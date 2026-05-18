@@ -50,6 +50,10 @@ jobs:
         env:
           VITE_SINGLE_FILE: 'true'
 
+      - name: Fix tony-kansai inline scripts
+        run: |
+          sed -i 's/<script type="module" crossorigin>/<script type="module">/g' tony-kansai-src/dist/index.html
+
       - name: Copy tony-kansai into dist
         run: |
           mkdir -p dist/tony-kansai
