@@ -99,21 +99,24 @@ export function Slider3D() {
                   boxShadow: isActive ? `0 32px 80px ${tour.accent}25, 0 0 0 1px ${tour.accent}18` : 'none',
                 }}
               >
-                {/* Banner */}
-                <div className={`bg-gradient-to-br ${tour.gradient} flex flex-col items-center justify-center gap-4 py-10`}>
-                  <motion.div
-                    animate={isActive ? { scale: [1, 1.07, 1] } : { scale: 1 }}
-                    transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                    className="text-7xl md:text-[88px] leading-none drop-shadow-2xl select-none"
-                  >
-                    {tour.emoji}
-                  </motion.div>
-                  <span
-                    className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
-                    style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}45` }}
-                  >
-                    {tour.badge}
-                  </span>
+                {/* Banner — real photo */}
+                <div className="relative h-52 overflow-hidden">
+                  <motion.img
+                    src={tour.imageCard}
+                    alt={tour.title}
+                    className="w-full h-full object-cover"
+                    animate={isActive ? { scale: [1, 1.06, 1] } : { scale: 1 }}
+                    transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                  <div className="absolute bottom-4 left-4">
+                    <span
+                      className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm"
+                      style={{ background: `${tour.accent}30`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
+                    >
+                      {tour.badge}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Content */}

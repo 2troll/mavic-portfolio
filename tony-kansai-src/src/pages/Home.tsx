@@ -2,22 +2,22 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, MessageCircle, Star, Check, ChevronRight } from 'lucide-react'
 import { AnimatedBackground } from '../components/AnimatedBackground'
-import { Card3D } from '../components/Card3D'
 import { HeroText } from '../components/HeroText'
 import { FadeUp } from '../components/FadeUp'
 import { CurtainReveal } from '../components/CurtainReveal'
+import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
 
 export default function Home() {
   return (
     <>
       <CurtainReveal />
+
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
-
-        {/* Animated CSS background — replaces Three.js (works everywhere) */}
         <AnimatedBackground />
+
         <motion.div animate={{ y: [0,-18,0], rotate:[0,3,0] }} transition={{ duration:8, repeat:Infinity, ease:'easeInOut' }}
           className="absolute top-28 left-10 text-7xl font-serif text-japan-red/10 select-none hidden lg:block pointer-events-none">旅</motion.div>
         <motion.div animate={{ y: [0,14,0], rotate:[0,-2,0] }} transition={{ duration:10, repeat:Infinity, ease:'easeInOut', delay:2 }}
@@ -92,7 +92,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── TOURS PREVIEW ─────────────────────────────────────── */}
+      {/* ── TOURS GRID ────────────────────────────────────────── */}
       <section className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <FadeUp className="text-center mb-14">
@@ -105,43 +105,50 @@ export default function Home() {
 
           <div className="grid md:grid-cols-3 gap-6 mb-10">
             {TOURS.map((tour, i) => (
-              <FadeUp key={tour.id} delay={i * 0.1}>
-                <Card3D glowColor={`${tour.accent}25`} className="h-full">
-                  <div className="glass-light rounded-2xl overflow-hidden h-full flex flex-col border border-white/6">
-                    <div className={`relative bg-gradient-to-br ${tour.gradient} h-40 flex items-center justify-center`}>
-                      <span className="text-6xl">{tour.emoji}</span>
-                      <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full text-xs font-semibold"
-                        style={{ background:`${tour.accent}25`, color:tour.accent, border:`1px solid ${tour.accent}40` }}>
-                        {tour.badge}
+              <FadeUp key={tour.id} delay={i * 0.08}>
+                <Link to={`/tours/${tour.id}`} className="group block h-full">
+                  <Card3D glowColor={`${tour.accent}20`} className="h-full">
+                    <div className="rounded-2xl overflow-hidden h-full flex flex-col border border-white/6 bg-japan-surface/60">
+                      {/* Photo */}
+                      <div className="relative h-48 overflow-hidden">
+                        <img
+                          src={tour.imageCard}
+                          alt={tour.title}
+                          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
+                        <div className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
+                          style={{ background:`${tour.accent}25`, color:tour.accent, border:`1px solid ${tour.accent}50` }}>
+                          {tour.badge}
+                        </div>
+                        <div className="absolute bottom-3 left-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
+                          {tour.subtitle}
+                        </div>
+                      </div>
+                      {/* Content */}
+                      <div className="p-5 flex flex-col flex-1">
+                        <h3 className="font-serif text-xl font-semibold text-white mb-2">{tour.title}</h3>
+                        <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tour.description}</p>
+                        <ul className="space-y-1.5 mb-4">
+                          {tour.highlights.slice(0,3).map((h) => (
+                            <li key={h} className="flex items-center gap-2 text-xs text-white/60">
+                              <Check size={11} style={{ color:tour.accent }} className="flex-shrink-0" />{h}
+                            </li>
+                          ))}
+                        </ul>
+                        <div className="flex items-center justify-between pt-3 border-t border-white/5">
+                          <span className="font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                          <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
+                            View Tour <ChevronRight size={12} />
+                          </span>
+                        </div>
                       </div>
                     </div>
-                    <div className="p-5 flex flex-col flex-1">
-                      <div className="text-xs font-medium mb-1 tracking-wider" style={{ color:tour.accent }}>{tour.subtitle}</div>
-                      <h3 className="font-serif text-xl font-semibold text-white mb-2">{tour.title}</h3>
-                      <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tour.description}</p>
-                      <ul className="space-y-1.5 mb-5">
-                        {tour.highlights.slice(0,3).map((h) => (
-                          <li key={h} className="flex items-center gap-2 text-xs text-white/60">
-                            <Check size={11} style={{ color:tour.accent }} className="flex-shrink-0" />{h}
-                          </li>
-                        ))}
-                      </ul>
-                      <Link to={`/tours/${tour.id}`}
-                        className="block text-center py-2.5 rounded-xl border border-white/10 text-sm text-white/80 hover:text-white hover:border-japan-red/40 transition-all font-medium">
-                        View Full Tour →
-                      </Link>
-                    </div>
-                  </div>
-                </Card3D>
+                  </Card3D>
+                </Link>
               </FadeUp>
             ))}
           </div>
-
-          <FadeUp className="text-center">
-            <Link to="/tours" className="inline-flex items-center gap-2 text-japan-red hover:text-japan-orange transition-colors font-medium">
-              See All Tours <ChevronRight size={16} />
-            </Link>
-          </FadeUp>
         </div>
       </section>
 
@@ -154,7 +161,6 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-br from-japan-red/8 via-transparent to-japan-orange/6 pointer-events-none" />
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-px bg-gradient-to-r from-transparent via-japan-red/60 to-transparent" />
                 <div className="relative z-10">
-                  <div className="text-4xl mb-4">🗾</div>
                   <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white mb-4">
                     Ready to Experience <span className="text-gradient-japan italic">Real Japan?</span>
                   </h2>

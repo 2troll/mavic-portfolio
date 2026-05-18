@@ -1,6 +1,7 @@
 import { useParams, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { ArrowLeft, Clock, Check, MessageCircle, MapPin, Users } from 'lucide-react'
+import { useRef } from 'react'
+import { motion, useScroll, useTransform } from 'framer-motion'
+import { ArrowLeft, Clock, Check, MessageCircle, MapPin, Users, ChevronRight } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
@@ -8,12 +9,16 @@ import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
 export default function TourDetail() {
   const { id } = useParams()
   const tour = TOURS.find((t) => t.id === id)
+  const heroRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
+  const imgY = useTransform(scrollYProgress, [0, 1], ['0%', '30%'])
+  const textY = useTransform(scrollYProgress, [0, 1], ['0%', '60%'])
+  const opacity = useTransform(scrollYProgress, [0, 0.7], [1, 0])
 
   if (!tour) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <div className="text-6xl mb-4">🗾</div>
           <h2 className="font-serif text-2xl text-white mb-3">Tour not found</h2>
           <Link to="/tours" className="text-japan-red hover:text-japan-orange">← Back to Tours</Link>
         </div>
@@ -25,86 +30,172 @@ export default function TourDetail() {
 
   return (
     <>
-      {/* Hero */}
-      <section className="relative pt-24 pb-0 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
-        <div className={`absolute inset-0 bg-gradient-to-br ${tour.gradient} opacity-15`} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-[120px] pointer-events-none opacity-20"
-          style={{ background: tour.accent }} />
+      {/* ── Cinematic Hero ─────────────────────────────────── */}
+      <section ref={heroRef} className="relative h-[85vh] overflow-hidden">
+        {/* Parallax image */}
+        <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
+          <img
+            src={tour.imageHero}
+            alt={tour.title}
+            className="w-full h-full object-cover"
+            loading="eager"
+          />
+        </motion.div>
 
-        <div className="relative z-10 max-w-4xl mx-auto px-6 pt-12 pb-16">
-          <motion.div initial={{ opacity:0, x:-20 }} animate={{ opacity:1, x:0 }} transition={{ duration:0.4 }}>
-            <Link to="/tours" className="inline-flex items-center gap-2 text-sm text-white/50 hover:text-white mb-8 transition-colors">
-              <ArrowLeft size={14} /> All Tours
-            </Link>
-          </motion.div>
+        {/* Gradient overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-japan-dark via-japan-dark/50 to-japan-dark/10" />
+        <div className="absolute inset-0 bg-gradient-to-r from-japan-dark/60 to-transparent" />
 
-          <motion.div initial={{ opacity:0, y:30 }} animate={{ opacity:1, y:0 }} transition={{ duration:0.6, delay:0.1 }}>
-            <div className="flex items-center gap-3 mb-4">
-              <span className="text-5xl">{tour.emoji}</span>
-              <div>
-                <div className="text-xs font-semibold tracking-wider" style={{ color:tour.accent }}>{tour.subtitle}</div>
-                <div className="flex items-center gap-2 text-xs text-white/40 mt-0.5">
-                  <Clock size={11} />{tour.duration}
-                </div>
-              </div>
+        {/* Back button */}
+        <motion.div
+          className="absolute top-6 left-6 z-20"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.4, delay: 0.3 }}
+        >
+          <Link
+            to="/tours"
+            className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/15 text-sm text-white/80 hover:text-white hover:border-japan-red/40 transition-all"
+          >
+            <ArrowLeft size={14} /> All Tours
+          </Link>
+        </motion.div>
+
+        {/* Hero text */}
+        <motion.div
+          className="absolute bottom-0 left-0 right-0 p-8 md:p-16 z-10"
+          style={{ y: textY, opacity }}
+        >
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
+            <div className="flex items-center gap-3 mb-3">
+              <span
+                className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
+                style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
+              >
+                {tour.badge}
+              </span>
+              <span className="text-xs text-white/50 font-medium">{tour.subtitle}</span>
             </div>
-            <h1 className="font-serif text-4xl md:text-6xl font-semibold text-white mb-4 leading-tight">{tour.title}</h1>
-            <div className="flex items-baseline gap-3 mb-6">
+            <h1 className="font-serif text-5xl md:text-7xl font-semibold text-white mb-4 leading-none">
+              {tour.title}
+            </h1>
+            <div className="flex items-center gap-6 flex-wrap">
               <span className="font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
-              <span className="text-sm text-white/40">per tour (not per person)</span>
-            </div>
-
-            <div className="flex flex-wrap gap-3">
-              <a href={`${WHATSAPP}?text=${waMsg}`} target="_blank" rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/40 hover:scale-105 transition-transform">
-                <MessageCircle size={15} /> Book This Tour
-              </a>
-              <Link to="/pricing"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/30 transition-all">
-                View All Pricing
-              </Link>
+              <span className="flex items-center gap-1.5 text-sm text-white/50">
+                <Clock size={13} />{tour.duration}
+              </span>
+              <span className="text-sm text-white/40">per tour · not per person</span>
             </div>
           </motion.div>
-        </div>
+        </motion.div>
       </section>
 
-      {/* Content */}
-      <section className="pb-28">
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="grid lg:grid-cols-3 gap-8">
-            {/* Main */}
+      {/* ── CTA bar ─────────────────────────────────────────── */}
+      <div className="sticky top-16 z-30 bg-japan-surface/90 backdrop-blur-xl border-b border-white/5">
+        <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
+          <div className="hidden sm:block text-sm font-serif text-white/60">
+            <span className="text-white font-semibold">{tour.title}</span> · {tour.duration}
+          </div>
+          <div className="flex gap-3 ml-auto">
+            <Link to="/pricing" className="px-4 py-2 rounded-lg glass border border-white/10 text-sm text-white/70 hover:text-white transition-all">
+              Pricing
+            </Link>
+            <a
+              href={`${WHATSAPP}?text=${waMsg}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold text-sm shadow-lg shadow-japan-red/40 hover:scale-105 transition-transform"
+            >
+              <MessageCircle size={14} /> Book Now
+            </a>
+          </div>
+        </div>
+      </div>
+
+      {/* ── Content ─────────────────────────────────────────── */}
+      <section className="py-16 pb-28">
+        <div className="max-w-5xl mx-auto px-6">
+          <div className="grid lg:grid-cols-3 gap-10">
+
+            {/* Main column */}
             <div className="lg:col-span-2 space-y-8">
+
               <ExplodeIn index={0}>
-                <div className="glass rounded-2xl p-7 border border-white/6">
+                <div className="glass rounded-2xl p-8 border border-white/6">
                   <h2 className="font-serif text-2xl font-semibold text-white mb-4">About this Tour</h2>
                   <p className="text-white/65 leading-relaxed text-[15px]">{tour.longDescription}</p>
                 </div>
               </ExplodeIn>
 
               <ExplodeIn index={1}>
-                <div className="glass rounded-2xl p-7 border border-white/6">
-                  <h2 className="font-serif text-2xl font-semibold text-white mb-5">What You'll Experience</h2>
-                  <div className="grid sm:grid-cols-2 gap-3">
-                    {tour.highlights.map((h) => (
-                      <div key={h} className="flex items-start gap-2.5 text-sm text-white/70">
-                        <Check size={14} className="mt-0.5 flex-shrink-0" style={{ color:tour.accent }} />{h}
-                      </div>
+                <div className="glass rounded-2xl p-8 border border-white/6">
+                  <h2 className="font-serif text-2xl font-semibold text-white mb-6">What You'll Experience</h2>
+                  <div className="grid sm:grid-cols-2 gap-4">
+                    {tour.highlights.map((h, i) => (
+                      <motion.div
+                        key={h}
+                        className="flex items-start gap-3 text-sm text-white/70"
+                        initial={{ opacity: 0, x: -15 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.07 }}
+                      >
+                        <div className="w-5 h-5 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5"
+                          style={{ background: `${tour.accent}20`, border: `1px solid ${tour.accent}40` }}>
+                          <Check size={10} style={{ color: tour.accent }} />
+                        </div>
+                        {h}
+                      </motion.div>
                     ))}
                   </div>
                 </div>
               </ExplodeIn>
 
               <ExplodeIn index={2}>
-                <div className="glass rounded-2xl p-7 border border-white/6">
+                <div className="glass rounded-2xl p-8 border border-white/6">
                   <h2 className="font-serif text-2xl font-semibold text-white mb-5">What's Included</h2>
-                  <div className="space-y-2.5">
+                  <div className="space-y-3">
                     {tour.includes.map((inc) => (
-                      <div key={inc} className="flex items-center gap-2.5 text-sm text-white/70">
-                        <div className="w-5 h-5 rounded-full bg-japan-red/15 flex items-center justify-center flex-shrink-0">
+                      <div key={inc} className="flex items-center gap-3 text-sm text-white/70">
+                        <div className="w-5 h-5 rounded-full bg-japan-red/15 border border-japan-red/30 flex items-center justify-center flex-shrink-0">
                           <Check size={10} className="text-japan-red" />
-                        </div>{inc}
+                        </div>
+                        {inc}
                       </div>
+                    ))}
+                  </div>
+                </div>
+              </ExplodeIn>
+
+              {/* Other tours — image strip */}
+              <ExplodeIn index={3}>
+                <div>
+                  <h2 className="font-serif text-xl font-semibold text-white mb-4">Other Experiences</h2>
+                  <div className="grid sm:grid-cols-2 gap-3">
+                    {TOURS.filter((t) => t.id !== tour.id).slice(0, 4).map((t) => (
+                      <Link
+                        key={t.id}
+                        to={`/tours/${t.id}`}
+                        className="group relative h-28 rounded-xl overflow-hidden border border-white/6 hover:border-white/20 transition-colors"
+                      >
+                        <img
+                          src={t.imageCard}
+                          alt={t.title}
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
+                        <div className="absolute bottom-3 left-3">
+                          <div className="text-xs font-medium mb-0.5" style={{ color: t.accent }}>{t.subtitle}</div>
+                          <div className="text-sm font-semibold text-white">{t.title}</div>
+                        </div>
+                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ChevronRight size={14} className="text-white" />
+                        </div>
+                      </Link>
                     ))}
                   </div>
                 </div>
@@ -113,57 +204,54 @@ export default function TourDetail() {
 
             {/* Sidebar */}
             <div className="space-y-5">
-              <ExplodeIn index={3}>
+              <ExplodeIn index={4}>
                 <Card3D glowColor={`${tour.accent}25`}>
-                  <div className="glass rounded-2xl p-6 border border-white/6 space-y-4">
+                  <div className="glass rounded-2xl p-6 border border-white/6 space-y-5">
                     <h3 className="font-serif text-lg font-semibold text-white">Quick Info</h3>
                     <div className="space-y-3 text-sm">
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <Clock size={14} className="text-japan-red" />{tour.duration}
+                        <Clock size={14} style={{ color: tour.accent }} />{tour.duration}
                       </div>
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <MapPin size={14} className="text-japan-red" />{tour.meetingPoint}
+                        <MapPin size={14} style={{ color: tour.accent }} />{tour.meetingPoint}
                       </div>
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <Users size={14} className="text-japan-red" />Private — no shared groups
+                        <Users size={14} style={{ color: tour.accent }} />Private — no shared groups
                       </div>
                     </div>
                     <div className="pt-3 border-t border-white/5">
-                      <div className="text-xs text-white/35 mb-2 font-medium">Available languages</div>
-                      <div className="flex gap-1.5 flex-wrap">
+                      <div className="text-xs text-white/35 mb-2.5 font-medium tracking-wider uppercase">Languages</div>
+                      <div className="flex gap-2 flex-wrap">
                         {LANGUAGES.map(({ flag, code }) => (
-                          <span key={code} className="text-lg" title={code}>{flag}</span>
+                          <div key={code} className="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/5 border border-white/8 text-xs text-white/60">
+                            <span>{flag}</span><span>{code}</span>
+                          </div>
                         ))}
                       </div>
                     </div>
-                    <a href={`${WHATSAPP}?text=${waMsg}`} target="_blank" rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 w-full py-3 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-md shadow-japan-red/30 hover:scale-105 transition-transform mt-2">
-                      <MessageCircle size={14} /> Book Now
+                    <a
+                      href={`${WHATSAPP}?text=${waMsg}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
+                    >
+                      <MessageCircle size={14} /> Book This Tour
                     </a>
                   </div>
                 </Card3D>
               </ExplodeIn>
 
-              <ExplodeIn index={4}>
-                <div className="glass rounded-2xl p-6 border border-white/6 text-center">
-                  <div className="text-2xl mb-2">⭐⭐⭐⭐⭐</div>
-                  <div className="text-sm font-semibold text-white mb-1">5.0 · 200+ tours</div>
-                  <div className="text-xs text-white/40">All private, all personal</div>
-                </div>
-              </ExplodeIn>
-
               <ExplodeIn index={5}>
-                <div className="glass rounded-2xl p-6 border border-white/6">
-                  <h4 className="text-sm font-semibold text-white/50 mb-3">Other Tours</h4>
-                  <div className="space-y-2">
-                    {TOURS.filter((t) => t.id !== tour.id).map((t) => (
-                      <Link key={t.id} to={`/tours/${t.id}`}
-                        className="flex items-center gap-2.5 text-sm text-white/65 hover:text-white py-1 transition-colors">
-                        <span className="text-base">{t.emoji}</span>
-                        <span>{t.title}</span>
-                      </Link>
+                <div className="glass rounded-2xl p-6 border border-white/6 text-center">
+                  <div className="flex justify-center gap-0.5 mb-2">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} className="w-4 h-4 text-japan-gold fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
                     ))}
                   </div>
+                  <div className="text-sm font-semibold text-white mb-1">5.0 · 200+ tours</div>
+                  <div className="text-xs text-white/40">All private, all personal</div>
                 </div>
               </ExplodeIn>
             </div>
