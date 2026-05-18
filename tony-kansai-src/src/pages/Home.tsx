@@ -15,18 +15,18 @@ export default function Home() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] rounded-full bg-japan-red/7 blur-[140px] pointer-events-none" />
+        {/* Responsive glow — max 90vw so it never overflows */}
+        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-japan-red/7 blur-[140px] pointer-events-none"
+          style={{ width: 'min(700px, 90vw)', height: 'min(700px, 90vw)' }} />
 
-        {/* Three.js 3D scene */}
+        {/* Three.js 3D scene — error-bounded, gracefully absent on mobile WebGL fail */}
         <Scene3D />
 
-        {/* Floating kanji */}
+        {/* Floating kanji — desktop only, safely inside overflow:hidden section */}
         <motion.div animate={{ y: [0,-18,0], rotate:[0,3,0] }} transition={{ duration:8, repeat:Infinity, ease:'easeInOut' }}
-          className="absolute top-28 left-10 text-7xl font-serif text-japan-red/10 select-none hidden lg:block">旅</motion.div>
+          className="absolute top-28 left-10 text-7xl font-serif text-japan-red/10 select-none hidden lg:block pointer-events-none">旅</motion.div>
         <motion.div animate={{ y: [0,14,0], rotate:[0,-2,0] }} transition={{ duration:10, repeat:Infinity, ease:'easeInOut', delay:2 }}
-          className="absolute bottom-36 right-14 text-8xl font-serif text-japan-gold/8 select-none hidden lg:block">京</motion.div>
-        <motion.div animate={{ y: [0,-10,0] }} transition={{ duration:7, repeat:Infinity, ease:'easeInOut', delay:1 }}
-          className="absolute top-1/2 left-8 text-4xl font-serif text-white/5 select-none hidden xl:block">道</motion.div>
+          className="absolute bottom-36 right-14 text-8xl font-serif text-japan-gold/8 select-none hidden lg:block pointer-events-none">京</motion.div>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity:0, y:20, scale:0.9 }} animate={{ opacity:1, y:0, scale:1 }} transition={{ duration:0.6, delay:0.1 }}
