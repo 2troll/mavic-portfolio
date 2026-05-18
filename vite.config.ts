@@ -5,5 +5,7 @@ import react from '@vitejs/plugin-react'
 // All other hosts (Netlify, Vercel, Cloudflare Pages, local) use base '/'.
 export default defineConfig({
   plugins: [react()],
-  base: process.env.GITHUB_PAGES === 'true' ? '/mavic-portfolio/' : '/',
+  base:
+    process.env.VITE_CDN_BASE ||
+    (process.env.GITHUB_PAGES === 'true' ? '/mavic-portfolio/' : '/'),
 })
