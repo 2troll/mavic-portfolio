@@ -48,7 +48,7 @@ jobs:
         run: npm run build
         working-directory: tony-kansai-src
         env:
-          VITE_CDN_BASE: '/mavic-portfolio/tony-kansai/'
+          VITE_SINGLE_FILE: 'true'
 
       - name: Copy tony-kansai into dist
         run: |
@@ -63,7 +63,7 @@ jobs:
 
   deploy:
     needs: build
-    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/claude/premium-3d-portfolio-rebuild-Qom7g' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

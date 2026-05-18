@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ChevronDown, MessageCircle, Star, Check, ChevronRight } from 'lucide-react'
-import { Scene3D } from '../components/Scene3D'
+import { AnimatedBackground } from '../components/AnimatedBackground'
 import { Card3D } from '../components/Card3D'
 import { HeroText } from '../components/HeroText'
 import { FadeUp } from '../components/FadeUp'
@@ -15,14 +15,9 @@ export default function Home() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
-        {/* Responsive glow — max 90vw so it never overflows */}
-        <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-japan-red/7 blur-[140px] pointer-events-none"
-          style={{ width: 'min(700px, 90vw)', height: 'min(700px, 90vw)' }} />
 
-        {/* Three.js 3D scene — error-bounded, gracefully absent on mobile WebGL fail */}
-        <Scene3D />
-
-        {/* Floating kanji — desktop only, safely inside overflow:hidden section */}
+        {/* Animated CSS background — replaces Three.js (works everywhere) */}
+        <AnimatedBackground />
         <motion.div animate={{ y: [0,-18,0], rotate:[0,3,0] }} transition={{ duration:8, repeat:Infinity, ease:'easeInOut' }}
           className="absolute top-28 left-10 text-7xl font-serif text-japan-red/10 select-none hidden lg:block pointer-events-none">旅</motion.div>
         <motion.div animate={{ y: [0,14,0], rotate:[0,-2,0] }} transition={{ duration:10, repeat:Infinity, ease:'easeInOut', delay:2 }}
