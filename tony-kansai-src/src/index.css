@@ -1,0 +1,96 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --japan-red: #E53030;
+  --japan-orange: #FF6B35;
+  --japan-gold: #D4A847;
+  --bg-dark: #050508;
+  --bg-surface: #0C0D16;
+  --bg-surface2: #12141F;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: #F0EDE6;
+  font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--bg-dark); }
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, #E53030, #FF6B35);
+  border-radius: 3px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(229, 48, 48, 0.3);
+  color: #fff;
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.025;
+}
+
+@layer utilities {
+  .text-gradient-japan {
+    background: linear-gradient(135deg, #E53030 0%, #FF6B35 50%, #D4A847 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .text-gradient-gold {
+    background: linear-gradient(135deg, #D4A847 0%, #FFE08C 50%, #D4A847 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass {
+    background: rgba(12, 13, 22, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+  }
+
+  .glass-light {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+  }
+
+  .glow-red {
+    box-shadow: 0 0 30px rgba(229, 48, 48, 0.3), 0 0 60px rgba(229, 48, 48, 0.1);
+  }
+
+  .glow-gold {
+    box-shadow: 0 0 30px rgba(212, 168, 71, 0.3);
+  }
+
+  .border-gradient-japan {
+    border-image: linear-gradient(135deg, #E53030, #FF6B35) 1;
+  }
+}
