@@ -37,9 +37,9 @@ function Layout() {
 
 export default function App() {
   return (
-    <BrowserRouter basename="/mavic-portfolio/tony-kansai">
+    <HashRouter>
       <ScrollToTop />
       <Layout />
-    </BrowserRouter>
+    </HashRouter>
   )
 }
