@@ -1,22 +1,14 @@
-name: CI / Deploy
+name: Build & Deploy to Surge
 
 on:
   push:
-    branches: ['**']
+    branches:
+      - main
+      - claude/premium-3d-portfolio-rebuild-Qom7g
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-concurrency:
-  group: pages
-  cancel-in-progress: false
-
 jobs:
-  build:
-    name: Build
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,28 +18,17 @@ jobs:
           node-version: 20
           cache: npm
 
-      - run: npm ci
+      - name: Install dependencies
+        run: npm ci
 
-      - run: npm run build
+      - name: Build
+        run: npm run build
+
+      - name: Add 200.html for SPA client-side routing
+        run: cp dist/index.html dist/200.html
+
+      - name: Deploy to Surge
+        run: npx surge dist mavic-portfolio.surge.sh
         env:
-          GITHUB_PAGES: 'true'
-
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist
-
-  deploy:
-    name: Deploy to GitHub Pages
-    # Only deploy when code lands on main (i.e. PR is merged).
-    # This prevents the deploy job from running — and failing — on feature branches
-    # where GitHub Pages is not yet the configured source.
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    needs: build
-    runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Deploy
-        id: deployment
-        uses: actions/deploy-pages@v4
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN }}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
