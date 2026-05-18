@@ -41,7 +41,7 @@ jobs:
 
       # ── Build Tony Kansai Guide ────────────────────────────
       - name: Install tony-kansai dependencies
-        run: npm ci
+        run: npm install --legacy-peer-deps
         working-directory: tony-kansai-src
 
       - name: Build tony-kansai guide
