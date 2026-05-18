@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// In build mode, set the base to the GitHub Pages project path.
-// In dev mode, keep root '/' so localhost works normally.
-export default defineConfig(({ command }) => ({
+// GITHUB_PAGES=true is set only in the GitHub Actions deploy workflow.
+// All other hosts (Netlify, Vercel, Cloudflare Pages, local) use base '/'.
+export default defineConfig({
   plugins: [react()],
-  base: command === 'build' ? '/mavic-portfolio/' : '/',
-}))
+  base: process.env.GITHUB_PAGES === 'true' ? '/mavic-portfolio/' : '/',
+})
