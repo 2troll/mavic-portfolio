@@ -1,7 +1,17 @@
-import { useRef, useMemo } from 'react'
+import { useRef, useMemo, Component } from 'react'
+import type { ReactNode } from 'react'
 import { Canvas, useFrame } from '@react-three/fiber'
 import { Float, Stars, MeshDistortMaterial } from '@react-three/drei'
 import * as THREE from 'three'
+
+class WebGLErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
+  state = { failed: false }
+  static getDerivedStateFromError() { return { failed: true } }
+  render() {
+    if (this.state.failed) return null
+    return this.props.children
+  }
+}
 
 function RotatingTorus() {
   const ref = useRef<THREE.Mesh>(null)
@@ -90,21 +100,23 @@ function Particles() {
 
 export function Scene3D() {
   return (
-    <Canvas
-      camera={{ position: [0, 0, 5], fov: 65 }}
-      style={{ background: 'transparent' }}
-      className="absolute inset-0 pointer-events-none"
-      dpr={[1, 2]}
-    >
-      <ambientLight intensity={0.2} />
-      <pointLight position={[5, 5, 5]} color="#E53030" intensity={3} />
-      <pointLight position={[-5, -5, -5]} color="#FF6B35" intensity={2} />
-      <pointLight position={[0, 5, 0]} color="#D4A847" intensity={1} />
-      <Stars radius={80} depth={40} count={2000} factor={3} fade speed={0.5} />
-      <RotatingTorus />
-      <GlowSphere />
-      <TorusKnot />
-      <Particles />
-    </Canvas>
+    <WebGLErrorBoundary>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 65 }}
+        style={{ background: 'transparent' }}
+        className="absolute inset-0 pointer-events-none"
+        dpr={[1, 1.5]}
+      >
+        <ambientLight intensity={0.2} />
+        <pointLight position={[5, 5, 5]} color="#E53030" intensity={3} />
+        <pointLight position={[-5, -5, -5]} color="#FF6B35" intensity={2} />
+        <pointLight position={[0, 5, 0]} color="#D4A847" intensity={1} />
+        <Stars radius={80} depth={40} count={2000} factor={3} fade speed={0.5} />
+        <RotatingTorus />
+        <GlowSphere />
+        <TorusKnot />
+        <Particles />
+      </Canvas>
+    </WebGLErrorBoundary>
   )
 }

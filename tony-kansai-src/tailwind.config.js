@@ -1,6 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  safelist: [
+    'from-rose-900/80', 'via-red-800/60', 'to-orange-900/80',
+    'from-emerald-900/80', 'via-teal-800/60', 'to-cyan-900/80',
+    'from-amber-900/80', 'via-yellow-800/60',
+    'bg-gradient-to-br', 'bg-gradient-to-b', 'bg-gradient-to-r',
+  ],
   theme: {
     extend: {
       fontFamily: {
