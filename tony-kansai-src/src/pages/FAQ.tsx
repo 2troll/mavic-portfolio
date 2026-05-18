@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, MessageCircle } from 'lucide-react'
 import { HeroText } from '../components/HeroText'
-import { FadeUp } from '../components/FadeUp'
+import { ExplodeIn } from '../components/ExplodeIn'
 import { FAQS, WHATSAPP } from '../lib/data'
 
 export default function FAQ() {
@@ -29,7 +29,7 @@ export default function FAQ() {
         <div className="max-w-3xl mx-auto px-6">
           <div className="space-y-3 mb-14">
             {FAQS.map((faq, i) => (
-              <FadeUp key={i} delay={i * 0.06}>
+              <ExplodeIn key={i} index={i}>
                 <motion.div
                   className="glass rounded-xl border overflow-hidden cursor-pointer"
                   animate={{ borderColor: open === i ? 'rgba(229,48,48,0.35)' : 'rgba(255,255,255,0.06)' }}
@@ -52,11 +52,11 @@ export default function FAQ() {
                     )}
                   </AnimatePresence>
                 </motion.div>
-              </FadeUp>
+              </ExplodeIn>
             ))}
           </div>
 
-          <FadeUp>
+          <ExplodeIn index={FAQS.length}>
             <div className="glass rounded-2xl border border-white/6 p-8 text-center">
               <div className="text-3xl mb-3">💬</div>
               <h3 className="font-serif text-xl font-semibold text-white mb-2">Still have questions?</h3>
@@ -72,7 +72,7 @@ export default function FAQ() {
                 </Link>
               </div>
             </div>
-          </FadeUp>
+          </ExplodeIn>
         </div>
       </section>
     </>

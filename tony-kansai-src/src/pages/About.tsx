@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { MapPin, Clock, Star, MessageCircle, ChevronRight } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
 import { HeroText } from '../components/HeroText'
-import { FadeUp } from '../components/FadeUp'
+import { ExplodeIn } from '../components/ExplodeIn'
 import { LANGUAGES, WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
 
 export default function About() {
@@ -28,8 +28,9 @@ export default function About() {
       <section className="pb-28">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-start">
-            {/* Card */}
-            <FadeUp>
+
+            {/* Sticky card */}
+            <ExplodeIn index={0}>
               <Card3D glowColor="rgba(229,48,48,0.2)" className="sticky top-24">
                 <div className="glass rounded-2xl p-8 border border-white/6">
                   <div className="flex items-center justify-between mb-7">
@@ -64,46 +65,44 @@ export default function About() {
                     <MessageCircle size={15} /> Send Tony a Message
                   </a>
                   <div className="text-center text-xs text-white/35 mt-2">{WHATSAPP_NUMBER} · replies in 2h</div>
-
-                  <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-40 h-px bg-gradient-to-r from-transparent via-japan-red/60 to-transparent" />
                 </div>
               </Card3D>
-            </FadeUp>
+            </ExplodeIn>
 
-            {/* Bio text */}
+            {/* Bio sections */}
             <div className="space-y-6">
-              <FadeUp delay={0.1}>
+              <ExplodeIn index={1}>
                 <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">The Story</div>
                 <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-6 leading-tight">
                   A Local Who Lives<br /><span className="text-gradient-japan italic">the Stories</span>
                 </h2>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.2}>
+              <ExplodeIn index={2}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
                   Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. Since 2018, he has guided over 200 private tours, sharing hidden temples, forgotten markets, and the living traditions that guidebooks miss.
                 </p>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.3}>
+              <ExplodeIn index={3}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
                   His approach is simple: no scripts, no rush, no crowds. Each tour is tailored completely to you — your pace, your interests, your language. Whether you want spiritual depth in Kyoto or the electric chaos of Osaka nights, Tony knows exactly where to take you.
                 </p>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.35}>
+              <ExplodeIn index={4}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
                   With fluency in five languages — English, Spanish, Russian, Czech, and Arabic — Tony bridges not just geography but culture. Nuance, humor, and history come through naturally in a way that only native-level understanding can provide.
                 </p>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.4}>
+              <ExplodeIn index={5}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
                   Tony covers the full Kansai region: the neon streets of Dotonbori, the thousand torii of Fushimi Inari, the bamboo groves of Arashiyama, the deer parks of Nara, the mountain trails of Kurama — and countless places in between that exist only in local memory.
                 </p>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.45}>
+              <ExplodeIn index={6}>
                 <div className="glass rounded-2xl p-6 border border-white/6">
                   <div className="text-sm font-semibold text-white/50 mb-3">Kansai Region Coverage</div>
                   <div className="flex flex-wrap gap-2">
@@ -112,9 +111,9 @@ export default function About() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.5}>
+              <ExplodeIn index={7}>
                 <div className="flex gap-4 pt-2">
                   <Link to="/tours"
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-md hover:scale-105 transition-transform">
@@ -125,7 +124,7 @@ export default function About() {
                     View Pricing
                   </Link>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
             </div>
           </div>
         </div>

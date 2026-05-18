@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { Check, MessageCircle, Clock } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
 import { HeroText } from '../components/HeroText'
-import { FadeUp } from '../components/FadeUp'
+import { ExplodeIn } from '../components/ExplodeIn'
 import { PRICING, WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
 
 export default function Pricing() {
@@ -29,7 +29,7 @@ export default function Pricing() {
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid md:grid-cols-3 gap-6 mb-14">
             {PRICING.map((tier, i) => (
-              <FadeUp key={tier.id} delay={i * 0.1}>
+              <ExplodeIn key={tier.id} index={i}>
                 <Card3D glowColor={tier.hot ? 'rgba(229,48,48,0.3)' : 'rgba(255,255,255,0.05)'} className="h-full">
                   <div className={`relative rounded-2xl overflow-hidden h-full flex flex-col ${
                     tier.hot ? 'bg-gradient-to-b from-japan-surface2 to-japan-surface border border-japan-red/40' : 'glass-light border border-white/6'
@@ -69,20 +69,18 @@ export default function Pricing() {
                     </div>
                   </div>
                 </Card3D>
-              </FadeUp>
+              </ExplodeIn>
             ))}
           </div>
 
-          {/* Note */}
-          <FadeUp className="text-center mb-14">
+          <ExplodeIn index={3} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass border border-white/6 text-sm text-white/50">
               <Clock size={14} className="text-japan-red" />
               Tony typically replies within 2 hours · {WHATSAPP_NUMBER}
             </div>
-          </FadeUp>
+          </ExplodeIn>
 
-          {/* Compare */}
-          <FadeUp delay={0.1}>
+          <ExplodeIn index={4} delay={0.1}>
             <div className="glass rounded-2xl border border-white/6 overflow-hidden">
               <div className="px-6 py-5 border-b border-white/5">
                 <h3 className="font-serif text-xl font-semibold text-white">What's always included</h3>
@@ -105,13 +103,13 @@ export default function Pricing() {
                 ))}
               </div>
             </div>
-          </FadeUp>
+          </ExplodeIn>
 
-          <FadeUp delay={0.15} className="text-center mt-10">
+          <ExplodeIn index={5} delay={0.15} className="text-center mt-10">
             <Link to="/faq" className="text-sm text-japan-red hover:text-japan-orange transition-colors">
               Have questions? Read the FAQ →
             </Link>
-          </FadeUp>
+          </ExplodeIn>
         </div>
       </section>
     </>

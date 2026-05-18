@@ -2,7 +2,7 @@ import { useParams, Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, Clock, Check, MessageCircle, MapPin, Users } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
-import { FadeUp } from '../components/FadeUp'
+import { ExplodeIn } from '../components/ExplodeIn'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
 
 export default function TourDetail() {
@@ -26,7 +26,7 @@ export default function TourDetail() {
   return (
     <>
       {/* Hero */}
-      <section className={`relative pt-24 pb-0 overflow-hidden`}>
+      <section className="relative pt-24 pb-0 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
         <div className={`absolute inset-0 bg-gradient-to-br ${tour.gradient} opacity-15`} />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[400px] rounded-full blur-[120px] pointer-events-none opacity-20"
@@ -75,14 +75,14 @@ export default function TourDetail() {
           <div className="grid lg:grid-cols-3 gap-8">
             {/* Main */}
             <div className="lg:col-span-2 space-y-8">
-              <FadeUp>
+              <ExplodeIn index={0}>
                 <div className="glass rounded-2xl p-7 border border-white/6">
                   <h2 className="font-serif text-2xl font-semibold text-white mb-4">About this Tour</h2>
                   <p className="text-white/65 leading-relaxed text-[15px]">{tour.longDescription}</p>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.1}>
+              <ExplodeIn index={1}>
                 <div className="glass rounded-2xl p-7 border border-white/6">
                   <h2 className="font-serif text-2xl font-semibold text-white mb-5">What You'll Experience</h2>
                   <div className="grid sm:grid-cols-2 gap-3">
@@ -93,9 +93,9 @@ export default function TourDetail() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.2}>
+              <ExplodeIn index={2}>
                 <div className="glass rounded-2xl p-7 border border-white/6">
                   <h2 className="font-serif text-2xl font-semibold text-white mb-5">What's Included</h2>
                   <div className="space-y-2.5">
@@ -108,12 +108,12 @@ export default function TourDetail() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
             </div>
 
             {/* Sidebar */}
             <div className="space-y-5">
-              <FadeUp delay={0.15}>
+              <ExplodeIn index={3}>
                 <Card3D glowColor={`${tour.accent}25`}>
                   <div className="glass rounded-2xl p-6 border border-white/6 space-y-4">
                     <h3 className="font-serif text-lg font-semibold text-white">Quick Info</h3>
@@ -142,18 +142,17 @@ export default function TourDetail() {
                     </a>
                   </div>
                 </Card3D>
-              </FadeUp>
+              </ExplodeIn>
 
-              <FadeUp delay={0.2}>
+              <ExplodeIn index={4}>
                 <div className="glass rounded-2xl p-6 border border-white/6 text-center">
                   <div className="text-2xl mb-2">⭐⭐⭐⭐⭐</div>
                   <div className="text-sm font-semibold text-white mb-1">5.0 · 200+ tours</div>
                   <div className="text-xs text-white/40">All private, all personal</div>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
 
-              {/* Other tours */}
-              <FadeUp delay={0.25}>
+              <ExplodeIn index={5}>
                 <div className="glass rounded-2xl p-6 border border-white/6">
                   <h4 className="text-sm font-semibold text-white/50 mb-3">Other Tours</h4>
                   <div className="space-y-2">
@@ -166,7 +165,7 @@ export default function TourDetail() {
                     ))}
                   </div>
                 </div>
-              </FadeUp>
+              </ExplodeIn>
             </div>
           </div>
         </div>

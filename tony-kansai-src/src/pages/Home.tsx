@@ -5,11 +5,13 @@ import { Scene3D } from '../components/Scene3D'
 import { Card3D } from '../components/Card3D'
 import { HeroText } from '../components/HeroText'
 import { FadeUp } from '../components/FadeUp'
+import { CurtainReveal } from '../components/CurtainReveal'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
 
 export default function Home() {
   return (
     <>
+      <CurtainReveal />
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
