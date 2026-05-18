@@ -1,10 +1,8 @@
-name: Deploy to GitHub Pages
+name: CI / Deploy
 
 on:
   push:
-    branches:
-      - main
-      - claude/premium-3d-portfolio-rebuild-Qom7g
+    branches: ['**']
   workflow_dispatch:
 
 permissions:
@@ -18,37 +16,38 @@ concurrency:
 
 jobs:
   build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
 
-      - name: Install dependencies
-        run: npm ci
+      - run: npm ci
 
-      - name: Build
-        run: npm run build
+      - run: npm run build
         env:
           GITHUB_PAGES: 'true'
 
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
 
   deploy:
+    name: Deploy to GitHub Pages
+    # Only deploy when code lands on main (i.e. PR is merged).
+    # This prevents the deploy job from running — and failing — on feature branches
+    # where GitHub Pages is not yet the configured source.
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     needs: build
     runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
