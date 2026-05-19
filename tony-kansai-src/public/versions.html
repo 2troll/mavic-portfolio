@@ -39,11 +39,29 @@
     <p>Version history — cinematic components & 3D simulations</p>
   </header>
 
-  <!-- v21 -->
+  <!-- v22 -->
   <div class="version current">
     <div class="v-header">
-      <span class="v-num">v21</span>
+      <span class="v-num">v22</span>
       <span class="badge current">Current</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Photo-First Redesign · Real Unsplash Parallax · All Pages Connected</div>
+    <ul>
+      <li><span class="tag design">design</span>Removed all custom SVG illustrations (CinematicScrollDeer deer silhouette, DioramaCastle3D SVG layers, InteractiveToriiGlow SVG torii) — replaced with real Unsplash photography throughout.</li>
+      <li><span class="tag new">new</span><strong>Discover Section</strong> — Fushimi Inari torii-gate photograph (<code>photo-1524413840807</code>) with Framer Motion <code>useScroll</code> + <code>useTransform</code> parallax. Container <code>scale-[1.2]</code> prevents edge exposure during scroll. Scroll range <code>['start end','end start']</code> → y offset <code>0%→18%</code>.</li>
+      <li><span class="tag new">new</span><strong>Fortress Section</strong> — Himeji Castle UNESCO photograph (<code>photo-1590559899731</code>) with identical parallax pattern on a separate <code>castleRef</code> scroll target. Text refocused on history narrative.</li>
+      <li><span class="tag fix">fix</span>All secondary pages (Tours, About, Pricing, FAQ) now use <code>HeroTextKinetic</code> instead of the legacy <code>HeroText</code> — consistent spring cascade across the entire site.</li>
+      <li><span class="tag fix">fix</span><code>Home.tsx</code> no longer imports <code>CinematicScrollDeer</code>, <code>DioramaCastle3D</code>, or <code>InteractiveToriiGlow</code> — dead code path eliminated.</li>
+      <li><span class="tag perf">perf</span>All photo containers use <code>loading="lazy"</code>. Parallax applied to inner <code>motion.div</code> wrapper, never to the <code>img</code> directly — avoids layout recalculation.</li>
+    </ul>
+  </div>
+
+  <!-- v21 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v21</span>
+      <span class="badge old">Released</span>
       <span class="v-date">May 2026</span>
     </div>
     <div class="v-title">UI/UX PRO MAX · Cinematic Scroll & Hardware 3D Simulations</div>

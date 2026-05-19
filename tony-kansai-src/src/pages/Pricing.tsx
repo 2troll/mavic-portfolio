@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { Check, MessageCircle, Clock } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
-import { HeroText } from '../components/HeroText'
+import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { PRICING, WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
 
@@ -16,7 +16,7 @@ export default function Pricing() {
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
             className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4">Pricing</motion.div>
           <div className="mb-6">
-            <HeroText text="Simple, Transparent Pricing" className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
+            <HeroTextKinetic text="Simple, Transparent Pricing" className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
           </div>
           <motion.p initial={{ opacity:0, y:15 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5 }}
             className="text-white/50 text-lg font-light max-w-xl mx-auto">

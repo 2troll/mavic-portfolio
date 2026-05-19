@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, MessageCircle } from 'lucide-react'
-import { HeroText } from '../components/HeroText'
+import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { FAQS, WHATSAPP } from '../lib/data'
 
@@ -18,7 +18,7 @@ export default function FAQ() {
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
             className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4">FAQ</motion.div>
           <div className="mb-6">
-            <HeroText text="Common Questions" className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
+            <HeroTextKinetic text="Common Questions" className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
           </div>
           <motion.p initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.5 }}
             className="text-white/50 font-light">Everything you need to know before booking.</motion.p>

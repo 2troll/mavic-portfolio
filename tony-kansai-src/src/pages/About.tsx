@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { MapPin, Clock, Star, MessageCircle, ChevronRight } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
-import { HeroText } from '../components/HeroText'
+import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { LANGUAGES, WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
 
@@ -17,7 +17,7 @@ export default function About() {
           <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
             className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4">About</motion.div>
           <div className="mb-4">
-            <HeroText text="Tony Hanma" className="justify-center text-5xl md:text-6xl font-serif font-semibold" delay={0.1} />
+            <HeroTextKinetic text="Tony Hanma" className="justify-center text-5xl md:text-6xl font-serif font-semibold" delay={0.1} />
           </div>
           <motion.p initial={{ opacity:0, y:15 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5 }}
             className="text-white/50 text-lg font-light font-serif italic">Private Kansai Guide · Since 2018</motion.p>

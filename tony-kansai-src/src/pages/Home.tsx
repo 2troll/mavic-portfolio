@@ -1,21 +1,20 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useTransform } from 'framer-motion'
 import {
   ChevronDown, MessageCircle, Star, Check, ChevronRight, MapPin, Clock, Users,
 } from 'lucide-react'
 import { AnimatedHeroBG } from '../components/AnimatedHeroBG'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
-import { CinematicScrollDeer } from '../components/CinematicScrollDeer'
-import { DioramaCastle3D } from '../components/DioramaCastle3D'
-import { InteractiveToriiGlow } from '../components/InteractiveToriiGlow'
 import { FadeUp } from '../components/FadeUp'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
 
-// ── spring variant shared across reveal cards ─────────────────────────────────
+const PHOTO_TORII = 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=85&w=900'
+const PHOTO_CASTLE = 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=85&w=900'
+
 const cardReveal = {
   hidden: { opacity: 0, y: 48, scale: 0.96 },
   visible: (i: number) => ({
@@ -25,8 +24,20 @@ const cardReveal = {
 }
 
 export default function Home() {
-  // Ref for the deer section scroll tracking
-  const deerSectionRef = useRef<HTMLElement>(null)
+  const discoverRef = useRef<HTMLElement>(null)
+  const castleRef = useRef<HTMLElement>(null)
+
+  const { scrollYProgress: discoverProgress } = useScroll({
+    target: discoverRef,
+    offset: ['start end', 'end start'],
+  })
+  const { scrollYProgress: castleProgress } = useScroll({
+    target: castleRef,
+    offset: ['start end', 'end start'],
+  })
+
+  const discoverPhotoY = useTransform(discoverProgress, [0, 1], ['0%', '18%'])
+  const castlePhotoY = useTransform(castleProgress, [0, 1], ['0%', '18%'])
 
   return (
     <>
@@ -36,18 +47,10 @@ export default function Home() {
           HERO — cinematic full viewport
       ════════════════════════════════════════════════════════ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
-        {/* Deep dark ground */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050508] via-[#08060F] to-japan-surface" />
         <AnimatedHeroBG />
 
-        {/* Decorative Torii watermark — desktop right edge */}
-        <div className="absolute right-10 top-1/2 -translate-y-1/2 hidden xl:block z-0">
-          <InteractiveToriiGlow className="opacity-[0.10] w-40" />
-        </div>
-
-        {/* Hero content */}
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
-          {/* Pill badge */}
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -59,7 +62,6 @@ export default function Home() {
             <Star size={13} fill="currentColor" />
           </motion.div>
 
-          {/* 3D kinetic headline */}
           <div className="mb-5">
             <HeroTextKinetic
               text="Discover Japan's True Soul"
@@ -69,7 +71,6 @@ export default function Home() {
             />
           </div>
 
-          {/* Accent line */}
           <motion.div
             initial={{ scaleX: 0 }}
             animate={{ scaleX: 1 }}
@@ -77,7 +78,6 @@ export default function Home() {
             className="h-[3px] w-44 mx-auto mb-10 rounded-full bg-gradient-to-r from-japan-red to-japan-orange origin-left"
           />
 
-          {/* Subtitle */}
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -88,7 +88,6 @@ export default function Home() {
             <span className="text-white/80 font-medium">5 languages</span> by a local who knows the story behind every stone.
           </motion.p>
 
-          {/* CTA buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -111,7 +110,6 @@ export default function Home() {
             </Link>
           </motion.div>
 
-          {/* Language flags */}
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -127,7 +125,6 @@ export default function Home() {
           </motion.div>
         </div>
 
-        {/* Scroll caret */}
         <motion.div
           className="absolute bottom-8 left-1/2 -translate-x-1/2"
           animate={{ y: [0, 9, 0] }}
@@ -161,16 +158,13 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          DEER WALK SECTION — Nara deer tracks scroll progress
+          DISCOVER SECTION — Fushimi Inari parallax photo
       ════════════════════════════════════════════════════════ */}
       <section
-        ref={deerSectionRef}
+        ref={discoverRef}
         className="relative py-24 overflow-hidden bg-gradient-to-b from-transparent to-japan-surface/20"
       >
-        {/* Deer walks across here */}
-        <CinematicScrollDeer sectionRef={deerSectionRef} />
-
-        <div className="max-w-5xl mx-auto px-6 relative z-10">
+        <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <FadeUp>
               <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
@@ -202,10 +196,24 @@ export default function Home() {
               </div>
             </FadeUp>
 
-            {/* Torii portal — interactive hover glow */}
+            {/* Parallax photo — Fushimi Inari torii gates */}
             <FadeUp delay={0.15}>
-              <div className="flex justify-center">
-                <InteractiveToriiGlow className="w-56 md:w-64 opacity-80 hover:opacity-100 transition-opacity" />
+              <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+                <motion.div
+                  className="absolute inset-0 scale-[1.2]"
+                  style={{ y: discoverPhotoY }}
+                >
+                  <img
+                    src={PHOTO_TORII}
+                    alt="Fushimi Inari torii gates Kyoto Japan"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/70 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-5 left-5">
+                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">Fushimi Inari · Kyoto</div>
+                </div>
               </div>
             </FadeUp>
           </div>
@@ -213,21 +221,43 @@ export default function Home() {
       </section>
 
       {/* ════════════════════════════════════════════════════════
-          3D CASTLE DIORAMA
+          FORTRESS SECTION — Himeji Castle parallax photo
       ════════════════════════════════════════════════════════ */}
-      <section className="py-20 overflow-hidden">
+      <section ref={castleRef} className="py-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
-            <FadeUp>
+            {/* Photo left on desktop */}
+            <ExplodeIn index={2}>
+              <div className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
+                <motion.div
+                  className="absolute inset-0 scale-[1.2]"
+                  style={{ y: castlePhotoY }}
+                >
+                  <img
+                    src={PHOTO_CASTLE}
+                    alt="Himeji Castle Japan UNESCO World Heritage"
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </motion.div>
+                <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/65 via-transparent to-transparent pointer-events-none" />
+                <div className="absolute bottom-5 left-5">
+                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">Himeji Castle · UNESCO World Heritage</div>
+                </div>
+              </div>
+            </ExplodeIn>
+
+            {/* Text right */}
+            <FadeUp delay={0.1}>
               <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
-                Osaka Castle
+                History & Culture
               </div>
               <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-5 leading-tight">
                 From ancient fortresses<br />
                 to <span className="text-gradient-japan italic">hidden alleys</span>
               </h2>
               <p className="text-white/50 leading-relaxed mb-6 font-light text-[15px]">
-                Osaka Castle has stood — and fallen, and risen again — for over 430 years. Tony guides you through the layers of its history like a diorama: the shogunate wars, the reconstruction, the cherry blossoms that frame it every spring. Move your cursor across the scene to feel the depth.
+                Japan's greatest monuments are not museums — they are living chapters in a story still being written. Tony brings the history of Himeji Castle, Osaka's shogunate wars, and Kyoto's thousand-year court to life through the eyes of someone who grew up in their shadow.
               </p>
               <Link
                 to="/tours"
@@ -236,10 +266,6 @@ export default function Home() {
                 Explore all destinations <ChevronRight size={14} />
               </Link>
             </FadeUp>
-
-            <ExplodeIn index={2}>
-              <DioramaCastle3D />
-            </ExplodeIn>
           </div>
         </div>
       </section>
@@ -275,7 +301,6 @@ export default function Home() {
                 <Link to={`/tours/${tour.id}`} className="group block h-full">
                   <Card3D glowColor={`${tour.accent}20`} className="h-full">
                     <div className="rounded-2xl overflow-hidden h-full flex flex-col border border-white/6 bg-japan-surface/60">
-                      {/* Photo */}
                       <div className="relative h-48 overflow-hidden">
                         <img
                           src={tour.imageCard}
@@ -295,7 +320,6 @@ export default function Home() {
                         </div>
                       </div>
 
-                      {/* Content */}
                       <div className="p-5 flex flex-col flex-1">
                         <h3 className="font-serif text-xl font-semibold text-white mb-2">{tour.title}</h3>
                         <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tour.description}</p>

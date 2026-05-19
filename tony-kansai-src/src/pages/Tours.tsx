@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { HeroText } from '../components/HeroText'
+import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { Slider3D } from '../components/Slider3D'
 
 export default function Tours() {
@@ -18,7 +18,7 @@ export default function Tours() {
             All Experiences
           </motion.div>
           <div className="mb-4">
-            <HeroText
+            <HeroTextKinetic
               text="Private Tours in Kansai"
               className="justify-center text-4xl md:text-5xl lg:text-6xl font-serif font-semibold"
               delay={0.1}
