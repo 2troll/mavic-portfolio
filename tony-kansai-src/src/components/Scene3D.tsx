@@ -7,6 +7,7 @@ import * as THREE from 'three'
 class WebGLErrorBoundary extends Component<{ children: ReactNode }, { failed: boolean }> {
   state = { failed: false }
   static getDerivedStateFromError() { return { failed: true } }
+  componentDidCatch(err: Error) { console.warn('[Scene3D] WebGL error:', err.message) }
   render() {
     if (this.state.failed) return null
     return this.props.children
@@ -155,6 +156,7 @@ export function Scene3D() {
         className="absolute inset-0 pointer-events-none"
         dpr={[1, 1.5]}
         gl={{ antialias: true, alpha: true }}
+        onCreated={({ gl }) => gl.setClearColor(0x000000, 0)}
       >
         <ambientLight intensity={0.12} />
         <directionalLight position={[4, 6, 4]} color="#FFE4B0" intensity={0.9} />

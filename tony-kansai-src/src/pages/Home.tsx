@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
+import { lazy, Suspense } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronDown, MessageCircle, Star, Check, ChevronRight } from 'lucide-react'
-import { Scene3D } from '../components/Scene3D'
-import { CastleScene } from '../components/CastleScene'
 import { HeroText } from '../components/HeroText'
 import { FadeUp } from '../components/FadeUp'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
+
+const Scene3D    = lazy(() => import('../components/Scene3D').then(m => ({ default: m.Scene3D })))
+const CastleScene = lazy(() => import('../components/CastleScene').then(m => ({ default: m.CastleScene })))
 
 export default function Home() {
   return (
@@ -17,7 +19,7 @@ export default function Home() {
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
-        <Scene3D />
+        <Suspense fallback={null}><Scene3D /></Suspense>
 
         <div className="relative z-10 max-w-5xl mx-auto px-6 text-center">
           <motion.div initial={{ opacity:0, y:20, scale:0.9 }} animate={{ opacity:1, y:0, scale:1 }} transition={{ duration:0.6, delay:0.1 }}
@@ -105,7 +107,9 @@ export default function Home() {
               </Link>
             </FadeUp>
             <FadeUp delay={0.15}>
-              <CastleScene />
+              <Suspense fallback={<div style={{ height: 480 }} />}>
+                <CastleScene />
+              </Suspense>
             </FadeUp>
           </div>
         </div>
