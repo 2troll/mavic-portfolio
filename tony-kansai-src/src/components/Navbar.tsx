@@ -3,18 +3,22 @@ import { Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, MessageCircle } from 'lucide-react'
 import { WHATSAPP } from '../lib/data'
-
-const LINKS = [
-  { to: '/', label: 'Home' },
-  { to: '/tours', label: 'Tours' },
-  { to: '/about', label: 'About' },
-  { to: '/pricing', label: 'Pricing' },
-  { to: '/faq', label: 'FAQ' },
-]
+import { useLanguage } from '../contexts/LanguageContext'
+import { LanguageSwitcher } from './LanguageSwitcher'
 
 export function Navbar() {
   const [open, setOpen] = useState(false)
   const { pathname } = useLocation()
+  const { t } = useLanguage()
+
+  const LINKS = [
+    { to: '/', label: t.nav.home },
+    { to: '/tours', label: t.nav.tours },
+    { to: '/about', label: t.nav.about },
+    { to: '/pricing', label: t.nav.pricing },
+    { to: '/faq', label: t.nav.faq },
+    { to: '/booking', label: t.nav.booking },
+  ]
 
   return (
     <motion.header
@@ -23,13 +27,13 @@ export function Navbar() {
       transition={{ duration: 0.5 }}
       className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 glass"
     >
-      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="font-serif text-xl font-semibold tracking-wide">
+      <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
+        <Link to="/" className="font-serif text-xl font-semibold tracking-wide flex-shrink-0">
           <span className="text-gradient-japan">Tony</span>
           <span className="text-white/60 font-light"> Hanma</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-6">
           {LINKS.map((l) => (
             <Link
               key={l.to}
@@ -41,20 +45,24 @@ export function Navbar() {
               {l.label}
             </Link>
           ))}
+          <LanguageSwitcher />
           <a
             href={WHATSAPP}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:shadow-japan-red/50 transition-shadow"
+            className="flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:shadow-japan-red/50 transition-shadow flex-shrink-0"
           >
             <MessageCircle size={15} />
-            Book Now
+            {t.common.book_now}
           </a>
         </nav>
 
-        <button onClick={() => setOpen(!open)} className="md:hidden p-2 text-white/70 hover:text-white">
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <LanguageSwitcher />
+          <button onClick={() => setOpen(!open)} className="p-2 text-white/70 hover:text-white">
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
+        </div>
       </div>
 
       <AnimatePresence>
@@ -84,7 +92,7 @@ export function Navbar() {
                 className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold mt-2 justify-center"
               >
                 <MessageCircle size={15} />
-                Book via WhatsApp
+                {t.common.book_wa}
               </a>
             </div>
           </motion.div>

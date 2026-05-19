@@ -1,8 +1,20 @@
 import { Link } from 'react-router-dom'
 import { MessageCircle, MapPin } from 'lucide-react'
 import { WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export function Footer() {
+  const { t } = useLanguage()
+
+  const NAV_LINKS = [
+    { to: '/', label: t.nav.home },
+    { to: '/tours', label: t.nav.tours },
+    { to: '/about', label: t.nav.about },
+    { to: '/pricing', label: t.nav.pricing },
+    { to: '/faq', label: t.nav.faq },
+    { to: '/booking', label: t.nav.booking },
+  ]
+
   return (
     <footer className="border-t border-white/5 bg-japan-surface py-14">
       <div className="max-w-6xl mx-auto px-6">
@@ -13,18 +25,20 @@ export function Footer() {
               <span className="text-white/50 font-light"> Hanma</span>
             </div>
             <p className="text-sm text-white/45 leading-relaxed max-w-sm mb-4">
-              Private Kansai guide since 2018. 200+ tours. 5 languages. 100% private experiences in Osaka, Kyoto, Nara and beyond.
+              {t.footer.about}
             </p>
             <div className="flex items-center gap-2 text-sm text-white/40">
               <MapPin size={13} className="text-japan-red" />
-              <span>Based in Osaka, Japan</span>
+              <span>{t.footer.based}</span>
             </div>
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">Navigation</div>
+            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">
+              {t.footer.nav_label}
+            </div>
             <div className="flex flex-col gap-2.5">
-              {[['/', 'Home'], ['/tours', 'Tours'], ['/about', 'About Tony'], ['/pricing', 'Pricing'], ['/faq', 'FAQ']].map(([to, label]) => (
+              {NAV_LINKS.map(({ to, label }) => (
                 <Link key={to} to={to} className="text-sm text-white/55 hover:text-white transition-colors">
                   {label}
                 </Link>
@@ -33,7 +47,9 @@ export function Footer() {
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">Contact</div>
+            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">
+              {t.footer.contact_label}
+            </div>
             <div className="flex flex-col gap-3">
               <a
                 href={WHATSAPP}
@@ -54,8 +70,8 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/25">
-          <span>© {new Date().getFullYear()} Tony Hanma · Private Kansai Guide · Osaka, Japan</span>
-          <span>Replies within 2 hours · 100% Private</span>
+          <span>© {new Date().getFullYear()} {t.footer.rights}</span>
+          <span>{t.footer.replies}</span>
         </div>
       </div>
     </footer>

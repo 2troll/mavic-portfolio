@@ -5,22 +5,28 @@ import { Card3D } from '../components/Card3D'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { PRICING, WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export default function Pricing() {
+  const { t } = useLanguage()
+  const p = t.pricing_page
+
   return (
     <>
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[400px] rounded-full bg-japan-red/7 blur-[120px] pointer-events-none" />
         <div className="relative z-10 max-w-4xl mx-auto px-6 text-center">
-          <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }}
-            className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4">Pricing</motion.div>
+          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}
+            className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4">
+            {p.label}
+          </motion.div>
           <div className="mb-6">
-            <HeroTextKinetic text="Simple, Transparent Pricing" className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
+            <HeroTextKinetic text={p.heading} className="justify-center text-4xl md:text-5xl font-serif font-semibold" delay={0.1} />
           </div>
-          <motion.p initial={{ opacity:0, y:15 }} animate={{ opacity:1, y:0 }} transition={{ delay:0.5 }}
+          <motion.p initial={{ opacity: 0, y: 15 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.5 }}
             className="text-white/50 text-lg font-light max-w-xl mx-auto">
-            Price is per tour — not per person. No hidden fees.
+            {p.sub}
           </motion.p>
         </div>
       </section>
@@ -76,14 +82,14 @@ export default function Pricing() {
           <ExplodeIn index={3} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass border border-white/6 text-sm text-white/50">
               <Clock size={14} className="text-japan-red" />
-              Tony typically replies within 2 hours · {WHATSAPP_NUMBER}
+              {p.reply_note} {WHATSAPP_NUMBER}
             </div>
           </ExplodeIn>
 
           <ExplodeIn index={4} delay={0.1}>
             <div className="glass rounded-2xl border border-white/6 overflow-hidden">
               <div className="px-6 py-5 border-b border-white/5">
-                <h3 className="font-serif text-xl font-semibold text-white">What's always included</h3>
+                <h3 className="font-serif text-xl font-semibold text-white">{p.included_label}</h3>
               </div>
               <div className="p-6 grid sm:grid-cols-2 md:grid-cols-3 gap-3">
                 {[
@@ -107,7 +113,7 @@ export default function Pricing() {
 
           <ExplodeIn index={5} delay={0.15} className="text-center mt-10">
             <Link to="/faq" className="text-sm text-japan-red hover:text-japan-orange transition-colors">
-              Have questions? Read the FAQ →
+              {p.faq_link}
             </Link>
           </ExplodeIn>
         </div>

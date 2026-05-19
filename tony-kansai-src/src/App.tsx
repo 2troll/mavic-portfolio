@@ -3,15 +3,15 @@ import { Component, useEffect } from 'react'
 import type { ReactNode } from 'react'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
+import { LanguageProvider } from './contexts/LanguageContext'
 import Home from './pages/Home'
 import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
 import About from './pages/About'
 import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
+import Booking from './pages/Booking'
 
-// Top-level safety net: if anything crashes past a component-level boundary,
-// show a minimal functional page instead of a blank black screen.
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
   static getDerivedStateFromError() { return { crashed: true } }
@@ -62,6 +62,7 @@ function Layout() {
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/booking" element={<Booking />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
@@ -73,10 +74,12 @@ function Layout() {
 export default function App() {
   return (
     <AppErrorBoundary>
-      <HashRouter>
-        <ScrollToTop />
-        <Layout />
-      </HashRouter>
+      <LanguageProvider>
+        <HashRouter>
+          <ScrollToTop />
+          <Layout />
+        </HashRouter>
+      </LanguageProvider>
     </AppErrorBoundary>
   )
 }

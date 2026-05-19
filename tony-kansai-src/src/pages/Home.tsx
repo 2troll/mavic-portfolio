@@ -1,9 +1,7 @@
 import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, useScroll, useTransform } from 'framer-motion'
-import {
-  ChevronDown, MessageCircle, Star, Check, ChevronRight, MapPin, Clock, Users,
-} from 'lucide-react'
+import { ChevronDown, MessageCircle, Star, Check, ChevronRight, MapPin, Clock, Users } from 'lucide-react'
 import { AnimatedHeroBG } from '../components/AnimatedHeroBG'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { FadeUp } from '../components/FadeUp'
@@ -11,6 +9,7 @@ import { ExplodeIn } from '../components/ExplodeIn'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const PHOTO_TORII = 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=85&w=900'
 const PHOTO_CASTLE = 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=85&w=900'
@@ -24,18 +23,12 @@ const cardReveal = {
 }
 
 export default function Home() {
+  const { t } = useLanguage()
   const discoverRef = useRef<HTMLElement>(null)
   const castleRef = useRef<HTMLElement>(null)
 
-  const { scrollYProgress: discoverProgress } = useScroll({
-    target: discoverRef,
-    offset: ['start end', 'end start'],
-  })
-  const { scrollYProgress: castleProgress } = useScroll({
-    target: castleRef,
-    offset: ['start end', 'end start'],
-  })
-
+  const { scrollYProgress: discoverProgress } = useScroll({ target: discoverRef, offset: ['start end', 'end start'] })
+  const { scrollYProgress: castleProgress } = useScroll({ target: castleRef, offset: ['start end', 'end start'] })
   const discoverPhotoY = useTransform(discoverProgress, [0, 1], ['0%', '18%'])
   const castlePhotoY = useTransform(castleProgress, [0, 1], ['0%', '18%'])
 
@@ -43,9 +36,7 @@ export default function Home() {
     <>
       <CurtainReveal />
 
-      {/* ════════════════════════════════════════════════════════
-          HERO — cinematic full viewport
-      ════════════════════════════════════════════════════════ */}
+      {/* ── HERO ──────────────────────────────────────────────── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-[#050508] via-[#08060F] to-japan-surface" />
         <AnimatedHeroBG />
@@ -58,13 +49,13 @@ export default function Home() {
             className="inline-flex items-center gap-2 mb-8 px-4 py-2 rounded-full border border-japan-red/30 bg-japan-red/10 text-japan-red text-sm font-semibold tracking-wider"
           >
             <Star size={13} fill="currentColor" />
-            Private Tours · Kansai, Japan
+            {t.hero.badge}
             <Star size={13} fill="currentColor" />
           </motion.div>
 
           <div className="mb-5">
             <HeroTextKinetic
-              text="Discover Japan's True Soul"
+              text={t.hero.headline}
               className="justify-center text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-serif font-semibold leading-[1.05]"
               delay={0.3}
               accentWords={[1, 2, 3]}
@@ -84,8 +75,7 @@ export default function Home() {
             transition={{ duration: 0.7, delay: 1.1 }}
             className="max-w-2xl mx-auto text-lg md:text-xl text-white/55 font-light leading-relaxed mb-12"
           >
-            100% private tours in Osaka, Kyoto, Nara & Kansai — guided in{' '}
-            <span className="text-white/80 font-medium">5 languages</span> by a local who knows the story behind every stone.
+            {t.hero.sub}
           </motion.p>
 
           <motion.div
@@ -100,13 +90,13 @@ export default function Home() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold text-sm shadow-xl shadow-japan-red/40 hover:shadow-japan-red/60 transition-all hover:scale-105 active:scale-95"
             >
-              <MessageCircle size={16} /> Book via WhatsApp
+              <MessageCircle size={16} /> {t.hero.cta_wa}
             </a>
             <Link
               to="/tours"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass text-white/90 hover:text-white font-semibold text-sm border border-white/10 hover:border-japan-red/40 transition-all hover:scale-105"
             >
-              Explore Tours <ChevronRight size={15} />
+              {t.hero.cta_tours} <ChevronRight size={15} />
             </Link>
           </motion.div>
 
@@ -134,9 +124,7 @@ export default function Home() {
         </motion.div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          STATS TICKER
-      ════════════════════════════════════════════════════════ */}
+      {/* ── STATS ─────────────────────────────────────────────── */}
       <section className="py-5 border-y border-white/5 bg-gradient-to-r from-japan-surface via-japan-surface2 to-japan-surface">
         <div className="max-w-5xl mx-auto px-6">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -148,7 +136,12 @@ export default function Home() {
                   </div>
                   <div>
                     <div className="text-2xl font-serif font-bold text-gradient-japan">{value}</div>
-                    <div className="text-xs text-white/45 tracking-wide font-medium">{label}</div>
+                    <div className="text-xs text-white/45 tracking-wide font-medium">
+                      {i === 0 ? t.stats.destinations
+                        : i === 1 ? t.stats.tours
+                        : i === 2 ? t.stats.languages
+                        : t.stats.private}
+                    </div>
                   </div>
                 </div>
               </FadeUp>
@@ -157,9 +150,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          DISCOVER SECTION — Fushimi Inari parallax photo
-      ════════════════════════════════════════════════════════ */}
+      {/* ── DISCOVER — Fushimi Inari parallax ────────────────── */}
       <section
         ref={discoverRef}
         className="relative py-24 overflow-hidden bg-gradient-to-b from-transparent to-japan-surface/20"
@@ -168,22 +159,22 @@ export default function Home() {
           <div className="grid lg:grid-cols-2 gap-14 items-center">
             <FadeUp>
               <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
-                Kansai · Japan
+                {t.discover.label}
               </div>
               <HeroTextKinetic
-                text="Where every path tells a story"
+                text={t.discover.heading}
                 className="text-4xl md:text-5xl font-serif font-semibold text-white leading-tight mb-5"
                 delay={0.1}
                 accentWords={[4, 5, 6]}
               />
               <p className="text-white/50 leading-relaxed mb-7 font-light text-[15px]">
-                Tony Hanma has spent decades learning Kansai — not from guidebooks, but from the people who live there. The 8th-century deer of Nara that approach you calmly. The mountain monks who share rituals never filmed. The izakaya owners who still use hand-written menus. This is the Japan that belongs to those who know how to look.
+                {t.discover.body}
               </p>
               <div className="flex flex-wrap gap-3">
                 {[
-                  { icon: MapPin, label: '7 Destinations' },
-                  { icon: Users, label: '100% Private' },
-                  { icon: Clock, label: '200+ Tours' },
+                  { icon: MapPin, label: t.discover.tag1 },
+                  { icon: Users, label: t.discover.tag2 },
+                  { icon: Clock, label: t.discover.tag3 },
                 ].map(({ icon: Icon, label }) => (
                   <div
                     key={label}
@@ -196,23 +187,14 @@ export default function Home() {
               </div>
             </FadeUp>
 
-            {/* Parallax photo — Fushimi Inari torii gates */}
             <FadeUp delay={0.15}>
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
-                <motion.div
-                  className="absolute inset-0 scale-[1.2]"
-                  style={{ y: discoverPhotoY }}
-                >
-                  <img
-                    src={PHOTO_TORII}
-                    alt="Fushimi Inari torii gates Kyoto Japan"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <motion.div className="absolute inset-0 scale-[1.2]" style={{ y: discoverPhotoY }}>
+                  <img src={PHOTO_TORII} alt="Fushimi Inari torii gates Kyoto Japan" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/70 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-5 left-5">
-                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">Fushimi Inari · Kyoto</div>
+                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.discover.caption}</div>
                 </div>
               </div>
             </FadeUp>
@@ -220,73 +202,59 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          FORTRESS SECTION — Himeji Castle parallax photo
-      ════════════════════════════════════════════════════════ */}
+      {/* ── FORTRESS — Himeji Castle parallax ────────────────── */}
       <section ref={castleRef} className="py-20 overflow-hidden">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-14 items-center">
-            {/* Photo left on desktop */}
             <ExplodeIn index={2}>
               <div className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
-                <motion.div
-                  className="absolute inset-0 scale-[1.2]"
-                  style={{ y: castlePhotoY }}
-                >
-                  <img
-                    src={PHOTO_CASTLE}
-                    alt="Himeji Castle Japan UNESCO World Heritage"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                <motion.div className="absolute inset-0 scale-[1.2]" style={{ y: castlePhotoY }}>
+                  <img src={PHOTO_CASTLE} alt="Himeji Castle Japan UNESCO World Heritage" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/65 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-5 left-5">
-                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">Himeji Castle · UNESCO World Heritage</div>
+                  <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.fortress.caption}</div>
                 </div>
               </div>
             </ExplodeIn>
 
-            {/* Text right */}
             <FadeUp delay={0.1}>
               <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
-                History & Culture
+                {t.fortress.label}
               </div>
               <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-5 leading-tight">
-                From ancient fortresses<br />
-                to <span className="text-gradient-japan italic">hidden alleys</span>
+                {t.fortress.heading}<br />
+                <span className="text-gradient-japan italic">{t.fortress.headingAccent}</span>
               </h2>
               <p className="text-white/50 leading-relaxed mb-6 font-light text-[15px]">
-                Japan's greatest monuments are not museums — they are living chapters in a story still being written. Tony brings the history of Himeji Castle, Osaka's shogunate wars, and Kyoto's thousand-year court to life through the eyes of someone who grew up in their shadow.
+                {t.fortress.body}
               </p>
               <Link
                 to="/tours"
                 className="inline-flex items-center gap-2 text-sm text-japan-red hover:text-japan-orange transition-colors font-medium"
               >
-                Explore all destinations <ChevronRight size={14} />
+                {t.fortress.cta} <ChevronRight size={14} />
               </Link>
             </FadeUp>
           </div>
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          TOURS GRID — whileInView cascade with spring
-      ════════════════════════════════════════════════════════ */}
+      {/* ── TOURS GRID ────────────────────────────────────────── */}
       <section className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <FadeUp className="text-center mb-14">
             <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
-              Experiences
+              {t.tours_section.label}
             </div>
             <HeroTextKinetic
-              text="Choose Your Journey"
+              text={t.tours_section.heading}
               className="justify-center text-4xl md:text-5xl font-serif font-semibold text-white mb-4"
               delay={0.05}
               accentWords={[2]}
             />
             <p className="max-w-xl mx-auto text-white/50 text-lg font-light">
-              Every tour is private, every route is yours.
+              {t.tours_section.sub}
             </p>
           </FadeUp>
 
@@ -334,7 +302,7 @@ export default function Home() {
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
                           <span className="font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
                           <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                            View Tour <ChevronRight size={12} />
+                            {t.tours_section.view} <ChevronRight size={12} />
                           </span>
                         </div>
                       </div>
@@ -347,9 +315,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ════════════════════════════════════════════════════════
-          CTA STRIP
-      ════════════════════════════════════════════════════════ */}
+      {/* ── CTA STRIP ─────────────────────────────────────────── */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-6">
           <FadeUp>
@@ -359,13 +325,13 @@ export default function Home() {
                 <div className="absolute top-0 left-1/2 -translate-x-1/2 w-72 h-px bg-gradient-to-r from-transparent via-japan-red/60 to-transparent" />
                 <div className="relative z-10">
                   <HeroTextKinetic
-                    text="Ready to Experience Real Japan?"
+                    text={t.cta_section.heading}
                     className="justify-center text-3xl md:text-4xl font-serif font-semibold text-white mb-4"
                     delay={0.05}
                     accentWords={[4, 5]}
                   />
                   <p className="text-white/55 max-w-lg mx-auto mb-8 font-light">
-                    Tony typically replies within 2 hours. Tell him your dates and he'll build your perfect itinerary.
+                    {t.cta_section.sub}
                   </p>
                   <div className="flex flex-col sm:flex-row gap-4 justify-center">
                     <a
@@ -374,13 +340,13 @@ export default function Home() {
                       rel="noopener noreferrer"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/40 hover:scale-105 transition-transform"
                     >
-                      <MessageCircle size={16} /> Message Tony Now
+                      <MessageCircle size={16} /> {t.cta_section.cta_wa}
                     </a>
                     <Link
                       to="/pricing"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/40 transition-all"
                     >
-                      See Pricing <ChevronRight size={15} />
+                      {t.cta_section.cta_pricing} <ChevronRight size={15} />
                     </Link>
                   </div>
                 </div>
