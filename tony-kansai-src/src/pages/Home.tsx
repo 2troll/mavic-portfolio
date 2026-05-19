@@ -6,6 +6,8 @@ import { HeroText } from '../components/HeroText'
 import { FadeUp } from '../components/FadeUp'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
+import { ToriiSVG } from '../components/ToriiSVG'
+import { OsakaCastleSVG } from '../components/OsakaCastleSVG'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
 
 export default function Home() {
@@ -17,6 +19,11 @@ export default function Home() {
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark via-[#08060F] to-japan-surface" />
         <AnimatedBackground />
+
+        {/* Torii gate — large watermark right side, interactive glow on hover */}
+        <div className="absolute right-0 top-1/2 -translate-y-1/2 opacity-[0.07] hidden lg:block pointer-events-auto translate-x-16">
+          <ToriiSVG size={340} />
+        </div>
 
         <motion.div animate={{ y: [0,-18,0], rotate:[0,3,0] }} transition={{ duration:8, repeat:Infinity, ease:'easeInOut' }}
           className="absolute top-28 left-10 text-7xl font-serif text-japan-red/10 select-none hidden lg:block pointer-events-none">旅</motion.div>
@@ -88,6 +95,29 @@ export default function Home() {
                 </div>
               </FadeUp>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── OSAKA CASTLE DIORAMA ──────────────────────────────── */}
+      <section className="py-16 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <FadeUp>
+              <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">Kansai Icons</div>
+              <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-5 leading-tight">
+                From ancient castles<br />to <span className="text-gradient-japan italic">hidden alleys</span>
+              </h2>
+              <p className="text-white/50 leading-relaxed mb-6 font-light">
+                Tony unlocks the Kansai region layer by layer — feudal ramparts, temple forests, and streets that haven't changed in centuries. Move your cursor over the castle to feel the depth.
+              </p>
+              <Link to="/tours" className="inline-flex items-center gap-2 text-sm text-japan-red hover:text-japan-orange transition-colors font-medium">
+                Explore all destinations <ChevronRight size={14} />
+              </Link>
+            </FadeUp>
+            <FadeUp delay={0.15}>
+              <OsakaCastleSVG className="w-full max-w-md mx-auto opacity-90" />
+            </FadeUp>
           </div>
         </div>
       </section>

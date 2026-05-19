@@ -4,6 +4,8 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowLeft, Clock, Check, MessageCircle, MapPin, Users, ChevronRight } from 'lucide-react'
 import { Card3D } from '../components/Card3D'
 import { ExplodeIn } from '../components/ExplodeIn'
+import { NaraParticles } from '../components/NaraParticles'
+import { ToriiSVG } from '../components/ToriiSVG'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
 
 export default function TourDetail() {
@@ -45,6 +47,14 @@ export default function TourDetail() {
         {/* Gradient overlays */}
         <div className="absolute inset-0 bg-gradient-to-t from-japan-dark via-japan-dark/50 to-japan-dark/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-japan-dark/60 to-transparent" />
+
+        {/* Nara: autumn leaf particles overlay */}
+        {tour.id === 'nara-sacred' && <NaraParticles />}
+
+        {/* Torii watermark — right edge, hover to activate glow */}
+        <div className="absolute right-8 top-1/2 -translate-y-1/2 opacity-[0.12] hidden lg:block pointer-events-auto z-10">
+          <ToriiSVG size={200} />
+        </div>
 
         {/* Back button */}
         <motion.div
