@@ -1,9 +1,10 @@
-import { lazy, Suspense, useRef } from 'react'
+import { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import {
   ChevronDown, MessageCircle, Star, Check, ChevronRight, MapPin, Clock, Users,
 } from 'lucide-react'
+import { AnimatedHeroBG } from '../components/AnimatedHeroBG'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { CinematicScrollDeer } from '../components/CinematicScrollDeer'
 import { DioramaCastle3D } from '../components/DioramaCastle3D'
@@ -13,8 +14,6 @@ import { ExplodeIn } from '../components/ExplodeIn'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
-
-const Scene3D = lazy(() => import('../components/Scene3D').then(m => ({ default: m.Scene3D })))
 
 // ── spring variant shared across reveal cards ─────────────────────────────────
 const cardReveal = {
@@ -39,10 +38,7 @@ export default function Home() {
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden pt-16">
         {/* Deep dark ground */}
         <div className="absolute inset-0 bg-gradient-to-b from-[#050508] via-[#08060F] to-japan-surface" />
-        {/* R3F starfield + torii gate — lazy, non-blocking */}
-        <Suspense fallback={null}>
-          <Scene3D />
-        </Suspense>
+        <AnimatedHeroBG />
 
         {/* Decorative Torii watermark — desktop right edge */}
         <div className="absolute right-10 top-1/2 -translate-y-1/2 hidden xl:block z-0">
