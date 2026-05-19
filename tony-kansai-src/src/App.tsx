@@ -4,6 +4,7 @@ import type { ReactNode } from 'react'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { LanguageProvider } from './contexts/LanguageContext'
+import { WhatsAppFloat } from './components/WhatsAppFloat'
 import Home from './pages/Home'
 import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
@@ -67,6 +68,7 @@ function Layout() {
         </Routes>
       </main>
       <Footer />
+      <WhatsAppFloat />
     </div>
   )
 }

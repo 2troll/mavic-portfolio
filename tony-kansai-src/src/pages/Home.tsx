@@ -8,7 +8,7 @@ import { FadeUp } from '../components/FadeUp'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
-import { TOURS, STATS, WHATSAPP, LANGUAGES } from '../lib/data'
+import { TOURS, STATS, GUIDES, TESTIMONIALS, WHATSAPP, LANGUAGES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
 
 const PHOTO_TORII = 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=85&w=900'
@@ -312,6 +312,127 @@ export default function Home() {
               </motion.div>
             ))}
           </motion.div>
+        </div>
+      </section>
+
+      {/* ── MEET THE GUIDES ───────────────────────────────────── */}
+      <section className="py-24 bg-gradient-to-b from-japan-surface/20 to-transparent">
+        <div className="max-w-6xl mx-auto px-6">
+          <FadeUp className="text-center mb-14">
+            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">Our Team</div>
+            <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">Meet Your Guides</h2>
+            <p className="max-w-xl mx-auto text-white/50 text-lg font-light">
+              Three specialists. Every language. Every corner of Kansai.
+            </p>
+          </FadeUp>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            {GUIDES.map((guide, i) => (
+              <FadeUp key={guide.id} delay={i * 0.1}>
+                <Card3D glowColor={`${guide.accent}20`} className="h-full">
+                  <div className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
+                    {/* Photo */}
+                    <div className="relative h-56 overflow-hidden">
+                      <img
+                        src={guide.photo}
+                        alt={guide.name}
+                        className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
+                        loading="lazy"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                      <div className="absolute bottom-4 left-4 right-4">
+                        <div className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: guide.accent }}>
+                          {guide.specialty}
+                        </div>
+                        <h3 className="font-serif text-xl font-semibold text-white">{guide.name}</h3>
+                        <div className="text-xs text-white/55 mt-0.5">{guide.role}</div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="p-5 flex flex-col flex-1">
+                      <p className="text-sm text-white/60 leading-relaxed mb-4 flex-1">{guide.bio}</p>
+
+                      <div className="space-y-3">
+                        {/* Stats row */}
+                        <div className="flex items-center gap-4 text-xs text-white/45">
+                          <span>Since {guide.since}</span>
+                          <span className="w-px h-3 bg-white/15" />
+                          <span>{guide.tours} tours</span>
+                          <span className="w-px h-3 bg-white/15" />
+                          <span className="text-japan-gold">★ {guide.rating}</span>
+                        </div>
+
+                        {/* Languages */}
+                        <div className="flex items-center gap-1.5">
+                          {guide.languages.map((flag, j) => (
+                            <span key={j} title={guide.langLabels[j]} className="text-lg leading-none">{flag}</span>
+                          ))}
+                        </div>
+
+                        {/* Signature tours */}
+                        <div className="flex flex-wrap gap-1.5">
+                          {guide.highlights.map(h => (
+                            <span
+                              key={h}
+                              className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
+                              style={{ color: guide.accent, borderColor: `${guide.accent}40`, background: `${guide.accent}10` }}
+                            >
+                              {h}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </Card3D>
+              </FadeUp>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── TESTIMONIALS ──────────────────────────────────────── */}
+      <section className="py-20 overflow-hidden">
+        <div className="max-w-6xl mx-auto px-6">
+          <FadeUp className="text-center mb-12">
+            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">Reviews</div>
+            <h2 className="font-serif text-4xl font-semibold text-white mb-3">What Guests Say</h2>
+            <div className="flex justify-center gap-1 mb-2">
+              {[...Array(5)].map((_, i) => (
+                <svg key={i} className="w-5 h-5 text-japan-gold fill-current" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+              ))}
+            </div>
+            <p className="text-white/40 text-sm">5.0 average · 400+ tours completed</p>
+          </FadeUp>
+
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {TESTIMONIALS.map((review, i) => (
+              <FadeUp key={i} delay={i * 0.07}>
+                <div className="glass rounded-2xl border border-white/6 p-6 h-full flex flex-col">
+                  <div className="flex items-center gap-1 mb-4">
+                    {[...Array(review.rating)].map((_, j) => (
+                      <svg key={j} className="w-3.5 h-3.5 text-japan-gold fill-current" viewBox="0 0 20 20">
+                        <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p className="text-sm text-white/70 leading-relaxed italic flex-1 mb-5">"{review.text}"</p>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <div className="text-sm font-semibold text-white">{review.name}</div>
+                      <div className="text-xs text-white/40">{review.country}</div>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-lg bg-white/5 border border-white/8 text-[11px] text-white/50">
+                      {review.tour}
+                    </div>
+                  </div>
+                </div>
+              </FadeUp>
+            ))}
+          </div>
         </div>
       </section>
 

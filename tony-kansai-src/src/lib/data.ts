@@ -202,9 +202,97 @@ export const FAQS = [
 
 export const STATS = [
   { value: '7', label: 'Destinations', icon: '📍' },
-  { value: '200+', label: 'Tours Completed', icon: '⭐' },
+  { value: '400+', label: 'Tours Completed', icon: '⭐' },
   { value: '5', label: 'Languages', icon: '🌐' },
   { value: '100%', label: 'Private', icon: '🔒' },
+]
+
+const gu = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=85&w=600&h=600`
+
+export const GUIDES = [
+  {
+    id: 'tony',
+    name: 'Tony Hanma',
+    role: 'Head Guide · Osaka',
+    since: '2018',
+    tours: '200+',
+    rating: '5.0',
+    photo: gu('photo-1507003211169-0a1dd7228f2d'),
+    accent: '#E53030',
+    languages: ['🇬🇧', '🇪🇸', '🇷🇺', '🇨🇿', '🇸🇦'],
+    langLabels: ['EN', 'ES', 'RU', 'CS', 'AR'],
+    specialty: 'Food, Culture & History',
+    bio: "The original Kansai insider. Tony built this company from his personal obsession with Osaka's hidden izakayas, Kyoto's secret temples, and the living stories behind every stone in the region.",
+    highlights: ['Osaka Food Circuit', 'Hidden Kyoto', 'Osaka × Kyoto Grand Day'],
+  },
+  {
+    id: 'johnny',
+    name: 'Johnny Coleta',
+    role: 'Senior Guide · Kyoto',
+    since: '2020',
+    tours: '120+',
+    rating: '5.0',
+    photo: gu('photo-1506794778202-cad84cf45f1d'),
+    accent: '#FF6B35',
+    languages: ['🇬🇧', '🇪🇸', '🇫🇷'],
+    langLabels: ['EN', 'ES', 'FR'],
+    specialty: 'Architecture & Urban Secrets',
+    bio: "Johnny's eye for architecture and urban design transforms every city walk into a visual masterclass. He knows every machiya townhouse in Kyoto and which alley hides the best ramen counter in Namba.",
+    highlights: ['Hidden Kyoto', 'Kobe Refined', 'Nara Sacred Forest'],
+  },
+  {
+    id: 'larion',
+    name: 'Larion',
+    role: 'Nature & Spiritual Guide',
+    since: '2021',
+    tours: '85+',
+    rating: '5.0',
+    photo: gu('photo-1472099645785-5658abf4ff4e'),
+    accent: '#8B5CF6',
+    languages: ['🇬🇧', '🇷🇺', '🇨🇿'],
+    langLabels: ['EN', 'RU', 'CS'],
+    specialty: 'Mountains, Temples & Pilgrimage',
+    bio: 'Larion discovered Japan through its ancient pilgrimage trails and never left. His Kōyasan tour has been called life-changing by guests from six continents. He knows where the monks meditate before dawn.',
+    highlights: ['Kōyasan Pilgrimage', 'Mountain Hiking', 'Nara Sacred Forest'],
+  },
+]
+
+export const TESTIMONIALS = [
+  {
+    name: 'Sofía R.',
+    country: 'Spain 🇪🇸',
+    tour: 'Hidden Kyoto',
+    rating: 5,
+    text: 'Tony nos llevó a lugares que ni sabíamos que existían. Fushimi Inari al amanecer, sin nadie más — fue mágico. El mejor día de todo nuestro viaje a Japón.',
+  },
+  {
+    name: 'James K.',
+    country: 'UK 🇬🇧',
+    tour: 'Kōyasan Pilgrimage',
+    rating: 5,
+    text: 'Larion arranged a private meeting with a monk that I will never forget. The lantern walk through Okunoin at dusk was genuinely spiritual. Completely unforgettable.',
+  },
+  {
+    name: 'Алексей В.',
+    country: 'Russia 🇷🇺',
+    tour: 'Osaka Food Circuit',
+    rating: 5,
+    text: 'Тони знает каждый переулок Осаки. Мы попробовали блюда, которых не найдёшь ни в одном путеводителе. Лучший гид, которого я встречал в жизни.',
+  },
+  {
+    name: 'Markéta H.',
+    country: 'Czech Republic 🇨🇿',
+    tour: 'Mountain Hiking',
+    rating: 5,
+    text: 'Johnny nás provedl trasami, kde nebyl jediný turista. Arashijamský bambusový háj v pět ráno — absolutní tišina. Tohle zažít nejde jinak než soukromě.',
+  },
+  {
+    name: 'Omar A.',
+    country: 'UAE 🇦🇪',
+    tour: 'Osaka × Kyoto Grand Day',
+    rating: 5,
+    text: 'Tony speaks perfect Arabic and made us feel at home throughout Japan. His knowledge of halal options and cultural sensitivities made this trip truly comfortable for our family.',
+  },
 ]
 
 export const LANGUAGES = [
