@@ -388,6 +388,15 @@ export default function Home() {
                             </span>
                           ))}
                         </div>
+
+                        {/* Profile link */}
+                        <Link
+                          to={`/guides/${guide.id}`}
+                          className="mt-1 flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-75"
+                          style={{ color: guide.accent }}
+                        >
+                          View full profile <ChevronRight size={12} />
+                        </Link>
                       </div>
                     </div>
                   </div>

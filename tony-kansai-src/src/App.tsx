@@ -15,6 +15,7 @@ import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
 import Booking from './pages/Booking'
 import Privacy from './pages/Privacy'
+import GuideDetail from './pages/GuideDetail'
 import Admin from './pages/Admin'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
@@ -80,6 +81,7 @@ function Layout() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/guides/:id" element={<GuideDetail />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<Home />} />
         </Routes>

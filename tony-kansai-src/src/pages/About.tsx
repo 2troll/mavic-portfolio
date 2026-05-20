@@ -16,7 +16,7 @@ export default function About() {
     <>
       <PageSEO
         title="About the Team · Tony Hanma & Kansai Guide"
-        description="Meet Tony Hanma, Johnny Coletta and Hilarion — private guides with 400+ tours across Osaka, Kyoto & Kansai since 2018. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
+        description="Meet Tony Hanma, Johnny Coletta and Larion — private guides with 400+ tours across Osaka, Kyoto & Kansai since 2018. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
         path="/about"
       />
       <section className="relative pt-32 pb-16 overflow-hidden">
