@@ -10,6 +10,7 @@ import { CurtainReveal } from '../components/CurtainReveal'
 import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, GUIDES, TESTIMONIALS, WHATSAPP, LANGUAGES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
+import { PageSEO } from '../components/PageSEO'
 
 const PHOTO_TORII = 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=85&w=900'
 const PHOTO_CASTLE = 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=85&w=900'
@@ -34,6 +35,11 @@ export default function Home() {
 
   return (
     <>
+      <PageSEO
+        title="Private Japan Tour Guide · Osaka, Kyoto & Kansai"
+        description="100% private guided tours in Osaka, Kyoto, Nara & Kansai with expert local guides. English, Spanish, Arabic, Czech & Russian. ★5.0 · 400+ tours."
+        path="/"
+      />
       <CurtainReveal />
 
       {/* ── HERO ──────────────────────────────────────────────── */}

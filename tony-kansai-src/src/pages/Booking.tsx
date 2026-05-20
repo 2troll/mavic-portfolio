@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, MessageCircle, Check, Clock, Users, MapPin, Minus, Plus } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
 import { TOURS, WHATSAPP } from '../lib/data'
+import { PageSEO } from '../components/PageSEO'
 import { FadeUp } from '../components/FadeUp'
 import { Card3D } from '../components/Card3D'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
@@ -70,6 +71,11 @@ export default function Booking() {
 
   return (
     <>
+      <PageSEO
+        title="Book a Private Japan Tour · Kansai Guide"
+        description="Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto & Kansai from ¥75,000 per group."
+        path="/booking"
+      />
       {/* Header */}
       <section className="relative pt-32 pb-12 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />

@@ -1,6 +1,7 @@
-import { HashRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Component, useEffect } from 'react'
 import type { ReactNode } from 'react'
+import { HelmetProvider } from 'react-helmet-async'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { LanguageProvider } from './contexts/LanguageContext'
@@ -80,12 +81,14 @@ function Layout() {
 export default function App() {
   return (
     <AppErrorBoundary>
-      <LanguageProvider>
-        <HashRouter>
-          <ScrollToTop />
-          <Layout />
-        </HashRouter>
-      </LanguageProvider>
+      <HelmetProvider>
+        <LanguageProvider>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Layout />
+          </BrowserRouter>
+        </LanguageProvider>
+      </HelmetProvider>
     </AppErrorBoundary>
   )
 }

@@ -9,5 +9,16 @@ export default defineConfig({
   base: process.env.VITE_CDN_BASE || '/',
   build: {
     assetsInlineLimit: singleFile ? 100_000_000 : 4096,
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'react-core': ['react', 'react-dom'],
+          'react-router': ['react-router-dom'],
+          'framer': ['framer-motion'],
+          'three': ['three', '@react-three/fiber', '@react-three/drei'],
+          'lucide': ['lucide-react'],
+        },
+      },
+    },
   },
 })

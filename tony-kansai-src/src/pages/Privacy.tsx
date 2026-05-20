@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { Shield } from 'lucide-react'
+import { PageSEO } from '../components/PageSEO'
 
 const SITE_URL = 'https://tonykansaiguide.surge.sh'
 const CONTACT_WA = 'https://wa.me/34634193106'
@@ -8,6 +9,12 @@ const UPDATED = 'May 2026'
 
 export default function Privacy() {
   return (
+    <>
+      <PageSEO
+        title="Privacy Policy"
+        description="Privacy policy for Tony Kansai Guide — how we use Google Analytics, cookies and WhatsApp data. GDPR compliant."
+        path="/privacy"
+      />
     <section className="relative pt-32 pb-28 min-h-screen">
       <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface pointer-events-none" />
       <div className="relative z-10 max-w-2xl mx-auto px-6">
@@ -106,6 +113,7 @@ export default function Privacy() {
         </motion.div>
       </div>
     </section>
+    </>
   )
 }
 

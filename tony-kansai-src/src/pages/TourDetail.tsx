@@ -2,10 +2,12 @@ import { useParams, Link } from 'react-router-dom'
 import { useRef } from 'react'
 import { motion, useScroll, useTransform } from 'framer-motion'
 import { ArrowLeft, Clock, Check, MessageCircle, MapPin, Users, ChevronRight } from 'lucide-react'
+import { Helmet } from 'react-helmet-async'
 import { Card3D } from '../components/Card3D'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { NaraParticles } from '../components/NaraParticles'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
+import { PageSEO } from '../components/PageSEO'
 
 export default function TourDetail() {
   const { id } = useParams()
@@ -28,9 +30,38 @@ export default function TourDetail() {
   }
 
   const waMsg = encodeURIComponent(`Hi Tony! I'm very interested in the "${tour.title}" tour. Could you share more details and availability?`)
+  const numericPrice = parseInt(tour.price.replace(/[^0-9]/g, ''), 10)
+  const tourSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristAttraction',
+    name: tour.title,
+    description: tour.subtitle,
+    url: `https://tonykansaiguide.surge.sh/tours/${tour.id}`,
+    image: tour.imageHero,
+    offers: {
+      '@type': 'Offer',
+      price: numericPrice,
+      priceCurrency: 'JPY',
+      availability: 'https://schema.org/InStock',
+    },
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Tony Hanma Private Kansai Tours',
+      telephone: '+34634193106',
+    },
+  }
 
   return (
     <>
+      <PageSEO
+        title={`${tour.title} · Private Tour Kansai`}
+        description={`${tour.subtitle} — Private guided tour with Tony Kansai Guide. ${tour.duration}. Guided in English, Spanish, Arabic, Czech & Russian.`}
+        path={`/tours/${tour.id}`}
+        ogImage={tour.imageHero}
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(tourSchema)}</script>
+      </Helmet>
       {/* ── Cinematic Hero ─────────────────────────────────── */}
       <section ref={heroRef} className="relative h-[85vh] overflow-hidden">
         {/* Parallax image */}

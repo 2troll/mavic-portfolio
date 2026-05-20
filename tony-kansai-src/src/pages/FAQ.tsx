@@ -2,18 +2,38 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronDown, MessageCircle } from 'lucide-react'
+import { Helmet } from 'react-helmet-async'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { FAQS, WHATSAPP } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
+import { PageSEO } from '../components/PageSEO'
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
   const { t } = useLanguage()
   const f = t.faq_page
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: FAQS.map((faq) => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+    })),
+  }
+
   return (
     <>
+      <PageSEO
+        title="FAQ · Private Japan Tour Guide Kansai"
+        description="Common questions about private tours in Osaka, Kyoto & Kansai — languages, cancellation, transport, restaurant bookings and more."
+        path="/faq"
+      />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
+      </Helmet>
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full bg-japan-red/6 blur-[100px] pointer-events-none" />
