@@ -9,7 +9,7 @@ export default defineConfig({
   base: process.env.VITE_CDN_BASE || '/',
   build: {
     assetsInlineLimit: singleFile ? 100_000_000 : 4096,
-    rollupOptions: {
+    rollupOptions: singleFile ? {} : {
       output: {
         manualChunks: {
           'react-core': ['react', 'react-dom'],
