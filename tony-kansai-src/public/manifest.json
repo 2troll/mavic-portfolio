@@ -1,0 +1,19 @@
+{
+  "name": "Tony Admin",
+  "short_name": "TonyAdmin",
+  "description": "Panel privado de gestión de tours — Tony Kansai Guide",
+  "start_url": "/admin",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0C0D16",
+  "theme_color": "#E53030",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

@@ -15,6 +15,7 @@ import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
 import Booking from './pages/Booking'
 import Privacy from './pages/Privacy'
+import Admin from './pages/Admin'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
@@ -55,6 +56,18 @@ function ScrollToTop() {
 }
 
 function Layout() {
+  const { pathname } = useLocation()
+  const isAdmin = pathname.startsWith('/admin')
+
+  if (isAdmin) {
+    return (
+      <Routes>
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/*" element={<Admin />} />
+      </Routes>
+    )
+  }
+
   return (
     <div className="min-h-screen bg-japan-dark font-sans">
       <Navbar />
