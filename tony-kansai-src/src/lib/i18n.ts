@@ -146,6 +146,15 @@ export interface Tr {
     contact_label: string;
     rights: string;
     replies: string;
+    privacy: string;
+  };
+
+  cookie: {
+    title: string;
+    body: string;
+    accept: string;
+    decline: string;
+    learn: string;
   };
 
   common: {
@@ -298,6 +307,15 @@ const en: Tr = {
     contact_label: 'Get in Touch',
     rights: 'All rights reserved.',
     replies: 'Replies within a few hours',
+    privacy: 'Privacy Policy',
+  },
+
+  cookie: {
+    title: 'We use cookies',
+    body: 'We use Google Analytics to understand how visitors use this site. No personal data is sold or shared with third parties.',
+    accept: 'Accept',
+    decline: 'Decline',
+    learn: 'Privacy Policy',
   },
 
   common: {
@@ -450,6 +468,15 @@ const es: Tr = {
     contact_label: 'Ponerse en Contacto',
     rights: 'Todos los derechos reservados.',
     replies: 'Responde en pocas horas',
+    privacy: 'Política de Privacidad',
+  },
+
+  cookie: {
+    title: 'Usamos cookies',
+    body: 'Usamos Google Analytics para entender cómo se usa el sitio. No vendemos ni compartimos datos personales con terceros.',
+    accept: 'Aceptar',
+    decline: 'Rechazar',
+    learn: 'Política de Privacidad',
   },
 
   common: {
@@ -602,6 +629,15 @@ const ar: Tr = {
     contact_label: 'تواصل معنا',
     rights: 'جميع الحقوق محفوظة.',
     replies: 'يرد خلال ساعات قليلة',
+    privacy: 'سياسة الخصوصية',
+  },
+
+  cookie: {
+    title: 'نستخدم ملفات تعريف الارتباط',
+    body: 'نستخدم Google Analytics لفهم كيفية استخدام الموقع. لا يتم بيع أو مشاركة البيانات الشخصية مع أطراف ثالثة.',
+    accept: 'قبول',
+    decline: 'رفض',
+    learn: 'سياسة الخصوصية',
   },
 
   common: {
@@ -754,6 +790,15 @@ const cs: Tr = {
     contact_label: 'Kontakt',
     rights: 'Všechna práva vyhrazena.',
     replies: 'Odpoví během několika hodin',
+    privacy: 'Zásady ochrany osobních údajů',
+  },
+
+  cookie: {
+    title: 'Používáme cookies',
+    body: 'Používáme Google Analytics, abychom pochopili, jak návštěvníci web používají. Žádné osobní údaje nejsou prodávány ani sdíleny s třetími stranami.',
+    accept: 'Přijmout',
+    decline: 'Odmítnout',
+    learn: 'Zásady ochrany osobních údajů',
   },
 
   common: {
@@ -906,6 +951,15 @@ const ru: Tr = {
     contact_label: 'Связаться',
     rights: 'Все права защищены.',
     replies: 'Отвечает в течение нескольких часов',
+    privacy: 'Политика конфиденциальности',
+  },
+
+  cookie: {
+    title: 'Мы используем cookies',
+    body: 'Мы используем Google Analytics, чтобы понять, как посетители пользуются сайтом. Личные данные не продаются и не передаются третьим лицам.',
+    accept: 'Принять',
+    decline: 'Отклонить',
+    learn: 'Политика конфиденциальности',
   },
 
   common: {

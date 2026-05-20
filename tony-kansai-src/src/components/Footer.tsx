@@ -71,7 +71,10 @@ export function Footer() {
 
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/25">
           <span>© {new Date().getFullYear()} {t.footer.rights}</span>
-          <span>{t.footer.replies}</span>
+          <div className="flex items-center gap-4">
+            <Link to="/privacy" className="hover:text-white/50 transition-colors">{t.footer.privacy}</Link>
+            <span>{t.footer.replies}</span>
+          </div>
         </div>
       </div>
     </footer>

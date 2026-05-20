@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Torii gate -->
+  <rect x="2" y="9" width="28" height="3.5" rx="1.75" fill="#E53030"/>
+  <rect x="5" y="13.5" width="22" height="2.5" rx="1.25" fill="#E53030"/>
+  <rect x="8" y="16" width="3" height="14" rx="1.5" fill="#E53030"/>
+  <rect x="21" y="16" width="3" height="14" rx="1.5" fill="#E53030"/>
+  <!-- Crossbar connectors -->
+  <rect x="9" y="7" width="2" height="2" rx="1" fill="#E53030"/>
+  <rect x="21" y="7" width="2" height="2" rx="1" fill="#E53030"/>
+</svg>

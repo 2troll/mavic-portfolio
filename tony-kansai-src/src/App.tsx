@@ -5,6 +5,7 @@ import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
+import { CookieBanner } from './components/CookieBanner'
 import Home from './pages/Home'
 import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
@@ -12,6 +13,7 @@ import About from './pages/About'
 import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
 import Booking from './pages/Booking'
+import Privacy from './pages/Privacy'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
@@ -64,11 +66,13 @@ function Layout() {
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/booking" element={<Booking />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
       <Footer />
       <WhatsAppFloat />
+      <CookieBanner />
     </div>
   )
 }
