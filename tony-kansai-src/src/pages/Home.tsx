@@ -361,11 +361,7 @@ export default function Home() {
 
                       <div className="space-y-3">
                         {/* Stats row */}
-                        <div className="flex items-center gap-4 text-xs text-white/45">
-                          <span>Since {guide.since}</span>
-                          <span className="w-px h-3 bg-white/15" />
-                          <span>{guide.tours} tours</span>
-                          <span className="w-px h-3 bg-white/15" />
+                        <div className="flex items-center gap-2 text-xs text-white/45">
                           <span className="text-japan-gold">★ {guide.rating}</span>
                         </div>
 
