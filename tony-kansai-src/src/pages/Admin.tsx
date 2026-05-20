@@ -4,7 +4,7 @@ import {
   Home, Calendar, List, Settings, Plus, ArrowLeft,
   Eye, EyeOff, LogOut, Download, Upload, Trash2,
   Edit2, ChevronLeft, ChevronRight, MessageCircle,
-  User, Clock, Users, MapPin, Phone,
+  User, Clock, Users, MapPin, Phone, FileText, X,
 } from 'lucide-react'
 import {
   AdminBooking, BookingStatus, Guide,
@@ -19,9 +19,10 @@ import { TOURS } from '../lib/data'
 type View = 'login' | 'home' | 'calendar' | 'list' | 'form' | 'detail' | 'settings'
 type NavTab = 'home' | 'calendar' | 'list' | 'settings'
 
-const GUIDES: Guide[] = ['Tony', 'Johnny', 'Hilarion']
+const GUIDES: Guide[] = ['Tony', 'Johnny', 'Larion']
 const LANGS = ['EN', 'ES', 'AR', 'CS', 'RU', 'JA', 'FR', 'DE', 'IT', 'PT']
-const PAY_METHODS: AdminBooking['paymentMethod'][] = ['efectivo', 'transferencia', 'tarjeta', 'otro']
+const PAY_METHODS: AdminBooking['paymentMethod'][] = ['efectivo', 'transferencia', 'tarjeta', 'wise', 'otro']
+const WISE_CURRENCIES = ['EUR', 'USD', 'GBP', 'AUD', 'CAD', 'CHF', 'SGD']
 
 const STATUS_LABEL: Record<BookingStatus, string> = {
   pendiente: 'Pendiente', confirmado: 'Confirmado',
@@ -406,6 +407,55 @@ function DetailView({ b, onEdit, onBack, onDelete, onMarkPaid }: {
         </div>
       </div>
 
+      {/* Wise breakdown */}
+      {b.paymentMethod === 'wise' && b.wiseAmount && (
+        <div className={card + ' mb-5'}>
+          <p className={labelCls}>Detalle Wise</p>
+          <div className="space-y-1.5">
+            <div className="flex justify-between text-sm">
+              <span className="text-white/40">Enviado</span>
+              <span className="text-white">{b.wiseAmount} {b.wiseCurrency || 'EUR'}</span>
+            </div>
+            {!!b.wiseFee && (
+              <div className="flex justify-between text-sm">
+                <span className="text-white/40">Comisión Wise</span>
+                <span className="text-[#F59E0B]">−{b.wiseFee} {b.wiseCurrency || 'EUR'}</span>
+              </div>
+            )}
+            {!!b.wiseRate && (
+              <>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/40">Tipo de cambio</span>
+                  <span className="text-white/55">1 {b.wiseCurrency || 'EUR'} = ¥{b.wiseRate}</span>
+                </div>
+                <div className="flex justify-between text-sm pt-2 border-t border-white/6">
+                  <span className="text-white/40">Recibido (est.)</span>
+                  <span className="text-[#3B82F6] font-semibold">
+                    {fmtMoney(Math.round(((b.wiseAmount || 0) - (b.wiseFee || 0)) * (b.wiseRate || 0)))}
+                  </span>
+                </div>
+              </>
+            )}
+          </div>
+          {b.wiseReceiptData && (
+            <div className="mt-3">
+              {b.wiseReceiptData.startsWith('data:image') ? (
+                <img
+                  src={b.wiseReceiptData}
+                  onClick={() => { const w = window.open(); w?.document.write(`<img src="${b.wiseReceiptData}" style="max-width:100%">`) }}
+                  className="w-full rounded-xl max-h-48 object-contain bg-black/20 cursor-zoom-in"
+                />
+              ) : (
+                <a href={b.wiseReceiptData} download="comprobante-wise.pdf"
+                  className="flex items-center gap-2 text-[#3B82F6] text-sm">
+                  <Download size={14} /> Ver comprobante PDF
+                </a>
+              )}
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="space-y-2">
         {owed > 0 && <button onClick={onMarkPaid} className={btnRed}>Marcar como pagado ✓</button>}
         {b.phone && (
@@ -416,6 +466,59 @@ function DetailView({ b, onEdit, onBack, onDelete, onMarkPaid }: {
         )}
       </div>
     </div>
+  )
+}
+
+// ── RECEIPT UPLOAD ────────────────────────────────────────────────────────
+
+function ReceiptUpload({ value, onChange }: { value?: string; onChange: (v: string) => void }) {
+  const ref = useRef<HTMLInputElement>(null)
+
+  const handleFile = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+    if (file.size > 2 * 1024 * 1024) { alert('Máximo 2 MB por archivo'); return }
+    const reader = new FileReader()
+    reader.onload = () => onChange(reader.result as string)
+    reader.readAsDataURL(file)
+    e.target.value = ''
+  }
+
+  if (value) {
+    return (
+      <div className="relative">
+        {value.startsWith('data:image') ? (
+          <img
+            src={value}
+            onClick={() => { const w = window.open(); w?.document.write(`<img src="${value}" style="max-width:100%">`) }}
+            className="w-full rounded-xl max-h-44 object-contain bg-black/30 cursor-zoom-in"
+          />
+        ) : (
+          <div className="w-full rounded-xl h-14 bg-[#3B82F6]/10 border border-[#3B82F6]/20 flex items-center justify-center gap-2">
+            <FileText size={16} className="text-[#3B82F6]" />
+            <span className="text-[#3B82F6] text-sm">PDF adjunto</span>
+          </div>
+        )}
+        <button
+          onClick={() => onChange('')}
+          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-[#E53030] flex items-center justify-center shadow"
+        >
+          <X size={12} className="text-white" />
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <>
+      <button
+        onClick={() => ref.current?.click()}
+        className="w-full h-14 rounded-xl border border-dashed border-white/12 flex items-center justify-center gap-2 text-white/30 text-sm active:opacity-75"
+      >
+        <Upload size={15} /> Adjuntar comprobante (foto o PDF)
+      </button>
+      <input ref={ref} type="file" accept="image/*,application/pdf" className="hidden" onChange={handleFile} />
+    </>
   )
 }
 
@@ -525,6 +628,51 @@ function FormView({ initial, onSave, onBack }: { initial: AdminBooking | null; o
         )}
       </div>
 
+      {/* Wise transfer details */}
+      {form.paymentMethod === 'wise' && (
+        <>
+          <p className={sectionCls}>Wise · Tipo de cambio</p>
+          <div className="space-y-3">
+            <div className="grid grid-cols-3 gap-2">
+              <Field label="Divisa">
+                <select className={inp} value={form.wiseCurrency || 'EUR'} onChange={e => set('wiseCurrency', e.target.value)}>
+                  {WISE_CURRENCIES.map(c => <option key={c}>{c}</option>)}
+                </select>
+              </Field>
+              <Field label="Importe enviado">
+                <input className={inp} type="number" step="0.01" min="0" value={form.wiseAmount || ''} onChange={e => set('wiseAmount', parseFloat(e.target.value) || 0)} placeholder="450.00" />
+              </Field>
+              <Field label="Comisión Wise">
+                <input className={inp} type="number" step="0.01" min="0" value={form.wiseFee || ''} onChange={e => set('wiseFee', parseFloat(e.target.value) || 0)} placeholder="3.50" />
+              </Field>
+            </div>
+            <Field label={`Tipo de cambio · 1 ${form.wiseCurrency || 'EUR'} = ¥`}>
+              <input className={inp} type="number" step="0.01" min="0" value={form.wiseRate || ''} onChange={e => set('wiseRate', parseFloat(e.target.value) || 0)} placeholder="165.20" />
+            </Field>
+
+            {/* Live Wise calculation */}
+            {!!form.wiseAmount && !!form.wiseRate && (
+              <div className="rounded-xl p-3 border border-[#3B82F6]/20 bg-[#3B82F6]/6 space-y-1.5">
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/40">Neto ({form.wiseCurrency || 'EUR'})</span>
+                  <span className="text-white">{((form.wiseAmount || 0) - (form.wiseFee || 0)).toFixed(2)}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span className="text-white/40">1 {form.wiseCurrency || 'EUR'} = ¥{form.wiseRate}</span>
+                  <span className="text-[#3B82F6] font-semibold">
+                    {fmtMoney(Math.round(((form.wiseAmount || 0) - (form.wiseFee || 0)) * (form.wiseRate || 0)))} recibido
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <Field label="Comprobante Wise">
+              <ReceiptUpload value={form.wiseReceiptData} onChange={v => set('wiseReceiptData', v)} />
+            </Field>
+          </div>
+        </>
+      )}
+
       <div className="mt-8 space-y-2">
         <button onClick={save} disabled={!form.name.trim() || !form.date || !form.tour.trim()} className={btnRed + ' disabled:opacity-40'}>
           {initial ? 'Guardar cambios' : 'Crear reserva'}
@@ -536,6 +684,49 @@ function FormView({ initial, onSave, onBack }: { initial: AdminBooking | null; o
 }
 
 // ── SETTINGS ──────────────────────────────────────────────────────────────
+
+function WiseCalcSection() {
+  const [cur, setCur] = useState('EUR')
+  const [amount, setAmount] = useState('')
+  const [fee, setFee] = useState('')
+  const [rate, setRate] = useState('')
+
+  const net = (parseFloat(amount) || 0) - (parseFloat(fee) || 0)
+  const jpy = Math.round(net * (parseFloat(rate) || 0))
+
+  return (
+    <div className={card + ' space-y-3'}>
+      <div className="grid grid-cols-3 gap-2">
+        <Field label="Divisa">
+          <select className={inp} value={cur} onChange={e => setCur(e.target.value)}>
+            {WISE_CURRENCIES.map(c => <option key={c}>{c}</option>)}
+          </select>
+        </Field>
+        <Field label="Importe">
+          <input className={inp} type="number" step="0.01" value={amount} onChange={e => setAmount(e.target.value)} placeholder="450" />
+        </Field>
+        <Field label="Comisión">
+          <input className={inp} type="number" step="0.01" value={fee} onChange={e => setFee(e.target.value)} placeholder="3.50" />
+        </Field>
+      </div>
+      <Field label={`Tipo de cambio · 1 ${cur} = ¥`}>
+        <input className={inp} type="number" step="0.01" value={rate} onChange={e => setRate(e.target.value)} placeholder="165.20" />
+      </Field>
+      {net > 0 && parseFloat(rate) > 0 && (
+        <div className="rounded-xl p-3 border border-[#3B82F6]/25 bg-[#3B82F6]/8">
+          <div className="flex justify-between text-sm mb-1">
+            <span className="text-white/40">Neto {cur}</span>
+            <span className="text-white">{net.toFixed(2)} {cur}</span>
+          </div>
+          <div className="flex justify-between text-base font-semibold">
+            <span className="text-white/40">= JPY</span>
+            <span className="text-[#3B82F6]">{fmtMoney(jpy)}</span>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
 
 function SettingsView({ onLogout }: { onLogout: () => void }) {
   const [oldP, setOldP] = useState('')
@@ -568,6 +759,9 @@ function SettingsView({ onLogout }: { onLogout: () => void }) {
         {msg && <p className={msg.includes('✓') ? 'text-[#10B981] text-xs' : 'text-[#E53030] text-xs'}>{msg}</p>}
         <button onClick={handleChangePass} className={btnRed}>Cambiar contraseña</button>
       </div>
+
+      <p className={sectionCls}>Calculadora Wise</p>
+      <WiseCalcSection />
 
       <p className={sectionCls}>Copias de seguridad</p>
       <div className="space-y-2 mb-4">

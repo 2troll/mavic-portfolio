@@ -195,7 +195,7 @@ export const FAQS = [
   { q: 'How far in advance should I book?', a: 'Tony recommends 2–3 weeks ahead for weekends and peak seasons (March–May cherry blossom, October–November autumn). Weekday slots often available 1 week out.' },
   { q: 'What is the cancellation policy?', a: 'Full refund 72+ hours before the tour. 50% refund within 48 hours. No refund within 24 hours. Tony is flexible with reschedules — just reach out via WhatsApp.' },
   { q: 'Is transport included?', a: 'Tony assists with all transit navigation and IC card top-up. Private vehicle available for Premium package. Public transit is used for the authentic local experience.' },
-  { q: 'Which languages do the guides speak?', a: 'Tony guides in English, Spanish and Arabic. Johnny guides in English and Czech. Hilarion guides in Russian, Japanese, English and Spanish — between the three of us, almost every guest feels right at home.' },
+  { q: 'Which languages do the guides speak?', a: 'Tony guides in English, Spanish and Arabic. Johnny guides in English and Czech. Larion guides in Russian, Japanese, English and Spanish — between the three of us, almost every guest feels right at home.' },
   { q: 'Can Tony help with restaurant reservations?', a: 'Absolutely. Tony has relationships with local restaurants including hidden spots that don\'t appear on any app. He pre-books in advance and pre-orders special dishes.' },
   { q: 'What areas does Tony cover?', a: 'Tony covers the full Kansai region: Osaka, Kyoto, Nara, Kobe, Himeji, Arashiyama, Kurama, Fushimi, Kōyasan, and more.' },
 ]
@@ -242,7 +242,7 @@ export const GUIDES = [
   },
   {
     id: 'larion',
-    name: 'Hilarion',
+    name: 'Larion',
     role: 'Nature & Spiritual Guide',
     since: '2021',
     tours: '85+',
@@ -252,7 +252,7 @@ export const GUIDES = [
     languages: ['🇷🇺', '🇯🇵', '🇬🇧', '🇪🇸'],
     langLabels: ['RU', 'JA', 'EN', 'ES'],
     specialty: 'Mountains, Temples & Pilgrimage',
-    bio: 'Hilarion discovered Japan through its ancient pilgrimage trails and never left. Fluent in Japanese, he accesses temples and ceremonies off-limits to most visitors. His Kōyasan tour has been called life-changing by guests from six continents.',
+    bio: 'Larion discovered Japan through its ancient pilgrimage trails and never left. Fluent in Japanese, he accesses temples and ceremonies off-limits to most visitors. His Kōyasan tour has been called life-changing by guests from six continents.',
     highlights: ['Kōyasan Pilgrimage', 'Mountain Hiking', 'Nara Sacred Forest'],
   },
 ]

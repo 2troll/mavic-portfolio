@@ -1,8 +1,8 @@
 // Private admin data layer — localStorage based
 
 export type BookingStatus = 'pendiente' | 'confirmado' | 'completado' | 'cancelado'
-export type PaymentMethod = 'efectivo' | 'transferencia' | 'tarjeta' | 'otro'
-export type Guide = 'Tony' | 'Johnny' | 'Hilarion'
+export type PaymentMethod = 'efectivo' | 'transferencia' | 'tarjeta' | 'wise' | 'otro'
+export type Guide = 'Tony' | 'Johnny' | 'Larion'
 
 export interface AdminBooking {
   id: string
@@ -26,6 +26,12 @@ export interface AdminBooking {
   totalPrice: number
   paidAmount: number
   paymentMethod: PaymentMethod
+  // Wise transfer details
+  wiseCurrency?: string      // EUR, USD, GBP…
+  wiseAmount?: number        // amount sent in foreign currency
+  wiseRate?: number          // 1 [currency] = X JPY
+  wiseFee?: number           // Wise fee in foreign currency
+  wiseReceiptData?: string   // base64 image/PDF data URL
   // Status
   status: BookingStatus
   createdAt: string
