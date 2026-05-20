@@ -285,7 +285,7 @@ export default function TourDetail() {
                       </svg>
                     ))}
                   </div>
-                  <div className="text-sm font-semibold text-white mb-1">5.0 · 200+ tours</div>
+                  <div className="text-sm font-semibold text-white mb-1">5.0</div>
                   <div className="text-xs text-white/40">All private, all personal</div>
                 </div>
               </ExplodeIn>
@@ -293,6 +293,30 @@ export default function TourDetail() {
           </div>
         </div>
       </section>
+
+      {/* ── ROUTE MAP ─────────────────────────────────────────────── */}
+      {tour.mapUrl && (
+        <section className="py-16">
+          <div className="max-w-5xl mx-auto px-6">
+            <h2 className="font-serif text-2xl font-semibold text-white mb-6">Route Overview</h2>
+            <div className="rounded-2xl overflow-hidden border border-white/6" style={{ height: '380px' }}>
+              <iframe
+                src={tour.mapUrl}
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title={`${tour.title} route map`}
+              />
+            </div>
+            <p className="text-white/30 text-xs mt-3 flex items-center gap-1.5">
+              <MapPin size={11} /> Starting point: {tour.meetingPoint}
+            </p>
+          </div>
+        </section>
+      )}
     </>
   )
 }

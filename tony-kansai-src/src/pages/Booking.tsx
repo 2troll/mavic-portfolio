@@ -280,7 +280,7 @@ export default function Booking() {
                     onChange={e => setNotes(e.target.value)}
                     placeholder={bp.notes_placeholder}
                     rows={4}
-                    className="w-full bg-white/3 border border-white/8 rounded-xl px-4 py-3 text-sm text-white/80 placeholder-white/25 focus:outline-none focus:border-japan-red/40 resize-none transition-colors"
+                    className="w-full bg-[#12141F] border border-white/10 rounded-xl px-4 py-3 text-sm text-white/80 placeholder-white/25 focus:outline-none focus:border-japan-red/40 resize-none transition-colors"
                     dir={lang === 'ar' ? 'rtl' : 'ltr'}
                   />
                 </div>
