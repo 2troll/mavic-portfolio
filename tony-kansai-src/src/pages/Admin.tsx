@@ -13,6 +13,7 @@ import {
   exportJSON, importJSON,
 } from '../lib/adminData'
 import { TOURS } from '../lib/data'
+import { generateContract, CONTRACT_LANGS, ContractLang } from '../lib/contractPDF'
 
 // ── Constants ─────────────────────────────────────────────────────────────
 
@@ -346,11 +347,47 @@ function ListView({ bookings, onDetail, onNew }: { bookings: AdminBooking[]; onD
   )
 }
 
+// ── CONTRACT PICKER ───────────────────────────────────────────────────────
+
+function ContractPicker({ data, onClose }: { data?: Parameters<typeof generateContract>[1]; onClose: () => void }) {
+  const open = (lang: ContractLang) => {
+    const html = generateContract(lang, data)
+    const w = window.open('', '_blank')
+    if (w) { w.document.write(html); w.document.close() }
+    onClose()
+  }
+  return (
+    <div className="fixed inset-0 z-50 flex items-end justify-center" style={{ background: 'rgba(0,0,0,0.7)' }} onClick={onClose}>
+      <div className="w-full max-w-sm bg-[#1C1F30] rounded-t-2xl p-5 pb-8" onClick={e => e.stopPropagation()}>
+        <div className="w-10 h-1 rounded-full bg-white/15 mx-auto mb-5" />
+        <p className="text-white font-semibold mb-1">Generar contrato</p>
+        <p className="text-white/35 text-xs mb-4">Selecciona el idioma del cliente</p>
+        <div className="grid grid-cols-2 gap-2">
+          {CONTRACT_LANGS.map(([lang, meta]) => (
+            <button
+              key={lang}
+              onClick={() => open(lang)}
+              className="flex items-center gap-3 px-4 py-3 rounded-xl bg-white/5 border border-white/8 text-left active:opacity-75"
+            >
+              <span className="text-2xl leading-none">{meta.flag}</span>
+              <div>
+                <p className="text-white text-sm font-medium">{meta.label}</p>
+                <p className="text-white/30 text-[10px]">PDF / Imprimir</p>
+              </div>
+            </button>
+          ))}
+        </div>
+      </div>
+    </div>
+  )
+}
+
 // ── DETAIL ────────────────────────────────────────────────────────────────
 
 function DetailView({ b, onEdit, onBack, onDelete, onMarkPaid }: {
   b: AdminBooking; onEdit: () => void; onBack: () => void; onDelete: () => void; onMarkPaid: () => void
 }) {
+  const [showContract, setShowContract] = useState(false)
   const owed = Math.max(0, b.totalPrice - b.paidAmount)
   const waMsg = encodeURIComponent(
     `Hola ${b.name}! Tu tour "${b.tour}" está confirmado para el ${fmtDate(b.date)} a las ${b.time}. ` +
@@ -464,7 +501,20 @@ function DetailView({ b, onEdit, onBack, onDelete, onMarkPaid }: {
             <MessageCircle size={15} /> WhatsApp a {b.name.split(' ')[0]}
           </a>
         )}
+        <button
+          onClick={() => setShowContract(true)}
+          className={btnGhost + ' flex items-center justify-center gap-2'}
+        >
+          <FileText size={15} /> Generar contrato
+        </button>
       </div>
+
+      {showContract && (
+        <ContractPicker
+          data={{ clientName: b.name, tour: b.tour, tourDate: b.date, guests: b.guests, guide: b.guide, totalPrice: b.totalPrice }}
+          onClose={() => setShowContract(false)}
+        />
+      )}
     </div>
   )
 }
@@ -759,6 +809,28 @@ function SettingsView({ onLogout }: { onLogout: () => void }) {
         {msg && <p className={msg.includes('✓') ? 'text-[#10B981] text-xs' : 'text-[#E53030] text-xs'}>{msg}</p>}
         <button onClick={handleChangePass} className={btnRed}>Cambiar contraseña</button>
       </div>
+
+      <p className={sectionCls}>Contratos · Plantillas</p>
+      <div className="grid grid-cols-2 gap-2 mb-4">
+        {CONTRACT_LANGS.map(([lang, meta]) => (
+          <button
+            key={lang}
+            onClick={() => {
+              const html = generateContract(lang)
+              const w = window.open('', '_blank')
+              if (w) { w.document.write(html); w.document.close() }
+            }}
+            className={card + ' flex items-center gap-3 text-left active:opacity-75'}
+          >
+            <span className="text-2xl leading-none">{meta.flag}</span>
+            <div className="min-w-0">
+              <p className="text-white text-sm font-medium">{meta.label}</p>
+              <p className="text-white/25 text-[10px]">Plantilla en blanco</p>
+            </div>
+          </button>
+        ))}
+      </div>
+      <p className="text-white/25 text-xs mb-6 px-1">Para contratos con datos del cliente, usa el botón "Generar contrato" dentro de cada reserva.</p>
 
       <p className={sectionCls}>Calculadora Wise</p>
       <WiseCalcSection />
