@@ -24,7 +24,12 @@ export const TOURS = [
     highlights: ['Kuromon Ichiba Market dawn run', 'Dotonbori takoyaki & okonomiyaki', 'Hidden izakaya (no English menu)', 'Shinsekai kushikatsu institution', 'Sake & craft beer local picks', 'Night street stall crawl'],
     includes: ['Private guide', 'Food tasting guidance', 'Transit navigation', 'IC card top-up', 'Zero tourist traps policy'],
     meetingPoint: 'Namba Station Exit 14',
-    mapUrl: 'https://maps.google.com/maps?saddr=Namba+Station,Osaka&daddr=Kuromon+Ichiba+Market,Osaka+to:Dotonbori,Osaka+to:Shinsekai,Osaka&output=embed',
+    mapStops: [
+      { name: 'Namba Station', lat: 34.6688, lng: 135.4963 },
+      { name: 'Kuromon Ichiba Market', lat: 34.6684, lng: 135.5060 },
+      { name: 'Dotonbori', lat: 34.6687, lng: 135.5013 },
+      { name: 'Shinsekai', lat: 34.6526, lng: 135.5063 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -46,7 +51,12 @@ export const TOURS = [
     highlights: ['Fushimi Inari at dawn (before crowds)', 'Secret upper mountain trails', 'Nishiki Market — "Kyoto Kitchen"', 'Hidden machiya townhouse lunch', 'Gion lantern walk at dusk', 'Eight-seat omakase dinner'],
     includes: ['Private guide all day', 'Transit navigation', 'IC card assistance', 'Restaurant bookings', 'Cultural deep-dive narration'],
     meetingPoint: 'Kyoto Station Central Exit',
-    mapUrl: 'https://maps.google.com/maps?saddr=Kyoto+Station&daddr=Fushimi+Inari+Taisha,Kyoto+to:Nishiki+Market,Kyoto+to:Gion,Kyoto&output=embed',
+    mapStops: [
+      { name: 'Kyoto Station', lat: 34.9859, lng: 135.7588 },
+      { name: 'Fushimi Inari Taisha', lat: 34.9671, lng: 135.7727 },
+      { name: 'Nishiki Market', lat: 35.0051, lng: 135.7659 },
+      { name: 'Gion', lat: 35.0038, lng: 135.7755 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -68,7 +78,12 @@ export const TOURS = [
     highlights: ['Himeji Castle interior (UNESCO)', 'Koko-en castle gardens', 'Kobe Kitano foreign quarter', 'Authentic Kobe Wagyu teppanyaki', 'Harbor at dusk', 'Sake brewery district walk'],
     includes: ['Private guide all day', 'Shinkansen assistance', 'Castle entry', 'Teppanyaki booking', 'Walking tour both cities'],
     meetingPoint: 'Shin-Osaka Station Bullet Train Gate',
-    mapUrl: 'https://maps.google.com/maps?saddr=Shin-Osaka+Station&daddr=Himeji+Castle+to:Kitano-cho,Kobe+to:Meriken+Park,Kobe&output=embed',
+    mapStops: [
+      { name: 'Shin-Osaka Station', lat: 34.7333, lng: 135.5000 },
+      { name: 'Himeji Castle', lat: 34.8394, lng: 134.6939 },
+      { name: 'Kitano-cho, Kobe', lat: 34.7020, lng: 135.1894 },
+      { name: 'Meriken Park', lat: 34.6878, lng: 135.1903 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -90,7 +105,12 @@ export const TOURS = [
     highlights: ['Kasuga Taisha dawn — 3,000 stone lanterns', 'Todai-ji Great Buddha (15m tall)', 'Free-roaming sacred deer', 'Naramachi Edo-period streets', 'Hidden local restaurant lunch', 'Isui-en traditional garden'],
     includes: ['Private guide all day', 'Transit from Kyoto/Osaka', 'Deer crackers', 'Temple entry fees', 'Cultural deep-dive narration'],
     meetingPoint: 'Kintetsu Nara Station Exit 2',
-    mapUrl: 'https://maps.google.com/maps?saddr=Kintetsu+Nara+Station&daddr=Kasuga+Grand+Shrine,Nara+to:Todaiji,Nara+to:Naramachi,Nara&output=embed',
+    mapStops: [
+      { name: 'Kintetsu Nara Station', lat: 34.6857, lng: 135.8247 },
+      { name: 'Kasuga Grand Shrine', lat: 34.6813, lng: 135.8449 },
+      { name: 'Tōdai-ji Temple', lat: 34.6888, lng: 135.8399 },
+      { name: 'Naramachi', lat: 34.6780, lng: 135.8306 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -112,7 +132,12 @@ export const TOURS = [
     highlights: ['Sacred cable car through cedar forest', 'Private monk audience', 'Shojin ryori temple cuisine', 'Okunoin cemetery at dusk — 200,000 lanterns', 'Garan sacred complex', 'Kongobuji Zen garden'],
     includes: ['Private guide all day', 'All transport arrangements', 'Temple meal included', 'Cable car tickets', 'Comprehensive spiritual context'],
     meetingPoint: 'Osaka Namba Station — Private Car',
-    mapUrl: 'https://maps.google.com/maps?saddr=Namba,Osaka&daddr=Koyasan,Wakayama+to:Kongobuji+Temple+to:Okunoin+Cemetery,Koya&output=embed',
+    mapStops: [
+      { name: 'Namba, Osaka', lat: 34.6688, lng: 135.4963 },
+      { name: 'Kōyasan', lat: 34.2136, lng: 135.5851 },
+      { name: 'Kongobuji Temple', lat: 34.2134, lng: 135.5839 },
+      { name: 'Okunoin Cemetery', lat: 34.2175, lng: 135.5943 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -134,7 +159,12 @@ export const TOURS = [
     highlights: ['Fushimi Inari at absolute dawn', 'Nishiki Market food circuit', 'Hidden machiya lunch', 'Shinkansen city switch', 'Dotonbori street food tour', 'Osaka Castle rooftop view at night'],
     includes: ['Private guide 12h', 'All transit navigation', 'IC card top-up', 'Both city restaurant bookings', 'Cultural narrative both cities'],
     meetingPoint: 'Kyoto Station Central Exit',
-    mapUrl: 'https://maps.google.com/maps?saddr=Kyoto+Station&daddr=Fushimi+Inari+Taisha+to:Nishiki+Market,Kyoto+to:Dotonbori,Osaka&output=embed',
+    mapStops: [
+      { name: 'Kyoto Station', lat: 34.9859, lng: 135.7588 },
+      { name: 'Fushimi Inari Taisha', lat: 34.9671, lng: 135.7727 },
+      { name: 'Nishiki Market', lat: 35.0051, lng: 135.7659 },
+      { name: 'Dotonbori, Osaka', lat: 34.6687, lng: 135.5013 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
   {
@@ -156,7 +186,12 @@ export const TOURS = [
     highlights: ['Kurama pilgrimage trail — imperial route', 'Ancient cedar shrine forest', 'Hidden waterfall meditation spot', 'Arashiyama bamboo grove (off-hour)', 'Traditional tea ceremony in nature', 'Monkey park optional stop'],
     includes: ['Private guide all day', 'Trail navigation & safety', 'Forest shrine ritual explanation', 'Tea ceremony included', 'Packed snack recommendations'],
     meetingPoint: 'Kurama Station Exit',
-    mapUrl: 'https://maps.google.com/maps?saddr=Kurama+Station,Kyoto&daddr=Kurama-dera+Temple+to:Kibune+Shrine,Kyoto+to:Arashiyama+Bamboo+Grove,Kyoto&output=embed',
+    mapStops: [
+      { name: 'Kurama Station', lat: 35.1197, lng: 135.7695 },
+      { name: 'Kurama-dera Temple', lat: 35.1189, lng: 135.7676 },
+      { name: 'Kibune Shrine', lat: 35.1318, lng: 135.7637 },
+      { name: 'Arashiyama Bamboo Grove', lat: 35.0170, lng: 135.6720 },
+    ],
     languages: ['EN', 'ES', 'РУ', 'CS', 'AR'],
   },
 ]

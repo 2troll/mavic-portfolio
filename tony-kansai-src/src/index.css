@@ -96,3 +96,18 @@ body::before {
     border-image: linear-gradient(135deg, #E53030, #FF6B35) 1;
   }
 }
+
+/* ── Leaflet map overrides ── */
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: transparent !important;
+  box-shadow: none !important;
+  padding: 0 !important;
+}
+.leaflet-popup-content {
+  margin: 0 !important;
+}
+.leaflet-container {
+  background: #0d0f1a;
+  font-family: inherit;
+}

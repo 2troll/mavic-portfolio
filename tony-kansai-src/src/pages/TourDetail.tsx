@@ -6,6 +6,7 @@ import { Helmet } from 'react-helmet-async'
 import { Card3D } from '../components/Card3D'
 import { ExplodeIn } from '../components/ExplodeIn'
 import { NaraParticles } from '../components/NaraParticles'
+import { TourMap } from '../components/TourMap'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
 import { PageSEO } from '../components/PageSEO'
 
@@ -295,25 +296,15 @@ export default function TourDetail() {
       </section>
 
       {/* ── ROUTE MAP ─────────────────────────────────────────────── */}
-      {tour.mapUrl && (
+      {tour.mapStops && tour.mapStops.length > 0 && (
         <section className="py-16">
           <div className="max-w-5xl mx-auto px-6">
             <h2 className="font-serif text-2xl font-semibold text-white mb-6">Route Overview</h2>
-            <div className="rounded-2xl overflow-hidden border border-white/6" style={{ height: '380px' }}>
-              <iframe
-                src={tour.mapUrl}
-                width="100%"
-                height="100%"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title={`${tour.title} route map`}
-              />
-            </div>
-            <p className="text-white/30 text-xs mt-3 flex items-center gap-1.5">
-              <MapPin size={11} /> Starting point: {tour.meetingPoint}
-            </p>
+            <TourMap
+              stops={tour.mapStops}
+              accent={tour.accent}
+              meetingPoint={tour.meetingPoint}
+            />
           </div>
         </section>
       )}
