@@ -863,6 +863,204 @@ function SettingsView({ onLogout }: { onLogout: () => void }) {
   )
 }
 
+// ── CHANGELOG ────────────────────────────────────────────────────────────
+
+const CHANGELOG = [
+  {
+    version: 'v2.5',
+    date: 'Mayo 2026',
+    title: 'Fotos reales de los guías',
+    changes: [
+      'Fotos reales de Tony, Johnny y Larion en la sección "Conoce al equipo"',
+      'Eliminadas fotos de stock de Unsplash',
+    ],
+  },
+  {
+    version: 'v2.4',
+    date: 'Mayo 2026',
+    title: 'Contratos en 4 idiomas',
+    changes: [
+      'Generador de contratos: EN, ES, RU, CS',
+      '8 cláusulas legales: servicio, exención de responsabilidad, seguro obligatorio, cancelación, fuerza mayor, conducta, fotografía, pago',
+      'Contrato pre-relleno con datos del cliente desde cada reserva',
+      'Plantillas en blanco desde Ajustes',
+    ],
+  },
+  {
+    version: 'v2.3',
+    date: 'Mayo 2026',
+    title: 'Tracking de pagos Wise',
+    changes: [
+      "Nuevo método de pago 'Wise' en el formulario de reservas",
+      'Campos: divisa, importe, comisión, tipo de cambio',
+      'Cálculo automático de yenes recibidos netos',
+      'Adjuntar comprobante Wise (foto o PDF, máx 2 MB)',
+      'Vista detalle muestra desglose completo Wise',
+      'Calculadora Wise en Ajustes',
+    ],
+  },
+  {
+    version: 'v2.2',
+    date: 'Mayo 2026',
+    title: 'Corrección nombre guía',
+    changes: [
+      "Corregido 'Hilarion' → 'Larion' en web pública, FAQ, bio y panel admin",
+    ],
+  },
+  {
+    version: 'v2.1',
+    date: 'Mayo 2026',
+    title: 'PWA — Instalar en móvil',
+    changes: [
+      'manifest.json para instalación "Añadir a pantalla de inicio"',
+      'Meta tags Apple Web App para iOS',
+      'Modo standalone (sin barra del navegador)',
+      'Admin separado del resto de la web (sin navbar ni footer)',
+    ],
+  },
+  {
+    version: 'v2.0',
+    date: 'Mayo 2026',
+    title: 'Panel de administración',
+    changes: [
+      'Login con contraseña SHA-256 (por defecto: tony2024)',
+      'Vista Hoy: tours del día + estadísticas de la semana',
+      'Calendario mensual con puntos por reserva',
+      'Lista de reservas con búsqueda y filtros por estado',
+      'Formulario completo: cliente, tour, logística, pago',
+      'Vista detalle con botón WhatsApp pre-escrito',
+      'Ajustes: cambiar contraseña, exportar/importar JSON',
+      'Datos guardados en el dispositivo (sin servidor)',
+    ],
+  },
+  {
+    version: 'v1.5',
+    date: 'Mayo 2026',
+    title: 'Corrección build CI/CD',
+    changes: [
+      'Error: manualChunks incompatible con VITE_SINGLE_FILE=true en GitHub Actions',
+      'Fix: rollupOptions condicional según entorno de build',
+      'CI pasó de rojo a verde',
+    ],
+  },
+  {
+    version: 'v1.4',
+    date: 'Mayo 2026',
+    title: 'SEO avanzado',
+    changes: [
+      'HashRouter → BrowserRouter (URLs limpias sin #)',
+      '200.html como fallback SPA para Surge',
+      'react-helmet-async: título y descripción únicos por página',
+      'FAQPage JSON-LD schema para rich snippets en Google',
+      'TouristAttraction + Offer schema por tour (precio JPY)',
+      'Sitemap actualizado con URLs limpias',
+      'Code splitting: chunks separados (React, Router, Framer, Three.js, Lucide)',
+    ],
+  },
+  {
+    version: 'v1.3',
+    date: 'Mayo 2026',
+    title: 'Política de Privacidad',
+    changes: [
+      'Página /privacy con política GDPR completa',
+      '9 secciones: quiénes somos, datos recogidos, Google Analytics, GDPR, retención, derechos',
+      'Link en el footer de la web pública',
+    ],
+  },
+  {
+    version: 'v1.2',
+    date: 'Mayo 2026',
+    title: 'Google Analytics + GDPR',
+    changes: [
+      'Google Analytics 4 con ID G-K9JKN9346D',
+      'Google Consent Mode v2 (analytics denegado por defecto)',
+      'Banner de cookies con Aceptar / Rechazar',
+      'Al aceptar: gtag consent update activa analytics',
+      'Al rechazar: cero datos recogidos',
+      'robots.txt y sitemap.xml',
+    ],
+  },
+  {
+    version: 'v1.1',
+    date: 'Mayo 2026',
+    title: 'SEO inicial + favicon',
+    changes: [
+      'Favicon SVG (torii gate rojo)',
+      'Open Graph y Twitter Card meta tags',
+      'TouristInformationCenter JSON-LD con AggregateRating 5.0/400 reseñas',
+      'Canonical URL configurado',
+      'Descripción y título optimizados para Google Ads',
+    ],
+  },
+  {
+    version: 'v1.0',
+    date: 'Mayo 2026',
+    title: 'Lanzamiento inicial',
+    changes: [
+      'Stack: Vite + React 18 + TypeScript + Tailwind CSS v3 + Framer Motion',
+      '7 páginas: Inicio, Tours, Detalle de tour, Nosotros, Precios, FAQ, Reservar',
+      '3 guías: Tony (EN/ES/AR), Johnny (EN/CS), Larion (RU/JA/EN/ES)',
+      '7 tours con precios en JPY',
+      'Idiomas: EN, ES, AR, CS, RU (soporte RTL para árabe)',
+      'Sección de preguntas frecuentes',
+      'Botón flotante WhatsApp',
+      'Diseño dark premium con rojo japón #E53030',
+      'Deploy en tonykansaiguide.surge.sh',
+    ],
+  },
+]
+
+function ChangelogModal({ onClose }: { onClose: () => void }) {
+  return (
+    <div className="fixed inset-0 z-50 flex flex-col" style={{ background: '#0C0D16' }}>
+      <div className="flex items-center gap-3 px-4 pt-6 pb-4 border-b border-white/6 flex-shrink-0">
+        <button onClick={onClose} className="w-9 h-9 rounded-xl bg-white/5 flex items-center justify-center">
+          <ArrowLeft size={18} className="text-white/60" />
+        </button>
+        <div>
+          <h2 className="text-white font-semibold">Historial de cambios</h2>
+          <p className="text-white/30 text-xs">Todo lo que se ha mejorado en la página</p>
+        </div>
+      </div>
+
+      <div className="flex-1 overflow-y-auto px-4 py-4 pb-8">
+        {CHANGELOG.map((entry, i) => (
+          <div key={entry.version} className="relative pl-6 pb-6 last:pb-0">
+            {/* Timeline line */}
+            {i < CHANGELOG.length - 1 && (
+              <div className="absolute left-[7px] top-5 bottom-0 w-px bg-white/8" />
+            )}
+            {/* Dot */}
+            <div
+              className="absolute left-0 top-1.5 w-3.5 h-3.5 rounded-full border-2 flex-shrink-0"
+              style={{ background: i === 0 ? '#E53030' : '#1C1F30', borderColor: i === 0 ? '#E53030' : 'rgba(255,255,255,0.15)' }}
+            />
+
+            <div className="flex items-baseline gap-2 mb-1">
+              <span
+                className="text-[10px] font-bold px-1.5 py-0.5 rounded"
+                style={{ background: i === 0 ? '#E53030' : 'rgba(255,255,255,0.07)', color: i === 0 ? '#fff' : 'rgba(255,255,255,0.4)' }}
+              >
+                {entry.version}
+              </span>
+              <span className="text-white/25 text-[10px]">{entry.date}</span>
+            </div>
+            <p className="text-white text-sm font-medium mb-2">{entry.title}</p>
+            <ul className="space-y-1">
+              {entry.changes.map((c, j) => (
+                <li key={j} className="flex gap-2 text-xs text-white/45 leading-relaxed">
+                  <span className="text-white/20 flex-shrink-0 mt-0.5">·</span>
+                  <span>{c}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
 // ── BOTTOM NAV ────────────────────────────────────────────────────────────
 
 function BottomNav({ active, onTab }: { active: NavTab; onTab: (t: NavTab) => void }) {
@@ -896,6 +1094,7 @@ export default function Admin() {
   const [bookings, setBookings] = useState<AdminBooking[]>(getBookings)
   const [selected, setSelected] = useState<AdminBooking | null>(null)
   const [editTarget, setEditTarget] = useState<AdminBooking | null>(null)
+  const [showChangelog, setShowChangelog] = useState(false)
 
   const refresh = () => setBookings(getBookings())
 
@@ -940,6 +1139,20 @@ export default function Admin() {
       {view === 'settings' && <SettingsView onLogout={() => { setAuthedState(false); setView('login') }} />}
 
       {showNav && <BottomNav active={tab} onTab={goTab} />}
+
+      {/* Updates floating button */}
+      {showNav && !showChangelog && (
+        <button
+          onClick={() => setShowChangelog(true)}
+          className="fixed right-4 z-40 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-semibold text-white/50 border border-white/10 bg-[#0E1020]"
+          style={{ bottom: '70px' }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full bg-[#E53030]" />
+          Updates
+        </button>
+      )}
+
+      {showChangelog && <ChangelogModal onClose={() => setShowChangelog(false)} />}
     </div>
   )
 }
