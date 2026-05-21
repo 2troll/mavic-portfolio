@@ -39,11 +39,31 @@
     <p>Version history — cinematic components & 3D simulations</p>
   </header>
 
-  <!-- v22 -->
+  <!-- v23 -->
   <div class="version current">
     <div class="v-header">
-      <span class="v-num">v22</span>
+      <span class="v-num">v23</span>
       <span class="badge current">Current</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Dominio propio · T&C · Limpieza de datos · Deploy en producción</div>
+    <ul>
+      <li><span class="tag new">new</span><strong>Términos y Condiciones</strong> — página <code>/terms</code> con 11 secciones reales: descripción del servicio, proceso de booking, precios y exclusiones, política de cancelación (72h/48h/24h), puntualidad, seguridad, fotografía, limitación de responsabilidad, ley aplicable (Japón). Link en footer junto a Privacy.</li>
+      <li><span class="tag fix">fix</span><strong>Datos eliminados</strong> — borradas todas las referencias a "Since 2018", "400+ tours" y "200+ tours" en todas las páginas y en los 5 idiomas (EN, ES, AR, CS, RU). Incluye SEO meta, badges, stats grid, bio de Tony, interfaz TypeScript <code>Tr.stats</code>.</li>
+      <li><span class="tag new">new</span><strong>Dominio propio</strong> — migración de <code>tonykansaiguide.surge.sh</code> a <code>https://tonykansaiguide.com</code>. Dominio registrado en Cloudflare Registrar. DNS configurado (4 registros A + CNAME www → 2troll.github.io). SSL Full (strict) activo.</li>
+      <li><span class="tag fix">fix</span><strong>Deploy raíz</strong> — Tony Kansai Guide movido de <code>/tony-kansai/</code> al root del dominio. Archivo <code>CNAME</code> generado automáticamente en cada deploy para preservar el dominio personalizado.</li>
+      <li><span class="tag fix">fix</span><strong>SPA routing</strong> — <code>404.html</code> copiado desde <code>index.html</code> en el workflow. GitHub Pages ahora sirve la React app en cualquier ruta directa (<code>/admin</code>, <code>/tours/osaka-food</code>, etc.) sin 404.</li>
+      <li><span class="tag fix">fix</span><strong>react-leaflet v4</strong> — downgrade de v5 a v4.2.1. react-leaflet v5 requiere React 19; v4 es estable con React 18. Mapas de tour detail funcionan correctamente.</li>
+      <li><span class="tag fix">fix</span><strong>TypeScript build</strong> — eliminada propiedad <code>tours: string</code> de la interfaz <code>Tr.stats</code> tras remover el stat del array <code>STATS</code>. Build limpio en CI.</li>
+      <li><span class="tag perf">perf</span>Sitemap.xml actualizado con dominio real y añadidas rutas <code>/terms</code> y <code>/privacy</code>. <code>robots.txt</code> actualizado. URL canónicas y og:url en todas las páginas apuntan a <code>tonykansaiguide.com</code>.</li>
+    </ul>
+  </div>
+
+  <!-- v22 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v22</span>
+      <span class="badge old">Released</span>
       <span class="v-date">May 2026</span>
     </div>
     <div class="v-title">Photo-First Redesign · Real Unsplash Parallax · All Pages Connected</div>
