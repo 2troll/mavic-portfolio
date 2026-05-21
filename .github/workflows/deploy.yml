@@ -59,6 +59,7 @@ jobs:
           mkdir -p deploy
           cp -r tony-kansai-src/dist/. deploy/
           echo "tonykansaiguide.com" > deploy/CNAME
+          cp deploy/index.html deploy/404.html
 
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact
