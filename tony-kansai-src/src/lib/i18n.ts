@@ -37,7 +37,6 @@ export interface Tr {
 
   stats: {
     destinations: string;
-    tours: string;
     languages: string;
     private: string;
   };
