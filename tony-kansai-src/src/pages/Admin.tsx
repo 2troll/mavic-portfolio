@@ -1005,7 +1005,7 @@ const CHANGELOG = [
       'Sección de preguntas frecuentes',
       'Botón flotante WhatsApp',
       'Diseño dark premium con rojo japón #E53030',
-      'Deploy en tonykansaiguide.surge.sh',
+      'Deploy en tonykansaiguide.com',
     ],
   },
 ]

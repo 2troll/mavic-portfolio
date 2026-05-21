@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tonykansaiguide.surge.sh/sitemap.xml
+Sitemap: https://tonykansaiguide.com/sitemap.xml

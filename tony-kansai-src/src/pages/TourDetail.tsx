@@ -37,7 +37,7 @@ export default function TourDetail() {
     '@type': 'TouristAttraction',
     name: tour.title,
     description: tour.subtitle,
-    url: `https://tonykansaiguide.surge.sh/tours/${tour.id}`,
+    url: `https://tonykansaiguide.com/tours/${tour.id}`,
     image: tour.imageHero,
     offers: {
       '@type': 'Offer',

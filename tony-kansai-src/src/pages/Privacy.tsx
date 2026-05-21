@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Shield } from 'lucide-react'
 import { PageSEO } from '../components/PageSEO'
 
-const SITE_URL = 'https://tonykansaiguide.surge.sh'
+const SITE_URL = 'https://tonykansaiguide.com'
 const CONTACT_WA = 'https://wa.me/34634193106'
 const UPDATED = 'May 2026'
 
