@@ -15,6 +15,7 @@ import Pricing from './pages/Pricing'
 import FAQ from './pages/FAQ'
 import Booking from './pages/Booking'
 import Privacy from './pages/Privacy'
+import Terms from './pages/Terms'
 import GuideDetail from './pages/GuideDetail'
 import Admin from './pages/Admin'
 
@@ -83,6 +84,7 @@ function Layout() {
           <Route path="/booking" element={<Booking />} />
           <Route path="/guides/:id" element={<GuideDetail />} />
           <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

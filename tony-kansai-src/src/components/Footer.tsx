@@ -73,6 +73,7 @@ export function Footer() {
           <span>© {new Date().getFullYear()} {t.footer.rights}</span>
           <div className="flex items-center gap-4">
             <Link to="/privacy" className="hover:text-white/50 transition-colors">{t.footer.privacy}</Link>
+            <Link to="/terms" className="hover:text-white/50 transition-colors">Terms</Link>
             <span>{t.footer.replies}</span>
           </div>
         </div>
