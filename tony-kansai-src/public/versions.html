@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Versions — Tony Kansai Guide</title>
+  <style>
+    :root { --red: #E53030; --orange: #FF6B35; --gold: #D4A847; --bg: #0C0D16; --surface: #12141F; --card: #1C1F30; --text: rgba(255,255,255,0.7); --dim: rgba(255,255,255,0.35); }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', system-ui, sans-serif; min-height: 100vh; padding: 60px 24px; }
+    .wrap { max-width: 760px; margin: 0 auto; }
+    header { text-align: center; margin-bottom: 56px; }
+    header h1 { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 3rem; font-weight: 600; background: linear-gradient(to right, var(--red), var(--orange)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom: 8px; }
+    header p { color: var(--dim); font-size: 0.875rem; }
+    .version { background: var(--surface); border: 1px solid rgba(255,255,255,0.07); border-radius: 16px; padding: 28px 32px; margin-bottom: 20px; position: relative; overflow: hidden; }
+    .version.current { border-color: rgba(229,48,48,0.35); }
+    .version.current::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(to right, var(--red), var(--orange)); }
+    .v-header { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+    .v-num { font-family: 'Cormorant Garamond', Georgia, serif; font-size: 1.4rem; font-weight: 700; color: #fff; }
+    .badge { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 10px; border-radius: 99px; }
+    .badge.current { background: rgba(229,48,48,0.15); color: var(--red); border: 1px solid rgba(229,48,48,0.4); }
+    .badge.old { background: rgba(255,255,255,0.05); color: var(--dim); border: 1px solid rgba(255,255,255,0.1); }
+    .v-date { margin-left: auto; font-size: 0.78rem; color: var(--dim); }
+    .v-title { font-size: 0.95rem; font-weight: 600; color: rgba(255,255,255,0.9); margin-bottom: 10px; }
+    ul { list-style: none; padding: 0; }
+    li { font-size: 0.83rem; color: var(--dim); padding: 4px 0 4px 18px; position: relative; line-height: 1.5; }
+    li::before { content: '→'; position: absolute; left: 0; color: var(--red); opacity: 0.7; }
+    .tag { display: inline-block; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; padding: 1px 7px; border-radius: 4px; margin-right: 4px; }
+    .tag.new { background: rgba(229,48,48,0.12); color: var(--red); }
+    .tag.fix { background: rgba(16,185,129,0.12); color: #10B981; }
+    .tag.perf { background: rgba(212,168,71,0.12); color: var(--gold); }
+    .tag.design { background: rgba(139,92,246,0.12); color: #8B5CF6; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Tony Kansai Guide</h1>
+    <p>Version history — cinematic components & 3D simulations</p>
+  </header>
+
+  <!-- v22 -->
+  <div class="version current">
+    <div class="v-header">
+      <span class="v-num">v22</span>
+      <span class="badge current">Current</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Photo-First Redesign · Real Unsplash Parallax · All Pages Connected</div>
+    <ul>
+      <li><span class="tag design">design</span>Removed all custom SVG illustrations (CinematicScrollDeer deer silhouette, DioramaCastle3D SVG layers, InteractiveToriiGlow SVG torii) — replaced with real Unsplash photography throughout.</li>
+      <li><span class="tag new">new</span><strong>Discover Section</strong> — Fushimi Inari torii-gate photograph (<code>photo-1524413840807</code>) with Framer Motion <code>useScroll</code> + <code>useTransform</code> parallax. Container <code>scale-[1.2]</code> prevents edge exposure during scroll. Scroll range <code>['start end','end start']</code> → y offset <code>0%→18%</code>.</li>
+      <li><span class="tag new">new</span><strong>Fortress Section</strong> — Himeji Castle UNESCO photograph (<code>photo-1590559899731</code>) with identical parallax pattern on a separate <code>castleRef</code> scroll target. Text refocused on history narrative.</li>
+      <li><span class="tag fix">fix</span>All secondary pages (Tours, About, Pricing, FAQ) now use <code>HeroTextKinetic</code> instead of the legacy <code>HeroText</code> — consistent spring cascade across the entire site.</li>
+      <li><span class="tag fix">fix</span><code>Home.tsx</code> no longer imports <code>CinematicScrollDeer</code>, <code>DioramaCastle3D</code>, or <code>InteractiveToriiGlow</code> — dead code path eliminated.</li>
+      <li><span class="tag perf">perf</span>All photo containers use <code>loading="lazy"</code>. Parallax applied to inner <code>motion.div</code> wrapper, never to the <code>img</code> directly — avoids layout recalculation.</li>
+    </ul>
+  </div>
+
+  <!-- v21 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v21</span>
+      <span class="badge old">Released</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">UI/UX PRO MAX · Cinematic Scroll & Hardware 3D Simulations</div>
+    <ul>
+      <li><span class="tag new">new</span><strong>CinematicScrollDeer</strong> — SVG Nara deer silhouette driven by <code>useScroll</code> section progress. <code>useTransform</code> maps scroll 0→1 to horizontal position −18vw→108vw. <code>useSpring({stiffness:100, damping:20})</code> provides organic deceleration on sudden stops. Vertical gallop bounce (<code>animate y:[0,−5,0,−2,0]</code>) completes the living-creature illusion.</li>
+      <li><span class="tag new">new</span><strong>DioramaCastle3D</strong> — True CSS 3D diorama with <code>transformStyle:"preserve-3d"</code> and <code>perspective:900px</code>. Three mathematically composed SVG layers at translateZ 20/40/60px: sky+moon+stars, Osaka Castle silhouette with eave arches, sakura foreground trees. <code>useMotionValue</code> → <code>useTransform</code> → <code>useSpring({stiffness:300, damping:30})</code> maps cursor coordinates to rotateX/Y and per-layer parallax offsets. Challenge overcome: avoiding <code>overflow:hidden</code> on <code>preserve-3d</code> containers (clips 3D children in all browsers).</li>
+      <li><span class="tag new">new</span><strong>InteractiveToriiGlow</strong> — High-fidelity SVG torii (kasagi, shimagi, nuki, hashira pillars, daiwa rings, nemaki base stones). <code>useAnimation</code> with <code>onHoverStart/End</code> drives a 4-keyframe <code>drop-shadow</code> neon pulse loop while hovered, then springs back to zero shadow (<code>stiffness:300, damping:15</code>).</li>
+      <li><span class="tag new">new</span><strong>HeroTextKinetic</strong> — Cascade text reveal: splits by words or chars, each token animates from <code>{rotateX:−95, y:60, opacity:0, scale:0.82, filter:blur(8px)}</code> with <code>spring(stiffness:260, damping:18)</code>. <code>staggerChildren:0.08</code> (words) / <code>0.022</code> (chars). <code>accentWords[]</code> prop applies brand gradient to specified word indices.</li>
+      <li><span class="tag design">design</span>7 tour routes introduced (Osaka Food Circuit / Hidden Kyoto / Kobe Refined / Nara Sacred Forest / Kōyasan Pilgrimage / Osaka×Kyoto Grand Day / Mountain Hiking) with <code>booking.html?route=N</code> WhatsApp redirect.</li>
+      <li><span class="tag perf">perf</span><code>React.lazy()</code> + <code>Suspense</code> isolates all Three.js/R3F — WebGL failure can never black-out the rest of the page.</li>
+      <li><span class="tag fix">fix</span>Root cause of black-page crash: <code>FinialPulse</code> and <code>Eave</code> were defined inside <code>CastleModel</code>'s render body, giving React unstable component identity on every render and breaking hook rules. Moved to module level.</li>
+    </ul>
+  </div>
+
+  <!-- v20 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v20</span>
+      <span class="badge old">Released</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Three.js / R3F PRO MAX — 3D Torii Gate + Castle Scene</div>
+    <ul>
+      <li><span class="tag new">new</span><strong>Scene3D</strong> — R3F Canvas with 3D Torii gate (CylinderGeometry pillars, BoxGeometry beams, emissive MeshStandardMaterial), Sparkles sakura, gold dust Points particles, Stars starfield, CameraRig mouse parallax.</li>
+      <li><span class="tag new">new</span><strong>CastleScene</strong> — R3F Canvas with multi-tier Japanese castle geometry, OrbitControls auto-rotate, pulsing Finial, GroundFog plane.</li>
+      <li><span class="tag design">design</span>6 tours → real Unsplash 4K photography, parallax hero images, sticky CTA bar.</li>
+    </ul>
+  </div>
+
+  <!-- v19 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v19</span>
+      <span class="badge old">Released</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">PRO MAX SVG Animations — ToriiSVG, NaraParticles, OsakaCastleSVG</div>
+    <ul>
+      <li><span class="tag new">new</span>ToriiSVG (hover glow), NaraParticles (autumn leaves), OsakaCastleSVG (4-layer mouse parallax)</li>
+      <li><span class="tag design">design</span>HeroText upgraded: rotateX flip + blur + scale spring reveal</li>
+      <li><span class="tag design">design</span>ExplodeIn upgraded: 10 blast directions, blur tween</li>
+    </ul>
+  </div>
+
+  <!-- v18 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v18</span>
+      <span class="badge old">Released</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Initial production build — 6 tours, HashRouter SPA, Netlify + Surge deploy</div>
+    <ul>
+      <li><span class="tag new">new</span>React 18 + Vite + Framer Motion 11 + Tailwind CSS 3</li>
+      <li><span class="tag new">new</span>HashRouter SPA — works on Surge without server config</li>
+      <li><span class="tag new">new</span>Scene3D with @react-three/fiber, @react-three/drei</li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

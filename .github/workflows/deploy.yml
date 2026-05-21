@@ -1,0 +1,78 @@
+name: Build & Deploy
+
+on:
+  push:
+    branches:
+      - main
+      - claude/premium-3d-portfolio-rebuild-Qom7g
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      # ── Build Mavic Portfolio ──────────────────────────────
+      - name: Install mavic dependencies
+        run: npm ci
+
+      - name: Build mavic portfolio
+        run: npm run build
+        env:
+          GITHUB_PAGES: 'true'
+
+      - name: SPA fallback
+        run: cp dist/index.html dist/200.html
+
+      # ── Build Tony Kansai Guide ────────────────────────────
+      - name: Install tony-kansai dependencies
+        run: npm install --legacy-peer-deps
+        working-directory: tony-kansai-src
+
+      - name: Build tony-kansai guide
+        run: npm run build
+        working-directory: tony-kansai-src
+        env:
+          VITE_SINGLE_FILE: 'true'
+
+      - name: Fix tony-kansai inline scripts
+        run: |
+          sed -i 's/<script type="module" crossorigin>/<script type="module">/g' tony-kansai-src/dist/index.html
+
+      - name: Copy tony-kansai into dist
+        run: |
+          mkdir -p dist/tony-kansai
+          cp -r tony-kansai-src/dist/. dist/tony-kansai/
+
+      # ── Deploy to GitHub Pages ─────────────────────────────
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    if: github.ref == 'refs/heads/main' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
