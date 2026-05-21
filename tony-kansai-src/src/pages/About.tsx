@@ -16,7 +16,7 @@ export default function About() {
     <>
       <PageSEO
         title="About the Team · Tony Hanma & Kansai Guide"
-        description="Meet Tony Hanma, Johnny Coletta and Larion — private guides with 400+ tours across Osaka, Kyoto & Kansai since 2018. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
+        description="Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto & Kansai. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
         path="/about"
       />
       <section className="relative pt-32 pb-16 overflow-hidden">
@@ -56,7 +56,6 @@ export default function About() {
 
                   <div className="space-y-2.5 text-sm text-white/60 mb-7">
                     <div className="flex items-center gap-2"><MapPin size={13} className="text-japan-red" />{a.based}</div>
-                    <div className="flex items-center gap-2"><Clock size={13} className="text-japan-red" />{a.guiding}</div>
                     <div className="flex items-center gap-2"><Star size={13} className="text-japan-red" fill="currentColor" />{a.rating}</div>
                   </div>
 
@@ -90,7 +89,7 @@ export default function About() {
 
               <ExplodeIn index={2}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. Since 2018, he has guided over 200 private tours, sharing hidden temples, forgotten markets, and the living traditions that guidebooks miss.
+                  Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. He shares hidden temples, forgotten markets, and the living traditions that guidebooks miss.
                 </p>
               </ExplodeIn>
 

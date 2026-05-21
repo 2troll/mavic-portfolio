@@ -37,7 +37,7 @@ export default function Home() {
     <>
       <PageSEO
         title="Private Japan Tour Guide · Osaka, Kyoto & Kansai"
-        description="100% private guided tours in Osaka, Kyoto, Nara & Kansai with expert local guides. English, Spanish, Arabic, Czech & Russian. ★5.0 · 400+ tours."
+        description="100% private guided tours in Osaka, Kyoto, Nara & Kansai with expert local guides. English, Spanish, Arabic, Czech & Russian. ★5.0 rated."
         path="/"
       />
       <CurtainReveal />
@@ -144,8 +144,7 @@ export default function Home() {
                     <div className="text-2xl font-serif font-bold text-gradient-japan">{value}</div>
                     <div className="text-xs text-white/45 tracking-wide font-medium">
                       {i === 0 ? t.stats.destinations
-                        : i === 1 ? t.stats.tours
-                        : i === 2 ? t.stats.languages
+                        : i === 1 ? t.stats.languages
                         : t.stats.private}
                     </div>
                   </div>
@@ -416,7 +415,7 @@ export default function Home() {
                 </svg>
               ))}
             </div>
-            <p className="text-white/40 text-sm">5.0 average · 400+ tours completed</p>
+            <p className="text-white/40 text-sm">5.0 average across all reviews</p>
           </FadeUp>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">

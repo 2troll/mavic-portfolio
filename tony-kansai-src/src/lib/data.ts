@@ -244,7 +244,6 @@ export const FAQS = [
 
 export const STATS = [
   { value: '7', label: 'Destinations', icon: '📍' },
-  { value: '400+', label: 'Tours Completed', icon: '⭐' },
   { value: '5', label: 'Languages', icon: '🌐' },
   { value: '100%', label: 'Private', icon: '🔒' },
 ]

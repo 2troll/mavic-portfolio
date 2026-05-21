@@ -180,7 +180,7 @@ const en: Tr = {
   },
 
   hero: {
-    badge: 'Private Kansai Guide · Since 2018',
+    badge: 'Private Kansai Guide',
     headline: "Discover Japan's True Soul",
     sub: 'Intimate, private tours through Osaka, Kyoto, Nara, and beyond — guided by Tony Hanma, a passionate local who brings every hidden story to life.',
     cta_wa: 'Chat on WhatsApp',
@@ -189,7 +189,6 @@ const en: Tr = {
 
   stats: {
     destinations: '7 Destinations',
-    tours: '200+ Tours',
     languages: '5 Languages',
     private: '100% Private',
   },
@@ -241,7 +240,7 @@ const en: Tr = {
     story_heading: "A Local's Passion, Shared With the World",
     private_guide: 'Private Guide',
     based: 'Based in Osaka',
-    guiding: 'Since 2018',
+    guiding: '',
     rating: '5-Star Rated',
     speaks: 'Speaks 5 Languages',
     cta_wa: 'Message Tony',
@@ -341,7 +340,7 @@ const es: Tr = {
   },
 
   hero: {
-    badge: 'Guía Privado de Kansai · Desde 2018',
+    badge: 'Guía Privado de Kansai',
     headline: 'Descubre el Alma Verdadera de Japón',
     sub: 'Tours privados e íntimos por Osaka, Kioto, Nara y más allá — guiados por Tony Hanma, un apasionado local que da vida a cada historia oculta.',
     cta_wa: 'Chatear por WhatsApp',
@@ -350,7 +349,6 @@ const es: Tr = {
 
   stats: {
     destinations: '7 Destinos',
-    tours: '+200 Tours',
     languages: '5 Idiomas',
     private: '100% Privado',
   },
@@ -402,7 +400,7 @@ const es: Tr = {
     story_heading: 'La Pasión de un Local, Compartida con el Mundo',
     private_guide: 'Guía Privado',
     based: 'Con base en Osaka',
-    guiding: 'Desde 2018',
+    guiding: '',
     rating: 'Valoración 5 Estrellas',
     speaks: 'Habla 5 Idiomas',
     cta_wa: 'Escribir a Tony',
@@ -502,7 +500,7 @@ const ar: Tr = {
   },
 
   hero: {
-    badge: 'مرشد كانساي الخاص · منذ 2018',
+    badge: 'مرشد كانساي الخاص',
     headline: 'اكتشف الروح الحقيقية لليابان',
     sub: 'جولات خاصة وحميمة عبر أوساكا وكيوتو ونارا وما وراءها — بقيادة توني هانما، المحلي الشغوف الذي يُحيي كل قصة مخفية.',
     cta_wa: 'تواصل عبر واتساب',
@@ -511,7 +509,6 @@ const ar: Tr = {
 
   stats: {
     destinations: '٧ وجهات',
-    tours: '+٢٠٠ جولة',
     languages: '٥ لغات',
     private: '١٠٠٪ خاص',
   },
@@ -563,7 +560,7 @@ const ar: Tr = {
     story_heading: 'شغف المحلي، يُشارك مع العالم',
     private_guide: 'مرشد خاص',
     based: 'مقيم في أوساكا',
-    guiding: 'منذ 2018',
+    guiding: '',
     rating: 'تقييم 5 نجوم',
     speaks: 'يتحدث 5 لغات',
     cta_wa: 'راسل توني',
@@ -663,7 +660,7 @@ const cs: Tr = {
   },
 
   hero: {
-    badge: 'Soukromý průvodce Kansai · Od roku 2018',
+    badge: 'Soukromý průvodce Kansai',
     headline: 'Objevte pravou duši Japonska',
     sub: 'Soukromé a intimní výlety přes Ósaku, Kjóto, Naru a dál — vedené Tonym Hanmou, vášnivým místním průvodcem, který dává každý skrytý příběh k životu.',
     cta_wa: 'Napsat přes WhatsApp',
@@ -672,7 +669,6 @@ const cs: Tr = {
 
   stats: {
     destinations: '7 destinací',
-    tours: '200+ výletů',
     languages: '5 jazyků',
     private: '100% soukromé',
   },
@@ -724,7 +720,7 @@ const cs: Tr = {
     story_heading: 'Vášeň místního, sdílená s celým světem',
     private_guide: 'Soukromý průvodce',
     based: 'Sídlí v Ósace',
-    guiding: 'Od roku 2018',
+    guiding: '',
     rating: 'Hodnocení 5 hvězd',
     speaks: 'Mluví 5 jazyky',
     cta_wa: 'Napsat Tonymu',
@@ -824,7 +820,7 @@ const ru: Tr = {
   },
 
   hero: {
-    badge: 'Личный гид по Кансай · С 2018 года',
+    badge: 'Личный гид по Кансай',
     headline: 'Откройте истинную душу Японии',
     sub: 'Частные, камерные туры по Осаке, Киото, Наре и не только — под руководством Тони Ханмы, страстного местного гида, который оживляет каждую скрытую историю.',
     cta_wa: 'Написать в WhatsApp',
@@ -833,7 +829,6 @@ const ru: Tr = {
 
   stats: {
     destinations: '7 направлений',
-    tours: '200+ туров',
     languages: '5 языков',
     private: '100% приватно',
   },
@@ -885,7 +880,7 @@ const ru: Tr = {
     story_heading: 'Страсть местного жителя, открытая миру',
     private_guide: 'Личный гид',
     based: 'Базируется в Осаке',
-    guiding: 'С 2018 года',
+    guiding: '',
     rating: 'Оценка 5 звёзд',
     speaks: 'Говорит на 5 языках',
     cta_wa: 'Написать Тони',
