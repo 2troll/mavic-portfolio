@@ -39,7 +39,7 @@ jobs:
       - name: SPA fallback
         run: cp dist/index.html dist/200.html
 
-      # ── Build Tony Kansai Guide ────────────────────────────
+      # ── Build Tony Kansai Guide (root of domain) ──────────
       - name: Install tony-kansai dependencies
         run: npm install --legacy-peer-deps
         working-directory: tony-kansai-src
@@ -54,16 +54,17 @@ jobs:
         run: |
           sed -i 's/<script type="module" crossorigin>/<script type="module">/g' tony-kansai-src/dist/index.html
 
-      - name: Copy tony-kansai into dist
+      - name: Prepare deploy folder
         run: |
-          mkdir -p dist/tony-kansai
-          cp -r tony-kansai-src/dist/. dist/tony-kansai/
+          mkdir -p deploy
+          cp -r tony-kansai-src/dist/. deploy/
+          echo "tonykansaiguide.com" > deploy/CNAME
 
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: dist
+          path: deploy
 
   deploy:
     needs: build
