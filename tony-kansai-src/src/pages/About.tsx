@@ -18,6 +18,7 @@ export default function About() {
         title="About the Team · Tony Hanma & Kansai Guide"
         description="Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto & Kansai. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
         path="/about"
+        breadcrumb={[{ name: 'About', path: '/about' }]}
       />
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />

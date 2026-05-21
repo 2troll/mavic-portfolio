@@ -59,6 +59,7 @@ export default function TourDetail() {
         description={`${tour.subtitle} — Private guided tour with Tony Kansai Guide. ${tour.duration}. Guided in English, Spanish, Arabic, Czech & Russian.`}
         path={`/tours/${tour.id}`}
         ogImage={tour.imageHero}
+        breadcrumb={[{ name: 'Tours', path: '/tours' }, { name: tour.title, path: `/tours/${tour.id}` }]}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(tourSchema)}</script>

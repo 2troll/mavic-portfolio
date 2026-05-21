@@ -39,11 +39,30 @@
     <p>Version history — cinematic components & 3D simulations</p>
   </header>
 
-  <!-- v23 -->
+  <!-- v24 -->
   <div class="version current">
     <div class="v-header">
-      <span class="v-num">v23</span>
+      <span class="v-num">v24</span>
       <span class="badge current">Current</span>
+      <span class="v-date">May 2026</span>
+    </div>
+    <div class="v-title">Full SEO — hreflang · FAQ rich snippets · AggregateRating fix · BreadcrumbList</div>
+    <ul>
+      <li><span class="tag new">new</span><strong>hreflang tags</strong> — Added <code>&lt;link rel="alternate" hreflang="..."&gt;</code> for EN, ES, AR, CS, RU and <code>x-default</code> in <code>index.html</code>. Signals multilingual content to Google and prevents duplicate-content penalties across languages.</li>
+      <li><span class="tag fix">fix</span><strong>AggregateRating reviewCount</strong> — Changed from fabricated <code>"400"</code> to <code>"5"</code> matching actual published testimonials. Google may demote pages with inflated review counts.</li>
+      <li><span class="tag fix">fix</span><strong>Schema type upgrade</strong> — Changed <code>@type: "TouristInformationCenter"</code> to <code>["LocalBusiness", "TouristInformationCenter"]</code> for richer Google Knowledge Panel eligibility.</li>
+      <li><span class="tag new">new</span><strong>FAQPage schema in index.html</strong> — Top 5 Q&amp;A pairs added as a second <code>application/ld+json</code> block on the home page. Enables FAQ rich results (expandable answers) in Google SERPs for the root URL.</li>
+      <li><span class="tag new">new</span><strong>og:locale:alternate</strong> — Added <code>es_ES</code>, <code>ar_SA</code>, <code>cs_CZ</code>, <code>ru_RU</code> alternate locale tags to <code>index.html</code> and to <code>PageSEO.tsx</code> so every page broadcasts multilingual signals to social crawlers.</li>
+      <li><span class="tag new">new</span><strong>BreadcrumbList schema</strong> — <code>PageSEO.tsx</code> accepts optional <code>breadcrumb</code> prop and renders <code>BreadcrumbList</code> JSON-LD. Wired to Tours, TourDetail, Pricing, About, FAQ, Booking pages. Enables breadcrumb display in Google search results.</li>
+      <li><span class="tag fix">fix</span><strong>Remaining surge.sh URLs</strong> — canonical, og:url and JSON-LD <code>url</code> in <code>index.html</code> updated from <code>tonykansaiguide.surge.sh</code> to <code>tonykansaiguide.com</code>.</li>
+    </ul>
+  </div>
+
+  <!-- v23 -->
+  <div class="version">
+    <div class="v-header">
+      <span class="v-num">v23</span>
+      <span class="badge old">Released</span>
       <span class="v-date">May 2026</span>
     </div>
     <div class="v-title">Dominio propio · T&C · Limpieza de datos · Deploy en producción</div>

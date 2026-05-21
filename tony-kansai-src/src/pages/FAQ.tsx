@@ -30,6 +30,7 @@ export default function FAQ() {
         title="FAQ · Private Japan Tour Guide Kansai"
         description="Common questions about private tours in Osaka, Kyoto & Kansai — languages, cancellation, transport, restaurant bookings and more."
         path="/faq"
+        breadcrumb={[{ name: 'FAQ', path: '/faq' }]}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>

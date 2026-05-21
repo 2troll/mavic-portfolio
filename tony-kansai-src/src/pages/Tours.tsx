@@ -13,6 +13,7 @@ export default function Tours() {
         title="Private Tours in Osaka, Kyoto & Kansai"
         description="7 exclusive private tours in Kansai Japan — Osaka food circuits, hidden Kyoto temples, Kōyasan pilgrimage and more. Guided in English, Spanish, Arabic, Czech & Russian."
         path="/tours"
+        breadcrumb={[{ name: 'Tours', path: '/tours' }]}
       />
       <section className="relative pt-28 pb-4 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />

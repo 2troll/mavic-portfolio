@@ -11,11 +11,19 @@
     <title>Tony Hanma — Private Kansai Guide · Japan</title>
     <meta name="description" content="100% private tours in Osaka, Kyoto, Nara &amp; Kansai. Expert guides in English, Spanish, Arabic, Czech and Russian. Book your Japan experience today." />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://tonykansaiguide.surge.sh/" />
+    <link rel="canonical" href="https://tonykansaiguide.com/" />
+
+    <!-- hreflang — multilingual, single-URL SPA -->
+    <link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/" />
+    <link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/" />
+    <link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/" />
+    <link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/" />
+    <link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/" />
 
     <!-- Open Graph (Facebook, WhatsApp, LinkedIn preview) -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://tonykansaiguide.surge.sh/" />
+    <meta property="og:url" content="https://tonykansaiguide.com/" />
     <meta property="og:title" content="Tony Hanma — Private Japan Guide · Kansai" />
     <meta property="og:description" content="100% private tours in Osaka, Kyoto &amp; Kansai. Guided in English, Spanish, Arabic, Czech and Russian. The Japan you deserve." />
     <meta property="og:image" content="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&h=630&q=80" />
@@ -23,6 +31,10 @@
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="Fushimi Inari torii gates at dawn in Kyoto, Japan" />
     <meta property="og:locale" content="en_US" />
+    <meta property="og:locale:alternate" content="es_ES" />
+    <meta property="og:locale:alternate" content="ar_SA" />
+    <meta property="og:locale:alternate" content="cs_CZ" />
+    <meta property="og:locale:alternate" content="ru_RU" />
     <meta property="og:site_name" content="Tony Kansai Guide" />
 
     <!-- Twitter Card (also used by iMessage, Telegram, etc.) -->
@@ -31,21 +43,21 @@
     <meta name="twitter:description" content="100% private tours in Osaka, Kyoto &amp; Kansai. Guided in English, Spanish, Arabic, Czech and Russian." />
     <meta name="twitter:image" content="https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&h=630&q=80" />
 
-    <!-- JSON-LD structured data (Google rich results) -->
+    <!-- JSON-LD: LocalBusiness + TourOperator -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
-      "@type": "TouristInformationCenter",
+      "@type": ["LocalBusiness", "TouristInformationCenter"],
       "name": "Tony Hanma Private Kansai Tours",
       "description": "100% private guided tours in Osaka, Kyoto, Nara and Kansai Japan in English, Spanish, Arabic, Czech and Russian.",
-      "url": "https://tonykansaiguide.surge.sh",
+      "url": "https://tonykansaiguide.com",
       "telephone": "+34634193106",
       "priceRange": "¥¥¥",
       "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&h=630&q=80",
       "aggregateRating": {
         "@type": "AggregateRating",
         "ratingValue": "5.0",
-        "reviewCount": "400",
+        "reviewCount": "5",
         "bestRating": "5"
       },
       "areaServed": [
@@ -62,6 +74,41 @@
         { "@type": "Language", "name": "Czech" },
         { "@type": "Language", "name": "Russian" },
         { "@type": "Language", "name": "Japanese" }
+      ]
+    }
+    </script>
+
+    <!-- JSON-LD: FAQPage (home page quick answers for Google rich results) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "Are tours truly private?",
+          "acceptedAnswer": { "@type": "Answer", "text": "100% private — your booking is exclusively yours. No other groups, no shared coaches. Just you and Tony with full attention on your experience." }
+        },
+        {
+          "@type": "Question",
+          "name": "How far in advance should I book?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tony recommends 2–3 weeks ahead for weekends and peak seasons (March–May cherry blossom, October–November autumn). Weekday slots often available 1 week out." }
+        },
+        {
+          "@type": "Question",
+          "name": "What is the cancellation policy?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Full refund 72+ hours before the tour. 50% refund within 48 hours. No refund within 24 hours. Tony is flexible with reschedules — just reach out via WhatsApp." }
+        },
+        {
+          "@type": "Question",
+          "name": "Which languages do the guides speak?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tony guides in English, Spanish and Arabic. Johnny guides in English and Czech. Larion guides in Russian, Japanese, English and Spanish." }
+        },
+        {
+          "@type": "Question",
+          "name": "What areas does Tony cover?",
+          "acceptedAnswer": { "@type": "Answer", "text": "Tony covers the full Kansai region: Osaka, Kyoto, Nara, Kobe, Himeji, Arashiyama, Kurama, Fushimi, Kōyasan, and more." }
+        }
       ]
     }
     </script>

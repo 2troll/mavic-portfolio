@@ -75,6 +75,7 @@ export default function Booking() {
         title="Book a Private Japan Tour · Kansai Guide"
         description="Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto & Kansai from ¥75,000 per group."
         path="/booking"
+        breadcrumb={[{ name: 'Book', path: '/booking' }]}
       />
       {/* Header */}
       <section className="relative pt-32 pb-12 overflow-hidden">

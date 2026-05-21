@@ -18,6 +18,7 @@ export default function Pricing() {
         title="Pricing · Private Japan Tours from ¥75,000"
         description="Transparent pricing for private guided tours in Osaka, Kyoto & Kansai. From ¥75,000 per group — half day to full day. No hidden fees."
         path="/pricing"
+        breadcrumb={[{ name: 'Pricing', path: '/pricing' }]}
       />
       <section className="relative pt-32 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface" />
