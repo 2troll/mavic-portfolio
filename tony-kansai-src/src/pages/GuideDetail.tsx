@@ -1,7 +1,7 @@
 import { useParams, Link, Navigate } from 'react-router-dom'
 import { motion } from 'framer-motion'
 import { ArrowLeft, MessageCircle, Star, Globe, Quote } from 'lucide-react'
-import { GUIDES, TOURS, TESTIMONIALS } from '../lib/data'
+import { GUIDES, TOURS } from '../lib/data'
 import { PageSEO } from '../components/PageSEO'
 
 const DETAIL: Record<string, {
@@ -68,7 +68,6 @@ export default function GuideDetail() {
     .map(h => TOURS.find(t => t.title === h))
     .filter(Boolean) as typeof TOURS
 
-  const guideTestimonials = TESTIMONIALS.filter(t => guide.highlights.includes(t.tour))
   const waMsg = encodeURIComponent(
     `Hi! I'd like to book a private tour with ${guide.name}. Could you tell me about availability?`
   )
@@ -212,28 +211,6 @@ export default function GuideDetail() {
               </motion.div>
             )}
 
-            {/* Testimonials */}
-            {guideTestimonials.length > 0 && (
-              <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <h3 className="font-semibold text-white mb-5">What Guests Say</h3>
-                <div className="space-y-4">
-                  {guideTestimonials.slice(0, 2).map((t, i) => (
-                    <div key={i} className="glass rounded-2xl border border-white/6 p-5">
-                      <div className="flex gap-0.5 mb-3">
-                        {Array.from({ length: t.rating }).map((_, j) => (
-                          <Star key={j} size={12} className="text-japan-gold" fill="currentColor" />
-                        ))}
-                      </div>
-                      <p className="text-white/65 text-sm leading-relaxed mb-4">"{t.text}"</p>
-                      <div className="flex items-center justify-between text-xs text-white/30">
-                        <span className="font-medium text-white/50">{t.name}</span>
-                        <span>{t.country} · {t.tour}</span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </motion.div>
-            )}
           </div>
 
           {/* Right: sidebar */}

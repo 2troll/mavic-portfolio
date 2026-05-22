@@ -292,43 +292,7 @@ export const GUIDES = [
   },
 ]
 
-export const TESTIMONIALS = [
-  {
-    name: 'Sofía R.',
-    country: 'Spain 🇪🇸',
-    tour: 'Hidden Kyoto',
-    rating: 5,
-    text: 'Tony nos llevó a lugares que ni sabíamos que existían. Fushimi Inari al amanecer, sin nadie más — fue mágico. El mejor día de todo nuestro viaje a Japón.',
-  },
-  {
-    name: 'James K.',
-    country: 'UK 🇬🇧',
-    tour: 'Kōyasan Pilgrimage',
-    rating: 5,
-    text: 'Larion arranged a private meeting with a monk that I will never forget. The lantern walk through Okunoin at dusk was genuinely spiritual. Completely unforgettable.',
-  },
-  {
-    name: 'Алексей В.',
-    country: 'Russia 🇷🇺',
-    tour: 'Osaka Food Circuit',
-    rating: 5,
-    text: 'Тони знает каждый переулок Осаки. Мы попробовали блюда, которых не найдёшь ни в одном путеводителе. Лучший гид, которого я встречал в жизни.',
-  },
-  {
-    name: 'Markéta H.',
-    country: 'Czech Republic 🇨🇿',
-    tour: 'Mountain Hiking',
-    rating: 5,
-    text: 'Johnny nás provedl trasami, kde nebyl jediný turista. Arashijamský bambusový háj v pět ráno — absolutní tišina. Tohle zažít nejde jinak než soukromě.',
-  },
-  {
-    name: 'Omar A.',
-    country: 'UAE 🇦🇪',
-    tour: 'Osaka × Kyoto Grand Day',
-    rating: 5,
-    text: 'Tony speaks perfect Arabic and made us feel at home throughout Japan. His knowledge of halal options and cultural sensitivities made this trip truly comfortable for our family.',
-  },
-]
+export const TESTIMONIALS: { name: string; country: string; tour: string; rating: number; text: string }[] = []
 
 export const LANGUAGES = [
   { flag: '🇬🇧', name: 'English', code: 'EN' },
