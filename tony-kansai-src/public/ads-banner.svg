@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="628" viewBox="0 0 1200 628">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#1a0808" stop-opacity="1"/>
+      <stop offset="50%" stop-color="#0C0D16" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#0C0D16" stop-opacity="1"/>
+    </linearGradient>
+    <linearGradient id="rg" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#E53030"/>
+      <stop offset="100%" stop-color="#FF6B35"/>
+    </linearGradient>
+    <linearGradient id="pg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#E53030"/>
+      <stop offset="100%" stop-color="#FF6B35" stop-opacity="0.4"/>
+    </linearGradient>
+    <radialGradient id="rglow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E53030" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#E53030" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="628" fill="#0C0D16"/>
+  <rect width="1200" height="628" fill="url(#bgGrad)"/>
+
+  <!-- Left accent bar -->
+  <rect x="72" y="140" width="6" height="348" rx="3" fill="url(#rg)"/>
+
+  <!-- Label chip -->
+  <rect x="100" y="140" width="262" height="38" rx="19" fill="#E53030" fill-opacity="0.14" stroke="#E53030" stroke-opacity="0.4" stroke-width="1"/>
+  <text x="231" y="164" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#E53030" text-anchor="middle" letter-spacing="2.5">PRIVATE JAPAN TOURS</text>
+
+  <!-- Main headline -->
+  <text x="100" y="268" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="88" font-weight="800" fill="#FFFFFF">Your Private</text>
+  <text x="100" y="364" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="88" font-weight="800" fill="#FFFFFF">Japan Guide</text>
+
+  <!-- Sub -->
+  <text x="100" y="422" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="24" font-weight="400" fill="rgba(255,255,255,0.50)">Osaka · Kyoto · Nara · Kōyasan</text>
+
+  <!-- Languages -->
+  <text x="100" y="460" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="17" font-weight="300" fill="rgba(255,255,255,0.32)">English · Español · العربية · Čeština · Русский</text>
+
+  <!-- CTA Button -->
+  <rect x="100" y="482" width="260" height="58" rx="12" fill="url(#rg)"/>
+  <text x="230" y="517" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="19" font-weight="700" fill="#FFFFFF" text-anchor="middle">Book via WhatsApp</text>
+
+  <!-- Right side glow -->
+  <ellipse cx="980" cy="314" rx="240" ry="240" fill="url(#rglow)"/>
+
+  <!-- Mini torii right side -->
+  <rect x="840" y="194" width="280" height="26" rx="4" fill="url(#rg)"/>
+  <rect x="826" y="202" width="16" height="18" rx="3" fill="#FF6B35"/>
+  <rect x="1118" y="202" width="16" height="18" rx="3" fill="#FF6B35"/>
+  <rect x="868" y="238" width="224" height="16" rx="3" fill="url(#rg)"/>
+  <rect x="878" y="238" width="24" height="196" rx="4" fill="url(#pg)"/>
+  <rect x="1058" y="238" width="24" height="196" rx="4" fill="url(#pg)"/>
+
+  <!-- Brand bottom right -->
+  <text x="840" y="488" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="rgba(255,255,255,0.55)" letter-spacing="2.5">TONY KANSAI GUIDE</text>
+  <text x="840" y="516" font-family="'Helvetica Neue', Helvetica, Arial, sans-serif" font-size="15" font-weight="400" fill="#E53030" fill-opacity="0.8">tonykansaiguide.com</text>
+</svg>
