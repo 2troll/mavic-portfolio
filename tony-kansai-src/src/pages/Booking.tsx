@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { ChevronLeft, ChevronRight, MessageCircle, Check, Clock, Users, MapPin, Minus, Plus } from 'lucide-react'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -68,6 +68,12 @@ export default function Booking() {
 
   const isSelected = (d: number) =>
     selectedDate?.y === viewYear && selectedDate?.m === viewMonth && selectedDate?.d === d
+
+  useEffect(() => {
+    if (typeof window !== 'undefined' && (window as any).gtag) {
+      (window as any).gtag('event', 'conversion', { send_to: 'AW-18180560747/lx69CLfxrLEcEOuuld1D' })
+    }
+  }, [])
 
   return (
     <>
