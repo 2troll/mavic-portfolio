@@ -19,6 +19,7 @@ import Terms from './pages/Terms'
 import GuideDetail from './pages/GuideDetail'
 import Admin from './pages/Admin'
 import Hiking from './pages/Hiking'
+import HikingDetail from './pages/HikingDetail'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
@@ -80,6 +81,7 @@ function Layout() {
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:id" element={<TourDetail />} />
           <Route path="/hiking" element={<Hiking />} />
+          <Route path="/hiking/:id" element={<HikingDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/faq" element={<FAQ />} />

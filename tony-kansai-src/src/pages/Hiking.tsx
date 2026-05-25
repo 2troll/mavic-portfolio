@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import { Mountain, Clock, MapPin, Users, MessageCircle, ChevronDown, ChevronUp, Calendar, Filter } from 'lucide-react'
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { PageSEO } from '../components/PageSEO'
@@ -166,20 +167,28 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
         </AnimatePresence>
 
         {/* CTA */}
-        {route.available ? (
-          <a
-            href={`${WHATSAPP}?text=${waMsg}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-xs font-semibold hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-japan-red/25"
+        <div className="flex gap-2">
+          <Link
+            to={`/hiking/${route.id}`}
+            className="flex-1 py-2.5 rounded-xl border border-white/10 text-center text-xs text-white/55 hover:text-white hover:border-white/25 transition-all font-medium"
           >
-            <MessageCircle size={12} /> Hire Tony as Guide
-          </a>
-        ) : (
-          <div className="flex items-center justify-center gap-2 w-full py-2.5 rounded-xl border border-white/8 text-white/25 text-xs font-medium">
-            Extreme route — contact for consultation
-          </div>
-        )}
+            Details
+          </Link>
+          {route.available ? (
+            <a
+              href={`${WHATSAPP}?text=${waMsg}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-xs font-semibold hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-japan-red/25"
+            >
+              <MessageCircle size={11} /> Book Guide
+            </a>
+          ) : (
+            <div className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-white/8 text-white/25 text-xs font-medium">
+              Consultation
+            </div>
+          )}
+        </div>
       </div>
     </motion.div>
   )
