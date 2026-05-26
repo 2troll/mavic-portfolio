@@ -46,6 +46,71 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/hiking</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/mt-kongo</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/mt-wakakusa</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/fukuchiyama-tunnels</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/mt-ikoma</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/minoh-falls</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/fushimi-inari</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/ponpon-mountain</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/zato-valley</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/hoshi-no-buranko</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/sky-house-daito</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/mt-hiei</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/hiking/mt-maya</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
