@@ -136,7 +136,7 @@ export function Slider3D() {
                   <p className="text-sm text-white/55 leading-relaxed mb-5 line-clamp-2">{tour.description}</p>
                   <div className="flex gap-3">
                     <Link
-                      to={`/tours/${tour.id}`}
+                      to={tour.id === 'mountain-hiking' ? '/hiking' : `/tours/${tour.id}`}
                       className="flex-1 py-3 rounded-xl border border-white/10 text-center text-sm text-white/70 hover:text-white hover:border-japan-red/40 transition-all font-medium"
                     >
                       Details

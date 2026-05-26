@@ -271,7 +271,7 @@ export default function Home() {
           >
             {TOURS.map((tour, i) => (
               <motion.div key={tour.id} variants={cardReveal} custom={i}>
-                <Link to={`/tours/${tour.id}`} className="group block h-full">
+                <Link to={tour.id === 'mountain-hiking' ? '/hiking' : `/tours/${tour.id}`} className="group block h-full">
                   <Card3D glowColor={`${tour.accent}20`} className="h-full">
                     <div className="rounded-2xl overflow-hidden h-full flex flex-col border border-white/6 bg-japan-surface/60">
                       <div className="relative h-48 overflow-hidden">
