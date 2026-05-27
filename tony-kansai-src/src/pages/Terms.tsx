@@ -123,6 +123,58 @@ export default function Terms() {
               </p>
             </Section>
 
+            <div className="border-t border-white/8 pt-8 mt-8">
+              <p className="text-xs font-semibold text-japan-red uppercase tracking-widest mb-6">⛰️ Hiking Guide — Términos adicionales</p>
+
+              <Section title="12. Servicio de guía de montaña">
+                <p>Las rutas de senderismo son conducidas personalmente por Tony Hanma como guía privado de montaña. No somos una empresa de escalada certificada ni un operador de deportes de aventura con licencia. El servicio consiste en acompañamiento, orientación y narración de los parajes visitados.</p>
+                <p className="mt-2">Cada ruta indica el nivel de dificultad (Easy / Moderate / Hard / Technical / Expert Only). El cliente es responsable de evaluar honestamente su condición física antes de reservar. Si existe cualquier duda médica, consulte a su médico antes de confirmar.</p>
+              </Section>
+
+              <Section title="13. Seguridad y exención de responsabilidad en montaña">
+                <p>Las rutas de senderismo conllevan riesgos inherentes: terreno irregular, piedras sueltas, pendientes pronunciadas, exposición al sol, lluvia, niebla o frío extremo. El cliente acepta y comprende estos riesgos al confirmar la reserva.</p>
+                <div className="mt-3 space-y-1.5">
+                  <Li label="Condición física">El cliente confirma que se encuentra en condición física adecuada para la ruta reservada.</Li>
+                  <Li label="Equipo">El cliente es responsable de llevar el equipo indicado en la página de la ruta (calzado de senderismo, agua, capas de ropa, etc.).</Li>
+                  <Li label="Emergencias">En caso de emergencia en montaña, se llamará al número de emergencias de Japón (110 policía / 119 ambulancia). El cliente asume los costes de rescate si los hubiera.</Li>
+                  <Li label="Seguro">Se recomienda encarecidamente contratar un seguro de viaje con cobertura de rescate en montaña antes de realizar cualquier ruta.</Li>
+                </div>
+                <p className="mt-3">Tony Kansai Guide no acepta ninguna responsabilidad por lesiones, accidentes, pérdida de objetos personales o situaciones de emergencia ocurridas durante o después de la ruta de senderismo.</p>
+              </Section>
+
+              <Section title="14. Cancelación por condiciones meteorológicas">
+                <p>Las rutas de senderismo pueden cancelarse o modificarse por condiciones climatológicas adversas (tormenta, nieve intensa, aviso de tifón, senderos cerrados por las autoridades). En estos casos:</p>
+                <div className="mt-2 space-y-2">
+                  <div className="flex gap-3 items-start">
+                    <span className="w-36 flex-shrink-0 text-japan-gold font-medium">Cancelación por clima</span>
+                    <span>Reembolso completo de cualquier depósito pagado. Sin penalización.</span>
+                  </div>
+                  <div className="flex gap-3 items-start">
+                    <span className="w-36 flex-shrink-0 text-japan-orange font-medium">Ruta alternativa</span>
+                    <span>Si ambas partes acuerdan una ruta alternativa de nivel similar, el precio original se mantiene.</span>
+                  </div>
+                </div>
+                <p className="mt-2">La decisión de cancelar por seguridad corresponde al guía. Su criterio prevalece sobre la preferencia del cliente.</p>
+              </Section>
+
+              <Section title="15. Contratos y confirmación de reserva">
+                <p>Para reservas de senderismo de alto nivel (Hard, Technical, Expert Only) o grupos de más de 4 personas, se puede solicitar un contrato de servicio por escrito. Este documento recoge: nombre del cliente, ruta, fecha, precio acordado, forma de pago, y la exención de responsabilidad firmada.</p>
+                <p className="mt-2">El contrato se genera desde nuestro panel interno y se envía al cliente por WhatsApp en PDF antes del tour. La firma puede realizarse digitalmente (WhatsApp) o en papel el día del encuentro.</p>
+              </Section>
+
+              <Section title="16. Métodos de pago y depósitos">
+                <p>Aceptamos los siguientes métodos de pago para los servicios de senderismo:</p>
+                <div className="mt-3 space-y-1.5">
+                  <Li label="Efectivo">Yenes japoneses (JPY) el día del tour. Método preferido.</Li>
+                  <Li label="Wise">Transferencia internacional vía Wise a cuenta EUR/GBP/USD. Datos facilitados al confirmar reserva.</Li>
+                  <Li label="Transferencia bancaria">Disponible para reservas con más de 7 días de antelación.</Li>
+                  <Li label="Tarjeta">Bajo consulta previa según disponibilidad.</Li>
+                </div>
+                <p className="mt-3">Para rutas Expert Only o Consultation, se puede requerir un <strong className="text-white/80">depósito del 30%</strong> no reembolsable al confirmar la reserva, para cubrir la planificación previa de la ruta.</p>
+                <p className="mt-2">Los precios mostrados en el sitio son orientativos. El precio final se acuerda por WhatsApp y queda confirmado por escrito antes del tour.</p>
+              </Section>
+            </div>
+
             <div className="pt-4 border-t border-white/6 flex flex-col sm:flex-row gap-3">
               <Link
                 to="/"

@@ -442,6 +442,17 @@ export default function Home() {
           </FadeUp>
         </div>
       </section>
+
+      {/* ── LEGAL STRIP ───────────────────────────────────────── */}
+      <section className="py-6 border-t border-white/4">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/25">
+          <span>🔒 Pagos seguros · Sin datos personales almacenados · Comunicación solo por WhatsApp</span>
+          <div className="flex items-center gap-5">
+            <Link to="/privacy" className="hover:text-white/55 transition-colors">Política de Privacidad</Link>
+            <Link to="/terms" className="hover:text-white/55 transition-colors">Términos & Condiciones</Link>
+          </div>
+        </div>
+      </section>
     </>
   )
 }

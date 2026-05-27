@@ -12,7 +12,7 @@ import {
   verifyPassword, changePassword, isAuthed, setAuthed,
   exportJSON, importJSON,
 } from '../lib/adminData'
-import { TOURS } from '../lib/data'
+import { TOURS, HIKING_ROUTES } from '../lib/data'
 import { generateContract, CONTRACT_LANGS, ContractLang } from '../lib/contractPDF'
 
 // ── Constants ─────────────────────────────────────────────────────────────
@@ -40,7 +40,14 @@ const todayStr = () => new Date().toISOString().slice(0, 10)
 const fmtDate = (d: string) => { if (!d) return '—'; const [y, m, day] = d.split('-'); return `${day}/${m}/${y}` }
 const fmtMoney = (n: number) => `¥${n.toLocaleString('ja-JP')}`
 const greet = () => { const h = new Date().getHours(); return h < 12 ? 'Buenos días' : h < 20 ? 'Buenas tardes' : 'Buenas noches' }
-const tourPrice = (name: string) => { const t = TOURS.find(t => t.title === name); return t ? parseInt(t.price.replace(/[^0-9]/g, ''), 10) : 0 }
+const tourPrice = (name: string) => {
+  const t = TOURS.find(t => t.title === name)
+  if (t) return parseInt(t.price.replace(/[^0-9]/g, ''), 10)
+  const clean = name.replace(/^⛰️\s*/, '')
+  const h = HIKING_ROUTES.find(h => h.title === clean)
+  if (h && h.price !== 'Consultation') return parseInt(h.price.replace(/[^0-9]/g, ''), 10)
+  return 0
+}
 
 function emptyForm(): Omit<AdminBooking, 'id' | 'createdAt'> {
   return {
@@ -619,7 +626,14 @@ function FormView({ initial, onSave, onBack }: { initial: AdminBooking | null; o
       <div className="space-y-3">
         <Field label="Tour *">
           <input className={inp} list="tour-opts" value={form.tour} onChange={e => handleTour(e.target.value)} placeholder="Nombre del tour" />
-          <datalist id="tour-opts">{TOURS.map(t => <option key={t.id} value={t.title} />)}</datalist>
+          <datalist id="tour-opts">
+            <optgroup label="Tours ciudad">
+              {TOURS.map(t => <option key={t.id} value={t.title} />)}
+            </optgroup>
+            <optgroup label="Hiking montaña">
+              {HIKING_ROUTES.map(h => <option key={h.id} value={`⛰️ ${h.title}`} />)}
+            </optgroup>
+          </datalist>
         </Field>
         <div className="grid grid-cols-2 gap-3">
           <Field label="Fecha *"><input className={inp} type="date" value={form.date} onChange={e => set('date', e.target.value)} /></Field>

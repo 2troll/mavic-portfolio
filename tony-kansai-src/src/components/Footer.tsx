@@ -9,6 +9,7 @@ export function Footer() {
   const NAV_LINKS = [
     { to: '/', label: t.nav.home },
     { to: '/tours', label: t.nav.tours },
+    { to: '/hiking', label: '⛰️ Hiking' },
     { to: '/about', label: t.nav.about },
     { to: '/pricing', label: t.nav.pricing },
     { to: '/faq', label: t.nav.faq },
