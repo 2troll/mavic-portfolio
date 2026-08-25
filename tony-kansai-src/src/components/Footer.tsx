@@ -44,6 +44,10 @@ export function Footer() {
                   {label}
                 </Link>
               ))}
+              {/* Páginas estáticas, fuera del router: enlace normal, no <Link>. */}
+              <a href="/resenas.html" className="text-sm text-white/55 hover:text-white transition-colors">
+                {t.reviews.title}
+              </a>
             </div>
           </div>
 

@@ -11,6 +11,7 @@ import { Card3D } from '../components/Card3D'
 import { TOURS, STATS, GUIDES, WHATSAPP, LANGUAGES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
 import { PageSEO } from '../components/PageSEO'
+import { GuestReviews } from '../components/GuestReviews'
 
 const PHOTO_TORII = 'https://images.unsplash.com/photo-1524413840807-0c3cb6fa808d?auto=format&fit=crop&q=85&w=900'
 const PHOTO_CASTLE = 'https://images.unsplash.com/photo-1590559899731-a382839e5549?auto=format&fit=crop&q=85&w=900'
@@ -401,6 +402,10 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+      {/* ── GUEST REVIEWS ─────────────────────────────────────── */}
+      {/* No se pinta nada mientras no haya reseñas aprobadas. */}
+      <GuestReviews />
 
       {/* ── CTA STRIP ─────────────────────────────────────────── */}
       <section className="py-20">

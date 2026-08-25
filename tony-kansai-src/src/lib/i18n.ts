@@ -148,6 +148,16 @@ export interface Tr {
     privacy: string;
   };
 
+  reviews: {
+    title: string;
+    subtitle: string;
+    based_on: string;
+    all: string;
+    cta_title: string;
+    cta_body: string;
+    cta_button: string;
+  };
+
   cookie: {
     title: string;
     body: string;
@@ -306,6 +316,16 @@ const en: Tr = {
     rights: 'All rights reserved.',
     replies: 'Replies within a few hours',
     privacy: 'Privacy Policy',
+  },
+
+  reviews: {
+    title: 'Guest Reviews',
+    subtitle: 'Real words from travellers who actually spent the day with us in Kansai.',
+    based_on: 'Based on {n} guest reviews',
+    all: 'Read all reviews',
+    cta_title: 'Travelled with us?',
+    cta_body: 'Tell other travellers about your day — it takes a minute, and you can add a photo.',
+    cta_button: 'Leave your review',
   },
 
   cookie: {
@@ -468,6 +488,16 @@ const es: Tr = {
     privacy: 'Política de Privacidad',
   },
 
+  reviews: {
+    title: 'Reseñas de Clientes',
+    subtitle: 'Palabras de viajeros que pasaron el día con nosotros en Kansai.',
+    based_on: 'Sobre {n} reseñas de clientes',
+    all: 'Ver todas las reseñas',
+    cta_title: '¿Has viajado con nosotros?',
+    cta_body: 'Cuéntale tu día a otros viajeros — es un minuto, y puedes añadir una foto.',
+    cta_button: 'Deja tu reseña',
+  },
+
   cookie: {
     title: 'Usamos cookies',
     body: 'Usamos Google Analytics para entender cómo se usa el sitio. No vendemos ni compartimos datos personales con terceros.',
@@ -626,6 +656,16 @@ const ar: Tr = {
     rights: 'جميع الحقوق محفوظة.',
     replies: 'يرد خلال ساعات قليلة',
     privacy: 'سياسة الخصوصية',
+  },
+
+  reviews: {
+    title: 'آراء الضيوف',
+    subtitle: 'كلمات من مسافرين قضوا يومهم معنا في كانساي.',
+    based_on: 'بناءً على {n} تقييمًا',
+    all: 'اقرأ كل التقييمات',
+    cta_title: 'هل سافرت معنا؟',
+    cta_body: 'احكِ لمسافرين آخرين عن يومك — دقيقة واحدة، ويمكنك إضافة صورة.',
+    cta_button: 'اترك تقييمك',
   },
 
   cookie: {
@@ -788,6 +828,16 @@ const cs: Tr = {
     privacy: 'Zásady ochrany osobních údajů',
   },
 
+  reviews: {
+    title: 'Recenze hostů',
+    subtitle: 'Slova cestovatelů, kteří s námi strávili den v Kansai.',
+    based_on: 'Na základě {n} recenzí',
+    all: 'Přečíst všechny recenze',
+    cta_title: 'Cestovali jste s námi?',
+    cta_body: 'Řekněte ostatním cestovatelům o svém dni — zabere to minutu a můžete přidat fotku.',
+    cta_button: 'Napsat recenzi',
+  },
+
   cookie: {
     title: 'Používáme cookies',
     body: 'Používáme Google Analytics, abychom pochopili, jak návštěvníci web používají. Žádné osobní údaje nejsou prodávány ani sdíleny s třetími stranami.',
@@ -946,6 +996,16 @@ const ru: Tr = {
     rights: 'Все права защищены.',
     replies: 'Отвечает в течение нескольких часов',
     privacy: 'Политика конфиденциальности',
+  },
+
+  reviews: {
+    title: 'Отзывы гостей',
+    subtitle: 'Слова путешественников, которые провели день с нами в Кансае.',
+    based_on: 'На основе {n} отзывов',
+    all: 'Читать все отзывы',
+    cta_title: 'Путешествовали с нами?',
+    cta_body: 'Расскажите другим путешественникам о своём дне — это займёт минуту, и можно добавить фото.',
+    cta_button: 'Оставить отзыв',
   },
 
   cookie: {
