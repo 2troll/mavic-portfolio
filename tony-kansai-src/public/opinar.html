@@ -1,260 +1,269 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Leave a review — Tony Kansai Private Tours</title>
-<meta name="description" content="Share your experience of your private tour in Kyoto, Osaka, Nara or Kobe with Tony Kansai. Rate it, tell your story and add a photo.">
+<title>Bienvenidos a Japón — Tony Kansai</title>
+<meta name="description" content="¿Qué tal tu día en Kansai? Cuéntalo, pon tus estrellas y añade una foto.">
 <meta name="robots" content="noindex">
-<meta property="og:title" content="Leave a review — Tony Kansai Private Tours">
-<meta property="og:description" content="How was your private tour in Kansai? Rate it, tell your story and add a photo.">
+<meta property="og:title" content="Bienvenidos a Japón — Tony Kansai">
+<meta property="og:description" content="¿Qué tal tu día en Kansai? Cuéntalo, pon tus estrellas y añade una foto.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <style>
   :root{
-    --ink:#050508; --ink2:#0C0D16; --card:#12141F; --line:rgba(255,255,255,.09);
-    --wash:#ffffff; --muted:rgba(255,255,255,.52); --shu:#E53030; --kin:#D4A847;
-    --naranja:#FF6B35; --err:#ff6b5e;
+    --ink:#050508; --campo:#12141F;
+    --linea:rgba(255,255,255,.10); --linea2:rgba(255,255,255,.16);
+    --texto:#ffffff; --suave:rgba(255,255,255,.58); --tenue:rgba(255,255,255,.38);
+    --rojo:#E53030; --naranja:#FF6B35; --oro:#D4A847; --err:#ff7a6e;
   }
   *{box-sizing:border-box;}
   [hidden]{display:none!important;}
-  html{scroll-behavior:smooth;}
-  body{margin:0;background:var(--ink);color:var(--wash);
-    font:16px/1.6 "Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+  html{scroll-behavior:smooth;-webkit-text-size-adjust:100%;}
+  body{margin:0;background:var(--ink);color:var(--texto);
+    font:16px/1.65 "Plus Jakarta Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
     -webkit-font-smoothing:antialiased;}
   .serif{font-family:"Cormorant Garamond",Georgia,"Times New Roman",serif;}
-  a{color:var(--kin);}
-  .wrap{max-width:660px;margin:0 auto;padding:0 22px;}
+  a{color:inherit;}
+  .wrap{max-width:620px;margin:0 auto;padding:0 24px;}
 
-  /* Language bar */
-  .langbar{border-bottom:1px solid var(--line);padding:14px 0;}
-  .langbar .wrap{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
-  .langbar button{background:none;border:1px solid var(--line);color:var(--muted);
-    border-radius:100px;padding:6px 14px;font-size:13px;cursor:pointer;
-    font-family:inherit;transition:border-color .15s ease,color .15s ease;}
-  .langbar button:hover{color:var(--wash);border-color:var(--kin);}
-  .langbar button[aria-pressed="true"]{color:var(--ink);background:var(--kin);
-    border-color:var(--kin);font-weight:700;}
+  /* ── Idiomas: discretos. El español manda; el resto está por si acaso. ── */
+  .idiomas{display:flex;justify-content:center;gap:6px;padding:18px 0 0;flex-wrap:wrap;}
+  .idiomas button{background:none;border:0;color:var(--tenue);font:inherit;font-size:13px;
+    padding:5px 11px;border-radius:100px;cursor:pointer;transition:color .15s,background .15s;}
+  .idiomas button:hover{color:var(--texto);}
+  .idiomas button[aria-pressed="true"]{color:var(--texto);background:rgba(255,255,255,.08);
+    font-weight:600;}
+  .idiomas button:focus-visible{outline:2px solid var(--oro);outline-offset:2px;}
 
-  header{padding:46px 0 30px;text-align:center;
-    background:radial-gradient(120% 90% at 50% -20%,rgba(229,48,48,.16),transparent 60%);}
-  .eyebrow{font-size:12px;letter-spacing:.28em;text-transform:uppercase;
-    color:var(--shu);font-weight:700;}
-  header h1{font-size:clamp(30px,6vw,46px);line-height:1.06;margin:14px 0 10px;
-    font-weight:400;text-wrap:balance;}
-  header p{color:var(--muted);margin:0 auto;max-width:48ch;text-wrap:balance;}
+  /* ── Portada ── */
+  header{text-align:center;padding:38px 0 6px;}
+  .marca{font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--rojo);
+    font-weight:700;}
+  header h1{font-size:clamp(40px,10vw,60px);line-height:1.03;margin:16px 0 14px;
+    font-weight:400;letter-spacing:-.015em;text-wrap:balance;}
+  header p{color:var(--suave);font-size:17px;margin:0 auto;max-width:34ch;text-wrap:balance;}
+  .sello{display:inline-flex;align-items:center;gap:7px;margin-top:22px;font-size:13px;
+    color:var(--tenue);}
+  .sello svg{width:14px;height:14px;fill:var(--oro);flex:none;}
 
-  main{padding:12px 0 70px;}
-  .card{background:var(--ink2);border:1px solid var(--line);border-radius:16px;
-    padding:26px 24px;}
-  .field{margin-bottom:22px;}
-  .field:last-child{margin-bottom:0;}
-  label.lbl{display:block;font-size:13px;letter-spacing:.14em;text-transform:uppercase;
-    color:var(--kin);font-weight:700;margin-bottom:8px;}
-  label.lbl .opt{color:var(--muted);font-weight:400;letter-spacing:.04em;
-    text-transform:none;font-size:12px;}
-  input[type=text],input[type=email],select,textarea{
-    width:100%;background:var(--ink);border:1px solid var(--line);border-radius:10px;
-    color:var(--wash);padding:12px 14px;font-family:inherit;line-height:1.5;
-    /* 16 px justos: por debajo de eso, iOS hace zoom cada vez que tocas un campo. */
-    font-size:16px;transition:border-color .15s ease;}
+  /* ── Formulario: sin cajas pesadas, aire entre bloques ── */
+  main{padding:34px 0 80px;}
+  .bloque{padding:26px 0;border-top:1px solid var(--linea);}
+  .bloque:first-of-type{border-top:0;padding-top:6px;}
+  .rotulo{display:block;font-size:15px;font-weight:600;margin-bottom:4px;}
+  .pista{color:var(--tenue);font-size:14px;margin:0 0 14px;}
+  .opcional{color:var(--tenue);font-weight:400;font-size:14px;}
+
+  input[type=text],select,textarea{
+    width:100%;background:var(--campo);border:1px solid transparent;border-radius:14px;
+    color:var(--texto);padding:15px 16px;font-family:inherit;line-height:1.5;
+    /* 16 px justos: por debajo, iOS hace zoom cada vez que se toca un campo. */
+    font-size:16px;transition:border-color .15s,background .15s;}
+  input[type=text]::placeholder,textarea::placeholder{color:rgba(255,255,255,.28);}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--oro);
+    background:#171A28;}
   textarea{min-height:150px;resize:vertical;}
-  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--kin);}
-  input.bad,textarea.bad,.stars.bad{border-color:var(--err);}
-  select{appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--kin) 50%),
-    linear-gradient(135deg,var(--kin) 50%,transparent 50%);
-    background-position:calc(100% - 20px) 22px,calc(100% - 14px) 22px;
-    background-size:6px 6px,6px 6px;background-repeat:no-repeat;padding-right:44px;}
-  .hint{color:var(--muted);font-size:13px;margin-top:7px;}
-  .counter{float:right;font-variant-numeric:tabular-nums;}
-  .msg-err{color:var(--err);font-size:13px;margin-top:7px;display:none;}
-  .msg-err.on{display:block;}
+  .malo{border-color:var(--err)!important;}
+  select{appearance:none;cursor:pointer;
+    background-image:linear-gradient(45deg,transparent 50%,var(--oro) 50%),
+      linear-gradient(135deg,var(--oro) 50%,transparent 50%);
+    background-position:calc(100% - 21px) 25px,calc(100% - 15px) 25px;
+    background-size:6px 6px;background-repeat:no-repeat;padding-right:46px;}
+  .aviso{color:var(--err);font-size:14px;margin-top:9px;display:none;}
+  .aviso.on{display:block;}
+  .cuenta{float:right;color:var(--tenue);font-size:13px;font-variant-numeric:tabular-nums;
+    font-weight:400;}
 
-  /* Stars */
-  .stars{display:inline-flex;gap:4px;border:1px solid transparent;border-radius:10px;
-    padding:2px;}
-  .stars button{background:none;border:none;cursor:pointer;padding:2px;line-height:1;
-    font-size:38px;color:rgba(212,168,71,.26);transition:color .12s ease,transform .12s ease;}
-  .stars button:hover{transform:scale(1.12);}
-  .stars button.lit{color:var(--kin);}
-  .stars button:focus-visible{outline:2px solid var(--kin);outline-offset:2px;border-radius:6px;}
-  .starword{display:inline-block;margin-inline-start:12px;color:var(--muted);font-size:14px;
-    vertical-align:14px;}
+  /* ── Estrellas: grandes y centradas, que apetezca tocarlas ── */
+  .estrellas{display:flex;justify-content:center;gap:6px;margin:4px 0 10px;}
+  .estrellas button{background:none;border:0;padding:4px;cursor:pointer;line-height:1;
+    font-size:44px;color:rgba(212,168,71,.22);
+    transition:color .14s ease,transform .14s ease;}
+  .estrellas button:hover{transform:scale(1.14);}
+  .estrellas button.on{color:var(--oro);}
+  .estrellas button:focus-visible{outline:2px solid var(--oro);outline-offset:3px;
+    border-radius:8px;}
+  .palabra{display:block;text-align:center;min-height:22px;color:var(--oro);font-size:15px;
+    font-weight:600;}
 
-  /* Photo */
-  .drop{border:1px dashed var(--line);border-radius:12px;padding:22px;text-align:center;
-    cursor:pointer;transition:border-color .15s ease,background .15s ease;}
-  .drop:hover,.drop.over{border-color:var(--kin);background:rgba(212,168,71,.06);}
-  .drop .big{font-size:30px;line-height:1;margin-bottom:8px;}
-  .drop .t{color:var(--wash);font-size:15px;}
-  .drop .s{color:var(--muted);font-size:13px;margin-top:4px;}
-  .preview{display:none;margin-top:14px;position:relative;}
-  .preview.on{display:block;}
-  .preview img{width:100%;max-height:320px;object-fit:cover;border-radius:12px;
-    border:1px solid var(--line);display:block;}
-  .preview .rm{position:absolute;top:10px;inset-inline-end:10px;background:rgba(18,16,14,.86);
-    border:1px solid var(--line);color:var(--wash);border-radius:100px;padding:6px 14px;
-    font-size:13px;cursor:pointer;font-family:inherit;}
-  .preview .rm:hover{border-color:var(--shu);color:#fff;background:var(--shu);}
+  /* ── Foto ── */
+  .soltar{border:1px dashed var(--linea2);border-radius:16px;padding:30px 20px;
+    text-align:center;cursor:pointer;transition:border-color .15s,background .15s;}
+  .soltar:hover,.soltar.encima{border-color:var(--oro);background:rgba(212,168,71,.05);}
+  .soltar .icono{font-size:30px;line-height:1;}
+  .soltar .t{margin-top:10px;font-size:15px;}
+  .soltar .s{margin-top:3px;color:var(--tenue);font-size:13px;}
+  .previa{display:none;position:relative;margin-top:6px;}
+  .previa.on{display:block;}
+  .previa img{width:100%;max-height:340px;object-fit:cover;border-radius:16px;display:block;}
+  .previa .quitar{position:absolute;top:12px;inset-inline-end:12px;
+    background:rgba(5,5,8,.8);border:1px solid var(--linea2);
+    color:var(--texto);border-radius:100px;padding:8px 16px;font:inherit;font-size:13px;
+    font-weight:600;cursor:pointer;}
+  .previa .quitar:hover{background:var(--rojo);border-color:var(--rojo);}
+  .lista{color:var(--oro);font-size:14px;margin-top:10px;display:none;}
+  .lista.on{display:block;}
 
-  /* Consent */
-  .consent{display:flex;gap:12px;align-items:flex-start;color:var(--muted);font-size:14px;
-    line-height:1.55;}
-  .consent input{margin:3px 0 0;width:19px;height:19px;accent-color:var(--shu);flex:none;}
+  /* ── Permiso ── */
+  .permiso{display:flex;gap:13px;align-items:flex-start;color:var(--suave);font-size:14px;
+    line-height:1.55;cursor:pointer;}
+  .permiso input{margin:2px 0 0;width:20px;height:20px;accent-color:var(--rojo);flex:none;}
 
-  .submit{width:100%;background:linear-gradient(to right,var(--shu),var(--naranja));
-    color:#fff;border:none;font-weight:700;
-    padding:16px 30px;border-radius:100px;font-size:16px;cursor:pointer;font-family:inherit;
-    box-shadow:0 8px 30px -8px rgba(229,48,48,.55);
-    transition:transform .15s ease,box-shadow .15s ease,opacity .15s ease;}
-  .submit:hover:not(:disabled){transform:translateY(-2px);
-    box-shadow:0 12px 36px -8px rgba(229,48,48,.7);}
-  .submit:disabled{opacity:.55;cursor:default;}
-  .submit:focus-visible{outline:3px solid var(--kin);outline-offset:3px;}
+  /* ── Enviar ── */
+  .enviar{width:100%;border:0;cursor:pointer;font-family:inherit;font-size:17px;
+    font-weight:700;color:#fff;padding:18px 28px;border-radius:16px;
+    background:linear-gradient(100deg,var(--rojo),var(--naranja));
+    box-shadow:0 10px 34px -10px rgba(229,48,48,.6);
+    transition:transform .15s,box-shadow .15s,opacity .15s;}
+  .enviar:hover:not(:disabled){transform:translateY(-2px);
+    box-shadow:0 16px 40px -10px rgba(229,48,48,.75);}
+  .enviar:disabled{opacity:.5;cursor:default;}
+  .enviar:focus-visible{outline:3px solid var(--oro);outline-offset:3px;}
+  .nota{text-align:center;color:var(--tenue);font-size:13px;margin:14px 0 0;}
 
-  /* Trampa anti-bots: invisible sin sacar la página de sitio (ojo en RTL). */
-  input.hp{position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;
+  /* trampa anti-bots: invisible sin descolocar la página (ojo con el RTL) */
+  input.trampa{position:absolute;width:1px;height:1px;padding:0;margin:-1px;border:0;
     overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;}
 
-  /* Result screens */
-  .screen{display:none;text-align:center;padding:16px 0;}
-  .screen.on{display:block;}
-  .screen .icon{font-size:52px;line-height:1;margin-bottom:14px;}
-  .screen h2{font-size:26px;font-weight:400;margin:0 0 10px;}
-  .screen p{color:var(--muted);margin:0 auto 8px;max-width:44ch;}
-  .backhome{display:inline-block;margin-top:22px;border:1px solid var(--shu);color:var(--wash);
-    padding:11px 22px;border-radius:100px;font-size:14px;font-weight:600;text-decoration:none;}
-  .backhome:hover{background:var(--shu);color:#fff;}
+  /* ── Pantallas finales ── */
+  .final{display:none;text-align:center;padding:40px 0;}
+  .final.on{display:block;}
+  .final .icono{font-size:56px;line-height:1;}
+  .final h2{font-size:34px;font-weight:400;margin:18px 0 12px;}
+  .final p{color:var(--suave);margin:0 auto 10px;max-width:36ch;}
+  .volver{display:inline-block;margin-top:26px;color:var(--oro);font-size:15px;
+    font-weight:600;text-decoration:none;}
+  .volver:hover{text-decoration:underline;}
 
-  footer{border-top:1px solid var(--line);padding:30px 0 50px;text-align:center;
-    color:var(--muted);font-size:14px;}
-  footer a{color:var(--kin);text-decoration:none;}
+  footer{border-top:1px solid var(--linea);padding:26px 0 44px;text-align:center;
+    color:var(--tenue);font-size:14px;}
+  footer a{color:var(--tenue);text-decoration:none;}
+  footer a:hover{color:var(--texto);}
 
   html[dir="rtl"] body{font-family:"Segoe UI",Tahoma,system-ui,sans-serif;}
-  html[dir="rtl"] .counter{float:left;}
+  html[dir="rtl"] .cuenta{float:left;}
 
-  @media (max-width:560px){
-    .card{padding:22px 18px;}
-    .stars button{font-size:32px;}
-    .starword{display:block;margin:6px 0 0;vertical-align:baseline;}
+  @media (max-width:420px){
+    .estrellas button{font-size:38px;}
+    header h1{margin-top:12px;}
   }
   @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto;}}
 </style>
 </head>
 <body>
 
-<nav class="langbar">
-  <div class="wrap" id="langbar"></div>
-</nav>
+<nav class="idiomas" id="idiomas" aria-label="Idioma"></nav>
 
 <header>
   <div class="wrap">
-    <div class="eyebrow">Tony Kansai · Private Tours · Japan</div>
-    <h1 class="serif" data-t="h1">How was your day in Kansai?</h1>
-    <p data-t="lede">Your words help other travellers find a real, private guide.
-      It takes one minute — and you can add a photo of your day.</p>
+    <div class="marca">Tony Kansai · Tours privados</div>
+    <h1 class="serif" data-t="h1">Bienvenidos a Japón</h1>
+    <p data-t="lede">¿Qué tal tu día con nosotros? Cuéntalo en un minuto.</p>
+    <div class="sello">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+      <span data-t="sello">Tu reseña ayuda al siguiente viajero</span>
+    </div>
   </div>
 </header>
 
 <main>
   <div class="wrap">
 
-    <!-- ============ FORM ============ -->
-    <form class="card" id="form" novalidate>
+    <!-- ═════════ FORMULARIO ═════════ -->
+    <form id="form" novalidate>
 
-      <div class="field">
-        <label class="lbl" id="lblStars" data-t="lStars">Your rating</label>
-        <div class="stars" id="stars" role="radiogroup" aria-labelledby="lblStars"></div>
-        <span class="starword" id="starword"></span>
-        <div class="msg-err" id="errStars" data-t="eStars">Please choose a rating.</div>
+      <div class="bloque">
+        <span class="rotulo" id="rotEstrellas" data-t="lEstrellas">¿Cómo fue?</span>
+        <div class="estrellas" id="estrellas" role="radiogroup" aria-labelledby="rotEstrellas"></div>
+        <span class="palabra" id="palabra"></span>
+        <div class="aviso" id="avEstrellas" data-t="eEstrellas" style="text-align:center">Elige una valoración.</div>
       </div>
 
-      <div class="field">
-        <label class="lbl" for="name" data-t="lName">Your name</label>
-        <input type="text" id="name" name="name" maxlength="60" autocomplete="name">
-        <div class="hint" data-t="hName">First name and initial is fine — e.g. “Sarah M.”</div>
-        <div class="msg-err" id="errName" data-t="eName">Please tell us your name.</div>
+      <div class="bloque">
+        <label class="rotulo" for="nombre" data-t="lNombre">Tu nombre</label>
+        <p class="pista" data-t="pNombre">Con el nombre y la inicial basta.</p>
+        <input type="text" id="nombre" maxlength="60" autocomplete="name" placeholder="Sara M.">
+        <div class="aviso" id="avNombre" data-t="eNombre">Dinos tu nombre, por favor.</div>
       </div>
 
-      <div class="field">
-        <label class="lbl" for="country"><span data-t="lCountry">Where are you from</span>
-          <span class="opt" data-t="optional">— optional</span></label>
-        <input type="text" id="country" name="country" maxlength="40" autocomplete="country-name">
+      <div class="bloque">
+        <label class="rotulo" for="pais"><span data-t="lPais">De dónde eres</span>
+          <span class="opcional" data-t="opcional">· opcional</span></label>
+        <input type="text" id="pais" maxlength="40" autocomplete="country-name" placeholder="España">
       </div>
 
-      <div class="field">
-        <label class="lbl" for="tour" data-t="lTour">Which tour did you take?</label>
-        <select id="tour" name="tour"></select>
+      <div class="bloque">
+        <label class="rotulo" for="tour" data-t="lTour">¿Dónde estuviste?</label>
+        <select id="tour"></select>
       </div>
 
-      <div class="field">
-        <label class="lbl" for="text"><span data-t="lText">Your review</span><span
-          class="counter" id="counter">0 / 1200</span></label>
-        <textarea id="text" name="text" maxlength="1200"></textarea>
-        <div class="hint" data-t="hText">What did you see, eat and feel? What would you
-          tell a friend who is thinking of booking?</div>
-        <div class="msg-err" id="errText" data-t="eText">Please write at least a couple of sentences.</div>
+      <div class="bloque">
+        <label class="rotulo" for="texto"><span data-t="lTexto">Tu reseña</span>
+          <span class="cuenta" id="cuenta">0 / 1200</span></label>
+        <p class="pista" data-t="pTexto">¿Qué viste, qué comiste, qué sentiste?</p>
+        <textarea id="texto" maxlength="1200" data-ph="phTexto"
+          placeholder="Lo que le contarías a un amigo…"></textarea>
+        <div class="aviso" id="avTexto" data-t="eTexto">Escribe al menos un par de frases.</div>
       </div>
 
-      <div class="field">
-        <label class="lbl"><span data-t="lPhoto">Add a photo</span>
-          <span class="opt" data-t="optional">— optional</span></label>
-        <div class="drop" id="drop" tabindex="0" role="button" aria-labelledby="dropText">
-          <div class="big">📷</div>
-          <div class="t" id="dropText" data-t="dropT">Tap to choose a photo</div>
-          <div class="s" data-t="dropS">JPG, PNG or HEIC · one photo · up to 12 MB</div>
+      <div class="bloque">
+        <span class="rotulo"><span data-t="lFoto">Una foto de tu día</span>
+          <span class="opcional" data-t="opcional">· opcional</span></span>
+        <p class="pista" data-t="pFoto">Es lo que más miran los que están decidiendo.</p>
+        <div class="soltar" id="soltar" tabindex="0" role="button" aria-labelledby="soltarT">
+          <div class="icono" aria-hidden="true">📷</div>
+          <div class="t" id="soltarT" data-t="fotoT">Toca para elegir una foto</div>
+          <div class="s" data-t="fotoS">JPG, PNG o HEIC · hasta 12 MB</div>
         </div>
-        <input type="file" id="file" accept="image/*" style="display:none">
-        <div class="preview" id="preview">
-          <img id="previewImg" alt="">
-          <button type="button" class="rm" id="removePhoto" data-t="removePhoto">Remove</button>
+        <input type="file" id="fichero" accept="image/*" hidden>
+        <div class="previa" id="previa">
+          <img id="previaImg" alt="">
+          <button type="button" class="quitar" id="quitar" data-t="quitar">Quitar</button>
         </div>
-        <div class="hint" id="photoNote" style="display:none"></div>
-        <div class="msg-err" id="errPhoto"></div>
+        <div class="lista" id="fotoLista"></div>
+        <div class="aviso" id="avFoto"></div>
       </div>
 
-      <div class="field">
-        <label class="consent">
-          <input type="checkbox" id="consent">
-          <span data-t="consent">I agree that Tony Kansai Guide may publish my review,
-            my first name and my photo on tonykansaiguide.com and its social media.</span>
+      <div class="bloque">
+        <label class="permiso">
+          <input type="checkbox" id="permiso">
+          <span data-t="permiso">Autorizo a Tony Kansai a publicar mi reseña, mi nombre
+            y mi foto en su web y en sus redes.</span>
         </label>
-        <div class="msg-err" id="errConsent" data-t="eConsent">We need your permission to publish it.</div>
+        <div class="aviso" id="avPermiso" data-t="ePermiso">Necesitamos tu permiso para publicarla.</div>
       </div>
 
-      <!-- anti-spam honeypot: humans never see or fill this -->
-      <input class="hp" type="text" id="website" name="website" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <input class="trampa" type="text" id="web" tabindex="-1" autocomplete="off" aria-hidden="true">
 
-      <div class="field">
-        <button type="submit" class="submit" id="send" data-t="send">Send my review →</button>
-        <div class="hint" style="text-align:center" data-t="moderation">Reviews are published
-          after Tony reads them — usually within a day or two.</div>
-        <div class="msg-err" id="errSend" style="text-align:center"></div>
-        <p id="rescate" style="text-align:center;margin:12px 0 0" hidden>
-          <a class="backhome" id="rescateLink" href="#" data-t="manSend">Send it now →</a>
+      <div class="bloque" style="border-top:0;padding-top:8px">
+        <button type="submit" class="enviar" id="enviar" data-t="enviar">Enviar mi reseña</button>
+        <p class="nota" data-t="moderacion">Tony la lee antes de publicarla.</p>
+        <div class="aviso" id="avEnvio" style="text-align:center"></div>
+        <p style="text-align:center;margin:14px 0 0" id="rescate" hidden>
+          <a class="volver" id="rescateLink" href="#" data-t="manEnviar">Enviarla por WhatsApp</a>
         </p>
       </div>
     </form>
 
-    <!-- ============ THANK YOU ============ -->
-    <div class="screen card" id="done">
-      <div class="icon">🙏</div>
-      <h2 class="serif" data-t="doneH">Thank you</h2>
-      <p data-t="doneP">Your review has been sent to Tony. It will appear on the site
-        once he has read it — usually within a day or two.</p>
-      <p data-t="doneP2">Arigatō gozaimasu — and come back to Kansai soon.</p>
-      <a class="backhome" href="/" data-t="backhome">← Back to the tours</a>
+    <!-- ═════════ GRACIAS ═════════ -->
+    <div class="final" id="hecho">
+      <div class="icono">🙏</div>
+      <h2 class="serif" data-t="okH">Gracias</h2>
+      <p data-t="okP">Tu reseña le ha llegado a Tony. Aparecerá en la web en cuanto la lea.</p>
+      <p data-t="okP2">Arigatō gozaimasu — y vuelve pronto a Kansai.</p>
+      <a class="volver" href="/" data-t="volver">← Volver a la web</a>
     </div>
 
-    <!-- ============ FALLBACK (no endpoint configured) ============ -->
-    <div class="screen card" id="manual">
-      <div class="icon">📩</div>
-      <h2 class="serif" data-t="manH">Almost there</h2>
-      <p data-t="manP">Send us your review with one tap — it opens WhatsApp (or your
-        email) with everything already written. If you chose a photo, attach it there.</p>
-      <p><a class="backhome" id="manLink" href="#" data-t="manSend">Send it now →</a></p>
+    <!-- ═════════ SALIDA POR WHATSAPP ═════════ -->
+    <div class="final" id="manual">
+      <div class="icono">💬</div>
+      <h2 class="serif" data-t="manH">Ya casi</h2>
+      <p data-t="manP">Mándanosla con un toque: se abre WhatsApp con todo escrito.
+        Si elegiste foto, adjúntala ahí.</p>
+      <p><a class="volver" id="manLink" href="#" data-t="manEnviar">Enviarla por WhatsApp</a></p>
     </div>
 
   </div>
@@ -262,465 +271,406 @@
 
 <footer>
   <div class="wrap">
-    <a href="https://tonykansaiguide.com">tonykansaiguide.com</a>
+    <a href="/">tonykansaiguide.com</a>
     <span aria-hidden="true"> · </span>
-    <a href="/" data-t="footTours">Private tours in Kansai</a>
+    <a href="/resenas.html" data-t="verTodas">Ver las reseñas</a>
   </div>
 </footer>
 
 <script>
 /* =====================================================================
-   CONFIG — lo único que tienes que tocar tú, Tony.
-   ---------------------------------------------------------------------
-   ENDPOINT: la dirección que recibe las reseñas. Ya apunta a tu dominio,
-   servido por el Worker de Cloudflare (cloudflare/worker-resenas.js).
-
-   Mientras el Worker no esté desplegado, la página NO deja tirado al
-   cliente: si el envío falla, le ofrece mandártela por WhatsApp o email
-   con un toque, con el texto ya redactado.
-
-   Esta página se despliega tal cual desde tony-kansai-src/public/, igual
-   que booking.html: no pasa por React ni por el bundle.
+   CONFIG — lo único que se toca aquí.
+   ENDPOINT recibe las reseñas (Worker de Cloudflare: está en el repo
+   tony-kansai-guide, en cloudflare/worker-resenas.js). Mientras no exista,
+   la página NO deja tirado al cliente: le ofrece mandarla por WhatsApp con
+   el texto ya redactado.
    ===================================================================== */
 const ENDPOINT = "https://tonykansaiguide.com/api/resenas";
-const WHATSAPP = "34634193106";            // el mismo de src/lib/data.ts
+const WHATSAPP = "34634193106";
 const EMAIL    = "tony@kansaiguide.jp";
 
-const MAX_UPLOAD_MB = 12;                  // lo que aceptamos del móvil del cliente
-const MAX_SIDE      = 1600;                // px: la foto se reduce aquí, en el navegador
-const JPEG_QUALITY  = 0.82;
+const MAX_MB   = 12;      // lo que aceptamos del móvil del cliente
+const MAX_LADO = 1600;    // px: la foto se reduce aquí, en su propio móvil
+const CALIDAD  = 0.82;
 
-const TOURS = [
-  "Osaka Food Circuit",
-  "Hidden Kyoto",
-  "Kobe Refined",
-  "Nara Sacred Forest",
-  "Osaka × Kyoto Grand Day",
-  "Kurama Mountain Hiking",
-  "Kōyasan Pilgrimage",
-];
+const SITIOS = ["Osaka", "Kioto", "Minoh", "Nara"];
 
 /* ---------------------------------------------------------------- i18n */
-const LANGS = [
-  {code:"en", label:"English"},
-  {code:"es", label:"Español"},
-  {code:"ar", label:"العربية", rtl:true},
-  {code:"ru", label:"Русский"},
-  {code:"cs", label:"Čeština"},
+const IDIOMAS = [
+  {c:"es", n:"Español"}, {c:"en", n:"English"}, {c:"ar", n:"العربية", rtl:true},
+  {c:"ru", n:"Русский"}, {c:"cs", n:"Čeština"},
 ];
 
 const T = {
-  en:{
-    title:"Leave a review — Tony Kansai Private Tours",
-    h1:"How was your day in Kansai?",
-    lede:"Your words help other travellers find a real, private guide. It takes one minute — and you can add a photo of your day.",
-    lStars:"Your rating", lName:"Your name", hName:"First name and initial is fine — e.g. “Sarah M.”",
-    lCountry:"Where are you from", optional:"— optional",
-    lTour:"Which tour did you take?", tourOther:"Another tour / a custom day",
-    tourPick:"Choose your tour…",
-    lText:"Your review",
-    hText:"What did you see, eat and feel? What would you tell a friend who is thinking of booking?",
-    lPhoto:"Add a photo", dropT:"Tap to choose a photo",
-    dropS:"JPG, PNG or HEIC · one photo · up to "+MAX_UPLOAD_MB+" MB",
-    removePhoto:"Remove", photoReady:"Photo ready — it will be sent with your review.",
-    consent:"I agree that Tony Kansai Guide may publish my review, my first name and my photo on tonykansaiguide.com and its social media.",
-    send:"Send my review →", sending:"Sending…",
-    moderation:"Reviews are published after Tony reads them — usually within a day or two.",
-    eStars:"Please choose a rating.", eName:"Please tell us your name.",
-    eText:"Please write at least a couple of sentences.",
-    eConsent:"We need your permission to publish it.",
-    ePhotoBig:"That photo is larger than "+MAX_UPLOAD_MB+" MB. Please choose a smaller one.",
-    ePhotoType:"That file is not an image.",
-    ePhotoRead:"We could not read that photo. Please try another one.",
-    eSend:"We could not send it just now. Please check your connection and try again.",
-    doneH:"Thank you",
-    doneP:"Your review has been sent to Tony. It will appear on the site once he has read it — usually within a day or two.",
-    doneP2:"Arigatō gozaimasu — and come back to Kansai soon.",
-    backhome:"← Back to the tours",
-    manH:"Almost there",
-    manP:"Send us your review with one tap — it opens WhatsApp (or your email) with everything already written. If you chose a photo, attach it there.",
-    manSend:"Send it now →",
-    footTours:"Private tours in Kansai",
-    words:["","Not good","Could be better","Good","Very good","Outstanding"],
-  },
   es:{
-    title:"Deja tu reseña — Tony Kansai Tours Privados",
-    h1:"¿Qué tal tu día en Kansai?",
-    lede:"Tus palabras ayudan a otros viajeros a encontrar un guía privado de verdad. Es un minuto — y puedes añadir una foto de tu día.",
-    lStars:"Tu valoración", lName:"Tu nombre", hName:"Con el nombre y la inicial basta — p. ej. «Sara M.»",
-    lCountry:"De dónde eres", optional:"— opcional",
-    lTour:"¿Qué tour hiciste?", tourOther:"Otro tour / un día a medida",
-    tourPick:"Elige tu tour…",
-    lText:"Tu reseña",
-    hText:"¿Qué viste, qué comiste, qué sentiste? ¿Qué le dirías a un amigo que está pensando en reservar?",
-    lPhoto:"Añade una foto", dropT:"Toca para elegir una foto",
-    dropS:"JPG, PNG o HEIC · una foto · hasta "+MAX_UPLOAD_MB+" MB",
-    removePhoto:"Quitar", photoReady:"Foto lista — se enviará con tu reseña.",
-    consent:"Autorizo a Tony Kansai Guide a publicar mi reseña, mi nombre y mi foto en tonykansaiguide.com y en sus redes sociales.",
-    send:"Enviar mi reseña →", sending:"Enviando…",
-    moderation:"Las reseñas se publican después de que Tony las lea — normalmente en uno o dos días.",
-    eStars:"Elige una valoración, por favor.", eName:"Dinos tu nombre, por favor.",
-    eText:"Escribe al menos un par de frases, por favor.",
-    eConsent:"Necesitamos tu permiso para publicarla.",
-    ePhotoBig:"Esa foto pesa más de "+MAX_UPLOAD_MB+" MB. Elige una más ligera, por favor.",
-    ePhotoType:"Ese archivo no es una imagen.",
-    ePhotoRead:"No hemos podido leer esa foto. Prueba con otra, por favor.",
-    eSend:"No hemos podido enviarla ahora mismo. Revisa tu conexión e inténtalo otra vez.",
-    doneH:"Gracias",
-    doneP:"Tu reseña le ha llegado a Tony. Aparecerá en la web en cuanto la lea — normalmente en uno o dos días.",
-    doneP2:"Arigatō gozaimasu — y vuelve pronto a Kansai.",
-    backhome:"← Volver a los tours",
-    manH:"Ya casi",
-    manP:"Mándanos tu reseña con un toque — se abre WhatsApp (o tu email) con todo ya escrito. Si elegiste foto, adjúntala ahí.",
-    manSend:"Enviar ahora →",
-    footTours:"Tours privados en Kansai",
-    words:["","Mal","Mejorable","Bien","Muy bien","Excepcional"],
+    title:"Bienvenidos a Japón — Tony Kansai",
+    h1:"Bienvenidos a Japón", lede:"¿Qué tal tu día con nosotros? Cuéntalo en un minuto.",
+    sello:"Tu reseña ayuda al siguiente viajero",
+    lEstrellas:"¿Cómo fue?", lNombre:"Tu nombre", pNombre:"Con el nombre y la inicial basta.",
+    lPais:"De dónde eres", opcional:"· opcional", lTour:"¿Dónde estuviste?",
+    tourElige:"Elige un sitio…", tourOtro:"Otro sitio",
+    lTexto:"Tu reseña", pTexto:"¿Qué viste, qué comiste, qué sentiste?",
+    phTexto:"Lo que le contarías a un amigo…",
+    lFoto:"Una foto de tu día", pFoto:"Es lo que más miran los que están decidiendo.",
+    fotoT:"Toca para elegir una foto", fotoS:"JPG, PNG o HEIC · hasta "+MAX_MB+" MB",
+    quitar:"Quitar", fotoLista:"Foto lista — se enviará con tu reseña.",
+    permiso:"Autorizo a Tony Kansai a publicar mi reseña, mi nombre y mi foto en su web y en sus redes.",
+    enviar:"Enviar mi reseña", enviando:"Enviando…",
+    moderacion:"Tony la lee antes de publicarla.",
+    eEstrellas:"Elige una valoración.", eNombre:"Dinos tu nombre, por favor.",
+    eTexto:"Escribe al menos un par de frases.", ePermiso:"Necesitamos tu permiso para publicarla.",
+    eFotoGrande:"Esa foto pesa más de "+MAX_MB+" MB. Elige otra más ligera.",
+    eFotoTipo:"Ese archivo no es una imagen.",
+    eFotoLeer:"No he podido leer esa foto. Prueba con otra.",
+    eEnvio:"No hemos podido enviarla ahora mismo.",
+    okH:"Gracias", okP:"Tu reseña le ha llegado a Tony. Aparecerá en la web en cuanto la lea.",
+    okP2:"Arigatō gozaimasu — y vuelve pronto a Kansai.", volver:"← Volver a la web",
+    manH:"Ya casi", manP:"Mándanosla con un toque: se abre WhatsApp con todo escrito. Si elegiste foto, adjúntala ahí.",
+    manEnviar:"Enviarla por WhatsApp", verTodas:"Ver las reseñas",
+    palabras:["","Mal","Mejorable","Bien","Muy bien","Excepcional"],
+  },
+  en:{
+    title:"Welcome to Japan — Tony Kansai",
+    h1:"Welcome to Japan", lede:"How was your day with us? It takes a minute.",
+    sello:"Your review helps the next traveller",
+    lEstrellas:"How was it?", lNombre:"Your name", pNombre:"First name and initial is fine.",
+    lPais:"Where you're from", opcional:"· optional", lTour:"Where did you go?",
+    tourElige:"Choose a place…", tourOtro:"Somewhere else",
+    lTexto:"Your review", pTexto:"What did you see, eat and feel?",
+    phTexto:"What you'd tell a friend…",
+    lFoto:"A photo of your day", pFoto:"It's what people deciding notice most.",
+    fotoT:"Tap to choose a photo", fotoS:"JPG, PNG or HEIC · up to "+MAX_MB+" MB",
+    quitar:"Remove", fotoLista:"Photo ready — it will be sent with your review.",
+    permiso:"I agree that Tony Kansai may publish my review, my name and my photo on the website and social media.",
+    enviar:"Send my review", enviando:"Sending…",
+    moderacion:"Tony reads it before publishing.",
+    eEstrellas:"Please choose a rating.", eNombre:"Please tell us your name.",
+    eTexto:"Please write at least a couple of sentences.", ePermiso:"We need your permission to publish it.",
+    eFotoGrande:"That photo is larger than "+MAX_MB+" MB. Please choose a smaller one.",
+    eFotoTipo:"That file is not an image.",
+    eFotoLeer:"We could not read that photo. Please try another.",
+    eEnvio:"We could not send it just now.",
+    okH:"Thank you", okP:"Your review reached Tony. It will appear on the site once he reads it.",
+    okP2:"Arigatō gozaimasu — and come back to Kansai soon.", volver:"← Back to the site",
+    manH:"Almost there", manP:"Send it with one tap: WhatsApp opens with everything written. If you chose a photo, attach it there.",
+    manEnviar:"Send it on WhatsApp", verTodas:"See the reviews",
+    palabras:["","Not good","Could be better","Good","Very good","Outstanding"],
   },
   ar:{
-    title:"اترك تقييمك — جولات طوني كانساي الخاصة",
-    h1:"كيف كان يومك في كانساي؟",
-    lede:"كلماتك تساعد مسافرين آخرين على إيجاد مرشد خاص حقيقي. الأمر لا يستغرق سوى دقيقة — ويمكنك إضافة صورة من يومك.",
-    lStars:"تقييمك", lName:"اسمك", hName:"يكفي الاسم الأول والحرف الأول — مثل «سارة م.»",
-    lCountry:"من أين أنت", optional:"— اختياري",
-    lTour:"أي جولة قمت بها؟", tourOther:"جولة أخرى / يوم مُخصّص",
-    tourPick:"اختر جولتك…",
-    lText:"تقييمك",
-    hText:"ماذا رأيت وذقت وشعرت؟ ماذا ستقول لصديق يفكّر في الحجز؟",
-    lPhoto:"أضف صورة", dropT:"اضغط لاختيار صورة",
-    dropS:"JPG أو PNG أو HEIC · صورة واحدة · حتى "+MAX_UPLOAD_MB+" ميغابايت",
-    removePhoto:"إزالة", photoReady:"الصورة جاهزة — ستُرسل مع تقييمك.",
-    consent:"أوافق على أن ينشر Tony Kansai Guide تقييمي واسمي وصورتي على tonykansaiguide.com وعلى حساباته في وسائل التواصل.",
-    send:"أرسل تقييمي ←", sending:"جارٍ الإرسال…",
-    moderation:"تُنشر التقييمات بعد أن يقرأها طوني — عادةً خلال يوم أو يومين.",
-    eStars:"يرجى اختيار تقييم.", eName:"يرجى كتابة اسمك.",
-    eText:"يرجى كتابة جملتين على الأقل.",
-    eConsent:"نحتاج إذنك لنشره.",
-    ePhotoBig:"حجم الصورة أكبر من "+MAX_UPLOAD_MB+" ميغابايت. يرجى اختيار صورة أصغر.",
-    ePhotoType:"هذا الملف ليس صورة.",
-    ePhotoRead:"تعذّرت قراءة الصورة. جرّب صورة أخرى.",
-    eSend:"تعذّر الإرسال الآن. تحقّق من اتصالك وحاول مرة أخرى.",
-    doneH:"شكرًا لك",
-    doneP:"وصل تقييمك إلى طوني. سيظهر على الموقع بعد أن يقرأه — عادةً خلال يوم أو يومين.",
-    doneP2:"أريغاتو غوزايماس — ونراك قريبًا في كانساي.",
-    backhome:"→ العودة إلى الجولات",
-    manH:"اقتربنا",
-    manP:"أرسل تقييمك بضغطة واحدة — سيفتح واتساب (أو بريدك) والنص جاهز. إن اخترت صورة، أرفقها هناك.",
-    manSend:"أرسل الآن →",
-    footTours:"جولات خاصة في كانساي",
-    words:["","سيئ","يمكن أن يكون أفضل","جيد","جيد جدًا","استثنائي"],
+    title:"أهلاً بكم في اليابان — طوني كانساي",
+    h1:"أهلاً بكم في اليابان", lede:"كيف كان يومك معنا؟ الأمر لا يستغرق سوى دقيقة.",
+    sello:"تقييمك يساعد المسافر القادم",
+    lEstrellas:"كيف كان؟", lNombre:"اسمك", pNombre:"يكفي الاسم الأول والحرف الأول.",
+    lPais:"من أين أنت", opcional:"· اختياري", lTour:"أين ذهبت؟",
+    tourElige:"اختر مكانًا…", tourOtro:"مكان آخر",
+    lTexto:"تقييمك", pTexto:"ماذا رأيت وذقت وشعرت؟",
+    phTexto:"ما ستقوله لصديق…",
+    lFoto:"صورة من يومك", pFoto:"هي أكثر ما ينظر إليه من يفكّر في الحجز.",
+    fotoT:"اضغط لاختيار صورة", fotoS:"JPG أو PNG أو HEIC · حتى "+MAX_MB+" ميغابايت",
+    quitar:"إزالة", fotoLista:"الصورة جاهزة — ستُرسل مع تقييمك.",
+    permiso:"أوافق على أن ينشر Tony Kansai تقييمي واسمي وصورتي على الموقع ووسائل التواصل.",
+    enviar:"أرسل تقييمي", enviando:"جارٍ الإرسال…",
+    moderacion:"يقرأها طوني قبل نشرها.",
+    eEstrellas:"يرجى اختيار تقييم.", eNombre:"يرجى كتابة اسمك.",
+    eTexto:"يرجى كتابة جملتين على الأقل.", ePermiso:"نحتاج إذنك لنشره.",
+    eFotoGrande:"حجم الصورة أكبر من "+MAX_MB+" ميغابايت. اختر صورة أصغر.",
+    eFotoTipo:"هذا الملف ليس صورة.",
+    eFotoLeer:"تعذّرت قراءة الصورة. جرّب صورة أخرى.",
+    eEnvio:"تعذّر الإرسال الآن.",
+    okH:"شكرًا لك", okP:"وصل تقييمك إلى طوني. سيظهر على الموقع بعد أن يقرأه.",
+    okP2:"أريغاتو غوزايماس — ونراك قريبًا في كانساي.", volver:"→ العودة إلى الموقع",
+    manH:"اقتربنا", manP:"أرسلها بضغطة: سيفتح واتساب والنص جاهز. إن اخترت صورة، أرفقها هناك.",
+    manEnviar:"أرسلها عبر واتساب", verTodas:"شاهد التقييمات",
+    palabras:["","سيئ","يمكن أن يكون أفضل","جيد","جيد جدًا","استثنائي"],
   },
   ru:{
-    title:"Оставьте отзыв — частные туры Tony Kansai",
-    h1:"Как прошёл ваш день в Кансае?",
-    lede:"Ваши слова помогут другим путешественникам найти настоящего частного гида. Это займёт минуту — и можно добавить фотографию.",
-    lStars:"Ваша оценка", lName:"Ваше имя", hName:"Достаточно имени и инициала — например, «Анна К.»",
-    lCountry:"Откуда вы", optional:"— необязательно",
-    lTour:"Какой тур вы взяли?", tourOther:"Другой тур / индивидуальный день",
-    tourPick:"Выберите тур…",
-    lText:"Ваш отзыв",
-    hText:"Что вы увидели, попробовали, почувствовали? Что бы вы сказали другу, который думает о поездке?",
-    lPhoto:"Добавьте фотографию", dropT:"Нажмите, чтобы выбрать фото",
-    dropS:"JPG, PNG или HEIC · одно фото · до "+MAX_UPLOAD_MB+" МБ",
-    removePhoto:"Убрать", photoReady:"Фото готово — оно отправится вместе с отзывом.",
-    consent:"Я разрешаю Tony Kansai Guide опубликовать мой отзыв, моё имя и мою фотографию на tonykansaiguide.com и в социальных сетях.",
-    send:"Отправить отзыв →", sending:"Отправляем…",
-    moderation:"Отзывы публикуются после того, как Тони их прочитает — обычно за один-два дня.",
-    eStars:"Пожалуйста, выберите оценку.", eName:"Пожалуйста, укажите ваше имя.",
-    eText:"Напишите, пожалуйста, хотя бы пару предложений.",
-    eConsent:"Нам нужно ваше разрешение на публикацию.",
-    ePhotoBig:"Это фото больше "+MAX_UPLOAD_MB+" МБ. Выберите файл поменьше.",
-    ePhotoType:"Этот файл не является изображением.",
-    ePhotoRead:"Не удалось прочитать это фото. Попробуйте другое.",
-    eSend:"Сейчас не удалось отправить. Проверьте соединение и попробуйте снова.",
-    doneH:"Спасибо",
-    doneP:"Ваш отзыв отправлен Тони. Он появится на сайте, как только Тони его прочитает — обычно через день-два.",
-    doneP2:"Аригато годзаимас — и возвращайтесь в Кансай.",
-    backhome:"← Вернуться к турам",
-    manH:"Почти готово",
-    manP:"Отправьте отзыв одним нажатием — откроется WhatsApp (или почта) с готовым текстом. Если вы выбрали фото, приложите его там.",
-    manSend:"Отправить сейчас →",
-    footTours:"Частные туры в Кансае",
-    words:["","Плохо","Могло быть лучше","Хорошо","Очень хорошо","Великолепно"],
+    title:"Добро пожаловать в Японию — Tony Kansai",
+    h1:"Добро пожаловать в Японию", lede:"Как прошёл ваш день с нами? Это займёт минуту.",
+    sello:"Ваш отзыв поможет следующему путешественнику",
+    lEstrellas:"Как всё прошло?", lNombre:"Ваше имя", pNombre:"Достаточно имени и инициала.",
+    lPais:"Откуда вы", opcional:"· необязательно", lTour:"Где вы были?",
+    tourElige:"Выберите место…", tourOtro:"Другое место",
+    lTexto:"Ваш отзыв", pTexto:"Что вы увидели, попробовали, почувствовали?",
+    phTexto:"То, что рассказали бы другу…",
+    lFoto:"Фотография вашего дня", pFoto:"На неё смотрят те, кто выбирает гида.",
+    fotoT:"Нажмите, чтобы выбрать фото", fotoS:"JPG, PNG или HEIC · до "+MAX_MB+" МБ",
+    quitar:"Убрать", fotoLista:"Фото готово — отправится вместе с отзывом.",
+    permiso:"Я разрешаю Tony Kansai опубликовать мой отзыв, имя и фотографию на сайте и в соцсетях.",
+    enviar:"Отправить отзыв", enviando:"Отправляем…",
+    moderacion:"Тони читает отзыв перед публикацией.",
+    eEstrellas:"Пожалуйста, выберите оценку.", eNombre:"Пожалуйста, укажите имя.",
+    eTexto:"Напишите хотя бы пару предложений.", ePermiso:"Нужно ваше разрешение на публикацию.",
+    eFotoGrande:"Фото больше "+MAX_MB+" МБ. Выберите поменьше.",
+    eFotoTipo:"Этот файл не изображение.",
+    eFotoLeer:"Не удалось прочитать фото. Попробуйте другое.",
+    eEnvio:"Сейчас не удалось отправить.",
+    okH:"Спасибо", okP:"Ваш отзыв отправлен Тони. Он появится на сайте, как только Тони его прочитает.",
+    okP2:"Аригато годзаимас — и возвращайтесь в Кансай.", volver:"← Вернуться на сайт",
+    manH:"Почти готово", manP:"Отправьте одним нажатием: откроется WhatsApp с готовым текстом. Фото приложите там.",
+    manEnviar:"Отправить в WhatsApp", verTodas:"Посмотреть отзывы",
+    palabras:["","Плохо","Могло быть лучше","Хорошо","Очень хорошо","Великолепно"],
   },
   cs:{
-    title:"Napište recenzi — soukromé výlety Tony Kansai",
-    h1:"Jaký byl váš den v Kansai?",
-    lede:"Vaše slova pomohou dalším cestovatelům najít skutečného soukromého průvodce. Zabere to minutu — a můžete přidat fotku ze svého dne.",
-    lStars:"Vaše hodnocení", lName:"Vaše jméno", hName:"Stačí jméno a iniciála — např. „Jana K.“",
-    lCountry:"Odkud jste", optional:"— nepovinné",
-    lTour:"Který výlet jste absolvovali?", tourOther:"Jiný výlet / den na míru",
-    tourPick:"Vyberte svůj výlet…",
-    lText:"Vaše recenze",
-    hText:"Co jste viděli, ochutnali a cítili? Co byste řekli příteli, který o rezervaci uvažuje?",
-    lPhoto:"Přidejte fotku", dropT:"Klepnutím vyberte fotku",
-    dropS:"JPG, PNG nebo HEIC · jedna fotka · až "+MAX_UPLOAD_MB+" MB",
-    removePhoto:"Odebrat", photoReady:"Fotka je připravená — odejde s recenzí.",
-    consent:"Souhlasím, aby Tony Kansai Guide zveřejnil mou recenzi, mé jméno a mou fotografii na tonykansaiguide.com a na sociálních sítích.",
-    send:"Odeslat recenzi →", sending:"Odesílám…",
-    moderation:"Recenze se zveřejňují poté, co si je Tony přečte — obvykle do jednoho až dvou dnů.",
-    eStars:"Vyberte prosím hodnocení.", eName:"Napište prosím své jméno.",
-    eText:"Napište prosím alespoň pár vět.",
-    eConsent:"Ke zveřejnění potřebujeme váš souhlas.",
-    ePhotoBig:"Tato fotka je větší než "+MAX_UPLOAD_MB+" MB. Vyberte prosím menší.",
-    ePhotoType:"Tento soubor není obrázek.",
-    ePhotoRead:"Fotku se nepodařilo načíst. Zkuste prosím jinou.",
-    eSend:"Teď se nepodařilo odeslat. Zkontrolujte připojení a zkuste to znovu.",
-    doneH:"Děkujeme",
-    doneP:"Vaše recenze dorazila Tonymu. Na webu se objeví, jakmile si ji přečte — obvykle do jednoho až dvou dnů.",
-    doneP2:"Arigatō gozaimasu — a vraťte se do Kansai brzy.",
-    backhome:"← Zpět na výlety",
-    manH:"Ještě krok",
-    manP:"Pošlete recenzi jedním klepnutím — otevře se WhatsApp (nebo e-mail) s hotovým textem. Pokud jste vybrali fotku, přiložte ji tam.",
-    manSend:"Odeslat nyní →",
-    footTours:"Soukromé výlety v Kansai",
-    words:["","Špatné","Mohlo být lepší","Dobré","Velmi dobré","Výjimečné"],
+    title:"Vítejte v Japonsku — Tony Kansai",
+    h1:"Vítejte v Japonsku", lede:"Jaký byl váš den s námi? Zabere to minutu.",
+    sello:"Vaše recenze pomůže dalšímu cestovateli",
+    lEstrellas:"Jaké to bylo?", lNombre:"Vaše jméno", pNombre:"Stačí jméno a iniciála.",
+    lPais:"Odkud jste", opcional:"· nepovinné", lTour:"Kde jste byli?",
+    tourElige:"Vyberte místo…", tourOtro:"Jiné místo",
+    lTexto:"Vaše recenze", pTexto:"Co jste viděli, ochutnali a cítili?",
+    phTexto:"Co byste řekli příteli…",
+    lFoto:"Fotka z vašeho dne", pFoto:"Právě té si všímají ti, kdo vybírají průvodce.",
+    fotoT:"Klepnutím vyberte fotku", fotoS:"JPG, PNG nebo HEIC · až "+MAX_MB+" MB",
+    quitar:"Odebrat", fotoLista:"Fotka je připravená — odejde s recenzí.",
+    permiso:"Souhlasím, aby Tony Kansai zveřejnil mou recenzi, jméno a fotografii na webu a sociálních sítích.",
+    enviar:"Odeslat recenzi", enviando:"Odesílám…",
+    moderacion:"Tony si ji před zveřejněním přečte.",
+    eEstrellas:"Vyberte prosím hodnocení.", eNombre:"Napište prosím své jméno.",
+    eTexto:"Napište prosím alespoň pár vět.", ePermiso:"Ke zveřejnění potřebujeme váš souhlas.",
+    eFotoGrande:"Fotka je větší než "+MAX_MB+" MB. Vyberte menší.",
+    eFotoTipo:"Tento soubor není obrázek.",
+    eFotoLeer:"Fotku se nepodařilo načíst. Zkuste jinou.",
+    eEnvio:"Teď se nepodařilo odeslat.",
+    okH:"Děkujeme", okP:"Vaše recenze dorazila Tonymu. Na webu se objeví, jakmile si ji přečte.",
+    okP2:"Arigatō gozaimasu — a vraťte se do Kansai brzy.", volver:"← Zpět na web",
+    manH:"Ještě krok", manP:"Pošlete ji jedním klepnutím: otevře se WhatsApp s hotovým textem. Fotku přiložte tam.",
+    manEnviar:"Poslat přes WhatsApp", verTodas:"Zobrazit recenze",
+    palabras:["","Špatné","Mohlo být lepší","Dobré","Velmi dobré","Výjimečné"],
   },
 };
 
-/* ------------------------------------------------------------- helpers */
-// En local (python3 resenas.py servidor) el receptor es esta misma máquina,
-// así que puedes probarlo todo sin tocar la configuración de arriba.
-function endpoint(){ return ENDPOINT; }
+/* -------------------------------------------------------------- ayudas */
 const $ = id => document.getElementById(id);
-let lang = "en";
-let rating = 0;
-let photo = null;        // {dataUrl, mime, bytes, name}
+let idioma = "es";
+let nota = 0;
+let foto = null;
 
-function pickLang(){
+// Siempre en español. No se hereda el idioma del móvil a propósito: la
+// mayoría de los clientes son hispanohablantes y ver la página en su idioma
+// desde el primer segundo es lo que hace que la rellenen. Quien necesite otro
+// lo cambia arriba en un toque, o se le manda el enlace con ?lang=en.
+function idiomaInicial(){
   const q = new URLSearchParams(location.search).get("lang");
-  const nav = (navigator.language || "en").slice(0,2).toLowerCase();
-  for (const c of [q, nav]) if (c && T[c]) return c;
-  return "en";
+  return (q && T[q]) ? q : "es";
 }
 
-function setLang(code){
-  lang = T[code] ? code : "en";
-  const t = T[lang];
-  const rtl = !!(LANGS.find(l => l.code === lang) || {}).rtl;
-  document.documentElement.lang = lang;
+function ponIdioma(codigo){
+  idioma = T[codigo] ? codigo : "es";
+  const t = T[idioma];
+  const rtl = !!(IDIOMAS.find(l => l.c === idioma) || {}).rtl;
+  document.documentElement.lang = idioma;
   document.documentElement.dir = rtl ? "rtl" : "ltr";
   document.title = t.title;
   document.querySelectorAll("[data-t]").forEach(el => {
-    const key = el.getAttribute("data-t");
-    if (t[key]) el.textContent = t[key];
+    const k = el.getAttribute("data-t");
+    if (t[k]) el.textContent = t[k];
   });
-  // Select de tours: primera opción traducida, nombres de tour tal cual (marca)
-  const sel = $("tour");
-  const keep = sel.value;
-  sel.innerHTML = `<option value="">${t.tourPick}</option>` +
-    TOURS.map(n => `<option value="${n}">${n}</option>`).join("") +
-    `<option value="other">${t.tourOther}</option>`;
-  if (keep) sel.value = keep;
-  $("send").textContent = t.send;
-  drawStars();
-  updateCounter();
-  if (photo) $("photoNote").textContent = t.photoReady;
-  document.querySelectorAll("#langbar button").forEach(b =>
-    b.setAttribute("aria-pressed", String(b.dataset.code === lang)));
+  document.querySelectorAll("[data-ph]").forEach(el => {
+    const k = el.getAttribute("data-ph");
+    if (t[k]) el.placeholder = t[k];
+  });
+  const sel = $("tour"), antes = sel.value;
+  sel.innerHTML = `<option value="">${t.tourElige}</option>` +
+    SITIOS.map(s => `<option value="${s}">${s}</option>`).join("") +
+    `<option value="otro">${t.tourOtro}</option>`;
+  if (antes) sel.value = antes;
+  $("enviar").textContent = t.enviar;
+  pintaEstrellas();
+  cuenta();
+  if (foto) $("fotoLista").textContent = t.fotoLista;
+  document.querySelectorAll("#idiomas button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.c === idioma)));
 }
 
-/* --------------------------------------------------------------- stars */
-// `foco` = estrella que debe quedarse con el foco tras repintar: si eliges la
-// nota con el teclado, el botón que pulsaste desaparece y el foco se perdería.
-function drawStars(foco){
-  const box = $("stars");
-  box.innerHTML = "";
+/* ---------------------------------------------------------- estrellas */
+// `foco` = estrella que se queda con el foco tras repintar: eligiendo con el
+// teclado, el botón pulsado desaparece y el foco se perdería.
+function pintaEstrellas(foco){
+  const caja = $("estrellas");
+  caja.innerHTML = "";
   for (let i = 1; i <= 5; i++){
     const b = document.createElement("button");
     b.type = "button";
-    b.className = i <= rating ? "lit" : "";
+    b.className = i <= nota ? "on" : "";
     b.textContent = "★";
     b.setAttribute("role", "radio");
-    b.setAttribute("aria-checked", String(i === rating));
+    b.setAttribute("aria-checked", String(i === nota));
     b.setAttribute("aria-label", i + "/5");
-    b.addEventListener("click", () => { rating = i; box.classList.remove("bad");
-      $("errStars").classList.remove("on"); drawStars(i); });
-    box.appendChild(b);
+    b.addEventListener("click", () => {
+      nota = i;
+      $("avEstrellas").classList.remove("on");
+      pintaEstrellas(i);
+    });
+    caja.appendChild(b);
   }
-  if (foco) box.children[foco - 1].focus();
-  $("starword").textContent = rating ? T[lang].words[rating] : "";
+  $("palabra").textContent = nota ? T[idioma].palabras[nota] : "";
+  if (foco) caja.children[foco - 1].focus();
 }
 
-/* --------------------------------------------------------------- photo */
-async function handleFile(file){
-  const t = T[lang];
-  $("errPhoto").classList.remove("on");
-  if (!file) return;
-  if (!/^image\//.test(file.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(file.name))
-    return fail(t.ePhotoType);
-  if (file.size > MAX_UPLOAD_MB * 1024 * 1024) return fail(t.ePhotoBig);
+/* --------------------------------------------------------------- foto */
+async function tomaFoto(f){
+  const t = T[idioma];
+  const av = $("avFoto");
+  av.classList.remove("on");
+  if (!f) return;
+  const falla = m => { av.textContent = m; av.classList.add("on"); };
+  if (!/^image\//.test(f.type) && !/\.(jpe?g|png|webp|heic|heif)$/i.test(f.name))
+    return falla(t.eFotoTipo);
+  if (f.size > MAX_MB * 1024 * 1024) return falla(t.eFotoGrande);
   try {
-    const out = await shrink(file);
-    photo = out;
-    $("previewImg").src = out.dataUrl;
-    $("preview").classList.add("on");
-    $("drop").style.display = "none";
-    $("photoNote").textContent = t.photoReady;
-    $("photoNote").style.display = "block";
-  } catch (e){
-    fail(t.ePhotoRead);
+    const out = await reduce(f);
+    foto = out;
+    $("previaImg").src = out.dataUrl;
+    $("previa").classList.add("on");
+    $("soltar").hidden = true;
+    $("fotoLista").textContent = t.fotoLista;
+    $("fotoLista").classList.add("on");
+  } catch {
+    falla(t.eFotoLeer);
   }
-  function fail(m){ const el = $("errPhoto"); el.textContent = m; el.classList.add("on"); }
 }
 
-// Reduce la foto en el propio móvil del cliente: menos datos, subida rápida.
-async function shrink(file){
-  let bmp;
+// Se reduce en el propio móvil del cliente: sube rápido aunque tenga mala
+// cobertura, que con datos de turista en Japón pasa a menudo.
+async function reduce(f){
+  let img;
   try {
-    bmp = await createImageBitmap(file, {imageOrientation:"from-image"});
-  } catch (e) {
-    bmp = await new Promise((res, rej) => {
-      const img = new Image();
-      img.onload = () => res(img);
-      img.onerror = rej;
-      img.src = URL.createObjectURL(file);
+    img = await createImageBitmap(f, {imageOrientation:"from-image"});
+  } catch {
+    img = await new Promise((ok, mal) => {
+      const i = new Image();
+      i.onload = () => ok(i);
+      i.onerror = mal;
+      i.src = URL.createObjectURL(f);
     });
   }
-  const w0 = bmp.width || bmp.naturalWidth, h0 = bmp.height || bmp.naturalHeight;
-  const k = Math.min(1, MAX_SIDE / Math.max(w0, h0));
+  const w0 = img.width || img.naturalWidth, h0 = img.height || img.naturalHeight;
+  const k = Math.min(1, MAX_LADO / Math.max(w0, h0));
   const c = document.createElement("canvas");
   c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
-  const ctx = c.getContext("2d");
-  ctx.fillStyle = "#ffffff";
-  ctx.fillRect(0, 0, c.width, c.height);     // fondo por si el PNG es transparente
-  ctx.drawImage(bmp, 0, 0, c.width, c.height);
-  const dataUrl = c.toDataURL("image/jpeg", JPEG_QUALITY);
-  return {dataUrl, mime:"image/jpeg", bytes:Math.round((dataUrl.length - 23) * 3 / 4),
-          name:file.name};
+  const cx = c.getContext("2d");
+  cx.fillStyle = "#ffffff";                    // por si el PNG es transparente
+  cx.fillRect(0, 0, c.width, c.height);
+  cx.drawImage(img, 0, 0, c.width, c.height);
+  return {dataUrl: c.toDataURL("image/jpeg", CALIDAD)};
 }
 
-function clearPhoto(){
-  photo = null;
-  $("preview").classList.remove("on");
-  $("previewImg").removeAttribute("src");
-  $("drop").style.display = "";
-  $("photoNote").style.display = "none";
-  $("file").value = "";
+function quitaFoto(){
+  foto = null;
+  $("previa").classList.remove("on");
+  $("previaImg").removeAttribute("src");
+  $("soltar").hidden = false;
+  $("fotoLista").classList.remove("on");
+  $("fichero").value = "";
 }
 
-/* ---------------------------------------------------------------- misc */
-function updateCounter(){
-  $("counter").textContent = $("text").value.length + " / 1200";
-}
+/* --------------------------------------------------------------- misc */
+function cuenta(){ $("cuenta").textContent = $("texto").value.length + " / 1200"; }
 
-function manualMessage(d){
+function mensajeManual(d){
   const L = [
     "★".repeat(d.stars) + "☆".repeat(5 - d.stars) + "  (" + d.stars + "/5)",
     d.name + (d.country ? " — " + d.country : ""),
-    d.tour ? "Tour: " + d.tour : "",
-    "",
-    d.text,
-    "",
-    photo ? "(Photo attached ↓)" : "",
+    d.tour ? "Sitio: " + d.tour : "",
+    "", d.text, "",
+    foto ? "(Foto adjunta ↓)" : "",
   ].filter(Boolean).join("\n");
   return WHATSAPP
     ? "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(L)
-    : "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Review — " + d.name) +
+    : "mailto:" + EMAIL + "?subject=" + encodeURIComponent("Reseña — " + d.name) +
       "&body=" + encodeURIComponent(L);
 }
 
-/* -------------------------------------------------------------- submit */
-async function submit(ev){
+/* ------------------------------------------------------------- enviar */
+async function enviar(ev){
   ev.preventDefault();
-  const t = T[lang];
-  let ok = true;
-  const bad = (errId, el) => { ok = false; $(errId).classList.add("on");
-    if (el) el.classList.add("bad"); };
+  const t = T[idioma];
+  let bien = true;
+  const mal = (av, campo) => { bien = false; $(av).classList.add("on");
+    if (campo) $(campo).classList.add("malo"); };
 
-  ["errStars","errName","errText","errConsent","errSend","errPhoto"]
+  ["avEstrellas","avNombre","avTexto","avPermiso","avEnvio","avFoto"]
     .forEach(i => $(i).classList.remove("on"));
-  ["name","text"].forEach(i => $(i).classList.remove("bad"));
-  $("stars").classList.remove("bad");
+  ["nombre","texto"].forEach(i => $(i).classList.remove("malo"));
 
-  if (!rating) bad("errStars", $("stars"));
-  const name = $("name").value.trim();
-  if (name.length < 2) bad("errName", $("name"));
-  const text = $("text").value.trim();
-  if (text.length < 20) bad("errText", $("text"));
-  if (!$("consent").checked) bad("errConsent");
-  if (!ok){ document.querySelector(".msg-err.on").scrollIntoView({block:"center"}); return; }
+  if (!nota) mal("avEstrellas");
+  const nombre = $("nombre").value.trim();
+  if (nombre.length < 2) mal("avNombre", "nombre");
+  const texto = $("texto").value.trim();
+  if (texto.length < 20) mal("avTexto", "texto");
+  if (!$("permiso").checked) mal("avPermiso");
+  if (!bien){ document.querySelector(".aviso.on").scrollIntoView({block:"center"}); return; }
 
-  const data = {
-    stars: rating,
-    name: name,
-    country: $("country").value.trim(),
-    tour: $("tour").value === "other" ? "" : $("tour").value,
-    text: text,
-    lang: lang,
-    consent: true,
-    website: $("website").value,          // honeypot
-    photo: photo ? photo.dataUrl : "",
+  const d = {
+    stars: nota, name: nombre, country: $("pais").value.trim(),
+    tour: $("tour").value === "otro" ? "" : $("tour").value,
+    text: texto, lang: idioma, consent: true,
+    website: $("web").value,                   // trampa anti-bots
+    photo: foto ? foto.dataUrl : "",
     page: location.href,
   };
 
-  const target = endpoint();
-  if (!target){                            // sin receptor configurado → WhatsApp/email
-    $("manLink").href = manualMessage(data);
+  if (!ENDPOINT){
+    $("manLink").href = mensajeManual(d);
     $("form").style.display = "none";
     $("manual").classList.add("on");
     scrollTo({top:0, behavior:"smooth"});
     return;
   }
 
-  const btn = $("send");
-  btn.disabled = true;
-  btn.textContent = t.sending;
+  const b = $("enviar");
+  b.disabled = true;
+  b.textContent = t.enviando;
   try {
-    const r = await fetch(target, {
-      method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body: JSON.stringify(data),
+    const r = await fetch(ENDPOINT, {
+      method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(d),
     });
     if (!r.ok) throw new Error("HTTP " + r.status);
     $("form").style.display = "none";
-    $("done").classList.add("on");
+    $("hecho").classList.add("on");
     scrollTo({top:0, behavior:"smooth"});
-  } catch (e){
-    btn.disabled = false;
-    btn.textContent = t.send;
-    const el = $("errSend");
-    el.textContent = t.eSend;
-    el.classList.add("on");
-    // Que no se quede sin poder mandarla: WhatsApp con el texto ya escrito.
-    $("rescateLink").href = manualMessage(data);
+  } catch {
+    b.disabled = false;
+    b.textContent = t.enviar;
+    const av = $("avEnvio");
+    av.textContent = t.eEnvio;
+    av.classList.add("on");
+    // Que no se quede sin poder mandarla.
+    $("rescateLink").href = mensajeManual(d);
     $("rescate").hidden = false;
   }
 }
 
-/* ----------------------------------------------------------------- init */
-$("langbar").innerHTML = LANGS.map(l =>
-  `<button type="button" data-code="${l.code}" aria-pressed="false">${l.label}</button>`).join("");
-$("langbar").addEventListener("click", e => {
-  const b = e.target.closest("button"); if (b) setLang(b.dataset.code);
+/* --------------------------------------------------------------- init */
+$("idiomas").innerHTML = IDIOMAS.map(l =>
+  `<button type="button" data-c="${l.c}" aria-pressed="false">${l.n}</button>`).join("");
+$("idiomas").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) ponIdioma(b.dataset.c);
 });
 
-$("drop").addEventListener("click", () => $("file").click());
-$("drop").addEventListener("keydown", e => {
-  if (e.key === "Enter" || e.key === " "){ e.preventDefault(); $("file").click(); }
+$("soltar").addEventListener("click", () => $("fichero").click());
+$("soltar").addEventListener("keydown", e => {
+  if (e.key === "Enter" || e.key === " "){ e.preventDefault(); $("fichero").click(); }
 });
-["dragenter","dragover"].forEach(ev => $("drop").addEventListener(ev, e => {
-  e.preventDefault(); $("drop").classList.add("over"); }));
-["dragleave","drop"].forEach(ev => $("drop").addEventListener(ev, e => {
-  e.preventDefault(); $("drop").classList.remove("over"); }));
-$("drop").addEventListener("drop", e => handleFile(e.dataTransfer.files[0]));
-$("file").addEventListener("change", e => handleFile(e.target.files[0]));
-$("removePhoto").addEventListener("click", clearPhoto);
-$("text").addEventListener("input", updateCounter);
+["dragenter","dragover"].forEach(ev => $("soltar").addEventListener(ev, e => {
+  e.preventDefault(); $("soltar").classList.add("encima"); }));
+["dragleave","drop"].forEach(ev => $("soltar").addEventListener(ev, e => {
+  e.preventDefault(); $("soltar").classList.remove("encima"); }));
+$("soltar").addEventListener("drop", e => tomaFoto(e.dataTransfer.files[0]));
+$("fichero").addEventListener("change", e => tomaFoto(e.target.files[0]));
+$("quitar").addEventListener("click", quitaFoto);
+$("texto").addEventListener("input", cuenta);
+$("form").addEventListener("submit", enviar);
 
-// El aviso en rojo se va en cuanto lo arreglan: nadie quiere ver un error
-// que ya no lo es mientras sigue escribiendo.
-function limpiaAviso(campo, aviso){
+// El aviso en rojo se va en cuanto lo arreglan.
+[["nombre","avNombre"],["texto","avTexto"],["permiso","avPermiso"]].forEach(([campo, av]) => {
   const el = $(campo);
-  const quitar = () => { el.classList.remove("bad"); $(aviso).classList.remove("on"); };
-  el.addEventListener("input", quitar);
-  el.addEventListener("change", quitar);
-}
-limpiaAviso("name", "errName");
-limpiaAviso("text", "errText");
-limpiaAviso("consent", "errConsent");
-$("form").addEventListener("submit", submit);
+  const limpia = () => { el.classList.remove("malo"); $(av).classList.remove("on"); };
+  el.addEventListener("input", limpia);
+  el.addEventListener("change", limpia);
+});
 
-setLang(pickLang());
+ponIdioma(idiomaInicial());
 </script>
 </body>
 </html>

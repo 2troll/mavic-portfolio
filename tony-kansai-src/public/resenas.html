@@ -1,15 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Guest Reviews — Tony Kansai Private Tours</title>
-<meta name="description" content="Real reviews from travellers who spent a private day in Kyoto, Osaka, Nara or Kobe with Tony Kansai Guide.">
+<title>Reseñas de nuestros clientes — Tony Kansai</title>
+<meta name="description" content="Lo que cuentan los viajeros que pasaron el día con Tony en Osaka, Kioto, Minoh y Nara.">
 <link rel="canonical" href="https://tonykansaiguide.com/resenas.html">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://tonykansaiguide.com/resenas.html">
-<meta property="og:title" content="Guest Reviews — Tony Kansai Private Tours">
-<meta property="og:description" content="Real words from travellers who spent the day with us in Kansai.">
+<meta property="og:title" content="Reseñas de nuestros clientes — Tony Kansai">
+<meta property="og:description" content="Lo que cuentan los viajeros que pasaron el día con nosotros en Kansai.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
@@ -126,11 +126,11 @@
 
 <header>
   <div class="wrap">
-    <div class="eyebrow">Tony Kansai · Private Tours · Japan</div>
-    <h1 class="serif">Guest Reviews</h1>
-    <p>Real words from travellers who actually spent the day with us in Kansai —
-      not a single one of them written by us.</p>
-    <a class="back" href="/">← Back to the tours</a>
+    <div class="eyebrow">Tony Kansai · Tours privados</div>
+    <h1 class="serif">Bienvenidos a Japón</h1>
+    <p>Lo que cuentan los viajeros que pasaron el día con nosotros. Ni una sola
+      palabra la hemos escrito nosotros.</p>
+    <a class="back" href="/">← Volver a la web</a>
   </div>
 </header>
 
@@ -141,20 +141,20 @@
     <button class="rev-more" id="revMore" hidden></button>
 
     <p class="vacio" id="vacio" hidden>
-      The first reviews are on their way. If you have travelled with us,
-      yours could be the one that helps the next traveller decide.
+      Las primeras reseñas están en camino. Si has viajado con nosotros,
+      la tuya puede ser la que ayude al siguiente viajero a decidirse.
     </p>
 
     <div class="rev-ask">
-      <h2 class="serif">Travelled with us?</h2>
-      <p>Tell other travellers about your day — it takes a minute, and you can add a photo.</p>
-      <a class="go" href="/opinar.html">Leave your review →</a>
+      <h2 class="serif">¿Has viajado con nosotros?</h2>
+      <p>Cuéntale tu día a otros viajeros. Es un minuto, y puedes añadir una foto.</p>
+      <a class="go" href="/opinar.html">Deja tu reseña</a>
     </div>
   </div>
 </main>
 
-<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Guest photo">
-  <button class="x" id="lbClose" aria-label="Close">&times;</button>
+<div class="lb" id="lightbox" role="dialog" aria-modal="true" aria-label="Foto del cliente">
+  <button class="x" id="lbClose" aria-label="Cerrar">&times;</button>
   <img id="lbImg" alt="">
   <div class="cap" id="lbCap"></div>
 </div>
@@ -163,7 +163,7 @@
   <div class="wrap">
     <a href="/">tonykansaiguide.com</a>
     <span aria-hidden="true"> · </span>
-    <a href="/opinar.html">Leave a review</a>
+    <a href="/opinar.html">Deja tu reseña</a>
   </div>
 </footer>
 
@@ -187,10 +187,10 @@ function rateline(value, label){
 }
 
 function tarjeta(r){
-  const stars = rateline(r.stars, r.stars + " out of 5 stars");
+  const stars = rateline(r.stars, r.stars + " de 5 estrellas");
   const photo = r.photo
     ? `<figure><img loading="lazy" src="${esc(r.photo)}"
-         alt="Photo shared by ${esc(r.name)} on the ${esc(r.tour || "Kansai")} tour"
+         alt="Foto de ${esc(r.name)} en ${esc(r.tour || "Kansai")}"
          data-full="${esc(r.photo)}" data-cap="${esc(r.name)}${r.tour ? " · " + esc(r.tour) : ""}"></figure>`
     : "";
   const donde = [r.country, r.date].filter(Boolean).map(esc).join(" · ");
@@ -215,7 +215,7 @@ fetch("/reviews.json", {cache:"no-cache"})
     resumen.innerHTML = `
       <div class="rev-score">${avg.toFixed(1)}<small> / 5</small></div>
       <div class="grow">
-        ${rateline(avg, avg.toFixed(1) + " out of 5 stars")}
+        ${rateline(avg, avg.toFixed(1) + " de 5 estrellas")}
         <div class="meta" style="margin-top:6px">Based on <b>${n}</b>
           guest review${n === 1 ? "" : "s"}</div>
       </div>`;
@@ -229,8 +229,8 @@ fetch("/reviews.json", {cache:"no-cache"})
       shown += next.length;
       if (shown < all.length){
         more.hidden = false;
-        more.textContent = `Read ${all.length - shown} more review` +
-          (all.length - shown === 1 ? "" : "s");
+        more.textContent = `Ver ${all.length - shown} reseña` +
+          (all.length - shown === 1 ? " más" : "s más");
       } else {
         more.hidden = true;
       }

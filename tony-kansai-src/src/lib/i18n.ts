@@ -319,8 +319,8 @@ const en: Tr = {
   },
 
   reviews: {
-    title: 'Guest Reviews',
-    subtitle: 'Real words from travellers who actually spent the day with us in Kansai.',
+    title: 'Welcome to Japan',
+    subtitle: 'What travellers say after a day with us in Kansai.',
     based_on: 'Based on {n} guest reviews',
     all: 'Read all reviews',
     cta_title: 'Travelled with us?',
@@ -489,8 +489,8 @@ const es: Tr = {
   },
 
   reviews: {
-    title: 'Reseñas de Clientes',
-    subtitle: 'Palabras de viajeros que pasaron el día con nosotros en Kansai.',
+    title: 'Bienvenidos a Japón',
+    subtitle: 'Lo que cuentan los viajeros que pasaron el día con nosotros.',
     based_on: 'Sobre {n} reseñas de clientes',
     all: 'Ver todas las reseñas',
     cta_title: '¿Has viajado con nosotros?',
@@ -659,8 +659,8 @@ const ar: Tr = {
   },
 
   reviews: {
-    title: 'آراء الضيوف',
-    subtitle: 'كلمات من مسافرين قضوا يومهم معنا في كانساي.',
+    title: 'أهلاً بكم في اليابان',
+    subtitle: 'ما يقوله المسافرون بعد يوم معنا في كانساي.',
     based_on: 'بناءً على {n} تقييمًا',
     all: 'اقرأ كل التقييمات',
     cta_title: 'هل سافرت معنا؟',
@@ -829,8 +829,8 @@ const cs: Tr = {
   },
 
   reviews: {
-    title: 'Recenze hostů',
-    subtitle: 'Slova cestovatelů, kteří s námi strávili den v Kansai.',
+    title: 'Vítejte v Japonsku',
+    subtitle: 'Co říkají cestovatelé po dni stráveném s námi v Kansai.',
     based_on: 'Na základě {n} recenzí',
     all: 'Přečíst všechny recenze',
     cta_title: 'Cestovali jste s námi?',
@@ -999,8 +999,8 @@ const ru: Tr = {
   },
 
   reviews: {
-    title: 'Отзывы гостей',
-    subtitle: 'Слова путешественников, которые провели день с нами в Кансае.',
+    title: 'Добро пожаловать в Японию',
+    subtitle: 'Что говорят путешественники после дня с нами в Кансае.',
     based_on: 'На основе {n} отзывов',
     all: 'Читать все отзывы',
     cta_title: 'Путешествовали с нами?',
