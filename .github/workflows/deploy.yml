@@ -61,6 +61,27 @@ jobs:
           echo "tonykansaiguide.com" > deploy/CNAME
           cp deploy/index.html deploy/404.html
 
+      # GitHub Pages responde 404 a cualquier ruta que no sea un fichero real.
+      # El 404.html de arriba hace que el visitante VEA la página (React Router
+      # se encarga), pero el estado sigue siendo 404 y Google no indexa un 404:
+      # /tours, /about y las 25 restantes del sitemap eran invisibles en el
+      # buscador. Creando un index.html de verdad por cada ruta, responden 200.
+      # Se toma la lista del propio sitemap.xml para que nunca se desincronicen.
+      - name: Rutas reales para el SPA (indexables por Google)
+        run: |
+          grep -oE '<loc>[^<]*</loc>' deploy/sitemap.xml \
+            | sed -E 's|</?loc>||g; s|https://tonykansaiguide\.com||; s|^/||; s|/$||' \
+            | grep -v '^$' \
+            | while read -r ruta; do
+                # Las que ya son un fichero real (resenas.html, booking.html…)
+                # responden 200 por sí solas: no hay que inventarles carpeta,
+                # y hacerlo rompería el despliegue con un choque de nombres.
+                if [ -e "deploy/$ruta" ]; then continue; fi
+                mkdir -p "deploy/$ruta"
+                cp deploy/index.html "deploy/$ruta/index.html"
+                echo "  200 -> /$ruta"
+              done
+
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

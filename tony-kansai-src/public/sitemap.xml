@@ -111,6 +111,11 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/resenas.html</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/about</loc>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
