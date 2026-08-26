@@ -153,6 +153,9 @@ export interface Tr {
     subtitle: string;
     based_on: string;
     all: string;
+    show_all: string;
+    show_less: string;
+    empty: string;
     cta_title: string;
     cta_body: string;
     cta_button: string;
@@ -323,6 +326,9 @@ const en: Tr = {
     subtitle: 'What travellers say after a day with us in Kansai.',
     based_on: 'Based on {n} guest reviews',
     all: 'Read all reviews',
+    show_all: 'Read all {n} reviews',
+    show_less: 'Show fewer',
+    empty: 'No reviews published yet — be the first to tell other travellers about your day.',
     cta_title: 'Travelled with us?',
     cta_body: 'Tell other travellers about your day — it takes a minute, and you can add a photo.',
     cta_button: 'Leave your review',
@@ -493,6 +499,9 @@ const es: Tr = {
     subtitle: 'Lo que cuentan los viajeros que pasaron el día con nosotros.',
     based_on: 'Sobre {n} reseñas de clientes',
     all: 'Ver todas las reseñas',
+    show_all: 'Leer las {n} reseñas',
+    show_less: 'Ver menos',
+    empty: 'Todavía no hay reseñas publicadas — sé el primero en contarle tu día a otros viajeros.',
     cta_title: '¿Has viajado con nosotros?',
     cta_body: 'Cuéntale tu día a otros viajeros — es un minuto, y puedes añadir una foto.',
     cta_button: 'Deja tu reseña',
@@ -663,6 +672,9 @@ const ar: Tr = {
     subtitle: 'ما يقوله المسافرون بعد يوم معنا في كانساي.',
     based_on: 'بناءً على {n} تقييمًا',
     all: 'اقرأ كل التقييمات',
+    show_all: 'اقرأ كل التقييمات ({n})',
+    show_less: 'عرض أقل',
+    empty: 'لا توجد تقييمات منشورة بعد — كن أول من يحكي للمسافرين الآخرين عن يومه.',
     cta_title: 'هل سافرت معنا؟',
     cta_body: 'احكِ لمسافرين آخرين عن يومك — دقيقة واحدة، ويمكنك إضافة صورة.',
     cta_button: 'اترك تقييمك',
@@ -833,6 +845,9 @@ const cs: Tr = {
     subtitle: 'Co říkají cestovatelé po dni stráveném s námi v Kansai.',
     based_on: 'Na základě {n} recenzí',
     all: 'Přečíst všechny recenze',
+    show_all: 'Přečíst všech {n} recenzí',
+    show_less: 'Zobrazit méně',
+    empty: 'Zatím nejsou zveřejněny žádné recenze — buďte první, kdo ostatním cestovatelům poví o svém dni.',
     cta_title: 'Cestovali jste s námi?',
     cta_body: 'Řekněte ostatním cestovatelům o svém dni — zabere to minutu a můžete přidat fotku.',
     cta_button: 'Napsat recenzi',
@@ -1003,6 +1018,9 @@ const ru: Tr = {
     subtitle: 'Что говорят путешественники после дня с нами в Кансае.',
     based_on: 'На основе {n} отзывов',
     all: 'Читать все отзывы',
+    show_all: 'Читать все отзывы ({n})',
+    show_less: 'Свернуть',
+    empty: 'Опубликованных отзывов пока нет — станьте первым, кто расскажет другим путешественникам о своём дне.',
     cta_title: 'Путешествовали с нами?',
     cta_body: 'Расскажите другим путешественникам о своём дне — это займёт минуту, и можно добавить фото.',
     cta_button: 'Оставить отзыв',

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Página privada de Tony: sin ella en Google y sin enlaces desde la web. Es
+     pública en el sentido de que cualquiera puede abrir la URL, pero sin la
+     contraseña de administrador no muestra ni un dato. -->
+<meta name="robots" content="noindex, nofollow" />
+<title>Panel de reseñas — Tony Kansai Guide</title>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<style>
+  :root {
+    --rojo:#e53030; --fondo:#0b0b0d; --carta:#141417; --borde:#26262c;
+    --texto:#f2f2f4; --suave:#9a9aa4; --oro:#e0b341; --verde:#2f9e5f;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--fondo); color:var(--texto);
+    font:15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    padding:0 0 60px;
+  }
+  header {
+    padding:22px 18px; border-bottom:1px solid var(--borde);
+    position:sticky; top:0; background:rgba(11,11,13,.94);
+    backdrop-filter:blur(8px); z-index:5;
+  }
+  h1 { margin:0; font-size:19px; letter-spacing:-.2px; }
+  h1 b { color:var(--rojo); }
+  .envoltorio { max-width:640px; margin:0 auto; padding:0 18px; }
+  h2 {
+    font-size:13px; text-transform:uppercase; letter-spacing:.09em;
+    color:var(--suave); margin:34px 0 14px; font-weight:600;
+  }
+  .carta {
+    background:var(--carta); border:1px solid var(--borde);
+    border-radius:14px; padding:16px; margin-bottom:14px;
+  }
+  .estrellas { color:var(--oro); letter-spacing:2px; font-size:16px; }
+  .estrellas .vacia { color:#3a3a42; }
+  .quien { font-weight:600; margin-top:8px; }
+  .meta { color:var(--suave); font-size:13px; }
+  .tour { color:var(--oro); font-size:13px; margin-top:2px; }
+  .texto { margin:12px 0; white-space:pre-line; }
+  .texto[dir="rtl"] { text-align:right; }
+  img.foto {
+    width:100%; border-radius:10px; margin:12px 0 4px; display:block;
+    background:#1c1c21; min-height:60px;
+  }
+  .sinfoto { color:var(--suave); font-size:13px; font-style:italic; margin:10px 0 2px; }
+  .botones { display:flex; flex-wrap:wrap; gap:9px; margin-top:14px; }
+  button {
+    font:inherit; font-weight:600; border-radius:10px; padding:11px 16px;
+    border:1px solid var(--borde); background:#1d1d22; color:var(--texto);
+    cursor:pointer; transition:.15s;
+  }
+  button:hover:not(:disabled) { border-color:#4a4a54; }
+  button:disabled { opacity:.45; cursor:default; }
+  button.principal { background:var(--rojo); border-color:var(--rojo); color:#fff; }
+  button.fantasma { background:transparent; color:var(--suave); }
+  input[type=password], input[type=text] {
+    width:100%; font:inherit; padding:13px 14px; border-radius:10px;
+    border:1px solid var(--borde); background:#1d1d22; color:var(--texto);
+  }
+  .aviso { padding:13px 15px; border-radius:11px; margin:16px 0; font-size:14px; }
+  .aviso.mal { background:rgba(229,48,48,.12); border:1px solid rgba(229,48,48,.4); }
+  .aviso.bien { background:rgba(47,158,95,.12); border:1px solid rgba(47,158,95,.4); }
+  .aviso.info { background:#17171b; border:1px solid var(--borde); color:var(--suave); }
+  .vacio { color:var(--suave); padding:20px 0; }
+  .permiso {
+    margin-top:10px; font-size:13px; color:#e5a030;
+    background:rgba(229,160,48,.1); border:1px solid rgba(229,160,48,.3);
+    border-radius:9px; padding:9px 12px;
+  }
+  footer { color:var(--suave); font-size:12.5px; margin-top:40px; }
+  a { color:var(--suave); }
+</style>
+</head>
+<body>
+
+<header><div class="envoltorio"><h1><b>Reseñas</b> · panel de Tony</h1></div></header>
+
+<div class="envoltorio">
+
+  <section id="acceso">
+    <div class="aviso info">
+      Tu contraseña de administrador (el <code>TOKEN_ADMIN</code> del Worker).
+      Se guarda <b>sólo en este móvil</b> y viaja únicamente a tu propio dominio.
+    </div>
+    <input id="clave" type="password" placeholder="Contraseña de administrador"
+           autocomplete="current-password" enterkeyhint="go" />
+    <div class="botones">
+      <button class="principal" id="entrar">Entrar</button>
+    </div>
+  </section>
+
+  <section id="panel" hidden>
+    <div id="mensaje"></div>
+
+    <h2>Esperando tu visto bueno (<span id="nPendientes">…</span>)</h2>
+    <div id="pendientes"></div>
+
+    <h2>Publicadas en la web (<span id="nPublicadas">…</span>)</h2>
+    <div id="publicadas"></div>
+
+    <footer>
+      <button class="fantasma" id="recargar">↻ Volver a mirar</button>
+      <button class="fantasma" id="salir">Olvidar la contraseña en este móvil</button>
+      <p>Lo que apruebas sale en <a href="/">tonykansaiguide.com</a> en menos de un minuto.</p>
+    </footer>
+  </section>
+
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  // Mismo dominio siempre. Nada de aceptar la dirección por la URL: alguien
+  // podría mandarle a Tony un enlace apuntando a su servidor y quedarse con la
+  // contraseña en cuanto la escribiera.
+  var API = "/api/resenas";
+  var LS = "tony-resenas-token";
+
+  var $ = function (id) { return document.getElementById(id); };
+
+  function esc(s) {
+    return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+      return { "&":"&amp;", "<":"&lt;", ">":"&gt;", '"':"&quot;", "'":"&#39;" }[c];
+    });
+  }
+
+  function estrellas(n) {
+    var s = "";
+    for (var i = 1; i <= 5; i++)
+      s += i <= n ? "★" : '<span class="vacia">★</span>';
+    return '<span class="estrellas" role="img" aria-label="' + n + ' de 5">' + s + "</span>";
+  }
+
+  function token() { try { return localStorage.getItem(LS) || ""; } catch (e) { return ""; } }
+
+  function decir(texto, clase) {
+    $("mensaje").innerHTML = texto
+      ? '<div class="aviso ' + clase + '">' + texto + "</div>" : "";
+  }
+
+  function pedir(ruta, opciones) {
+    opciones = opciones || {};
+    opciones.headers = Object.assign({ Authorization: "Bearer " + token() },
+                                     opciones.headers || {});
+    opciones.cache = "no-store";
+    return fetch(API + ruta, opciones).then(function (r) {
+      if (r.status === 401) {
+        var e = new Error("unauthorized"); e.noAutorizado = true; throw e;
+      }
+      return r.json().then(function (d) {
+        if (!r.ok) { var e = new Error(d.error || r.status); e.datos = d; throw e; }
+        return d;
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------ pendientes */
+  function pintarPendiente(r) {
+    var permiso = r.consentimiento ? "" :
+      '<div class="permiso">Esta persona <b>no marcó</b> la casilla de permiso ' +
+      'para publicar. Apruébala sólo si te lo autorizó por otra vía.</div>';
+
+    var foto = r.conFoto
+      ? '<img class="foto" alt="Foto de ' + esc(r.nombre) + '" data-foto="' + esc(r.id) + '" />'
+      : '<p class="sinfoto">Sin foto.</p>';
+
+    return '<article class="carta" data-id="' + esc(r.id) + '">' +
+      estrellas(r.estrellas) +
+      '<div class="quien">' + esc(r.nombre) + "</div>" +
+      '<div class="meta">' +
+        [esc(r.pais), esc(r.origen), esc(r.recibida).replace("T", " ")]
+          .filter(Boolean).join(" · ") +
+      "</div>" +
+      (r.tour ? '<div class="tour">' + esc(r.tour) + "</div>" : "") +
+      '<p class="texto" dir="' + (r.idioma === "ar" ? "rtl" : "auto") + '" lang="' +
+        esc(r.idioma || "en") + '">' + esc(r.texto) + "</p>" +
+      foto + permiso +
+      '<div class="botones">' +
+        '<button class="principal" data-accion="aprobar">Publicar en la web</button>' +
+        (r.conFoto ? '<button data-accion="aprobar-sin-foto">Publicar sin la foto</button>' : "") +
+        '<button class="fantasma" data-accion="rechazar">Descartar</button>' +
+      "</div></article>";
+  }
+
+  function pintarPublicada(r) {
+    return '<article class="carta" data-id="' + esc(r.id) + '">' +
+      estrellas(r.stars) +
+      '<div class="quien">' + esc(r.name) + "</div>" +
+      '<div class="meta">' + [esc(r.country), esc(r.date)].filter(Boolean).join(" · ") + "</div>" +
+      (r.tour ? '<div class="tour">' + esc(r.tour) + "</div>" : "") +
+      '<p class="texto" dir="' + (r.lang === "ar" ? "rtl" : "auto") + '">' + esc(r.text) + "</p>" +
+      (r.photo ? '<img class="foto" alt="" src="' + esc(r.photo) + '" />' : "") +
+      '<div class="botones">' +
+        '<button class="fantasma" data-accion="despublicar">Quitar de la web</button>' +
+      "</div></article>";
+  }
+
+  // Las fotos de las pendientes van protegidas por token, así que no se pueden
+  // poner en un src normal: se piden con la cabecera y se inyectan.
+  function cargarFotos() {
+    var imgs = document.querySelectorAll("img[data-foto]");
+    Array.prototype.forEach.call(imgs, function (img) {
+      var id = img.getAttribute("data-foto");
+      img.removeAttribute("data-foto");
+      pedir("/foto?id=" + encodeURIComponent(id))
+        .then(function (d) { img.src = d.foto; })
+        .catch(function () { img.replaceWith(Object.assign(document.createElement("p"),
+          { className: "sinfoto", textContent: "La foto no se pudo cargar." })); });
+    });
+  }
+
+  /* ---------------------------------------------------------------- cargar */
+  function cargar() {
+    decir("Mirando…", "info");
+    return Promise.all([
+      pedir("/pendientes"),
+      fetch(API + "/publicas", { cache: "no-store" })
+        .then(function (r) { return r.ok ? r.json() : { reviews: [] }; })
+        .catch(function () { return { reviews: [] }; }),
+    ]).then(function (res) {
+      var pend = res[0].resenas || [];
+      var pub = res[1].reviews || [];
+
+      $("nPendientes").textContent = pend.length;
+      $("pendientes").innerHTML = pend.length
+        ? pend.map(pintarPendiente).join("")
+        : '<p class="vacio">Nada nuevo. Cuando un cliente rellene el formulario, aparecerá aquí.</p>';
+
+      $("nPublicadas").textContent = pub.length;
+      $("publicadas").innerHTML = pub.length
+        ? pub.map(pintarPublicada).join("")
+        : '<p class="vacio">Todavía no has publicado ninguna.</p>';
+
+      cargarFotos();
+      decir(pend.length
+        ? "Tienes <b>" + pend.length + "</b> reseña(s) esperando."
+        : "", pend.length ? "bien" : "info");
+    }).catch(function (e) {
+      if (e.noAutorizado) {
+        decir("Esa contraseña no vale. Es el <code>TOKEN_ADMIN</code> que pusiste " +
+              "en el Worker de Cloudflare.", "mal");
+        salir(true);
+      } else {
+        decir("No pude conectar con el receptor: " + esc(e.message) + ".", "mal");
+      }
+    });
+  }
+
+  /* --------------------------------------------------------------- acciones */
+  document.addEventListener("click", function (ev) {
+    var boton = ev.target.closest("button[data-accion]");
+    if (!boton) return;
+    var carta = boton.closest(".carta");
+    var id = carta.getAttribute("data-id");
+    var accion = boton.getAttribute("data-accion");
+
+    if (accion === "rechazar" &&
+        !confirm("¿Descartar esta reseña? Se borra y no se puede recuperar.")) return;
+    if (accion === "despublicar" &&
+        !confirm("¿Quitarla de la web? Dejará de verse en la portada.")) return;
+
+    Array.prototype.forEach.call(carta.querySelectorAll("button"),
+      function (b) { b.disabled = true; });
+
+    var peticion = accion === "despublicar"
+      ? pedir("/despublicar", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ id: id }),
+        })
+      : pedir("/moderar", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            id: id,
+            accion: accion === "rechazar" ? "rechazar" : "aprobar",
+            sinFoto: accion === "aprobar-sin-foto",
+          }),
+        });
+
+    peticion.then(function () { return cargar(); })
+      .catch(function (e) {
+        Array.prototype.forEach.call(carta.querySelectorAll("button"),
+          function (b) { b.disabled = false; });
+        if (e.noAutorizado) { decir("La contraseña ha dejado de valer.", "mal"); salir(true); return; }
+        if (e.message === "no consent") {
+          if (confirm("Esta persona no marcó la casilla de permiso.\n\n" +
+                      "¿Te autorizó a publicarla por otra vía (WhatsApp, email)?")) {
+            pedir("/moderar", {
+              method: "POST", headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ id: id, accion: "aprobar", forzar: true,
+                                     sinFoto: accion === "aprobar-sin-foto" }),
+            }).then(cargar).catch(function () { decir("No se pudo publicar.", "mal"); });
+          }
+          return;
+        }
+        decir("No se pudo: " + esc(e.message) + ".", "mal");
+      });
+  });
+
+  /* ----------------------------------------------------------------- acceso */
+  function entrar() {
+    var v = $("clave").value.trim();
+    if (!v) return;
+    try { localStorage.setItem(LS, v); } catch (e) {}
+    $("clave").value = "";
+    $("acceso").hidden = true;
+    $("panel").hidden = false;
+    cargar();
+  }
+
+  function salir(silencioso) {
+    try { localStorage.removeItem(LS); } catch (e) {}
+    $("panel").hidden = true;
+    $("acceso").hidden = false;
+    if (!silencioso) $("mensaje").innerHTML = "";
+  }
+
+  $("entrar").addEventListener("click", entrar);
+  $("clave").addEventListener("keydown", function (e) { if (e.key === "Enter") entrar(); });
+  $("recargar").addEventListener("click", function () { cargar(); });
+  $("salir").addEventListener("click", function () { salir(false); });
+
+  if (token()) { $("acceso").hidden = true; $("panel").hidden = false; cargar(); }
+})();
+</script>
+</body>
+</html>
