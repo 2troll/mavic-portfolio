@@ -7,10 +7,15 @@ import { useLanguage } from '../contexts/LanguageContext'
 /**
  * Reseñas de clientes en la portada.
  *
- * Lee /reviews.json, que genera `resenas.py publicar` sólo con las que Tony ha
- * aprobado. Se pintan las tres primeras y el resto se despliega aquí mismo con
- * un botón: quien llega al final de la portada puede leerlas todas sin salir de
- * la página. /resenas.html sigue existiendo como página para compartir.
+ * Salen de dos sitios, y ninguno de los dos publica nada solo:
+ *   /api/resenas/publicas  las que Tony aprueba desde el móvil (panel-resenas.html)
+ *   /reviews.json          las que aprueba en el Mac con `resenas.py publicar`
+ * Se unen quitando repetidas por id, así los dos caminos conviven. Si el Worker
+ * no contesta, queda el fichero de siempre y la portada no se entera.
+ *
+ * Se pintan las tres primeras y el resto se despliega aquí mismo con un botón:
+ * quien llega al final de la portada puede leerlas todas sin salir de la página.
+ * /resenas.html sigue existiendo como página para compartir.
  *
  * La sección se muestra siempre, incluso sin reseñas: en ese caso no se inventa
  * ninguna nota media, sólo se invita a dejar la primera.
@@ -28,9 +33,9 @@ interface Resena {
   photo?: string
 }
 
+// Las dos fuentes traen también `count` y `average`, pero cada una sólo cuenta
+// las suyas: aquí se recalculan sobre la lista unida.
 interface Datos {
-  count?: number
-  average?: number
   reviews?: Resena[]
 }
 
@@ -89,7 +94,7 @@ function Tarjeta({ r }: { r: Resena }) {
 
 export function GuestReviews() {
   const { t } = useLanguage()
-  const [datos, setDatos] = useState<Datos | null>(null)
+  const [todas, setResenas] = useState<Resena[]>([])
   const [abierto, setAbierto] = useState(false)
   const seccion = useRef<HTMLElement>(null)
   const montado = useRef(false)
@@ -104,20 +109,34 @@ export function GuestReviews() {
 
   useEffect(() => {
     let vivo = true
-    fetch('/reviews.json', { cache: 'no-cache' })
-      .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
-      .then((d: Datos) => { if (vivo) setDatos(d) })
-      .catch(() => { /* sin reseñas la portada sigue igual */ })
+    const traer = (url: string): Promise<Datos | null> =>
+      fetch(url, { cache: 'no-cache' })
+        .then((r) => (r.ok ? r.json() : null))
+        .catch(() => null)
+
+    Promise.all([traer('/api/resenas/publicas'), traer('/reviews.json')])
+      .then((fuentes) => {
+        if (!vivo) return
+        const vistos = new Set<string>()
+        const unidas: Resena[] = []
+        for (const d of fuentes) {
+          for (const r of d?.reviews ?? []) {
+            if (!r || !r.text || !r.stars || vistos.has(r.id)) continue
+            vistos.add(r.id)
+            unidas.push(r)
+          }
+        }
+        setResenas(unidas)
+      })
     return () => { vivo = false }
   }, [])
 
-  const todas = (datos?.reviews ?? []).filter((r) => r && r.text && r.stars)
   const hay = todas.length > 0
   const ocultas = todas.length - EN_PORTADA
-  const n = datos?.count ?? todas.length
-  const media = hay
-    ? datos?.average ?? todas.reduce((a, r) => a + r.stars, 0) / todas.length
-    : 0
+  // Media y total se calculan sobre la lista ya unida: el `count` de cada
+  // fuente sólo cuenta su mitad y daría un número menor del real.
+  const n = todas.length
+  const media = hay ? todas.reduce((a, r) => a + r.stars, 0) / todas.length : 0
 
   return (
     <section ref={seccion} className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">

@@ -168,8 +168,11 @@
 </footer>
 
 <script>
-/* Las reseñas salen de /reviews.json, que genera `resenas.py publicar` con las
-   que Tony ha aprobado. Ni una sola llega aquí sin que él la lea antes. */
+/* Las reseñas salen de dos sitios, y ninguno publica nada solo:
+   - /api/resenas/publicas : las que Tony aprueba desde el móvil (panel-resenas.html)
+   - /reviews.json         : las que aprueba en el Mac con `resenas.py publicar`
+   Se unen quitando repetidas por id, así los dos caminos conviven. Si el Worker
+   no contesta, la web se queda con el fichero de siempre y no se rompe. */
 const POR_PAGINA = 9;
 
 const esc = str => String(str).replace(/[&<>"']/g,
@@ -201,14 +204,56 @@ function tarjeta(r){
     </div></article>`;
 }
 
-fetch("/reviews.json", {cache:"no-cache"})
-  .then(r => r.ok ? r.json() : Promise.reject(r.status))
-  .then(data => {
-    const all = (data.reviews || []).filter(r => r && r.text && r.stars);
+const traer = url => fetch(url, {cache:"no-cache"})
+  .then(r => r.ok ? r.json() : null).catch(() => null);
+
+Promise.all([traer("/api/resenas/publicas"), traer("/reviews.json")])
+  .then(fuentes => {
+    const vistos = new Set();
+    const all = [];
+    for (const data of fuentes){
+      for (const r of (data && data.reviews) || []){
+        if (!r || !r.text || !r.stars || vistos.has(r.id)) continue;
+        vistos.add(r.id);
+        all.push(r);
+      }
+    }
     if (!all.length){ document.getElementById("vacio").hidden = false; return; }
 
-    const avg = Number(data.average) || (all.reduce((a, r) => a + r.stars, 0) / all.length);
-    const n = Number(data.count) || all.length;
+    // Media y total salen de la lista ya unida: los de cada fichero sólo
+    // cuentan su mitad y darían un número menor del real.
+    const avg = all.reduce((a, r) => a + r.stars, 0) / all.length;
+    const n = all.length;
+
+    // Estrellas en Google. `resenas.py publicar` deja aquí un bloque estático,
+    // pero sólo con lo que hay en reviews.json: le faltarían las que Tony
+    // aprueba desde el móvil. Se sustituye por uno hecho con la lista unida,
+    // que siempre es la completa. Se quita el viejo antes de poner el nuevo:
+    // dos AggregateRating en la misma página se contradicen y Google los
+    // descarta los dos.
+    try {
+      document.querySelectorAll('script[type="application/ld+json"]').forEach(el => {
+        if ((el.textContent || "").includes("AggregateRating")) el.remove();
+      });
+      const marca = document.createElement("script");
+      marca.type = "application/ld+json";
+      marca.textContent = JSON.stringify({
+        "@context":"https://schema.org", "@type":"TravelAgency",
+        name:"Tony Kansai Guide", url:"https://tonykansaiguide.com/",
+        areaServed:"Kansai, Japan",
+        aggregateRating:{ "@type":"AggregateRating", ratingValue:Math.round(avg*10)/10,
+          bestRating:5, worstRating:1, reviewCount:n },
+        review: all.slice(0, 20).map(r => ({
+          "@type":"Review",
+          author:{ "@type":"Person", name:r.name },
+          datePublished:String(r.date || "").slice(0, 10),
+          reviewRating:{ "@type":"Rating", ratingValue:r.stars, bestRating:5, worstRating:1 },
+          reviewBody:r.text,
+        })),
+      // Que ningún texto de cliente pueda cerrar el <script> antes de tiempo.
+      }).replace(/</g, "\\u003c").replace(/>/g, "\\u003e").replace(/&/g, "\\u0026");
+      document.head.appendChild(marca);
+    } catch (e) { /* el marcado es un extra: si falla, las reseñas se ven igual */ }
 
     const resumen = document.getElementById("revSummary");
     resumen.hidden = false;
