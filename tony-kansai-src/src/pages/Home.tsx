@@ -404,7 +404,8 @@ export default function Home() {
       </section>
 
       {/* ── GUEST REVIEWS ─────────────────────────────────────── */}
-      {/* No se pinta nada mientras no haya reseñas aprobadas. */}
+      {/* Siempre visible: con reseñas aprobadas las pinta y deja desplegar el
+          resto; sin ninguna, sólo invita a dejar la primera. */}
       <GuestReviews />
 
       {/* ── CTA STRIP ─────────────────────────────────────────── */}

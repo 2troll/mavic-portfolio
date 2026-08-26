@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
-import { Star } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { ChevronDown, Star } from 'lucide-react'
 import { FadeUp } from './FadeUp'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -7,10 +8,12 @@ import { useLanguage } from '../contexts/LanguageContext'
  * Reseñas de clientes en la portada.
  *
  * Lee /reviews.json, que genera `resenas.py publicar` sólo con las que Tony ha
- * aprobado. Mientras no haya ninguna, la sección no se pinta: más vale nada que
- * un hueco vacío pidiendo reseñas que no existen.
+ * aprobado. Se pintan las tres primeras y el resto se despliega aquí mismo con
+ * un botón: quien llega al final de la portada puede leerlas todas sin salir de
+ * la página. /resenas.html sigue existiendo como página para compartir.
  *
- * La página completa vive en /resenas.html (estática, fuera de esta app).
+ * La sección se muestra siempre, incluso sin reseñas: en ese caso no se inventa
+ * ninguna nota media, sólo se invita a dejar la primera.
  */
 
 interface Resena {
@@ -52,9 +55,42 @@ function Estrellas({ nota, tam = 14 }: { nota: number; tam?: number }) {
   )
 }
 
+function Tarjeta({ r }: { r: Resena }) {
+  return (
+    // h-full, con items-start en la rejilla: sin eso una reseña corta y sin foto
+    // se estira hasta la altura de la más larga y deja un hueco muerto.
+    <article className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
+      {r.photo && (
+        <img
+          src={r.photo}
+          alt={`${r.name} — ${r.tour || 'Kansai'}`}
+          className="w-full aspect-[4/3] object-cover"
+          loading="lazy"
+        />
+      )}
+      <div className="p-5 flex flex-col flex-1">
+        <Estrellas nota={r.stars} />
+        <blockquote
+          dir={r.lang === 'ar' ? 'rtl' : 'auto'}
+          lang={r.lang || 'en'}
+          className="mt-3 mb-4 text-[15px] leading-relaxed text-white/80 whitespace-pre-line flex-1"
+        >
+          {r.text}
+        </blockquote>
+        <div className="border-t border-white/6 pt-3 text-xs text-white/45">
+          <div className="text-[15px] font-semibold text-white">{r.name}</div>
+          {[r.country, r.date].filter(Boolean).join(' · ')}
+          {r.tour && <div className="text-japan-gold mt-1.5">{r.tour}</div>}
+        </div>
+      </div>
+    </article>
+  )
+}
+
 export function GuestReviews() {
   const { t } = useLanguage()
   const [datos, setDatos] = useState<Datos | null>(null)
+  const [abierto, setAbierto] = useState(false)
 
   useEffect(() => {
     let vivo = true
@@ -66,10 +102,12 @@ export function GuestReviews() {
   }, [])
 
   const todas = (datos?.reviews ?? []).filter((r) => r && r.text && r.stars)
-  if (!todas.length) return null
-
+  const hay = todas.length > 0
+  const ocultas = todas.length - EN_PORTADA
   const n = datos?.count ?? todas.length
-  const media = datos?.average ?? todas.reduce((a, r) => a + r.stars, 0) / todas.length
+  const media = hay
+    ? datos?.average ?? todas.reduce((a, r) => a + r.stars, 0) / todas.length
+    : 0
 
   return (
     <section className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">
@@ -82,67 +120,76 @@ export function GuestReviews() {
             {t.reviews.subtitle}
           </p>
 
-          <div className="mt-7 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2
-                          glass rounded-2xl border border-white/6 px-6 py-4">
-            <span className="font-serif text-4xl font-semibold text-japan-gold tabular-nums leading-none">
-              {media.toFixed(1)}
-              <span className="text-base text-white/40 font-sans font-normal"> / 5</span>
-            </span>
-            <Estrellas nota={media} tam={18} />
-            <span className="text-sm text-white/45">
-              {t.reviews.based_on.replace('{n}', String(n))}
-            </span>
-          </div>
+          {/* Sin reseñas no se enseña la nota: un 0,0 / 5 espanta más que el hueco. */}
+          {hay && (
+            <div className="mt-7 inline-flex flex-wrap items-center justify-center gap-x-4 gap-y-2
+                            glass rounded-2xl border border-white/6 px-6 py-4">
+              <span className="font-serif text-4xl font-semibold text-japan-gold tabular-nums leading-none">
+                {media.toFixed(1)}
+                <span className="text-base text-white/40 font-sans font-normal"> / 5</span>
+              </span>
+              <Estrellas nota={media} tam={18} />
+              <span className="text-sm text-white/45">
+                {t.reviews.based_on.replace('{n}', String(n))}
+              </span>
+            </div>
+          )}
         </FadeUp>
 
-        {/* items-start: sin esto, una reseña corta y sin foto se estira
-            hasta la altura de la más larga y deja un hueco muerto. */}
-        <div className="grid md:grid-cols-3 gap-6 items-start">
-          {todas.slice(0, EN_PORTADA).map((r, i) => (
-            <FadeUp key={r.id} delay={i * 0.1}>
-              <article className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
-                {r.photo && (
-                  <img
-                    src={r.photo}
-                    alt={`${r.name} — ${r.tour || 'Kansai'}`}
-                    className="w-full aspect-[4/3] object-cover"
-                    loading="lazy"
-                  />
-                )}
-                <div className="p-5 flex flex-col flex-1">
-                  <Estrellas nota={r.stars} />
-                  <blockquote
-                    dir={r.lang === 'ar' ? 'rtl' : 'auto'}
-                    lang={r.lang || 'en'}
-                    className="mt-3 mb-4 text-[15px] leading-relaxed text-white/80 whitespace-pre-line flex-1"
+        {hay && (
+          <div id="resenas-lista" className="grid md:grid-cols-3 gap-6 items-start">
+            {todas.slice(0, EN_PORTADA).map((r, i) => (
+              <FadeUp key={r.id} delay={i * 0.1}>
+                <Tarjeta r={r} />
+              </FadeUp>
+            ))}
+
+            {/* Las que se despliegan. Van dentro de la misma rejilla para que
+                continúen la fila donde se quedaron las tres primeras. */}
+            <AnimatePresence initial={false}>
+              {abierto &&
+                todas.slice(EN_PORTADA).map((r) => (
+                  <motion.div
+                    key={r.id}
+                    initial={{ opacity: 0, y: -12 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.25 }}
                   >
-                    {r.text}
-                  </blockquote>
-                  <div className="border-t border-white/6 pt-3 text-xs text-white/45">
-                    <div className="text-[15px] font-semibold text-white">{r.name}</div>
-                    {[r.country, r.date].filter(Boolean).join(' · ')}
-                    {r.tour && <div className="text-japan-gold mt-1.5">{r.tour}</div>}
-                  </div>
-                </div>
-              </article>
-            </FadeUp>
-          ))}
-        </div>
+                    <Tarjeta r={r} />
+                  </motion.div>
+                ))}
+            </AnimatePresence>
+          </div>
+        )}
 
-        <FadeUp className="mt-10 text-center">
-          {/* Enlaces normales, no <Link>: estas dos páginas son estáticas y viven
-              fuera del router de la app. */}
-          <a
-            href="/resenas.html"
-            className="inline-block rounded-full border border-white/12 px-7 py-3 text-sm font-semibold
-                       text-white/80 hover:border-japan-gold hover:text-white transition-colors"
-          >
-            {t.reviews.all} →
-          </a>
-        </FadeUp>
+        {/* El botón sólo aparece si queda algo por desplegar. */}
+        {ocultas > 0 && (
+          <FadeUp className="mt-10 text-center">
+            <button
+              type="button"
+              onClick={() => setAbierto((v) => !v)}
+              aria-expanded={abierto}
+              aria-controls="resenas-lista"
+              className="inline-flex items-center gap-2 rounded-full border border-white/12 px-7 py-3
+                         text-sm font-semibold text-white/80
+                         hover:border-japan-gold hover:text-white transition-colors"
+            >
+              {abierto
+                ? t.reviews.show_less
+                : t.reviews.show_all.replace('{n}', String(todas.length))}
+              <ChevronDown
+                size={16}
+                className={`transition-transform ${abierto ? 'rotate-180' : ''}`}
+                aria-hidden="true"
+              />
+            </button>
+          </FadeUp>
+        )}
 
         <FadeUp className="mt-8">
           <div className="rounded-2xl border border-dashed border-white/10 px-6 py-8 text-center">
+            {!hay && <p className="text-white/45 text-sm mb-5">{t.reviews.empty}</p>}
             <h3 className="font-serif text-2xl font-semibold text-white mb-2">{t.reviews.cta_title}</h3>
             <p className="text-white/50 text-sm mb-5 max-w-md mx-auto">{t.reviews.cta_body}</p>
             <a
@@ -154,6 +201,20 @@ export function GuestReviews() {
             >
               {t.reviews.cta_button} →
             </a>
+
+            {/* Enlace normal, no <Link>: /resenas.html es estática y vive fuera
+                del router de la app. Se queda como página para compartir. */}
+            {hay && (
+              <div className="mt-6">
+                <a
+                  href="/resenas.html"
+                  className="text-sm text-white/40 underline underline-offset-4
+                             hover:text-japan-gold transition-colors"
+                >
+                  {t.reviews.all} →
+                </a>
+              </div>
+            )}
           </div>
         </FadeUp>
       </div>
