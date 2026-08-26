@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import { ChevronDown, Star } from 'lucide-react'
 import { FadeUp } from './FadeUp'
@@ -91,6 +91,16 @@ export function GuestReviews() {
   const { t } = useLanguage()
   const [datos, setDatos] = useState<Datos | null>(null)
   const [abierto, setAbierto] = useState(false)
+  const seccion = useRef<HTMLElement>(null)
+  const montado = useRef(false)
+
+  // Al plegar, la lista encoge por debajo del visitante y lo deja tirado en el
+  // pie de página —y siendo ésta la última sección, no hay nada más abajo a lo
+  // que agarrarse—. Se le devuelve al principio de las reseñas.
+  useEffect(() => {
+    if (!montado.current) { montado.current = true; return }
+    if (!abierto) seccion.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }, [abierto])
 
   useEffect(() => {
     let vivo = true
@@ -110,7 +120,7 @@ export function GuestReviews() {
     : 0
 
   return (
-    <section className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">
+    <section ref={seccion} className="py-24 bg-gradient-to-b from-transparent via-japan-surface/30 to-transparent">
       <div className="max-w-6xl mx-auto px-6">
         <FadeUp className="text-center mb-12">
           <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">

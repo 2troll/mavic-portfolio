@@ -403,11 +403,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* ── GUEST REVIEWS ─────────────────────────────────────── */}
-      {/* Siempre visible: con reseñas aprobadas las pinta y deja desplegar el
-          resto; sin ninguna, sólo invita a dejar la primera. */}
-      <GuestReviews />
-
       {/* ── CTA STRIP ─────────────────────────────────────────── */}
       <section className="py-20">
         <div className="max-w-4xl mx-auto px-6">
@@ -448,6 +443,14 @@ export default function Home() {
           </FadeUp>
         </div>
       </section>
+
+      {/* ── GUEST REVIEWS ─────────────────────────────────────── */}
+      {/* Lo último de la portada, después del CTA: quien ha bajado hasta aquí
+          ya se ha leído los tours, y es donde Tony quiere que se lean. Sólo
+          queda debajo la franja legal, que es letra pequeña del pie.
+          Siempre visible: con reseñas aprobadas las pinta y deja desplegar el
+          resto; sin ninguna, sólo invita a dejar la primera. */}
+      <GuestReviews />
 
       {/* ── LEGAL STRIP ───────────────────────────────────────── */}
       <section className="py-6 border-t border-white/4">
