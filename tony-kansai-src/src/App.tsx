@@ -17,6 +17,10 @@ import FAQ from './pages/FAQ'
 import Booking from './pages/Booking'
 import Privacy from './pages/Privacy'
 import Terms from './pages/Terms'
+import Cookies from './pages/Cookies'
+import Safety from './pages/Safety'
+import Legal from './pages/Legal'
+import Accessibility from './pages/Accessibility'
 import GuideDetail from './pages/GuideDetail'
 import Admin from './pages/Admin'
 import Hiking from './pages/Hiking'
@@ -93,6 +97,10 @@ function Layout() {
           <Route path="/guides/:id" element={<GuideDetail />} />
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
+          <Route path="/cookies" element={<Cookies />} />
+          <Route path="/safety" element={<Safety />} />
+          <Route path="/legal" element={<Legal />} />
+          <Route path="/accessibility" element={<Accessibility />} />
           <Route path="*" element={<Home />} />
         </Routes>
       </main>

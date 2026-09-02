@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { FileText } from 'lucide-react'
 import { PageSEO } from '../components/PageSEO'
 import { useLanguage } from '../contexts/LanguageContext'
+import { LegalFooterLinks } from '../components/LegalPage'
 
 const CONTACT_WA = 'https://wa.me/34634193106'
 const UPDATED = 'May 2026'
@@ -184,20 +185,7 @@ export default function Terms() {
               </Section>
             </div>
 
-            <div className="pt-4 border-t border-white/6 flex flex-col sm:flex-row gap-3">
-              <Link
-                to="/"
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl glass border border-white/10 text-white/70 hover:text-white text-sm transition-colors"
-              >
-                <span className="flip-rtl inline-block me-1.5">←</span> {tc('Back to Home')}
-              </Link>
-              <Link
-                to="/privacy"
-                className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl glass border border-white/10 text-white/70 hover:text-white text-sm transition-colors"
-              >
-                {tc('Privacy Policy')}
-              </Link>
-            </div>
+            <LegalFooterLinks current="/terms" />
           </motion.div>
         </div>
       </section>

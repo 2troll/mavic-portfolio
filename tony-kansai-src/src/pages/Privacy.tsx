@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { Shield } from 'lucide-react'
 import { PageSEO } from '../components/PageSEO'
 import { useLanguage } from '../contexts/LanguageContext'
+import { LegalFooterLinks } from '../components/LegalPage'
 
 const SITE_URL = 'https://tonykansaiguide.com'
 const CONTACT_WA = 'https://wa.me/34634193106'
@@ -117,22 +118,7 @@ export default function Privacy() {
             <p>{tc('We may update this policy occasionally. The "Last updated" date at the top of this page will reflect any changes. Continued use of the site after changes constitutes acceptance of the updated policy.')}</p>
           </Section>
 
-          <div className="pt-4 border-t border-white/6 flex flex-col sm:flex-row gap-3">
-            <Link
-              to="/"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl glass border border-white/10 text-white/70 hover:text-white text-sm transition-colors"
-            >
-              <span className="flip-rtl inline-block me-1.5">←</span> {tc('Back to Home')}
-            </Link>
-            <a
-              href={CONTACT_WA}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-xl bg-japan-red/15 border border-japan-red/25 text-japan-red hover:bg-japan-red/25 text-sm transition-colors"
-            >
-              {tc('Questions? WhatsApp us')}
-            </a>
-          </div>
+          <LegalFooterLinks current="/privacy" />
         </motion.div>
       </div>
     </section>

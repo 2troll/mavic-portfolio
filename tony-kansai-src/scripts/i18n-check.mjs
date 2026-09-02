@@ -47,12 +47,45 @@ for (const m of readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
   wanted.add(`${MESES[m[1]] ?? m[1]} ${m[2]}`)
 }
 
-// 3) Todo el texto visible de data.ts y de la prosa de las fichas de guía
+// 3) Todo el texto visible de data.ts y de las constantes de módulo de las
+//    páginas (prosa de las fichas de guía, tabla de cookies, fechas de
+//    revisión…): son textos que llegan a tc() como variable, así que el
+//    barrido de literales del punto 1 no los ve.
+// Sólo las constantes de datos: barrer todo lo que hay antes de
+// `export default` arrastraría también clases de Tailwind y estilos.
+const CONSTANTES = ['DETAIL', 'ALMACENAMIENTO', 'UPDATED']
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
-  + '\n' + readFileSync(join(root, 'src/pages/GuideDetail.tsx'), 'utf8')
-      .split('export default')[0]
-      .split('\n').filter((l) => !l.startsWith('import ')).join('\n')
+  + sources
+      .filter((f) => f.includes('/pages/') && !f.endsWith('Admin.tsx'))
+      .map((f) => {
+        const code = readFileSync(f, 'utf8')
+        // GuideDetail guarda toda la prosa de las fichas en una constante con
+        // anotación de tipo; ahí se toma el bloque entero antes del componente.
+        if (f.endsWith('GuideDetail.tsx')) {
+          return '\n' + code.split('export default')[0]
+            .split('\n').filter((l) => !l.startsWith('import ')).join('\n')
+        }
+        return CONSTANTES
+          .map((nombre) => {
+            const desde = code.indexOf(`const ${nombre}`)
+            if (desde < 0) return ''
+            const finLinea = code.indexOf('\n', desde)
+            const primeraLinea = code.slice(desde, finLinea)
+            // `const UPDATED = 'September 2026'` cabe en una línea; una tabla
+            // o un objeto se lee hasta su cierre (\n] o \n}).
+            if (/=\s*['"`]/.test(primeraLinea)) return '\n' + primeraLinea
+            const cierres = ['\n]', '\n}'].map((c) => code.indexOf(c, desde)).filter((i) => i > 0)
+            const fin = cierres.length ? Math.min(...cierres) : -1
+            return '\n' + (fin > 0 && fin - desde < 6000 ? code.slice(desde, fin) : primeraLinea)
+          })
+          .join('')
+      })
+      .join('')
 // se saltan URLs, ids, clases de Tailwind y direcciones de correo
+// Nombres de cookies y de proveedores: son identificadores, no texto.
+const IDENTIFICADORES = new Set(['_ga', '_ga_K9JKN9346D', '_gcl_au',
+                                 'Google Analytics 4', 'Google Ads',
+                                 'tonykansaiguide.com'])
 const skip = /^(https?:|\/|#|&|from-|via-|to-|photo-|[a-z0-9]+(-[a-z0-9]+)*$)|@/
 for (let i = 0; i < data.length; i++) {
   const q = data[i]
@@ -66,7 +99,7 @@ for (let i = 0; i < data.length; i++) {
   i = j
   // Basta una letra: "~2 h" o "4.7 km one way" también son texto visible.
   // Los códigos de idioma (EN, ES, AR…) se muestran tal cual y no se traducen.
-  if (out && !skip.test(out) && /[A-Za-z]/.test(out) && !/^[A-Z]{2,3}$/.test(out)) wanted.add(out)
+  if (out && !skip.test(out) && !IDENTIFICADORES.has(out) && /[A-Za-z]/.test(out) && !/^[A-Z]{2,3}$/.test(out)) wanted.add(out)
 }
 
 let failed = false
@@ -96,13 +129,15 @@ const HARD_TEXT = />\s*([A-Z][^<>{}]{20,600}?)\s*</gs
 const CODEY = /=>|\bconst\b|\breturn\b|\bfunction\b|[;()]/
 // Un teléfono o un correo no son texto traducible.
 const CONTACT = /\+\d[\d\s]{6,}|@/
+// El nombre comercial se escribe igual en los cinco idiomas: es su nombre.
+const NOMBRE_COMERCIAL = new Set(['Tony Hanma Private Kansai Tours'])
 const hardcoded = []
 for (const f of sources) {
   if (f.endsWith('Admin.tsx') || f.endsWith('.ts')) continue
   const code = readFileSync(f, 'utf8')
   for (const m of code.matchAll(HARD_TEXT)) {
     const text = m[1].replace(/\s+/g, ' ').trim()
-    if (CODEY.test(text) || CONTACT.test(text)) continue
+    if (CODEY.test(text) || CONTACT.test(text) || NOMBRE_COMERCIAL.has(text)) continue
     if (text.split(' ').length < 4) continue
     hardcoded.push(`${f.replace(root + '/', '')}: ${text.slice(0, 90)}…`)
   }

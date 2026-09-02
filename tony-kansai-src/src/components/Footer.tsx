@@ -6,10 +6,19 @@ import { useLanguage } from '../contexts/LanguageContext'
 export function Footer() {
   const { t, tc } = useLanguage()
 
+  const LEGAL_LINKS = [
+    { to: '/terms', label: tc('Terms and Conditions') },
+    { to: '/privacy', label: t.footer.privacy },
+    { to: '/cookies', label: tc('Cookie Policy') },
+    { to: '/safety', label: tc('Safety & Insurance') },
+    { to: '/legal', label: tc('Legal Notice') },
+    { to: '/accessibility', label: tc('Accessibility') },
+  ]
+
   const NAV_LINKS = [
     { to: '/', label: t.nav.home },
     { to: '/tours', label: t.nav.tours },
-    { to: '/hiking', label: '⛰️ Hiking' },
+    { to: '/hiking', label: `⛰️ ${t.nav.hiking}` },
     { to: '/about', label: t.nav.about },
     { to: '/pricing', label: t.nav.pricing },
     { to: '/faq', label: t.nav.faq },
@@ -74,13 +83,23 @@ export function Footer() {
           </div>
         </div>
 
+        {/* Las seis páginas legales, todas al alcance desde cualquier página. */}
+        <div className="border-t border-white/5 pt-6 mb-5">
+          <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-3">
+            {tc('Legal & Safety')}
+          </div>
+          <div className="flex flex-wrap gap-x-5 gap-y-2">
+            {LEGAL_LINKS.map(({ to, label }) => (
+              <Link key={to} to={to} className="text-xs text-white/45 hover:text-white transition-colors">
+                {label}
+              </Link>
+            ))}
+          </div>
+        </div>
+
         <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/25">
           <span>© {new Date().getFullYear()} {t.footer.rights}</span>
-          <div className="flex items-center gap-4">
-            <Link to="/privacy" className="hover:text-white/50 transition-colors">{t.footer.privacy}</Link>
-            <Link to="/terms" className="hover:text-white/50 transition-colors">{tc('Terms and Conditions')}</Link>
-            <span>{t.footer.replies}</span>
-          </div>
+          <span>{t.footer.replies}</span>
         </div>
       </div>
     </footer>

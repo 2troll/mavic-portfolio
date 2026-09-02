@@ -422,7 +422,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/terms?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/terms"/>
     <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <priority>0.4</priority>
   </url>
   <url>
     <loc>https://tonykansaiguide.com/privacy</loc>
@@ -432,6 +432,50 @@
     <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/privacy?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/privacy?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/privacy"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.4</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/cookies</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/cookies"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/cookies?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/cookies?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/cookies?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/cookies?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/cookies"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/safety</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/safety"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/safety?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/safety?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/safety?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/safety?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/safety"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/legal</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/legal"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/legal?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/legal?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/legal?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/legal?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/legal"/>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/accessibility</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/accessibility"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/accessibility?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/accessibility?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/accessibility?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/accessibility?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/accessibility"/>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>

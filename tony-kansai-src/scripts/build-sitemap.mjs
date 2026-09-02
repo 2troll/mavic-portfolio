@@ -36,8 +36,12 @@ const paginas = [
   { loc: '/faq', priority: '0.7', changefreq: 'monthly' },
   { loc: '/booking', priority: '0.9', changefreq: 'weekly' },
   { loc: '/resenas.html', priority: '0.7', changefreq: 'weekly' },
-  { loc: '/terms', priority: '0.3', changefreq: 'yearly' },
-  { loc: '/privacy', priority: '0.3', changefreq: 'yearly' },
+  { loc: '/terms', priority: '0.4', changefreq: 'yearly' },
+  { loc: '/privacy', priority: '0.4', changefreq: 'yearly' },
+  { loc: '/cookies', priority: '0.3', changefreq: 'yearly' },
+  { loc: '/safety', priority: '0.6', changefreq: 'monthly' },
+  { loc: '/legal', priority: '0.3', changefreq: 'yearly' },
+  { loc: '/accessibility', priority: '0.3', changefreq: 'yearly' },
 ]
 
 const url = ({ loc, priority, changefreq }) => {
