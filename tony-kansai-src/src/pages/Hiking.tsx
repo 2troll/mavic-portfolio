@@ -128,7 +128,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
         </div>
 
         <div className="mb-4">
-          <GradeTag grade={tc(route.grade)} accent={route.accent} />
+          <GradeTag grade={route.grade} accent={route.accent} />
         </div>
 
         <p className="text-xs text-white/45 leading-relaxed mb-4 italic line-clamp-2">"{tc(route.note)}"</p>
