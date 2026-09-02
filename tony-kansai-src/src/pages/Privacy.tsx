@@ -48,7 +48,7 @@ export default function Privacy() {
 
           <Section title={tc('1. Who We Are')}>
             <p>{tc('We are Tony Hanma Private Kansai Tours, a private tour guide service based in Osaka, Japan. We operate this website to present our services and allow potential guests to get in touch via WhatsApp.')}</p>
-            <p className="mt-2">{tc('Contact')}: <a href={CONTACT_WA} target="_blank" rel="noopener noreferrer" className="text-japan-red">WhatsApp +34 634 193 106</a></p>
+            <p className="mt-2">{tc('Contact')}: <a href={CONTACT_WA} target="_blank" rel="noopener noreferrer" className="ltr-num text-japan-red">WhatsApp +34 634 193 106</a></p>
           </Section>
 
           <Section title={tc('2. Data We Collect')}>

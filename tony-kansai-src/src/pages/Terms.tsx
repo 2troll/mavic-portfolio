@@ -124,7 +124,7 @@ export default function Terms() {
               <p>{tc('Questions about these terms? Reach us directly:')}</p>
               <p className="mt-2">
                 <a href={CONTACT_WA} target="_blank" rel="noopener noreferrer" className="text-japan-red">
-                  WhatsApp +34 634 193 106
+                  <span className="ltr-num">WhatsApp +34 634 193 106</span>
                 </a>
               </p>
             </Section>

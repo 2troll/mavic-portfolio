@@ -27,6 +27,8 @@ for (const f of sources) {
   const code = readFileSync(f, 'utf8')
   for (const m of code.matchAll(/tc\(\s*'((?:[^'\\]|\\.)*)'\s*\)/g)) wanted.add(m[1].replace(/\\'/g, "'"))
   for (const m of code.matchAll(/tc\(\s*"((?:[^"\\]|\\.)*)"\s*\)/g)) wanted.add(m[1].replace(/\\"/g, '"'))
+  // El fallback del error boundary traduce con t('...') porque no puede usar el hook.
+  for (const m of code.matchAll(/\bt\(\s*'((?:[^'\\]|\\.)*)'\s*\)/g)) wanted.add(m[1].replace(/\\'/g, "'"))
 }
 
 // 2) Constantes de módulo que se traducen por variable, no por literal
@@ -75,6 +77,30 @@ for (const lang of LANGS) {
     for (const o of orphan.slice(0, 10)) console.warn(`      ${o}`)
     if (orphan.length > 10) console.warn(`      … y ${orphan.length - 10} más`)
   }
+}
+
+
+// 4) Texto en inglés escrito a pelo dentro del JSX (lo que se nos escapó
+//    varias veces: párrafos largos que ningún tc() envuelve).
+const HARD_TEXT = />\s*([A-Z][^<>{}]{20,600}?)\s*</gs
+const CODEY = /=>|\bconst\b|\breturn\b|\bfunction\b|[;()]/
+// Un teléfono o un correo no son texto traducible.
+const CONTACT = /\+\d[\d\s]{6,}|@/
+const hardcoded = []
+for (const f of sources) {
+  if (f.endsWith('Admin.tsx') || f.endsWith('.ts')) continue
+  const code = readFileSync(f, 'utf8')
+  for (const m of code.matchAll(HARD_TEXT)) {
+    const text = m[1].replace(/\s+/g, ' ').trim()
+    if (CODEY.test(text) || CONTACT.test(text)) continue
+    if (text.split(' ').length < 4) continue
+    hardcoded.push(`${f.replace(root + '/', '')}: ${text.slice(0, 90)}…`)
+  }
+}
+if (hardcoded.length) {
+  failed = true
+  console.error(`\n✗ ${hardcoded.length} texto(s) sin envolver en tc() dentro del JSX`)
+  for (const h of hardcoded) console.error(`    ${h}`)
 }
 
 process.exit(failed ? 1 : 0)

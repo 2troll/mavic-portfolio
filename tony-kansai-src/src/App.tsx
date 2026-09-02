@@ -4,7 +4,8 @@ import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
-import { LanguageProvider } from './contexts/LanguageContext'
+import { LanguageProvider, detectLang } from './contexts/LanguageContext'
+import { translate } from './lib/dict'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
 import { CookieBanner } from './components/CookieBanner'
 import Home from './pages/Home'
@@ -27,6 +28,9 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boo
   componentDidCatch(err: Error) { console.error('[App] Unhandled crash:', err.message) }
   render() {
     if (this.state.crashed) {
+      // Este fallback se pinta por encima del LanguageProvider (si la app se
+      // ha caído, el contexto puede no existir), así que traduce a mano.
+      const t = (s: string) => translate(detectLang(), s)
       return (
         <div style={{
           minHeight: '100vh', background: '#0C0D16',
@@ -35,16 +39,16 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boo
           gap: 20, padding: 24, fontFamily: 'system-ui',
         }}>
           <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, textAlign: 'center' }}>
-            Something went wrong loading the page.
+            {t('Something went wrong loading the page.')}
           </p>
           <button
             onClick={() => { this.setState({ crashed: false }); window.location.hash = '/'; window.location.reload() }}
             style={{ background: '#E53030', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
           >
-            Reload
+            {t('Reload')}
           </button>
           <a href="https://wa.me/34634193106" style={{ color: '#E53030', fontSize: 13 }}>
-            Contact Tony directly on WhatsApp
+            {t('Contact Tony directly on WhatsApp')}
           </a>
         </div>
       )

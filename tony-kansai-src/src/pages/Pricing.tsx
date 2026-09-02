@@ -89,7 +89,7 @@ export default function Pricing() {
           <ExplodeIn index={3} className="text-center mb-14">
             <div className="inline-flex items-center gap-2 px-5 py-3 rounded-xl glass border border-white/6 text-sm text-white/50">
               <Clock size={14} className="text-japan-red" />
-              {p.reply_note} {WHATSAPP_NUMBER}
+              {p.reply_note} <span className="ltr-num">{WHATSAPP_NUMBER}</span>
             </div>
           </ExplodeIn>
 

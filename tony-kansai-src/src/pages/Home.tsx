@@ -455,10 +455,10 @@ export default function Home() {
       {/* ── LEGAL STRIP ───────────────────────────────────────── */}
       <section className="py-6 border-t border-white/4">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/25">
-          <span>🔒 Pagos seguros · Sin datos personales almacenados · Comunicación solo por WhatsApp</span>
+          <span>🔒 {tc('Secure payments · No personal data stored · Contact only via WhatsApp')}</span>
           <div className="flex items-center gap-5">
-            <Link to="/privacy" className="hover:text-white/55 transition-colors">Política de Privacidad</Link>
-            <Link to="/terms" className="hover:text-white/55 transition-colors">Términos & Condiciones</Link>
+            <Link to="/privacy" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
+            <Link to="/terms" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>
           </div>
         </div>
       </section>

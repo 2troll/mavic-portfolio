@@ -75,7 +75,7 @@ export default function About() {
                     className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform">
                     <MessageCircle size={15} /> {a.cta_wa}
                   </a>
-                  <div className="text-center text-xs text-white/35 mt-2">{WHATSAPP_NUMBER} · {t.common.replies}</div>
+                  <div className="text-center text-xs text-white/35 mt-2"><span className="ltr-num">{WHATSAPP_NUMBER}</span> · {t.common.replies}</div>
                 </div>
               </Card3D>
             </ExplodeIn>
@@ -90,25 +90,25 @@ export default function About() {
 
               <ExplodeIn index={2}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. He shares hidden temples, forgotten markets, and the living traditions that guidebooks miss.
+                  {tc('Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. He shares hidden temples, forgotten markets, and the living traditions that guidebooks miss.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={3}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  His approach is simple: no scripts, no rush, no crowds. Each tour is tailored completely to you — your pace, your interests, your language. Whether you want spiritual depth in Kyoto or the electric chaos of Osaka nights, Tony knows exactly where to take you.
+                  {tc('His approach is simple: no scripts, no rush, no crowds. Each tour is tailored completely to you — your pace, your interests, your language. Whether you want spiritual depth in Kyoto or the electric chaos of Osaka nights, Tony knows exactly where to take you.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={4}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  With fluency in five languages — English, Spanish, Russian, Czech, and Arabic — Tony bridges not just geography but culture. Nuance, humor, and history come through naturally in a way that only native-level understanding can provide.
+                  {tc('With fluency in five languages — English, Spanish, Russian, Czech, and Arabic — Tony bridges not just geography but culture. Nuance, humor, and history come through naturally in a way that only native-level understanding can provide.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={5}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  Tony covers the full Kansai region: the neon streets of Dotonbori, the thousand torii of Fushimi Inari, the bamboo groves of Arashiyama, the deer parks of Nara, the mountain trails of Kurama — and countless places in between that exist only in local memory.
+                  {tc('Tony covers the full Kansai region: the neon streets of Dotonbori, the thousand torii of Fushimi Inari, the bamboo groves of Arashiyama, the deer parks of Nara, the mountain trails of Kurama — and countless places in between that exist only in local memory.')}
                 </p>
               </ExplodeIn>
 

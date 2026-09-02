@@ -63,7 +63,7 @@ export function Footer() {
                 className="flex items-center gap-2 text-sm text-white/55 hover:text-japan-red transition-colors"
               >
                 <MessageCircle size={14} className="text-japan-red flex-shrink-0" />
-                {WHATSAPP_NUMBER}
+                <span className="ltr-num">{WHATSAPP_NUMBER}</span>
               </a>
               <div className="flex gap-1.5 mt-2">
                 {['🇬🇧', '🇪🇸', '🇷🇺', '🇨🇿', '🇸🇦'].map((f) => (
