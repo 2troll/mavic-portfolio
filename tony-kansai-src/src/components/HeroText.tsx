@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion'
 import { cn } from '../lib/utils'
 
+// El árabe es escritura ligada: partirlo en caracteres rompe las ligaduras y
+// el texto sale como letras sueltas. En árabe se anima siempre por palabras.
+const RTL_SCRIPT = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/
+
+
 interface HeroTextProps {
   text: string
   className?: string
@@ -16,7 +21,7 @@ export function HeroText({
   delay = 0,
   mode = 'words',
 }: HeroTextProps) {
-  const isChars = mode === 'chars'
+  const isChars = mode === 'chars' && !RTL_SCRIPT.test(text)
 
   // In word mode: split on whitespace.
   // In char mode: split every codepoint (Array.from handles emoji/surrogates correctly).

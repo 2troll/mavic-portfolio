@@ -5,8 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && cp dist/index.html dist/200.html",
-    "preview": "vite preview"
+    "build": "node scripts/i18n-check.mjs && tsc && vite build && cp dist/index.html dist/200.html",
+    "preview": "vite preview",
+    "i18n": "node scripts/i18n-check.mjs"
   },
   "dependencies": {
     "@react-three/drei": "^10.7.7",

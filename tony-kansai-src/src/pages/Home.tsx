@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <>
       <PageSEO
-        title="Private Japan Tour Guide · Osaka, Kyoto & Kansai"
-        description="100% private guided tours in Osaka, Kyoto, Nara & Kansai with expert local guides. English, Spanish, Arabic, Czech & Russian. ★5.0 rated."
+        title={tc('Private Japan Tour Guide · Osaka, Kyoto and Kansai')}
+        description={tc('100% private guided tours in Osaka, Kyoto, Nara and Kansai with expert local guides. English, Spanish, Arabic, Czech and Russian. ★5.0 rated.')}
         path="/"
       />
       <CurtainReveal />
@@ -325,10 +325,10 @@ export default function Home() {
       <section className="py-24 bg-gradient-to-b from-japan-surface/20 to-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <FadeUp className="text-center mb-14">
-            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">Our Team</div>
-            <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">Meet Your Guides</h2>
+            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">{tc('Our Team')}</div>
+            <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">{tc('Meet Your Guides')}</h2>
             <p className="max-w-xl mx-auto text-white/50 text-lg font-light">
-              Three specialists. Every language. Every corner of Kansai.
+              {tc('Three specialists. Every language. Every corner of Kansai.')}
             </p>
           </FadeUp>
 
@@ -391,7 +391,7 @@ export default function Home() {
                           className="mt-1 flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-75"
                           style={{ color: guide.accent }}
                         >
-                          View full profile <ChevronRight className="flip-rtl" size={12} />
+                          {tc('View full profile')} <ChevronRight className="flip-rtl" size={12} />
                         </Link>
                       </div>
                     </div>

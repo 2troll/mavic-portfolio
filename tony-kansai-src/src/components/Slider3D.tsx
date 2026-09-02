@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Clock, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { TOURS, WHATSAPP } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const SPRING = { type: 'spring', stiffness: 220, damping: 30 } as const
 
 export function Slider3D() {
+  const { tc } = useLanguage()
   const [active, setActive] = useState(0)
   const total = TOURS.length
 
@@ -103,7 +105,7 @@ export function Slider3D() {
                 <div className="relative h-52 overflow-hidden">
                   <motion.img
                     src={tour.imageCard}
-                    alt={tour.title}
+                    alt={tc(tour.title)}
                     className="w-full h-full object-cover"
                     animate={isActive ? { scale: [1, 1.06, 1] } : { scale: 1 }}
                     transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
@@ -114,7 +116,7 @@ export function Slider3D() {
                       className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm"
                       style={{ background: `${tour.accent}30`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
                     >
-                      {tour.badge}
+                      {tc(tour.badge)}
                     </span>
                   </div>
                 </div>
@@ -122,32 +124,32 @@ export function Slider3D() {
                 {/* Content */}
                 <div className="p-6 md:p-8">
                   <div className="text-[10px] font-bold tracking-[0.25em] uppercase mb-2" style={{ color: tour.accent }}>
-                    {tour.subtitle}
+                    {tc(tour.subtitle)}
                   </div>
                   <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white mb-2 leading-snug">
-                    {tour.title}
+                    {tc(tour.title)}
                   </h2>
                   <div className="flex items-center gap-4 mb-4">
                     <span className="font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
                     <span className="flex items-center gap-1 text-xs text-white/40">
-                      <Clock size={10} /> {tour.duration}
+                      <Clock size={10} /> {tc(tour.duration)}
                     </span>
                   </div>
-                  <p className="text-sm text-white/55 leading-relaxed mb-5 line-clamp-2">{tour.description}</p>
+                  <p className="text-sm text-white/55 leading-relaxed mb-5 line-clamp-2">{tc(tour.description)}</p>
                   <div className="flex gap-3">
                     <Link
                       to={tour.id === 'mountain-hiking' ? '/hiking' : `/tours/${tour.id}`}
                       className="flex-1 py-3 rounded-xl border border-white/10 text-center text-sm text-white/70 hover:text-white hover:border-japan-red/40 transition-all font-medium"
                     >
-                      Details
+                      {tc('Details')}
                     </Link>
                     <a
-                      href={`${WHATSAPP}?text=${encodeURIComponent(`Hi Tony! I'm interested in the ${tour.title} tour.`)}`}
+                      href={`${WHATSAPP}?text=${encodeURIComponent(`${tc('Hi Tony! I am very interested in this tour:')} ${tc(tour.title)}. ${tc('Could you share more details and availability?')}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 active:scale-95 transition-transform"
                     >
-                      <MessageCircle size={13} /> Book
+                      <MessageCircle size={13} /> {tc('Book Now')}
                     </a>
                   </div>
                 </div>

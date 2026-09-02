@@ -27,8 +27,8 @@ export default function FAQ() {
   return (
     <>
       <PageSEO
-        title="FAQ · Private Japan Tour Guide Kansai"
-        description="Common questions about private tours in Osaka, Kyoto & Kansai — languages, cancellation, transport, restaurant bookings and more."
+        title={tc('FAQ · Private Japan Tour Guide Kansai')}
+        description={tc('Common questions about private tours in Osaka, Kyoto and Kansai — languages, cancellation, transport, restaurant bookings and more.')}
         path="/faq"
         breadcrumb={[{ name: 'FAQ', path: '/faq' }]}
       />

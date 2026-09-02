@@ -200,9 +200,9 @@ const en: Tr = {
   },
 
   stats: {
-    destinations: '7 Destinations',
-    languages: '5 Languages',
-    private: '100% Private',
+    destinations: 'Destinations',
+    languages: 'Languages',
+    private: 'Private',
   },
 
   discover: {
@@ -373,9 +373,9 @@ const es: Tr = {
   },
 
   stats: {
-    destinations: '7 Destinos',
-    languages: '5 Idiomas',
-    private: '100% Privado',
+    destinations: 'Destinos',
+    languages: 'Idiomas',
+    private: 'Privado',
   },
 
   discover: {
@@ -546,9 +546,9 @@ const ar: Tr = {
   },
 
   stats: {
-    destinations: '٧ وجهات',
-    languages: '٥ لغات',
-    private: '١٠٠٪ خاص',
+    destinations: 'وجهات',
+    languages: 'لغات',
+    private: 'خاص',
   },
 
   discover: {
@@ -719,9 +719,9 @@ const cs: Tr = {
   },
 
   stats: {
-    destinations: '7 destinací',
-    languages: '5 jazyků',
-    private: '100% soukromé',
+    destinations: 'destinací',
+    languages: 'jazyků',
+    private: 'soukromé',
   },
 
   discover: {
@@ -892,9 +892,9 @@ const ru: Tr = {
   },
 
   stats: {
-    destinations: '7 направлений',
-    languages: '5 языков',
-    private: '100% приватно',
+    destinations: 'направлений',
+    languages: 'языков',
+    private: 'приватно',
   },
 
   discover: {

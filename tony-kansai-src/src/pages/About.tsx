@@ -15,8 +15,8 @@ export default function About() {
   return (
     <>
       <PageSEO
-        title="About the Team · Tony Hanma & Kansai Guide"
-        description="Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto & Kansai. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
+        title={tc('About the Team · Tony Hanma and Kansai Guide')}
+        description={tc('Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto and Kansai. Fluent in English, Spanish, Arabic, Czech, Russian and Japanese.')}
         path="/about"
         breadcrumb={[{ name: 'About', path: '/about' }]}
       />

@@ -1,6 +1,11 @@
 import { motion } from 'framer-motion'
 import { cn } from '../lib/utils'
 
+// El árabe es escritura ligada: partirlo en caracteres rompe las ligaduras y
+// el texto sale como letras sueltas. En árabe se anima siempre por palabras.
+const RTL_SCRIPT = /[\u0590-\u08FF\uFB1D-\uFDFF\uFE70-\uFEFF]/
+
+
 interface HeroTextKineticProps {
   text: string
   className?: string
@@ -21,13 +26,14 @@ export function HeroTextKinetic({
   mode = 'words',
   accentWords = [],
 }: HeroTextKineticProps) {
-  const tokens = mode === 'chars' ? Array.from(text) : text.split(' ')
+  const safeMode = RTL_SCRIPT.test(text) ? 'words' : mode
+  const tokens = safeMode === 'chars' ? Array.from(text) : text.split(' ')
 
   const container = {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: mode === 'chars' ? 0.022 : 0.08,
+        staggerChildren: safeMode === 'chars' ? 0.022 : 0.08,
         delayChildren: delay,
       },
     },
@@ -76,7 +82,7 @@ export function HeroTextKinetic({
           )}
           style={{
             transformStyle: 'preserve-3d',
-            ...(mode === 'chars' ? { whiteSpace: 'pre' } : {}),
+            ...(safeMode === 'chars' ? { whiteSpace: 'pre' } : {}),
           }}
         >
           {token}
