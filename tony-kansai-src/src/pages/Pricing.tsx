@@ -50,7 +50,7 @@ export default function Pricing() {
                     {tier.hot && (
                       <>
                         <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-japan-red to-transparent" />
-                        <div className="absolute top-4 right-4 px-2.5 py-1 rounded-full bg-japan-red text-white text-xs font-bold">HOT</div>
+                        <div className="absolute top-4 end-4 px-2.5 py-1 rounded-full bg-japan-red text-white text-xs font-bold">HOT</div>
                       </>
                     )}
                     <div className="p-7 flex flex-col flex-1">

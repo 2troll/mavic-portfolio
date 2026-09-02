@@ -68,13 +68,13 @@ export default function HikingDetail() {
         <div className="absolute inset-0 bg-gradient-to-t from-japan-dark via-japan-dark/50 to-japan-dark/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-japan-dark/60 to-transparent" />
 
-        <motion.div className="absolute top-6 left-6 z-20" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.3 }}>
+        <motion.div className="absolute top-6 start-6 z-20" initial={{ opacity: 0, x: -20 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4, delay: 0.3 }}>
           <Link to="/hiking" className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/15 text-sm text-white/80 hover:text-white hover:border-japan-red/40 transition-all">
-            <ArrowLeft size={14} /> All Hiking Routes
+            <ArrowLeft className="flip-rtl" size={14} /> All Hiking Routes
           </Link>
         </motion.div>
 
-        <motion.div className="absolute bottom-0 left-0 right-0 p-8 md:p-16 z-10" style={{ y: textY, opacity }}>
+        <motion.div className="absolute bottom-0 start-0 end-0 p-8 md:p-16 z-10" style={{ y: textY, opacity }}>
           <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.7, delay: 0.2 }}>
             <div className="flex items-center gap-3 mb-3 flex-wrap">
               <span
@@ -114,7 +114,7 @@ export default function HikingDetail() {
           <div className="hidden sm:block text-sm font-serif text-white/60">
             <span className="text-white font-semibold">{route.title}</span> · {route.grade}
           </div>
-          <div className="flex gap-3 ml-auto items-center">
+          <div className="flex gap-3 ms-auto items-center">
             <span className="text-sm font-serif font-bold text-gradient-japan">{route.price}</span>
             <a
               href={`${WHATSAPP}?text=${waMsg}`}
@@ -152,7 +152,7 @@ export default function HikingDetail() {
                 <div className="mt-4 flex items-center gap-2">
                   <img src="/guides/guide-tony.jpg" alt="Tony" className="w-7 h-7 rounded-full object-cover" />
                   <span className="text-xs text-white/40">Tony Hanma · {route.date}</span>
-                  <span className="text-xs text-white/25 ml-1">· {route.companions}</span>
+                  <span className="text-xs text-white/25 ms-1">· {route.companions}</span>
                 </div>
               </motion.div>
 
@@ -170,7 +170,7 @@ export default function HikingDetail() {
 
                 <div className="relative">
                   {/* Vertical line */}
-                  <div className="absolute left-3 top-0 bottom-0 w-px bg-white/8" />
+                  <div className="absolute start-3 top-0 bottom-0 w-px bg-white/8" />
 
                   <div className="space-y-1">
                     {route.timing.map((step, i) => {
@@ -183,11 +183,11 @@ export default function HikingDetail() {
                           whileInView={{ opacity: 1, x: 0 }}
                           viewport={{ once: true }}
                           transition={{ delay: i * 0.06 }}
-                          className="relative flex items-start gap-4 pl-8 py-3"
+                          className="relative flex items-start gap-4 ps-8 py-3"
                         >
                           {/* Dot */}
                           <div
-                            className="absolute left-0 top-4 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
+                            className="absolute start-0 top-4 w-6 h-6 rounded-full flex items-center justify-center flex-shrink-0"
                             style={{ background: `${color}20`, border: `1.5px solid ${color}50` }}
                           >
                             <span className="font-bold text-[9px]" style={{ color }}>{i + 1}</span>
@@ -301,12 +301,12 @@ export default function HikingDetail() {
                     >
                       <img src={r.imageCard} alt={r.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                      <div className="absolute bottom-3 left-3">
+                      <div className="absolute bottom-3 start-3">
                         <div className="text-xs font-medium mb-0.5" style={{ color: r.accent }}>{r.altitude || r.grade}</div>
                         <div className="text-sm font-semibold text-white">{r.title}</div>
                       </div>
-                      <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                        <ChevronRight size={14} className="text-white" />
+                      <div className="absolute top-3 end-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                        <ChevronRight size={14} className="flip-rtl text-white" />
                       </div>
                     </Link>
                   ))}
@@ -415,7 +415,7 @@ export default function HikingDetail() {
                 to="/hiking"
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/8 text-white/40 hover:text-white/70 hover:border-white/20 text-sm transition-all"
               >
-                <ArrowLeft size={13} /> All 12 Hiking Routes
+                <ArrowLeft className="flip-rtl" size={13} /> All 12 Hiking Routes
               </Link>
             </div>
 
@@ -435,7 +435,7 @@ export default function HikingDetail() {
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
           >
             <MessageCircle size={15} /> Hire Tony · {route.price}
-            <ArrowRight size={14} />
+            <ArrowRight className="flip-rtl" size={14} />
           </a>
         </div>
       </section>

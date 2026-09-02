@@ -68,7 +68,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
         {/* Badges */}
-        <div className="absolute top-3 left-3 flex gap-2 flex-wrap">
+        <div className="absolute top-3 start-3 flex gap-2 flex-wrap">
           <span
             className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm"
             style={{ background: `${route.accent}30`, color: route.accent, border: `1px solid ${route.accent}50` }}
@@ -83,13 +83,13 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
         </div>
 
         {/* Date */}
-        <div className="absolute bottom-3 right-3">
+        <div className="absolute bottom-3 end-3">
           <span className="text-[10px] text-white/50 font-medium">{route.date}</span>
         </div>
 
         {/* Altitude pill */}
         {route.altitude && (
-          <div className="absolute bottom-3 left-3">
+          <div className="absolute bottom-3 start-3">
             <div
               className="flex items-center gap-1.5 px-2.5 py-1 rounded-full backdrop-blur-sm"
               style={{ background: `${route.accent}25`, border: `1px solid ${route.accent}40` }}
@@ -270,7 +270,7 @@ function CalendarSection() {
                       </div>
                     </div>
 
-                    <div className="absolute bottom-2 left-2 right-2">
+                    <div className="absolute bottom-2 start-2 end-2">
                       <div className="text-[9px] text-white/50 mb-0.5">{route.date}</div>
                       <div className="text-xs font-semibold text-white leading-tight truncate">{route.title}</div>
                       {route.altitude && (
@@ -395,7 +395,7 @@ export default function Hiking() {
               {g}
             </button>
           ))}
-          <span className="ml-auto flex-shrink-0 text-xs text-white/25">{filtered.length} routes</span>
+          <span className="ms-auto flex-shrink-0 text-xs text-white/25">{filtered.length} routes</span>
         </div>
       </section>
 

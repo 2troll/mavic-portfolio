@@ -126,7 +126,7 @@ export function TourMap({ stops, accent = '#E53030', meetingPoint }: TourMapProp
               style={{ background: `${accent}30`, color: accent }}
             >{i + 1}</span>
             {stop.name}
-            {i < stops.length - 1 && <span className="text-white/15 ml-1">›</span>}
+            {i < stops.length - 1 && <span className="text-white/15 ms-1">›</span>}
           </div>
         ))}
       </div>

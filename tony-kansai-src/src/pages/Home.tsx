@@ -103,7 +103,7 @@ export default function Home() {
               to="/tours"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass text-white/90 hover:text-white font-semibold text-sm border border-white/10 hover:border-japan-red/40 transition-all hover:scale-105"
             >
-              {t.hero.cta_tours} <ChevronRight size={15} />
+              {t.hero.cta_tours} <ChevronRight className="flip-rtl" size={15} />
             </Link>
           </motion.div>
 
@@ -199,7 +199,7 @@ export default function Home() {
                   <img src={PHOTO_TORII} alt="Fushimi Inari torii gates Kyoto Japan" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/70 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-5 left-5">
+                <div className="absolute bottom-5 start-5">
                   <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.discover.caption}</div>
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function Home() {
                   <img src={PHOTO_CASTLE} alt="Himeji Castle Japan UNESCO World Heritage" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/65 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-5 left-5">
+                <div className="absolute bottom-5 start-5">
                   <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.fortress.caption}</div>
                 </div>
               </div>
@@ -239,7 +239,7 @@ export default function Home() {
                 to="/tours"
                 className="inline-flex items-center gap-2 text-sm text-japan-red hover:text-japan-orange transition-colors font-medium"
               >
-                {t.fortress.cta} <ChevronRight size={14} />
+                {t.fortress.cta} <ChevronRight className="flip-rtl" size={14} />
               </Link>
             </FadeUp>
           </div>
@@ -284,12 +284,12 @@ export default function Home() {
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                         <div
-                          className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
+                          className="absolute top-3 end-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
                           style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
                         >
                           {tour.badge}
                         </div>
-                        <div className="absolute bottom-3 left-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
+                        <div className="absolute bottom-3 start-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
                           {tour.subtitle}
                         </div>
                       </div>
@@ -308,7 +308,7 @@ export default function Home() {
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
                           <span className="font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
                           <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                            {t.tours_section.view} <ChevronRight size={12} />
+                            {t.tours_section.view} <ChevronRight className="flip-rtl" size={12} />
                           </span>
                         </div>
                       </div>
@@ -346,7 +346,7 @@ export default function Home() {
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4">
+                      <div className="absolute bottom-4 start-4 end-4">
                         <div className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: guide.accent }}>
                           {guide.specialty}
                         </div>
@@ -391,7 +391,7 @@ export default function Home() {
                           className="mt-1 flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-75"
                           style={{ color: guide.accent }}
                         >
-                          View full profile <ChevronRight size={12} />
+                          View full profile <ChevronRight className="flip-rtl" size={12} />
                         </Link>
                       </div>
                     </div>
@@ -434,7 +434,7 @@ export default function Home() {
                       to="/pricing"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/40 transition-all"
                     >
-                      {t.cta_section.cta_pricing} <ChevronRight size={15} />
+                      {t.cta_section.cta_pricing} <ChevronRight className="flip-rtl" size={15} />
                     </Link>
                   </div>
                 </div>

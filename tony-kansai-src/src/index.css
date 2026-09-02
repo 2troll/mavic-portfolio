@@ -111,3 +111,52 @@ body::before {
   background: #0d0f1a;
   font-family: inherit;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Árabe · tipografía y RTL
+   La clase `lang-ar` la pone LanguageContext en <html>. Todo lo que sigue
+   corrige lo que el diseño latino da por supuesto: la fuente, el tracking
+   (el árabe es escritura ligada: separar letras la rompe), la cursiva
+   (no existe en árabe) y la dirección de los elementos posicionados.
+   ───────────────────────────────────────────────────────────────────────────*/
+
+.lang-ar body,
+.lang-ar .font-sans {
+  font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Geeza Pro', system-ui, sans-serif;
+}
+
+.lang-ar .font-serif {
+  font-family: 'Amiri', 'IBM Plex Sans Arabic', 'Noto Naskh Arabic', Georgia, serif;
+}
+
+/* El tracking amplio rompe la ligadura árabe: se anula en todo el sitio. */
+.lang-ar [class*='tracking-'] {
+  letter-spacing: normal !important;
+}
+
+/* El árabe no tiene cursiva; sintetizarla produce una inclinación falsa. */
+.lang-ar .italic {
+  font-style: normal;
+}
+
+/* Los titulares árabes necesitan más interlineado que el latino. */
+.lang-ar h1,
+.lang-ar h2,
+.lang-ar h3 {
+  line-height: 1.5;
+}
+
+/* Comillas tipográficas correctas para citas en árabe. */
+.lang-ar q::before { content: '«'; }
+.lang-ar q::after  { content: '»'; }
+
+/* Los iconos de flecha y de "siguiente" apuntan al otro lado en RTL. */
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* Barra de desplazamiento y sombras a la izquierda en RTL. */
+[dir='rtl'] .leaflet-control-container .leaflet-right {
+  right: auto;
+  left: 0;
+}

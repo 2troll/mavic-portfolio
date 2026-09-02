@@ -46,7 +46,7 @@ export function CookieBanner() {
     <AnimatePresence>
       {visible && (
         <motion.div
-          className="fixed bottom-24 left-4 right-4 md:left-6 md:right-auto md:max-w-xs z-[300] glass border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/60"
+          className="fixed bottom-24 start-4 end-4 md:start-6 md:end-auto md:max-w-xs z-[300] glass border border-white/10 rounded-2xl p-5 shadow-2xl shadow-black/60"
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 24 }}

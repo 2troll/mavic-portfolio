@@ -86,10 +86,10 @@ export function AnimatedBackground() {
       ))}
 
       {/* Corner accent lines */}
-      <div className="absolute top-0 left-0 w-32 h-px bg-gradient-to-r from-japan-red/40 to-transparent" />
-      <div className="absolute top-0 left-0 w-px h-32 bg-gradient-to-b from-japan-red/40 to-transparent" />
-      <div className="absolute bottom-0 right-0 w-32 h-px bg-gradient-to-l from-japan-red/40 to-transparent" />
-      <div className="absolute bottom-0 right-0 w-px h-32 bg-gradient-to-t from-japan-red/40 to-transparent" />
+      <div className="absolute top-0 start-0 w-32 h-px bg-gradient-to-r from-japan-red/40 to-transparent" />
+      <div className="absolute top-0 start-0 w-px h-32 bg-gradient-to-b from-japan-red/40 to-transparent" />
+      <div className="absolute bottom-0 end-0 w-32 h-px bg-gradient-to-l from-japan-red/40 to-transparent" />
+      <div className="absolute bottom-0 end-0 w-px h-32 bg-gradient-to-t from-japan-red/40 to-transparent" />
     </div>
   )
 }

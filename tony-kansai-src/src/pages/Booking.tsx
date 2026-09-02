@@ -133,7 +133,7 @@ export default function Booking() {
                       <button
                         key={tour.id}
                         onClick={() => setSelectedTour(tour)}
-                        className={`text-left p-4 rounded-xl border transition-all ${
+                        className={`text-start p-4 rounded-xl border transition-all ${
                           selectedTour.id === tour.id
                             ? 'border-japan-red/50 bg-japan-red/8'
                             : 'border-white/6 bg-white/3 hover:border-white/15 hover:bg-white/5'
@@ -180,7 +180,7 @@ export default function Booking() {
                       aria-label={bp.prev_month}
                       className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 transition-all"
                     >
-                      <ChevronLeft size={14} />
+                      <ChevronLeft className="flip-rtl" size={14} />
                     </button>
                     <div className="font-serif text-lg font-semibold text-white">
                       {bp.months[viewMonth]} {viewYear}
@@ -190,7 +190,7 @@ export default function Booking() {
                       aria-label={bp.next_month}
                       className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 transition-all"
                     >
-                      <ChevronRight size={14} />
+                      <ChevronRight className="flip-rtl" size={14} />
                     </button>
                   </div>
 

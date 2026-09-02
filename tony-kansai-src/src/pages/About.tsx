@@ -127,7 +127,7 @@ export default function About() {
                 <div className="flex gap-4 pt-2">
                   <Link to="/tours"
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-md hover:scale-105 transition-transform">
-                    {a.cta_tours} <ChevronRight size={14} />
+                    {a.cta_tours} <ChevronRight className="flip-rtl" size={14} />
                   </Link>
                   <Link to="/pricing"
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/30 text-sm transition-all">

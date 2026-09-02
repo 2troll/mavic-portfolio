@@ -109,7 +109,7 @@ export function Slider3D() {
                     transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
+                  <div className="absolute bottom-4 start-4">
                     <span
                       className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm"
                       style={{ background: `${tour.accent}30`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
@@ -160,15 +160,15 @@ export function Slider3D() {
       {/* Arrow buttons — z-30 so they're above cards (z-20) */}
       <button
         onClick={() => go(active - 1)}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
+        className="absolute start-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
       >
-        <ChevronLeft size={16} />
+        <ChevronLeft className="flip-rtl" size={16} />
       </button>
       <button
         onClick={() => go(active + 1)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
+        className="absolute end-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
       >
-        <ChevronRight size={16} />
+        <ChevronRight className="flip-rtl" size={16} />
       </button>
 
       {/* Dots */}

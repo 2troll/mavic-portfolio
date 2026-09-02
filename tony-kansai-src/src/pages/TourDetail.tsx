@@ -85,7 +85,7 @@ export default function TourDetail() {
 
         {/* Back button */}
         <motion.div
-          className="absolute top-6 left-6 z-20"
+          className="absolute top-6 start-6 z-20"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
@@ -94,13 +94,13 @@ export default function TourDetail() {
             to="/tours"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/15 text-sm text-white/80 hover:text-white hover:border-japan-red/40 transition-all"
           >
-            <ArrowLeft size={14} /> All Tours
+            <ArrowLeft className="flip-rtl" size={14} /> All Tours
           </Link>
         </motion.div>
 
         {/* Hero text */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 p-8 md:p-16 z-10"
+          className="absolute bottom-0 start-0 end-0 p-8 md:p-16 z-10"
           style={{ y: textY, opacity }}
         >
           <motion.div
@@ -137,7 +137,7 @@ export default function TourDetail() {
           <div className="hidden sm:block text-sm font-serif text-white/60">
             <span className="text-white font-semibold">{tour.title}</span> · {tour.duration}
           </div>
-          <div className="flex gap-3 ml-auto">
+          <div className="flex gap-3 ms-auto">
             <Link to="/pricing" className="px-4 py-2 rounded-lg glass border border-white/10 text-sm text-white/70 hover:text-white transition-all">
               Pricing
             </Link>
@@ -225,12 +225,12 @@ export default function TourDetail() {
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                        <div className="absolute bottom-3 left-3">
+                        <div className="absolute bottom-3 start-3">
                           <div className="text-xs font-medium mb-0.5" style={{ color: t.accent }}>{t.subtitle}</div>
                           <div className="text-sm font-semibold text-white">{t.title}</div>
                         </div>
-                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <ChevronRight size={14} className="text-white" />
+                        <div className="absolute top-3 end-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ChevronRight size={14} className="flip-rtl text-white" />
                         </div>
                       </Link>
                     ))}

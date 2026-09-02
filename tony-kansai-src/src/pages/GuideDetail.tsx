@@ -84,13 +84,13 @@ export default function GuideDetail() {
       <section className="relative pt-28 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-japan-dark to-japan-surface pointer-events-none" />
         <div
-          className="absolute top-0 right-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-10 pointer-events-none"
+          className="absolute top-0 end-0 w-[600px] h-[600px] rounded-full blur-[160px] opacity-10 pointer-events-none"
           style={{ background: guide.accent }}
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           <Link to="/about" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors mb-10">
-            <ArrowLeft size={15} /> Back to team
+            <ArrowLeft className="flip-rtl" size={15} /> Back to team
           </Link>
 
           <div className="grid md:grid-cols-5 gap-10 md:gap-14 items-start">
@@ -137,7 +137,7 @@ export default function GuideDetail() {
                 {[1,2,3,4,5].map(s => (
                   <Star key={s} size={15} className="text-japan-gold" fill="currentColor" />
                 ))}
-                <span className="text-white/40 text-sm ml-1">{guide.rating}</span>
+                <span className="text-white/40 text-sm ms-1">{guide.rating}</span>
               </div>
 
               {/* Languages */}
@@ -194,10 +194,10 @@ export default function GuideDetail() {
             {detail.quote && (
               <motion.blockquote
                 initial={{ opacity: 0, x: -10 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }}
-                className="relative pl-6 border-l-2"
+                className="relative ps-6 border-s-2"
                 style={{ borderColor: guide.accent }}
               >
-                <Quote size={16} className="absolute -left-0.5 -top-1 opacity-25" style={{ color: guide.accent }} />
+                <Quote size={16} className="absolute -start-0.5 -top-1 opacity-25" style={{ color: guide.accent }} />
                 <p className="font-serif text-xl italic text-white/75 leading-relaxed">"{detail.quote}"</p>
                 <p className="text-sm text-white/30 mt-3">— {guide.name}</p>
               </motion.blockquote>

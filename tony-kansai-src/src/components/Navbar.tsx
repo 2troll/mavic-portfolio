@@ -26,7 +26,7 @@ export function Navbar() {
       initial={{ y: -60, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="fixed top-0 left-0 right-0 z-50 border-b border-white/5 glass"
+      className="fixed top-0 start-0 end-0 z-50 border-b border-white/5 glass"
     >
       <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between gap-4">
         <Link to="/" className="font-serif text-xl font-semibold tracking-wide flex-shrink-0">
