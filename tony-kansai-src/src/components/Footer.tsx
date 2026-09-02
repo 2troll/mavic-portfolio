@@ -4,7 +4,7 @@ import { WHATSAPP, WHATSAPP_NUMBER } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
 
 export function Footer() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
 
   const NAV_LINKS = [
     { to: '/', label: t.nav.home },

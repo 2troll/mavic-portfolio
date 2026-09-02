@@ -25,7 +25,7 @@ const cardReveal = {
 }
 
 export default function Home() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const discoverRef = useRef<HTMLElement>(null)
   const castleRef = useRef<HTMLElement>(null)
 
@@ -278,7 +278,7 @@ export default function Home() {
                       <div className="relative h-48 overflow-hidden">
                         <img
                           src={tour.imageCard}
-                          alt={tour.title}
+                          alt={tc(tour.title)}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           loading="lazy"
                         />
@@ -287,21 +287,21 @@ export default function Home() {
                           className="absolute top-3 end-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
                           style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
                         >
-                          {tour.badge}
+                          {tc(tour.badge)}
                         </div>
                         <div className="absolute bottom-3 start-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
-                          {tour.subtitle}
+                          {tc(tour.subtitle)}
                         </div>
                       </div>
 
                       <div className="p-5 flex flex-col flex-1">
-                        <h3 className="font-serif text-xl font-semibold text-white mb-2">{tour.title}</h3>
-                        <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tour.description}</p>
+                        <h3 className="font-serif text-xl font-semibold text-white mb-2">{tc(tour.title)}</h3>
+                        <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tc(tour.description)}</p>
                         <ul className="space-y-1.5 mb-4">
                           {tour.highlights.slice(0, 3).map(h => (
                             <li key={h} className="flex items-center gap-2 text-xs text-white/60">
                               <Check size={11} style={{ color: tour.accent }} className="flex-shrink-0" />
-                              {h}
+                              {tc(h)}
                             </li>
                           ))}
                         </ul>
@@ -341,23 +341,23 @@ export default function Home() {
                     <div className="relative h-56 overflow-hidden">
                       <img
                         src={guide.photo}
-                        alt={guide.name}
+                        alt={tc(guide.name)}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-4 start-4 end-4">
                         <div className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: guide.accent }}>
-                          {guide.specialty}
+                          {tc(guide.specialty)}
                         </div>
-                        <h3 className="font-serif text-xl font-semibold text-white">{guide.name}</h3>
-                        <div className="text-xs text-white/55 mt-0.5">{guide.role}</div>
+                        <h3 className="font-serif text-xl font-semibold text-white">{tc(guide.name)}</h3>
+                        <div className="text-xs text-white/55 mt-0.5">{tc(guide.role)}</div>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-5 flex flex-col flex-1">
-                      <p className="text-sm text-white/60 leading-relaxed mb-4 flex-1">{guide.bio}</p>
+                      <p className="text-sm text-white/60 leading-relaxed mb-4 flex-1">{tc(guide.bio)}</p>
 
                       <div className="space-y-3">
                         {/* Stats row */}
@@ -380,7 +380,7 @@ export default function Home() {
                               className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
                               style={{ color: guide.accent, borderColor: `${guide.accent}40`, background: `${guide.accent}10` }}
                             >
-                              {h}
+                              {tc(h)}
                             </span>
                           ))}
                         </div>

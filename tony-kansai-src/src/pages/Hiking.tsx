@@ -5,6 +5,7 @@ import { Mountain, Clock, MapPin, Users, MessageCircle, ChevronDown, ChevronUp, 
 import { HeroTextKinetic } from '../components/HeroTextKinetic'
 import { PageSEO } from '../components/PageSEO'
 import { HIKING_ROUTES, WHATSAPP } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const GRADES = ['All', 'Easy', 'Moderate', 'Hard', 'Technical', 'Expert Only'] as const
 
@@ -20,6 +21,7 @@ const CALENDAR_MONTHS = [
 ]
 
 function GradeTag({ grade, accent }: { grade: string; accent: string }) {
+  const { tc } = useLanguage()
   const level = grade.toLowerCase()
   const isHard = level.includes('hard') || level.includes('technical') || level.includes('expert')
   const isEasy = level.includes('easy')
@@ -32,15 +34,16 @@ function GradeTag({ grade, accent }: { grade: string; accent: string }) {
         border: `1px solid ${isHard ? 'rgba(239,68,68,0.35)' : isEasy ? 'rgba(34,197,94,0.35)' : accent + '35'}`,
       }}
     >
-      {grade}
+      {tc(grade)}
     </span>
   )
 }
 
 function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: number }) {
+  const { tc } = useLanguage()
   const [expanded, setExpanded] = useState(false)
   const waMsg = encodeURIComponent(
-    `Hi Tony! I'm interested in hiring you as a guide for the ${route.title} hike (${route.date}). Can you share availability and pricing?`
+    `${tc('Hi Tony! I would like to hire you as a guide for this hike:')} ${tc(route.title)} (${tc(route.date)}). ${tc('Can you share availability and pricing?')}`,
   )
 
   return (
@@ -60,7 +63,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
       <div className="relative h-48 overflow-hidden">
         <motion.img
           src={route.imageCard}
-          alt={route.title}
+          alt={tc(route.title)}
           className="w-full h-full object-cover"
           whileHover={{ scale: 1.05 }}
           transition={{ duration: 0.6 }}
@@ -73,18 +76,18 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
             className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm"
             style={{ background: `${route.accent}30`, color: route.accent, border: `1px solid ${route.accent}50` }}
           >
-            {route.badge}
+            {tc(route.badge)}
           </span>
           {!route.available && (
             <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm bg-black/40 text-white/40 border border-white/15">
-              Extreme
+              {tc('Extreme')}
             </span>
           )}
         </div>
 
         {/* Date */}
         <div className="absolute bottom-3 end-3">
-          <span className="text-[10px] text-white/50 font-medium">{route.date}</span>
+          <span className="text-[10px] text-white/50 font-medium">{tc(route.date)}</span>
         </div>
 
         {/* Altitude pill */}
@@ -104,31 +107,31 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
       {/* Content */}
       <div className="p-5">
         <div className="text-[10px] font-bold tracking-[0.2em] uppercase mb-1" style={{ color: route.accent }}>
-          {route.subtitle}
+          {tc(route.subtitle)}
         </div>
-        <h3 className="font-serif text-xl font-semibold text-white mb-3 leading-snug">{route.title}</h3>
+        <h3 className="font-serif text-xl font-semibold text-white mb-3 leading-snug">{tc(route.title)}</h3>
 
         <div className="flex flex-wrap gap-x-4 gap-y-1.5 mb-3">
           {route.duration && (
             <div className="flex items-center gap-1.5 text-xs text-white/50">
-              <Clock size={11} style={{ color: route.accent }} />{route.duration}
+              <Clock size={11} style={{ color: route.accent }} />{tc(route.duration)}
             </div>
           )}
           {route.distance && (
             <div className="flex items-center gap-1.5 text-xs text-white/50">
-              <MapPin size={11} style={{ color: route.accent }} />{route.distance}
+              <MapPin size={11} style={{ color: route.accent }} />{tc(route.distance)}
             </div>
           )}
           <div className="flex items-center gap-1.5 text-xs text-white/50">
-            <Users size={11} style={{ color: route.accent }} />{route.companions}
+            <Users size={11} style={{ color: route.accent }} />{tc(route.companions)}
           </div>
         </div>
 
         <div className="mb-4">
-          <GradeTag grade={route.grade} accent={route.accent} />
+          <GradeTag grade={tc(route.grade)} accent={route.accent} />
         </div>
 
-        <p className="text-xs text-white/45 leading-relaxed mb-4 italic line-clamp-2">"{route.note}"</p>
+        <p className="text-xs text-white/45 leading-relaxed mb-4 italic line-clamp-2">"{tc(route.note)}"</p>
 
         {/* Expandable details */}
         <button
@@ -136,7 +139,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
           className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors mb-3"
         >
           {expanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
-          {expanded ? 'Less details' : 'Route details'}
+          {expanded ? tc('Less details') : tc('Route details')}
         </button>
 
         <AnimatePresence>
@@ -150,11 +153,11 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
             >
               <div className="space-y-2 mb-4 pt-1 border-t border-white/5">
                 {[
-                  { label: 'Location', value: route.location },
-                  { label: 'Access', value: route.access },
-                  { label: 'Route', value: route.route },
-                  { label: 'Summit', value: route.summit },
-                  route.wildlife ? { label: 'Wildlife', value: route.wildlife } : null,
+                  { label: tc('Location'), value: tc(route.location) },
+                  { label: tc('Access'), value: tc(route.access) },
+                  { label: tc('Route'), value: tc(route.route) },
+                  { label: tc('Summit'), value: tc(route.summit) },
+                  route.wildlife ? { label: tc('Wildlife'), value: tc(route.wildlife) } : null,
                 ].filter(Boolean).map((item) => (
                   <div key={item!.label} className="flex gap-2 text-xs">
                     <span className="text-white/30 w-16 flex-shrink-0 font-medium uppercase tracking-wide">{item!.label}</span>
@@ -172,7 +175,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
             to={`/hiking/${route.id}`}
             className="flex-1 py-2.5 rounded-xl border border-white/10 text-center text-xs text-white/55 hover:text-white hover:border-white/25 transition-all font-medium"
           >
-            Details
+            {tc('Details')}
           </Link>
           {route.available ? (
             <a
@@ -181,11 +184,11 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
               rel="noopener noreferrer"
               className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-xs font-semibold hover:scale-105 active:scale-95 transition-transform shadow-lg shadow-japan-red/25"
             >
-              <MessageCircle size={11} /> Book Guide
+              <MessageCircle size={11} /> {tc('Book Guide')}
             </a>
           ) : (
             <div className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-white/8 text-white/25 text-xs font-medium">
-              Consultation
+              {tc('Consultation')}
             </div>
           )}
         </div>
@@ -195,6 +198,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
 }
 
 function CalendarSection() {
+  const { tc } = useLanguage()
   return (
     <section className="py-20 border-t border-white/5">
       <div className="max-w-5xl mx-auto px-6">
@@ -205,7 +209,7 @@ function CalendarSection() {
             viewport={{ once: true }}
             className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3"
           >
-            Photo Calendar
+            {tc('Photo Calendar')}
           </motion.div>
           <motion.h2
             initial={{ opacity: 0, y: 16 }}
@@ -214,7 +218,7 @@ function CalendarSection() {
             transition={{ delay: 0.1 }}
             className="font-serif text-3xl md:text-4xl font-semibold text-white mb-3"
           >
-            Each Mountain · Its Own Light
+            {tc('Each Mountain · Its Own Light')}
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
@@ -223,7 +227,7 @@ function CalendarSection() {
             transition={{ delay: 0.2 }}
             className="text-white/40 text-sm max-w-md mx-auto"
           >
-            Browse the routes by month and pick the landscape that speaks to you — then book Tony as your guide.
+            {tc('Browse the routes by month and pick the landscape that speaks to you — then book Tony as your guide.')}
           </motion.p>
         </div>
 
@@ -231,15 +235,15 @@ function CalendarSection() {
           <div key={block.month} className="mb-14">
             <div className="flex items-center gap-3 mb-6">
               <Calendar size={14} className="text-japan-red" />
-              <h3 className="font-serif text-lg text-white/80 font-medium">{block.month}</h3>
+              <h3 className="font-serif text-lg text-white/80 font-medium">{tc(block.month)}</h3>
               <div className="flex-1 h-px bg-white/8" />
-              <span className="text-xs text-white/30">{block.routes.length} hikes</span>
+              <span className="text-xs text-white/30">{block.routes.length} {tc('hikes')}</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
               {block.routes.map((route, i) => {
                 const waMsg = encodeURIComponent(
-                  `Hi Tony! I saw the photo from ${route.title} and I'd love to hike it with you as guide. What's your availability?`
+                  `${tc('Hi Tony! I saw the photo of this route and I would love to hike it with you as my guide:')} ${tc(route.title)}. ${tc('What is your availability?')}`
                 )
                 return (
                   <motion.a
@@ -255,7 +259,7 @@ function CalendarSection() {
                   >
                     <img
                       src={route.imageCard}
-                      alt={route.title}
+                      alt={tc(route.title)}
                       className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/20 to-transparent" />
@@ -266,13 +270,13 @@ function CalendarSection() {
                         className="px-3 py-1.5 rounded-full text-xs font-semibold flex items-center gap-1.5"
                         style={{ background: `${route.accent}90`, color: '#fff' }}
                       >
-                        <MessageCircle size={10} /> Book Guide
+                        <MessageCircle size={10} /> {tc('Book Guide')}
                       </div>
                     </div>
 
                     <div className="absolute bottom-2 start-2 end-2">
-                      <div className="text-[9px] text-white/50 mb-0.5">{route.date}</div>
-                      <div className="text-xs font-semibold text-white leading-tight truncate">{route.title}</div>
+                      <div className="text-[9px] text-white/50 mb-0.5">{tc(route.date)}</div>
+                      <div className="text-xs font-semibold text-white leading-tight truncate">{tc(route.title)}</div>
                       {route.altitude && (
                         <div className="text-[9px] mt-0.5" style={{ color: route.accent }}>{route.altitude}</div>
                       )}
@@ -289,6 +293,7 @@ function CalendarSection() {
 }
 
 export default function Hiking() {
+  const { tc } = useLanguage()
   const [gradeFilter, setGradeFilter] = useState<string>('All')
 
   const filtered = gradeFilter === 'All'
@@ -296,16 +301,16 @@ export default function Hiking() {
     : HIKING_ROUTES.filter(r => r.grade.toLowerCase().includes(gradeFilter.toLowerCase()))
 
   const waGuide = encodeURIComponent(
-    'Hi Tony! I\'m interested in hiring you as a mountain hiking guide in Kansai. Can we talk about routes and availability?'
+    tc('Hi Tony! I would like to hire you as a mountain hiking guide in Kansai. Can we talk about routes and availability?'),
   )
 
   return (
     <>
       <PageSEO
-        title="Kansai Mountain Hiking Routes · Tony Hanma Guide"
-        description="12 real mountain hikes completed by Tony Hanma in Osaka, Kyoto & Kobe — Mt. Kongo, Fushimi Inari, Mt. Hiei, Mt. Maya, Ponpon Mountain and more. Hire Tony as your private hiking guide."
+        title={tc('Kansai Mountain Hiking Routes · Tony Hanma Guide')}
+        description={tc('12 real mountain hikes completed by Tony Hanma in Osaka, Kyoto and Kobe — Mt. Kongo, Fushimi Inari, Mt. Hiei, Mt. Maya, Ponpon Mountain and more. Hire Tony as your private hiking guide.')}
         path="/hiking"
-        breadcrumb={[{ name: 'Hiking', path: '/hiking' }]}
+        breadcrumb={[{ name: tc('Hiking'), path: '/hiking' }]}
       />
 
       {/* Hero */}
@@ -324,11 +329,11 @@ export default function Hiking() {
             animate={{ opacity: 1, y: 0 }}
             className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-4"
           >
-            Kansai · Mountain Expeditions 2026
+            {tc('Kansai · Mountain Expeditions 2026')}
           </motion.div>
           <div className="mb-4">
             <HeroTextKinetic
-              text="Hiking Routes"
+              text={tc('Hiking Routes')}
               className="justify-center text-4xl md:text-5xl lg:text-6xl font-serif font-semibold"
               delay={0.1}
             />
@@ -339,7 +344,7 @@ export default function Hiking() {
             transition={{ delay: 0.5 }}
             className="text-white/50 text-lg font-light max-w-xl mx-auto mb-8"
           >
-            12 real routes explored by Tony across Osaka, Kyoto and Kobe — from sacred summits to lost valleys. Hire Tony to guide you through any of them.
+            {tc('12 real routes explored by Tony across Osaka, Kyoto and Kobe — from sacred summits to lost valleys. Hire Tony to guide you through any of them.')}
           </motion.p>
 
           {/* Stats row */}
@@ -350,10 +355,10 @@ export default function Hiking() {
             className="flex flex-wrap justify-center gap-6 mb-8"
           >
             {[
-              { value: '12', label: 'Routes Completed' },
-              { value: '9', label: 'Available to Guide' },
-              { value: '1,125m', label: 'Highest Peak' },
-              { value: '14.1 km', label: 'Longest Route' },
+              { value: '12', label: tc('Routes Completed') },
+              { value: '9', label: tc('Available to Guide') },
+              { value: '1,125 m', label: tc('Highest Peak') },
+              { value: '14.1 km', label: tc('Longest Route') },
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <div className="font-serif text-2xl font-bold text-gradient-japan">{s.value}</div>
@@ -372,7 +377,7 @@ export default function Hiking() {
             transition={{ delay: 0.7 }}
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 active:scale-95 transition-transform"
           >
-            <MessageCircle size={16} /> Hire Tony as Hiking Guide
+            <MessageCircle size={16} /> {tc('Hire Tony as Hiking Guide')}
           </motion.a>
         </div>
       </section>
@@ -392,10 +397,10 @@ export default function Hiking() {
                   : { background: 'rgba(255,255,255,0.05)', color: 'rgba(255,255,255,0.45)' }
               }
             >
-              {g}
+              {tc(g)}
             </button>
           ))}
-          <span className="ms-auto flex-shrink-0 text-xs text-white/25">{filtered.length} routes</span>
+          <span className="ms-auto flex-shrink-0 text-xs text-white/25">{filtered.length} {tc('routes')}</span>
         </div>
       </section>
 
@@ -411,7 +416,7 @@ export default function Hiking() {
                 exit={{ opacity: 0 }}
                 className="text-center text-white/30 py-20"
               >
-                No routes match this filter.
+                {tc('No routes match this filter.')}
               </motion.p>
             ) : (
               <motion.div
@@ -438,10 +443,10 @@ export default function Hiking() {
         <div className="max-w-2xl mx-auto px-6 text-center">
           <Mountain size={32} className="text-japan-red mx-auto mb-4 opacity-60" />
           <h2 className="font-serif text-3xl font-semibold text-white mb-3">
-            Ready to hit the trail?
+            {tc('Ready to hit the trail?')}
           </h2>
           <p className="text-white/45 text-sm leading-relaxed mb-8 max-w-md mx-auto">
-            Tony has walked every one of these routes personally — some multiple times, some alone, some lost for hours. He knows exactly where to go, where to stop, and what you'd miss without a guide.
+            {tc('Tony has walked every one of these routes personally — some multiple times, some alone, some lost for hours. He knows exactly where to go, where to stop, and what you would miss without a guide.')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
@@ -450,13 +455,13 @@ export default function Hiking() {
               rel="noopener noreferrer"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
             >
-              <MessageCircle size={15} /> Book a Hiking Guide
+              <MessageCircle size={15} /> {tc('Book a Hiking Guide')}
             </a>
             <a
               href="/tours"
               className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-xl border border-white/10 text-white/70 hover:text-white hover:border-white/25 font-medium transition-all"
             >
-              View All Tours
+              {tc('View All Tours')}
             </a>
           </div>
         </div>

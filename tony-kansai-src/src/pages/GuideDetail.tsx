@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import { ArrowLeft, MessageCircle, Star, Globe, Quote } from 'lucide-react'
 import { GUIDES, TOURS } from '../lib/data'
 import { PageSEO } from '../components/PageSEO'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const DETAIL: Record<string, {
   paragraphs: string[]
@@ -58,6 +59,7 @@ const DETAIL: Record<string, {
 }
 
 export default function GuideDetail() {
+  const { tc } = useLanguage()
   const { id } = useParams<{ id: string }>()
   const guide = GUIDES.find(g => g.id === id)
 
@@ -68,15 +70,16 @@ export default function GuideDetail() {
     .map(h => TOURS.find(t => t.title === h))
     .filter(Boolean) as typeof TOURS
 
+  const firstName = tc(guide.name).split(' ')[0]
   const waMsg = encodeURIComponent(
-    `Hi! I'd like to book a private tour with ${guide.name}. Could you tell me about availability?`
+    `${tc('Hi! I would like to book a private tour with')} ${tc(guide.name)}. ${tc('Could you tell me about availability?')}`,
   )
 
   return (
     <>
       <PageSEO
-        title={`${guide.name} · ${guide.specialty}`}
-        description={`Meet ${guide.name} — ${guide.role}. ${guide.bio}`}
+        title={`${tc(guide.name)} · ${tc(guide.specialty)}`}
+        description={`${tc('Meet')} ${tc(guide.name)} — ${tc(guide.role)}. ${tc(guide.bio)}`}
         path={`/guides/${guide.id}`}
       />
 
@@ -90,7 +93,7 @@ export default function GuideDetail() {
 
         <div className="relative z-10 max-w-5xl mx-auto px-6">
           <Link to="/about" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors mb-10">
-            <ArrowLeft className="flip-rtl" size={15} /> Back to team
+            <ArrowLeft className="flip-rtl" size={15} /> {tc('Back to team')}
           </Link>
 
           <div className="grid md:grid-cols-5 gap-10 md:gap-14 items-start">
@@ -108,7 +111,7 @@ export default function GuideDetail() {
               >
                 <img
                   src={guide.photo}
-                  alt={guide.name}
+                  alt={tc(guide.name)}
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -125,12 +128,12 @@ export default function GuideDetail() {
                 className="text-xs font-semibold tracking-[0.22em] uppercase mb-3"
                 style={{ color: guide.accent }}
               >
-                {guide.specialty}
+                {tc(guide.specialty)}
               </div>
               <h1 className="font-serif text-5xl md:text-6xl font-semibold text-white mb-2 leading-tight">
-                {guide.name}
+                {tc(guide.name)}
               </h1>
-              <p className="text-white/45 text-lg mb-6">{guide.role}</p>
+              <p className="text-white/45 text-lg mb-6">{tc(guide.role)}</p>
 
               {/* Rating */}
               <div className="flex items-center gap-1.5 mb-6">
@@ -153,7 +156,7 @@ export default function GuideDetail() {
               </div>
 
               {/* Short bio */}
-              <p className="text-white/55 leading-relaxed mb-8 text-[15px]">{guide.bio}</p>
+              <p className="text-white/55 leading-relaxed mb-8 text-[15px]">{tc(guide.bio)}</p>
 
               {/* CTA */}
               <a
@@ -164,7 +167,7 @@ export default function GuideDetail() {
                 style={{ background: guide.accent, boxShadow: `0 8px 24px ${guide.accent}40` }}
               >
                 <MessageCircle size={17} />
-                Book with {guide.name.split(' ')[0]}
+                {tc('Book with {name}').replace('{name}', firstName)}
               </a>
             </motion.div>
           </div>
@@ -181,11 +184,11 @@ export default function GuideDetail() {
             {/* Full bio */}
             <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
               <h2 className="font-serif text-2xl font-semibold text-white mb-5">
-                About {guide.name.split(' ')[0]}
+                {tc('About {name}').replace('{name}', firstName)}
               </h2>
               <div className="space-y-4">
                 {detail.paragraphs.map((p, i) => (
-                  <p key={i} className="text-white/60 leading-relaxed">{p}</p>
+                  <p key={i} className="text-white/60 leading-relaxed">{tc(p)}</p>
                 ))}
               </div>
             </motion.div>
@@ -198,16 +201,16 @@ export default function GuideDetail() {
                 style={{ borderColor: guide.accent }}
               >
                 <Quote size={16} className="absolute -start-0.5 -top-1 opacity-25" style={{ color: guide.accent }} />
-                <p className="font-serif text-xl italic text-white/75 leading-relaxed">"{detail.quote}"</p>
-                <p className="text-sm text-white/30 mt-3">— {guide.name}</p>
+                <p className="font-serif text-xl italic text-white/75 leading-relaxed">«{tc(detail.quote)}»</p>
+                <p className="text-sm text-white/30 mt-3">— {tc(guide.name)}</p>
               </motion.blockquote>
             )}
 
             {/* Guide style */}
             {detail.approach && (
               <motion.div initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}>
-                <h3 className="font-semibold text-white mb-3">Guide Style</h3>
-                <p className="text-white/60 leading-relaxed">{detail.approach}</p>
+                <h3 className="font-semibold text-white mb-3">{tc('Guide Style')}</h3>
+                <p className="text-white/60 leading-relaxed">{tc(detail.approach)}</p>
               </motion.div>
             )}
 
@@ -222,7 +225,7 @@ export default function GuideDetail() {
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 className="glass rounded-2xl border border-white/6 p-5"
               >
-                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">Quick Facts</h3>
+                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Quick Facts')}</h3>
                 <ul className="space-y-3">
                   {detail.funFacts.map((f, i) => (
                     <li key={i} className="flex gap-3 text-sm text-white/55 leading-relaxed">
@@ -230,7 +233,7 @@ export default function GuideDetail() {
                         className="w-5 h-5 rounded-full flex-shrink-0 flex items-center justify-center text-[10px] font-bold mt-0.5"
                         style={{ background: `${guide.accent}20`, color: guide.accent }}
                       >{i + 1}</span>
-                      {f}
+                      {tc(f)}
                     </li>
                   ))}
                 </ul>
@@ -243,7 +246,7 @@ export default function GuideDetail() {
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 className="glass rounded-2xl border border-white/6 p-5"
               >
-                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">Signature Tours</h3>
+                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Signature Tours')}</h3>
                 <div className="space-y-3">
                   {signatureTours.map(tour => (
                     <Link
@@ -252,7 +255,7 @@ export default function GuideDetail() {
                       className="flex items-center justify-between gap-2 group"
                     >
                       <div className="min-w-0">
-                        <p className="text-white/70 text-sm font-medium group-hover:text-white transition-colors truncate">{tour.title}</p>
+                        <p className="text-white/70 text-sm font-medium group-hover:text-white transition-colors truncate">{tc(tour.title)}</p>
                         <p className="text-white/25 text-xs">{tour.price}</p>
                       </div>
                       <span className="text-white/15 group-hover:text-white/40 text-lg leading-none flex-shrink-0 transition-colors">›</span>
@@ -267,7 +270,7 @@ export default function GuideDetail() {
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass rounded-2xl border border-white/6 p-5"
             >
-              <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">Languages</h3>
+              <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Languages')}</h3>
               <div className="space-y-2.5">
                 {guide.languages.map((flag, i) => (
                   <div key={i} className="flex items-center gap-3">
@@ -284,7 +287,7 @@ export default function GuideDetail() {
       {/* ── OTHER GUIDES ──────────────────────────────────────────── */}
       <section className="border-t border-white/6 py-16">
         <div className="max-w-5xl mx-auto px-6">
-          <h3 className="font-serif text-2xl font-semibold text-white mb-8">Meet the rest of the team</h3>
+          <h3 className="font-serif text-2xl font-semibold text-white mb-8">{tc('Meet the rest of the team')}</h3>
           <div className="grid md:grid-cols-2 gap-5">
             {GUIDES.filter(g => g.id !== guide.id).map(g => (
               <Link
@@ -295,14 +298,14 @@ export default function GuideDetail() {
                 <div className="w-24 flex-shrink-0 overflow-hidden">
                   <img
                     src={g.photo}
-                    alt={g.name}
+                    alt={tc(g.name)}
                     className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                   />
                 </div>
                 <div className="p-4 min-w-0">
-                  <p className="text-white font-semibold truncate">{g.name}</p>
-                  <p className="text-xs mb-2" style={{ color: g.accent }}>{g.specialty}</p>
-                  <p className="text-white/40 text-xs leading-relaxed line-clamp-2">{g.bio}</p>
+                  <p className="text-white font-semibold truncate">{tc(g.name)}</p>
+                  <p className="text-xs mb-2" style={{ color: g.accent }}>{tc(g.specialty)}</p>
+                  <p className="text-white/40 text-xs leading-relaxed line-clamp-2">{tc(g.bio)}</p>
                 </div>
               </Link>
             ))}

@@ -11,7 +11,7 @@ import { PageSEO } from '../components/PageSEO'
 
 export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0)
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const f = t.faq_page
 
   const faqSchema = {
@@ -63,7 +63,7 @@ export default function FAQ() {
                   onClick={() => setOpen(open === i ? null : i)}
                 >
                   <div className="flex items-center justify-between px-6 py-4 gap-4">
-                    <h3 className="font-medium text-white/90">{faq.q}</h3>
+                    <h3 className="font-medium text-white/90">{tc(faq.q)}</h3>
                     <motion.div animate={{ rotate: open === i ? 180 : 0 }} transition={{ type: 'spring', stiffness: 300, damping: 24 }}>
                       <ChevronDown size={16} className="text-japan-red flex-shrink-0" />
                     </motion.div>
@@ -73,7 +73,7 @@ export default function FAQ() {
                       <motion.div
                         initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }}
                         transition={{ type: 'spring', stiffness: 240, damping: 26 }}>
-                        <div className="px-6 pb-5 text-sm text-white/60 leading-relaxed border-t border-white/5 pt-4">{faq.a}</div>
+                        <div className="px-6 pb-5 text-sm text-white/60 leading-relaxed border-t border-white/5 pt-4">{tc(faq.a)}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>

@@ -9,7 +9,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { PageSEO } from '../components/PageSEO'
 
 export default function About() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const a = t.about_page
 
   return (
@@ -65,7 +65,7 @@ export default function About() {
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map(({ flag, name }) => (
                         <div key={name} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/70">
-                          <span>{flag}</span><span>{name}</span>
+                          <span>{flag}</span><span>{tc(name)}</span>
                         </div>
                       ))}
                     </div>

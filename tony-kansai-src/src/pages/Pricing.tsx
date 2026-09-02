@@ -9,7 +9,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { PageSEO } from '../components/PageSEO'
 
 export default function Pricing() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const p = t.pricing_page
 
   return (
@@ -54,30 +54,30 @@ export default function Pricing() {
                       </>
                     )}
                     <div className="p-7 flex flex-col flex-1">
-                      <div className="text-xs font-medium text-white/40 tracking-wider uppercase mb-1">{tier.subtitle}</div>
-                      <div className="font-serif text-2xl font-semibold text-white mb-3">{tier.name}</div>
+                      <div className="text-xs font-medium text-white/40 tracking-wider uppercase mb-1">{tc(tier.subtitle)}</div>
+                      <div className="font-serif text-2xl font-semibold text-white mb-3">{tc(tier.name)}</div>
                       <div className="flex items-baseline gap-2 mb-1">
                         <span className={`font-serif text-4xl font-bold ${tier.hot ? 'text-gradient-japan' : 'text-white'}`}>{tier.price}</span>
                       </div>
-                      <div className="text-xs text-white/35 mb-6">{tier.priceUSD} · {tier.duration}</div>
+                      <div className="text-xs text-white/35 mb-6">{tier.priceUSD} · {tc(tier.duration)}</div>
 
                       <ul className="space-y-2.5 mb-8 flex-1">
                         {tier.features.map((f) => (
                           <li key={f} className="flex items-start gap-2.5 text-sm text-white/65">
-                            <Check size={13} className={`mt-0.5 flex-shrink-0 ${tier.hot ? 'text-japan-red' : 'text-white/40'}`} />{f}
+                            <Check size={13} className={`mt-0.5 flex-shrink-0 ${tier.hot ? 'text-japan-red' : 'text-white/40'}`} />{tc(f)}
                           </li>
                         ))}
                       </ul>
 
                       <a
-                        href={`${WHATSAPP}?text=${encodeURIComponent(`Hi Tony! I'd like to book the ${tier.name} (${tier.subtitle}) package. Could you confirm availability?`)}`}
+                        href={`${WHATSAPP}?text=${encodeURIComponent(`Hi Tony! I'd like to book the ${tc(tier.name)} (${tc(tier.subtitle)}) package. Could you confirm availability?`)}`}
                         target="_blank" rel="noopener noreferrer"
                         className={`flex items-center justify-center gap-2 w-full py-3.5 rounded-xl text-sm font-semibold transition-all hover:scale-105 ${
                           tier.hot
                             ? 'bg-gradient-to-r from-japan-red to-japan-orange text-white shadow-lg shadow-japan-red/30'
                             : 'glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/30'
                         }`}>
-                        <MessageCircle size={14} /> {tier.cta}
+                        <MessageCircle size={14} /> {tc(tier.cta)}
                       </a>
                     </div>
                   </div>

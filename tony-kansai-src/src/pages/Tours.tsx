@@ -5,7 +5,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { PageSEO } from '../components/PageSEO'
 
 export default function Tours() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
 
   return (
     <>

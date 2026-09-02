@@ -25,7 +25,7 @@ function isPast(y: number, m: number, d: number) {
 }
 
 export default function Booking() {
-  const { t, lang } = useLanguage()
+  const { t, tc, lang } = useLanguage()
   const bp = t.booking_page
 
   const now = new Date()
@@ -144,7 +144,7 @@ export default function Booking() {
                             className="text-xs font-bold tracking-widest uppercase"
                             style={{ color: tour.accent }}
                           >
-                            {tour.badge}
+                            {tc(tour.badge)}
                           </div>
                           {selectedTour.id === tour.id && (
                             <div className="w-4 h-4 rounded-full bg-japan-red flex items-center justify-center flex-shrink-0">
@@ -152,11 +152,11 @@ export default function Booking() {
                             </div>
                           )}
                         </div>
-                        <div className="font-serif text-sm font-semibold text-white mb-1">{tour.title}</div>
+                        <div className="font-serif text-sm font-semibold text-white mb-1">{tc(tour.title)}</div>
                         <div className="flex items-center gap-3">
                           <span className="font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
                           <span className="text-[11px] text-white/40 flex items-center gap-1">
-                            <Clock size={9} />{tour.duration}
+                            <Clock size={9} />{tc(tour.duration)}
                           </span>
                         </div>
                       </button>
