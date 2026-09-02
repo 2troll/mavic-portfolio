@@ -117,7 +117,7 @@ export default function HikingDetail() {
             <span className="text-white font-semibold">{tc(route.title)}</span> · {tc(route.grade)}
           </div>
           <div className="flex gap-3 ms-auto items-center">
-            <span className="ltr-num text-sm font-serif font-bold text-gradient-japan">{route.price}</span>
+            <span className="ltr-num text-sm font-serif font-bold text-gradient-japan">{tc(route.price)}</span>
             <a
               href={`${WHATSAPP}?text=${waMsg}`}
               target="_blank"
@@ -327,7 +327,7 @@ export default function HikingDetail() {
               >
                 <div className="text-xs text-white/30 mb-1 uppercase tracking-wide">{tc('Guide Fee')}</div>
                 <div className="font-serif text-3xl font-bold mb-1" style={{ color: route.accent }}>
-                  <span className="ltr-num">{route.price}</span>
+                  <span className="ltr-num">{tc(route.price)}</span>
                 </div>
                 <div className="text-xs text-white/30 mb-5">{tc('per group · not per person')}</div>
 
@@ -417,7 +417,7 @@ export default function HikingDetail() {
                 to="/hiking"
                 className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/8 text-white/40 hover:text-white/70 hover:border-white/20 text-sm transition-all"
               >
-                <ArrowLeft className="flip-rtl" size={13} /> {tc('All 12 Hiking Routes')}
+                <ArrowLeft className="flip-rtl" size={13} /> {tc('All {n} Hiking Routes').replace('{n}', String(HIKING_ROUTES.length))}
               </Link>
             </div>
 
@@ -436,7 +436,7 @@ export default function HikingDetail() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
           >
-            <MessageCircle size={15} /> {tc('Hire Tony')} · <span className="ltr-num">{route.price}</span>
+            <MessageCircle size={15} /> {tc('Hire Tony')} · <span className="ltr-num">{tc(route.price)}</span>
             <ArrowRight className="flip-rtl" size={14} />
           </a>
         </div>

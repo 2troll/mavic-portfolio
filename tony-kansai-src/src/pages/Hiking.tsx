@@ -9,16 +9,27 @@ import { useLanguage } from '../contexts/LanguageContext'
 
 const GRADES = ['All', 'Easy', 'Moderate', 'Hard', 'Technical', 'Expert Only'] as const
 
-const CALENDAR_MONTHS = [
-  {
-    month: 'April 2026',
-    routes: HIKING_ROUTES.filter(r => r.date.startsWith('Apr')),
-  },
-  {
-    month: 'May 2026',
-    routes: HIKING_ROUTES.filter(r => r.date.startsWith('May')),
-  },
-]
+const MONTH_NAMES: Record<string, string> = {
+  Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April',
+  May: 'May', Jun: 'June', Jul: 'July', Aug: 'August',
+  Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December',
+}
+
+// Los meses salen de las propias rutas: al añadir una en julio aparece sola,
+// sin tocar esta lista (que antes tenía abril y mayo escritos a mano).
+const CALENDAR_MONTHS = (() => {
+  const bloques: { month: string; routes: typeof HIKING_ROUTES }[] = []
+  for (const r of HIKING_ROUTES) {
+    // 'Jun 2, 2026' → 'June 2026'
+    const [mes, , anio] = r.date.split(' ')
+    const largo = MONTH_NAMES[mes] ?? mes
+    const clave = `${largo} ${anio}`
+    const encontrado = bloques.find(b => b.month === clave)
+    if (encontrado) encontrado.routes.push(r)
+    else bloques.push({ month: clave, routes: [r] })
+  }
+  return bloques
+})()
 
 function GradeTag({ grade, accent }: { grade: string; accent: string }) {
   const { tc } = useLanguage()
@@ -169,7 +180,17 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
           )}
         </AnimatePresence>
 
-        {/* CTA */}
+        {/* Precio + CTA */}
+        <div className="flex items-center justify-between mb-3">
+          {route.price.startsWith('¥') ? (
+            <>
+              <span className="ltr-num font-serif text-lg font-bold text-gradient-japan">{route.price}</span>
+              <span className="text-[10px] text-white/30 uppercase tracking-wide">{tc('per group')}</span>
+            </>
+          ) : (
+            <span className="font-serif text-base font-semibold text-white/45">{tc(route.price)}</span>
+          )}
+        </div>
         <div className="flex gap-2">
           <Link
             to={`/hiking/${route.id}`}
@@ -308,7 +329,7 @@ export default function Hiking() {
     <>
       <PageSEO
         title={tc('Kansai Mountain Hiking Routes · Tony Hanma Guide')}
-        description={tc('12 real mountain hikes completed by Tony Hanma in Osaka, Kyoto and Kobe — Mt. Kongo, Fushimi Inari, Mt. Hiei, Mt. Maya, Ponpon Mountain and more. Hire Tony as your private hiking guide.')}
+        description={tc('Mountain hiking routes guided by Tony Hanma across Osaka, Kyoto, Kobe and Nara — Mt. Kongo, Fushimi Inari, Mt. Hiei, Mt. Rokko, Mt. Atago, Yoshino and more. Hire Tony as your private hiking guide.')}
         path="/hiking"
         breadcrumb={[{ name: tc('Hiking'), path: '/hiking' }]}
       />
@@ -344,7 +365,7 @@ export default function Hiking() {
             transition={{ delay: 0.5 }}
             className="text-white/50 text-lg font-light max-w-xl mx-auto mb-8"
           >
-            {tc('12 real routes explored by Tony across Osaka, Kyoto and Kobe — from sacred summits to lost valleys. Hire Tony to guide you through any of them.')}
+            {tc('{n} routes across Osaka, Kyoto, Kobe and Nara — from sacred summits to lost valleys. Hire Tony to guide you through any of them.').replace('{n}', String(HIKING_ROUTES.length))}
           </motion.p>
 
           {/* Stats row */}
@@ -355,8 +376,8 @@ export default function Hiking() {
             className="flex flex-wrap justify-center gap-6 mb-8"
           >
             {[
-              { value: '12', label: tc('Routes Completed') },
-              { value: '9', label: tc('Available to Guide') },
+              { value: String(HIKING_ROUTES.length), label: tc('Routes Completed') },
+              { value: String(HIKING_ROUTES.filter(r => r.available).length), label: tc('Available to Guide') },
               { value: tc('1,125 m'), label: tc('Highest Peak') },
               { value: tc('14.1 km'), label: tc('Longest Route') },
             ].map((s) => (

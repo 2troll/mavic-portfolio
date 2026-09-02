@@ -12,16 +12,24 @@
     .btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(to right, #E53030, #FF6B35); color: #fff; font-weight: 600; padding: 14px 28px; border-radius: 12px; text-decoration: none; font-size: 0.9rem; }
   </style>
   <script>
+    // Esta lista es un espejo de TOURS en src/lib/data.ts: el índice es el
+    // `route` de cada tour. Si añades uno allí, añádelo aquí.
     const TOURS = [
-      'Osaka Food Circuit',       // route=0
-      'Hidden Kyoto',             // route=1
-      'Kobe Refined',             // route=2
-      'Nara Sacred Forest',       // route=3
-      'Kōyasan Pilgrimage',       // route=4
-      'Osaka × Kyoto Grand Day',  // route=5
-      'Mountain Hiking',          // route=6
+      'Osaka Food Circuit',              // route=0
+      'Hidden Kyoto',                    // route=1
+      'Kobe Refined',                    // route=2
+      'Nara Sacred Forest',              // route=3
+      'Kōyasan Pilgrimage',              // route=4
+      'Osaka × Kyoto Grand Day',         // route=5
+      'Mountain Hiking',                 // route=6
+      'Uji · Matcha & the Phoenix Hall', // route=7
+      'Arashiyama & Sagano',             // route=8
+      'Amanohashidate & Ine',            // route=9
+      'Kumano Kodo Pilgrimage',          // route=10
+      'Lake Biwa & Hikone Castle',       // route=11
     ]
-    const PRICES = ['¥75,000', '¥95,000', '¥85,000', '¥98,000', '¥165,000', '¥130,000', '¥108,000']
+    const PRICES = ['¥75,000', '¥95,000', '¥85,000', '¥98,000', '¥165,000', '¥130,000',
+                    '¥108,000', '¥78,000', '¥88,000', '¥165,000', '¥155,000', '¥92,000']
     const WA = 'https://wa.me/34634193106'
 
     // Esta página sólo se ve un segundo y medio antes de saltar a WhatsApp,
@@ -47,7 +55,7 @@
 
     window.addEventListener('DOMContentLoaded', () => {
       const params = new URLSearchParams(window.location.search)
-      const route = Math.max(0, Math.min(6, parseInt(params.get('route') || '0', 10)))
+      const route = Math.max(0, Math.min(TOURS.length - 1, parseInt(params.get('route') || '0', 10)))
       const name = TOURS[route]
       const price = PRICES[route]
 

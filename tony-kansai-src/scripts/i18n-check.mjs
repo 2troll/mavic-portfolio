@@ -33,8 +33,18 @@ for (const f of sources) {
 
 // 2) Constantes de módulo que se traducen por variable, no por literal
 for (const extra of ['All', 'Easy', 'Moderate', 'Hard', 'Technical', 'Expert Only',
-                     'Transit', 'Hiking', 'At Site', 'April 2026', 'May 2026']) {
+                     'Transit', 'Hiking', 'At Site']) {
   wanted.add(extra)
+}
+
+// El calendario de /hiking compone la etiqueta del mes desde la fecha de cada
+// ruta ('Jun 2, 2026' → 'June 2026'), así que hay que pedir esas etiquetas.
+const MESES = { Jan: 'January', Feb: 'February', Mar: 'March', Apr: 'April',
+                May: 'May', Jun: 'June', Jul: 'July', Aug: 'August',
+                Sep: 'September', Oct: 'October', Nov: 'November', Dec: 'December' }
+for (const m of readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
+       .matchAll(/date: '(\w+) \d+, (\d{4})'/g)) {
+  wanted.add(`${MESES[m[1]] ?? m[1]} ${m[2]}`)
 }
 
 // 3) Todo el texto visible de data.ts y de la prosa de las fichas de guía

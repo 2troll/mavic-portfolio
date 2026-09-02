@@ -14,13 +14,13 @@ const DETAIL: Record<string, {
   tony: {
     paragraphs: [
       "Tony came to Japan the way most people do — as a traveller. He never left.",
-      "What started as a year-long adventure in Osaka became a complete obsession with Kansai's hidden layers: the izakayas tucked down unmarked alleys, the temples that don't appear on any map, the market vendors who know your face by the third visit.",
+      "What started as a year-long adventure in Osaka became a complete obsession with Kansai's hidden layers: the family kitchens tucked down unmarked alleys, the temples that don't appear on any map, the market vendors who know your face by the third visit.",
       "He speaks English, Spanish and Arabic, bringing a uniquely international perspective to Japanese culture. Every tour is 100% private — no groups, ever. His rule: every guest deserves undivided attention, every day should feel like exploring with a friend who happens to know where every secret is.",
     ],
     quote: "Japan rewards curiosity. My job is to give you the curiosity of someone who has lived here for years — in a single day.",
     approach: "Tony's tours move at your pace. No rushing between checkpoints, no ticking boxes. If you want to sit in a temple garden for an hour, you sit. If you find a noodle shop you want to try, you try it. The itinerary is a starting point — the day belongs to you.",
     funFacts: [
-      "Has eaten at hundreds of different izakayas in Osaka",
+      "Has eaten at hundreds of different family kitchens in Osaka",
       "Speaks Arabic after years living in the Middle East before Japan",
       "Once walked the Kumano Kodo solo for three days straight",
       "Personally knows owners of several hidden restaurants he takes guests to",
