@@ -77,7 +77,7 @@ export default function Terms() {
                   <span>{tc('Full refund of any deposit paid. No charge.')}</span>
                 </div>
                 <div className="flex gap-3 items-start">
-                  <span className="w-28 flex-shrink-0 text-japan-orange font-medium">48 – 72 h</span>
+                  <span className="w-28 flex-shrink-0 text-japan-orange font-medium">{tc('48 – 72 h')}</span>
                   <span>{tc('50% of the agreed tour price is charged.')}</span>
                 </div>
                 <div className="flex gap-3 items-start">

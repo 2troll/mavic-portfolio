@@ -35,8 +35,11 @@ for (const extra of ['All', 'Easy', 'Moderate', 'Hard', 'Technical', 'Expert Onl
   wanted.add(extra)
 }
 
-// 3) Todo el texto visible de data.ts
+// 3) Todo el texto visible de data.ts y de la prosa de las fichas de guía
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
+  + '\n' + readFileSync(join(root, 'src/pages/GuideDetail.tsx'), 'utf8')
+      .split('export default')[0]
+      .split('\n').filter((l) => !l.startsWith('import ')).join('\n')
 // se saltan URLs, ids, clases de Tailwind y direcciones de correo
 const skip = /^(https?:|\/|#|&|from-|via-|to-|photo-|[a-z0-9]+(-[a-z0-9]+)*$)|@/
 for (let i = 0; i < data.length; i++) {
