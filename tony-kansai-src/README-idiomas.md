@@ -79,3 +79,25 @@ patrón en las tres.
 
 `panel-resenas.html` y `versions.html` se quedan en español a propósito: son
 herramientas de Tony, no páginas de cliente.
+
+## Añadir un tour o una ruta
+
+Todo el contenido vive en `src/lib/data.ts`. Al añadir un tour:
+
+1. dale un `route:` = el siguiente número libre (es el índice del deep link
+   `/booking.html?route=N`);
+2. añádelo también a la lista `TOURS` de `public/booking.html`, que es un
+   espejo a mano de esa misma lista;
+3. `npm run build` regenera el sitemap y te dirá qué textos faltan por
+   traducir.
+
+Las rutas de montaña sólo necesitan el objeto en `HIKING_ROUTES`: el mes del
+calendario, el número de rutas y el sitemap salen solos de ahí.
+
+### Las fotos
+
+Todas las imágenes son de Unsplash y están verificadas (devuelven 200). Los
+tours y rutas añadidos en septiembre de 2026 **reutilizan fotos que ya
+estaban en la web**: son de relleno. Cámbialas por las tuyas en cuanto
+puedas — tienes fotos reales de todos esos sitios y valen más, para el
+cliente y para Google, que cualquier banco de imágenes.
