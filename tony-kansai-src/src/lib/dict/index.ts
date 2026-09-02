@@ -3,28 +3,24 @@
 //
 // `i18n.ts` cubre la interfaz con claves tipadas (t.nav.home, t.hero.badge…).
 // Este diccionario cubre el CONTENIDO: los textos que viven en `data.ts`
-// (tours, rutas de montaña, guías, tarifas, FAQ) y las etiquetas de las
-// páginas de detalle y legales. Se indexa por la cadena inglesa original, así
-// que el inglés no necesita fichero y cualquier texto sin traducir cae con
-// elegancia al inglés en vez de romper la página.
+// (tours, rutas de montaña, guías, tarifas, FAQ), las páginas de detalle y las
+// legales. Se indexa por la cadena inglesa original, así que el inglés no
+// necesita fichero y cualquier texto sin traducir cae con elegancia al inglés
+// en vez de romper la página.
 //
-// Cada idioma va en su propio chunk y se descarga sólo el que se usa: son
-// ~24 kB comprimidos por idioma, y cargarlos todos sería regalar 90 kB al
-// móvil de un cliente que sólo lee uno.
+// Los JSON viven en `public/i18n/` y se piden por red, NO se importan. El
+// despliegue compila con `vite-plugin-singlefile`, que mete todo lo importado
+// dentro del index.html: importarlos obligaría a cada visitante a descargar
+// los cinco idiomas (unos 170 kB comprimidos de más) para leer uno solo. Así
+// se baja únicamente el suyo, ~24 kB, y además se pueden corregir traducciones
+// sin recompilar la web.
 //
-// Añadir un idioma: crear el JSON y registrarlo en LOADERS.
-// Comprobar qué falta: `node scripts/i18n-check.mjs`
+// Añadir un idioma: crear public/i18n/<código>.json y registrarlo en LANG_META.
+// Comprobar qué falta: `npm run i18n`
 // ─────────────────────────────────────────────────────────────────────────────
 import type { Lang } from '../i18n'
 
 type Phrases = Record<string, string>
-
-const LOADERS: Partial<Record<Lang, () => Promise<{ default: Phrases }>>> = {
-  es: () => import('./es.json'),
-  ar: () => import('./ar.json'),
-  cs: () => import('./cs.json'),
-  ru: () => import('./ru.json'),
-}
 
 const loaded: Partial<Record<Lang, Phrases>> = { en: {} }
 const inFlight: Partial<Record<Lang, Promise<void>>> = {}
@@ -32,14 +28,17 @@ const inFlight: Partial<Record<Lang, Promise<void>>> = {}
 /** Descarga el diccionario de un idioma (una sola vez). El inglés no tiene. */
 export function loadPhrases(lang: Lang): Promise<void> {
   if (loaded[lang]) return Promise.resolve()
-  const loader = LOADERS[lang]
-  if (!loader) return Promise.resolve()
   if (!inFlight[lang]) {
-    inFlight[lang] = loader()
-      .then((mod) => { loaded[lang] = mod.default })
+    const url = `${import.meta.env.BASE_URL}i18n/${lang}.json`
+    inFlight[lang] = fetch(url)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
+        return res.json() as Promise<Phrases>
+      })
+      .then((data) => { loaded[lang] = data })
       .catch((err) => {
         // Sin diccionario la web sigue en pie, en inglés.
-        console.error(`[i18n] no se pudo cargar el diccionario ${lang}:`, err)
+        console.error(`[i18n] no se pudo cargar ${url}:`, err)
         loaded[lang] = {}
       })
   }

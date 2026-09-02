@@ -4,7 +4,7 @@
 //   node scripts/i18n-check.mjs
 //
 // Recorre lo que el código pide con tc(...) y todo el texto visible de
-// data.ts, y lo contrasta con src/lib/dict/*.json. Sale con código 1 si
+// data.ts, y lo contrasta con public/i18n/*.json. Sale con código 1 si
 // falta algo, así que sirve tal cual en un hook de pre-commit o en CI.
 import { readFileSync, readdirSync } from 'node:fs'
 import { join, dirname } from 'node:path'
@@ -61,7 +61,7 @@ for (let i = 0; i < data.length; i++) {
 
 let failed = false
 for (const lang of LANGS) {
-  const dict = JSON.parse(readFileSync(join(root, `src/lib/dict/${lang}.json`), 'utf8'))
+  const dict = JSON.parse(readFileSync(join(root, `public/i18n/${lang}.json`), 'utf8'))
   const missing = [...wanted].filter((k) => !(k in dict)).sort()
   const orphan = Object.keys(dict).filter((k) => !wanted.has(k)).sort()
 
