@@ -125,7 +125,7 @@ export default function TourDetail() {
               {tc(tour.title)}
             </h1>
             <div className="flex items-center gap-6 flex-wrap">
-              <span className="font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
+              <span className="ltr-num font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
               <span className="flex items-center gap-1.5 text-sm text-white/50">
                 <Clock size={13} />{tc(tour.duration)}
               </span>

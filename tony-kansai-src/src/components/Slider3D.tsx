@@ -130,7 +130,7 @@ export function Slider3D() {
                     {tc(tour.title)}
                   </h2>
                   <div className="flex items-center gap-4 mb-4">
-                    <span className="font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
+                    <span className="ltr-num font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
                     <span className="flex items-center gap-1 text-xs text-white/40">
                       <Clock size={10} /> {tc(tour.duration)}
                     </span>

@@ -94,7 +94,7 @@ export default function HikingDetail() {
               {route.altitude && (
                 <div className="flex items-center gap-1.5" style={{ color: route.accent }}>
                   <Mountain size={15} />
-                  <span className="font-bold text-lg">{route.altitude}</span>
+                  <span className="ltr-num font-bold text-lg">{tc(route.altitude)}</span>
                 </div>
               )}
               <span className="flex items-center gap-1.5 text-sm text-white/50">
@@ -117,7 +117,7 @@ export default function HikingDetail() {
             <span className="text-white font-semibold">{tc(route.title)}</span> · {tc(route.grade)}
           </div>
           <div className="flex gap-3 ms-auto items-center">
-            <span className="text-sm font-serif font-bold text-gradient-japan">{route.price}</span>
+            <span className="ltr-num text-sm font-serif font-bold text-gradient-japan">{route.price}</span>
             <a
               href={`${WHATSAPP}?text=${waMsg}`}
               target="_blank"
@@ -304,7 +304,7 @@ export default function HikingDetail() {
                       <img src={r.imageCard} alt={tc(r.title)} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
                       <div className="absolute bottom-3 start-3">
-                        <div className="text-xs font-medium mb-0.5" style={{ color: r.accent }}>{r.altitude || tc(r.grade)}</div>
+                        <div className="text-xs font-medium mb-0.5" style={{ color: r.accent }}><span className={r.altitude ? 'ltr-num' : undefined}>{r.altitude ? tc(r.altitude) : tc(r.grade)}</span></div>
                         <div className="text-sm font-semibold text-white">{tc(r.title)}</div>
                       </div>
                       <div className="absolute top-3 end-3 opacity-0 group-hover:opacity-100 transition-opacity">
@@ -327,7 +327,7 @@ export default function HikingDetail() {
               >
                 <div className="text-xs text-white/30 mb-1 uppercase tracking-wide">{tc('Guide Fee')}</div>
                 <div className="font-serif text-3xl font-bold mb-1" style={{ color: route.accent }}>
-                  {route.price}
+                  <span className="ltr-num">{route.price}</span>
                 </div>
                 <div className="text-xs text-white/30 mb-5">{tc('per group · not per person')}</div>
 
@@ -436,7 +436,7 @@ export default function HikingDetail() {
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
           >
-            <MessageCircle size={15} /> {tc('Hire Tony')} · {route.price}
+            <MessageCircle size={15} /> {tc('Hire Tony')} · <span className="ltr-num">{route.price}</span>
             <ArrowRight className="flip-rtl" size={14} />
           </a>
         </div>

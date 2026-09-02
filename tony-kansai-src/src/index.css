@@ -160,3 +160,11 @@ body::before {
   right: auto;
   left: 0;
 }
+
+/* Cifras y unidades latinas dentro de un párrafo árabe: el algoritmo bidi
+   las reordena («1,125 m» sale como «m 1,125»). Aislarlas lo evita. */
+.ltr-num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}

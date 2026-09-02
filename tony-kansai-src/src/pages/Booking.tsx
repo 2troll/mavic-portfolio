@@ -154,7 +154,7 @@ export default function Booking() {
                         </div>
                         <div className="font-serif text-sm font-semibold text-white mb-1">{tc(tour.title)}</div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
+                          <span className="ltr-num font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
                           <span className="text-[11px] text-white/40 flex items-center gap-1">
                             <Clock size={9} />{tc(tour.duration)}
                           </span>

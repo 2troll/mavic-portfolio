@@ -21,6 +21,7 @@ export interface Tr {
   nav: {
     home: string;
     tours: string;
+    hiking: string;
     about: string;
     pricing: string;
     faq: string;
@@ -185,6 +186,7 @@ const en: Tr = {
   nav: {
     home: 'Home',
     tours: 'Tours',
+    hiking: 'Hiking',
     about: 'About',
     pricing: 'Pricing',
     faq: 'FAQ',
@@ -358,6 +360,7 @@ const es: Tr = {
   nav: {
     home: 'Inicio',
     tours: 'Tours',
+    hiking: 'Montaña',
     about: 'Sobre Tony',
     pricing: 'Precios',
     faq: 'Preguntas',
@@ -531,6 +534,7 @@ const ar: Tr = {
   nav: {
     home: 'الرئيسية',
     tours: 'الجولات',
+    hiking: 'الجبال',
     about: 'عن توني',
     pricing: 'الأسعار',
     faq: 'الأسئلة الشائعة',
@@ -704,6 +708,7 @@ const cs: Tr = {
   nav: {
     home: 'Domů',
     tours: 'Výlety',
+    hiking: 'Hory',
     about: 'O Tonym',
     pricing: 'Ceník',
     faq: 'Otázky',
@@ -877,6 +882,7 @@ const ru: Tr = {
   nav: {
     home: 'Главная',
     tours: 'Туры',
+    hiking: 'Горы',
     about: 'О Тони',
     pricing: 'Цены',
     faq: 'Вопросы',

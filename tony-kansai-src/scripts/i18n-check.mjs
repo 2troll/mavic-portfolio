@@ -38,7 +38,7 @@ for (const extra of ['All', 'Easy', 'Moderate', 'Hard', 'Technical', 'Expert Onl
 // 3) Todo el texto visible de data.ts
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
 // se saltan URLs, ids, clases de Tailwind y direcciones de correo
-const skip = /^(https?:|\/|#|from-|via-|to-|photo-|[a-z0-9]+(-[a-z0-9]+)*$)|@/
+const skip = /^(https?:|\/|#|&|from-|via-|to-|photo-|[a-z0-9]+(-[a-z0-9]+)*$)|@/
 for (let i = 0; i < data.length; i++) {
   const q = data[i]
   if (q !== "'" && q !== '"' && q !== '`') continue
@@ -49,7 +49,9 @@ for (let i = 0; i < data.length; i++) {
     out += data[j]; j++
   }
   i = j
-  if (out && !skip.test(out) && /[A-Za-z]{3}/.test(out)) wanted.add(out)
+  // Basta una letra: "~2 h" o "4.7 km one way" también son texto visible.
+  // Los códigos de idioma (EN, ES, AR…) se muestran tal cual y no se traducen.
+  if (out && !skip.test(out) && /[A-Za-z]/.test(out) && !/^[A-Z]{2,3}$/.test(out)) wanted.add(out)
 }
 
 let failed = false

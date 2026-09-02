@@ -142,7 +142,7 @@ export default function Home() {
                     {icon}
                   </div>
                   <div>
-                    <div className="text-2xl font-serif font-bold text-gradient-japan">{value}</div>
+                    <div className="ltr-num text-2xl font-serif font-bold text-gradient-japan">{value}</div>
                     <div className="text-xs text-white/45 tracking-wide font-medium">
                       {i === 0 ? t.stats.destinations
                         : i === 1 ? t.stats.languages
@@ -306,7 +306,7 @@ export default function Home() {
                           ))}
                         </ul>
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                          <span className="font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                          <span className="ltr-num font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
                           <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                             {t.tours_section.view} <ChevronRight className="flip-rtl" size={12} />
                           </span>

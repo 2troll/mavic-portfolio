@@ -98,7 +98,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
               style={{ background: `${route.accent}25`, border: `1px solid ${route.accent}40` }}
             >
               <Mountain size={10} style={{ color: route.accent }} />
-              <span className="text-xs font-bold" style={{ color: route.accent }}>{route.altitude}</span>
+              <span className="ltr-num text-xs font-bold" style={{ color: route.accent }}>{tc(route.altitude)}</span>
             </div>
           </div>
         )}
@@ -278,7 +278,7 @@ function CalendarSection() {
                       <div className="text-[9px] text-white/50 mb-0.5">{tc(route.date)}</div>
                       <div className="text-xs font-semibold text-white leading-tight truncate">{tc(route.title)}</div>
                       {route.altitude && (
-                        <div className="text-[9px] mt-0.5" style={{ color: route.accent }}>{route.altitude}</div>
+                        <div className="ltr-num text-[9px] mt-0.5" style={{ color: route.accent }}>{tc(route.altitude)}</div>
                       )}
                     </div>
                   </motion.a>
@@ -357,11 +357,11 @@ export default function Hiking() {
             {[
               { value: '12', label: tc('Routes Completed') },
               { value: '9', label: tc('Available to Guide') },
-              { value: '1,125 m', label: tc('Highest Peak') },
-              { value: '14.1 km', label: tc('Longest Route') },
+              { value: tc('1,125 m'), label: tc('Highest Peak') },
+              { value: tc('14.1 km'), label: tc('Longest Route') },
             ].map((s) => (
               <div key={s.label} className="text-center">
-                <div className="font-serif text-2xl font-bold text-gradient-japan">{s.value}</div>
+                <div className="ltr-num font-serif text-2xl font-bold text-gradient-japan">{s.value}</div>
                 <div className="text-[11px] text-white/35 uppercase tracking-wide">{s.label}</div>
               </div>
             ))}

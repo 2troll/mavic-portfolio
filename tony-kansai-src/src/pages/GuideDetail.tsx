@@ -256,7 +256,7 @@ export default function GuideDetail() {
                     >
                       <div className="min-w-0">
                         <p className="text-white/70 text-sm font-medium group-hover:text-white transition-colors truncate">{tc(tour.title)}</p>
-                        <p className="text-white/25 text-xs">{tour.price}</p>
+                        <p className="ltr-num text-white/25 text-xs">{tour.price}</p>
                       </div>
                       <span className="text-white/15 group-hover:text-white/40 text-lg leading-none flex-shrink-0 transition-colors">›</span>
                     </Link>
