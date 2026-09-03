@@ -452,13 +452,49 @@ export default function Home() {
           resto; sin ninguna, sólo invita a dejar la primera. */}
       <GuestReviews />
 
+      {/* ── GUÍA PRÁCTICA ─────────────────────────────────────── */}
+      <section className="py-20 border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-6">
+          <FadeUp>
+            <div className="glass rounded-3xl border border-white/8 p-8 md:p-10 text-center">
+              <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
+                {tc('Before You Come')}
+              </div>
+              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white mb-4">
+                {tc('Kansai Practical Guide')}
+              </h2>
+              <p className="text-white/50 text-sm leading-relaxed max-w-xl mx-auto mb-7">
+                {tc('Airport to city, cash or card, the last train, when to come, halal and vegetarian food, prayer spaces and eight phrases worth knowing. Free, and useful whether or not you ever book with us.')}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-8">
+                {[
+                  tc('From the airport'), tc('Money'), tc('Getting around'), tc('When to come'),
+                  tc('Halal, vegetarian and allergies'), tc('Prayer and quiet space'),
+                ].map((etiqueta) => (
+                  <span key={etiqueta} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/55">
+                    {etiqueta}
+                  </span>
+                ))}
+              </div>
+              <Link
+                to="/guide"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold text-sm shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
+              >
+                {tc('Read the guide')} <ChevronRight className="flip-rtl" size={15} />
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
       {/* ── LEGAL STRIP ───────────────────────────────────────── */}
       <section className="py-6 border-t border-white/4">
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/25">
           <span>🔒 {tc('Secure payments · No personal data stored · Contact only via WhatsApp')}</span>
-          <div className="flex items-center gap-5">
-            <Link to="/privacy" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/terms" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>
+            <Link to="/privacy" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
+            <Link to="/safety" className="hover:text-white/55 transition-colors">{tc('Safety & Insurance')}</Link>
           </div>
         </div>
       </section>

@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { TRANSLATIONS, LANG_META } from '../lib/i18n'
 import type { Lang, Tr } from '../lib/i18n'
 import { translate, loadPhrases, isLoaded } from '../lib/dict'
+import { cargaFuenteArabe } from '../lib/arabicFont'
 
 interface LanguageContextType {
   lang: Lang
@@ -71,6 +72,7 @@ export function LanguageProvider({ children }: { children: ReactNode }) {
     // Marca la raíz para que la tipografía árabe y los ajustes RTL del CSS
     // se apliquen sin tocar cada componente.
     root.classList.toggle('lang-ar', lang === 'ar')
+    if (lang === 'ar') cargaFuenteArabe()
   }, [lang, dir])
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { Component, useEffect } from 'react'
+import { Component, useEffect, lazy, Suspense } from 'react'
 import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { Navbar } from './components/Navbar'
@@ -21,8 +21,11 @@ import Cookies from './pages/Cookies'
 import Safety from './pages/Safety'
 import Legal from './pages/Legal'
 import Accessibility from './pages/Accessibility'
+import NotFound from './pages/NotFound'
 import GuideDetail from './pages/GuideDetail'
-import Admin from './pages/Admin'
+// El panel interno pesa lo que pesa (contratos en PDF incluidos) y sólo lo
+// usa Tony: se descarga sólo cuando se entra en /admin.
+const Admin = lazy(() => import('./pages/Admin'))
 import Hiking from './pages/Hiking'
 import Guide from './pages/Guide'
 import HikingDetail from './pages/HikingDetail'
@@ -74,10 +77,12 @@ function Layout() {
 
   if (isAdmin) {
     return (
-      <Routes>
-        <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/*" element={<Admin />} />
-      </Routes>
+      <Suspense fallback={<div className="min-h-screen bg-japan-dark" />}>
+        <Routes>
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/admin/*" element={<Admin />} />
+        </Routes>
+      </Suspense>
     )
   }
 
@@ -103,7 +108,7 @@ function Layout() {
           <Route path="/safety" element={<Safety />} />
           <Route path="/legal" element={<Legal />} />
           <Route path="/accessibility" element={<Accessibility />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
       <Footer />

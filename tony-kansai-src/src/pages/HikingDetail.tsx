@@ -6,6 +6,7 @@ import {
   Check, ChevronRight, Backpack, Star, Calendar, ArrowRight,
 } from 'lucide-react'
 import { HIKING_ROUTES, WHATSAPP } from '../lib/data'
+import { Helmet } from 'react-helmet-async'
 import { PageSEO } from '../components/PageSEO'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -49,6 +50,44 @@ export default function HikingDetail() {
 
   const otherRoutes = HIKING_ROUTES.filter((r) => r.id !== route.id && r.available).slice(0, 4)
 
+  // Google entiende una ruta guiada como TouristTrip. Sin esto, /hiking/:id
+  // era la única parte del sitio sin datos estructurados y no salía con
+  // precio ni con foto en los resultados.
+  const precioNumerico = parseInt(route.price.replace(/[^0-9]/g, ''), 10)
+  const rutaSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'TouristTrip',
+    name: tc(route.title),
+    description: tc(route.note),
+    image: route.imageHero,
+    url: `https://tonykansaiguide.com/hiking/${route.id}`,
+    touristType: tc(route.grade),
+    itinerary: {
+      '@type': 'ItemList',
+      itemListElement: route.timing.map((paso, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: tc(paso.segment),
+      })),
+    },
+    provider: {
+      '@type': 'LocalBusiness',
+      name: 'Tony Hanma Private Kansai Tours',
+      telephone: '+34634193106',
+      areaServed: 'Kansai, Japan',
+    },
+    ...(precioNumerico ? {
+      offers: {
+        '@type': 'Offer',
+        price: precioNumerico,
+        priceCurrency: 'JPY',
+        availability: route.available
+          ? 'https://schema.org/InStock'
+          : 'https://schema.org/PreOrder',
+      },
+    } : {}),
+  }
+
   return (
     <>
       <PageSEO
@@ -61,6 +100,9 @@ export default function HikingDetail() {
           { name: tc(route.title), path: `/hiking/${route.id}` },
         ]}
       />
+      <Helmet>
+        <script type="application/ld+json">{JSON.stringify(rutaSchema)}</script>
+      </Helmet>
 
       {/* ── Hero ───────────────────────────────────────────── */}
       <section ref={heroRef} className="relative h-[85vh] overflow-hidden">

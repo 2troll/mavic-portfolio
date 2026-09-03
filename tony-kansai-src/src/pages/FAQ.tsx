@@ -19,8 +19,8 @@ export default function FAQ() {
     '@type': 'FAQPage',
     mainEntity: FAQS.map((faq) => ({
       '@type': 'Question',
-      name: faq.q,
-      acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      name: tc(faq.q),
+      acceptedAnswer: { '@type': 'Answer', text: tc(faq.a) },
     })),
   }
 
@@ -30,7 +30,7 @@ export default function FAQ() {
         title={tc('FAQ · Private Japan Tour Guide Kansai')}
         description={tc('Common questions about private tours in Osaka, Kyoto and Kansai — languages, cancellation, transport, restaurant bookings and more.')}
         path="/faq"
-        breadcrumb={[{ name: 'FAQ', path: '/faq' }]}
+        breadcrumb={[{ name: tc('Read the FAQ'), path: '/faq' }]}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(faqSchema)}</script>
