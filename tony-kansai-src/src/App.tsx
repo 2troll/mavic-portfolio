@@ -24,6 +24,7 @@ import Accessibility from './pages/Accessibility'
 import GuideDetail from './pages/GuideDetail'
 import Admin from './pages/Admin'
 import Hiking from './pages/Hiking'
+import Guide from './pages/Guide'
 import HikingDetail from './pages/HikingDetail'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
@@ -89,6 +90,7 @@ function Layout() {
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:id" element={<TourDetail />} />
           <Route path="/hiking" element={<Hiking />} />
+          <Route path="/guide" element={<Guide />} />
           <Route path="/hiking/:id" element={<HikingDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />

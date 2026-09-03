@@ -31,6 +31,7 @@ const paginas = [
   ...tours.map((id) => ({ loc: `/tours/${id}`, priority: '0.85', changefreq: 'monthly' })),
   { loc: '/hiking', priority: '0.9', changefreq: 'weekly' },
   ...rutas.map((id) => ({ loc: `/hiking/${id}`, priority: '0.8', changefreq: 'monthly' })),
+  { loc: '/guide', priority: '0.85', changefreq: 'monthly' },
   { loc: '/about', priority: '0.8', changefreq: 'monthly' },
   { loc: '/pricing', priority: '0.85', changefreq: 'monthly' },
   { loc: '/faq', priority: '0.7', changefreq: 'monthly' },

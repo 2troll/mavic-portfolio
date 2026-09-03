@@ -365,6 +365,17 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/guide</loc>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/guide"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/guide?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/guide?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/guide?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/guide?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/guide"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/about</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/about"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/about?lang=es"/>

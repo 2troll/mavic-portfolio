@@ -6,11 +6,14 @@ const UPDATED = 'September 2026'
 const SITE = 'tonykansaiguide.com'
 
 /*
- * Aviso legal. Los datos del titular son los que hay hoy: nombre comercial,
- * actividad, contacto y jurisdicción. Si Tony registra la actividad en Japón
- * o en España, hay que añadir aquí la razón social, el número fiscal y el
- * domicilio: es lo que exige la ley de comercio electrónico de la UE a quien
- * vende a clientes europeos.
+ * Aviso legal. Los datos del titular son los reales de hoy: persona
+ * responsable, nombre comercial, actividad, sede y contacto.
+ *
+ * PENDIENTE: cuando la actividad quede formalmente registrada (en Japón o en
+ * España), añadir aquí razón social, número fiscal y domicilio social. Es lo
+ * que la ley de comercio electrónico de la UE exige a quien vende a clientes
+ * europeos. Hasta entonces la página lo dice tal cual, sin fingir un registro
+ * que no existe.
  */
 export default function Legal() {
   const { tc } = useLanguage()
@@ -26,12 +29,15 @@ export default function Legal() {
     >
       <Section title={tc('1. Who runs this site')}>
         <ul className="mt-1 space-y-2 list-none">
+          <Li label={tc('Person responsible')}>Tony Hanma</Li>
           <Li label={tc('Trading name')}>Tony Hanma Private Kansai Tours</Li>
-          <Li label={tc('Activity')}>{tc('Private guiding services in the Kansai region of Japan.')}</Li>
+          <Li label={tc('Activity')}>{tc('Private guiding services in the Kansai region of Japan, provided personally by Tony Hanma.')}</Li>
           <Li label={tc('Based in')}>{tc('Osaka, Japan.')}</Li>
           <Li label={tc('Website')}>{SITE}</Li>
           <Li label={tc('Contact')}><span className="ltr-num">WhatsApp +34 634 193 106</span></Li>
+          <Li label={tc('Languages')}>{tc('English, Spanish, Arabic, Czech and Russian.')}</Li>
         </ul>
+        <p className="mt-3">{tc('The service is provided by Tony Hanma in a personal capacity. Company registration details will be published on this page as soon as the activity is formally registered; until then, this notice states the position as it is rather than implying a registration that does not exist.')}</p>
         <p className="mt-3">{tc('WhatsApp is the only official channel. We never ask for payment through any other messaging account, and we never ask for card details by message.')}</p>
       </Section>
 

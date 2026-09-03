@@ -375,6 +375,13 @@ export const FAQS = [
   { q: 'Which languages do the guides speak?', a: 'Tony guides in English, Spanish and Arabic. Johnny guides in English and Czech. Larion guides in Russian, Japanese, English and Spanish — between the three of us, almost every guest feels right at home.' },
   { q: 'Can Tony help with restaurant reservations?', a: 'Absolutely. Tony has relationships with local restaurants including hidden spots that don\'t appear on any app. He pre-books in advance and pre-orders special dishes.' },
   { q: 'What areas does Tony cover?', a: 'Tony covers the full Kansai region: Osaka, Kyoto, Nara, Kobe, Himeji, Arashiyama, Kurama, Fushimi, Kōyasan, and more.' },
+  { q: 'Can you handle halal, vegetarian or allergy needs?', a: 'Yes, and it is one of the reasons people book us. Tony is Muslim, knows which halal places in Osaka and Kyoto are genuine, and books ahead. For vegetarians the trap is dashi, a fish stock that is in almost everything — we ask in Japanese before you order. Tell us when you book, not on the day.' },
+  { q: 'Is there anywhere to pray during the tour?', a: 'Yes. Kansai has the Osaka Masjid, the Kobe Muslim Mosque — the oldest in Japan — and the Kyoto Muslim Association, and Kansai Airport has prayer rooms in both terminals. Tony builds prayer stops into the route from the start, so the day does not lose an hour.' },
+  { q: 'Do I need a JR Pass?', a: 'Usually not, if you are staying inside Kansai. It only pays for itself when you are crossing the country. An ICOCA card covers almost every train and bus here. Ask Tony before you buy anything — it is a common and expensive mistake.' },
+  { q: 'What happens if it rains?', a: 'City tours run in the rain; Kansai is beautiful wet and the crowds disappear. Mountain routes are a different matter: the guide decides, and a route cancelled for safety means a full refund of any deposit or a new date at no cost.' },
+  { q: 'Can you pick us up at our hotel?', a: 'Yes, anywhere in Osaka or Kyoto, and elsewhere by arrangement. Most days start better at a station, but if you are travelling with small children or limited mobility, we come to you.' },
+  { q: 'Are children welcome?', a: 'Very. City tours adapt to any age and Tony carries deer crackers before the children ask. Easy hiking routes are fine with a parent; Hard, Technical and Expert Only routes are 18 and over.' },
+  { q: 'What if my flight is delayed or my plans change?', a: 'Message Tony. Reschedules are handled personally and generously — the cancellation terms exist for people who vanish, not for people whose plane was late.' },
 ]
 
 export const STATS = [

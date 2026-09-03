@@ -53,7 +53,7 @@ for (const m of readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
 //    barrido de literales del punto 1 no los ve.
 // Sólo las constantes de datos: barrer todo lo que hay antes de
 // `export default` arrastraría también clases de Tailwind y estilos.
-const CONSTANTES = ['DETAIL', 'ALMACENAMIENTO', 'UPDATED']
+const CONSTANTES = ['DETAIL', 'ALMACENAMIENTO', 'UPDATED', 'MESES', 'FRASES']
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
   + sources
       .filter((f) => f.includes('/pages/') && !f.endsWith('Admin.tsx'))
@@ -86,6 +86,11 @@ const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
 const IDENTIFICADORES = new Set(['_ga', '_ga_K9JKN9346D', '_gcl_au',
                                  'Google Analytics 4', 'Google Ads',
                                  'tonykansaiguide.com'])
+// Las frases en romaji de la guía se muestran tal cual: son japonés, no
+// texto por traducir. Lo que se traduce es su significado.
+const ROMAJI = /^(Arigatō|Sumimasen|Onegaishimasu|Oishii|Toire|Eigo|Buta|Daijōbu)/
+// Los rangos de temperatura se pintan sin pasar por tc().
+const TEMPERATURA = /^[\d\s.,–-]+°\s?C$/
 const skip = /^(https?:|\/|#|&|from-|via-|to-|photo-|[a-z0-9]+(-[a-z0-9]+)*$)|@/
 for (let i = 0; i < data.length; i++) {
   const q = data[i]
@@ -99,7 +104,8 @@ for (let i = 0; i < data.length; i++) {
   i = j
   // Basta una letra: "~2 h" o "4.7 km one way" también son texto visible.
   // Los códigos de idioma (EN, ES, AR…) se muestran tal cual y no se traducen.
-  if (out && !skip.test(out) && !IDENTIFICADORES.has(out) && /[A-Za-z]/.test(out) && !/^[A-Z]{2,3}$/.test(out)) wanted.add(out)
+  if (out && !skip.test(out) && !IDENTIFICADORES.has(out) && !ROMAJI.test(out) && !TEMPERATURA.test(out)
+      && /[A-Za-z]/.test(out) && !/^[A-Z]{2,3}$/.test(out)) wanted.add(out)
 }
 
 let failed = false
