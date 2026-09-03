@@ -32,7 +32,7 @@ export default function Terms() {
             </div>
             <div>
               <h1 className="font-serif text-3xl font-semibold text-white">{tc('Terms and Conditions')}</h1>
-              <p className="text-xs text-white/35 mt-0.5">{tc('Last updated')}: {tc(UPDATED)}</p>
+              <p className="text-xs text-white/50 mt-0.5">{tc('Last updated')}: {tc(UPDATED)}</p>
             </div>
           </motion.div>
 

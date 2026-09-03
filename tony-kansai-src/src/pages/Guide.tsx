@@ -167,7 +167,7 @@ export default function Guide() {
             <div className="overflow-x-auto rounded-2xl border border-white/8">
               <table className="w-full text-sm">
                 <thead>
-                  <tr className="bg-white/4 text-white/40">
+                  <tr className="bg-white/4 text-white/55">
                     <th className="text-start font-medium px-4 py-3">{tc('Month')}</th>
                     <th className="text-start font-medium px-4 py-3 whitespace-nowrap">{tc('Typical')}</th>
                     <th className="text-start font-medium px-4 py-3">{tc('What it is like')}</th>
@@ -188,7 +188,7 @@ export default function Guide() {
             </div>
           </FadeUp>
           <FadeUp>
-            <p className="text-xs text-white/35 mt-3">{tc('Golden Week (end of April into early May) and the mid-August Obon holiday are the two weeks when all of Japan travels at once. Everything is full and everything costs more. Tony will say so honestly if you ask for those dates.')}</p>
+            <p className="text-xs text-white/50 mt-3">{tc('Golden Week (end of April into early May) and the mid-August Obon holiday are the two weeks when all of Japan travels at once. Everything is full and everything costs more. Tony will say so honestly if you ask for those dates.')}</p>
           </FadeUp>
         </div>
       </section>

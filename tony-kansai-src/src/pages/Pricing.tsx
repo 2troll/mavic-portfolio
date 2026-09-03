@@ -54,17 +54,17 @@ export default function Pricing() {
                       </>
                     )}
                     <div className="p-7 flex flex-col flex-1">
-                      <div className="text-xs font-medium text-white/40 tracking-wider uppercase mb-1">{tc(tier.subtitle)}</div>
+                      <div className="text-xs font-medium text-white/55 tracking-wider uppercase mb-1">{tc(tier.subtitle)}</div>
                       <div className="font-serif text-2xl font-semibold text-white mb-3">{tc(tier.name)}</div>
                       <div className="flex items-baseline gap-2 mb-1">
                         <span className={`font-serif text-4xl font-bold ${tier.hot ? 'text-gradient-japan' : 'text-white'}`}><span className="ltr-num">{tier.price}</span></span>
                       </div>
-                      <div className="text-xs text-white/35 mb-6"><span className="ltr-num">{tier.priceUSD}</span> · {tc(tier.duration)}</div>
+                      <div className="text-xs text-white/50 mb-6"><span className="ltr-num">{tier.priceUSD}</span> · {tc(tier.duration)}</div>
 
                       <ul className="space-y-2.5 mb-8 flex-1">
                         {tier.features.map((f) => (
                           <li key={f} className="flex items-start gap-2.5 text-sm text-white/65">
-                            <Check size={13} className={`mt-0.5 flex-shrink-0 ${tier.hot ? 'text-japan-red' : 'text-white/40'}`} />{tc(f)}
+                            <Check size={13} className={`mt-0.5 flex-shrink-0 ${tier.hot ? 'text-japan-red' : 'text-white/55'}`} />{tc(f)}
                           </li>
                         ))}
                       </ul>

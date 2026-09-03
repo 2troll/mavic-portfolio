@@ -61,7 +61,7 @@ export default function About() {
                   </div>
 
                   <div className="mb-7">
-                    <div className="text-xs text-white/35 font-medium tracking-wider uppercase mb-3">{a.speaks}</div>
+                    <div className="text-xs text-white/50 font-medium tracking-wider uppercase mb-3">{a.speaks}</div>
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map(({ flag, name }) => (
                         <div key={name} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/70">
@@ -75,7 +75,7 @@ export default function About() {
                     className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform">
                     <MessageCircle size={15} /> {a.cta_wa}
                   </a>
-                  <div className="text-center text-xs text-white/35 mt-2"><span className="ltr-num">{WHATSAPP_NUMBER}</span> · {t.common.replies}</div>
+                  <div className="text-center text-xs text-white/50 mt-2"><span className="ltr-num">{WHATSAPP_NUMBER}</span> · {t.common.replies}</div>
                 </div>
               </Card3D>
             </ExplodeIn>

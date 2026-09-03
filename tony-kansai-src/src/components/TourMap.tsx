@@ -134,7 +134,7 @@ export function TourMap({ stops, accent = '#E53030', meetingPoint }: TourMapProp
       </div>
 
       {meetingPoint && (
-        <p className="text-white/25 text-xs">{tc('Meeting point')}: {tc(meetingPoint)}</p>
+        <p className="text-white/45 text-xs">{tc('Meeting point')}: {tc(meetingPoint)}</p>
       )}
     </div>
   )

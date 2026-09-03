@@ -92,7 +92,7 @@ export default function GuideDetail() {
         />
 
         <div className="relative z-10 max-w-5xl mx-auto px-6">
-          <Link to="/about" className="inline-flex items-center gap-2 text-white/40 hover:text-white text-sm transition-colors mb-10">
+          <Link to="/about" className="inline-flex items-center gap-2 text-white/55 hover:text-white text-sm transition-colors mb-10">
             <ArrowLeft className="flip-rtl" size={15} /> {tc('Back to team')}
           </Link>
 
@@ -140,16 +140,16 @@ export default function GuideDetail() {
                 {[1,2,3,4,5].map(s => (
                   <Star key={s} size={15} className="text-japan-gold" fill="currentColor" />
                 ))}
-                <span className="text-white/40 text-sm ms-1">{guide.rating}</span>
+                <span className="text-white/55 text-sm ms-1">{guide.rating}</span>
               </div>
 
               {/* Languages */}
               <div className="flex items-center gap-2 mb-8">
-                <Globe size={14} className="text-white/25" />
+                <Globe size={14} className="text-white/45" />
                 {guide.languages.map((flag, i) => (
                   <span key={i} className="flex items-center gap-1.5">
                     <span className="text-xl leading-none">{flag}</span>
-                    <span className="text-white/40 text-xs font-medium">{guide.langLabels[i]}</span>
+                    <span className="text-white/55 text-xs font-medium">{guide.langLabels[i]}</span>
                     {i < guide.languages.length - 1 && <span className="text-white/15 text-xs">·</span>}
                   </span>
                 ))}
@@ -202,7 +202,7 @@ export default function GuideDetail() {
               >
                 <Quote size={16} className="absolute -start-0.5 -top-1 opacity-25" style={{ color: guide.accent }} />
                 <p className="font-serif text-xl italic text-white/75 leading-relaxed">«{tc(detail.quote)}»</p>
-                <p className="text-sm text-white/30 mt-3">— {tc(guide.name)}</p>
+                <p className="text-sm text-white/45 mt-3">— {tc(guide.name)}</p>
               </motion.blockquote>
             )}
 
@@ -225,7 +225,7 @@ export default function GuideDetail() {
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 className="glass rounded-2xl border border-white/6 p-5"
               >
-                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Quick Facts')}</h3>
+                <h3 className="text-[10px] font-semibold text-white/45 uppercase tracking-widest mb-4">{tc('Quick Facts')}</h3>
                 <ul className="space-y-3">
                   {detail.funFacts.map((f, i) => (
                     <li key={i} className="flex gap-3 text-sm text-white/55 leading-relaxed">
@@ -246,7 +246,7 @@ export default function GuideDetail() {
                 initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
                 className="glass rounded-2xl border border-white/6 p-5"
               >
-                <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Signature Tours')}</h3>
+                <h3 className="text-[10px] font-semibold text-white/45 uppercase tracking-widest mb-4">{tc('Signature Tours')}</h3>
                 <div className="space-y-3">
                   {signatureTours.map(tour => (
                     <Link
@@ -256,9 +256,9 @@ export default function GuideDetail() {
                     >
                       <div className="min-w-0">
                         <p className="text-white/70 text-sm font-medium group-hover:text-white transition-colors truncate">{tc(tour.title)}</p>
-                        <p className="ltr-num text-white/25 text-xs">{tour.price}</p>
+                        <p className="ltr-num text-white/45 text-xs">{tour.price}</p>
                       </div>
-                      <span className="text-white/15 group-hover:text-white/40 text-lg leading-none flex-shrink-0 transition-colors">›</span>
+                      <span className="text-white/15 group-hover:text-white/55 text-lg leading-none flex-shrink-0 transition-colors">›</span>
                     </Link>
                   ))}
                 </div>
@@ -270,7 +270,7 @@ export default function GuideDetail() {
               initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }}
               className="glass rounded-2xl border border-white/6 p-5"
             >
-              <h3 className="text-[10px] font-semibold text-white/30 uppercase tracking-widest mb-4">{tc('Languages')}</h3>
+              <h3 className="text-[10px] font-semibold text-white/45 uppercase tracking-widest mb-4">{tc('Languages')}</h3>
               <div className="space-y-2.5">
                 {guide.languages.map((flag, i) => (
                   <div key={i} className="flex items-center gap-3">
@@ -305,7 +305,7 @@ export default function GuideDetail() {
                 <div className="p-4 min-w-0">
                   <p className="text-white font-semibold truncate">{tc(g.name)}</p>
                   <p className="text-xs mb-2" style={{ color: g.accent }}>{tc(g.specialty)}</p>
-                  <p className="text-white/40 text-xs leading-relaxed line-clamp-2">{tc(g.bio)}</p>
+                  <p className="text-white/55 text-xs leading-relaxed line-clamp-2">{tc(g.bio)}</p>
                 </div>
               </Link>
             ))}

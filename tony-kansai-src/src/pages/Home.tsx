@@ -116,7 +116,7 @@ export default function Home() {
             {LANGUAGES.map(({ flag, code }) => (
               <div key={code} className="flex flex-col items-center gap-1">
                 <span className="text-2xl">{flag}</span>
-                <span className="text-[10px] text-white/40 font-medium tracking-wider">{code}</span>
+                <span className="text-[10px] text-white/55 font-medium tracking-wider">{code}</span>
               </div>
             ))}
           </motion.div>
@@ -127,7 +127,7 @@ export default function Home() {
           animate={{ y: [0, 9, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <ChevronDown size={20} className="text-white/30" />
+          <ChevronDown size={20} className="text-white/45" />
         </motion.div>
       </section>
 
@@ -489,7 +489,7 @@ export default function Home() {
 
       {/* ── LEGAL STRIP ───────────────────────────────────────── */}
       <section className="py-6 border-t border-white/4">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/25">
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/45">
           <span>🔒 {tc('Secure payments · No personal data stored · Contact only via WhatsApp')}</span>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
             <Link to="/terms" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>

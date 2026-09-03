@@ -38,14 +38,14 @@ export function Footer() {
             <p className="text-sm text-white/45 leading-relaxed max-w-sm mb-4">
               {t.footer.about}
             </p>
-            <div className="flex items-center gap-2 text-sm text-white/40">
+            <div className="flex items-center gap-2 text-sm text-white/55">
               <MapPin size={13} className="text-japan-red" />
               <span>{t.footer.based}</span>
             </div>
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">
+            <div className="text-xs font-semibold text-white/45 tracking-widest uppercase mb-4">
               {t.footer.nav_label}
             </div>
             <div className="flex flex-col gap-2.5">
@@ -62,7 +62,7 @@ export function Footer() {
           </div>
 
           <div>
-            <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-4">
+            <div className="text-xs font-semibold text-white/45 tracking-widest uppercase mb-4">
               {t.footer.contact_label}
             </div>
             <div className="flex flex-col gap-3">
@@ -86,7 +86,7 @@ export function Footer() {
 
         {/* Las seis páginas legales, todas al alcance desde cualquier página. */}
         <div className="border-t border-white/5 pt-6 mb-5">
-          <div className="text-xs font-semibold text-white/30 tracking-widest uppercase mb-3">
+          <div className="text-xs font-semibold text-white/45 tracking-widest uppercase mb-3">
             {tc('Legal & Safety')}
           </div>
           <div className="flex flex-wrap gap-x-5 gap-y-2">
@@ -98,7 +98,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/25">
+        <div className="border-t border-white/5 pt-6 flex flex-col md:flex-row items-center justify-between gap-3 text-xs text-white/45">
           <span>© {new Date().getFullYear()} {t.footer.rights}</span>
           <span>{t.footer.replies}</span>
         </div>

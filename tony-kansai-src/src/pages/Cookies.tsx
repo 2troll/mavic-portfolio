@@ -37,7 +37,7 @@ export default function Cookies() {
         <div className="mt-3 overflow-x-auto rounded-xl border border-white/8">
           <table className="w-full text-xs">
             <thead>
-              <tr className="bg-white/4 text-white/40 text-start">
+              <tr className="bg-white/4 text-white/55 text-start">
                 <th className="text-start font-medium px-3 py-2.5">{tc('Name')}</th>
                 <th className="text-start font-medium px-3 py-2.5">{tc('Set by')}</th>
                 <th className="text-start font-medium px-3 py-2.5">{tc('What it does')}</th>

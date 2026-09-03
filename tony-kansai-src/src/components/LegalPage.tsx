@@ -44,7 +44,7 @@ export function LegalPage({ title, description, path, icon, updated, intro, chil
             </div>
             <div>
               <h1 className="font-serif text-3xl font-semibold text-white">{title}</h1>
-              <p className="text-xs text-white/35 mt-0.5">{tc('Last updated')}: {tc(updated)}</p>
+              <p className="text-xs text-white/50 mt-0.5">{tc('Last updated')}: {tc(updated)}</p>
             </div>
           </motion.div>
 
@@ -84,7 +84,7 @@ export function LegalFooterLinks({ current }: { current: string }) {
     <div className="pt-4 border-t border-white/6 space-y-4">
       <div className="flex flex-wrap gap-x-4 gap-y-2">
         {paginas.map((p) => (
-          <Link key={p.to} to={p.to} className="text-xs text-white/35 hover:text-japan-red transition-colors">
+          <Link key={p.to} to={p.to} className="text-xs text-white/50 hover:text-japan-red transition-colors">
             {p.label}
           </Link>
         ))}

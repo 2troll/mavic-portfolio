@@ -29,6 +29,8 @@ export default function Accessibility() {
           <Li label={tc('Reduced motion')}>{tc('If your system asks for less motion, the animations and the smooth scrolling stop.')}</Li>
           <Li label={tc('Zoom and small screens')}>{tc('The layout holds at 200% zoom and on a phone, without horizontal scrolling.')}</Li>
           <Li label={tc('No cookie wall')}>{tc('Declining cookies costs you nothing: the whole site works either way.')}</Li>
+          <Li label={tc('Contrast')}>{tc('All text on the public pages now meets the AA contrast ratio of 4.5:1 against the dark background. The faintest greys, which used to sit around 2:1 and were genuinely hard to read, were raised in September 2026.')}</Li>
+          <Li label={tc('Focus ring')}>{tc('A gold outline follows the keyboard around the site, on every link, button, filter and calendar day.')}</Li>
         </ul>
       </Section>
 
@@ -36,7 +38,6 @@ export default function Accessibility() {
         <ul className="mt-1 space-y-1.5 list-none">
           <Li label={tc('3D scenes')}>{tc('The animated castle and torii on the home page are decorative and convey nothing that is not also written in text — but they are not usable by keyboard.')}</Li>
           <Li label={tc('Route maps')}>{tc('The interactive map is hard to use without a mouse. Every stop it shows is also listed as text underneath it, in order.')}</Li>
-          <Li label={tc('Contrast')}>{tc('Some secondary grey text on the dark background sits close to the minimum ratio. We are raising it page by page.')}</Li>
           <Li label={tc('Guest photographs')}>{tc('Photographs sent in by guests carry a generic description, because we do not always know what is in them.')}</Li>
         </ul>
       </Section>

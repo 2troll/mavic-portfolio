@@ -129,7 +129,7 @@ export default function TourDetail() {
               <span className="flex items-center gap-1.5 text-sm text-white/50">
                 <Clock size={13} />{tc(tour.duration)}
               </span>
-              <span className="text-sm text-white/40">{tc('per tour · not per person')}</span>
+              <span className="text-sm text-white/55">{tc('per tour · not per person')}</span>
             </div>
           </motion.div>
         </motion.div>
@@ -261,7 +261,7 @@ export default function TourDetail() {
                       </div>
                     </div>
                     <div className="pt-3 border-t border-white/5">
-                      <div className="text-xs text-white/35 mb-2.5 font-medium tracking-wider uppercase">{tc('Languages')}</div>
+                      <div className="text-xs text-white/50 mb-2.5 font-medium tracking-wider uppercase">{tc('Languages')}</div>
                       <div className="flex gap-2 flex-wrap">
                         {LANGUAGES.map(({ flag, code }) => (
                           <div key={code} className="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/5 border border-white/8 text-xs text-white/60">

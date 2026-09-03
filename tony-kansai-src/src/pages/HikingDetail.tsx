@@ -128,7 +128,7 @@ export default function HikingDetail() {
                 {tc(route.badge)}
               </span>
               <span className="text-xs text-white/50 font-medium">{tc(route.date)}</span>
-              <span className="text-xs text-white/40">{tc(route.grade)}</span>
+              <span className="text-xs text-white/55">{tc(route.grade)}</span>
             </div>
             <h1 className="font-serif text-5xl md:text-7xl font-semibold text-white mb-3 leading-none">{tc(route.title)}</h1>
             <p className="text-white/60 text-lg mb-4">{tc(route.subtitle)}</p>
@@ -195,8 +195,8 @@ export default function HikingDetail() {
                 </blockquote>
                 <div className="mt-4 flex items-center gap-2">
                   <img src="/guides/guide-tony.jpg" alt="Tony" className="w-7 h-7 rounded-full object-cover" />
-                  <span className="text-xs text-white/40">{tc('Tony Hanma')} · {tc(route.date)}</span>
-                  <span className="text-xs text-white/25 ms-1">· {tc(route.companions)}</span>
+                  <span className="text-xs text-white/55">{tc('Tony Hanma')} · {tc(route.date)}</span>
+                  <span className="text-xs text-white/45 ms-1">· {tc(route.companions)}</span>
                 </div>
               </motion.div>
 
@@ -210,7 +210,7 @@ export default function HikingDetail() {
                   <Clock size={16} className="text-japan-red" />
                   <h2 className="font-serif text-xl font-semibold text-white">{tc('Full Schedule and Timing')}</h2>
                 </div>
-                <div className="text-xs text-white/30 mb-5 uppercase tracking-wide">{tc('Total')} · {tc(route.totalTime)}</div>
+                <div className="text-xs text-white/45 mb-5 uppercase tracking-wide">{tc('Total')} · {tc(route.totalTime)}</div>
 
                 <div className="relative">
                   {/* Vertical line */}
@@ -260,7 +260,7 @@ export default function HikingDetail() {
                   {(Object.keys(TYPE_COLOR) as TimingType[]).map((t) => (
                     <div key={t} className="flex items-center gap-1.5">
                       <div className="w-2 h-2 rounded-full" style={{ background: TYPE_COLOR[t] }} />
-                      <span className="text-[10px] text-white/35 uppercase tracking-wide">{tc(TYPE_LABEL[t])}</span>
+                      <span className="text-[10px] text-white/50 uppercase tracking-wide">{tc(TYPE_LABEL[t])}</span>
                     </div>
                   ))}
                 </div>
@@ -367,11 +367,11 @@ export default function HikingDetail() {
                 className="glass rounded-2xl p-6 border"
                 style={{ borderColor: `${route.accent}20`, boxShadow: `0 0 40px ${route.accent}10` }}
               >
-                <div className="text-xs text-white/30 mb-1 uppercase tracking-wide">{tc('Guide Fee')}</div>
+                <div className="text-xs text-white/45 mb-1 uppercase tracking-wide">{tc('Guide Fee')}</div>
                 <div className="font-serif text-3xl font-bold mb-1" style={{ color: route.accent }}>
                   <span className="ltr-num">{tc(route.price)}</span>
                 </div>
-                <div className="text-xs text-white/30 mb-5">{tc('per group · not per person')}</div>
+                <div className="text-xs text-white/45 mb-5">{tc('per group · not per person')}</div>
 
                 <div className="space-y-3 text-sm mb-5">
                   <div className="flex items-center gap-2.5 text-white/55">
@@ -407,7 +407,7 @@ export default function HikingDetail() {
                     >
                       <MessageCircle size={14} /> {tc('Request Consultation')}
                     </a>
-                    <p className="text-[11px] text-white/25 text-center mt-2">{tc('Extreme route — fitness assessment required')}</p>
+                    <p className="text-[11px] text-white/45 text-center mt-2">{tc('Extreme route — fitness assessment required')}</p>
                   </>
                 )}
               </motion.div>
@@ -447,7 +447,7 @@ export default function HikingDetail() {
                     route.wildlife ? { label: tc('Wildlife'), value: tc(route.wildlife) } : null,
                   ].filter(Boolean).map((item) => (
                     <div key={item!.label} className="flex gap-2">
-                      <span className="text-[10px] text-white/25 uppercase tracking-wide w-14 flex-shrink-0 pt-0.5 font-medium">{item!.label}</span>
+                      <span className="text-[10px] text-white/45 uppercase tracking-wide w-14 flex-shrink-0 pt-0.5 font-medium">{item!.label}</span>
                       <span className="text-xs text-white/55 leading-relaxed">{item!.value}</span>
                     </div>
                   ))}
@@ -457,7 +457,7 @@ export default function HikingDetail() {
               {/* Back to all routes */}
               <Link
                 to="/hiking"
-                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/8 text-white/40 hover:text-white/70 hover:border-white/20 text-sm transition-all"
+                className="flex items-center justify-center gap-2 w-full py-3 rounded-xl border border-white/8 text-white/55 hover:text-white/70 hover:border-white/20 text-sm transition-all"
               >
                 <ArrowLeft className="flip-rtl" size={13} /> {tc('All {n} Hiking Routes').replace('{n}', String(HIKING_ROUTES.length))}
               </Link>
@@ -471,7 +471,7 @@ export default function HikingDetail() {
       <section className="py-16 border-t border-white/5">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <h2 className="font-serif text-2xl font-semibold text-white mb-3">{tc('Ready to hike {name}?').replace('{name}', tc(route.title))}</h2>
-          <p className="text-white/40 text-sm mb-6">{tc('Tony walked this route personally. Message him directly on WhatsApp to check availability.')}</p>
+          <p className="text-white/55 text-sm mb-6">{tc('Tony walked this route personally. Message him directly on WhatsApp to check availability.')}</p>
           <a
             href={`${WHATSAPP}?text=${waMsg}`}
             target="_blank"

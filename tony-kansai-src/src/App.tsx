@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Component, useEffect, lazy, Suspense } from 'react'
 import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
+import { MotionConfig } from 'framer-motion'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
 import { LanguageProvider, detectLang } from './contexts/LanguageContext'
@@ -122,12 +123,17 @@ export default function App() {
   return (
     <AppErrorBoundary>
       <HelmetProvider>
+        {/* reducedMotion="user" hace que todos los motion.* del sitio respeten
+            la preferencia del sistema. Sin esto, el CSS de arriba no basta:
+            Framer anima con JavaScript. */}
+        <MotionConfig reducedMotion="user">
         <LanguageProvider>
           <BrowserRouter>
             <ScrollToTop />
             <Layout />
           </BrowserRouter>
         </LanguageProvider>
+        </MotionConfig>
       </HelmetProvider>
     </AppErrorBoundary>
   )

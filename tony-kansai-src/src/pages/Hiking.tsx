@@ -90,7 +90,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
             {tc(route.badge)}
           </span>
           {!route.available && (
-            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm bg-black/40 text-white/40 border border-white/15">
+            <span className="px-2.5 py-1 rounded-full text-[10px] font-bold tracking-widest uppercase backdrop-blur-sm bg-black/40 text-white/55 border border-white/15">
               {tc('Extreme')}
             </span>
           )}
@@ -147,7 +147,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
         {/* Expandable details */}
         <button
           onClick={() => setExpanded(!expanded)}
-          className="flex items-center gap-1.5 text-xs text-white/40 hover:text-white/70 transition-colors mb-3"
+          className="flex items-center gap-1.5 text-xs text-white/55 hover:text-white/70 transition-colors mb-3"
         >
           {expanded ? <ChevronUp size={12} /> : <ChevronDown size={12} />}
           {expanded ? tc('Less details') : tc('Route details')}
@@ -171,7 +171,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
                   route.wildlife ? { label: tc('Wildlife'), value: tc(route.wildlife) } : null,
                 ].filter(Boolean).map((item) => (
                   <div key={item!.label} className="flex gap-2 text-xs">
-                    <span className="text-white/30 w-16 flex-shrink-0 font-medium uppercase tracking-wide">{item!.label}</span>
+                    <span className="text-white/45 w-16 flex-shrink-0 font-medium uppercase tracking-wide">{item!.label}</span>
                     <span className="text-white/55">{item!.value}</span>
                   </div>
                 ))}
@@ -185,7 +185,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
           {route.price.startsWith('¥') ? (
             <>
               <span className="ltr-num font-serif text-lg font-bold text-gradient-japan">{route.price}</span>
-              <span className="text-[10px] text-white/30 uppercase tracking-wide">{tc('per group')}</span>
+              <span className="text-[10px] text-white/45 uppercase tracking-wide">{tc('per group')}</span>
             </>
           ) : (
             <span className="font-serif text-base font-semibold text-white/45">{tc(route.price)}</span>
@@ -208,7 +208,7 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
               <MessageCircle size={11} /> {tc('Book Guide')}
             </a>
           ) : (
-            <div className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-white/8 text-white/25 text-xs font-medium">
+            <div className="flex-1 flex items-center justify-center gap-1.5 py-2.5 rounded-xl border border-white/8 text-white/45 text-xs font-medium">
               {tc('Consultation')}
             </div>
           )}
@@ -246,7 +246,7 @@ function CalendarSection() {
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ delay: 0.2 }}
-            className="text-white/40 text-sm max-w-md mx-auto"
+            className="text-white/55 text-sm max-w-md mx-auto"
           >
             {tc('Browse the routes by month and pick the landscape that speaks to you — then book Tony as your guide.')}
           </motion.p>
@@ -258,7 +258,7 @@ function CalendarSection() {
               <Calendar size={14} className="text-japan-red" />
               <h3 className="font-serif text-lg text-white/80 font-medium">{tc(block.month)}</h3>
               <div className="flex-1 h-px bg-white/8" />
-              <span className="text-xs text-white/30">{block.routes.length} {tc('hikes')}</span>
+              <span className="text-xs text-white/45">{block.routes.length} {tc('hikes')}</span>
             </div>
 
             <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
@@ -383,7 +383,7 @@ export default function Hiking() {
             ].map((s) => (
               <div key={s.label} className="text-center">
                 <div className="ltr-num font-serif text-2xl font-bold text-gradient-japan">{s.value}</div>
-                <div className="text-[11px] text-white/35 uppercase tracking-wide">{s.label}</div>
+                <div className="text-[11px] text-white/50 uppercase tracking-wide">{s.label}</div>
               </div>
             ))}
           </motion.div>
@@ -406,7 +406,7 @@ export default function Hiking() {
       {/* Filter */}
       <section className="sticky top-16 z-20 bg-japan-dark/90 backdrop-blur-xl border-b border-white/5 py-3">
         <div className="max-w-5xl mx-auto px-6 flex items-center gap-3 overflow-x-auto pb-0.5">
-          <Filter size={13} className="text-white/30 flex-shrink-0" />
+          <Filter size={13} className="text-white/45 flex-shrink-0" />
           {GRADES.map((g) => (
             <button
               key={g}
@@ -421,7 +421,7 @@ export default function Hiking() {
               {tc(g)}
             </button>
           ))}
-          <span className="ms-auto flex-shrink-0 text-xs text-white/25">{filtered.length} {tc('routes')}</span>
+          <span className="ms-auto flex-shrink-0 text-xs text-white/45">{filtered.length} {tc('routes')}</span>
         </div>
       </section>
 
@@ -435,7 +435,7 @@ export default function Hiking() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 exit={{ opacity: 0 }}
-                className="text-center text-white/30 py-20"
+                className="text-center text-white/45 py-20"
               >
                 {tc('No routes match this filter.')}
               </motion.p>

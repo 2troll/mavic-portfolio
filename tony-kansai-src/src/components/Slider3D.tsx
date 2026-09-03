@@ -131,7 +131,7 @@ export function Slider3D() {
                   </h2>
                   <div className="flex items-center gap-4 mb-4">
                     <span className="ltr-num font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
-                    <span className="flex items-center gap-1 text-xs text-white/40">
+                    <span className="flex items-center gap-1 text-xs text-white/55">
                       <Clock size={10} /> {tc(tour.duration)}
                     </span>
                   </div>
@@ -190,7 +190,7 @@ export function Slider3D() {
             </button>
           ))}
         </div>
-        <div className="text-white/30 font-serif text-xs select-none">
+        <div className="text-white/45 font-serif text-xs select-none">
           <span className="text-white/80 font-semibold">{String(active + 1).padStart(2, '0')}</span>
           {' / '}
           {String(total).padStart(2, '0')}

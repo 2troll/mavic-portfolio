@@ -155,7 +155,7 @@ export default function Booking() {
                         <div className="font-serif text-sm font-semibold text-white mb-1">{tc(tour.title)}</div>
                         <div className="flex items-center gap-3">
                           <span className="ltr-num font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
-                          <span className="text-[11px] text-white/40 flex items-center gap-1">
+                          <span className="text-[11px] text-white/55 flex items-center gap-1">
                             <Clock size={9} />{tc(tour.duration)}
                           </span>
                         </div>
@@ -197,7 +197,7 @@ export default function Booking() {
                   {/* Day headers */}
                   <div className="grid grid-cols-7 mb-2">
                     {bp.days.map((day) => (
-                      <div key={day} className="text-center text-[11px] font-semibold text-white/30 tracking-wide py-1">
+                      <div key={day} className="text-center text-[11px] font-semibold text-white/45 tracking-wide py-1">
                         {day}
                       </div>
                     ))}
@@ -263,7 +263,7 @@ export default function Booking() {
                     </button>
                     <div className="text-center min-w-[60px]">
                       <div className="font-serif text-3xl font-bold text-gradient-japan">{guests}</div>
-                      <div className="text-xs text-white/40">{bp.guests_label}</div>
+                      <div className="text-xs text-white/55">{bp.guests_label}</div>
                     </div>
                     <button
                       onClick={() => setGuests(g => Math.min(15, g + 1))}
@@ -327,7 +327,7 @@ export default function Booking() {
 
                     <div className="border-t border-white/6 pt-4">
                       <div className="font-serif text-2xl font-bold text-gradient-japan mb-1">{selectedTour.price}</div>
-                      <div className="text-xs text-white/35">{bp.per_group}</div>
+                      <div className="text-xs text-white/50">{bp.per_group}</div>
                     </div>
 
                     {selectedDate && (
@@ -346,10 +346,10 @@ export default function Booking() {
                     </a>
 
                     {!selectedDate && (
-                      <p className="text-center text-xs text-white/30">{bp.step2} ↑</p>
+                      <p className="text-center text-xs text-white/45">{bp.step2} ↑</p>
                     )}
 
-                    <p className="text-center text-[11px] text-white/35 leading-relaxed">{bp.note}</p>
+                    <p className="text-center text-[11px] text-white/50 leading-relaxed">{bp.note}</p>
                   </div>
                 </Card3D>
               </FadeUp>
