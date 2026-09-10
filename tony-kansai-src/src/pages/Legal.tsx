@@ -37,7 +37,7 @@ export default function Legal() {
           <Li label={tc('Contact')}><span className="ltr-num">WhatsApp +81 90 2458 5949</span></Li>
           <Li label={tc('Languages')}>{tc('English, Spanish, Arabic, Czech and Russian.')}</Li>
         </ul>
-        <p className="mt-3">{tc('The service is provided by Tony Hanma in a personal capacity. Company registration details will be published on this page as soon as the activity is formally registered; until then, this notice states the position as it is rather than implying a registration that does not exist.')}</p>
+        <p className="mt-3">{tc('Tony Hanma has traded as a sole proprietor (個人事業主) in Osaka since July 2026. This is not a company, so there is no corporate registration number to publish. The business is not enrolled in Japan\'s qualified invoice system, which means invoices are issued without an インボイス registration number — worth knowing if your company needs to reclaim Japanese consumption tax.')}</p>
         <p className="mt-3">{tc('WhatsApp is the only official channel. We never ask for payment through any other messaging account, and we never ask for card details by message.')}</p>
       </Section>
 
