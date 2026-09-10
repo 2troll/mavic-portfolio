@@ -1,6 +1,6 @@
 export const WHATSAPP = 'https://wa.me/34634193106'
 export const WHATSAPP_NUMBER = '+34 634 193 106'
-export const EMAIL = 'tony@kansaiguide.jp'
+export const EMAIL = 'pagos.euros73@gmail.com'
 
 const u = (id: string) => `https://images.unsplash.com/${id}?auto=format&fit=crop&q=85`
 
