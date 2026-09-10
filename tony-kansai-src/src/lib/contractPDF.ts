@@ -87,8 +87,8 @@ const T: Record<ContractLang, Template> = {
     sigNameLabel: 'Print Name',
     sigGuideLabel: 'Guide — Tony Hanma Private Kansai Tours',
     sigDateLabel: 'Date',
-    returnNote: 'Please sign and return this document via WhatsApp (+34 634 193 106) before your tour date.',
-    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +34 634 193 106 · tonykansaiguide.com',
+    returnNote: 'Please sign and return this document via WhatsApp (+81 90 2458 5949) before your tour date.',
+    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +81 90 2458 5949 · tonykansaiguide.com',
   },
 
   // ── SPANISH ───────────────────────────────────────────────────────────────
@@ -140,8 +140,8 @@ const T: Record<ContractLang, Template> = {
     sigNameLabel: 'Nombre en mayúsculas',
     sigGuideLabel: 'Guía — Tony Hanma Private Kansai Tours',
     sigDateLabel: 'Fecha',
-    returnNote: 'Por favor, firma y devuelve este documento por WhatsApp (+34 634 193 106) antes de la fecha del tour.',
-    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +34 634 193 106 · tonykansaiguide.com',
+    returnNote: 'Por favor, firma y devuelve este documento por WhatsApp (+81 90 2458 5949) antes de la fecha del tour.',
+    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +81 90 2458 5949 · tonykansaiguide.com',
   },
 
   // ── RUSSIAN ───────────────────────────────────────────────────────────────
@@ -193,8 +193,8 @@ const T: Record<ContractLang, Template> = {
     sigNameLabel: 'Имя печатными буквами',
     sigGuideLabel: 'Гид — Tony Hanma Private Kansai Tours',
     sigDateLabel: 'Дата',
-    returnNote: 'Пожалуйста, подпишите и верните этот документ через WhatsApp (+34 634 193 106) до даты экскурсии.',
-    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +34 634 193 106 · tonykansaiguide.com',
+    returnNote: 'Пожалуйста, подпишите и верните этот документ через WhatsApp (+81 90 2458 5949) до даты экскурсии.',
+    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +81 90 2458 5949 · tonykansaiguide.com',
   },
 
   // ── CZECH ─────────────────────────────────────────────────────────────────
@@ -246,8 +246,8 @@ const T: Record<ContractLang, Template> = {
     sigNameLabel: 'Jméno hůlkovým písmem',
     sigGuideLabel: 'Průvodce — Tony Hanma Private Kansai Tours',
     sigDateLabel: 'Datum',
-    returnNote: 'Prosím, podepište a vraťte tento dokument přes WhatsApp (+34 634 193 106) před datem výletu.',
-    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +34 634 193 106 · tonykansaiguide.com',
+    returnNote: 'Prosím, podepište a vraťte tento dokument přes WhatsApp (+81 90 2458 5949) před datem výletu.',
+    footer: 'Tony Hanma Private Kansai Tours · WhatsApp +81 90 2458 5949 · tonykansaiguide.com',
   },
 }
 

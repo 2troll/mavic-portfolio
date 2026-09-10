@@ -56,7 +56,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boo
           >
             {t('Reload')}
           </button>
-          <a href="https://wa.me/34634193106" style={{ color: '#E53030', fontSize: 13 }}>
+          <a href="https://wa.me/819024585949" style={{ color: '#E53030', fontSize: 13 }}>
             {t('Contact Tony directly on WhatsApp')}
           </a>
         </div>

@@ -160,7 +160,7 @@ export default function GuideDetail() {
 
               {/* CTA */}
               <a
-                href={`https://wa.me/34634193106?text=${waMsg}`}
+                href={`https://wa.me/819024585949?text=${waMsg}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-2.5 px-7 py-3.5 rounded-2xl font-semibold text-white text-sm transition-opacity hover:opacity-85"

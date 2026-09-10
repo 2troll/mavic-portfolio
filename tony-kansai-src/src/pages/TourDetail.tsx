@@ -52,7 +52,7 @@ export default function TourDetail() {
     provider: {
       '@type': 'LocalBusiness',
       name: 'Tony Hanma Private Kansai Tours',
-      telephone: '+34634193106',
+      telephone: '+819024585949',
     },
   }
 

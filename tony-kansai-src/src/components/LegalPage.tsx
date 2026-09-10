@@ -4,7 +4,7 @@ import type { ReactNode } from 'react'
 import { PageSEO } from './PageSEO'
 import { useLanguage } from '../contexts/LanguageContext'
 
-const CONTACT_WA = 'https://wa.me/34634193106'
+const CONTACT_WA = 'https://wa.me/819024585949'
 
 interface Props {
   /** Ya traducido por quien llama. */

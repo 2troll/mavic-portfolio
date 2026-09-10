@@ -2,7 +2,7 @@
 # Si encuentras un problema de seguridad en este sitio, escríbenos antes de
 # hacerlo público. Contestamos personalmente, en cinco idiomas.
 
-Contact: https://wa.me/34634193106
+Contact: https://wa.me/819024585949
 Preferred-Languages: en, es, ar, cs, ru
 Canonical: https://tonykansaiguide.com/.well-known/security.txt
 Expires: 2027-09-01T00:00:00.000Z

@@ -5,7 +5,7 @@ import { PageSEO } from '../components/PageSEO'
 import { useLanguage } from '../contexts/LanguageContext'
 import { LegalFooterLinks } from '../components/LegalPage'
 
-const CONTACT_WA = 'https://wa.me/34634193106'
+const CONTACT_WA = 'https://wa.me/819024585949'
 const UPDATED = 'May 2026'
 
 export default function Terms() {
@@ -125,7 +125,7 @@ export default function Terms() {
               <p>{tc('Questions about these terms? Reach us directly:')}</p>
               <p className="mt-2">
                 <a href={CONTACT_WA} target="_blank" rel="noopener noreferrer" className="text-japan-red">
-                  <span className="ltr-num">WhatsApp +34 634 193 106</span>
+                  <span className="ltr-num">WhatsApp +81 90 2458 5949</span>
                 </a>
               </p>
             </Section>
