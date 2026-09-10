@@ -306,7 +306,12 @@ export default function Home() {
                           ))}
                         </ul>
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                          <span className="ltr-num font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                          <span className="flex flex-col gap-0.5">
+                            <span className="ltr-num font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                            <span className="text-[10px] uppercase tracking-wider text-white/40">
+                              {tc(tour.duration)} · {tc(tour.maxGuests)}
+                            </span>
+                          </span>
                           <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
                             {t.tours_section.view} <ChevronRight className="flip-rtl" size={12} />
                           </span>

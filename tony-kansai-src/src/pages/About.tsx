@@ -102,7 +102,7 @@ export default function About() {
 
               <ExplodeIn index={4}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  {tc('With fluency in five languages — English, Spanish, Russian, Czech, and Arabic — Tony bridges not just geography but culture. Nuance, humor, and history come through naturally in a way that only native-level understanding can provide.')}
+                  {tc('Tony guides in Spanish, his mother tongue, in Arabic, which he grew up bilingual in, and in English. Russian and Czech tours are run by Larion and Johnny. Between the three of them the team covers five languages — and each guide only takes the ones he can actually work in.')}
                 </p>
               </ExplodeIn>
 

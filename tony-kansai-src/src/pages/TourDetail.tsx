@@ -129,6 +129,9 @@ export default function TourDetail() {
               <span className="flex items-center gap-1.5 text-sm text-white/50">
                 <Clock size={13} />{tc(tour.duration)}
               </span>
+              <span className="flex items-center gap-1.5 text-sm text-white/50">
+                <Users size={13} />{tc(tour.maxGuests)}
+              </span>
               <span className="text-sm text-white/55">{tc('per tour · not per person')}</span>
             </div>
           </motion.div>

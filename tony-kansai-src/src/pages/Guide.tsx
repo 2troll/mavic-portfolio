@@ -263,7 +263,7 @@ export default function Guide() {
             {tc('Still have a question?')}
           </h2>
           <p className="text-white/45 text-sm leading-relaxed mb-7">
-            {tc('Ask it. Tony answers every message himself, in five languages, whether or not you end up booking anything. Nobody has ever been charged for a question.')}
+            {tc('Ask it. Tony answers every message himself, in Spanish, Arabic or English, whether or not you end up booking anything. Nobody has ever been charged for a question.')}
           </p>
           <div className="flex flex-col sm:flex-row gap-3 justify-center">
             <a
