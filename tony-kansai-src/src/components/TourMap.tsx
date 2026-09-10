@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { MapContainer, TileLayer, Polyline, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export interface MapStop {
   name: string
@@ -50,6 +51,7 @@ interface TourMapProps {
 }
 
 export function TourMap({ stops, accent = '#E53030', meetingPoint }: TourMapProps) {
+  const { tc } = useLanguage()
   const positions = stops.map(s => [s.lat, s.lng] as [number, number])
 
   return (
@@ -108,8 +110,8 @@ export function TourMap({ stops, accent = '#E53030', meetingPoint }: TourMapProp
                   whiteSpace: 'nowrap',
                   border: `1px solid ${accent}40`,
                 }}>
-                  <span style={{ color: accent, marginRight: 6 }}>{i + 1}.</span>
-                  {stop.name}
+                  <span style={{ color: accent, marginInlineEnd: 6 }}>{i + 1}.</span>
+                  {tc(stop.name)}
                 </div>
               </Popup>
             </Marker>
@@ -125,14 +127,14 @@ export function TourMap({ stops, accent = '#E53030', meetingPoint }: TourMapProp
               className="w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-bold flex-shrink-0"
               style={{ background: `${accent}30`, color: accent }}
             >{i + 1}</span>
-            {stop.name}
-            {i < stops.length - 1 && <span className="text-white/15 ml-1">›</span>}
+            {tc(stop.name)}
+            {i < stops.length - 1 && <span className="text-white/15 ms-1">›</span>}
           </div>
         ))}
       </div>
 
       {meetingPoint && (
-        <p className="text-white/25 text-xs">Meeting point: {meetingPoint}</p>
+        <p className="text-white/45 text-xs">{tc('Meeting point')}: {tc(meetingPoint)}</p>
       )}
     </div>
   )

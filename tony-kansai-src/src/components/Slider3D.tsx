@@ -3,10 +3,12 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { ChevronLeft, ChevronRight, Clock, MessageCircle } from 'lucide-react'
 import { Link } from 'react-router-dom'
 import { TOURS, WHATSAPP } from '../lib/data'
+import { useLanguage } from '../contexts/LanguageContext'
 
 const SPRING = { type: 'spring', stiffness: 220, damping: 30 } as const
 
 export function Slider3D() {
+  const { tc } = useLanguage()
   const [active, setActive] = useState(0)
   const total = TOURS.length
 
@@ -103,18 +105,18 @@ export function Slider3D() {
                 <div className="relative h-52 overflow-hidden">
                   <motion.img
                     src={tour.imageCard}
-                    alt={tour.title}
+                    alt={tc(tour.title)}
                     className="w-full h-full object-cover"
                     animate={isActive ? { scale: [1, 1.06, 1] } : { scale: 1 }}
                     transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                  <div className="absolute bottom-4 left-4">
+                  <div className="absolute bottom-4 start-4">
                     <span
                       className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase backdrop-blur-sm"
                       style={{ background: `${tour.accent}30`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
                     >
-                      {tour.badge}
+                      {tc(tour.badge)}
                     </span>
                   </div>
                 </div>
@@ -122,32 +124,32 @@ export function Slider3D() {
                 {/* Content */}
                 <div className="p-6 md:p-8">
                   <div className="text-[10px] font-bold tracking-[0.25em] uppercase mb-2" style={{ color: tour.accent }}>
-                    {tour.subtitle}
+                    {tc(tour.subtitle)}
                   </div>
                   <h2 className="font-serif text-2xl md:text-3xl font-semibold text-white mb-2 leading-snug">
-                    {tour.title}
+                    {tc(tour.title)}
                   </h2>
                   <div className="flex items-center gap-4 mb-4">
-                    <span className="font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
-                    <span className="flex items-center gap-1 text-xs text-white/40">
-                      <Clock size={10} /> {tour.duration}
+                    <span className="ltr-num font-serif text-xl font-bold text-gradient-japan">{tour.price}</span>
+                    <span className="flex items-center gap-1 text-xs text-white/55">
+                      <Clock size={10} /> {tc(tour.duration)}
                     </span>
                   </div>
-                  <p className="text-sm text-white/55 leading-relaxed mb-5 line-clamp-2">{tour.description}</p>
+                  <p className="text-sm text-white/55 leading-relaxed mb-5 line-clamp-2">{tc(tour.description)}</p>
                   <div className="flex gap-3">
                     <Link
                       to={tour.id === 'mountain-hiking' ? '/hiking' : `/tours/${tour.id}`}
                       className="flex-1 py-3 rounded-xl border border-white/10 text-center text-sm text-white/70 hover:text-white hover:border-japan-red/40 transition-all font-medium"
                     >
-                      Details
+                      {tc('Details')}
                     </Link>
                     <a
-                      href={`${WHATSAPP}?text=${encodeURIComponent(`Hi Tony! I'm interested in the ${tour.title} tour.`)}`}
+                      href={`${WHATSAPP}?text=${encodeURIComponent(`${tc('Hi Tony! I am very interested in this tour:')} ${tc(tour.title)}. ${tc('Could you share more details and availability?')}`)}`}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 active:scale-95 transition-transform"
                     >
-                      <MessageCircle size={13} /> Book
+                      <MessageCircle size={13} /> {tc('Book Now')}
                     </a>
                   </div>
                 </div>
@@ -160,15 +162,15 @@ export function Slider3D() {
       {/* Arrow buttons — z-30 so they're above cards (z-20) */}
       <button
         onClick={() => go(active - 1)}
-        className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
+        className="absolute start-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
       >
-        <ChevronLeft size={16} />
+        <ChevronLeft className="flip-rtl" size={16} />
       </button>
       <button
         onClick={() => go(active + 1)}
-        className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
+        className="absolute end-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 rounded-full glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 hover:scale-110 transition-all"
       >
-        <ChevronRight size={16} />
+        <ChevronRight className="flip-rtl" size={16} />
       </button>
 
       {/* Dots */}
@@ -188,7 +190,7 @@ export function Slider3D() {
             </button>
           ))}
         </div>
-        <div className="text-white/30 font-serif text-xs select-none">
+        <div className="text-white/45 font-serif text-xs select-none">
           <span className="text-white/80 font-semibold">{String(active + 1).padStart(2, '0')}</span>
           {' / '}
           {String(total).padStart(2, '0')}

@@ -21,6 +21,8 @@ export interface Tr {
   nav: {
     home: string;
     tours: string;
+    hiking: string;
+    guide: string;
     about: string;
     pricing: string;
     faq: string;
@@ -185,6 +187,8 @@ const en: Tr = {
   nav: {
     home: 'Home',
     tours: 'Tours',
+    hiking: 'Hiking',
+    guide: 'Kansai Guide',
     about: 'About',
     pricing: 'Pricing',
     faq: 'FAQ',
@@ -200,9 +204,9 @@ const en: Tr = {
   },
 
   stats: {
-    destinations: '7 Destinations',
-    languages: '5 Languages',
-    private: '100% Private',
+    destinations: 'Destinations',
+    languages: 'Languages',
+    private: 'Private',
   },
 
   discover: {
@@ -358,6 +362,8 @@ const es: Tr = {
   nav: {
     home: 'Inicio',
     tours: 'Tours',
+    hiking: 'Montaña',
+    guide: 'Guía Kansai',
     about: 'Sobre Tony',
     pricing: 'Precios',
     faq: 'Preguntas',
@@ -373,9 +379,9 @@ const es: Tr = {
   },
 
   stats: {
-    destinations: '7 Destinos',
-    languages: '5 Idiomas',
-    private: '100% Privado',
+    destinations: 'Destinos',
+    languages: 'Idiomas',
+    private: 'Privado',
   },
 
   discover: {
@@ -531,6 +537,8 @@ const ar: Tr = {
   nav: {
     home: 'الرئيسية',
     tours: 'الجولات',
+    hiking: 'الجبال',
+    guide: 'دليل كانساي',
     about: 'عن توني',
     pricing: 'الأسعار',
     faq: 'الأسئلة الشائعة',
@@ -546,9 +554,9 @@ const ar: Tr = {
   },
 
   stats: {
-    destinations: '٧ وجهات',
-    languages: '٥ لغات',
-    private: '١٠٠٪ خاص',
+    destinations: 'وجهات',
+    languages: 'لغات',
+    private: 'خاص',
   },
 
   discover: {
@@ -704,6 +712,8 @@ const cs: Tr = {
   nav: {
     home: 'Domů',
     tours: 'Výlety',
+    hiking: 'Hory',
+    guide: 'Průvodce Kansai',
     about: 'O Tonym',
     pricing: 'Ceník',
     faq: 'Otázky',
@@ -719,9 +729,9 @@ const cs: Tr = {
   },
 
   stats: {
-    destinations: '7 destinací',
-    languages: '5 jazyků',
-    private: '100% soukromé',
+    destinations: 'destinací',
+    languages: 'jazyků',
+    private: 'soukromé',
   },
 
   discover: {
@@ -877,6 +887,8 @@ const ru: Tr = {
   nav: {
     home: 'Главная',
     tours: 'Туры',
+    hiking: 'Горы',
+    guide: 'Гид по Кансаю',
     about: 'О Тони',
     pricing: 'Цены',
     faq: 'Вопросы',
@@ -892,9 +904,9 @@ const ru: Tr = {
   },
 
   stats: {
-    destinations: '7 направлений',
-    languages: '5 языков',
-    private: '100% приватно',
+    destinations: 'направлений',
+    languages: 'языков',
+    private: 'приватно',
   },
 
   discover: {

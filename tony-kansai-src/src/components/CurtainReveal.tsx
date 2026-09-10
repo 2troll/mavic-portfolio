@@ -1,7 +1,9 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import { useEffect, useState } from 'react'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export function CurtainReveal() {
+  const { tc } = useLanguage()
   const [show, setShow] = useState(true)
 
   useEffect(() => {
@@ -32,7 +34,7 @@ export function CurtainReveal() {
             exit={{ y: 20, opacity: 0 }}
             transition={{ duration: 0.4 }}
           >
-            Private Tours · Japan
+            {tc('Private Tours · Japan')}
           </motion.div>
           <motion.div
             className="mt-4 flex gap-3"

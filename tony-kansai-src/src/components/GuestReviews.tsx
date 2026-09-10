@@ -155,7 +155,7 @@ export function GuestReviews() {
                             glass rounded-2xl border border-white/6 px-6 py-4">
               <span className="font-serif text-4xl font-semibold text-japan-gold tabular-nums leading-none">
                 {media.toFixed(1)}
-                <span className="text-base text-white/40 font-sans font-normal"> / 5</span>
+                <span className="text-base text-white/55 font-sans font-normal"> / 5</span>
               </span>
               <Estrellas nota={media} tam={18} />
               <span className="text-sm text-white/45">
@@ -237,7 +237,7 @@ export function GuestReviews() {
               <div className="mt-6">
                 <a
                   href="/resenas.html"
-                  className="text-sm text-white/40 underline underline-offset-4
+                  className="text-sm text-white/55 underline underline-offset-4
                              hover:text-japan-gold transition-colors"
                 >
                   {t.reviews.all} →

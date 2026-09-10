@@ -111,3 +111,99 @@ body::before {
   background: #0d0f1a;
   font-family: inherit;
 }
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Árabe · tipografía y RTL
+   La clase `lang-ar` la pone LanguageContext en <html>. Todo lo que sigue
+   corrige lo que el diseño latino da por supuesto: la fuente, el tracking
+   (el árabe es escritura ligada: separar letras la rompe), la cursiva
+   (no existe en árabe) y la dirección de los elementos posicionados.
+   ───────────────────────────────────────────────────────────────────────────*/
+
+.lang-ar body,
+.lang-ar .font-sans {
+  font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Geeza Pro', system-ui, sans-serif;
+}
+
+.lang-ar .font-serif {
+  font-family: 'Amiri', 'IBM Plex Sans Arabic', 'Noto Naskh Arabic', Georgia, serif;
+}
+
+/* El tracking amplio rompe la ligadura árabe: se anula en todo el sitio. */
+.lang-ar [class*='tracking-'] {
+  letter-spacing: normal !important;
+}
+
+/* El árabe no tiene cursiva; sintetizarla produce una inclinación falsa. */
+.lang-ar .italic {
+  font-style: normal;
+}
+
+/* Los titulares árabes necesitan más interlineado que el latino. */
+.lang-ar h1,
+.lang-ar h2,
+.lang-ar h3 {
+  line-height: 1.5;
+}
+
+/* Comillas tipográficas correctas para citas en árabe. */
+.lang-ar q::before { content: '«'; }
+.lang-ar q::after  { content: '»'; }
+
+/* Los iconos de flecha y de "siguiente" apuntan al otro lado en RTL. */
+[dir='rtl'] .flip-rtl {
+  transform: scaleX(-1);
+}
+
+/* Barra de desplazamiento y sombras a la izquierda en RTL. */
+[dir='rtl'] .leaflet-control-container .leaflet-right {
+  right: auto;
+  left: 0;
+}
+
+/* Cifras y unidades latinas dentro de un párrafo árabe: el algoritmo bidi
+   las reordena («1,125 m» sale como «m 1,125»). Aislarlas lo evita. */
+.ltr-num {
+  direction: ltr;
+  unicode-bidi: isolate;
+  display: inline-block;
+}
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   Accesibilidad
+   La página /accessibility promete estas dos cosas. Aquí es donde se cumplen.
+   ───────────────────────────────────────────────────────────────────────────*/
+
+/* Foco visible en todo lo que se puede enfocar. Sin esto, quien navega con
+   teclado no sabe dónde está: es el fallo de accesibilidad más común que hay. */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible,
+[role='button']:focus-visible {
+  outline: 2px solid var(--japan-gold);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Quien pide menos movimiento en su sistema lo pide por algo: vértigo,
+   migraña o mareo por movimiento. Se apaga todo, no se atenúa. */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  /* La textura de ruido del fondo también molesta a quien es sensible. */
+  body::before {
+    display: none;
+  }
+}

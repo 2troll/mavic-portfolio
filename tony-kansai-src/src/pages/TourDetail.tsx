@@ -9,8 +9,10 @@ import { NaraParticles } from '../components/NaraParticles'
 import { TourMap } from '../components/TourMap'
 import { TOURS, WHATSAPP, LANGUAGES } from '../lib/data'
 import { PageSEO } from '../components/PageSEO'
+import { useLanguage } from '../contexts/LanguageContext'
 
 export default function TourDetail() {
+  const { tc } = useLanguage()
   const { id } = useParams()
   const tour = TOURS.find((t) => t.id === id)
   const heroRef = useRef<HTMLDivElement>(null)
@@ -23,20 +25,22 @@ export default function TourDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h2 className="font-serif text-2xl text-white mb-3">Tour not found</h2>
-          <Link to="/tours" className="text-japan-red hover:text-japan-orange">← Back to Tours</Link>
+          <h2 className="font-serif text-2xl text-white mb-3">{tc('Tour not found')}</h2>
+          <Link to="/tours" className="text-japan-red hover:text-japan-orange">← {tc('All Tours')}</Link>
         </div>
       </div>
     )
   }
 
-  const waMsg = encodeURIComponent(`Hi Tony! I'm very interested in the "${tour.title}" tour. Could you share more details and availability?`)
+  const waMsg = encodeURIComponent(
+    `${tc('Hi Tony! I am very interested in this tour:')} "${tc(tour.title)}". ${tc('Could you share more details and availability?')}`,
+  )
   const numericPrice = parseInt(tour.price.replace(/[^0-9]/g, ''), 10)
   const tourSchema = {
     '@context': 'https://schema.org',
     '@type': 'TouristAttraction',
-    name: tour.title,
-    description: tour.subtitle,
+    name: tc(tour.title),
+    description: tc(tour.subtitle),
     url: `https://tonykansaiguide.com/tours/${tour.id}`,
     image: tour.imageHero,
     offers: {
@@ -55,11 +59,11 @@ export default function TourDetail() {
   return (
     <>
       <PageSEO
-        title={`${tour.title} · Private Tour Kansai`}
-        description={`${tour.subtitle} — Private guided tour with Tony Kansai Guide. ${tour.duration}. Guided in English, Spanish, Arabic, Czech & Russian.`}
+        title={`${tc(tour.title)} · ${tc('Private Tour Kansai')}`}
+        description={`${tc(tour.subtitle)} — ${tc('Private guided tour with Tony Kansai Guide.')} ${tc(tour.duration)}. ${tc('Guided in English, Spanish, Arabic, Czech and Russian.')}`}
         path={`/tours/${tour.id}`}
         ogImage={tour.imageHero}
-        breadcrumb={[{ name: 'Tours', path: '/tours' }, { name: tour.title, path: `/tours/${tour.id}` }]}
+        breadcrumb={[{ name: tc('Tours'), path: '/tours' }, { name: tc(tour.title), path: `/tours/${tour.id}` }]}
       />
       <Helmet>
         <script type="application/ld+json">{JSON.stringify(tourSchema)}</script>
@@ -70,7 +74,7 @@ export default function TourDetail() {
         <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
           <img
             src={tour.imageHero}
-            alt={tour.title}
+            alt={tc(tour.title)}
             className="w-full h-full object-cover"
             loading="eager"
           />
@@ -85,7 +89,7 @@ export default function TourDetail() {
 
         {/* Back button */}
         <motion.div
-          className="absolute top-6 left-6 z-20"
+          className="absolute top-6 start-6 z-20"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.4, delay: 0.3 }}
@@ -94,13 +98,13 @@ export default function TourDetail() {
             to="/tours"
             className="inline-flex items-center gap-2 px-4 py-2 rounded-full glass border border-white/15 text-sm text-white/80 hover:text-white hover:border-japan-red/40 transition-all"
           >
-            <ArrowLeft size={14} /> All Tours
+            <ArrowLeft className="flip-rtl" size={14} /> {tc('All Tours')}
           </Link>
         </motion.div>
 
         {/* Hero text */}
         <motion.div
-          className="absolute bottom-0 left-0 right-0 p-8 md:p-16 z-10"
+          className="absolute bottom-0 start-0 end-0 p-8 md:p-16 z-10"
           style={{ y: textY, opacity }}
         >
           <motion.div
@@ -113,19 +117,22 @@ export default function TourDetail() {
                 className="px-3 py-1 rounded-full text-xs font-bold tracking-widest uppercase"
                 style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
               >
-                {tour.badge}
+                {tc(tour.badge)}
               </span>
-              <span className="text-xs text-white/50 font-medium">{tour.subtitle}</span>
+              <span className="text-xs text-white/50 font-medium">{tc(tour.subtitle)}</span>
             </div>
             <h1 className="font-serif text-5xl md:text-7xl font-semibold text-white mb-4 leading-none">
-              {tour.title}
+              {tc(tour.title)}
             </h1>
             <div className="flex items-center gap-6 flex-wrap">
-              <span className="font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
+              <span className="ltr-num font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
               <span className="flex items-center gap-1.5 text-sm text-white/50">
-                <Clock size={13} />{tour.duration}
+                <Clock size={13} />{tc(tour.duration)}
               </span>
-              <span className="text-sm text-white/40">per tour · not per person</span>
+              <span className="flex items-center gap-1.5 text-sm text-white/50">
+                <Users size={13} />{tc(tour.maxGuests)}
+              </span>
+              <span className="text-sm text-white/55">{tc('per tour · not per person')}</span>
             </div>
           </motion.div>
         </motion.div>
@@ -135,11 +142,11 @@ export default function TourDetail() {
       <div className="sticky top-16 z-30 bg-japan-surface/90 backdrop-blur-xl border-b border-white/5">
         <div className="max-w-4xl mx-auto px-6 py-3 flex items-center justify-between gap-4">
           <div className="hidden sm:block text-sm font-serif text-white/60">
-            <span className="text-white font-semibold">{tour.title}</span> · {tour.duration}
+            <span className="text-white font-semibold">{tc(tour.title)}</span> · {tc(tour.duration)}
           </div>
-          <div className="flex gap-3 ml-auto">
+          <div className="flex gap-3 ms-auto">
             <Link to="/pricing" className="px-4 py-2 rounded-lg glass border border-white/10 text-sm text-white/70 hover:text-white transition-all">
-              Pricing
+              {tc('Pricing')}
             </Link>
             <a
               href={`${WHATSAPP}?text=${waMsg}`}
@@ -147,7 +154,7 @@ export default function TourDetail() {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-5 py-2 rounded-lg bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold text-sm shadow-lg shadow-japan-red/40 hover:scale-105 transition-transform"
             >
-              <MessageCircle size={14} /> Book Now
+              <MessageCircle size={14} /> {tc('Book Now')}
             </a>
           </div>
         </div>
@@ -163,14 +170,14 @@ export default function TourDetail() {
 
               <ExplodeIn index={0}>
                 <div className="glass rounded-2xl p-8 border border-white/6">
-                  <h2 className="font-serif text-2xl font-semibold text-white mb-4">About this Tour</h2>
-                  <p className="text-white/65 leading-relaxed text-[15px]">{tour.longDescription}</p>
+                  <h2 className="font-serif text-2xl font-semibold text-white mb-4">{tc('About this Tour')}</h2>
+                  <p className="text-white/65 leading-relaxed text-[15px]">{tc(tour.longDescription)}</p>
                 </div>
               </ExplodeIn>
 
               <ExplodeIn index={1}>
                 <div className="glass rounded-2xl p-8 border border-white/6">
-                  <h2 className="font-serif text-2xl font-semibold text-white mb-6">What You'll Experience</h2>
+                  <h2 className="font-serif text-2xl font-semibold text-white mb-6">{tc('What You will Experience')}</h2>
                   <div className="grid sm:grid-cols-2 gap-4">
                     {tour.highlights.map((h, i) => (
                       <motion.div
@@ -185,7 +192,7 @@ export default function TourDetail() {
                           style={{ background: `${tour.accent}20`, border: `1px solid ${tour.accent}40` }}>
                           <Check size={10} style={{ color: tour.accent }} />
                         </div>
-                        {h}
+                        {tc(h)}
                       </motion.div>
                     ))}
                   </div>
@@ -194,14 +201,14 @@ export default function TourDetail() {
 
               <ExplodeIn index={2}>
                 <div className="glass rounded-2xl p-8 border border-white/6">
-                  <h2 className="font-serif text-2xl font-semibold text-white mb-5">What's Included</h2>
+                  <h2 className="font-serif text-2xl font-semibold text-white mb-5">{tc('What is Included')}</h2>
                   <div className="space-y-3">
                     {tour.includes.map((inc) => (
                       <div key={inc} className="flex items-center gap-3 text-sm text-white/70">
                         <div className="w-5 h-5 rounded-full bg-japan-red/15 border border-japan-red/30 flex items-center justify-center flex-shrink-0">
                           <Check size={10} className="text-japan-red" />
                         </div>
-                        {inc}
+                        {tc(inc)}
                       </div>
                     ))}
                   </div>
@@ -211,7 +218,7 @@ export default function TourDetail() {
               {/* Other tours — image strip */}
               <ExplodeIn index={3}>
                 <div>
-                  <h2 className="font-serif text-xl font-semibold text-white mb-4">Other Experiences</h2>
+                  <h2 className="font-serif text-xl font-semibold text-white mb-4">{tc('Other Experiences')}</h2>
                   <div className="grid sm:grid-cols-2 gap-3">
                     {TOURS.filter((t) => t.id !== tour.id).slice(0, 4).map((t) => (
                       <Link
@@ -221,16 +228,16 @@ export default function TourDetail() {
                       >
                         <img
                           src={t.imageCard}
-                          alt={t.title}
+                          alt={tc(t.title)}
                           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent" />
-                        <div className="absolute bottom-3 left-3">
-                          <div className="text-xs font-medium mb-0.5" style={{ color: t.accent }}>{t.subtitle}</div>
-                          <div className="text-sm font-semibold text-white">{t.title}</div>
+                        <div className="absolute bottom-3 start-3">
+                          <div className="text-xs font-medium mb-0.5" style={{ color: t.accent }}>{tc(t.subtitle)}</div>
+                          <div className="text-sm font-semibold text-white">{tc(t.title)}</div>
                         </div>
-                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity">
-                          <ChevronRight size={14} className="text-white" />
+                        <div className="absolute top-3 end-3 opacity-0 group-hover:opacity-100 transition-opacity">
+                          <ChevronRight size={14} className="flip-rtl text-white" />
                         </div>
                       </Link>
                     ))}
@@ -244,20 +251,20 @@ export default function TourDetail() {
               <ExplodeIn index={4}>
                 <Card3D glowColor={`${tour.accent}25`}>
                   <div className="glass rounded-2xl p-6 border border-white/6 space-y-5">
-                    <h3 className="font-serif text-lg font-semibold text-white">Quick Info</h3>
+                    <h3 className="font-serif text-lg font-semibold text-white">{tc('Quick Info')}</h3>
                     <div className="space-y-3 text-sm">
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <Clock size={14} style={{ color: tour.accent }} />{tour.duration}
+                        <Clock size={14} style={{ color: tour.accent }} />{tc(tour.duration)}
                       </div>
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <MapPin size={14} style={{ color: tour.accent }} />{tour.meetingPoint}
+                        <MapPin size={14} style={{ color: tour.accent }} />{tc(tour.meetingPoint)}
                       </div>
                       <div className="flex items-center gap-2.5 text-white/60">
-                        <Users size={14} style={{ color: tour.accent }} />Private — no shared groups
+                        <Users size={14} style={{ color: tour.accent }} />{tc('Private — no shared groups')}
                       </div>
                     </div>
                     <div className="pt-3 border-t border-white/5">
-                      <div className="text-xs text-white/35 mb-2.5 font-medium tracking-wider uppercase">Languages</div>
+                      <div className="text-xs text-white/50 mb-2.5 font-medium tracking-wider uppercase">{tc('Languages')}</div>
                       <div className="flex gap-2 flex-wrap">
                         {LANGUAGES.map(({ flag, code }) => (
                           <div key={code} className="flex items-center gap-1 px-2 py-1 rounded-lg bg-white/5 border border-white/8 text-xs text-white/60">
@@ -272,7 +279,7 @@ export default function TourDetail() {
                       rel="noopener noreferrer"
                       className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
                     >
-                      <MessageCircle size={14} /> Book This Tour
+                      <MessageCircle size={14} /> {tc('Book This Tour')}
                     </a>
                   </div>
                 </Card3D>
@@ -287,7 +294,7 @@ export default function TourDetail() {
       {tour.mapStops && tour.mapStops.length > 0 && (
         <section className="py-16">
           <div className="max-w-5xl mx-auto px-6">
-            <h2 className="font-serif text-2xl font-semibold text-white mb-6">Route Overview</h2>
+            <h2 className="font-serif text-2xl font-semibold text-white mb-6">{tc('Route Overview')}</h2>
             <TourMap
               stops={tour.mapStops}
               accent={tour.accent}

@@ -1,4 +1,7 @@
 User-agent: *
 Allow: /
 
+# El panel de reseñas es la herramienta interna de Tony, no una página pública.
+Disallow: /panel-resenas.html
+
 Sitemap: https://tonykansaiguide.com/sitemap.xml

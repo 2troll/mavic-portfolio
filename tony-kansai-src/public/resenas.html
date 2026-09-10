@@ -150,6 +150,13 @@
 
   .vacio{text-align:center;color:var(--muted);padding:30px 0 6px;}
 
+  .idiomas{display:flex;justify-content:center;gap:6px;padding:18px 0 0;flex-wrap:wrap;}
+  .idiomas button{background:none;border:0;color:var(--muted);font:inherit;font-size:13px;
+    padding:6px 12px;border-radius:100px;cursor:pointer;transition:color .15s ease;}
+  .idiomas button:hover{color:var(--wash);}
+  .idiomas button[aria-pressed="true"]{color:var(--wash);background:rgba(255,255,255,.08);}
+  .idiomas button:focus-visible{outline:2px solid var(--kin);outline-offset:2px;}
+
   /* Lightbox */
   .lb{position:fixed;inset:0;background:rgba(5,5,8,.95);display:none;
     align-items:center;justify-content:center;padding:26px;z-index:50;cursor:zoom-out;}
@@ -171,13 +178,15 @@
 </head>
 <body>
 
+<nav class="idiomas" id="idiomas" aria-label="Idioma"></nav>
+
 <header>
   <div class="wrap">
-    <div class="eyebrow">Tony Kansai · Tours privados</div>
-    <h1 class="serif">Bienvenidos a Japón</h1>
-    <p>Lo que cuentan los viajeros que pasaron el día con nosotros. Ni una sola
+    <div class="eyebrow" data-t="marca">Tony Kansai · Tours privados</div>
+    <h1 class="serif" data-t="h1">Bienvenidos a Japón</h1>
+    <p data-t="lede">Lo que cuentan los viajeros que pasaron el día con nosotros. Ni una sola
       palabra la hemos escrito nosotros.</p>
-    <a class="back" href="/">← Volver a la web</a>
+    <a class="back" href="/" data-t="volver">← Volver a la web</a>
   </div>
 </header>
 
@@ -187,15 +196,15 @@
     <div class="rev-grid" id="revGrid"></div>
     <button class="rev-more" id="revMore" hidden></button>
 
-    <p class="vacio" id="vacio" hidden>
+    <p class="vacio" id="vacio" hidden data-t="vacio">
       Las primeras reseñas están en camino. Si has viajado con nosotros,
       la tuya puede ser la que ayude al siguiente viajero a decidirse.
     </p>
 
     <div class="rev-ask">
-      <h2 class="serif">¿Has viajado con nosotros?</h2>
-      <p>Cuéntale tu día a otros viajeros. Es un minuto, y puedes añadir una foto.</p>
-      <a class="go" href="/opinar.html">Deja tu reseña</a>
+      <h2 class="serif" data-t="askH">¿Has viajado con nosotros?</h2>
+      <p data-t="askP">Cuéntale tu día a otros viajeros. Es un minuto, y puedes añadir una foto.</p>
+      <a class="go" href="/opinar.html" data-t="askGo">Deja tu reseña</a>
     </div>
   </div>
 </main>
@@ -210,7 +219,7 @@
   <div class="wrap">
     <a href="/">tonykansaiguide.com</a>
     <span aria-hidden="true"> · </span>
-    <a href="/opinar.html">Deja tu reseña</a>
+    <a href="/opinar.html" data-t="askGo">Deja tu reseña</a>
   </div>
 </footer>
 
@@ -220,6 +229,120 @@
    - /reviews.json         : las que aprueba en el Mac con `resenas.py publicar`
    Se unen quitando repetidas por id, así los dos caminos conviven. Si el Worker
    no contesta, la web se queda con el fichero de siempre y no se rompe. */
+// Estado de la lista. Se declara antes que nada porque ponIdioma() repinta
+// en cuanto carga la página, y con `let` más abajo caería en la zona muerta.
+let RESENAS = [];
+let MEDIA = 0;
+let MOSTRADAS = 0;
+
+/* ─────────────────────────────────────────────────────────────────────────
+   Idiomas. Mismo mecanismo que opinar.html: `data-t` en el HTML, un
+   diccionario aquí y `?lang=` en la URL. Por defecto español, porque la
+   mayoría de los clientes que dejan reseña lo son; quien necesite otro lo
+   cambia arriba en un toque.
+   ─────────────────────────────────────────────────────────────────────── */
+const IDIOMAS = [
+  {c:"es", n:"Español"}, {c:"en", n:"English"}, {c:"ar", n:"العربية", rtl:true},
+  {c:"ru", n:"Русский"}, {c:"cs", n:"Čeština"},
+];
+
+const T = {
+  es:{
+    title:"Reseñas de nuestros clientes — Tony Kansai",
+    marca:"Tony Kansai · Tours privados", h1:"Bienvenidos a Japón",
+    lede:"Lo que cuentan los viajeros que pasaron el día con nosotros. Ni una sola palabra la hemos escrito nosotros.",
+    volver:"← Volver a la web",
+    vacio:"Las primeras reseñas están en camino. Si has viajado con nosotros, la tuya puede ser la que ayude al siguiente viajero a decidirse.",
+    askH:"¿Has viajado con nosotros?",
+    askP:"Cuéntale tu día a otros viajeros. Es un minuto, y puedes añadir una foto.",
+    askGo:"Deja tu reseña", cerrar:"Cerrar", fotoDe:"Foto de",
+    estrellasDe:v => v + " de 5 estrellas",
+    basadoEn:n => "Sobre " + n + (n === 1 ? " reseña" : " reseñas") + " de clientes",
+    verMas:n => "Ver " + n + (n === 1 ? " reseña más" : " reseñas más"),
+  },
+  en:{
+    title:"Guest reviews — Tony Kansai",
+    marca:"Tony Kansai · Private tours", h1:"Welcome to Japan",
+    lede:"What travellers say after a day with us. Not one word of it written by us.",
+    volver:"← Back to the site",
+    vacio:"The first reviews are on their way. If you have travelled with us, yours could be the one that helps the next traveller decide.",
+    askH:"Travelled with us?",
+    askP:"Tell other travellers about your day. It takes a minute, and you can add a photo.",
+    askGo:"Leave your review", cerrar:"Close", fotoDe:"Photo by",
+    estrellasDe:v => v + " out of 5 stars",
+    basadoEn:n => "Based on " + n + " guest review" + (n === 1 ? "" : "s"),
+    verMas:n => "Show " + n + " more review" + (n === 1 ? "" : "s"),
+  },
+  ar:{
+    title:"آراء ضيوفنا — Tony Kansai",
+    marca:"Tony Kansai · جولات خاصة", h1:"أهلاً بكم في اليابان",
+    lede:"ما يقوله المسافرون بعد يوم معنا. ولا كلمة منه كتبناها نحن.",
+    volver:"← العودة إلى الموقع",
+    vacio:"أولى الآراء في طريقها إلينا. وإن كنت قد سافرت معنا، فقد يكون رأيك هو ما يساعد المسافر التالي على القرار.",
+    askH:"هل سافرت معنا؟",
+    askP:"احكِ يومك لمسافرين آخرين. لا يستغرق سوى دقيقة، ويمكنك إضافة صورة.",
+    askGo:"اكتب رأيك", cerrar:"إغلاق", fotoDe:"صورة من",
+    estrellasDe:v => v + " من 5 نجوم",
+    basadoEn:n => "استناداً إلى " + n + (n === 1 ? " رأي" : " آراء") + " من الضيوف",
+    verMas:n => "عرض " + n + (n === 1 ? " رأياً آخر" : " آراء أخرى"),
+  },
+  ru:{
+    title:"Отзывы гостей — Tony Kansai",
+    marca:"Tony Kansai · Частные туры", h1:"Добро пожаловать в Японию",
+    lede:"Что говорят путешественники после дня с нами. Ни слова не написано нами.",
+    volver:"← Вернуться на сайт",
+    vacio:"Первые отзывы уже в пути. Если вы путешествовали с нами, именно ваш может помочь следующему решиться.",
+    askH:"Путешествовали с нами?",
+    askP:"Расскажите другим о своём дне. Это минута, и можно добавить фото.",
+    askGo:"Оставить отзыв", cerrar:"Закрыть", fotoDe:"Фото:",
+    estrellasDe:v => v + " из 5 звёзд",
+    basadoEn:n => "По " + n + " отзыв" + (n === 1 ? "у" : (n < 5 ? "ам" : "ам")) + " гостей",
+    verMas:n => "Показать ещё " + n + (n === 1 ? " отзыв" : (n < 5 ? " отзыва" : " отзывов")),
+  },
+  cs:{
+    title:"Recenze hostů — Tony Kansai",
+    marca:"Tony Kansai · Soukromé prohlídky", h1:"Vítejte v Japonsku",
+    lede:"Co říkají cestovatelé po dni s námi. Ani slovo jsme nenapsali my.",
+    volver:"← Zpět na web",
+    vacio:"První recenze jsou na cestě. Pokud jste cestovali s námi, ta vaše může být ta, která pomůže dalšímu rozhodnout se.",
+    askH:"Cestovali jste s námi?",
+    askP:"Povězte ostatním o svém dni. Je to na minutu a můžete přidat fotku.",
+    askGo:"Napsat recenzi", cerrar:"Zavřít", fotoDe:"Fotka od",
+    estrellasDe:v => v + " z 5 hvězdiček",
+    basadoEn:n => "Na základě " + n + (n === 1 ? " recenze" : (n < 5 ? " recenzí" : " recenzí")) + " hostů",
+    verMas:n => "Zobrazit další " + n + (n === 1 ? " recenzi" : (n < 5 ? " recenze" : " recenzí")),
+  },
+};
+
+let idioma = (() => {
+  const q = new URLSearchParams(location.search).get("lang");
+  return (q && T[q]) ? q : "es";
+})();
+const t = () => T[idioma];
+
+function ponIdioma(codigo){
+  idioma = T[codigo] ? codigo : "es";
+  const rtl = !!(IDIOMAS.find(l => l.c === idioma) || {}).rtl;
+  document.documentElement.lang = idioma;
+  document.documentElement.dir = rtl ? "rtl" : "ltr";
+  document.title = t().title;
+  document.querySelectorAll("[data-t]").forEach(el => {
+    const k = el.getAttribute("data-t");
+    if (t()[k]) el.textContent = t()[k];
+  });
+  document.getElementById("lbClose").setAttribute("aria-label", t().cerrar);
+  document.querySelectorAll("#idiomas button").forEach(b =>
+    b.setAttribute("aria-pressed", String(b.dataset.c === idioma)));
+  repinta();
+}
+
+document.getElementById("idiomas").innerHTML = IDIOMAS.map(l =>
+  `<button type="button" data-c="${l.c}" aria-pressed="false">${l.n}</button>`).join("");
+document.getElementById("idiomas").addEventListener("click", e => {
+  const b = e.target.closest("button"); if (b) ponIdioma(b.dataset.c);
+});
+ponIdioma(idioma);   // aplica ?lang= antes de que lleguen las reseñas
+
 const POR_PAGINA = 9;
 
 const esc = str => String(str).replace(/[&<>"']/g,
@@ -237,10 +360,10 @@ function rateline(value, label){
 }
 
 function tarjeta(r){
-  const stars = rateline(r.stars, r.stars + " de 5 estrellas");
+  const stars = rateline(r.stars, t().estrellasDe(r.stars));
   const photo = r.photo
     ? `<figure><img loading="lazy" src="${esc(r.photo)}"
-         alt="Foto de ${esc(r.name)} en ${esc(r.tour || "Kansai")}"
+         alt="${esc(t().fotoDe)} ${esc(r.name)} — ${esc(r.tour || "Kansai")}"
          data-full="${esc(r.photo)}" data-cap="${esc(r.name)}${r.tour ? " · " + esc(r.tour) : ""}"></figure>`
     : "";
   const donde = [r.country, r.date].filter(Boolean).map(esc).join(" · ");
@@ -249,6 +372,33 @@ function tarjeta(r){
       <blockquote dir="${r.lang === "ar" ? "rtl" : "auto"}" lang="${esc(r.lang || "en")}">${esc(r.text)}</blockquote>
       <div class="who"><b>${esc(r.name)}</b>${donde}${tour}</div>
     </div></article>`;
+}
+
+/* Todo lo que se pinta pasa por aquí, así cambiar de idioma sólo tiene que
+   volver a llamar a repinta() en vez de recargar la página. */
+function repinta(){
+  if (!RESENAS.length) return;
+  const n = RESENAS.length;
+
+  const resumen = document.getElementById("revSummary");
+  resumen.hidden = false;
+  resumen.innerHTML = `
+    <div class="rev-score">${MEDIA.toFixed(1)}<small> / 5</small></div>
+    <div class="grow">
+      ${rateline(MEDIA, t().estrellasDe(MEDIA.toFixed(1)))}
+      <div class="meta" style="margin-top:6px">${t().basadoEn(n)}</div>
+    </div>`;
+
+  const grid = document.getElementById("revGrid");
+  const more = document.getElementById("revMore");
+  const hasta = Math.min(MOSTRADAS, n);
+  grid.innerHTML = RESENAS.slice(0, hasta).map(tarjeta).join("");
+  if (hasta < n){
+    more.hidden = false;
+    more.textContent = t().verMas(n - hasta);
+  } else {
+    more.hidden = true;
+  }
 }
 
 const traer = url => fetch(url, {cache:"no-cache"})
@@ -302,33 +452,12 @@ Promise.all([traer("/api/resenas/publicas"), traer("/reviews.json")])
       document.head.appendChild(marca);
     } catch (e) { /* el marcado es un extra: si falla, las reseñas se ven igual */ }
 
-    const resumen = document.getElementById("revSummary");
-    resumen.hidden = false;
-    resumen.innerHTML = `
-      <div class="rev-score">${avg.toFixed(1)}<small> / 5</small></div>
-      <div class="grow">
-        ${rateline(avg, avg.toFixed(1) + " de 5 estrellas")}
-        <div class="meta" style="margin-top:6px">Based on <b>${n}</b>
-          guest review${n === 1 ? "" : "s"}</div>
-      </div>`;
-
-    const grid = document.getElementById("revGrid");
+    RESENAS = all;
+    MEDIA = avg;
     const more = document.getElementById("revMore");
-    let shown = 0;
-    const draw = () => {
-      const next = all.slice(shown, shown + POR_PAGINA);
-      grid.insertAdjacentHTML("beforeend", next.map(tarjeta).join(""));
-      shown += next.length;
-      if (shown < all.length){
-        more.hidden = false;
-        more.textContent = `Ver ${all.length - shown} reseña` +
-          (all.length - shown === 1 ? " más" : "s más");
-      } else {
-        more.hidden = true;
-      }
-    };
-    more.addEventListener("click", draw);
-    draw();
+    more.addEventListener("click", () => { MOSTRADAS += POR_PAGINA; repinta(); });
+    MOSTRADAS = POR_PAGINA;
+    repinta();
 
     const lb = document.getElementById("lightbox");
     const lbImg = document.getElementById("lbImg");

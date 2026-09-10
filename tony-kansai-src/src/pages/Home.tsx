@@ -25,7 +25,7 @@ const cardReveal = {
 }
 
 export default function Home() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const discoverRef = useRef<HTMLElement>(null)
   const castleRef = useRef<HTMLElement>(null)
 
@@ -37,8 +37,8 @@ export default function Home() {
   return (
     <>
       <PageSEO
-        title="Private Japan Tour Guide · Osaka, Kyoto & Kansai"
-        description="100% private guided tours in Osaka, Kyoto, Nara & Kansai with expert local guides. English, Spanish, Arabic, Czech & Russian. ★5.0 rated."
+        title={tc('Private Japan Tour Guide · Osaka, Kyoto and Kansai')}
+        description={tc('100% private guided tours in Osaka, Kyoto, Nara and Kansai with expert local guides. English, Spanish, Arabic, Czech and Russian. ★5.0 rated.')}
         path="/"
       />
       <CurtainReveal />
@@ -103,7 +103,7 @@ export default function Home() {
               to="/tours"
               className="inline-flex items-center gap-2 px-8 py-4 rounded-xl glass text-white/90 hover:text-white font-semibold text-sm border border-white/10 hover:border-japan-red/40 transition-all hover:scale-105"
             >
-              {t.hero.cta_tours} <ChevronRight size={15} />
+              {t.hero.cta_tours} <ChevronRight className="flip-rtl" size={15} />
             </Link>
           </motion.div>
 
@@ -116,7 +116,7 @@ export default function Home() {
             {LANGUAGES.map(({ flag, code }) => (
               <div key={code} className="flex flex-col items-center gap-1">
                 <span className="text-2xl">{flag}</span>
-                <span className="text-[10px] text-white/40 font-medium tracking-wider">{code}</span>
+                <span className="text-[10px] text-white/55 font-medium tracking-wider">{code}</span>
               </div>
             ))}
           </motion.div>
@@ -127,7 +127,7 @@ export default function Home() {
           animate={{ y: [0, 9, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
         >
-          <ChevronDown size={20} className="text-white/30" />
+          <ChevronDown size={20} className="text-white/45" />
         </motion.div>
       </section>
 
@@ -142,7 +142,7 @@ export default function Home() {
                     {icon}
                   </div>
                   <div>
-                    <div className="text-2xl font-serif font-bold text-gradient-japan">{value}</div>
+                    <div className="ltr-num text-2xl font-serif font-bold text-gradient-japan">{value}</div>
                     <div className="text-xs text-white/45 tracking-wide font-medium">
                       {i === 0 ? t.stats.destinations
                         : i === 1 ? t.stats.languages
@@ -199,7 +199,7 @@ export default function Home() {
                   <img src={PHOTO_TORII} alt="Fushimi Inari torii gates Kyoto Japan" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/70 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-5 left-5">
+                <div className="absolute bottom-5 start-5">
                   <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.discover.caption}</div>
                 </div>
               </div>
@@ -218,7 +218,7 @@ export default function Home() {
                   <img src={PHOTO_CASTLE} alt="Himeji Castle Japan UNESCO World Heritage" className="w-full h-full object-cover" loading="lazy" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/65 via-transparent to-transparent pointer-events-none" />
-                <div className="absolute bottom-5 left-5">
+                <div className="absolute bottom-5 start-5">
                   <div className="text-xs text-white/50 font-medium tracking-wider uppercase">{t.fortress.caption}</div>
                 </div>
               </div>
@@ -239,7 +239,7 @@ export default function Home() {
                 to="/tours"
                 className="inline-flex items-center gap-2 text-sm text-japan-red hover:text-japan-orange transition-colors font-medium"
               >
-                {t.fortress.cta} <ChevronRight size={14} />
+                {t.fortress.cta} <ChevronRight className="flip-rtl" size={14} />
               </Link>
             </FadeUp>
           </div>
@@ -278,37 +278,42 @@ export default function Home() {
                       <div className="relative h-48 overflow-hidden">
                         <img
                           src={tour.imageCard}
-                          alt={tour.title}
+                          alt={tc(tour.title)}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                         <div
-                          className="absolute top-3 right-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
+                          className="absolute top-3 end-3 px-2.5 py-1 rounded-full text-xs font-semibold backdrop-blur-sm"
                           style={{ background: `${tour.accent}25`, color: tour.accent, border: `1px solid ${tour.accent}50` }}
                         >
-                          {tour.badge}
+                          {tc(tour.badge)}
                         </div>
-                        <div className="absolute bottom-3 left-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
-                          {tour.subtitle}
+                        <div className="absolute bottom-3 start-3 text-xs font-medium tracking-wider" style={{ color: tour.accent }}>
+                          {tc(tour.subtitle)}
                         </div>
                       </div>
 
                       <div className="p-5 flex flex-col flex-1">
-                        <h3 className="font-serif text-xl font-semibold text-white mb-2">{tour.title}</h3>
-                        <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tour.description}</p>
+                        <h3 className="font-serif text-xl font-semibold text-white mb-2">{tc(tour.title)}</h3>
+                        <p className="text-sm text-white/55 leading-relaxed mb-4 flex-1">{tc(tour.description)}</p>
                         <ul className="space-y-1.5 mb-4">
                           {tour.highlights.slice(0, 3).map(h => (
                             <li key={h} className="flex items-center gap-2 text-xs text-white/60">
                               <Check size={11} style={{ color: tour.accent }} className="flex-shrink-0" />
-                              {h}
+                              {tc(h)}
                             </li>
                           ))}
                         </ul>
                         <div className="flex items-center justify-between pt-3 border-t border-white/5">
-                          <span className="font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                          <span className="flex flex-col gap-0.5">
+                            <span className="ltr-num font-serif font-bold text-gradient-japan text-sm">{tour.price}</span>
+                            <span className="text-[10px] uppercase tracking-wider text-white/40">
+                              {tc(tour.duration)} · {tc(tour.maxGuests)}
+                            </span>
+                          </span>
                           <span className="text-xs text-japan-red group-hover:translate-x-1 transition-transform inline-flex items-center gap-1">
-                            {t.tours_section.view} <ChevronRight size={12} />
+                            {t.tours_section.view} <ChevronRight className="flip-rtl" size={12} />
                           </span>
                         </div>
                       </div>
@@ -325,10 +330,10 @@ export default function Home() {
       <section className="py-24 bg-gradient-to-b from-japan-surface/20 to-transparent">
         <div className="max-w-6xl mx-auto px-6">
           <FadeUp className="text-center mb-14">
-            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">Our Team</div>
-            <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">Meet Your Guides</h2>
+            <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">{tc('Our Team')}</div>
+            <h2 className="font-serif text-4xl md:text-5xl font-semibold text-white mb-4">{tc('Meet Your Guides')}</h2>
             <p className="max-w-xl mx-auto text-white/50 text-lg font-light">
-              Three specialists. Every language. Every corner of Kansai.
+              {tc('Three specialists. Every language. Every corner of Kansai.')}
             </p>
           </FadeUp>
 
@@ -341,23 +346,23 @@ export default function Home() {
                     <div className="relative h-56 overflow-hidden">
                       <img
                         src={guide.photo}
-                        alt={guide.name}
+                        alt={tc(guide.name)}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
                         loading="lazy"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-                      <div className="absolute bottom-4 left-4 right-4">
+                      <div className="absolute bottom-4 start-4 end-4">
                         <div className="text-xs font-semibold tracking-widest uppercase mb-1" style={{ color: guide.accent }}>
-                          {guide.specialty}
+                          {tc(guide.specialty)}
                         </div>
-                        <h3 className="font-serif text-xl font-semibold text-white">{guide.name}</h3>
-                        <div className="text-xs text-white/55 mt-0.5">{guide.role}</div>
+                        <h3 className="font-serif text-xl font-semibold text-white">{tc(guide.name)}</h3>
+                        <div className="text-xs text-white/55 mt-0.5">{tc(guide.role)}</div>
                       </div>
                     </div>
 
                     {/* Content */}
                     <div className="p-5 flex flex-col flex-1">
-                      <p className="text-sm text-white/60 leading-relaxed mb-4 flex-1">{guide.bio}</p>
+                      <p className="text-sm text-white/60 leading-relaxed mb-4 flex-1">{tc(guide.bio)}</p>
 
                       <div className="space-y-3">
                         {/* Stats row */}
@@ -380,7 +385,7 @@ export default function Home() {
                               className="text-[10px] px-2 py-0.5 rounded-full border font-medium"
                               style={{ color: guide.accent, borderColor: `${guide.accent}40`, background: `${guide.accent}10` }}
                             >
-                              {h}
+                              {tc(h)}
                             </span>
                           ))}
                         </div>
@@ -391,7 +396,7 @@ export default function Home() {
                           className="mt-1 flex items-center gap-1 text-xs font-semibold transition-opacity hover:opacity-75"
                           style={{ color: guide.accent }}
                         >
-                          View full profile <ChevronRight size={12} />
+                          {tc('View full profile')} <ChevronRight className="flip-rtl" size={12} />
                         </Link>
                       </div>
                     </div>
@@ -434,7 +439,7 @@ export default function Home() {
                       to="/pricing"
                       className="inline-flex items-center gap-2 px-7 py-3.5 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/40 transition-all"
                     >
-                      {t.cta_section.cta_pricing} <ChevronRight size={15} />
+                      {t.cta_section.cta_pricing} <ChevronRight className="flip-rtl" size={15} />
                     </Link>
                   </div>
                 </div>
@@ -452,13 +457,49 @@ export default function Home() {
           resto; sin ninguna, sólo invita a dejar la primera. */}
       <GuestReviews />
 
+      {/* ── GUÍA PRÁCTICA ─────────────────────────────────────── */}
+      <section className="py-20 border-t border-white/5">
+        <div className="max-w-4xl mx-auto px-6">
+          <FadeUp>
+            <div className="glass rounded-3xl border border-white/8 p-8 md:p-10 text-center">
+              <div className="text-xs text-japan-red font-semibold tracking-[0.2em] uppercase mb-3">
+                {tc('Before You Come')}
+              </div>
+              <h2 className="font-serif text-3xl md:text-4xl font-semibold text-white mb-4">
+                {tc('Kansai Practical Guide')}
+              </h2>
+              <p className="text-white/50 text-sm leading-relaxed max-w-xl mx-auto mb-7">
+                {tc('Airport to city, cash or card, the last train, when to come, halal and vegetarian food, prayer spaces and eight phrases worth knowing. Free, and useful whether or not you ever book with us.')}
+              </p>
+              <div className="flex flex-wrap justify-center gap-2 mb-8">
+                {[
+                  tc('From the airport'), tc('Money'), tc('Getting around'), tc('When to come'),
+                  tc('Halal, vegetarian and allergies'), tc('Prayer and quiet space'),
+                ].map((etiqueta) => (
+                  <span key={etiqueta} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/55">
+                    {etiqueta}
+                  </span>
+                ))}
+              </div>
+              <Link
+                to="/guide"
+                className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold text-sm shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform"
+              >
+                {tc('Read the guide')} <ChevronRight className="flip-rtl" size={15} />
+              </Link>
+            </div>
+          </FadeUp>
+        </div>
+      </section>
+
       {/* ── LEGAL STRIP ───────────────────────────────────────── */}
       <section className="py-6 border-t border-white/4">
-        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/25">
-          <span>🔒 Pagos seguros · Sin datos personales almacenados · Comunicación solo por WhatsApp</span>
-          <div className="flex items-center gap-5">
-            <Link to="/privacy" className="hover:text-white/55 transition-colors">Política de Privacidad</Link>
-            <Link to="/terms" className="hover:text-white/55 transition-colors">Términos & Condiciones</Link>
+        <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/45">
+          <span>🔒 {tc('Secure payments · No personal data stored · Contact only via WhatsApp')}</span>
+          <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
+            <Link to="/terms" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>
+            <Link to="/privacy" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
+            <Link to="/safety" className="hover:text-white/55 transition-colors">{tc('Safety & Insurance')}</Link>
           </div>
         </div>
       </section>

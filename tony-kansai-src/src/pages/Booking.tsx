@@ -25,7 +25,7 @@ function isPast(y: number, m: number, d: number) {
 }
 
 export default function Booking() {
-  const { t, lang } = useLanguage()
+  const { t, tc, lang } = useLanguage()
   const bp = t.booking_page
 
   const now = new Date()
@@ -62,7 +62,7 @@ export default function Booking() {
 
   const waHref = () => {
     if (!selectedDate) return WHATSAPP
-    const msg = bp.wa_msg(selectedTour.title, formatSelectedDate(), guests, notes)
+    const msg = bp.wa_msg(tc(selectedTour.title), formatSelectedDate(), guests, notes)
     return `${WHATSAPP}?text=${encodeURIComponent(msg)}`
   }
 
@@ -78,8 +78,8 @@ export default function Booking() {
   return (
     <>
       <PageSEO
-        title="Book a Private Japan Tour · Kansai Guide"
-        description="Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto & Kansai from ¥75,000 per group."
+        title={tc('Book a Private Japan Tour · Kansai Guide')}
+        description={tc('Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto and Kansai from ¥75,000 per group.')}
         path="/booking"
         breadcrumb={[{ name: 'Book', path: '/booking' }]}
       />
@@ -133,7 +133,7 @@ export default function Booking() {
                       <button
                         key={tour.id}
                         onClick={() => setSelectedTour(tour)}
-                        className={`text-left p-4 rounded-xl border transition-all ${
+                        className={`text-start p-4 rounded-xl border transition-all ${
                           selectedTour.id === tour.id
                             ? 'border-japan-red/50 bg-japan-red/8'
                             : 'border-white/6 bg-white/3 hover:border-white/15 hover:bg-white/5'
@@ -144,7 +144,7 @@ export default function Booking() {
                             className="text-xs font-bold tracking-widest uppercase"
                             style={{ color: tour.accent }}
                           >
-                            {tour.badge}
+                            {tc(tour.badge)}
                           </div>
                           {selectedTour.id === tour.id && (
                             <div className="w-4 h-4 rounded-full bg-japan-red flex items-center justify-center flex-shrink-0">
@@ -152,11 +152,11 @@ export default function Booking() {
                             </div>
                           )}
                         </div>
-                        <div className="font-serif text-sm font-semibold text-white mb-1">{tour.title}</div>
+                        <div className="font-serif text-sm font-semibold text-white mb-1">{tc(tour.title)}</div>
                         <div className="flex items-center gap-3">
-                          <span className="font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
-                          <span className="text-[11px] text-white/40 flex items-center gap-1">
-                            <Clock size={9} />{tour.duration}
+                          <span className="ltr-num font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
+                          <span className="text-[11px] text-white/55 flex items-center gap-1">
+                            <Clock size={9} />{tc(tour.duration)}
                           </span>
                         </div>
                       </button>
@@ -180,7 +180,7 @@ export default function Booking() {
                       aria-label={bp.prev_month}
                       className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 transition-all"
                     >
-                      <ChevronLeft size={14} />
+                      <ChevronLeft className="flip-rtl" size={14} />
                     </button>
                     <div className="font-serif text-lg font-semibold text-white">
                       {bp.months[viewMonth]} {viewYear}
@@ -190,14 +190,14 @@ export default function Booking() {
                       aria-label={bp.next_month}
                       className="w-8 h-8 rounded-lg glass border border-white/10 flex items-center justify-center text-white/50 hover:text-white hover:border-japan-red/40 transition-all"
                     >
-                      <ChevronRight size={14} />
+                      <ChevronRight className="flip-rtl" size={14} />
                     </button>
                   </div>
 
                   {/* Day headers */}
                   <div className="grid grid-cols-7 mb-2">
                     {bp.days.map((day) => (
-                      <div key={day} className="text-center text-[11px] font-semibold text-white/30 tracking-wide py-1">
+                      <div key={day} className="text-center text-[11px] font-semibold text-white/45 tracking-wide py-1">
                         {day}
                       </div>
                     ))}
@@ -263,7 +263,7 @@ export default function Booking() {
                     </button>
                     <div className="text-center min-w-[60px]">
                       <div className="font-serif text-3xl font-bold text-gradient-japan">{guests}</div>
-                      <div className="text-xs text-white/40">{bp.guests_label}</div>
+                      <div className="text-xs text-white/55">{bp.guests_label}</div>
                     </div>
                     <button
                       onClick={() => setGuests(g => Math.min(15, g + 1))}
@@ -327,7 +327,7 @@ export default function Booking() {
 
                     <div className="border-t border-white/6 pt-4">
                       <div className="font-serif text-2xl font-bold text-gradient-japan mb-1">{selectedTour.price}</div>
-                      <div className="text-xs text-white/35">{bp.per_group}</div>
+                      <div className="text-xs text-white/50">{bp.per_group}</div>
                     </div>
 
                     {selectedDate && (
@@ -346,10 +346,10 @@ export default function Booking() {
                     </a>
 
                     {!selectedDate && (
-                      <p className="text-center text-xs text-white/30">{bp.step2} ↑</p>
+                      <p className="text-center text-xs text-white/45">{bp.step2} ↑</p>
                     )}
 
-                    <p className="text-center text-[11px] text-white/35 leading-relaxed">{bp.note}</p>
+                    <p className="text-center text-[11px] text-white/50 leading-relaxed">{bp.note}</p>
                   </div>
                 </Card3D>
               </FadeUp>

@@ -9,14 +9,14 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { PageSEO } from '../components/PageSEO'
 
 export default function About() {
-  const { t } = useLanguage()
+  const { t, tc } = useLanguage()
   const a = t.about_page
 
   return (
     <>
       <PageSEO
-        title="About the Team · Tony Hanma & Kansai Guide"
-        description="Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto & Kansai. Fluent in English, Spanish, Arabic, Czech, Russian & Japanese."
+        title={tc('About the Team · Tony Hanma and Kansai Guide')}
+        description={tc('Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto and Kansai. Fluent in English, Spanish, Arabic, Czech, Russian and Japanese.')}
         path="/about"
         breadcrumb={[{ name: 'About', path: '/about' }]}
       />
@@ -61,11 +61,11 @@ export default function About() {
                   </div>
 
                   <div className="mb-7">
-                    <div className="text-xs text-white/35 font-medium tracking-wider uppercase mb-3">{a.speaks}</div>
+                    <div className="text-xs text-white/50 font-medium tracking-wider uppercase mb-3">{a.speaks}</div>
                     <div className="flex flex-wrap gap-2">
                       {LANGUAGES.map(({ flag, name }) => (
                         <div key={name} className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs text-white/70">
-                          <span>{flag}</span><span>{name}</span>
+                          <span>{flag}</span><span>{tc(name)}</span>
                         </div>
                       ))}
                     </div>
@@ -75,7 +75,7 @@ export default function About() {
                     className="flex items-center justify-center gap-2 w-full py-3.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white font-semibold shadow-lg shadow-japan-red/30 hover:scale-105 transition-transform">
                     <MessageCircle size={15} /> {a.cta_wa}
                   </a>
-                  <div className="text-center text-xs text-white/35 mt-2">{WHATSAPP_NUMBER} · {t.common.replies}</div>
+                  <div className="text-center text-xs text-white/50 mt-2"><span className="ltr-num">{WHATSAPP_NUMBER}</span> · {t.common.replies}</div>
                 </div>
               </Card3D>
             </ExplodeIn>
@@ -90,25 +90,25 @@ export default function About() {
 
               <ExplodeIn index={2}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. He shares hidden temples, forgotten markets, and the living traditions that guidebooks miss.
+                  {tc('Tony Hanma has spent years exploring every corner of Kansai — not as a tourist, but as someone who grew up breathing its culture. He shares hidden temples, forgotten markets, and the living traditions that guidebooks miss.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={3}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  His approach is simple: no scripts, no rush, no crowds. Each tour is tailored completely to you — your pace, your interests, your language. Whether you want spiritual depth in Kyoto or the electric chaos of Osaka nights, Tony knows exactly where to take you.
+                  {tc('His approach is simple: no scripts, no rush, no crowds. Each tour is tailored completely to you — your pace, your interests, your language. Whether you want spiritual depth in Kyoto or the electric chaos of Osaka nights, Tony knows exactly where to take you.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={4}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  With fluency in five languages — English, Spanish, Russian, Czech, and Arabic — Tony bridges not just geography but culture. Nuance, humor, and history come through naturally in a way that only native-level understanding can provide.
+                  {tc('Tony guides in Spanish, his mother tongue, in Arabic, which he grew up bilingual in, and in English. Russian and Czech tours are run by Larion and Johnny. Between the three of them the team covers five languages — and each guide only takes the ones he can actually work in.')}
                 </p>
               </ExplodeIn>
 
               <ExplodeIn index={5}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  Tony covers the full Kansai region: the neon streets of Dotonbori, the thousand torii of Fushimi Inari, the bamboo groves of Arashiyama, the deer parks of Nara, the mountain trails of Kurama — and countless places in between that exist only in local memory.
+                  {tc('Tony covers the full Kansai region: the neon streets of Dotonbori, the thousand torii of Fushimi Inari, the bamboo groves of Arashiyama, the deer parks of Nara, the mountain trails of Kurama — and countless places in between that exist only in local memory.')}
                 </p>
               </ExplodeIn>
 
@@ -127,7 +127,7 @@ export default function About() {
                 <div className="flex gap-4 pt-2">
                   <Link to="/tours"
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl bg-gradient-to-r from-japan-red to-japan-orange text-white text-sm font-semibold shadow-md hover:scale-105 transition-transform">
-                    {a.cta_tours} <ChevronRight size={14} />
+                    {a.cta_tours} <ChevronRight className="flip-rtl" size={14} />
                   </Link>
                   <Link to="/pricing"
                     className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-xl glass text-white/80 hover:text-white border border-white/10 hover:border-japan-red/30 text-sm transition-all">

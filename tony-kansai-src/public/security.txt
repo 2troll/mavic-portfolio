@@ -1,0 +1,15 @@
+# Tony Kansai Guide — https://tonykansaiguide.com
+# Si encuentras un problema de seguridad en este sitio, escríbenos antes de
+# hacerlo público. Contestamos personalmente, en cinco idiomas.
+
+Contact: https://wa.me/34634193106
+Preferred-Languages: en, es, ar, cs, ru
+Canonical: https://tonykansaiguide.com/.well-known/security.txt
+Expires: 2027-09-01T00:00:00.000Z
+
+# Qué hay aquí, para que no pierdas el tiempo:
+# - Sitio estático. No hay backend propio, ni base de datos, ni cuentas de
+#   usuario, ni contraseñas.
+# - No se procesan pagos en la web. Nunca se piden datos de tarjeta.
+# - Único endpoint dinámico: /api/resenas (Cloudflare Worker) para recibir
+#   las reseñas de clientes.

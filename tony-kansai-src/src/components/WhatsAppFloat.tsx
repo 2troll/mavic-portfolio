@@ -7,7 +7,7 @@ export function WhatsAppFloat() {
       href={WHATSAPP}
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-[200] flex items-center gap-2.5 pl-4 pr-5 py-3 rounded-full shadow-2xl shadow-black/50 group"
+      className="fixed bottom-6 end-6 z-[200] flex items-center gap-2.5 ps-4 pe-5 py-3 rounded-full shadow-2xl shadow-black/50 group"
       style={{ background: 'linear-gradient(135deg, #25D366, #128C7E)' }}
       initial={{ opacity: 0, scale: 0.5, y: 20 }}
       animate={{ opacity: 1, scale: 1, y: 0 }}

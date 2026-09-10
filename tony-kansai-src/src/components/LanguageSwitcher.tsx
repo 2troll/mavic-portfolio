@@ -33,13 +33,13 @@ export function LanguageSwitcher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.95 }}
             transition={{ duration: 0.13 }}
-            className="absolute top-full mt-2 right-0 bg-japan-surface border border-white/12 rounded-xl overflow-hidden shadow-2xl shadow-black/50 min-w-[110px] z-[100]"
+            className="absolute top-full mt-2 end-0 bg-japan-surface border border-white/12 rounded-xl overflow-hidden shadow-2xl shadow-black/50 min-w-[110px] z-[100]"
           >
             {(Object.keys(LANG_META) as Lang[]).map((l) => (
               <button
                 key={l}
                 onMouseDown={() => { setLang(l); setOpen(false) }}
-                className={`flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-left transition-colors ${
+                className={`flex items-center gap-2.5 w-full px-4 py-2.5 text-sm text-start transition-colors ${
                   l === lang
                     ? 'bg-japan-red/15 text-white'
                     : 'text-white/55 hover:text-white hover:bg-white/5'
