@@ -29,7 +29,13 @@ const inFlight: Partial<Record<Lang, Promise<void>>> = {}
 export function loadPhrases(lang: Lang): Promise<void> {
   if (loaded[lang]) return Promise.resolve()
   if (!inFlight[lang]) {
-    const url = `${import.meta.env.BASE_URL}i18n/${lang}.json`
+    // BASE_URL vale './' en el despliegue: vite-plugin-singlefile lo fuerza
+    // para que el index.html funcione servido desde cualquier carpeta. Pedir
+    // './i18n/es.json' desde /guide/ o /book/ buscaba /guide/i18n/es.json y
+    // devolvía 404, así que TODA página que no fuera la portada se leía en
+    // inglés aunque la interfaz estuviera en español. Se resuelve contra la
+    // raíz del dominio, no contra la ruta en la que está el visitante.
+    const url = new URL(`${import.meta.env.BASE_URL}i18n/${lang}.json`, window.location.origin).toString()
     inFlight[lang] = fetch(url)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP ${res.status}`)
