@@ -16,6 +16,7 @@ export function Navbar() {
     { to: '/tours', label: t.nav.tours },
     { to: '/hiking', label: `⛰️ ${t.nav.hiking}` },
     { to: '/guide', label: t.nav.guide },
+    { to: '/book', label: t.nav.book },
     { to: '/about', label: t.nav.about },
     { to: '/pricing', label: t.nav.pricing },
     { to: '/faq', label: t.nav.faq },

@@ -29,6 +29,7 @@ import GuideDetail from './pages/GuideDetail'
 const Admin = lazy(() => import('./pages/Admin'))
 import Hiking from './pages/Hiking'
 import Guide from './pages/Guide'
+import Book from './pages/Book'
 import HikingDetail from './pages/HikingDetail'
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
@@ -97,6 +98,7 @@ function Layout() {
           <Route path="/tours/:id" element={<TourDetail />} />
           <Route path="/hiking" element={<Hiking />} />
           <Route path="/guide" element={<Guide />} />
+          <Route path="/book" element={<Book />} />
           <Route path="/hiking/:id" element={<HikingDetail />} />
           <Route path="/about" element={<About />} />
           <Route path="/pricing" element={<Pricing />} />

@@ -23,6 +23,7 @@ export interface Tr {
     tours: string;
     hiking: string;
     guide: string;
+    book: string;
     about: string;
     pricing: string;
     faq: string;
@@ -189,6 +190,7 @@ const en: Tr = {
     tours: 'Tours',
     hiking: 'Hiking',
     guide: 'Kansai Guide',
+    book: 'The Book',
     about: 'About',
     pricing: 'Pricing',
     faq: 'FAQ',
@@ -364,6 +366,7 @@ const es: Tr = {
     tours: 'Tours',
     hiking: 'Montaña',
     guide: 'Guía Kansai',
+    book: 'El libro',
     about: 'Sobre Tony',
     pricing: 'Precios',
     faq: 'Preguntas',
@@ -539,6 +542,7 @@ const ar: Tr = {
     tours: 'الجولات',
     hiking: 'الجبال',
     guide: 'دليل كانساي',
+    book: 'الكتاب',
     about: 'عن توني',
     pricing: 'الأسعار',
     faq: 'الأسئلة الشائعة',
@@ -714,6 +718,7 @@ const cs: Tr = {
     tours: 'Výlety',
     hiking: 'Hory',
     guide: 'Průvodce Kansai',
+    book: 'Kniha',
     about: 'O Tonym',
     pricing: 'Ceník',
     faq: 'Otázky',
@@ -889,6 +894,7 @@ const ru: Tr = {
     tours: 'Туры',
     hiking: 'Горы',
     guide: 'Гид по Кансаю',
+    book: 'Книга',
     about: 'О Тони',
     pricing: 'Цены',
     faq: 'Вопросы',
