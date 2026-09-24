@@ -26,7 +26,9 @@ interface Props {
 export function PageSEO({ title, description, path = '', ogImage = OG_IMG, breadcrumb }: Props) {
   const { lang, dir, tc } = useLanguage()
   const fullTitle = `${title} | Tony Kansai Guide`
-  const url = `${BASE}${path}`
+  // GitHub Pages sirve cada ruta como carpeta: sin barra final responde 301,
+  // y un canonical que redirige confunde a Google. /booking es un .html real.
+  const url = !path || path.endsWith('/') || path === '/booking' ? `${BASE}${path || '/'}` : `${BASE}${path}/`
   const langs = Object.keys(LANG_META) as Lang[]
 
   const breadcrumbSchema = breadcrumb && breadcrumb.length > 0 ? {

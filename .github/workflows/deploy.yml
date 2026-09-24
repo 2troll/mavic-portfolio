@@ -78,7 +78,10 @@ jobs:
                 # y hacerlo rompería el despliegue con un choque de nombres.
                 if [ -e "deploy/$ruta" ]; then continue; fi
                 mkdir -p "deploy/$ruta"
-                cp deploy/index.html "deploy/$ruta/index.html"
+                # La copia trae el canonical de la portada: sin esto, Google
+                # tomaba las 44 páginas por duplicados de "/" y no las indexaba.
+                sed -E '/rel="canonical"|rel="alternate"|og:url/ s|https://tonykansaiguide\.com/|https://tonykansaiguide.com/'"$ruta"'/|' \
+                  deploy/index.html > "deploy/$ruta/index.html"
                 echo "  200 -> /$ruta"
               done
 

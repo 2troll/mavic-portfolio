@@ -47,7 +47,10 @@ const paginas = [
 ]
 
 const url = ({ loc, priority, changefreq }) => {
-  const abs = `${BASE}${loc}`
+  // GitHub Pages sirve cada ruta como carpeta: sin barra final responde 301 y
+  // Search Console no indexa URLs que redirigen. /booking es un .html real.
+  const conBarra = loc === '/' || loc === '/booking' || loc.endsWith('.html') ? loc : `${loc}/`
+  const abs = `${BASE}${conBarra}`
   // Las páginas .html llevan su propio selector de idioma dentro; el resto
   // usan ?lang= y se declaran con hreflang para que Google indexe cada versión.
   const alternates = loc.endsWith('.html') ? '' : LANGS.map((l) =>
