@@ -16,7 +16,7 @@ export default function About() {
     <>
       <PageSEO
         title={tc('About the Team · Tony Hanma and Kansai Guide')}
-        description={tc('Meet Tony Hanma, Johnny Coletta and Larion — private guides across Osaka, Kyoto and Kansai. Fluent in English, Spanish, Arabic, Czech, Russian and Japanese.')}
+        description={tc('Meet Tony Hanma and Larion — private guides across Osaka, Kyoto and Kansai. Tony guides in English, Spanish and Arabic; Larion in Russian and English.')}
         path="/about"
         breadcrumb={[{ name: 'About', path: '/about' }]}
       />
@@ -102,7 +102,7 @@ export default function About() {
 
               <ExplodeIn index={4}>
                 <p className="text-white/65 leading-relaxed text-[15px]">
-                  {tc('Tony guides in Spanish, his mother tongue, in Arabic, which he grew up bilingual in, and in English. Russian and Czech tours are run by Larion and Johnny. Between the three of them the team covers five languages — and each guide only takes the ones he can actually work in.')}
+                  {tc('Tony guides in Spanish, his mother tongue, in Arabic, which he grew up bilingual in, and in English. Russian tours are run by Larion, who also guides in English. Each guide only takes the languages he can actually work in.')}
                 </p>
               </ExplodeIn>
 

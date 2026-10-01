@@ -60,7 +60,7 @@ export default function TourDetail() {
     <>
       <PageSEO
         title={`${tc(tour.title)} · ${tc('Private Tour Kansai')}`}
-        description={`${tc(tour.subtitle)} — ${tc('Private guided tour with Tony Kansai Guide.')} ${tc(tour.duration)}. ${tc('Guided in English, Spanish, Arabic, Czech and Russian.')}`}
+        description={`${tc(tour.subtitle)} — ${tc('Private guided tour with Tony Kansai Guide.')} ${tc(tour.duration)}. ${tc('Guided in English, Spanish, Arabic and Russian.')}`}
         path={`/tours/${tour.id}`}
         ogImage={tour.imageHero}
         breadcrumb={[{ name: tc('Tours'), path: '/tours' }, { name: tc(tour.title), path: `/tours/${tour.id}` }]}

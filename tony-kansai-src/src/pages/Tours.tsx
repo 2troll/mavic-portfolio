@@ -11,7 +11,7 @@ export default function Tours() {
     <>
       <PageSEO
         title={tc('Private Tours in Osaka, Kyoto and Kansai')}
-        description={tc('7 exclusive private tours in Kansai Japan — Osaka food circuits, hidden Kyoto temples, Kōyasan pilgrimage and more. Guided in English, Spanish, Arabic, Czech and Russian.')}
+        description={tc('7 exclusive private tours in Kansai Japan — Osaka food circuits, hidden Kyoto temples, Kōyasan pilgrimage and more. Guided in English, Spanish, Arabic and Russian.')}
         path="/tours"
         breadcrumb={[{ name: tc('Tours'), path: '/tours' }]}
       />

@@ -38,7 +38,7 @@ export default function Home() {
     <>
       <PageSEO
         title={tc('Private Japan Tour Guide · Osaka, Kyoto and Kansai')}
-        description={tc('100% private guided tours in Osaka, Kyoto, Nara and Kansai with expert local guides. English, Spanish, Arabic, Czech and Russian. ★5.0 rated.')}
+        description={tc('100% private guided tours in Osaka, Kyoto, Nara and Kansai with expert local guides. English, Spanish, Arabic and Russian. ★5.0 rated.')}
         path="/"
       />
       <CurtainReveal />

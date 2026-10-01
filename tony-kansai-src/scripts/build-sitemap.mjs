@@ -12,7 +12,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const LANGS = ['en', 'es', 'ar', 'cs', 'ru']
+const LANGS = ['en', 'es', 'ar', 'ru']
 
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
 

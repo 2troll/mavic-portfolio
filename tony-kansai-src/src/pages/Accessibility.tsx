@@ -24,7 +24,7 @@ export default function Accessibility() {
         <ul className="mt-1 space-y-1.5 list-none">
           <Li label={tc('Keyboard')}>{tc('Every link, button, filter and calendar day can be reached and used with the keyboard alone, with a visible focus ring.')}</Li>
           <Li label={tc('Screen readers')}>{tc('Headings run in order, images that carry meaning have alternative text, and decorative ones are hidden from the reading order.')}</Li>
-          <Li label={tc('Five languages')}>{tc('English, Spanish, Arabic, Czech and Russian, with the page language announced correctly so a screen reader uses the right voice.')}</Li>
+          <Li label={tc('Five languages')}>{tc('English, Spanish, Arabic and Russian, with the page language announced correctly so a screen reader uses the right voice.')}</Li>
           <Li label={tc('Right-to-left')}>{tc('Arabic is laid out right-to-left throughout, with its own typography rather than a mirrored Latin font.')}</Li>
           <Li label={tc('Reduced motion')}>{tc('If your system asks for less motion, the animations and the smooth scrolling stop.')}</Li>
           <Li label={tc('Zoom and small screens')}>{tc('The layout holds at 200% zoom and on a phone, without horizontal scrolling.')}</Li>

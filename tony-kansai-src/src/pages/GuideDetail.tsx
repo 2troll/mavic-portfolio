@@ -26,21 +26,6 @@ const DETAIL: Record<string, {
       "Personally knows owners of several hidden restaurants he takes guests to",
     ],
   },
-  johnny: {
-    paragraphs: [
-      "Johnny Coletta arrived in Japan as a student of architectural history and discovered that Kyoto was his life's subject.",
-      "Every street in the old city is a timeline. Johnny reads it like a book — pointing out the Edo-period tea house hidden behind a convenience store, the private garden accessible through an unmarked gate, the way morning light hits Kinkakuji in a way no photograph can capture.",
-      "Fluent in Czech and English, Johnny specialises in guests from Central Europe and the English-speaking world who want depth over breadth. His tours are slower, more observant — you leave with a completely different understanding of what Kyoto actually is.",
-    ],
-    quote: "Kyoto isn't a museum — it's a living city that breathes. I want to show you the parts that are still alive.",
-    approach: "Johnny's tours are visually driven. Expect to stop often, look closely, and ask a lot of questions. He encourages curiosity and never makes guests feel rushed. Bring comfortable shoes — you will walk, but every step will mean something.",
-    funFacts: [
-      "Studied architectural history in Prague before moving to Japan",
-      "Has documented hundreds of lesser-known machiya townhouses in Kyoto",
-      "Speaks Czech, English and conversational Japanese",
-      "Wakes at 5am before tours to scout the best light at each location",
-    ],
-  },
   larion: {
     paragraphs: [
       "Born to a Russian-Japanese family, Larion grew up between two worlds — and two languages. Russia and Japan shaped him equally, giving him a perspective that is genuinely rare.",

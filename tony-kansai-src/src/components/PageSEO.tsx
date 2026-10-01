@@ -11,7 +11,6 @@ const OG_LOCALE: Record<Lang, string> = {
   en: 'en_US',
   es: 'es_ES',
   ar: 'ar_SA',
-  cs: 'cs_CZ',
   ru: 'ru_RU',
 }
 

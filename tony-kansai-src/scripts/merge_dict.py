@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Vuelca un lote de traducciones {ingles: [es, ar, cs, ru]} en public/i18n/*.json."""
+"""Vuelca un lote de traducciones {ingles: [es, ar, ru]} en public/i18n/*.json."""
 import json, sys, os
 BASE = os.path.join(os.path.dirname(__file__), '..', 'public', 'i18n')
-LANGS = ['es', 'ar', 'cs', 'ru']
+LANGS = ['es', 'ar', 'ru']
 
 def merge(batch):
     for i, lang in enumerate(LANGS):

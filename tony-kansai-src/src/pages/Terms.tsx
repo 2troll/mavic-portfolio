@@ -47,7 +47,7 @@ export default function Terms() {
             </div>
 
             <Section title={tc('1. About the Service')}>
-              <p>{tc('Tony Kansai Guide ("we", "us", "the guide") provides 100% private, bespoke guided tour experiences in the Kansai region of Japan, including but not limited to Osaka, Kyoto, Nara, Kobe, Himeji and Kōyasan. Tours are conducted personally by Tony Hanma or by one of our approved guides (Johnny Coletta, Larion).')}</p>
+              <p>{tc('Tony Kansai Guide ("we", "us", "the guide") provides 100% private, bespoke guided tour experiences in the Kansai region of Japan, including but not limited to Osaka, Kyoto, Nara, Kobe, Himeji and Kōyasan. Tours are conducted personally by Tony Hanma or by our approved guide, Larion.')}</p>
               <p className="mt-2">{tc('All tours are private — your group only. We do not operate shared or group tours with other guests.')}</p>
             </Section>
 

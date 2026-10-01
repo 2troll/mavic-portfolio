@@ -20,7 +20,7 @@ import { generateContract, CONTRACT_LANGS, ContractLang } from '../lib/contractP
 type View = 'login' | 'home' | 'calendar' | 'list' | 'form' | 'detail' | 'settings'
 type NavTab = 'home' | 'calendar' | 'list' | 'settings'
 
-const GUIDES: Guide[] = ['Tony', 'Johnny', 'Larion']
+const GUIDES: Guide[] = ['Tony', 'Larion']
 const LANGS = ['EN', 'ES', 'AR', 'CS', 'RU', 'JA', 'FR', 'DE', 'IT', 'PT']
 const PAY_METHODS: AdminBooking['paymentMethod'][] = ['efectivo', 'transferencia', 'tarjeta', 'wise', 'otro']
 const WISE_CURRENCIES = ['EUR', 'USD', 'GBP', 'AUD', 'CAD', 'CHF', 'SGD']
@@ -885,7 +885,7 @@ const CHANGELOG = [
     date: 'Mayo 2026',
     title: 'Fotos reales de los guías',
     changes: [
-      'Fotos reales de Tony, Johnny y Larion en la sección "Conoce al equipo"',
+      'Fotos reales de Tony y Larion en la sección "Conoce al equipo"',
       'Eliminadas fotos de stock de Unsplash',
     ],
   },
@@ -1013,7 +1013,7 @@ const CHANGELOG = [
     changes: [
       'Stack: Vite + React 18 + TypeScript + Tailwind CSS v3 + Framer Motion',
       '7 páginas: Inicio, Tours, Detalle de tour, Nosotros, Precios, FAQ, Reservar',
-      '3 guías: Tony (EN/ES/AR), Johnny (EN/CS), Larion (RU/JA/EN/ES)',
+      '2 guías: Tony (EN/ES/AR), Larion (RU/EN)',
       '7 tours con precios en JPY',
       'Idiomas: EN, ES, AR, CS, RU (soporte RTL para árabe)',
       'Sección de preguntas frecuentes',

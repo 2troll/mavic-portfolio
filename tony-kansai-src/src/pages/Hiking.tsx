@@ -133,9 +133,11 @@ function RouteCard({ route, index }: { route: typeof HIKING_ROUTES[0]; index: nu
               <MapPin size={11} style={{ color: route.accent }} />{tc(route.distance)}
             </div>
           )}
-          <div className="flex items-center gap-1.5 text-xs text-white/50">
-            <Users size={11} style={{ color: route.accent }} />{tc(route.companions)}
-          </div>
+          {route.companions && (
+            <div className="flex items-center gap-1.5 text-xs text-white/50">
+              <Users size={11} style={{ color: route.accent }} />{tc(route.companions)}
+            </div>
+          )}
         </div>
 
         <div className="mb-4">

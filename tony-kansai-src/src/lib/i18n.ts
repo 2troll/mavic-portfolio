@@ -1,15 +1,14 @@
 // ─────────────────────────────────────────────────────────────────────────────
 // i18n.ts — Tony Hanma | Private Kansai Guide
-// Languages: English · Spanish · Arabic · Czech · Russian
+// Languages: English · Spanish · Arabic · Russian
 // ─────────────────────────────────────────────────────────────────────────────
 
-export type Lang = 'en' | 'es' | 'ar' | 'cs' | 'ru';
+export type Lang = 'en' | 'es' | 'ar' | 'ru';
 
 export const LANG_META: Record<Lang, { label: string; flag: string; dir: 'ltr' | 'rtl' }> = {
   en: { label: 'EN', flag: '🇬🇧', dir: 'ltr' },
   es: { label: 'ES', flag: '🇪🇸', dir: 'ltr' },
   ar: { label: 'AR', flag: '🇸🇦', dir: 'rtl' },
-  cs: { label: 'CS', flag: '🇨🇿', dir: 'ltr' },
   ru: { label: 'РУ', flag: '🇷🇺', dir: 'ltr' },
 };
 
@@ -708,186 +707,6 @@ const ar: Tr = {
   },
 };
 
-// ─────────────────────────────────────────────────────────────────────────────
-// CZECH
-// ─────────────────────────────────────────────────────────────────────────────
-
-const cs: Tr = {
-  nav: {
-    home: 'Domů',
-    tours: 'Výlety',
-    hiking: 'Hory',
-    guide: 'Průvodce Kansai',
-    book: 'Kniha',
-    about: 'O Tonym',
-    pricing: 'Ceník',
-    faq: 'Otázky',
-    booking: 'Rezervovat',
-  },
-
-  hero: {
-    badge: 'Soukromý průvodce Kansai',
-    headline: 'Objevte pravou duši Japonska',
-    sub: 'Soukromé a intimní výlety přes Ósaku, Kjóto, Naru a dál — vedené Tonym Hanmou, vášnivým místním průvodcem, který dává každý skrytý příběh k životu.',
-    cta_wa: 'Napsat přes WhatsApp',
-    cta_tours: 'Prozkoumat výlety',
-  },
-
-  stats: {
-    destinations: 'destinací',
-    languages: 'jazyků',
-    private: 'soukromé',
-  },
-
-  discover: {
-    label: 'Kansai čeká',
-    heading: 'Kde každá ulice skrývá tajemství',
-    body: 'Kansai je bijící srdce tradičního Japonska. Od lucernami osvětlených uliček Gionu po tyčící se brány Fušimi Inari — každý kout šeptá staletí historie. Nechte Tonyho, aby vás zavedl za hranice cestovních průvodců.',
-    tag1: 'Skryté chrámy',
-    tag2: 'Místní trhy',
-    tag3: 'Dávná historie',
-    caption: 'Brány torii ve Fušimi Inari za úsvitu, Kjóto',
-  },
-
-  fortress: {
-    label: 'Nejlepší z Ósaky',
-    heading: 'Hrad Ósaka a',
-    headingAccent: 'město pod ním',
-    body: 'Hrad Ósaka není jen památník — je to brána do bouřlivého feudálního období Japonska. Tony spojuje hrad s živými ulicemi Ósaky, kde moderní stánky takoyaki sousedí s opevněními ze 16. století. Celodenní dobrodružství, které žádný průvodce nedokáže napodobit.',
-    cta: 'Zobrazit výlet do Ósaky',
-    caption: 'Hrad Ósaka s třešňovými květy, jaro',
-  },
-
-  tours_section: {
-    label: 'Ručně sestavené itineráře',
-    heading: 'Výlety pro každou zvědavost',
-    sub: 'Každý výlet je soukromý, probíhá vaším tempem a Tony ho vede osobně. Žádní cizí lidé, žádné uspěchané skupiny — jen vy, vaši cestovní společníci a skutečné Japonsko.',
-    view: 'Zobrazit podrobnosti',
-  },
-
-  cta_section: {
-    heading: 'Připraveni zažít Kansai?',
-    sub: 'Pošlete Tonymu zprávu přes WhatsApp, abyste ověřili dostupnost, položili otázky nebo rezervovali soukromý výlet. Odpoví během několika hodin.',
-    cta_wa: 'Napsat Tonymu přes WhatsApp',
-    cta_pricing: 'Zobrazit ceník',
-  },
-
-  tours_page: {
-    label: 'Všechny zážitky',
-    heading: 'Soukromé výlety po Kansai',
-    sub: 'Sedm destinací, sedm příběhů. Každý výlet je soukromý, plně průvodcovský a uzpůsobený vašemu tempu.',
-  },
-
-  about_page: {
-    label: 'Váš průvodce',
-    heading: 'Poznejte Tonyho Hanmu',
-    sub: 'Průvodce sídlící v Ósace, vypravěč a neúnavný nadšenec pro vše, co Kansai nabízí.',
-    story_label: 'Příběh',
-    story_heading: 'Vášeň místního, sdílená s celým světem',
-    private_guide: 'Soukromý průvodce',
-    based: 'Sídlí v Ósace',
-    guiding: '',
-    rating: 'Hodnocení 5 hvězd',
-    speaks: 'Mluví 5 jazyky',
-    cta_wa: 'Napsat Tonymu',
-    cta_tours: 'Zobrazit výlety',
-    cta_pricing: 'Zobrazit ceník',
-    coverage_label: 'Oblast pokrytí',
-  },
-
-  pricing_page: {
-    label: 'Transparentní ceny',
-    heading: 'Jednoduchá paušální cena',
-    sub: 'Jedna cena za skupinu — žádné skryté poplatky, žádné výpočty na osobu. Celý den je váš.',
-    included_label: 'Co je zahrnuto',
-    faq_link: 'Přečíst časté otázky',
-    reply_note: 'Tony obvykle odpoví přes WhatsApp do několika hodin.',
-  },
-
-  faq_page: {
-    label: 'Vaše otázky',
-    heading: 'Často kladené otázky',
-    sub: 'Vše, co potřebujete vědět před rezervací soukromého výletu po Kansai.',
-    still_q: 'Stále máte otázky?',
-    still_sub: 'Tony rád zodpoví cokoli před rezervací. Napište mu přes WhatsApp — odpoví během několika hodin.',
-    cta_wa: 'Zeptat se Tonyho přes WhatsApp',
-    cta_pricing: 'Zobrazit ceník',
-  },
-
-  booking_page: {
-    label: 'Zajistěte si svůj den',
-    heading: 'Rezervujte soukromý výlet',
-    sub: 'Vyberte výlet, zvolte datum a pošlete Tonymu své údaje přes WhatsApp. Tony potvrdí dostupnost a vše zařídí.',
-    step1: 'Vyberte výlet',
-    step2: 'Vyberte datum',
-    step3: 'Zvolte počet hostů',
-    step4: 'Odeslat přes WhatsApp',
-    guests_label: 'Počet osob',
-    notes_placeholder: 'Zvláštní přání, potřeby přístupnosti nebo dotazy pro Tonyho…',
-    per_group: 'za skupinu',
-    duration: 'Celý den',
-    cta: 'Odeslat žádost o rezervaci přes WhatsApp',
-    note: 'Tony potvrdí vaši rezervaci ručně. Online se neplatí.',
-    today: 'Dnes',
-    prev_month: 'Předchozí měsíc',
-    next_month: 'Následující měsíc',
-    days: ['Ne', 'Po', 'Út', 'St', 'Čt', 'Pá', 'So'],
-    months: [
-      'Leden', 'Únor', 'Březen', 'Duben', 'Květen', 'Červen',
-      'Červenec', 'Srpen', 'Září', 'Říjen', 'Listopad', 'Prosinec',
-    ],
-    wa_msg: (tour, date, guests, notes) =>
-      `Ahoj Tony! Chtěl/a bych rezervovat soukromý výlet.\n\n` +
-      `Výlet: ${tour}\n` +
-      `Datum: ${date}\n` +
-      `Počet osob: ${guests}\n` +
-      (notes ? `Poznámky: ${notes}\n` : '') +
-      `\nProsím, dej mi vědět, zda je toto datum volné. Děkuji!`,
-  },
-
-  footer: {
-    about: 'Soukromě vedené výlety srdcem Kansai — Ósaka, Kjóto, Nara a dál.',
-    based: 'Sídlí v Ósace, Japonsko',
-    nav_label: 'Navigace',
-    contact_label: 'Kontakt',
-    rights: 'Všechna práva vyhrazena.',
-    replies: 'Odpoví během několika hodin',
-    privacy: 'Zásady ochrany osobních údajů',
-  },
-
-  reviews: {
-    title: 'Vítejte v Japonsku',
-    subtitle: 'Co říkají cestovatelé po dni stráveném s námi v Kansai.',
-    based_on: 'Na základě {n} recenzí',
-    all: 'Přečíst všechny recenze',
-    show_all: 'Přečíst všech {n} recenzí',
-    show_less: 'Zobrazit méně',
-    empty: 'Zatím nejsou zveřejněny žádné recenze — buďte první, kdo ostatním cestovatelům poví o svém dni.',
-    cta_title: 'Cestovali jste s námi?',
-    cta_body: 'Řekněte ostatním cestovatelům o svém dni — zabere to minutu a můžete přidat fotku.',
-    cta_button: 'Napsat recenzi',
-  },
-
-  cookie: {
-    title: 'Používáme cookies',
-    body: 'Používáme Google Analytics, abychom pochopili, jak návštěvníci web používají. Žádné osobní údaje nejsou prodávány ani sdíleny s třetími stranami.',
-    accept: 'Přijmout',
-    decline: 'Odmítnout',
-    learn: 'Zásady ochrany osobních údajů',
-  },
-
-  common: {
-    book_now: 'Rezervovat',
-    book_wa: 'Rezervovat přes WhatsApp',
-    per_group: 'za skupinu',
-    replies: 'Odpoví během několika hodin',
-  },
-};
-
-// ─────────────────────────────────────────────────────────────────────────────
-// RUSSIAN
-// ─────────────────────────────────────────────────────────────────────────────
-
 const ru: Tr = {
   nav: {
     home: 'Главная',
@@ -1064,4 +883,4 @@ const ru: Tr = {
 // Assembled export
 // ─────────────────────────────────────────────────────────────────────────────
 
-export const TRANSLATIONS: Record<Lang, Tr> = { en, es, ar, cs, ru };
+export const TRANSLATIONS: Record<Lang, Tr> = { en, es, ar, ru };

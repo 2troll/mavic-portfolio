@@ -55,7 +55,7 @@ export default function Booking() {
   const formatSelectedDate = () => {
     if (!selectedDate) return ''
     const d = new Date(selectedDate.y, selectedDate.m, selectedDate.d)
-    return d.toLocaleDateString(lang === 'ar' ? 'ar-SA' : lang === 'cs' ? 'cs-CZ' : lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : 'en-US', {
+    return d.toLocaleDateString(lang === 'ar' ? 'ar-SA' : lang === 'ru' ? 'ru-RU' : lang === 'es' ? 'es-ES' : 'en-US', {
       weekday: 'long', year: 'numeric', month: 'long', day: 'numeric',
     })
   }
