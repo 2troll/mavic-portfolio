@@ -9,20 +9,20 @@ import { LanguageProvider, detectLang } from './contexts/LanguageContext'
 import { translate } from './lib/dict'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
 import { CookieBanner } from './components/CookieBanner'
-import Tours from './pages/Tours'
-import TourDetail from './pages/TourDetail'
-import About from './pages/About'
-import Pricing from './pages/Pricing'
-import FAQ from './pages/FAQ'
-import Booking from './pages/Booking'
-import Privacy from './pages/Privacy'
-import Terms from './pages/Terms'
-import Cookies from './pages/Cookies'
-import Safety from './pages/Safety'
-import Legal from './pages/Legal'
-import Accessibility from './pages/Accessibility'
-import NotFound from './pages/NotFound'
-import GuideDetail from './pages/GuideDetail'
+const Tours = lazy(() => import('./pages/Tours'))
+const TourDetail = lazy(() => import('./pages/TourDetail'))
+const About = lazy(() => import('./pages/About'))
+const Pricing = lazy(() => import('./pages/Pricing'))
+const FAQ = lazy(() => import('./pages/FAQ'))
+const Booking = lazy(() => import('./pages/Booking'))
+const Privacy = lazy(() => import('./pages/Privacy'))
+const Terms = lazy(() => import('./pages/Terms'))
+const Cookies = lazy(() => import('./pages/Cookies'))
+const Safety = lazy(() => import('./pages/Safety'))
+const Legal = lazy(() => import('./pages/Legal'))
+const Accessibility = lazy(() => import('./pages/Accessibility'))
+const NotFound = lazy(() => import('./pages/NotFound'))
+const GuideDetail = lazy(() => import('./pages/GuideDetail'))
 // El panel interno pesa lo que pesa (contratos en PDF incluidos) y sólo lo
 // usa Tony: se descarga sólo cuando se entra en /admin.
 const Admin = lazy(() => import('./pages/Admin'))
@@ -34,10 +34,10 @@ import { Corte } from './v7/Corte'
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
 }
-import Hiking from './pages/Hiking'
-import Guide from './pages/Guide'
-import Book from './pages/Book'
-import HikingDetail from './pages/HikingDetail'
+const Hiking = lazy(() => import('./pages/Hiking'))
+const Guide = lazy(() => import('./pages/Guide'))
+const Book = lazy(() => import('./pages/Book'))
+const HikingDetail = lazy(() => import('./pages/HikingDetail'))
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
@@ -112,6 +112,9 @@ function Layout() {
     <div className="min-h-screen bg-japan-dark font-sans">
       <Navbar />
       <main>
+        {/* Las páginas antiguas se descargan sólo al visitarlas: la página de
+            cada idioma (v7) no carga ninguna. */}
+        <Suspense fallback={<div className="min-h-screen" />}>
         <Routes>
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:id" element={<TourDetail />} />
@@ -132,6 +135,7 @@ function Layout() {
           <Route path="/accessibility" element={<Accessibility />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+        </Suspense>
       </main>
       <Footer />
       <WhatsAppFloat />

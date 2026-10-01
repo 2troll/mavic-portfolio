@@ -7,6 +7,7 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { MODELOS } from './datosRutas'
 import type { ModeloId } from './datosRutas'
 import { movimientoReducido } from './petalos'
@@ -14,7 +15,8 @@ import { movimientoReducido } from './petalos'
 interface Props { modelo: ModeloId; variante?: 'osaka' | 'agua'; etiqueta: string }
 
 const cache = new Map<string, Promise<THREE.Group>>()
-const cargador = new GLTFLoader()
+// Los .glb van comprimidos con meshopt (gltf-transform optimize): 2,5 MB → 180 KB.
+const cargador = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 function carga(url: string) {
   if (!cache.has(url)) cache.set(url, cargador.loadAsync(url).then((g) => g.scene))
   return cache.get(url)!

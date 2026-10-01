@@ -35,7 +35,7 @@ export interface Pagina {
   ideas: { titulo: string; sub: string; tarjetas: Tarjeta[] }
   precios: { titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string; desde: string }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[] }
-  resenas?: { titulo: string; nota?: string }
+  resenas?: { titulo: string; nota?: string; opinar: string }
   faq: { titulo: string; items: Pregunta[] }
   contacto: {
     titulo: string; sub: string
@@ -199,7 +199,7 @@ const es: Pagina = {
     tuHora: 'Tu hora',
     divisas: ['EUR', 'MXN'],
   },
-  resenas: { titulo: 'Lo que dicen' },
+  resenas: { titulo: 'Lo que dicen', opinar: '¿Hiciste un tour con nosotros? Deja tu opinión' },
   faq: {
     titulo: 'Preguntas',
     items: [
@@ -318,7 +318,7 @@ const en: Pagina = {
     tuHora: 'Your time',
     divisas: ['GBP'],
   },
-  resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.' },
+  resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.', opinar: 'Toured with us? Leave a review' },
   faq: {
     titulo: 'Questions',
     items: [
@@ -437,7 +437,7 @@ const ar: Pagina = {
     tuHora: 'توقيتك',
     divisas: ['AED', 'SAR'],
   },
-  resenas: { titulo: 'ماذا يقول الضيوف', nota: 'مراجعات أصلية باللغة الإسبانية.' },
+  resenas: { titulo: 'ماذا يقول الضيوف', nota: 'مراجعات أصلية باللغة الإسبانية.', opinar: 'هل قمت بجولة معنا؟ اترك رأيك' },
   faq: {
     titulo: 'أسئلة',
     items: [
@@ -667,8 +667,8 @@ export const HERMANAS: Record<GuiaId, { id: PaginaId; etiqueta: string }[]> = {
 }
 
 export const GUIAS: Record<GuiaId, { nombre: string; foto: string; wa: string }> = {
-  tony: { nombre: 'Tony Hanma', foto: '/guides/guide-tony.jpg', wa: WA_TONY },
-  larion: { nombre: 'Larion', foto: '/guides/guide-larion.jpg', wa: WA_LARION },
+  tony: { nombre: 'Tony Hanma', foto: '/guides/guide-tony.webp', wa: WA_TONY },
+  larion: { nombre: 'Larion', foto: '/guides/guide-larion.webp', wa: WA_LARION },
 }
 
 /** Nombre del guía tal como se escribe en cada idioma. */

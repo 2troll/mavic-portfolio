@@ -2,18 +2,20 @@
 // Orden pensado para quien llega sin saber nada: qué es → cómo funciona →
 // quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { ViajeScroll } from './ViajeScroll'
 import { Sakura } from './Sakura'
-import { Rutas } from './Rutas'
 import { ETIQUETAS, MODELOS } from './datosRutas'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
-import { cargaFuenteArabe } from '../lib/arabicFont'
+import { foto } from './foto'
 import './v7.css'
+
+// El 3D (three.js) llega después de pintar la foto de portada.
+const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
+const Rutas = lazy(() => import('./Rutas').then((m) => ({ default: m.Rutas })))
 
 const BASE = 'https://tonykansaiguide.com'
 
@@ -111,7 +113,7 @@ function Cabecera({ p }: { p: Pagina }) {
           </Link>
         ))}
       </nav>
-      <a className="v7-boton v7-boton-peq" href={enlaceWa(g.wa, msg)} target="_blank" rel="noopener noreferrer">
+      <a className="v7-boton v7-boton-peq" href={enlaceWa(g.wa, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — WhatsApp`}>
         <IconoWa /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
       </a>
     </header>
@@ -265,6 +267,36 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
   )
 }
 
+/** Para Google: el guía (con sus idiomas), la zona y las tres tarifas. */
+function datosEstructurados(p: Pagina) {
+  const g = GUIAS[p.guia]
+  const idiomas = p.guia === 'larion' ? ['ru', 'en'] : ['es', 'en', 'ar']
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    name: p.seo.titulo.split(' | ')[0],
+    description: p.seo.descripcion,
+    url: `${BASE}${p.ruta}`,
+    inLanguage: p.lang,
+    serviceType: 'Private tour guide',
+    areaServed: p.zona.lugares.map((l) => ({ '@type': 'Place', name: l.nombre, geo: { '@type': 'GeoCoordinates', latitude: l.lat, longitude: l.lon } })),
+    availableLanguage: idiomas,
+    provider: {
+      '@type': 'Person',
+      name: g.nombre,
+      image: `${BASE}${g.foto}`,
+      jobTitle: 'Private tour guide',
+      knowsLanguage: idiomas,
+      telephone: `+${g.wa}`,
+      worksFor: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, email: CORREO },
+    },
+    offers: p.precios.planes.map((pl) => ({
+      '@type': 'Offer', name: pl.nombre, description: pl.detalle,
+      priceSpecification: { '@type': 'PriceSpecification', price: pl.yenes, priceCurrency: 'JPY', ...(pl.desde ? { minPrice: pl.yenes } : {}) },
+    })),
+  }
+}
+
 // ── Página ───────────────────────────────────────────────────────────────────
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -277,7 +309,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
     setLang(p.lang)
     try { localStorage.setItem('v7-pagina', p.id) } catch { /* bloqueado */ }
-    if (p.lang === 'ar') cargaFuenteArabe()
   }, [p.lang, setLang])
 
   const hermanas = HERMANAS[p.guia]
@@ -299,6 +330,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta property="og:image" content={`${BASE}${p.hero.foto}`} />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
+        <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
       </Helmet>
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
@@ -307,7 +339,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <main>
         {/* Portada de la página */}
         <section className="v7-hero">
-          <img className="v7-hero-foto" src={p.hero.foto} alt="" fetchPriority="high" />
+          <img className="v7-hero-foto" {...foto(p.hero.foto)} alt="" width={1800} height={1200} fetchPriority="high" />
           <div className="v7-hero-velo" />
           <Sakura />
           <div className="v7-hero-texto">
@@ -322,7 +354,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </section>
 
         {/* El viaje: globo fijo que se mueve con el scroll */}
-        <ViajeScroll p={p} />
+        <Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense>
 
         {/* Cómo funciona */}
         <section id="como" className="v7-seccion">
@@ -357,7 +389,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </section>
 
         {/* Rutas con modelo 3D */}
-        <Rutas p={p} />
+        <Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense>
 
         {/* Precios */}
         <section id="precios" className="v7-seccion">
@@ -379,6 +411,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <section className="v7-seccion">
             <h2>{p.resenas.titulo}</h2>
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
+            <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
             <div className="v7-resenas">
               {resenas.map((r) => (
                 <figure key={r.id} className="tarjeta" lang="es" dir="ltr">

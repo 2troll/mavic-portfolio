@@ -44,15 +44,12 @@ jobs:
         run: npm install --legacy-peer-deps
         working-directory: tony-kansai-src
 
+      # Build normal por trozos (antes era un solo HTML de 1,6 MB con todo
+      # dentro: la foto de portada tardaba ~20 s en móvil lento, y el modo
+      # single-file reescribía las rutas a relativas y rompía el manifest).
       - name: Build tony-kansai guide
         run: npm run build
         working-directory: tony-kansai-src
-        env:
-          VITE_SINGLE_FILE: 'true'
-
-      - name: Fix tony-kansai inline scripts
-        run: |
-          sed -i 's/<script type="module" crossorigin>/<script type="module">/g' tony-kansai-src/dist/index.html
 
       - name: Prepare deploy folder
         run: |
@@ -85,6 +82,15 @@ jobs:
                 sed -E -e '/rel="alternate" hreflang=/d' \
                   -e '/rel="canonical"|og:url/ s|https://tonykansaiguide\.com/|https://tonykansaiguide.com/'"$ruta"'/|' \
                   deploy/index.html > "deploy/$ruta/index.html"
+                # Las páginas de idioma precargan su foto de portada (la de
+                # hero.foto en src/v7/contenido.ts): sin esto el navegador no
+                # la ve hasta que arranca React y tarda varios segundos.
+                case "$ruta" in
+                  es) foto=kioto ;; en) foto=nara ;; ar) foto=osaka ;; ru|larion) foto=miyajima ;; *) foto= ;;
+                esac
+                if [ -n "$foto" ]; then
+                  sed -i "s|</head>|<link rel=\"preload\" as=\"image\" href=\"/v7/fotos/$foto.webp\" imagesrcset=\"/v7/fotos/$foto-900.webp 900w, /v7/fotos/$foto.webp 1800w\" imagesizes=\"100vw\" fetchpriority=\"high\" /></head>|" "deploy/$ruta/index.html"
+                fi
                 echo "  200 -> /$ruta"
               done
 

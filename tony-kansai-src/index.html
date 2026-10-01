@@ -57,14 +57,18 @@
       "description": "100% private guided tours in Osaka, Kyoto, Nara and Kansai Japan in English, Spanish, Arabic and Russian.",
       "url": "https://tonykansaiguide.com",
       "telephone": "+819024585949",
-      "priceRange": "¥¥¥",
-      "image": "https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?auto=format&fit=crop&w=1200&h=630&q=80",
+      "priceRange": "¥38,000–¥70,000",
+      "email": "tony@tonykansaiguide.com",
+      "image": "https://tonykansaiguide.com/v7/fotos/kioto.jpg",
       "areaServed": [
         { "@type": "City", "name": "Osaka" },
         { "@type": "City", "name": "Kyoto" },
         { "@type": "City", "name": "Nara" },
         { "@type": "City", "name": "Kobe" },
-        { "@type": "Place", "name": "Kōyasan" }
+        { "@type": "City", "name": "Himeji" },
+        { "@type": "Place", "name": "Kōyasan" },
+        { "@type": "City", "name": "Hiroshima" },
+        { "@type": "Place", "name": "Miyajima" }
       ],
       "availableLanguage": [
         { "@type": "Language", "name": "English" },
@@ -106,7 +110,9 @@
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+    <!-- Sin bloquear el primer pintado: las páginas de idioma (v7) usan la
+         letra del sistema; sólo las páginas antiguas usan estas. -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" media="print" onload="this.media='all'" />
   </head>
   <body>
     <div id="root"></div>

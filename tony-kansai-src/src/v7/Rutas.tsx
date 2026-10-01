@@ -9,6 +9,7 @@ import { META, MODELOS, PRECIO, RUTAS_LARION, RUTAS_TONY, ETIQUETAS, TEXTOS } fr
 import type { RutaId } from './datosRutas'
 import type { Pagina } from './contenido'
 import { GUIAS } from './contenido'
+import { foto } from './foto'
 
 const FOTO: Record<RutaId, string> = {
   kioto: '/v7/fotos/kioto.jpg', osaka: '/v7/fotos/osaka.jpg', nara: '/v7/fotos/nara.jpg', himeji: '/v7/fotos/himeji.jpg',
@@ -37,7 +38,7 @@ export function Rutas({ p }: { p: Pagina }) {
       <div className="v7-rutas-pestanas" role="tablist" aria-label={et.titulo}>
         {ids.map((id) => (
           <button key={id} type="button" role="tab" aria-selected={id === sel} aria-controls="v7-ruta-panel" onClick={() => setSel(id)}>
-            <img src={FOTO[id]} alt="" loading="lazy" />
+            <img src={foto(FOTO[id]).src.replace('.webp', '-900.webp')} alt="" width={34} height={34} loading="lazy" />
             <span>{TEXTOS[p.lang][id].titulo}</span>
           </button>
         ))}
@@ -45,7 +46,7 @@ export function Rutas({ p }: { p: Pagina }) {
 
       <div id="v7-ruta-panel" className="v7-ruta" role="tabpanel">
         <div className="v7-ruta-escena">
-          <img key={sel} className="v7-ruta-fondo" src={FOTO[sel]} alt="" />
+          <img key={sel} className="v7-ruta-fondo" {...foto(FOTO[sel], '(max-width: 820px) 100vw, 55vw')} alt="" width={1800} height={1200} />
           <Visor3D modelo={meta.modelo} variante={meta.variante} etiqueta={`${et.modelo}: ${r.titulo}`} />
           <p className="v7-ruta-gira" aria-hidden="true">{et.gira}</p>
           <a className="v7-ruta-credito" href={modelo.url} target="_blank" rel="noopener noreferrer" lang="en" dir="ltr">

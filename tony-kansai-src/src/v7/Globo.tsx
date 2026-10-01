@@ -276,7 +276,14 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
     window.addEventListener('pointerup', arriba)
 
     const texturas: THREE.Texture[] = []
-    Promise.all([cargaImagen('/v7/tierra.jpg'), cargaImagen('/v7/japon.jpg')])
+    // Las texturas (≈1,3 MB) no se piden hasta que el globo está cerca de verse.
+    const cerca = new IntersectionObserver(([e]) => {
+      if (!e.isIntersecting) return
+      cerca.disconnect()
+      cargaTexturas()
+    }, { rootMargin: '100% 0px' })
+    cerca.observe(el)
+    const cargaTexturas = () => Promise.all([cargaImagen(window.innerWidth < 900 ? '/v7/tierra-2k.jpg' : '/v7/tierra.jpg'), cargaImagen('/v7/japon.jpg')])
       .then(([imgTierra, imgJapon]) => {
         if (!vivo) return
         const tx = new THREE.Texture(imgTierra)
@@ -303,7 +310,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
     return () => {
       vivo = false
       cancelAnimationFrame(raf)
-      io.disconnect(); ro.disconnect()
+      io.disconnect(); ro.disconnect(); cerca.disconnect()
       document.removeEventListener('visibilitychange', alCambiarPestana)
       el.removeEventListener('pointerdown', abajo)
       window.removeEventListener('pointermove', mueve)

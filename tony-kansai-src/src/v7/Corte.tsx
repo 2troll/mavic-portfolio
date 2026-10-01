@@ -103,11 +103,13 @@ export function Corte({ rutas }: { rutas: string[] }) {
   }
 
   return (
-    <div className={`v7-corte ${fase}`} aria-hidden="true">
+    <div className={`v7-corte ${fase}`} aria-hidden="true" style={{ position: 'fixed', inset: 0, pointerEvents: fase === 'nada' ? 'none' : undefined, zIndex: 300 }}>
       <div className="v7-corte-mitad a" />
       <div className="v7-corte-mitad b" onAnimationEnd={termina} />
       <div className="v7-corte-filo"><span /></div>
-      <canvas ref={lienzo} className="v7-corte-petalos" />
+      {/* Estilo en línea: Corte se monta antes de que llegue v7.css y, sin
+          esto, el lienzo entraba en el flujo y empujaba la página (CLS). */}
+      <canvas ref={lienzo} className="v7-corte-petalos" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
     </div>
   )
 }

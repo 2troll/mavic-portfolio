@@ -12,6 +12,8 @@
   --linea: rgba(0, 0, 0, 0.08);
   --acento: #d93a2b;
   --acento-tinta: #ffffff;
+  /* Fondo de botón con texto blanco: más oscuro que el acento para pasar AA. */
+  --boton: #c0301f;
   --cristal: rgba(255, 255, 255, 0.62);
   --cristal-borde: rgba(255, 255, 255, 0.7);
   --sombra: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 28px rgba(0, 0, 0, 0.06);
@@ -26,7 +28,9 @@
   min-height: 100vh;
   overflow-x: clip;
 }
-.v7.lang-ar { font-family: 'IBM Plex Sans Arabic', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif; line-height: 1.7; }
+/* Árabe con la letra del sistema (SF Arabic, Noto, Segoe): una fuente web
+   llegaba tarde y movía la portada al cargar. */
+.v7.lang-ar { font-family: -apple-system, BlinkMacSystemFont, 'SF Arabic', 'Segoe UI', 'Noto Sans Arabic', 'Noto Naskh Arabic', Tahoma, sans-serif; line-height: 1.7; }
 
 @media (prefers-color-scheme: dark) {
   .v7:not(.v7-portada) {
@@ -67,7 +71,7 @@
 .v7-boton {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0;
-  background: var(--acento); color: var(--acento-tinta) !important;
+  background: var(--boton); color: var(--acento-tinta) !important;
   font: inherit; font-weight: 600; font-size: 16px; text-decoration: none; cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
@@ -245,6 +249,10 @@
 .v7-resenas blockquote { margin: 0; white-space: pre-line; }
 .v7-resenas figcaption { color: var(--tenue); font-size: 14px; }
 .v7-resenas img { border-radius: 14px; width: 100%; max-height: 260px; object-fit: cover; }
+
+/* Enlace al buzón de reseñas */
+.v7-opinar { margin: -12px 0 20px !important; }
+.v7-opinar a { color: var(--acento); font-weight: 600; text-decoration: none; }
 
 /* Preguntas */
 .v7-faq { display: grid; gap: 10px; max-width: 52rem; }
