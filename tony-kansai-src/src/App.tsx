@@ -9,7 +9,6 @@ import { LanguageProvider, detectLang } from './contexts/LanguageContext'
 import { translate } from './lib/dict'
 import { WhatsAppFloat } from './components/WhatsAppFloat'
 import { CookieBanner } from './components/CookieBanner'
-import Home from './pages/Home'
 import Tours from './pages/Tours'
 import TourDetail from './pages/TourDetail'
 import About from './pages/About'
@@ -27,6 +26,13 @@ import GuideDetail from './pages/GuideDetail'
 // El panel interno pesa lo que pesa (contratos en PDF incluidos) y sólo lo
 // usa Tony: se descarga sólo cuando se entra en /admin.
 const Admin = lazy(() => import('./pages/Admin'))
+// Web v7: portada con globo y una página por idioma. Van fuera del Navbar y
+// del Footer antiguos; three.js sólo se descarga al entrar en ellas.
+const Portada = lazy(() => import('./v7/Portada'))
+const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
+const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion'> = {
+  '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
+}
 import Hiking from './pages/Hiking'
 import Guide from './pages/Guide'
 import Book from './pages/Book'
@@ -77,6 +83,16 @@ function Layout() {
   const { pathname } = useLocation()
   const isAdmin = pathname.startsWith('/admin')
 
+  const v7 = RUTAS_V7[pathname.replace(/\/+$/, '') || '/']
+  if (v7) {
+    return (
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: v7 === 'portada' ? '#05070d' : '#f5f5f7' }} />}>
+        {v7 === 'portada' ? <Portada /> : <PaginaGuia key={v7} id={v7} />}
+        <CookieBanner />
+      </Suspense>
+    )
+  }
+
   if (isAdmin) {
     return (
       <Suspense fallback={<div className="min-h-screen bg-japan-dark" />}>
@@ -93,7 +109,6 @@ function Layout() {
       <Navbar />
       <main>
         <Routes>
-          <Route path="/" element={<Home />} />
           <Route path="/tours" element={<Tours />} />
           <Route path="/tours/:id" element={<TourDetail />} />
           <Route path="/hiking" element={<Hiking />} />

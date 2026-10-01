@@ -44,11 +44,14 @@ const DETAIL: Record<string, {
 }
 
 export default function GuideDetail() {
-  const { tc } = useLanguage()
+  const { tc, lang } = useLanguage()
   const { id } = useParams<{ id: string }>()
   const guide = GUIDES.find(g => g.id === id)
 
   if (!guide) return <Navigate to="/about" replace />
+  // La ficha larga de Larion daba datos que no son suyos (nativo en japonés,
+  // los 88 templos…). Su página de verdad es la v7, en ruso o en inglés.
+  if (guide.id === 'larion') return <Navigate to={lang === 'ru' ? '/ru/' : '/larion/'} replace />
 
   const detail = DETAIL[guide.id] ?? { paragraphs: [guide.bio], quote: '', approach: '', funFacts: [] }
   const signatureTours = guide.highlights
