@@ -28,7 +28,7 @@ import GuideDetail from './pages/GuideDetail'
 const Admin = lazy(() => import('./pages/Admin'))
 // Web v7: portada con globo y una página por idioma. Van fuera del Navbar y
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
-const Portada = lazy(() => import('./v7/Portada'))
+import Redirige from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 import { Corte } from './v7/Corte'
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion'> = {
@@ -89,7 +89,7 @@ function Layout() {
     return (
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: v7 === 'portada' ? '#05070d' : '#f5f5f7' }} />}>
-        {v7 === 'portada' ? <Portada /> : <PaginaGuia key={v7} id={v7} />}
+        {v7 === 'portada' ? <Redirige /> : <PaginaGuia key={v7} id={v7} />}
         <CookieBanner compacto />
       </Suspense>
       <Corte rutas={Object.keys(RUTAS_V7)} />

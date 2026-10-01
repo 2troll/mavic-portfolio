@@ -7,6 +7,8 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { ViajeScroll } from './ViajeScroll'
 import { Sakura } from './Sakura'
+import { Rutas } from './Rutas'
+import { ETIQUETAS, MODELOS } from './datosRutas'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -88,7 +90,7 @@ function useSeccionActiva(ids: string[]) {
 }
 
 function Cabecera({ p }: { p: Pagina }) {
-  const activa = useSeccionActiva(['zona', 'como', 'precios', 'contacto'])
+  const activa = useSeccionActiva(['zona', 'rutas', 'como', 'precios', 'contacto'])
   const g = GUIAS[p.guia]
   const msg = p.contacto.plantilla(VACIO)
   return (
@@ -98,7 +100,7 @@ function Cabecera({ p }: { p: Pagina }) {
         <span>Tony Kansai Guide</span>
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
-        {([['zona', p.nav.zona], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
+        {([['rutas', ETIQUETAS[p.lang].titulo], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
       </nav>
@@ -263,36 +265,6 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
   )
 }
 
-/** Galería horizontal con imán, como las de Apple; flechas en escritorio. */
-function Ideas({ p }: { p: Pagina }) {
-  const pista = useRef<HTMLDivElement>(null)
-  const mueve = (sentido: 1 | -1) => {
-    const el = pista.current
-    if (!el) return
-    const rtl = p.dir === 'rtl' ? -1 : 1
-    el.scrollBy({ left: sentido * rtl * el.clientWidth * 0.8, behavior: 'smooth' })
-  }
-  return (
-    <>
-      <div className="v7-ideas" ref={pista}>
-        {p.ideas.tarjetas.map((t) => (
-          <article key={t.titulo} className="v7-idea">
-            <img src={t.foto} alt="" loading="lazy" />
-            <div className="v7-idea-texto">
-              <h3>{t.titulo}</h3>
-              <p>{t.texto}</p>
-            </div>
-          </article>
-        ))}
-      </div>
-      <div className="v7-ideas-flechas">
-        <button type="button" onClick={() => mueve(-1)} aria-label="←">{p.dir === 'rtl' ? '→' : '←'}</button>
-        <button type="button" onClick={() => mueve(1)} aria-label="→">{p.dir === 'rtl' ? '←' : '→'}</button>
-      </div>
-    </>
-  )
-}
-
 // ── Página ───────────────────────────────────────────────────────────────────
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -304,6 +276,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
     setLang(p.lang)
+    try { localStorage.setItem('v7-pagina', p.id) } catch { /* bloqueado */ }
     if (p.lang === 'ar') cargaFuenteArabe()
   }, [p.lang, setLang])
 
@@ -383,12 +356,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </div>
         </section>
 
-        {/* Ideas */}
-        <section className="v7-seccion">
-          <h2>{p.ideas.titulo}</h2>
-          <p className="v7-entradilla">{p.ideas.sub}</p>
-          <Ideas p={p} />
-        </section>
+        {/* Rutas con modelo 3D */}
+        <Rutas p={p} />
 
         {/* Precios */}
         <section id="precios" className="v7-seccion">
@@ -472,6 +441,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <ul lang="es" dir="ltr">
             {CREDITOS.map((c) => (
               <li key={c.url}>{c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
+            ))}
+            {Object.values(MODELOS).map((m) => (
+              <li key={m.url}>Modelo 3D «{m.titulo}»: <a href={m.url} target="_blank" rel="noopener noreferrer">{m.autor}</a>, {m.licencia} (Poly Pizza)</li>
             ))}
           </ul>
         </details>
