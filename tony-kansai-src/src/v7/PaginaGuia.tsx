@@ -143,7 +143,7 @@ function Precios({ p }: { p: Pagina }) {
           <article key={plan.nombre} className="v7-plan tarjeta">
             <h3>{plan.nombre}</h3>
             <p className="v7-plan-detalle">{plan.detalle}</p>
-            <p className="v7-plan-precio"><bdi>{plan.precio}</bdi></p>
+            <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
             {cambios.length > 0 && (
               <p className="v7-plan-aprox">

@@ -31,7 +31,7 @@ export interface Pagina {
   guiaTxt: { titulo: string; idiomas: string; bio: string[]; otro?: { texto: string; enlace: string; ruta: string } }
   zona: { titulo: string; sub: string; lugares: Lugar[]; origenes: Lugar[] }
   ideas: { titulo: string; sub: string; tarjetas: Tarjeta[] }
-  precios: { titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string }
+  precios: { titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string; desde: string }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[] }
   resenas?: { titulo: string; nota?: string }
   faq: { titulo: string; items: Pregunta[] }
@@ -56,10 +56,8 @@ export interface DatosContacto {
 
 /** WhatsApp de Tony (el de las facturas, perfil.json). */
 export const WA_TONY = '819024585949'
-/** PENDIENTE: Larion aún no tiene contacto propio en la web; de momento le
- *  llegan los mensajes por el WhatsApp de la empresa. Cambiar aquí cuando
- *  tengamos su número o su Telegram. */
-export const WA_LARION = '819024585949'
+/** WhatsApp de Larion (+81 80 8506 7586). */
+export const WA_LARION = '818085067586'
 export const CORREO = 'tony@tonykansaiguide.com'
 
 const F = '/v7/fotos/'
@@ -87,7 +85,10 @@ const O = {
 }
 
 /** Precios de data.ts (PRICING). Si cambian allí, cambiarlos aquí. */
-const YEN = { medio: 75000, completo: 95000, completoMax: 130000, lejos: 165000 }
+// Media del mercado en Japón (2026): medio día ¥18.000–35.000 y día de 8 h
+// ¥35.000–60.000 por grupo. Nos ponemos algo por encima: español, árabe y
+// ruso son idiomas de guía escasos.
+const YEN = { medio: 38000, completo: 58000, lejos: 70000 }
 
 /** Créditos de las fotos (las CC BY / BY-SA obligan a citarlos). */
 export const CREDITOS = [
@@ -169,10 +170,10 @@ const es: Pagina = {
   },
   precios: {
     titulo: 'Precios claros',
-    porGrupo: 'por grupo',
+    porGrupo: 'por grupo', desde: 'desde',
     planes: [
-      { nombre: 'Medio día', detalle: '4–5 horas · hasta 4 personas', precio: fmtYen(YEN.medio, '.'), yenes: YEN.medio },
-      { nombre: 'Día completo', detalle: '8–12 horas · hasta 6 personas', precio: `${fmtYen(YEN.completo, '.')}–${fmtYen(YEN.completoMax, '.')}`, yenes: YEN.completo, desde: true },
+      { nombre: 'Medio día', detalle: '4 horas · hasta 6 personas', precio: fmtYen(YEN.medio, '.'), yenes: YEN.medio },
+      { nombre: 'Día completo', detalle: '8 horas · hasta 6 personas', precio: fmtYen(YEN.completo, '.'), yenes: YEN.completo },
       { nombre: 'Excursión lejana', detalle: 'Kōyasan, Amanohashidate, Kumano…', precio: fmtYen(YEN.lejos, '.'), yenes: YEN.lejos, desde: true },
     ],
     notas: [
@@ -291,10 +292,10 @@ const en: Pagina = {
   },
   precios: {
     titulo: 'Clear prices',
-    porGrupo: 'per group',
+    porGrupo: 'per group', desde: 'from',
     planes: [
-      { nombre: 'Half day', detalle: '4–5 hours · up to 4 people', precio: fmtYen(YEN.medio, ','), yenes: YEN.medio },
-      { nombre: 'Full day', detalle: '8–12 hours · up to 6 people', precio: `${fmtYen(YEN.completo, ',')}–${fmtYen(YEN.completoMax, ',')}`, yenes: YEN.completo, desde: true },
+      { nombre: 'Half day', detalle: '4 hours · up to 6 people', precio: fmtYen(YEN.medio, ','), yenes: YEN.medio },
+      { nombre: 'Full day', detalle: '8 hours · up to 6 people', precio: fmtYen(YEN.completo, ','), yenes: YEN.completo },
       { nombre: 'Long day trip', detalle: 'Kōyasan, Amanohashidate, Kumano…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
     ],
     notas: [
@@ -409,10 +410,10 @@ const ar: Pagina = {
   },
   precios: {
     titulo: 'أسعار واضحة',
-    porGrupo: 'للمجموعة',
+    porGrupo: 'للمجموعة', desde: 'ابتداءً من',
     planes: [
-      { nombre: 'نصف يوم', detalle: '٤–٥ ساعات · حتى ٤ أشخاص', precio: fmtYen(YEN.medio, ','), yenes: YEN.medio },
-      { nombre: 'يوم كامل', detalle: '٨–١٢ ساعة · حتى ٦ أشخاص', precio: `${fmtYen(YEN.completo, ',')}–${fmtYen(YEN.completoMax, ',')}`, yenes: YEN.completo, desde: true },
+      { nombre: 'نصف يوم', detalle: '٤ ساعات · حتى ٦ أشخاص', precio: fmtYen(YEN.medio, ','), yenes: YEN.medio },
+      { nombre: 'يوم كامل', detalle: '٨ ساعات · حتى ٦ أشخاص', precio: fmtYen(YEN.completo, ','), yenes: YEN.completo },
       { nombre: 'رحلة بعيدة', detalle: 'كوياسان، أمانوهاشيداته، كومانو…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
     ],
     notas: [
@@ -532,10 +533,10 @@ const ru: Pagina = {
   },
   precios: {
     titulo: 'Понятные цены',
-    porGrupo: 'за группу',
+    porGrupo: 'за группу', desde: 'от',
     planes: [
-      { nombre: 'Полдня', detalle: '4–5 часов · до 4 человек', precio: fmtYen(YEN.medio, ' '), yenes: YEN.medio },
-      { nombre: 'Целый день', detalle: '8–12 часов · до 6 человек', precio: `${fmtYen(YEN.completo, ' ')}–${fmtYen(YEN.completoMax, ' ')}`, yenes: YEN.completo, desde: true },
+      { nombre: 'Полдня', detalle: '4 часа · до 6 человек', precio: fmtYen(YEN.medio, ' '), yenes: YEN.medio },
+      { nombre: 'Целый день', detalle: '8 часов · до 6 человек', precio: fmtYen(YEN.completo, ' '), yenes: YEN.completo },
       { nombre: 'Дальняя поездка', detalle: 'Хиросима и Миядзима, Коясан…', precio: fmtYen(YEN.lejos, ' '), yenes: YEN.lejos, desde: true },
     ],
     notas: [

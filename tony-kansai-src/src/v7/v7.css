@@ -206,6 +206,7 @@
 .v7-plan h3 { font-size: 1.2rem; }
 .v7-plan-detalle { color: var(--tenue); font-size: 15px; }
 .v7-plan-precio { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px !important; font-variant-numeric: tabular-nums; }
+.v7-plan-desde { font-size: 1rem; font-weight: 500; color: var(--tenue); }
 .v7-plan-grupo { color: var(--tenue); font-size: 14px; }
 .v7-plan-aprox { color: var(--tenue); font-size: 14px; margin-top: 6px !important; }
 .v7-notas { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--tenue); }

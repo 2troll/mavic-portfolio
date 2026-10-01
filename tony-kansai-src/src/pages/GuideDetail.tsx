@@ -21,7 +21,7 @@ const DETAIL: Record<string, {
     approach: "Tony's tours move at your pace. No rushing between checkpoints, no ticking boxes. If you want to sit in a temple garden for an hour, you sit. If you find a noodle shop you want to try, you try it. The itinerary is a starting point — the day belongs to you.",
     funFacts: [
       "Has eaten at hundreds of different family kitchens in Osaka",
-      "Speaks Arabic after years living in the Middle East before Japan",
+      "Has spoken Arabic since childhood",
       "Once walked the Kumano Kodo solo for three days straight",
       "Personally knows owners of several hidden restaurants he takes guests to",
     ],

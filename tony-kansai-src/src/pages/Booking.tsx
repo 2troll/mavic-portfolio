@@ -79,7 +79,7 @@ export default function Booking() {
     <>
       <PageSEO
         title={tc('Book a Private Japan Tour · Kansai Guide')}
-        description={tc('Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto and Kansai from ¥75,000 per group.')}
+        description={tc('Choose your tour, select a date and send Tony a WhatsApp message. Private guided tours in Osaka, Kyoto and Kansai from ¥38,000 per group.')}
         path="/booking"
         breadcrumb={[{ name: 'Book', path: '/booking' }]}
       />
