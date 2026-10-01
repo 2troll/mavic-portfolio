@@ -26,7 +26,14 @@ const tours = ids('TOURS')
 const rutas = ids('HIKING_ROUTES')
 
 const paginas = [
-  { loc: '/', priority: '1.0', changefreq: 'weekly' },
+  { loc: '/', priority: '1.0', changefreq: 'weekly', v7: true },
+  // Web v7: una página por idioma y guía. Se declaran entre sí con hreflang
+  // (Tony: es/en/ar; Larion: ru/en), no con ?lang=.
+  { loc: '/es', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
+  { loc: '/en', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
+  { loc: '/ar', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
+  { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
+  { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
   { loc: '/tours', priority: '0.9', changefreq: 'weekly' },
   ...tours.map((id) => ({ loc: `/tours/${id}`, priority: '0.85', changefreq: 'monthly' })),
   { loc: '/hiking', priority: '0.9', changefreq: 'weekly' },
@@ -46,13 +53,25 @@ const paginas = [
   { loc: '/accessibility', priority: '0.3', changefreq: 'yearly' },
 ]
 
-const url = ({ loc, priority, changefreq }) => {
+const V7 = {
+  tony: [['es', '/es/'], ['en', '/en/'], ['ar', '/ar/']],
+  larion: [['ru', '/ru/'], ['en', '/larion/']],
+  portada: [['es', '/es/'], ['en', '/en/'], ['ar', '/ar/'], ['ru', '/ru/']],
+}
+
+const url = ({ loc, priority, changefreq, v7 }) => {
   // GitHub Pages sirve cada ruta como carpeta: sin barra final responde 301 y
   // Search Console no indexa URLs que redirigen. /booking es un .html real.
   const conBarra = loc === '/' || loc === '/booking' || loc.endsWith('.html') ? loc : `${loc}/`
   const abs = `${BASE}${conBarra}`
   // Las páginas .html llevan su propio selector de idioma dentro; el resto
   // usan ?lang= y se declaran con hreflang para que Google indexe cada versión.
+  if (v7) {
+    const grupo = V7[v7 === true ? 'portada' : v7]
+    const alt = grupo.map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
+      + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}/"/>`
+    return `  <url>\n    <loc>${abs}</loc>${alt}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+  }
   const alternates = loc.endsWith('.html') ? '' : LANGS.map((l) =>
     `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${abs}${l === 'en' ? '' : `?lang=${l}`}"/>`
   ).join('') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs}"/>`

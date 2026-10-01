@@ -80,7 +80,10 @@ jobs:
                 mkdir -p "deploy/$ruta"
                 # La copia trae el canonical de la portada: sin esto, Google
                 # tomaba las 44 páginas por duplicados de "/" y no las indexaba.
-                sed -E '/rel="canonical"|rel="alternate"|og:url/ s|https://tonykansaiguide\.com/|https://tonykansaiguide.com/'"$ruta"'/|' \
+                # Los hreflang estáticos son los de la portada: en una subruta
+                # serían falsos, así que se quitan (los pone React y el sitemap).
+                sed -E -e '/rel="alternate" hreflang=/d' \
+                  -e '/rel="canonical"|og:url/ s|https://tonykansaiguide\.com/|https://tonykansaiguide.com/'"$ruta"'/|' \
                   deploy/index.html > "deploy/$ruta/index.html"
                 echo "  200 -> /$ruta"
               done

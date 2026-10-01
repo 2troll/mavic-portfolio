@@ -3,21 +3,62 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://tonykansaiguide.com/</loc>
-    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/"/>
-    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/?lang=es"/>
-    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/?lang=cs"/>
-    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
   </url>
   <url>
     <loc>https://tonykansaiguide.com/tours/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/"/>
     <changefreq>weekly</changefreq>
@@ -28,7 +69,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/osaka-food/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/osaka-food/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/osaka-food/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/osaka-food/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/osaka-food/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/osaka-food/"/>
     <changefreq>monthly</changefreq>
@@ -39,7 +79,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/hidden-kyoto/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/hidden-kyoto/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/hidden-kyoto/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/hidden-kyoto/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/hidden-kyoto/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/hidden-kyoto/"/>
     <changefreq>monthly</changefreq>
@@ -50,7 +89,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/kobe-refined/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/kobe-refined/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/kobe-refined/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/kobe-refined/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/kobe-refined/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/kobe-refined/"/>
     <changefreq>monthly</changefreq>
@@ -61,7 +99,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/nara-sacred/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/nara-sacred/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/nara-sacred/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/nara-sacred/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/nara-sacred/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/nara-sacred/"/>
     <changefreq>monthly</changefreq>
@@ -72,7 +109,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/koyasan/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/koyasan/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/koyasan/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/koyasan/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/koyasan/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/koyasan/"/>
     <changefreq>monthly</changefreq>
@@ -83,7 +119,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/osaka-kyoto-grand/"/>
     <changefreq>monthly</changefreq>
@@ -94,7 +129,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/mountain-hiking/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/mountain-hiking/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/mountain-hiking/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/mountain-hiking/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/mountain-hiking/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/mountain-hiking/"/>
     <changefreq>monthly</changefreq>
@@ -105,7 +139,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/uji-matcha/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/uji-matcha/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/uji-matcha/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/uji-matcha/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/uji-matcha/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/uji-matcha/"/>
     <changefreq>monthly</changefreq>
@@ -116,7 +149,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/arashiyama-sagano/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/arashiyama-sagano/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/arashiyama-sagano/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/arashiyama-sagano/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/arashiyama-sagano/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/arashiyama-sagano/"/>
     <changefreq>monthly</changefreq>
@@ -127,7 +159,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/amanohashidate-ine/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/amanohashidate-ine/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/amanohashidate-ine/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/amanohashidate-ine/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/amanohashidate-ine/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/amanohashidate-ine/"/>
     <changefreq>monthly</changefreq>
@@ -138,7 +169,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/kumano-kodo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/kumano-kodo/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/kumano-kodo/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/kumano-kodo/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/kumano-kodo/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/kumano-kodo/"/>
     <changefreq>monthly</changefreq>
@@ -149,7 +179,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/biwa-hikone/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/biwa-hikone/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/tours/biwa-hikone/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/tours/biwa-hikone/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/tours/biwa-hikone/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/tours/biwa-hikone/"/>
     <changefreq>monthly</changefreq>
@@ -160,7 +189,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/"/>
     <changefreq>weekly</changefreq>
@@ -171,7 +199,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-kongo/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-kongo/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-kongo/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-kongo/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-kongo/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-kongo/"/>
     <changefreq>monthly</changefreq>
@@ -182,7 +209,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-wakakusa/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-wakakusa/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-wakakusa/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-wakakusa/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-wakakusa/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-wakakusa/"/>
     <changefreq>monthly</changefreq>
@@ -193,7 +219,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/fukuchiyama-tunnels/"/>
     <changefreq>monthly</changefreq>
@@ -204,7 +229,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-ikoma/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-ikoma/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-ikoma/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-ikoma/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-ikoma/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-ikoma/"/>
     <changefreq>monthly</changefreq>
@@ -215,7 +239,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/minoh-falls/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/minoh-falls/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/minoh-falls/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/minoh-falls/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/minoh-falls/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/minoh-falls/"/>
     <changefreq>monthly</changefreq>
@@ -226,7 +249,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/fushimi-inari/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/fushimi-inari/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/fushimi-inari/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/fushimi-inari/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/fushimi-inari/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/fushimi-inari/"/>
     <changefreq>monthly</changefreq>
@@ -237,7 +259,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/ponpon-mountain/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/ponpon-mountain/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/ponpon-mountain/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/ponpon-mountain/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/ponpon-mountain/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/ponpon-mountain/"/>
     <changefreq>monthly</changefreq>
@@ -248,7 +269,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/zato-valley/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/zato-valley/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/zato-valley/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/zato-valley/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/zato-valley/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/zato-valley/"/>
     <changefreq>monthly</changefreq>
@@ -259,7 +279,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/hoshi-no-buranko/"/>
     <changefreq>monthly</changefreq>
@@ -270,7 +289,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/sky-house-daito/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/sky-house-daito/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/sky-house-daito/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/sky-house-daito/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/sky-house-daito/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/sky-house-daito/"/>
     <changefreq>monthly</changefreq>
@@ -281,7 +299,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-hiei/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-hiei/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-hiei/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-hiei/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-hiei/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-hiei/"/>
     <changefreq>monthly</changefreq>
@@ -292,7 +309,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-maya/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-maya/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-maya/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-maya/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-maya/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-maya/"/>
     <changefreq>monthly</changefreq>
@@ -303,7 +319,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-rokko/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-rokko/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-rokko/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-rokko/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-rokko/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-rokko/"/>
     <changefreq>monthly</changefreq>
@@ -314,7 +329,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-atago/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-atago/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-atago/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-atago/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-atago/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-atago/"/>
     <changefreq>monthly</changefreq>
@@ -325,7 +339,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-yoshino/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-yoshino/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-yoshino/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-yoshino/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-yoshino/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-yoshino/"/>
     <changefreq>monthly</changefreq>
@@ -336,7 +349,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/nunobiki-falls/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/nunobiki-falls/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/nunobiki-falls/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/nunobiki-falls/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/nunobiki-falls/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/nunobiki-falls/"/>
     <changefreq>monthly</changefreq>
@@ -347,7 +359,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-daimonji/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-daimonji/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-daimonji/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-daimonji/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-daimonji/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-daimonji/"/>
     <changefreq>monthly</changefreq>
@@ -358,7 +369,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/hiking/mt-kasagi/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/hiking/mt-kasagi/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/hiking/mt-kasagi/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/hiking/mt-kasagi/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/hiking/mt-kasagi/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/hiking/mt-kasagi/"/>
     <changefreq>monthly</changefreq>
@@ -369,7 +379,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/guide/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/guide/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/guide/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/guide/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/guide/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/guide/"/>
     <changefreq>monthly</changefreq>
@@ -380,7 +389,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/book/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/book/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/book/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/book/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/book/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/book/"/>
     <changefreq>monthly</changefreq>
@@ -391,7 +399,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/about/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/about/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/about/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/about/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/about/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/about/"/>
     <changefreq>monthly</changefreq>
@@ -402,7 +409,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/pricing/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/pricing/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/pricing/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/pricing/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/pricing/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/pricing/"/>
     <changefreq>monthly</changefreq>
@@ -413,7 +419,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/faq/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/faq/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/faq/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/faq/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/faq/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/faq/"/>
     <changefreq>monthly</changefreq>
@@ -424,7 +429,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/booking"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/booking?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/booking?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/booking?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/booking?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/booking"/>
     <changefreq>weekly</changefreq>
@@ -440,7 +444,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/terms/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/terms/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/terms/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/terms/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/terms/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/terms/"/>
     <changefreq>yearly</changefreq>
@@ -451,7 +454,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/privacy/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/privacy/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/privacy/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/privacy/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/privacy/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/privacy/"/>
     <changefreq>yearly</changefreq>
@@ -462,7 +464,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/cookies/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/cookies/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/cookies/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/cookies/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/cookies/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/cookies/"/>
     <changefreq>yearly</changefreq>
@@ -473,7 +474,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/safety/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/safety/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/safety/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/safety/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/safety/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/safety/"/>
     <changefreq>monthly</changefreq>
@@ -484,7 +484,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/legal/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/legal/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/legal/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/legal/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/legal/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/legal/"/>
     <changefreq>yearly</changefreq>
@@ -495,7 +494,6 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/accessibility/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/accessibility/?lang=es"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/accessibility/?lang=ar"/>
-    <xhtml:link rel="alternate" hreflang="cs" href="https://tonykansaiguide.com/accessibility/?lang=cs"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/accessibility/?lang=ru"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/accessibility/"/>
     <changefreq>yearly</changefreq>
