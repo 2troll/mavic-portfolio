@@ -30,6 +30,8 @@ export interface Pagina {
   como: { titulo: string; pasos: { t: string; d: string }[]; noTitulo: string; no: string[] }
   guiaTxt: { titulo: string; idiomas: string; bio: string[]; otro?: { texto: string; enlace: string; ruta: string } }
   zona: { titulo: string; sub: string; lugares: Lugar[]; origenes: Lugar[] }
+  /** Las cuatro frases del globo con scroll: origen → Kansai → hotel → destino. */
+  viaje: string[]
   ideas: { titulo: string; sub: string; tarjetas: Tarjeta[] }
   precios: { titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string; desde: string }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[] }
@@ -111,7 +113,7 @@ function lineas(campos: [string, string][]): string {
 // ── Español · Tony · España y México ─────────────────────────────────────────
 
 const es: Pagina = {
-  id: 'es', lang: 'es', dir: 'ltr', ruta: '/es/', guia: 'tony',
+  id: 'es', lang: 'es', viaje: ['Sales de Madrid o de Cancún.', 'Aterrizas en Kansai.', 'Te recojo en el vestíbulo de tu hotel.', 'Y pasamos el día donde quieras.'], dir: 'ltr', ruta: '/es/', guia: 'tony',
   seo: {
     titulo: 'Guía privado en español en Japón — Kioto, Osaka y Nara | Tony Kansai Guide',
     descripcion: 'Tony, guía privado en español en Kansai. Te recoge en tu hotel y pasáis el día en Kioto, Osaka, Nara o Kobe. Trato directo, sin agencia y con precio cerrado por grupo.',
@@ -232,7 +234,7 @@ const es: Pagina = {
 // ── English · Tony · United Kingdom ─────────────────────────────────────────
 
 const en: Pagina = {
-  id: 'en', lang: 'en', dir: 'ltr', ruta: '/en/', guia: 'tony',
+  id: 'en', lang: 'en', viaje: ['You fly in from London.', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we spend the day wherever you like.'], dir: 'ltr', ruta: '/en/', guia: 'tony',
   seo: {
     titulo: 'Private guide in Kyoto, Osaka & Nara — booked directly | Tony Kansai Guide',
     descripcion: 'Tony is a private guide in Kansai. He meets you in your hotel lobby and you spend the day in Kyoto, Osaka, Nara or Kobe. No agency, no group, one fixed price per party.',
@@ -351,7 +353,7 @@ const en: Pagina = {
 // ── العربية · Tony · الخليج ─────────────────────────────────────────────────
 
 const ar: Pagina = {
-  id: 'ar', lang: 'ar', dir: 'rtl', ruta: '/ar/', guia: 'tony',
+  id: 'ar', lang: 'ar', viaje: ['تنطلق من دبي أو الرياض.', 'تهبط في كانساي.', 'ألتقيك في بهو فندقك.', 'ونقضي اليوم حيثما تحب.'], dir: 'rtl', ruta: '/ar/', guia: 'tony',
   seo: {
     titulo: 'مرشد خاص باللغة العربية في اليابان — كيوتو وأوساكا ونارا | Tony Kansai Guide',
     descripcion: 'طوني مرشد خاص يتحدث العربية في كانساي. يلتقيك في فندقك وتقضون اليوم في كيوتو أو أوساكا أو نارا أو كوبي. تعامل مباشر بلا وكالة، وسعر ثابت للمجموعة، ومطاعم حلال وأوقات صلاة في المسار.',
@@ -476,7 +478,7 @@ const lugaresLarion = (n: Record<string, string>): Lugar[] => [
 ]
 
 const ru: Pagina = {
-  id: 'ru', lang: 'ru', dir: 'ltr', ruta: '/ru/', guia: 'larion',
+  id: 'ru', lang: 'ru', viaje: ['Вы вылетаете из Москвы.', 'Прилетаете в Кансай.', 'Я встречаю вас в лобби отеля.', 'И мы проводим день там, где вам хочется.'], dir: 'ltr', ruta: '/ru/', guia: 'larion',
   seo: {
     titulo: 'Частный гид в Японии на русском — Киото, Осака, Хиросима | Tony Kansai Guide',
     descripcion: 'Ларион — частный гид на русском языке. Встречает в лобби отеля и везёт в Киото, Осаку, Нару, Хиросиму или на Миядзиму. Напрямую, без агентства, фиксированная цена за группу.',
@@ -594,6 +596,7 @@ const ru: Pagina = {
 const larion: Pagina = {
   ...en,
   id: 'larion', ruta: '/larion/', guia: 'larion',
+  viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west — as far as Hiroshima.'],
   seo: {
     titulo: 'Larion — private guide in Kansai and Hiroshima | Tony Kansai Guide',
     descripcion: 'Larion is a private guide in Russian and English. He meets you at your hotel and takes you to Kyoto, Osaka, Nara, Hiroshima or Miyajima. Booked directly, one fixed price per group.',

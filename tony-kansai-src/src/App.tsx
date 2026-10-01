@@ -30,6 +30,7 @@ const Admin = lazy(() => import('./pages/Admin'))
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
 const Portada = lazy(() => import('./v7/Portada'))
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
+import { Corte } from './v7/Corte'
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
 }
@@ -86,10 +87,13 @@ function Layout() {
   const v7 = RUTAS_V7[pathname.replace(/\/+$/, '') || '/']
   if (v7) {
     return (
+      <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: v7 === 'portada' ? '#05070d' : '#f5f5f7' }} />}>
         {v7 === 'portada' ? <Portada /> : <PaginaGuia key={v7} id={v7} />}
-        <CookieBanner />
+        <CookieBanner compacto />
       </Suspense>
+      <Corte rutas={Object.keys(RUTAS_V7)} />
+      </>
     )
   }
 

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Globo } from './Globo'
+import { Sakura } from './Sakura'
 import type { PaginaId } from './contenido'
 import { GUIAS } from './contenido'
 import './v7.css'
@@ -92,6 +93,7 @@ export default function Portada() {
         etiquetaAria="Globo terráqueo que gira y se acerca a Kansai, en Japón"
       />
 
+      <Sakura cantidad={14} />
       <header className="v7-portada-marca">
         <img src="/logo-square.svg" alt="" width={28} height={28} />
         <span>Tony Kansai Guide</span>

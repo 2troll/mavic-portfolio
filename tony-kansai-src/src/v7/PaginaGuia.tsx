@@ -2,10 +2,11 @@
 // Orden pensado para quien llega sin saber nada: qué es → cómo funciona →
 // quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
 
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { Globo } from './Globo'
+import { ViajeScroll } from './ViajeScroll'
+import { Sakura } from './Sakura'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -72,7 +73,22 @@ function useResenas(activas: boolean) {
 
 // ── Piezas ───────────────────────────────────────────────────────────────────
 
+/** Qué sección se está leyendo, para marcarla en el menú. */
+function useSeccionActiva(ids: string[]) {
+  const [activa, setActiva] = useState('')
+  useEffect(() => {
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean) as HTMLElement[]
+    const io = new IntersectionObserver((entradas) => {
+      for (const e of entradas) if (e.isIntersecting) setActiva(e.target.id)
+    }, { rootMargin: '-45% 0px -50% 0px' })
+    els.forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [ids.join()])
+  return activa
+}
+
 function Cabecera({ p }: { p: Pagina }) {
+  const activa = useSeccionActiva(['zona', 'como', 'precios', 'contacto'])
   const g = GUIAS[p.guia]
   const msg = p.contacto.plantilla(VACIO)
   return (
@@ -82,9 +98,9 @@ function Cabecera({ p }: { p: Pagina }) {
         <span>Tony Kansai Guide</span>
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
-        <a href="#como">{p.nav.como}</a>
-        <a href="#zona">{p.nav.zona}</a>
-        <a href="#precios">{p.nav.precios}</a>
+        {([['zona', p.nav.zona], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
+          <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
+        ))}
       </nav>
       <nav className="v7-idiomas" aria-label={p.nav.idioma}>
         {HERMANAS[p.guia].map((h) => (
@@ -220,6 +236,63 @@ function Contacto({ p }: { p: Pagina }) {
   )
 }
 
+/** En móvil, el botón de WhatsApp se queda abajo en cuanto se deja atrás la portada. */
+function BarraMovil({ p, href }: { p: Pagina; href: string }) {
+  const [ver, setVer] = useState(false)
+  useEffect(() => {
+    const hero = document.querySelector('.v7-hero')
+    const contacto = document.getElementById('contacto')
+    if (!hero) return
+    let pasada = false, enContacto = false
+    const pinta = () => setVer(pasada && !enContacto)
+    const io = new IntersectionObserver((es) => {
+      for (const e of es) {
+        if (e.target === hero) pasada = !e.isIntersecting
+        if (e.target === contacto) enContacto = e.isIntersecting
+      }
+      pinta()
+    })
+    io.observe(hero)
+    if (contacto) io.observe(contacto)
+    return () => io.disconnect()
+  }, [])
+  return (
+    <div className={`v7-barra-movil cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
+      <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}><IconoWa /> {p.hero.cta}</a>
+    </div>
+  )
+}
+
+/** Galería horizontal con imán, como las de Apple; flechas en escritorio. */
+function Ideas({ p }: { p: Pagina }) {
+  const pista = useRef<HTMLDivElement>(null)
+  const mueve = (sentido: 1 | -1) => {
+    const el = pista.current
+    if (!el) return
+    const rtl = p.dir === 'rtl' ? -1 : 1
+    el.scrollBy({ left: sentido * rtl * el.clientWidth * 0.8, behavior: 'smooth' })
+  }
+  return (
+    <>
+      <div className="v7-ideas" ref={pista}>
+        {p.ideas.tarjetas.map((t) => (
+          <article key={t.titulo} className="v7-idea">
+            <img src={t.foto} alt="" loading="lazy" />
+            <div className="v7-idea-texto">
+              <h3>{t.titulo}</h3>
+              <p>{t.texto}</p>
+            </div>
+          </article>
+        ))}
+      </div>
+      <div className="v7-ideas-flechas">
+        <button type="button" onClick={() => mueve(-1)} aria-label="←">{p.dir === 'rtl' ? '→' : '←'}</button>
+        <button type="button" onClick={() => mueve(1)} aria-label="→">{p.dir === 'rtl' ? '←' : '→'}</button>
+      </div>
+    </>
+  )
+}
+
 // ── Página ───────────────────────────────────────────────────────────────────
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -227,7 +300,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const g = GUIAS[p.guia]
   const { setLang } = useLanguage()
   const resenas = useResenas(!!p.resenas)
-  const [zonaLista, setZonaLista] = useState(false)
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -237,7 +309,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
   const hermanas = HERMANAS[p.guia]
   const msgCorto = p.contacto.plantilla(VACIO)
-  const centroZona = p.guia === 'larion' ? { lat: 34.62, lon: 134.15, dist: 1.155 } : { lat: 34.82, lon: 135.42, dist: 1.1 }
 
   return (
     <div className={`v7 v7-pagina lang-${p.lang}`} lang={p.lang} dir={p.dir}>
@@ -265,6 +336,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <section className="v7-hero">
           <img className="v7-hero-foto" src={p.hero.foto} alt="" fetchPriority="high" />
           <div className="v7-hero-velo" />
+          <Sakura />
           <div className="v7-hero-texto">
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
@@ -275,6 +347,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             </div>
           </div>
         </section>
+
+        {/* El viaje: globo fijo que se mueve con el scroll */}
+        <ViajeScroll p={p} />
 
         {/* Cómo funciona */}
         <section id="como" className="v7-seccion">
@@ -308,42 +383,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </div>
         </section>
 
-        {/* Zona, con el globo */}
-        <section id="zona" className="v7-seccion v7-zona">
-          <div className="v7-zona-texto">
-            <h2>{p.zona.titulo}</h2>
-            <p>{p.zona.sub}</p>
-            <ul className={`v7-lugares ${zonaLista ? 'listo' : ''}`}>
-              {p.zona.lugares.map((l) => <li key={l.nombre}>{l.nombre}</li>)}
-            </ul>
-          </div>
-          <Globo
-            className="v7-globo-zona"
-            lugares={p.zona.lugares}
-            origenes={p.zona.origenes}
-            inicio={p.zona.origenes[0] ? { lat: p.zona.origenes[0].lat, lon: p.zona.origenes[0].lon } : undefined}
-            final={centroZona}
-            duracion={6000}
-            alTerminar={() => setZonaLista(true)}
-            etiquetaAria={`${p.zona.titulo}: ${p.zona.lugares.map((l) => l.nombre).join(', ')}`}
-          />
-        </section>
-
         {/* Ideas */}
         <section className="v7-seccion">
           <h2>{p.ideas.titulo}</h2>
           <p className="v7-entradilla">{p.ideas.sub}</p>
-          <div className="v7-ideas">
-            {p.ideas.tarjetas.map((t) => (
-              <article key={t.titulo} className="v7-idea">
-                <img src={t.foto} alt="" loading="lazy" />
-                <div className="v7-idea-texto">
-                  <h3>{t.titulo}</h3>
-                  <p>{t.texto}</p>
-                </div>
-              </article>
-            ))}
-          </div>
+          <Ideas p={p} />
         </section>
 
         {/* Precios */}
@@ -399,6 +443,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Contacto p={p} />
         </section>
       </main>
+      <BarraMovil p={p} href={enlaceWa(g.wa, msgCorto)} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

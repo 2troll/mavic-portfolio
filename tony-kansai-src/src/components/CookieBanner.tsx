@@ -18,7 +18,8 @@ function grantAnalytics() {
   })
 }
 
-export function CookieBanner() {
+/** compacto: versión de cristal en una línea para las páginas v7. */
+export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) {
   const { t } = useLanguage()
   const [visible, setVisible] = useState(false)
 
@@ -40,6 +41,21 @@ export function CookieBanner() {
   const decline = () => {
     localStorage.setItem(CONSENT_KEY, 'declined')
     setVisible(false)
+  }
+
+  if (compacto) {
+    return visible ? (
+      <div className="v7-cookies" role="region" aria-label={t.cookie.title}>
+        <p>
+          {t.cookie.title}.{' '}
+          <Link to="/privacy" onClick={decline}>{t.cookie.learn}</Link>
+        </p>
+        <div>
+          <button type="button" onClick={decline}>{t.cookie.decline}</button>
+          <button type="button" className="si" onClick={accept}>{t.cookie.accept}</button>
+        </div>
+      </div>
+    ) : null
   }
 
   return (

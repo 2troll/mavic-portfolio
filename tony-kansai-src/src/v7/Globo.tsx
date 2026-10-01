@@ -20,6 +20,8 @@ interface Props {
   inicio?: { lat: number; lon: number }
   final: { lat: number; lon: number; dist: number }
   duracion?: number
+  /** Si se pasa, el vuelo lo manda el scroll (0–1) y no el reloj. */
+  progreso?: { current: number }
   alTerminar?: () => void
   etiquetaAria: string
   className?: string
@@ -78,7 +80,7 @@ function cargaImagen(src: string): Promise<HTMLImageElement> {
   })
 }
 
-export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, alTerminar, etiquetaAria, className }: Props) {
+export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, progreso, alTerminar, etiquetaAria, className }: Props) {
   const caja = useRef<HTMLDivElement>(null)
   const capaEtiquetas = useRef<HTMLDivElement>(null)
   const [estado, setEstado] = useState<'cargando' | 'listo' | 'fallo'>('cargando')
@@ -157,7 +159,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
         pts.push(v.multiplyScalar(1 + Math.sin(Math.PI * t) * (0.04 + angulo * 0.09)))
       }
       const tubo = new THREE.Mesh(
-        new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 160, 0.0024, 6, false),
+        new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 160, 0.0016, 6, false),
         new THREE.MeshBasicMaterial({ color: ACENTO, transparent: true, opacity: 0.9, depthWrite: false }),
       )
       tubo.geometry.setDrawRange(0, 0)
@@ -172,6 +174,9 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
     const reducido = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false
 
     let arranque = 0
+    // Con scroll: el valor mostrado persigue al del scroll como un muelle,
+    // para que la cámara no dé tirones con la rueda del ratón.
+    let suavizado = progreso?.current ?? 0
     let visible = false
     let terminado = false
     let raf = 0
@@ -196,7 +201,13 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
       raf = 0
       if (!vivo) return
       if (!arranque) arranque = ahora
-      const t = reducido ? 1 : recorta((ahora - arranque) / duracion)
+      let t: number
+      if (progreso) {
+        suavizado += (recorta(progreso.current) - suavizado) * (reducido ? 1 : 0.09)
+        t = suavizado
+      } else {
+        t = reducido ? 1 : recorta((ahora - arranque) / duracion)
+      }
       const giroT = suave(recorta(t / 0.85))
       const zoomT = suave(recorta((t - 0.3) / 0.7))
 
@@ -207,7 +218,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
       dir.applyAxisAngle(eje, desvio.x)
       dir.applyAxisAngle(new THREE.Vector3().crossVectors(eje, dir).normalize(), desvio.y)
       // Un balanceo muy lento cuando ha terminado, para que no parezca una foto.
-      if (t >= 1 && !reducido) dir.applyAxisAngle(eje, Math.sin(ahora / 7000) * 0.012)
+      if (!reducido) dir.applyAxisAngle(eje, Math.sin(ahora / 7000) * 0.012 * recorta((t - 0.9) / 0.1))
 
       const dist = THREE.MathUtils.lerp(3.6, final.dist, zoomT)
       camara.position.copy(dir).multiplyScalar(dist)
@@ -218,7 +229,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
       arcos.forEach((a) => {
         a.geometry.setDrawRange(0, Math.floor(recorta((t - 0.15) / 0.6) * (a.geometry.index?.count ?? 0)))
         // De cerca el tubo sería una franja enorme: cuenta el viaje y se va.
-        const op = 0.9 * (1 - recorta((zoomT - 0.55) / 0.35))
+        const op = 0.9 * (1 - recorta((zoomT - 0.2) / 0.3))
         ;(a.material as THREE.MeshBasicMaterial).opacity = op
         a.visible = op > 0.01
       })
@@ -239,7 +250,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
         e.el.style.transform = `translate(${((v.x + 1) / 2) * w}px, ${((1 - v.y) / 2) * h}px)`
       }
 
-      if (t >= 1 && !terminado) { terminado = true; terminar.current?.() }
+      if (t >= 0.98 && !terminado) { terminado = true; terminar.current?.() }
       if (visible && !document.hidden) raf = requestAnimationFrame(cuadro)
     }
     const seguir = () => { if (!raf && visible && !document.hidden && vivo) raf = requestAnimationFrame(cuadro) }
