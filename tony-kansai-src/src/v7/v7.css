@@ -5,21 +5,25 @@
    tirones en móviles modestos. */
 
 .v7 {
-  --fondo: #f5f5f7;
-  --superficie: #ffffff;
-  --tinta: #1d1d1f;
-  --tenue: #6e6e73;
-  --linea: rgba(0, 0, 0, 0.08);
-  --acento: #d93a2b;
+  /* Paleta japonesa: papel kinari, tinta sumi y bermellón shu. */
+  --fondo: #f3eee4;
+  --superficie: #fbf8f2;
+  --tinta: #1c1a17;
+  --tenue: #6b6458;
+  --linea: rgba(28, 26, 23, 0.1);
+  --acento: #c8442d;
   --acento-tinta: #ffffff;
   /* Fondo de botón con texto blanco: más oscuro que el acento para pasar AA. */
-  --boton: #c0301f;
-  --cristal: rgba(255, 255, 255, 0.62);
+  --boton: #ad3722;
+  --cristal: rgba(251, 248, 242, 0.66);
   --cristal-borde: rgba(255, 255, 255, 0.7);
-  --sombra: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 28px rgba(0, 0, 0, 0.06);
+  --sombra: 0 1px 2px rgba(28, 26, 23, 0.05), 0 8px 28px rgba(28, 26, 23, 0.07);
+  --mincho: 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
   --radio: 22px;
   --ancho: 1120px;
-  background: var(--fondo);
+  background-color: var(--fondo);
+  /* Grano de papel washi: ruido SVG muy tenue, sin imágenes. */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0.45 0 0 0 0 0.4 0 0 0 0 0.3 0 0 0 0.07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   color: var(--tinta);
   font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Text', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   font-size: 17px;
@@ -34,14 +38,14 @@
 
 @media (prefers-color-scheme: dark) {
   .v7:not(.v7-portada) {
-    --fondo: #000000;
-    --superficie: #1c1c1e;
-    --tinta: #f5f5f7;
-    --tenue: #a1a1a6;
-    --linea: rgba(255, 255, 255, 0.1);
-    --acento: #ff5a47;
-    --cristal: rgba(28, 28, 30, 0.6);
-    --cristal-borde: rgba(255, 255, 255, 0.12);
+    --fondo: #0f0e0c;
+    --superficie: #1b1a17;
+    --tinta: #efe8db;
+    --tenue: #a69f92;
+    --linea: rgba(239, 232, 219, 0.1);
+    --acento: #e2674f;
+    --cristal: rgba(27, 26, 23, 0.6);
+    --cristal-borde: rgba(255, 255, 255, 0.1);
     --sombra: none;
   }
 }
@@ -501,3 +505,92 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 @media (prefers-reduced-motion: reduce) {
   .v7 *, .v7 *::before, .v7 *::after { transition: none !important; }
 }
+
+/* ══ Acentos japoneses ══════════════════════════════════════════════════════ */
+.v7-kanji { font-family: var(--mincho); color: var(--acento); font-weight: 500; margin-inline-end: 0.45em; font-size: 0.82em; letter-spacing: 0.04em; }
+.v7-hanko {
+  display: inline-grid; place-items: center; width: 26px; height: 26px; border-radius: 4px;
+  background: var(--acento); color: #fbf8f2; font-family: var(--mincho); font-size: 9.5px; line-height: 1;
+  writing-mode: vertical-rl; letter-spacing: 1px; transform: rotate(-4deg); box-shadow: inset 0 0 0 1.5px rgba(251, 248, 242, 0.35);
+}
+.v7-solo-movil { display: none; }
+@media (max-width: 560px) { .v7-solo-movil { display: inline; } }
+.v7-paso-num { font-family: var(--mincho); font-weight: 600; }
+
+/* Puerta a la montaña desde las páginas de ciudad */
+.v7-puerta-montana {
+  display: flex; align-items: center; gap: 20px; padding: 26px 28px; border-radius: var(--radio); text-decoration: none;
+  background: #1c1a17; color: #efe8db !important; position: relative; overflow: hidden;
+}
+.v7-puerta-montana::after { content: ''; position: absolute; inset: auto -10% -60% 30%; height: 140%; background: radial-gradient(closest-side, rgba(200, 68, 45, 0.35), transparent); pointer-events: none; }
+.v7-puerta-montana .v7-kanji { font-size: 3rem; margin: 0; color: #e2674f; }
+.v7-puerta-montana strong { display: block; font-size: 1.3rem; letter-spacing: -0.01em; }
+.v7-puerta-montana small { display: block; color: rgba(239, 232, 219, 0.7); font-size: 15px; margin-top: 4px; }
+.v7-puerta-montana > span:last-child { margin-inline-start: auto; font-size: 1.4rem; }
+
+/* ══ Página de montaña ═══════════════════════════════════════════════════════ */
+.v7-montes { position: relative; }
+.v7-montes-fijo {
+  position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden;
+  background: radial-gradient(ellipse at 60% 55%, rgba(255, 255, 255, 0.55) 0%, rgba(243, 238, 228, 0) 60%);
+}
+.v7-montes-lienzo { position: absolute; inset: 0; opacity: 0; transition: opacity 1.2s ease; }
+.v7-montes-lienzo.listo { opacity: 1; }
+.v7-montes-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
+.v7-montes-etiqueta {
+  position: absolute; left: 0; top: 0; margin: -34px 0 0 -60px; width: 120px; text-align: center; white-space: nowrap;
+  font-family: var(--mincho); font-size: 14px; color: var(--tinta); text-shadow: 0 1px 8px rgba(251, 248, 242, 0.9); pointer-events: none;
+}
+.v7-montes-texto { position: absolute; inset: 0; pointer-events: none; }
+/* Veladura de papel tras la columna de texto: el monte no se mezcla con las letras. */
+@media (min-width: 821px) {
+  .v7-montes-texto { background: linear-gradient(90deg, var(--fondo) 18%, color-mix(in srgb, var(--fondo) 75%, transparent) 36%, transparent 56%); }
+  [dir='rtl'] .v7-montes-texto { background: linear-gradient(270deg, var(--fondo) 18%, color-mix(in srgb, var(--fondo) 75%, transparent) 36%, transparent 56%); }
+}
+.v7-montes-cap {
+  position: absolute; inset-inline-start: max(24px, calc((100vw - var(--ancho)) / 2 + 24px)); top: 50%;
+  width: min(29rem, calc(100% - 48px)); transform: translateY(-44%); opacity: 0;
+  transition: opacity 0.55s ease, transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.v7-montes-cap.activo { opacity: 1; transform: translateY(-50%); pointer-events: auto; }
+.v7-montes-intro h1 { font-size: clamp(2.3rem, 5vw, 3.9rem); margin: 6px 0 16px; text-wrap: balance; }
+.v7-montes-intro p { color: var(--tenue); font-size: 1.1rem; }
+.v7-montes-baja { margin-top: 22px !important; font-size: 14px !important; color: var(--acento) !important; font-weight: 600; }
+.v7-monte-ficha { padding: 26px; border-radius: var(--radio); background: rgba(251, 248, 242, 0.88); border: 1px solid var(--linea); box-shadow: var(--sombra); display: grid; gap: 10px; }
+@media (prefers-color-scheme: dark) { .v7-monte-ficha { background: rgba(27, 26, 23, 0.86); } .v7-montes-etiqueta { text-shadow: 0 1px 8px rgba(0, 0, 0, 0.9); } .v7-montes-fijo { background: radial-gradient(ellipse at 60% 55%, rgba(60, 55, 46, 0.5) 0%, rgba(15, 14, 12, 0) 60%); } }
+.v7-monte-num { font-size: 13px; color: var(--tenue); font-variant-numeric: tabular-nums; }
+.v7-monte-num span { font-family: var(--mincho); color: var(--acento); font-size: 15px; margin-inline-end: 6px; }
+.v7-monte-ficha h2 { font-size: clamp(1.7rem, 3vw, 2.3rem); }
+.v7-monte-sub { color: var(--tenue); }
+.v7-monte-datos { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 18px; margin: 6px 0; }
+.v7-monte-datos dt { font-size: 12px; color: var(--tenue); }
+.v7-monte-datos dd { margin: 0; font-weight: 600; font-size: 15px; }
+.v7-monte-nota { font-size: 15px; }
+.v7-monte-pie { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 6px; }
+.v7-monte-precio { font-weight: 700; font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.v7-monte-precio small { font-weight: 400; font-size: 13px; color: var(--tenue); }
+.v7-montes-indice { position: absolute; inset-inline-end: 22px; top: 50%; transform: translateY(-50%); list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.v7-montes-indice li { width: 6px; height: 6px; border-radius: 50%; background: var(--linea); transition: background 0.3s ease, transform 0.3s ease; }
+.v7-montes-indice li.activo { background: var(--acento); transform: scale(1.5); }
+@media (max-width: 820px) {
+  .v7-montes-cap { top: auto; bottom: 18px; transform: translateY(16px); }
+  .v7-montes-cap.activo { transform: none; }
+  .v7-montes-intro { padding: 22px; border-radius: var(--radio); background: rgba(251, 248, 242, 0.86); }
+  .v7-monte-ficha { padding: 18px; gap: 6px; }
+  .v7-monte-nota { display: none; }
+  .v7-montes-indice { inset-inline-end: 8px; }
+}
+.v7-oficio { list-style: none; margin: 24px 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.v7-oficio li { padding: 24px; display: grid; gap: 8px; align-content: start; }
+.v7-oficio-num { font-family: var(--mincho); color: var(--acento); font-size: 1.8rem; line-height: 1; }
+.v7-oficio h3 { font-size: 1.15rem; }
+.v7-oficio p { color: var(--tenue); }
+@media (max-width: 820px) { .v7-oficio { grid-template-columns: 1fr; } }
+.v7-montana-final { position: relative; }
+.v7-montana-guias { display: flex; flex-wrap: wrap; gap: 16px; }
+.v7-montana-guia { display: flex; align-items: center; gap: 16px; padding: 16px 18px; text-decoration: none; flex: 1 1 320px; }
+.v7-montana-guia img { width: 64px; height: 64px; border-radius: 50%; object-fit: cover; }
+.v7-montana-guia strong { display: block; font-size: 1.1rem; }
+.v7-montana-guia small { color: var(--tenue); }
+.v7-montana-guia .v7-boton { margin-inline-start: auto; }
+.v7-fuente-gsi { font-size: 12px; }

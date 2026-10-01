@@ -11,6 +11,8 @@ import type { Pagina } from './contenido'
 import { GUIAS } from './contenido'
 import { foto } from './foto'
 
+const KANJI_RUTA: Record<RutaId, string> = { kioto: '京都', osaka: '大阪', nara: '奈良', himeji: '姫路', kobe: '神戸', miyajima: '宮島', hiroshima: '広島' }
+
 const FOTO: Record<RutaId, string> = {
   kioto: '/v7/fotos/kioto.jpg', osaka: '/v7/fotos/osaka.jpg', nara: '/v7/fotos/nara.jpg', himeji: '/v7/fotos/himeji.jpg',
   kobe: '/v7/fotos/kobe.jpg', miyajima: '/v7/fotos/miyajima.jpg', hiroshima: '/v7/fotos/hiroshima.jpg',
@@ -55,7 +57,7 @@ export function Rutas({ p }: { p: Pagina }) {
         </div>
         <div className="v7-ruta-info" key={sel}>
           <p className="v7-ruta-desde"><span>{et.desde}</span> {r.desde}</p>
-          <h3>{r.titulo}</h3>
+          <h3><span className="v7-kanji" lang="ja">{KANJI_RUTA[sel]}</span>{r.titulo}</h3>
           <p className="v7-ruta-texto">{r.texto}</p>
           <ul className="v7-ruta-opciones">
             {r.opciones.map((o, i) => {

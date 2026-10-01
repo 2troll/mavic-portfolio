@@ -98,7 +98,7 @@ function Cabecera({ p }: { p: Pagina }) {
   return (
     <header className="v7-cabecera cristal">
       <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide">
-        <img src="/logo-square.svg" alt="" width={24} height={24} />
+        <span className="v7-hanko" aria-hidden="true">関西</span>
         <span>Tony Kansai Guide</span>
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
@@ -297,6 +297,14 @@ function datosEstructurados(p: Pagina) {
   }
 }
 
+const PUERTA_MONTANA: Record<PaginaId, { ruta: string; titulo: string; sub: string }> = {
+  es: { ruta: '/es/montana/', titulo: '¿Ya conoces Kioto? Sube a sus montañas', sub: 'Ocho rutas de montaña con guía: Kongō, Atago, Hiei, Rokkō, Yoshino…' },
+  en: { ruta: '/en/hiking/', titulo: 'Already seen Kyoto? Climb its mountains', sub: 'Eight guided mountain routes: Kongō, Atago, Hiei, Rokkō, Yoshino…' },
+  ar: { ruta: '/ar/hiking/', titulo: 'زرت كيوتو من قبل؟ اصعد إلى جبالها', sub: 'ثمانية مسارات جبلية مع مرشد: كونغو، أتاغو، هيئي، روكّو، يوشينو…' },
+  ru: { ruta: '/ru/hiking/', titulo: 'Киото уже видели? Поднимитесь в его горы', sub: 'Восемь горных маршрутов с гидом: Конго, Атаго, Хиэй, Рокко, Ёсино…' },
+  larion: { ruta: '/en/hiking/', titulo: 'Already seen Kyoto? Climb its mountains', sub: 'Eight guided mountain routes: Kongō, Atago, Hiei, Rokkō, Yoshino…' },
+}
+
 // ── Página ───────────────────────────────────────────────────────────────────
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -362,7 +370,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <ol className="v7-pasos">
             {p.como.pasos.map((s, i) => (
               <li key={s.t} className="tarjeta">
-                <span className="v7-paso-num" aria-hidden="true">{i + 1}</span>
+                <span className="v7-paso-num" lang="ja" aria-hidden="true">{['一', '二', '三'][i]}</span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
               </li>
@@ -390,6 +398,15 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Rutas con modelo 3D */}
         <Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense>
+
+        {/* Puerta a la página de montaña, para quien ya conoce las ciudades */}
+        <section className="v7-seccion">
+          <Link to={PUERTA_MONTANA[p.id].ruta} className="v7-puerta-montana">
+            <span className="v7-kanji" lang="ja">山</span>
+            <span><strong>{PUERTA_MONTANA[p.id].titulo}</strong><small>{PUERTA_MONTANA[p.id].sub}</small></span>
+            <span aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
+          </Link>
+        </section>
 
         {/* Precios */}
         <section id="precios" className="v7-seccion">

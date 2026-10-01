@@ -30,9 +30,12 @@ const Admin = lazy(() => import('./pages/Admin'))
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
 import Redirige from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
+const Montana = lazy(() => import('./v7/Montana'))
 import { Corte } from './v7/Corte'
-const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion'> = {
+const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion' | 'm-es' | 'm-en' | 'm-ar' | 'm-ru'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
+  // Montaña: página aparte para quien vuelve a Japón (y para anuncios propios).
+  '/es/montana': 'm-es', '/en/hiking': 'm-en', '/ar/hiking': 'm-ar', '/ru/hiking': 'm-ru',
 }
 const Hiking = lazy(() => import('./pages/Hiking'))
 const Guide = lazy(() => import('./pages/Guide'))
@@ -89,7 +92,7 @@ function Layout() {
     return (
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: v7 === 'portada' ? '#05070d' : '#f5f5f7' }} />}>
-        {v7 === 'portada' ? <Redirige /> : <PaginaGuia key={v7} id={v7} />}
+        {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
         <CookieBanner compacto />
       </Suspense>
       <Corte rutas={Object.keys(RUTAS_V7)} />

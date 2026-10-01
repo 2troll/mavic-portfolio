@@ -55,6 +55,46 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/es/montana/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/montana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/hiking/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/montana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/hiking/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/montana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/hiking/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/montana/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiking/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/tours/</loc>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/tours/"/>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/tours/?lang=es"/>
