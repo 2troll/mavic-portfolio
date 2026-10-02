@@ -142,7 +142,7 @@ for (const f of sources) {
   if (f.endsWith('Admin.tsx') || f.endsWith('.ts')) continue
   // La web v7 (src/v7) no traduce del inglés: cada página trae su texto
   // escrito en su idioma en v7/contenido.ts.
-  if (f.includes('/src/v7/')) continue
+  if (f.includes('/src/v7/') || f.includes('/src/v8/')) continue
   const code = readFileSync(f, 'utf8')
   for (const m of code.matchAll(HARD_TEXT)) {
     const text = m[1].replace(/\s+/g, ' ').trim()

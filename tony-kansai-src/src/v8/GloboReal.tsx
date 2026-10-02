@@ -11,7 +11,8 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import type { PuntoGlobo } from '../v7/Globo'
-import { VERT_MUNDO, FRAG_TIERRA, FRAG_NUBES, FRAG_HALO } from './globo-shaders'
+import { VERT_MUNDO, FRAG_TIERRA, FRAG_NUBES, FRAG_HALO, FRAG_LLUVIA, VERT_PLANO, FRAG_TIFON } from './globo-shaders'
+import { tifones, km, type Tifon } from './tiempo'
 
 export type { PuntoGlobo }
 
@@ -20,6 +21,8 @@ export const CREDITOS_GLOBO = [
   { capa: 'Japón de cerca', fuente: 'NASA GIBS / Worldview', licencia: 'Dominio público (NASA)', url: 'https://earthdata.nasa.gov/gibs' },
   { capa: 'Luces nocturnas (globo y parche de Japón a 500 m)', fuente: 'NASA Black Marble 2016 (VIIRS_Black_Marble, NASA GIBS)', licencia: 'Dominio público (NASA)', url: 'https://earthobservatory.nasa.gov/features/NightLights' },
   { capa: 'Nubes de ayer', fuente: 'NOAA-20 VIIRS Corrected Reflectance, NASA GIBS (en vivo)', licencia: 'Dominio público (NASA/NOAA)', url: 'https://earthdata.nasa.gov/gibs' },
+  { capa: 'Lluvia de ahora', fuente: 'NASA GPM IMERG Precipitation Rate, NASA GIBS (en vivo)', licencia: 'Dominio público (NASA)', url: 'https://gpm.nasa.gov/data/imerg' },
+  { capa: 'Tifones activos', fuente: 'Agencia Meteorológica de Japón (JMA), datos de tifones (en vivo)', licencia: 'Datos públicos de la JMA', url: 'https://www.jma.go.jp/bosai/map.html#contents=typhoon' },
   { capa: 'Nubes de reserva', fuente: 'Máscara propia de 3 días de NOAA-20 VIIRS (28–30-9-2026), NASA GIBS', licencia: 'Dominio público (NASA/NOAA)', url: 'https://earthdata.nasa.gov/gibs' },
 ] as const
 
@@ -46,6 +49,11 @@ const PARCHE = { latN: 38.5, latS: 30.5, lonO: 129.5, lonE: 141.5 }
 const GIBS = 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0'
   + '&CRS=EPSG:4326&BBOX=-90,-180,90,180&FORMAT=image/jpeg&LAYERS=VIIRS_NOAA20_CorrectedReflectance_TrueColor'
 const R_NUBES = 1.0045
+// Lluvia IMERG (media hora de NASA GPM): por defecto GIBS da la última capa completa.
+const GIBS_LLUVIA = 'https://gibs.earthdata.nasa.gov/wms/epsg4326/best/wms.cgi?SERVICE=WMS&REQUEST=GetMap&VERSION=1.3.0'
+  + '&CRS=EPSG:4326&BBOX=-90,-180,90,180&FORMAT=image/png&TRANSPARENT=true&LAYERS=IMERG_Precipitation_Rate'
+const R_LLUVIA = 1.006
+const TIFON = new THREE.Color('#e0401f')
 /** Deriva de la esfera de nubes, en radianes por segundo. */
 const DERIVA_NUBES = 0.0025
 
@@ -176,8 +184,24 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
     halo.renderOrder = 3
     escena.add(halo)
 
+    // Lluvia de ahora: fija al suelo (no deriva como las nubes) para que case con los tifones.
+    const uLluvia = { uLluvia: { value: vacia as THREE.Texture }, uLluviaOp: { value: 0 }, uSol: comunes.uSol }
+    const lluvia = new THREE.Mesh(
+      new THREE.SphereGeometry(R_LLUVIA, 96, 64),
+      new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: uLluvia, vertexShader: VERT_MUNDO, fragmentShader: FRAG_LLUVIA }),
+    )
+    lluvia.renderOrder = 2.5
+    lluvia.visible = false
+    escena.add(lluvia)
+    let lluviaLista = 0
+
+    // Tifones: remolino en su posición, trayectoria prevista a trazos y etiqueta.
+    const remolinos: { m: THREE.Mesh; u: { uGiro: { value: number }; uOp: { value: number } } }[] = []
+    const puntosTifon: THREE.Mesh[] = []
+    const trazasTifon: THREE.Line[] = []
+
     // Puntos de los lugares y etiquetas HTML que los siguen.
-    const etiquetas: { pos: THREE.Vector3; el: HTMLSpanElement; origen: boolean }[] = []
+    const etiquetas: { pos: THREE.Vector3; el: HTMLSpanElement; origen: boolean; tifon?: THREE.Mesh }[] = []
     const marcas: { m: THREE.Mesh; origen: boolean }[] = []
     const ponerEtiqueta = (p: PuntoGlobo, origen: boolean) => {
       const pos = punto(p.lat, p.lon, 1.002)
@@ -238,6 +262,9 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
     let terminado = false
     let raf = 0
     let ultimoSol = -1e9
+    const solReal = new THREE.Vector3(1, 0, 0)
+    // Sol de media mañana sobre Kansai (al sureste): luz de día y relieve con sombra.
+    const SOL_JAPON = punto(22, 150).normalize()
     let nubesListas = 0 // instante en que llegaron las nubes, para fundirlas
     // Arrastre con ratón (en táctil no: robaría el desplazamiento de la página).
     const desvio = { x: 0, y: 0 }
@@ -256,6 +283,7 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
     tam()
 
     const v = new THREE.Vector3()
+    const v2 = new THREE.Vector3()
     const ejeY = new THREE.Vector3(0, 1, 0)
     const cuadro = (ahora: number) => {
       raf = 0
@@ -290,8 +318,12 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
       if (ahora - ultimoSol > 5000) {
         ultimoSol = ahora
         const [la, lo] = subsolar()
-        comunes.uSol.value.copy(punto(la, lo)).normalize()
+        solReal.copy(punto(la, lo)).normalize()
       }
+      // Al acercarse a Japón el sol «amanece» sobre Kansai: se llega siempre de
+      // día (lo pidió él); de lejos se sigue viendo la noche real del mundo.
+      const amanece = zoomT * zoomT * (3 - 2 * zoomT)
+      comunes.uSol.value.copy(solReal).lerp(SOL_JAPON, amanece).normalize()
 
       // Nubes: derivan despacio y se apartan al acercarse (de cerca serían un borrón).
       if (!reducido) comunes.uGiroNubes.value += dt * DERIVA_NUBES
@@ -311,6 +343,18 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
       // Los puntos miden lo mismo en pantalla a cualquier distancia.
       for (const { m, origen } of marcas) m.scale.setScalar((dist - 1) * (origen ? 0.9 : 1.6))
 
+      // Lluvia: sutil de lejos, se aparta al acercarse como las nubes.
+      const entraLluvia = lluviaLista ? (reducido ? 1 : recorta((ahora - lluviaLista) / 1200)) : 0
+      uLluvia.uLluviaOp.value = 0.7 * entraLluvia * (1 - recorta((zoomT - 0.35) / 0.5))
+      lluvia.visible = uLluvia.uLluviaOp.value > 0.01
+      // Tifones: tamaño en pantalla constante, como los puntos.
+      for (const { m, u } of remolinos) {
+        m.scale.setScalar((dist - 1) * 0.04)
+        if (!reducido) u.uGiro.value += dt * 1.6
+        u.uOp.value = recorta((t - 0.02) / 0.15)
+      }
+      for (const p of puntosTifon) p.scale.setScalar((dist - 1) * 0.0032)
+
       renderer.render(escena, camara)
 
       // Etiquetas: se proyectan a pantalla y se esconden por detrás del globo.
@@ -319,9 +363,15 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
       for (const e of etiquetas) {
         const cara = e.pos.clone().normalize().dot(haciaCamara)
         v.copy(e.pos).project(camara)
-        const aparece = e.origen ? recorta((t - 0.05) / 0.2) * (1 - recorta((t - 0.55) / 0.2)) : recorta((t - 0.7) / 0.25)
+        const aparece = e.tifon ? recorta((t - 0.05) / 0.2)
+          : e.origen ? recorta((t - 0.05) / 0.2) * (1 - recorta((t - 0.55) / 0.2)) : recorta((t - 0.7) / 0.25)
         const op = cara > 0.2 ? aparece : 0
         e.el.style.opacity = op.toFixed(2)
+        if (e.tifon && op > 0) {
+          // La etiqueta se aparta lo que mide el remolino en pantalla, para no taparlo.
+          v2.setFromMatrixColumn(camara.matrixWorld, 0).multiplyScalar(e.tifon.scale.x * 0.8).add(e.pos).project(camara)
+          e.el.style.marginLeft = `${Math.round(9 + Math.abs(v2.x - v.x) * w / 2)}px`
+        }
         e.el.style.transform = `translate(${((v.x + 1) / 2) * w}px, ${((1 - v.y) / 2) * h}px)`
       }
 
@@ -385,6 +435,94 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
         .catch(() => { /* sin nubes: el globo sigue siendo válido */ })
     }
 
+    // Lluvia IMERG: la última que haya; si llega vacía, hoy y luego ayer. Sin
+    // respuesta en 12 s, no hay capa de lluvia (el globo sigue siendo válido).
+    const cargaLluvia = async () => {
+      const lado = movil ? '&WIDTH=1024&HEIGHT=512' : '&WIDTH=2048&HEIGHT=1024'
+      for (const tiempo of ['', `&TIME=${diaUTC(0)}`, `&TIME=${diaUTC(1)}`, `&TIME=${diaUTC(2)}`]) {
+        const c = new AbortController()
+        const reloj = window.setTimeout(() => c.abort(), 12000)
+        try {
+          const r = await fetch(`${GIBS_LLUVIA}${lado}${tiempo}`, { signal: c.signal })
+          const b = r.ok ? await r.blob() : null
+          // Un PNG vacío (sin datos para esa fecha) pesa ~2 kB.
+          if (!b || b.size < 8000 || !b.type.startsWith('image/')) continue
+          const url = URL.createObjectURL(b)
+          try {
+            const img = await cargaImagen(url, 12000)
+            if (!vivo) return
+            uLluvia.uLluvia.value = textura(img, false)
+            lluviaLista = performance.now()
+          } finally { URL.revokeObjectURL(url) }
+          return
+        } catch (e) {
+          if ((e as Error).name === 'AbortError') break
+        } finally { clearTimeout(reloj) }
+      }
+      console.warn('Globo: sin capa de lluvia IMERG de NASA GIBS')
+    }
+
+    // Tifones activos de la JMA. Sin tifón, nada; si la JMA no responde, aviso y nada.
+    const ponTifon = (tf: Tifon) => {
+      const hemis = tf.lat < 0 ? -1 : 1
+      const n = punto(tf.lat, tf.lon).normalize()
+      const u = { uGiro: { value: 0 }, uOp: { value: 0 }, uHemis: { value: hemis }, uColor: { value: TIFON } }
+      const m = new THREE.Mesh(
+        new THREE.PlaneGeometry(2, 2),
+        new THREE.ShaderMaterial({ transparent: true, depthWrite: false, uniforms: u, vertexShader: VERT_PLANO, fragmentShader: FRAG_TIFON }),
+      )
+      m.position.copy(n).multiplyScalar(1.008)
+      m.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), n)
+      m.renderOrder = 4
+      tierra.add(m)
+      remolinos.push({ m, u })
+
+      // Trayectoria: ahora y cada punto previsto, unidos por arcos de círculo máximo.
+      const nodos = [{ lat: tf.lat, lon: tf.lon }, ...tf.prevision]
+      const pts: THREE.Vector3[] = []
+      for (let i = 0; i < nodos.length - 1; i++) {
+        const a = punto(nodos[i].lat, nodos[i].lon).normalize()
+        const b = punto(nodos[i + 1].lat, nodos[i + 1].lon).normalize()
+        const q = new THREE.Quaternion().setFromUnitVectors(a, b)
+        const pasos = Math.max(4, Math.ceil(km(nodos[i].lat, nodos[i].lon, nodos[i + 1].lat, nodos[i + 1].lon) / 60))
+        for (let k = 0; k < pasos; k++) pts.push(a.clone().applyQuaternion(new THREE.Quaternion().slerp(q, k / pasos)).multiplyScalar(1.004))
+      }
+      if (nodos.length > 1) {
+        const ultimo = nodos[nodos.length - 1]
+        pts.push(punto(ultimo.lat, ultimo.lon, 1.004))
+        const linea = new THREE.Line(
+          new THREE.BufferGeometry().setFromPoints(pts),
+          new THREE.LineDashedMaterial({ color: TIFON, dashSize: 0.012, gapSize: 0.008, transparent: true, opacity: 0.9, depthWrite: false }),
+        )
+        linea.computeLineDistances()
+        linea.renderOrder = 4
+        tierra.add(linea)
+        trazasTifon.push(linea)
+      }
+      const bola = new THREE.SphereGeometry(1, 10, 8)
+      const matBola = new THREE.MeshBasicMaterial({ color: TIFON })
+      for (const p of tf.prevision) {
+        const d = new THREE.Mesh(bola, matBola)
+        d.position.copy(punto(p.lat, p.lon, 1.004))
+        d.renderOrder = 4
+        tierra.add(d)
+        puntosTifon.push(d)
+      }
+
+      const span = document.createElement('span')
+      span.className = 'v7-globo-etiqueta es-tifon'
+      span.style.background = '#e0401f'
+      span.style.color = '#fff'
+      span.style.borderColor = 'transparent'
+      const num = tf.numero ? `台風 ${Number(tf.numero.slice(-2))}` : '熱帯低気圧'
+      span.textContent = [num, tf.nombre].filter(Boolean).join(' ') + (tf.presion ? ` · ${tf.presion} hPa` : '')
+      capa.appendChild(span)
+      etiquetas.push({ pos: punto(tf.lat, tf.lon, 1.008), el: span, origen: false, tifon: m })
+    }
+    const cargaTifones = () => tifones()
+      .then((lista) => { if (vivo) lista.forEach(ponTifon) })
+      .catch((e) => console.warn('Globo: la JMA no responde, sin tifones', e))
+
     // Las texturas no se piden hasta que el globo está cerca de verse.
     const cerca = new IntersectionObserver(([e]) => {
       if (!e.isIntersecting) return
@@ -421,6 +559,8 @@ export function GloboReal({ lugares, origenes = [], inicio, final, duracion = 52
         setEstado('listo')
         io.observe(el)
         cargaNubes()
+        cargaLluvia()
+        cargaTifones()
       })
       .catch(() => { if (vivo) setEstado('fallo') })
 

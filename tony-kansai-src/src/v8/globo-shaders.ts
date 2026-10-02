@@ -152,3 +152,63 @@ void main() {
   #include <colorspace_fragment>
 }
 `
+
+/**
+ * Lluvia de ahora (NASA IMERG vía GIBS). La paleta original va del verde al
+ * rojo; aquí se lee su intensidad (verde poca, amarillo media, rojo mucha) y
+ * se pinta en azules, que es como se lee «lluvia» sobre un globo de día.
+ */
+export const FRAG_LLUVIA = /* glsl */ `
+uniform sampler2D uLluvia;
+uniform float uLluviaOp;
+uniform vec3 uSol;
+varying vec2 vUv;
+varying vec3 vNw;
+varying vec3 vPw;
+void main() {
+  vec4 m = texture2D(uLluvia, vUv);
+  float a = m.a * uLluviaOp;
+  if (a < 0.01) discard;
+  float i = clamp(m.r * (1.0 - 0.5 * m.g), 0.0, 1.0);
+  vec3 col = mix(vec3(0.38, 0.72, 1.0), vec3(0.06, 0.16, 0.8), i);
+  // De noche se ve, pero sin brillar más que las luces de las ciudades.
+  float luz = 0.45 + 0.55 * smoothstep(-0.2, 0.3, dot(normalize(vNw), uSol));
+  gl_FragColor = vec4(col * luz, a * (0.55 + 0.45 * i));
+  #include <colorspace_fragment>
+}
+`
+
+/** Plano con uv: para la marca del tifón. */
+export const VERT_PLANO = /* glsl */ `
+varying vec2 vUv;
+void main() {
+  vUv = uv;
+  gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+}
+`
+
+/**
+ * Remolino del tifón: dos brazos en espiral logarítmica alrededor de un ojo.
+ * uGiro lo hace girar (en sentido antihorario en el hemisferio norte, como
+ * los de verdad); uHemis = -1 lo refleja para el hemisferio sur.
+ */
+export const FRAG_TIFON = /* glsl */ `
+uniform float uGiro, uOp, uHemis;
+uniform vec3 uColor;
+varying vec2 vUv;
+void main() {
+  vec2 p = vUv * 2.0 - 1.0;
+  p.x *= uHemis;
+  float r = length(p);
+  if (r > 1.0) discard;
+  float ang = atan(p.y, p.x) - uGiro;
+  float brazos = smoothstep(0.15, 0.85, 0.5 + 0.5 * sin(2.0 * ang + 5.5 * log(r + 0.04)));
+  float cuerpo = (1.0 - smoothstep(0.45, 1.0, r)) * smoothstep(0.1, 0.2, r);
+  float ojo = smoothstep(0.06, 0.1, r) * (1.0 - smoothstep(0.1, 0.17, r));
+  float a = max(brazos * cuerpo * 0.9, ojo);
+  if (a * uOp < 0.01) discard;
+  vec3 col = mix(uColor, vec3(1.0), ojo * 0.35);
+  gl_FragColor = vec4(col, a * uOp);
+  #include <colorspace_fragment>
+}
+`
