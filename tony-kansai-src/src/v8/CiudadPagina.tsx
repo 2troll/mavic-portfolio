@@ -5,7 +5,7 @@
 //   4. el día en una línea por hora, montañas cerca y el botón de WhatsApp.
 // Rutas: Tony /es|en|ar/{ciudad}/; Larion /ru/{ciudad}/ y /larion/{ciudad}/.
 
-import { Suspense, lazy, useEffect } from 'react'
+import { Suspense, lazy, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -52,6 +52,29 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   const g = nombreGuia(guia, lang)
   const { setLang } = useLanguage()
   useEffect(() => { setLang(lang) }, [lang, setLang])
+
+  // Respaldo para navegadores sin animaciones ligadas al scroll (Firefox):
+  // la pista se mueve leyendo la posición de la sección en cada fotograma
+  // mientras está en pantalla. En Chrome y Safari lo hace el CSS solo.
+  const pan = useRef<HTMLElement>(null)
+  useEffect(() => {
+    const sec = pan.current
+    if (!sec || CSS.supports('animation-timeline: view()')) return
+    const pista = sec.querySelector<HTMLElement>('.v8-pan-pista')
+    if (!pista) return
+    const n = c.zonas.length, sentido = dir === 'rtl' ? 1 : -1
+    let raf = 0, visible = false
+    const cuadro = () => {
+      raf = 0
+      const r = sec.getBoundingClientRect()
+      const t = Math.min(1, Math.max(0, -r.top / (r.height - window.innerHeight)))
+      pista.style.transform = `translateX(${t * (n - 1) * 100 * sentido}vw)`
+      if (visible) raf = requestAnimationFrame(cuadro)
+    }
+    const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; if (visible && !raf) raf = requestAnimationFrame(cuadro) })
+    io.observe(sec)
+    return () => { io.disconnect(); cancelAnimationFrame(raf) }
+  }, [c.zonas.length, dir])
 
   const itin = c.itinerario ? ITINERARIOS[lang][c.itinerario] : undefined
   const tramo = c.itinerario ? META_ITIN[c.itinerario].tramo : 'lejos'
@@ -107,7 +130,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         </section>
 
         {/* 2. Zonas: pista horizontal que avanza con el scroll vertical */}
-        <section className="v8-pan" style={{ ['--n' as string]: c.zonas.length }} aria-label={et.zonas}>
+        <section ref={pan} className="v8-pan" style={{ ['--n' as string]: c.zonas.length }} aria-label={et.zonas}>
           {/* Puntos de parada: al soltar el scroll, cada zona queda encuadrada. */}
           {c.zonas.map((z, i) => <span key={z.id} className="v8-pan-parada" style={{ top: `calc(${i} * 100svh)` }} aria-hidden="true" />)}
           <div className="v8-pan-fijo">

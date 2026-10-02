@@ -64,35 +64,9 @@ jobs:
       # /tours, /about y las 25 restantes del sitemap eran invisibles en el
       # buscador. Creando un index.html de verdad por cada ruta, responden 200.
       # Se toma la lista del propio sitemap.xml para que nunca se desincronicen.
-      - name: Rutas reales para el SPA (indexables por Google)
-        run: |
-          grep -oE '<loc>[^<]*</loc>' deploy/sitemap.xml \
-            | sed -E 's|</?loc>||g; s|https://tonykansaiguide\.com||; s|^/||; s|/$||' \
-            | grep -v '^$' \
-            | while read -r ruta; do
-                # Las que ya son un fichero real (resenas.html, booking.html…)
-                # responden 200 por sí solas: no hay que inventarles carpeta,
-                # y hacerlo rompería el despliegue con un choque de nombres.
-                if [ -e "deploy/$ruta" ]; then continue; fi
-                mkdir -p "deploy/$ruta"
-                # La copia trae el canonical de la portada: sin esto, Google
-                # tomaba las 44 páginas por duplicados de "/" y no las indexaba.
-                # Los hreflang estáticos son los de la portada: en una subruta
-                # serían falsos, así que se quitan (los pone React y el sitemap).
-                sed -E -e '/rel="alternate" hreflang=/d' \
-                  -e '/rel="canonical"|og:url/ s|https://tonykansaiguide\.com/|https://tonykansaiguide.com/'"$ruta"'/|' \
-                  deploy/index.html > "deploy/$ruta/index.html"
-                # Las páginas de idioma precargan su foto de portada (la de
-                # hero.foto en src/v7/contenido.ts): sin esto el navegador no
-                # la ve hasta que arranca React y tarda varios segundos.
-                case "$ruta" in
-                  es) foto=kioto ;; en) foto=nara ;; ar) foto=osaka ;; ru|larion) foto=miyajima ;; *) foto= ;;
-                esac
-                if [ -n "$foto" ]; then
-                  sed -i "s|</head>|<link rel=\"preload\" as=\"image\" href=\"/v7/fotos/$foto.webp\" imagesrcset=\"/v7/fotos/$foto-900.webp 900w, /v7/fotos/$foto.webp 1800w\" imagesizes=\"100vw\" fetchpriority=\"high\" /></head>|" "deploy/$ruta/index.html"
-                fi
-                echo "  200 -> /$ruta"
-              done
+      - name: Rutas reales con su propia cabecera (Google y WhatsApp)
+        working-directory: tony-kansai-src
+        run: node scripts/rutas-estaticas.mjs ../deploy
 
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact

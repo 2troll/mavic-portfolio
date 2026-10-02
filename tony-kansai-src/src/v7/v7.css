@@ -921,20 +921,27 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 /* Viñeta manga del guía dentro de cada día: entra de lado, ladeada, con
    borde blanco de página de cómic. */
 .v7-itin-panel .v7-itin-vineta {
-  position: absolute; z-index: 2; inset: auto 6vw 12vh auto; height: auto; width: min(36vw, 540px); aspect-ratio: 1344 / 768; object-fit: cover;
-  border: 6px solid #fff; border-radius: 6px; transform: rotate(2deg); box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.55);
+  /* A la izquierda: la hoja del día sube por la derecha y no debe taparla. */
+  position: absolute; z-index: 2; inset: auto auto 10vh 5vw; height: auto; width: min(36vw, 540px); aspect-ratio: 1344 / 768; object-fit: cover;
+  border: 6px solid #fff; border-radius: 6px; transform: rotate(-2deg); box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.55);
 }
-[dir='rtl'] .v7-itin-panel .v7-itin-vineta { inset: auto auto 12vh 6vw; transform: rotate(-2deg); }
+[dir='rtl'] .v7-itin-panel .v7-itin-vineta { inset: auto 5vw 10vh auto; transform: rotate(2deg); }
 @supports (animation-timeline: view()) {
   @media (prefers-reduced-motion: no-preference) {
     .v7-itin-panel .v7-itin-vineta { animation: v7-vineta-entra linear both; animation-timeline: view(); animation-range: entry 40% cover 45%; }
   }
 }
 @keyframes v7-vineta-entra {
-  from { opacity: 0; transform: translateX(30vw) rotate(9deg) scale(0.9); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
-  to { opacity: 1; transform: rotate(2deg); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+  from { opacity: 0; transform: translateX(-30vw) rotate(-9deg) scale(0.9); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+  to { opacity: 1; transform: rotate(-2deg); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
 }
 @media (max-width: 760px) {
   .v7-itin-panel .v7-itin-vineta { inset: 11vh auto auto 5vw; width: 62vw; border-width: 4px; }
   [dir='rtl'] .v7-itin-panel .v7-itin-vineta { inset: 11vh 5vw auto auto; }
+}
+
+@media (min-width: 761px) {
+  .v7-itin-panel:has(.v7-itin-vineta) { align-items: start; }
+  .v7-itin-panel:has(.v7-itin-vineta) .v7-itin-titulo { padding-top: 16vh; }
+  .v7-itin-panel .v7-itin-vineta { width: min(34vw, 500px); }
 }

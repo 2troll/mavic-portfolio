@@ -38,12 +38,9 @@
 .v8-zona-num { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.85; font-variant-numeric: tabular-nums; }
 .v8-zona-texto h2 { font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
 .v8-zona-texto p:last-child { font-size: clamp(1.05rem, 1.8vw, 1.4rem); color: rgba(255, 255, 255, 0.92); max-width: 34ch; }
-/* Sin scroll-driven (Firefox, Safari antiguos): pista deslizable con el dedo. */
+/* Sin scroll-driven (Firefox): la misma pista fija; la mueve CiudadPagina con JS. */
 @supports not (animation-timeline: view()) {
-  .v8-pan { height: auto; }
-  .v8-pan-fijo { position: relative; height: 88vh; overflow-x: auto; scroll-snap-type: x mandatory; }
-  .v8-pan-pista { animation: none; }
-  .v8-zona { scroll-snap-align: start; }
+  .v8-pan-pista { animation: none; will-change: transform; }
 }
 @media (prefers-reduced-motion: reduce) {
   .v8-zona img, .v8-portada-kanji, .v8-portada-texto > * { animation: none; }
@@ -118,7 +115,6 @@
 /* Paradas de la pista horizontal (scroll-snap suave sólo en páginas de ciudad). */
 html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v8-pan-parada { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; pointer-events: none; }
-@supports not (animation-timeline: view()) { .v8-pan-parada { display: none; } }
 
 /* Tiempo en vivo en la portada de la ciudad */
 .v8-tiempo { position: absolute; z-index: 3; right: max(24px, 5vw); bottom: 10vh; display: grid; gap: 10px; justify-items: end; max-width: min(460px, 90vw); }
