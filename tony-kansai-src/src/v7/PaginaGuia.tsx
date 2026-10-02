@@ -373,7 +373,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div className="v7-hero-texto">
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
-            <ul className="v7-chips">{p.hero.chips.map((c) => <li key={c} className="cristal">{c}</li>)}</ul>
             <div className="v7-acciones">
               <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.hero.cta}</a>
               <a className="v7-boton v7-boton-cristal cristal" href="#contacto">{p.hero.cta2}</a>
@@ -385,34 +384,34 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense>
 
         {/* Cómo funciona */}
+        {/* Así funciona + el guía, en una sola rejilla asimétrica (bento de soft-skill):
+            la cara del guía manda, los tres pasos al lado y lo que no hacemos debajo. */}
         <section id="como" className="v7-seccion">
           <h2>{p.como.titulo}</h2>
-          <ol className="v7-pasos">
+          <div className="v7-bento">
+            <article className="v7-bento-guia tarjeta">
+              <img src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} loading="lazy" />
+              <div>
+                <p className="v7-antetitulo">{p.guiaTxt.titulo}</p>
+                <h3>{NOMBRE_GUIA[p.id]}</h3>
+                <p className="v7-idiomas-guia">{p.guiaTxt.idiomas}</p>
+                {p.guiaTxt.bio.map((b) => <p key={b}>{b}</p>)}
+                {p.guiaTxt.otro && (
+                  <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
+                )}
+              </div>
+            </article>
             {p.como.pasos.map((s, i) => (
-              <li key={s.t}>
+              <article key={s.t} className="v7-bento-paso tarjeta">
                 <span className="v7-paso-num" aria-hidden="true">0{i + 1}<span lang="ja">{['一', '二', '三'][i]}</span></span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
-              </li>
+              </article>
             ))}
-          </ol>
-          <div className="v7-no tarjeta">
-            <h3>{p.como.noTitulo}</h3>
-            <ul>{p.como.no.map((n) => <li key={n}>{n}</li>)}</ul>
-          </div>
-        </section>
-
-        {/* El guía */}
-        <section className="v7-seccion v7-guia">
-          <img src={g.foto} alt={NOMBRE_GUIA[p.id]} width={320} height={340} loading="lazy" />
-          <div>
-            <p className="v7-antetitulo">{p.guiaTxt.titulo}</p>
-            <h2>{NOMBRE_GUIA[p.id]}</h2>
-            <p className="v7-idiomas-guia">{p.guiaTxt.idiomas}</p>
-            {p.guiaTxt.bio.map((b) => <p key={b}>{b}</p>)}
-            {p.guiaTxt.otro && (
-              <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} →</Link></p>
-            )}
+            <article className="v7-bento-no">
+              <h3>{p.como.noTitulo}</h3>
+              <ul>{p.como.no.map((n) => <li key={n}>{n}</li>)}</ul>
+            </article>
           </div>
         </section>
 
