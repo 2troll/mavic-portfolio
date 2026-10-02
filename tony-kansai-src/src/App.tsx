@@ -32,6 +32,10 @@ import Redirige from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 const Montana = lazy(() => import('./v7/Montana'))
 import { Corte } from './v7/Corte'
+import { MarcoLegal } from './v7/MarcoLegal'
+
+// Páginas legales: el contenido de siempre dentro del marco nuevo de papel y tinta.
+const LEGALES = ['/terms', '/privacy', '/cookies', '/safety', '/legal', '/accessibility']
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion' | 'm-es' | 'm-en' | 'm-ar' | 'm-ru'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
   // Montaña: página aparte para quien vuelve a Japón (y para anuncios propios).
@@ -97,6 +101,24 @@ function Layout() {
       </Suspense>
       <Corte rutas={Object.keys(RUTAS_V7)} />
       </>
+    )
+  }
+
+  if (LEGALES.includes(pathname.replace(/\/+$/, ''))) {
+    return (
+      <MarcoLegal>
+        <Suspense fallback={<div className="min-h-screen" />}>
+          <Routes>
+            <Route path="/terms" element={<Terms />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/cookies" element={<Cookies />} />
+            <Route path="/safety" element={<Safety />} />
+            <Route path="/legal" element={<Legal />} />
+            <Route path="/accessibility" element={<Accessibility />} />
+          </Routes>
+        </Suspense>
+        <CookieBanner compacto />
+      </MarcoLegal>
     )
   }
 

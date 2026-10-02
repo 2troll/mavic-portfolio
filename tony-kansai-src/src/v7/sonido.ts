@@ -1,24 +1,24 @@
 // Sonido de la web: apagado por defecto (los navegadores no dejan sonar sin
 // un toque, y un móvil que suena solo en el metro espanta al cliente). Al
-// encenderlo: campana de templo de bienvenida, un arroyo de fondo y, de vez
+// encenderlo: campana de templo de bienvenida, un koto de fondo y, de vez
 // en cuando, un shishi-odoshi (ciudad) o un hototogisu (montaña). El corte de
 // katana suena al cambiar de página y un fūrin en cada transformación.
 //
 // Sonidos de Wikimedia Commons; autores y licencias en CREDITOS_SONIDO.
 
-type Nombre = 'katana' | 'furin' | 'campana' | 'shishiodoshi' | 'hototogisu' | 'arroyo'
+type Nombre = 'katana' | 'furin' | 'campana' | 'shishiodoshi' | 'hototogisu' | 'koto'
 export type Ambiente = 'ciudad' | 'montana'
 
 export const CREDITOS_SONIDO = [
   { sonido: 'Campana de templo (bonshō)', autor: 'Jnn', licencia: 'CC BY 2.1 JP', url: 'https://commons.wikimedia.org/wiki/File:Bonsyou5599.ogg' },
   { sonido: 'Hototogisu', autor: 'ISAKA Yoji', licencia: 'CC BY 2.1 JP', url: 'https://commons.wikimedia.org/wiki/File:Hototogisu_07b8051.ogg' },
   { sonido: 'Shishi-odoshi', autor: 'Fg2', licencia: 'Dominio público', url: 'https://commons.wikimedia.org/wiki/File:Shishiodoshi-LS100103.ogg' },
-  { sonido: 'Arroyo', autor: 'stephan', licencia: 'Dominio público', url: 'https://commons.wikimedia.org/wiki/File:Shallow_small_river_with_stony_riverbed.ogg' },
+  { sonido: 'Koto (música de fondo)', autor: 'Torsodog', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:Koto_performance.ogg' },
   { sonido: 'Campanillas de viento', autor: 'Esc861', licencia: 'Dominio público', url: 'https://commons.wikimedia.org/wiki/File:Windchimes.ogg' },
   { sonido: 'Espada', autor: 'Gravity Sound', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Sword_9_(Gravity_Sound).mp3' },
 ]
 
-const VOLUMEN: Record<Nombre, number> = { katana: 0.55, furin: 0.35, campana: 0.5, shishiodoshi: 0.45, hototogisu: 0.4, arroyo: 0.22 }
+const VOLUMEN: Record<Nombre, number> = { katana: 0.55, furin: 0.35, campana: 0.5, shishiodoshi: 0.45, hototogisu: 0.3, koto: 0.3 }
 const CLAVE = 'v7-sonido'
 
 let ctx: AudioContext | null = null
@@ -41,7 +41,7 @@ function buffer(n: Nombre) {
 }
 
 /** Toca un sonido una vez, si el sonido está encendido. */
-export async function suena(n: Exclude<Nombre, 'arroyo'>) {
+export async function suena(n: Exclude<Nombre, 'koto'>) {
   if (!encendido || !ctx || !general || document.hidden) return
   const b = await buffer(n)
   if (!b || !encendido) return
@@ -55,26 +55,26 @@ export async function suena(n: Exclude<Nombre, 'arroyo'>) {
 
 async function arrancaFondo() {
   if (!ctx || !general || fondo || !ambiente) return
-  const b = await buffer('arroyo')
+  const b = await buffer('koto')
   if (!b || !encendido || fondo) return
   fondo = ctx.createBufferSource()
   fondo.buffer = b
   fondo.loop = true // el archivo ya viene con el final fundido en el principio
   const g = ctx.createGain()
   g.gain.setValueAtTime(0, ctx.currentTime)
-  g.gain.linearRampToValueAtTime(VOLUMEN.arroyo, ctx.currentTime + 3)
+  g.gain.linearRampToValueAtTime(VOLUMEN.koto, ctx.currentTime + 4)
   fondo.connect(g).connect(general)
   fondo.start()
   programa()
 }
 
-/** Cada 25–45 s, el sonido propio del lugar. */
+/** Cada 45–80 s, el sonido propio del lugar, discreto, por encima del koto. */
 function programa() {
   clearTimeout(reloj)
   reloj = window.setTimeout(() => {
     if (encendido) suena(ambiente === 'montana' ? 'hototogisu' : 'shishiodoshi')
     if (encendido) programa()
-  }, 25000 + Math.random() * 20000)
+  }, 45000 + Math.random() * 35000)
 }
 
 function paraFondo() {

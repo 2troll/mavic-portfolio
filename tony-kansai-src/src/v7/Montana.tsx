@@ -9,7 +9,7 @@ import { GUIAS, CORREO } from './contenido'
 import { MONTANA, MONTES, KANJI, CIUDAD } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
-import { Sakura } from './Sakura'
+import { EfectoEstacion, estacionDeHoy } from './Estacion'
 import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO } from './sonido'
 import './v7.css'
@@ -124,7 +124,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         </section>
 
         <section className="v7-seccion v7-montana-final">
-          <Sakura cantidad={10} />
+          <EfectoEstacion estacion={estacionDeHoy()} cantidad={10} />
           <h2>{p.final.titulo}</h2>
           <p className="v7-entradilla">{p.final.sub}</p>
           <div className="v7-montana-guias">

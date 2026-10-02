@@ -28,7 +28,61 @@ interface Props {
 }
 
 const GRADO = Math.PI / 180
-const ACENTO = new THREE.Color('#ff5a47')
+const ACENTO = new THREE.Color('#c8442d')
+
+/** Colores de la página (papel y tinta), para que el globo siga el tema claro/oscuro. */
+function colorCss(nombre: string, porDefecto: string) {
+  try {
+    const v = getComputedStyle(document.querySelector('.v7') ?? document.documentElement).getPropertyValue(nombre).trim()
+    // THREE.Color guarda en lineal; el shader escribe tal cual, así que se le
+    // pasan los valores sRGB del CSS.
+    return new THREE.Color(v || porDefecto).convertLinearToSRGB()
+  } catch { return new THREE.Color(porDefecto).convertLinearToSRGB() }
+}
+
+/**
+ * La Tierra pintada a la manera sumi-e: el mar es el papel, la tierra una
+ * aguada de tinta más oscura donde la foto de la NASA es más oscura (bosque)
+ * y más clara en desiertos y nieve, la costa trazada a pincel y una retícula
+ * de 15° muy tenue. caja = lonO, lonE, latS, latN de la textura.
+ */
+function materialSumi(mapa: THREE.Texture, caja: [number, number, number, number], parche: boolean) {
+  return new THREE.ShaderMaterial({
+    transparent: parche, depthWrite: !parche,
+    uniforms: {
+      uMapa: { value: mapa }, uCaja: { value: new THREE.Vector4(...caja) },
+      uPapel: { value: colorCss('--fondo', '#f3eee4') }, uTinta: { value: colorCss('--tinta', '#1c1a17') },
+    },
+    vertexShader: `varying vec2 vUv; varying vec3 vN; varying vec3 vVista;
+      void main(){ vUv = uv; vN = normalize(normalMatrix * normal);
+        vec4 mv = modelViewMatrix * vec4(position, 1.0); vVista = -mv.xyz; gl_Position = projectionMatrix * mv; }`,
+    fragmentShader: `uniform sampler2D uMapa; uniform vec4 uCaja; uniform vec3 uPapel; uniform vec3 uTinta;
+      varying vec2 vUv; varying vec3 vN; varying vec3 vVista;
+      float h(vec2 p){ return fract(sin(dot(p, vec2(12.9898, 78.233))) * 43758.5453); }
+      void main(){
+        vec4 t = texture2D(uMapa, vUv);
+        // Blue Marble: el mar es azul dominante; la nieve y el desierto, no.
+        float agua = smoothstep(0.03, 0.12, t.b - max(t.r, t.g) * 0.92);
+        float lum = dot(t.rgb, vec3(0.299, 0.587, 0.114));
+        float grano = h(floor(vUv * vec2(4096.0, 2048.0)));
+        float tono = clamp(0.26 + (0.5 - lum) * 0.8, 0.08, 0.58) * (0.9 + 0.1 * grano);
+        vec3 col = mix(mix(uPapel, uTinta, tono), uPapel * (0.975 + 0.025 * grano), agua);
+        // Costa a pincel: donde cambia el agua, una línea de tinta.
+        float aa = fwidth(agua);
+        float costa = 1.0 - smoothstep(0.0, aa * 1.5 + 0.03, abs(agua - 0.5));
+        col = mix(col, uTinta, costa * 0.7);
+        // Retícula de 15°, casi invisible: cartografía antigua.
+        float lon = mix(uCaja.x, uCaja.y, vUv.x), lat = mix(uCaja.z, uCaja.w, vUv.y);
+        float gx = abs(fract(lon / 15.0 + 0.5) - 0.5) * 15.0, gy = abs(fract(lat / 15.0 + 0.5) - 0.5) * 15.0;
+        float red = max(1.0 - smoothstep(0.0, fwidth(lon) * 1.2, gx), 1.0 - smoothstep(0.0, fwidth(lat) * 1.2, gy));
+        col = mix(col, uTinta, red * 0.1 * agua);
+        // Borde del globo algo más oscuro, como una bola de papel.
+        float fr = dot(normalize(vN), normalize(vVista));
+        col *= mix(0.8, 1.0, smoothstep(0.0, 0.55, fr));
+        gl_FragColor = vec4(col, ${parche ? 't.a' : '1.0'});
+      }`,
+  })
+}
 const OSAKA = { lat: 34.6937, lon: 135.5023 }
 // Parche de NASA GIBS: lat 30.5–38.5, lon 129.5–141.5 (ver README de v7).
 const PARCHE = { latN: 38.5, latS: 30.5, lonO: 129.5, lonE: 141.5 }
@@ -65,7 +119,7 @@ function texturaParche(img: HTMLImageElement): THREE.CanvasTexture {
   v.addColorStop(1 - borde / c.height, 'rgba(0,0,0,1)'); v.addColorStop(1, 'rgba(0,0,0,0)')
   g.fillStyle = v; g.fillRect(0, 0, c.width, c.height)
   const t = new THREE.CanvasTexture(c)
-  t.colorSpace = THREE.SRGBColorSpace
+  t.colorSpace = THREE.NoColorSpace
   t.anisotropy = 4
   return t
 }
@@ -112,13 +166,15 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
     const sol = new THREE.DirectionalLight(0xffffff, 1.6)
     escena.add(sol)
 
-    // Atmósfera: un halo azul que sólo brilla en el borde (Fresnel).
+    // Halo en el borde (Fresnel).
     const atmosfera = new THREE.Mesh(
       new THREE.SphereGeometry(1.08, 64, 48),
       new THREE.ShaderMaterial({
-        side: THREE.BackSide, transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
+        side: THREE.BackSide, transparent: true, depthWrite: false,
+        uniforms: { uTinta: { value: colorCss('--tinta', '#1c1a17') } },
         vertexShader: 'varying vec3 n; void main(){ n = normalize(normalMatrix*normal); gl_Position = projectionMatrix*modelViewMatrix*vec4(position,1.0); }',
-        fragmentShader: 'varying vec3 n; void main(){ float i = pow(0.72 - dot(n, vec3(0.0,0.0,1.0)), 3.0); gl_FragColor = vec4(0.36,0.62,1.0,1.0)*i; }',
+        // Halo de tinta muy tenue alrededor del globo, en vez de la atmósfera azul.
+        fragmentShader: 'uniform vec3 uTinta; varying vec3 n; void main(){ float i = pow(0.72 - dot(n, vec3(0.0,0.0,1.0)), 3.0); gl_FragColor = vec4(uTinta, clamp(i, 0.0, 1.0) * 0.18); }',
       }),
     )
     escena.add(atmosfera)
@@ -130,7 +186,7 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
       const pos = punto(p.lat, p.lon, 1.002)
       const marca = new THREE.Mesh(
         new THREE.SphereGeometry(origen ? 0.006 : 0.0032, 16, 12),
-        new THREE.MeshBasicMaterial({ color: origen ? 0xffffff : ACENTO }),
+        new THREE.MeshBasicMaterial({ color: origen ? colorCss('--tinta', '#1c1a17').convertSRGBToLinear() : ACENTO }),
       )
       marca.position.copy(pos)
       tierra.add(marca)
@@ -287,20 +343,22 @@ export function Globo({ lugares, origenes = [], inicio, final, duracion = 5200, 
       .then(([imgTierra, imgJapon]) => {
         if (!vivo) return
         const tx = new THREE.Texture(imgTierra)
-        tx.colorSpace = THREE.SRGBColorSpace
+        // Sin conversión de color: el shader lee los valores tal cual para
+        // separar mar y tierra.
+        tx.colorSpace = THREE.NoColorSpace
         tx.anisotropy = 8
         tx.needsUpdate = true
         const tp = texturaParche(imgJapon)
         texturas.push(tx, tp)
         tierra.add(new THREE.Mesh(
           new THREE.SphereGeometry(1, 128, 96),
-          new THREE.MeshPhongMaterial({ map: tx, shininess: 6, specular: new THREE.Color(0x1a2633) }),
+          materialSumi(tx, [-180, 180, -90, 90], false),
         ))
         tierra.add(new THREE.Mesh(
           new THREE.SphereGeometry(1.0006, 96, 64,
             (PARCHE.lonO + 180) * GRADO, (PARCHE.lonE - PARCHE.lonO) * GRADO,
             (90 - PARCHE.latN) * GRADO, (PARCHE.latN - PARCHE.latS) * GRADO),
-          new THREE.MeshPhongMaterial({ map: tp, transparent: true, shininess: 6, depthWrite: false }),
+          materialSumi(tp, [PARCHE.lonO, PARCHE.lonE, PARCHE.latS, PARCHE.latN], true),
         ))
         setEstado('listo')
         io.observe(el)

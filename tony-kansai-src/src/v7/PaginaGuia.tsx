@@ -5,13 +5,15 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { Sakura } from './Sakura'
+import { EfectoEstacion, SelectorEstacion, estacionDeHoy } from './Estacion'
+import type { Estacion } from './Estacion'
 import { ETIQUETAS, MODELOS } from './datosRutas'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
 import { BotonSonido } from './BotonSonido'
+import { HeroTinta } from './HeroTinta'
 import { CREDITOS_SONIDO } from './sonido'
 import './v7.css'
 
@@ -308,6 +310,15 @@ const PUERTA_MONTANA: Record<PaginaId, { ruta: string; titulo: string; sub: stri
   larion: { ruta: '/en/hiking/', titulo: 'Already seen Kyoto? Climb its mountains', sub: 'Eight guided mountain routes: Kongō, Atago, Hiei, Rokkō, Yoshino…' },
 }
 
+/** Pase de la portada: la foto de siempre primero y dos destinos más de ese público. */
+const FOTOS_HERO: Record<PaginaId, string[]> = {
+  es: ['/v7/fotos/kioto.jpg', '/v7/fotos/osaka.jpg', '/v7/fotos/nara.jpg'],
+  en: ['/v7/fotos/nara.jpg', '/v7/fotos/kioto.jpg', '/v7/fotos/himeji.jpg'],
+  ar: ['/v7/fotos/osaka.jpg', '/v7/fotos/kobe.jpg', '/v7/fotos/kioto.jpg'],
+  ru: ['/v7/fotos/miyajima.jpg', '/v7/fotos/hiroshima.jpg', '/v7/fotos/himeji.jpg'],
+  larion: ['/v7/fotos/miyajima.jpg', '/v7/fotos/himeji.jpg', '/v7/fotos/kioto.jpg'],
+}
+
 // ── Página ───────────────────────────────────────────────────────────────────
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -315,6 +326,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const g = GUIAS[p.guia]
   const { setLang } = useLanguage()
   const resenas = useResenas(!!p.resenas)
+  const [estacion, setEstacion] = useState<Estacion>(estacionDeHoy)
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -351,8 +363,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Portada de la página */}
         <section className="v7-hero">
           <img className="v7-hero-foto" {...foto(p.hero.foto)} alt="" width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+          <HeroTinta fotos={FOTOS_HERO[p.id]} />
           <div className="v7-hero-velo" />
-          <Sakura />
+          <EfectoEstacion estacion={estacion} />
+          <SelectorEstacion lang={p.lang} valor={estacion} alCambiar={setEstacion} />
           <div className="v7-hero-texto">
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
