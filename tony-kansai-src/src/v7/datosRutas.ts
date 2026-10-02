@@ -10,7 +10,8 @@ export type RutaId = 'kioto' | 'osaka' | 'nara' | 'himeji' | 'kobe' | 'miyajima'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
 
 export const MODELOS: Record<ModeloId, { archivo: string; titulo: string; autor: string; licencia: string; url: string }> = {
-  castillo: { archivo: '/v7/modelos/castillo.glb', titulo: 'Pagoda', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/d1M5ncMBUDi' },
+  // No existe un castillo japonés libre en glTF: este se construye por código (castilloHimeji.ts).
+  castillo: { archivo: 'procedural:himeji', titulo: 'Himeji Castle (procedural three.js)', autor: 'Tony Kansai Guide, con img2threejs', licencia: 'Apache 2.0', url: 'https://github.com/img2threejs/img2threejs' },
   pagoda: { archivo: '/v7/modelos/pagoda.glb', titulo: 'Pagoda', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/1zS7ucaAd4J' },
   torii: { archivo: '/v7/modelos/torii.glb', titulo: 'Torii Gate', autor: 'Hattie Stroud', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/07__lYTDdEH' },
   ciervo: { archivo: '/v7/modelos/ciervo.glb', titulo: 'Deer', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0tJzk22c46S' },
@@ -86,7 +87,7 @@ export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean }> = {
   ] },
 }
 
-type Tramo = 'medio' | 'completo' | 'lejos'
+export type Tramo = 'medio' | 'completo' | 'lejos'
 export const PRECIO: Record<Tramo, number> = { medio: 38000, completo: 58000, lejos: 70000 }
 
 /** Lo que no depende del idioma: modelo, retoque y precio de cada opción. */

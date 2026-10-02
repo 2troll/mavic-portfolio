@@ -8,13 +8,15 @@ import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.j
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
 import { ESCENAS, MODELOS } from './datosRutas'
+import { creaCastilloHimeji } from './castilloHimeji'
 import type { RutaId } from './datosRutas'
 
 // Los .glb van comprimidos con meshopt (gltf-transform optimize): 2,5 MB → 180 KB.
 const cargador = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
 const cache = new Map<string, Promise<THREE.Group>>()
 export function carga(url: string) {
-  if (!cache.has(url)) cache.set(url, cargador.loadAsync(url).then((g) => g.scene))
+  // 'procedural:…' = modelo hecho por código, sin archivo que descargar.
+  if (!cache.has(url)) cache.set(url, url === 'procedural:himeji' ? Promise.resolve(creaCastilloHimeji()) : cargador.loadAsync(url).then((g) => g.scene))
   return cache.get(url)!
 }
 
@@ -87,6 +89,12 @@ export function muestrea(g: THREE.Group, n: number): Float32Array {
     let geo = mesh.geometry.clone()
     geo = geo.index ? geo.toNonIndexed() : geo
     for (const k of Object.keys(geo.attributes)) if (k !== 'position') geo.deleteAttribute(k)
+    // Los .glb llegan cuantizados (enteros) y el castillo procedural en float:
+    // mergeGeometries exige el mismo tipo, y aplicar la matriz sobre enteros perdería precisión.
+    const pos = geo.getAttribute('position')
+    const f32 = new Float32Array(pos.count * 3)
+    for (let i = 0; i < pos.count; i++) f32.set([pos.getX(i), pos.getY(i), pos.getZ(i)], i * 3)
+    geo.setAttribute('position', new THREE.BufferAttribute(f32, 3))
     geo.applyMatrix4(mesh.matrixWorld)
     geos.push(geo)
   })
