@@ -28,26 +28,30 @@
       'Kumano Kodo Pilgrimage',          // route=10
       'Lake Biwa & Hikone Castle',       // route=11
     ]
-    const PRICES = ['¥75,000', '¥95,000', '¥85,000', '¥98,000', '¥165,000', '¥130,000',
-                    '¥108,000', '¥78,000', '¥88,000', '¥165,000', '¥155,000', '¥92,000']
+    // Los mismos precios que TOURS (y que la portada): 38.000 medio día,
+    // 58.000 día completo, desde 70.000 las excursiones lejanas.
+    const PRICES = ['¥38,000', '¥58,000', '¥58,000', '¥58,000', '¥70,000', '¥70,000',
+                    '¥58,000', '¥38,000', '¥58,000', '¥70,000', '¥70,000', '¥58,000']
+    // Rutas con precio "desde" (Kōyasan, Amanohashidate, Kumano)
+    const DESDE = [4, 9, 10]
     const WA = 'https://wa.me/819024585949'
 
     // Esta página sólo se ve un segundo y medio antes de saltar a WhatsApp,
     // pero el mensaje que se envía sí se queda: va en el idioma del visitante.
     const T = {
-      en:{ redir:'Redirecting you to WhatsApp to book with Tony…', open:'Open WhatsApp',
+      en:{ from:'from ', redir:'Redirecting you to WhatsApp to book with Tony…', open:'Open WhatsApp',
            per:' per group', load:'Loading…',
            msg:(n,p) => `Hi Tony! I'd like to book the "${n}" tour (${p}). Can you share availability and details?` },
-      es:{ redir:'Te llevamos a WhatsApp para reservar con Tony…', open:'Abrir WhatsApp',
+      es:{ from:'desde ', redir:'Te llevamos a WhatsApp para reservar con Tony…', open:'Abrir WhatsApp',
            per:' por grupo', load:'Cargando…',
            msg:(n,p) => `¡Hola, Tony! Me gustaría reservar el tour «${n}» (${p}). ¿Me dices disponibilidad y detalles?` },
-      ar:{ redir:'نحوّلك إلى واتساب لتحجز مع طوني…', open:'افتح واتساب',
+      ar:{ from:'ابتداءً من ', redir:'نحوّلك إلى واتساب لتحجز مع طوني…', open:'افتح واتساب',
            per:' للمجموعة', load:'جارٍ التحميل…',
            msg:(n,p) => `مرحباً طوني! أودّ حجز جولة «${n}» (${p}). هل تخبرني بالمواعيد المتاحة والتفاصيل؟` },
-      ru:{ redir:'Перенаправляем вас в WhatsApp для брони у Тони…', open:'Открыть WhatsApp',
+      ru:{ from:'от ', redir:'Перенаправляем вас в WhatsApp для брони у Тони…', open:'Открыть WhatsApp',
            per:' за группу', load:'Загрузка…',
            msg:(n,p) => `Здравствуйте, Тони! Хочу забронировать тур «${n}» (${p}). Подскажите даты и детали?` },
-      cs:{ redir:'Přesměrováváme vás na WhatsApp k rezervaci u Tonyho…', open:'Otevřít WhatsApp',
+      cs:{ from:'od ', redir:'Přesměrováváme vás na WhatsApp k rezervaci u Tonyho…', open:'Otevřít WhatsApp',
            per:' za skupinu', load:'Načítání…',
            msg:(n,p) => `Dobrý den, Tony! Rád bych si rezervoval prohlídku „${n}" (${p}). Můžete mi napsat termíny a detaily?` },
     }
@@ -57,11 +61,11 @@
       const params = new URLSearchParams(window.location.search)
       const route = Math.max(0, Math.min(TOURS.length - 1, parseInt(params.get('route') || '0', 10)))
       const name = TOURS[route]
-      const price = PRICES[route]
 
       const pedido = (params.get('lang') || navigator.language || 'en').slice(0, 2).toLowerCase()
       const lang = T[pedido] ? pedido : 'en'
       const t = T[lang]
+      const price = (DESDE.includes(route) ? t.from : '') + PRICES[route]
       document.documentElement.lang = lang
       document.documentElement.dir = RTL[lang] ? 'rtl' : 'ltr'
 
