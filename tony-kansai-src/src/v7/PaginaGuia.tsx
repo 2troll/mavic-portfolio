@@ -11,6 +11,8 @@ import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './conte
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
+import { BotonSonido } from './BotonSonido'
+import { CREDITOS_SONIDO } from './sonido'
 import './v7.css'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
@@ -113,6 +115,7 @@ function Cabecera({ p }: { p: Pagina }) {
           </Link>
         ))}
       </nav>
+      <BotonSonido lang={p.lang} ambiente="ciudad" />
       <a className="v7-boton v7-boton-peq" href={enlaceWa(g.wa, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — WhatsApp`}>
         <IconoWa /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
       </a>
@@ -347,7 +350,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <main>
         {/* Portada de la página */}
         <section className="v7-hero">
-          <img className="v7-hero-foto" {...foto(p.hero.foto)} alt="" width={1800} height={1200} fetchPriority="high" />
+          <img className="v7-hero-foto" {...foto(p.hero.foto)} alt="" width={1800} height={1200} {...{ fetchpriority: 'high' }} />
           <div className="v7-hero-velo" />
           <Sakura />
           <div className="v7-hero-texto">
@@ -491,6 +494,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <ul lang="es" dir="ltr">
             {CREDITOS.map((c) => (
               <li key={c.url}>{c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
+            ))}
+            {CREDITOS_SONIDO.map((c) => (
+              <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia} (Wikimedia Commons)</li>
             ))}
             {Object.values(MODELOS).map((m) => (
               <li key={m.url}>Modelo 3D «{m.titulo}»: <a href={m.url} target="_blank" rel="noopener noreferrer">{m.autor}</a>, {m.licencia} (Poly Pizza)</li>

@@ -11,6 +11,7 @@ import type { ReactNode } from 'react'
 import * as THREE from 'three'
 import type { MonteId } from './datosMontana'
 import { movimientoReducido } from './petalos'
+import { suena } from './sonido'
 
 interface Meta { min: number; max: number; punto: [number, number]; lado: number }
 interface Monte { alturas: Float32Array; foto: THREE.Texture; punto: [number, number] }
@@ -64,6 +65,13 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
   const capitulos = montes.length + 1
 
   // Scroll → progreso 0 … capitulos-1.
+  // Un fūrin en cada cambio (si el visitante encendió el sonido).
+  const inicio = useRef(true)
+  useEffect(() => {
+    if (inicio.current) { inicio.current = false; return }
+    suena('furin')
+  }, [cap])
+
   useEffect(() => {
     const el = seccion.current
     if (!el) return

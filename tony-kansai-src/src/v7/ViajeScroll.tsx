@@ -4,6 +4,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { Globo } from './Globo'
+import { suena } from './sonido'
 import type { Pagina } from './contenido'
 
 export function ViajeScroll({ p }: { p: Pagina }) {
@@ -16,6 +17,13 @@ export function ViajeScroll({ p }: { p: Pagina }) {
   const final = p.guia === 'larion'
     ? { lat: ancho ? 34.55 : 34.2, lon: ancho ? 131.7 : 133.75, dist: ancho ? 1.155 : 1.22 }
     : { lat: 34.8, lon: ancho ? 134.2 : 135.35, dist: 1.1 }
+
+  // Un fūrin en cada cambio (si el visitante encendió el sonido).
+  const inicio = useRef(true)
+  useEffect(() => {
+    if (inicio.current) { inicio.current = false; return }
+    suena('furin')
+  }, [paso])
 
   useEffect(() => {
     const el = seccion.current

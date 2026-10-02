@@ -1,0 +1,104 @@
+// Carga y preparación de los modelos 3D de las rutas (glTF de Poly Pizza,
+// ver datosRutas.ts), y muestreo de su superficie en partículas para las
+// transformaciones con scroll.
+
+import * as THREE from 'three'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
+import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+
+// Los .glb van comprimidos con meshopt (gltf-transform optimize): 2,5 MB → 180 KB.
+const cargador = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
+const cache = new Map<string, Promise<THREE.Group>>()
+export function carga(url: string) {
+  if (!cache.has(url)) cache.set(url, cargador.loadAsync(url).then((g) => g.scene))
+  return cache.get(url)!
+}
+
+/** Centra el modelo sobre el suelo, lo escala a una altura fija y aplica el retoque de la ruta. */
+export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua'): THREE.Group {
+  const m = original.clone(true)
+  m.traverse((o) => {
+    const mesh = o as THREE.Mesh
+    if (!mesh.isMesh) return
+    mesh.castShadow = true
+    // Cada clon lleva sus materiales: el retoque de Osaka no debe teñir Himeji,
+    // y la opacidad de la transición no debe afectar a otro modelo.
+    const mats = (Array.isArray(mesh.material) ? mesh.material : [mesh.material]).map((x) => x.clone())
+    for (const mat of mats as THREE.MeshStandardMaterial[]) {
+      // Osaka: los tejados del castillo son verde cobre, no grises.
+      if (variante === 'osaka' && mat.name === '03___Default') mat.color.set('#5e8f7b')
+      mat.envMapIntensity = 0.9
+      mat.transparent = true
+    }
+    mesh.material = Array.isArray(mesh.material) ? mats : mats[0]
+  })
+  const caja = new THREE.Box3().setFromObject(m)
+  const tam = caja.getSize(new THREE.Vector3())
+  m.scale.setScalar(2.2 / Math.max(tam.x, tam.y, tam.z))
+  const c = new THREE.Box3().setFromObject(m)
+  const centro = c.getCenter(new THREE.Vector3())
+  m.position.set(-centro.x, -c.min.y, -centro.z)
+  const g = new THREE.Group()
+  g.add(m)
+  if (variante === 'agua') {
+    // Miyajima: el torii «flota» sobre agua cuando sube la marea.
+    m.position.y -= 0.35
+    const agua = new THREE.Mesh(
+      new THREE.CircleGeometry(1.9, 64),
+      new THREE.MeshStandardMaterial({ color: '#2f6f8f', roughness: 0.15, metalness: 0.2, transparent: true, opacity: 0.85 }),
+    )
+    agua.rotation.x = -Math.PI / 2
+    // Un pelo por encima del suelo de sombras: a la misma altura parpadean.
+    agua.position.y = 0.01
+    agua.receiveShadow = true
+    agua.userData.agua = true
+    agua.userData.opacidadBase = 0.85
+    g.add(agua)
+  }
+  g.updateMatrixWorld(true)
+  g.userData.alto = new THREE.Box3().setFromObject(m).getSize(new THREE.Vector3()).y
+  return g
+}
+
+/** Opacidad de todo el modelo (para fundirlo con las partículas). */
+export function opacidad(g: THREE.Group, a: number) {
+  g.visible = a > 0.01
+  g.traverse((o) => {
+    const mesh = o as THREE.Mesh
+    if (!mesh.isMesh) return
+    for (const mat of (Array.isArray(mesh.material) ? mesh.material : [mesh.material]) as THREE.Material[]) {
+      mat.opacity = a * ((mesh.userData.opacidadBase as number) ?? 1)
+      // Con opacidad total escribe profundidad: si no, el modelo se ve «hueco».
+      mat.depthWrite = a > 0.98
+    }
+  })
+}
+
+/** n puntos repartidos por la superficie del modelo, proporcionales al área. */
+export function muestrea(g: THREE.Group, n: number): Float32Array {
+  const geos: THREE.BufferGeometry[] = []
+  g.traverse((o) => {
+    const mesh = o as THREE.Mesh
+    if (!mesh.isMesh || mesh.userData.agua) return
+    let geo = mesh.geometry.clone()
+    geo = geo.index ? geo.toNonIndexed() : geo
+    for (const k of Object.keys(geo.attributes)) if (k !== 'position') geo.deleteAttribute(k)
+    geo.applyMatrix4(mesh.matrixWorld)
+    geos.push(geo)
+  })
+  const salida = new Float32Array(n * 3)
+  if (!geos.length) return salida
+  const unida = mergeGeometries(geos, false)
+  if (!unida) return salida
+  const sampler = new MeshSurfaceSampler(new THREE.Mesh(unida)).build()
+  const p = new THREE.Vector3()
+  for (let i = 0; i < n; i++) {
+    sampler.sample(p)
+    salida.set([p.x, p.y, p.z], i * 3)
+  }
+  unida.dispose()
+  geos.forEach((x) => x.dispose())
+  return salida
+}

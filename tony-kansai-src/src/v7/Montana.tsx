@@ -10,6 +10,8 @@ import { MONTANA, MONTES, KANJI, CIUDAD } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
 import { Sakura } from './Sakura'
+import { BotonSonido } from './BotonSonido'
+import { CREDITOS_SONIDO } from './sonido'
 import './v7.css'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -99,6 +101,7 @@ export default function Montana({ id }: { id: MontanaId }) {
             <Link key={x.id} to={MONTANA[x.id].ruta} lang={MONTANA[x.id].lang} aria-current={x.id === id ? 'page' : undefined}>{x.etiqueta}</Link>
           ))}
         </nav>
+        <BotonSonido lang={p.lang} ambiente="montana" />
         <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — WhatsApp`}>
           <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span aria-hidden="true" className="v7-solo-movil">✉</span>
         </a>
@@ -146,6 +149,12 @@ export default function Montana({ id }: { id: MontanaId }) {
           </nav>
           <p className="v7-fuente-gsi">{p.et.fuente}</p>
         </div>
+        <details className="v7-creditos">
+          <summary>Créditos · Credits</summary>
+          <ul lang="es" dir="ltr">
+            {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
+          </ul>
+        </details>
       </footer>
     </div>
   )

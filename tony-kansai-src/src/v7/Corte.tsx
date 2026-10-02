@@ -10,6 +10,7 @@
 
 import { useEffect, useRef, useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { suena } from './sonido'
 import { dibujaPetalo, mueve, movimientoReducido, nuevoPetalo } from './petalos'
 import type { Petalo } from './petalos'
 
@@ -56,6 +57,7 @@ export function Corte({ rutas }: { rutas: string[] }) {
         navegar(url.pathname + url.search)
         window.scrollTo(0, 0)
         setFase('abre')
+        suena('katana')
         lanzaPetalos()
         // Termina con animationend de la mitad b; esto es sólo la red de seguridad.
         window.setTimeout(termina, APERTURA_MS * 2.5)
