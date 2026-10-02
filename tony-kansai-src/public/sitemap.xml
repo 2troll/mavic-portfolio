@@ -95,6 +95,275 @@
     <priority>0.9</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/es/osaka/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/osaka/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/osaka/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/nara/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/nara/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/nara/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/nara/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/nara/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/nara/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/nara/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/nara/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/nara/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/nara/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/nara/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/nara/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/kobe/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/kobe/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/kobe/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/kobe/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/himeji/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/himeji/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/himeji/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/hiroshima/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/hiroshima/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/hiroshima/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/beyond/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/beyond/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ar/beyond/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/beyond/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/hiroshima/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/hiroshima/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/hiroshima/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/nara/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/nara/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/nara/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/nara/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/nara/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/nara/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/osaka/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/osaka/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/osaka/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/ru/himeji/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/larion/himeji/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/himeji/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/es/rutas/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/rutas/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/routes/"/>

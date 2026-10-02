@@ -32,6 +32,24 @@ import Redirige from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 const Montana = lazy(() => import('./v7/Montana'))
 const Itinerarios = lazy(() => import('./v7/Itinerarios'))
+const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
+import { CIUDADES_LARION, CIUDADES_TONY } from './v8/ciudades'
+import type { PaginaCiudad } from './v8/CiudadPagina'
+
+// Páginas de ciudad (v8): /es|en|ar/{ciudad}/ de Tony y /ru|larion/{ciudad}/ de Larion.
+function paginaCiudad(ruta: string): PaginaCiudad | null {
+  const m = ruta.match(/^\/(es|en|ar|ru|larion)\/([a-z]+)$/)
+  if (!m) return null
+  const prefijo = `/${m[1]}` as PaginaCiudad['prefijo']
+  const guia = m[1] === 'ru' || m[1] === 'larion' ? 'larion' : 'tony'
+  const lista: string[] = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
+  if (!lista.includes(m[2])) return null
+  return { prefijo, guia, lang: m[1] === 'larion' ? 'en' : (m[1] as PaginaCiudad['lang']), ciudad: m[2] as PaginaCiudad['ciudad'] }
+}
+const RUTAS_CIUDAD = [
+  ...['/es', '/en', '/ar'].flatMap((p) => CIUDADES_TONY.map((c) => `${p}/${c}`)),
+  ...['/ru', '/larion'].flatMap((p) => CIUDADES_LARION.map((c) => `${p}/${c}`)),
+]
 import { Corte } from './v7/Corte'
 import { MarcoLegal } from './v7/MarcoLegal'
 
@@ -94,6 +112,19 @@ function Layout() {
   const { pathname } = useLocation()
   const isAdmin = pathname.startsWith('/admin')
 
+  const ciudad = paginaCiudad(pathname.replace(/\/+$/, ''))
+  if (ciudad) {
+    return (
+      <>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+        <CiudadPagina key={pathname} pg={ciudad} />
+        <CookieBanner compacto />
+      </Suspense>
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
+      </>
+    )
+  }
+
   const v7 = RUTAS_V7[pathname.replace(/\/+$/, '') || '/']
   if (v7) {
     return (
@@ -102,7 +133,7 @@ function Layout() {
         {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
         <CookieBanner compacto />
       </Suspense>
-      <Corte rutas={Object.keys(RUTAS_V7)} />
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
     )
   }

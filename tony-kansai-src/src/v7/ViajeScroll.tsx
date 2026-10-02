@@ -3,7 +3,7 @@
 // vuelo: de la ciudad del cliente a Kansai, y del hotel al destino.
 
 import { useEffect, useRef, useState } from 'react'
-import { Globo } from './Globo'
+import { GloboReal } from '../v8/GloboReal'
 import { suena } from './sonido'
 import type { Pagina } from './contenido'
 
@@ -56,7 +56,7 @@ export function ViajeScroll({ p }: { p: Pagina }) {
   return (
     <section id="zona" ref={seccion} className="v7-viaje" aria-label={p.zona.titulo}>
       <div className="v7-viaje-fijo">
-        <Globo
+        <GloboReal
           className="v7-globo-viaje"
           lugares={p.zona.lugares}
           origenes={p.zona.origenes}

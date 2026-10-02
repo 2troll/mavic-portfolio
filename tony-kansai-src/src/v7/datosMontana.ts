@@ -35,7 +35,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-es': {
     id: 'm-es', lang: 'es', dir: 'ltr', ruta: '/es/montana/', guias: ['tony'],
     seo: {
-      titulo: 'Rutas de montaña con guía en Kansai — para quien vuelve a Japón | Tony Kansai Guide',
+      titulo: 'Rutas de montaña con guía en Kansai para quien vuelve a Japón | Tony Kansai Guide',
       descripcion: 'Ocho rutas de montaña con guía privado en español alrededor de Osaka, Kioto, Nara y Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino… Para quien ya conoce las ciudades y quiere algo distinto.',
     },
     intro: {
@@ -62,7 +62,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-en': {
     id: 'm-en', lang: 'en', dir: 'ltr', ruta: '/en/hiking/', guias: ['tony', 'larion'],
     seo: {
-      titulo: 'Guided mountain hikes in Kansai — for your second trip to Japan | Tony Kansai Guide',
+      titulo: 'Guided mountain hikes in Kansai for your second trip to Japan | Tony Kansai Guide',
       descripcion: 'Eight guided mountain routes around Osaka, Kyoto, Nara and Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino and more. For travellers who already know the cities and want something new.',
     },
     intro: {
@@ -75,7 +75,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
     oficio: {
       titulo: 'How we work in the mountains',
       puntos: [
-        { t: 'We check the weather the day before', d: 'If the mountain isn\'t safe, we move the date or refund your deposit. The guide decides — no debate.' },
+        { t: 'We check the weather the day before', d: 'If the mountain isn\'t safe, we move the date or refund your deposit. The guide decides, no debate.' },
         { t: 'Routes we have walked', d: 'Each route sheet says how to get there, how long each stretch takes and what to bring. Nothing improvised.' },
         { t: 'First-aid kit and navigation', d: 'The guide carries a first-aid kit and the route loaded. We go at the pace of the slowest in the group.' },
         { t: 'Honest grading', d: 'Hard, Technical and Expert Only routes are for over-18s. If in doubt, start with a Moderate one.' },
@@ -89,7 +89,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-ar': {
     id: 'm-ar', lang: 'ar', dir: 'rtl', ruta: '/ar/hiking/', guias: ['tony'],
     seo: {
-      titulo: 'رحلات جبلية مع مرشد في كانساي — لزيارتك الثانية لليابان | Tony Kansai Guide',
+      titulo: 'رحلات جبلية مع مرشد في كانساي لزيارتك الثانية لليابان | Tony Kansai Guide',
       descripcion: 'ثمانية مسارات جبلية مع مرشد خاص يتحدث العربية حول أوساكا وكيوتو ونارا وكوبي: كونغو وأتاغو وهيئي وروكّو ويوشينو. لمن يعرف المدن ويريد شيئاً جديداً.',
     },
     intro: {

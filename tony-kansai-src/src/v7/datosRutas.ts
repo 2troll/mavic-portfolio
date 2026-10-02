@@ -109,7 +109,7 @@ interface TextoRuta { titulo: string; desde: string; texto: string; opciones: { 
 
 export const ETIQUETAS: Record<Lengua, { titulo: string; sub: string; desde: string; pedir: string; gira: string; modelo: string; desdePrecio: string; nombres: Record<Tramo, string> }> = {
   es: { titulo: 'Las rutas', sub: 'Elige una y mira qué incluye. Son puntos de partida: el día lo ajustamos a vosotros.', desde: 'Desde Osaka', pedir: 'Quiero esta ruta', gira: 'Arrastra para girar', modelo: 'Modelo 3D', desdePrecio: 'desde', nombres: { medio: 'Medio día', completo: 'Día completo', lejos: 'Día completo' } },
-  en: { titulo: 'The routes', sub: 'Pick one and see what it includes. They\'re starting points — we adjust the day to you.', desde: 'From Osaka', pedir: 'I want this route', gira: 'Drag to rotate', modelo: '3D model', desdePrecio: 'from', nombres: { medio: 'Half day', completo: 'Full day', lejos: 'Full day' } },
+  en: { titulo: 'The routes', sub: 'Pick one and see what it includes. They\'re starting points; we adjust the day to you.', desde: 'From Osaka', pedir: 'I want this route', gira: 'Drag to rotate', modelo: '3D model', desdePrecio: 'from', nombres: { medio: 'Half day', completo: 'Full day', lejos: 'Full day' } },
   ar: { titulo: 'المسارات', sub: 'اختر مساراً وانظر ما يشمله. هي نقاط انطلاق، ونرتّب اليوم على مقاسكم.', desde: 'من أوساكا', pedir: 'أريد هذا المسار', gira: 'اسحب للتدوير', modelo: 'نموذج ثلاثي الأبعاد', desdePrecio: 'ابتداءً من', nombres: { medio: 'نصف يوم', completo: 'يوم كامل', lejos: 'يوم كامل' } },
   ru: { titulo: 'Маршруты', sub: 'Выберите маршрут и посмотрите, что в него входит. Это отправная точка — день подстроим под вас.', desde: 'Из Осаки', pedir: 'Хочу этот маршрут', gira: 'Потяните, чтобы повернуть', modelo: '3D-модель', desdePrecio: 'от', nombres: { medio: 'Полдня', completo: 'Целый день', lejos: 'Целый день' } },
 }
@@ -149,7 +149,7 @@ export const TEXTOS: Record<Lengua, Record<RutaId, TextoRuta>> = {
       { nombre: 'Full day', texto: 'All of that, plus Kasuga Taisha shrine and Isui-en garden.' }] },
     himeji: { titulo: 'Himeji', desde: '≈ 1 h by rapid train', texto: 'Japan\'s best-preserved original castle, a UNESCO World Heritage Site since 1993.', opciones: [
       { nombre: 'Full day', texto: 'The castle and Kōko-en garden, with a stop in Kobe on the way back if you like.' }] },
-    kobe: { titulo: 'Kobe', desde: '≈ 25 min by train', texto: 'A port city between the sea and the mountains, and home to the Kobe Mosque, built in 1935 — the oldest in Japan.', opciones: [
+    kobe: { titulo: 'Kobe', desde: '≈ 25 min by train', texto: 'A port city between the sea and the mountains, and home to the Kobe Mosque, built in 1935, the oldest in Japan.', opciones: [
       { nombre: 'Half day', texto: 'Meriken harbour, the Kitano quarter and the mosque.' },
       { nombre: 'Full day', texto: 'All of that, plus Nankinmachi Chinatown and the Shin-Kobe ropeway.' }] },
     miyajima: { titulo: 'Miyajima', desde: '≈ 2 h 15 min (shinkansen and ferry)', texto: 'The island of the torii that seems to float at high tide, and of Itsukushima Shrine.', opciones: [

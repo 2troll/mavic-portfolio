@@ -94,14 +94,14 @@ const YEN = { medio: 38000, completo: 58000, lejos: 70000 }
 
 /** Créditos de las fotos (las CC BY / BY-SA obligan a citarlos). */
 export const CREDITOS = [
-  { foto: 'Kioto — Fushimi Inari', autor: 'Basile Morin', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg' },
-  { foto: 'Osaka — castillo', autor: 'Dick Thomas Johnson', licencia: 'CC BY 2.0', url: 'https://commons.wikimedia.org/wiki/File:Osaka_Castle_2022-04-23.jpg' },
-  { foto: 'Nara — ciervos', autor: 'Marek Ślusarczyk (Tupungato)', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:003_Nara_deer_in_Japan_-_deer_of_Nara_Park_under_autumn_leaves.jpg' },
-  { foto: 'Kobe — puerto', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Maritime_Museum,_November_2016.jpg' },
-  { foto: 'Himeji — castillo', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
-  { foto: 'Miyajima — torii', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
-  { foto: 'Hiroshima — Cúpula de la Bomba Atómica', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
-  { foto: 'Globo y mapa — Blue Marble', autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
+  { foto: 'Kioto: Fushimi Inari', autor: 'Basile Morin', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg' },
+  { foto: 'Osaka: castillo', autor: 'Dick Thomas Johnson', licencia: 'CC BY 2.0', url: 'https://commons.wikimedia.org/wiki/File:Osaka_Castle_2022-04-23.jpg' },
+  { foto: 'Nara: ciervos', autor: 'Marek Ślusarczyk (Tupungato)', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:003_Nara_deer_in_Japan_-_deer_of_Nara_Park_under_autumn_leaves.jpg' },
+  { foto: 'Kobe: puerto', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Maritime_Museum,_November_2016.jpg' },
+  { foto: 'Himeji: castillo', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
+  { foto: 'Miyajima: torii', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
+  { foto: 'Hiroshima: Cúpula de la Bomba Atómica', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
+  { foto: 'Globo y mapa: Blue Marble', autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
 ]
 
 const fmtYen = (n: number, sep: string) => '¥' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep)
@@ -115,7 +115,7 @@ function lineas(campos: [string, string][]): string {
 const es: Pagina = {
   id: 'es', lang: 'es', viaje: ['Sales de Madrid o de Cancún.', 'Aterrizas en Kansai.', 'Te recojo en el vestíbulo de tu hotel.', 'Y pasamos el día donde quieras.'], dir: 'ltr', ruta: '/es/', guia: 'tony',
   seo: {
-    titulo: 'Guía privado en español en Japón — Kioto, Osaka y Nara | Tony Kansai Guide',
+    titulo: 'Guía privado en español en Japón: Kioto, Osaka y Nara | Tony Kansai Guide',
     descripcion: 'Tony, guía privado en español en Kansai. Te recoge en tu hotel y pasáis el día en Kioto, Osaka, Nara o Kobe. Trato directo, sin agencia y con precio cerrado por grupo.',
   },
   nav: { como: 'Cómo funciona', zona: 'Dónde vamos', precios: 'Precios', contacto: 'Escríbeme', idioma: 'Idioma' },
@@ -236,14 +236,14 @@ const es: Pagina = {
 const en: Pagina = {
   id: 'en', lang: 'en', viaje: ['You fly in from London.', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we spend the day wherever you like.'], dir: 'ltr', ruta: '/en/', guia: 'tony',
   seo: {
-    titulo: 'Private guide in Kyoto, Osaka & Nara — booked directly | Tony Kansai Guide',
+    titulo: 'Private guide in Kyoto, Osaka & Nara, booked directly | Tony Kansai Guide',
     descripcion: 'Tony is a private guide in Kansai. He meets you in your hotel lobby and you spend the day in Kyoto, Osaka, Nara or Kobe. No agency, no group, one fixed price per party.',
   },
   nav: { como: 'How it works', zona: 'Where we go', precios: 'Prices', contacto: 'Message me', idioma: 'Language' },
   hero: {
     foto: F + 'nara.jpg',
     titulo: 'Your private guide in Japan.',
-    sub: 'I\'m Tony. I meet you in your hotel lobby and we spend the day in Kyoto, Osaka, Nara — wherever you\'d like to go. No agency, no group: you deal with me directly.',
+    sub: 'I\'m Tony. I meet you in your hotel lobby and we spend the day in Kyoto, Osaka, Nara, or wherever you\'d like to go. No agency, no group: you deal with me directly.',
     chips: ['Just your party', 'One price per group', 'Hotel pick-up'],
     cta: 'Message me on WhatsApp',
     cta2: 'Plan your day',
@@ -283,7 +283,7 @@ const en: Pagina = {
   },
   ideas: {
     titulo: 'Ideas for your day',
-    sub: 'These aren\'t fixed packages. They\'re places I know well — we shape the day around you.',
+    sub: 'These aren\'t fixed packages. They\'re places I know well; we shape the day around you.',
     tarjetas: [
       { foto: F + 'kioto.jpg', titulo: 'Kyoto', texto: 'Fushimi Inari, Kiyomizu and the lanes of Gion. Best early, before the crowds.' },
       { foto: F + 'osaka.jpg', titulo: 'Osaka', texto: 'The castle, Dōtonbori and the markets where locals actually eat.' },
@@ -302,7 +302,7 @@ const en: Pagina = {
     ],
     notas: [
       'Prices are per group, not per person.',
-      'Trains, admissions and meals aren\'t included — you pay for them as we go.',
+      'Trains, admissions and meals aren\'t included: you pay for them as we go.',
       'Payment is in cash, in yen, on the day, or by bank transfer if we agree it when you book.',
       'Free cancellation up to 72 hours before.',
     ],
@@ -312,7 +312,7 @@ const en: Pagina = {
     titulo: 'Coming from the UK',
     texto: [
       'Japan is 8 hours ahead of London in summer and 9 in winter.',
-      'Message me whenever suits you — I reply as soon as it\'s morning here. Tipping isn\'t expected in Japan, and that includes me.',
+      'Message me whenever suits you. I reply as soon as it\'s morning here. Tipping isn\'t expected in Japan, and that includes me.',
     ],
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }, { ciudad: 'London', tz: 'Europe/London' }],
     tuHora: 'Your time',
@@ -355,7 +355,7 @@ const en: Pagina = {
 const ar: Pagina = {
   id: 'ar', lang: 'ar', viaje: ['تنطلق من دبي أو الرياض.', 'تهبط في كانساي.', 'ألتقيك في بهو فندقك.', 'ونقضي اليوم حيثما تحب.'], dir: 'rtl', ruta: '/ar/', guia: 'tony',
   seo: {
-    titulo: 'مرشد خاص باللغة العربية في اليابان — كيوتو وأوساكا ونارا | Tony Kansai Guide',
+    titulo: 'مرشد خاص باللغة العربية في اليابان، كيوتو وأوساكا ونارا | Tony Kansai Guide',
     descripcion: 'طوني مرشد خاص يتحدث العربية في كانساي. يلتقيك في فندقك وتقضون اليوم في كيوتو أو أوساكا أو نارا أو كوبي. تعامل مباشر بلا وكالة، وسعر ثابت للمجموعة، ومطاعم حلال وأوقات صلاة في المسار.',
   },
   nav: { como: 'كيف نعمل', zona: 'إلى أين نذهب', precios: 'الأسعار', contacto: 'راسلني', idioma: 'اللغة' },
@@ -596,15 +596,15 @@ const ru: Pagina = {
 const larion: Pagina = {
   ...en,
   id: 'larion', ruta: '/larion/', guia: 'larion',
-  viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west — as far as Hiroshima.'],
+  viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west, as far as Hiroshima.'],
   seo: {
-    titulo: 'Larion — private guide in Kansai and Hiroshima | Tony Kansai Guide',
+    titulo: 'Larion, private guide in Kansai and Hiroshima | Tony Kansai Guide',
     descripcion: 'Larion is a private guide in Russian and English. He meets you at your hotel and takes you to Kyoto, Osaka, Nara, Hiroshima or Miyajima. Booked directly, one fixed price per group.',
   },
   hero: {
     foto: F + 'miyajima.jpg',
     titulo: 'A private guide in Kansai and Hiroshima.',
-    sub: 'I\'m Larion. I meet you in your hotel lobby and we go wherever you\'d like: Kyoto, Osaka, Nara, Hiroshima, Miyajima. No agency, no group — you deal with me directly.',
+    sub: 'I\'m Larion. I meet you in your hotel lobby and we go wherever you\'d like: Kyoto, Osaka, Nara, Hiroshima, Miyajima. No agency, no group: you deal with me directly.',
     chips: en.hero.chips, cta: en.hero.cta, cta2: en.hero.cta2,
   },
   guiaTxt: {
@@ -612,7 +612,7 @@ const larion: Pagina = {
     idiomas: 'Russian · English',
     bio: [
       'I guide in Russian and English.',
-      'I cover all of Kansai — Kyoto, Osaka, Nara, Kobe, Himeji — and further west: Okayama, Hiroshima, Miyajima.',
+      'I cover all of Kansai (Kyoto, Osaka, Nara, Kobe, Himeji) and further west: Okayama, Hiroshima, Miyajima.',
       'Mountains, temples and long walking days are my favourite ground.',
     ],
     otro: { texto: 'Prefer Spanish or Arabic? Tony guides in both, as well as English.', enlace: 'Meet Tony', ruta: '/en/' },
@@ -640,7 +640,7 @@ const larion: Pagina = {
   },
   mercado: {
     titulo: 'Wherever you\'re flying in from',
-    texto: ['Message me whenever suits you — I reply as soon as it\'s morning here in Japan.'],
+    texto: ['Message me whenever suits you. I reply as soon as it\'s morning here in Japan.'],
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }],
     tuHora: 'Your time',
     divisas: ['GBP', 'USD', 'EUR'],
