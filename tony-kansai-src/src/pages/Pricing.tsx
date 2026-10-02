@@ -57,6 +57,7 @@ export default function Pricing() {
                       <div className="text-xs font-medium text-white/55 tracking-wider uppercase mb-1">{tc(tier.subtitle)}</div>
                       <div className="font-serif text-2xl font-semibold text-white mb-3">{tc(tier.name)}</div>
                       <div className="flex items-baseline gap-2 mb-1">
+                        {tier.priceFrom && <span className="text-sm text-white/55">{tc('from')}</span>}
                         <span className={`font-serif text-4xl font-bold ${tier.hot ? 'text-gradient-japan' : 'text-white'}`}><span className="ltr-num">{tier.price}</span></span>
                       </div>
                       <div className="text-xs text-white/50 mb-6"><span className="ltr-num">{tier.priceUSD}</span> · {tc(tier.duration)}</div>
@@ -108,10 +109,10 @@ export default function Pricing() {
                   'WhatsApp planning support',
                   'Restaurant recommendations',
                   'All ages welcome',
-                  'Cancellation protection',
+                  'Free cancellation up to 72 hours before.',
                 ].map((item) => (
                   <div key={item} className="flex items-center gap-2 text-sm text-white/65">
-                    <Check size={13} className="text-japan-red flex-shrink-0" />{item}
+                    <Check size={13} className="text-japan-red flex-shrink-0" />{tc(item)}
                   </div>
                 ))}
               </div>

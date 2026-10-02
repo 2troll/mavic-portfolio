@@ -154,6 +154,7 @@ export default function Booking() {
                         </div>
                         <div className="font-serif text-sm font-semibold text-white mb-1">{tc(tour.title)}</div>
                         <div className="flex items-center gap-3">
+                          {tour.priceFrom && <span className="text-[11px] text-white/55 -me-2">{tc('from')}</span>}
                           <span className="ltr-num font-bold text-xs" style={{ color: tour.accent }}>{tour.price}</span>
                           <span className="text-[11px] text-white/55 flex items-center gap-1">
                             <Clock size={9} />{tc(tour.duration)}
@@ -316,7 +317,7 @@ export default function Booking() {
                         </div>
                         <div className="flex items-center gap-2">
                           <MapPin size={13} style={{ color: selectedTour.accent }} />
-                          {selectedTour.meetingPoint}
+                          {tc(selectedTour.meetingPoint)}
                         </div>
                         <div className="flex items-center gap-2">
                           <Users size={13} style={{ color: selectedTour.accent }} />
@@ -326,7 +327,7 @@ export default function Booking() {
                     </div>
 
                     <div className="border-t border-white/6 pt-4">
-                      <div className="font-serif text-2xl font-bold text-gradient-japan mb-1">{selectedTour.price}</div>
+                      <div className="font-serif text-2xl font-bold text-gradient-japan mb-1">{selectedTour.priceFrom && <span className="text-sm font-normal text-white/55 me-1">{tc('from')}</span>}<span className="ltr-num">{selectedTour.price}</span></div>
                       <div className="text-xs text-white/50">{bp.per_group}</div>
                     </div>
 

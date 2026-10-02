@@ -125,6 +125,7 @@ export default function TourDetail() {
               {tc(tour.title)}
             </h1>
             <div className="flex items-center gap-6 flex-wrap">
+              {tour.priceFrom && <span className="text-sm text-white/55 -me-4">{tc('from')}</span>}
               <span className="ltr-num font-serif text-3xl font-bold text-gradient-japan">{tour.price}</span>
               <span className="flex items-center gap-1.5 text-sm text-white/50">
                 <Clock size={13} />{tc(tour.duration)}
@@ -212,6 +213,8 @@ export default function TourDetail() {
                       </div>
                     ))}
                   </div>
+                  <p className="mt-5 text-sm text-white/50">{tc('Not included: trains, admissions and meals — you pay for them as we go.')}</p>
+                  <p className="mt-2 text-sm text-white/50">{tc('Free cancellation up to 72 hours before.')}</p>
                 </div>
               </ExplodeIn>
 
