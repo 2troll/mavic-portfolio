@@ -119,3 +119,28 @@
 html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v8-pan-parada { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; pointer-events: none; }
 @supports not (animation-timeline: view()) { .v8-pan-parada { display: none; } }
+
+/* Tiempo en vivo en la portada de la ciudad */
+.v8-tiempo { position: absolute; z-index: 3; right: max(24px, 5vw); bottom: 10vh; display: grid; gap: 10px; justify-items: end; max-width: min(460px, 90vw); }
+[dir='rtl'] .v8-tiempo { right: auto; left: max(24px, 5vw); justify-items: start; }
+.v8-tiempo-fila { display: flex; align-items: center; gap: 18px; padding: 10px 18px; border-radius: 999px; color: var(--tinta);
+  --cristal: rgba(255, 255, 255, 0.72); }
+.v8-tiempo-ahora { display: flex; align-items: baseline; gap: 6px; padding-inline-end: 16px; border-inline-end: 1px solid var(--linea); }
+.v8-tiempo-ahora span { font-family: var(--mincho); font-size: 1.5rem; color: var(--acento); }
+.v8-tiempo-ahora strong { font-size: 1.6rem; font-weight: 600; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.v8-tiempo small { font-size: 12px; color: var(--tenue); }
+.v8-tiempo ol { display: flex; gap: 14px; list-style: none; margin: 0; padding: 0; }
+.v8-tiempo li { display: grid; justify-items: center; gap: 1px; font-size: 14px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.v8-tiempo li span { font-family: var(--mincho); font-weight: 400; }
+.v8-tiempo .moja { color: #1f6c9f; font-weight: 600; }
+.v8-tifon { display: flex; gap: 10px; align-items: flex-start; padding: 10px 16px; border-radius: 18px; background: rgba(255, 244, 230, 0.94);
+  color: #6b3a00; font-size: 14px; line-height: 1.4; box-shadow: var(--sombra); }
+.v8-tifon > span:first-child { font-family: var(--mincho); font-size: 1.1rem; color: #b8520a; }
+.v8-tifon.cerca { background: #fff0ec; color: #8a1f0c; }
+@media (max-width: 760px) {
+  .v8-tiempo { right: 16px; left: 16px; bottom: auto; top: 76px; justify-items: stretch; max-width: none; }
+  [dir='rtl'] .v8-tiempo { left: 16px; right: 16px; }
+  .v8-tiempo-fila { gap: 10px; padding: 8px 14px; justify-content: space-between; }
+  .v8-tiempo ol { gap: 10px; }
+  .v8-portada-kanji { top: 36vh; font-size: clamp(4rem, 22vw, 7rem); }
+}

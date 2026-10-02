@@ -21,6 +21,7 @@ import { HIKING_ROUTES } from '../lib/data'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, MANGA_APROBADO } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
+import { TiempoCiudad } from './TiempoCiudad'
 import '../v7/v7.css'
 import './v8.css'
 
@@ -94,6 +95,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <HeroTinta fotos={c.zonas.slice(0, 5).map((z) => fotoZona(z.id))} />
           <div className="v7-hero-velo" />
           <span className="v8-portada-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
+          <TiempoCiudad ciudad={c.id} lang={lang} />
           <div className="v8-portada-texto">
             <h1>{c.nombre[lang]}</h1>
             <p>{c.lema[lang]}</p>
@@ -205,6 +207,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <summary>Créditos · Credits</summary>
           <ul lang="es" dir="ltr">
             {c.zonas.map((z) => CREDITOS[z.id] && <li key={z.id}>{z.nombre.en}: <a href={CREDITOS[z.id].url} target="_blank" rel="noopener noreferrer">{CREDITOS[z.id].autor}</a>, {CREDITOS[z.id].licencia}</li>)}
+            <li>Tiempo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> (CC BY 4.0); tifones: <a href="https://www.jma.go.jp/bosai/map.html#contents=typhoon" target="_blank" rel="noopener noreferrer">Agencia Meteorológica de Japón</a></li>
             {CREDITOS_SONIDO.map((s) => <li key={s.url}>Sonido «{s.sonido}»: <a href={s.url} target="_blank" rel="noopener noreferrer">{s.autor}</a>, {s.licencia}</li>)}
           </ul>
         </details>
