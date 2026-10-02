@@ -153,6 +153,8 @@ function Relojes({ p }: { p: Pagina }) {
   )
 }
 
+const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
+
 function Precios({ p }: { p: Pagina }) {
   const cambios = useCambio(p.mercado.divisas)
   const fmt = (n: number, divisa: string) => {
@@ -163,8 +165,10 @@ function Precios({ p }: { p: Pagina }) {
   return (
     <>
       <div className="v7-planes">
-        {p.precios.planes.map((plan) => (
-          <article key={plan.nombre} className="v7-plan tarjeta">
+        {p.precios.planes.map((plan, i) => (
+          // El día completo es lo que más rinde al cliente: se destaca con tinta, no con altura.
+          <article key={plan.nombre} className={`v7-plan tarjeta ${i === 1 ? 'v7-plan-destacado' : ''}`}>
+            {i === 1 && <p className="v7-plan-sello">{RECOMENDADO[p.lang] ?? RECOMENDADO.en}</p>}
             <h3>{plan.nombre}</h3>
             <p className="v7-plan-detalle">{plan.detalle}</p>
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
@@ -385,8 +389,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <h2>{p.como.titulo}</h2>
           <ol className="v7-pasos">
             {p.como.pasos.map((s, i) => (
-              <li key={s.t} className="tarjeta">
-                <span className="v7-paso-num" lang="ja" aria-hidden="true">{['一', '二', '三'][i]}</span>
+              <li key={s.t}>
+                <span className="v7-paso-num" aria-hidden="true">0{i + 1}<span lang="ja">{['一', '二', '三'][i]}</span></span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
               </li>
@@ -459,11 +463,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         )}
 
         {/* Preguntas */}
-        <section className="v7-seccion">
+        <section className="v7-seccion v7-faq-seccion">
           <h2>{p.faq.titulo}</h2>
           <div className="v7-faq">
             {p.faq.items.map((f) => (
-              <details key={f.q} className="tarjeta">
+              <details key={f.q}>
                 <summary>{f.q}</summary>
                 <p>{f.a}</p>
               </details>
