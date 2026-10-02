@@ -123,4 +123,4 @@ export const CIUDADES_LARION: CiudadId[] = ['hiroshima', 'kyoto', 'nara', 'osaka
 
 /** Viñetas manga aprobadas por él (public/v8/manga/{guia}-{ciudad}.webp).
  *  Sólo se enseñan las que estén aquí: nunca una imagen sin su visto bueno. */
-export const MANGA_APROBADO: string[] = []
+export const MANGA_APROBADO: string[] = ['tony-kyoto', 'larion-hiroshima']
