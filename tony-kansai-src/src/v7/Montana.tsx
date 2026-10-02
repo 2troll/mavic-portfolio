@@ -12,6 +12,7 @@ import { MontesScroll } from './MontesScroll'
 import { EfectoEstacion, estacionDeHoy } from './Estacion'
 import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO } from './sonido'
+import { Logo } from './Logo'
 import './v7.css'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -88,9 +89,7 @@ export default function Montana({ id }: { id: MontanaId }) {
       </Helmet>
 
       <header className="v7-cabecera cristal">
-        <Link to={CIUDAD[id]} className="v7-marca" aria-label="Tony Kansai Guide">
-          <span className="v7-hanko" aria-hidden="true">関西</span>
-          <span>Tony Kansai Guide</span>
+        <Link to={CIUDAD[id]} className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
         </Link>
         <nav className="v7-anclas">
           <Link to={CIUDAD[id]}>{p.et.ciudad}</Link>

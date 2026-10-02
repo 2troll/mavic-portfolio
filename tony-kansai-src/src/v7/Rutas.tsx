@@ -8,11 +8,11 @@
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
-import { META, MODELOS, PRECIO, RUTAS_LARION, RUTAS_TONY, ETIQUETAS, TEXTOS } from './datosRutas'
+import { ESCENAS, META, MODELOS, PRECIO, RUTAS_LARION, RUTAS_TONY, ETIQUETAS, TEXTOS } from './datosRutas'
 import type { RutaId } from './datosRutas'
 import type { Pagina } from './contenido'
 import { GUIAS } from './contenido'
-import { carga, prepara, opacidad, muestrea } from './modelos3d'
+import { compone, opacidad, muestrea } from './modelos3d'
 import { movimientoReducido } from './petalos'
 import { suena } from './sonido'
 
@@ -187,7 +187,7 @@ export function Rutas({ p }: { p: Pagina }) {
       }
       // El scroll también gira el modelo: se ve por todos lados al bajar.
       peana.rotation.y = 0.5 + q * 1.4 + (reducido ? 0 : (t / 1000) * 0.12)
-      camara.position.set(0, mira + 0.6, 6.4)
+      camara.position.set(0, mira + 1.1, 7.4)
       camara.lookAt(0, mira, 0)
       renderer.render(escena, camara)
       if (visible && !document.hidden) raf = requestAnimationFrame(cuadro)
@@ -201,8 +201,7 @@ export function Rutas({ p }: { p: Pagina }) {
     ;(async () => {
       for (let i = 0; i < ids.length && vivo; i++) {
         try {
-          const m = META[ids[i]]
-          const grupo = prepara(await carga(MODELOS[m.modelo].archivo), m.variante)
+          const grupo = await compone(ids[i])
           modelos[i] = { grupo, puntos: muestrea(grupo, PARTICULAS) }
           a0 = -1
           sigue()
@@ -218,7 +217,6 @@ export function Rutas({ p }: { p: Pagina }) {
     }
   }, [ids])
 
-  const modelo = MODELOS[meta.modelo]
   return (
     <section id="rutas" ref={seccion} className="v7-rutas-scroll" style={{ height: `${ids.length * 85 + 15}vh` }}>
       <div className="v7-rutas-fijo">
@@ -254,9 +252,11 @@ export function Rutas({ p }: { p: Pagina }) {
               })}
             </ul>
           </div>
-          <a className="v7-ruta-credito" href={modelo.url} target="_blank" rel="noopener noreferrer" lang="en" dir="ltr">
-            {et.modelo}: {modelo.titulo} · {modelo.autor} · {modelo.licencia}
-          </a>
+          <p className="v7-ruta-credito" lang="en" dir="ltr">
+            {et.modelo}: {[...new Set(ESCENAS[sel].piezas.map((x) => x.m))].map((m, i) => (
+              <span key={m}>{i > 0 ? ' · ' : ''}<a href={MODELOS[m].url} target="_blank" rel="noopener noreferrer">{MODELOS[m].titulo}</a> ({MODELOS[m].autor}, {MODELOS[m].licencia})</span>
+            ))}
+          </p>
         </div>
       </div>
     </section>

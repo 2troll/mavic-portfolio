@@ -5,7 +5,7 @@
 // Modelos 3D descargados de Poly Pizza (no hechos aquí). Licencias y autores
 // en MODELOS; las CC-BY obligan a citarlos y se citan en la ficha.
 
-export type ModeloId = 'castillo' | 'pagoda' | 'torii' | 'ciervo' | 'grulla' | 'barco'
+export type ModeloId = 'castillo' | 'pagoda' | 'torii' | 'ciervo' | 'grulla' | 'barco' | 'chochin' | 'toro' | 'cerezo' | 'arce' | 'pino' | 'bonsai' | 'carpa' | 'faro'
 export type RutaId = 'kioto' | 'osaka' | 'nara' | 'himeji' | 'kobe' | 'miyajima' | 'hiroshima'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
 
@@ -16,12 +16,70 @@ export const MODELOS: Record<ModeloId, { archivo: string; titulo: string; autor:
   ciervo: { archivo: '/v7/modelos/ciervo.glb', titulo: 'Deer', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0tJzk22c46S' },
   grulla: { archivo: '/v7/modelos/grulla.glb', titulo: 'crane', autor: 'konta johanna', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/ac2YD5VPryU' },
   barco: { archivo: '/v7/modelos/barco.glb', titulo: 'Container Ship', autor: 'Alex Safayan', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/3AmDGcCu6Ll' },
+  chochin: { archivo: '/v7/modelos/chochin.glb', titulo: 'red lantern', autor: 'Sophie Kim', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/7PZhxLFiGc2' },
+  toro: { archivo: '/v7/modelos/toro.glb', titulo: 'Japanese Stone Lamp', autor: 'Flopsi', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/5gZfOZIW92k' },
+  cerezo: { archivo: '/v7/modelos/cerezo.glb', titulo: 'Cherry tree', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/1FSDzk-LRdA' },
+  arce: { archivo: '/v7/modelos/arce.glb', titulo: 'Autumn Tree', autor: 'Quaternius', licencia: 'Dominio público (CC0)', url: 'https://poly.pizza/m/2lRubrT6Na' },
+  pino: { archivo: '/v7/modelos/pino.glb', titulo: 'Pine', autor: 'Quaternius', licencia: 'Dominio público (CC0)', url: 'https://poly.pizza/m/699sFuLCN2' },
+  bonsai: { archivo: '/v7/modelos/bonsai.glb', titulo: 'Bonsai', autor: 'Don Carson', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/44XK5UHTd4Q' },
+  carpa: { archivo: '/v7/modelos/carpa.glb', titulo: 'Goldfish', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0bOZGc8ONrx' },
+  faro: { archivo: '/v7/modelos/faro.glb', titulo: 'Lighthouse', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0t2ZYRBsqX-' },
+}
+
+/** Una pieza del diorama: modelo, sitio en el suelo (x, z), tamaño (lado mayor), giro y altura. */
+export interface Pieza { m: ModeloId; x: number; z: number; tam: number; rot?: number; y?: number; osaka?: boolean }
+
+/** Cada ruta es una pequeña escena compuesta con piezas descargadas. */
+export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean }> = {
+  kioto: { piezas: [
+    { m: 'pagoda', x: 0.1, z: -0.3, tam: 2.3 },
+    { m: 'torii', x: -1.15, z: 0.75, tam: 0.95, rot: 0.55 },
+    { m: 'arce', x: 1.2, z: -0.35, tam: 1.3 },
+    { m: 'toro', x: 0.75, z: 0.95, tam: 0.5 },
+  ] },
+  osaka: { piezas: [
+    { m: 'castillo', x: 0, z: -0.25, tam: 2.1, osaka: true },
+    { m: 'cerezo', x: -1.3, z: 0.35, tam: 1.1 },
+    { m: 'cerezo', x: 1.35, z: -0.5, tam: 0.9, rot: 1.2 },
+    { m: 'chochin', x: 0.8, z: 1.0, tam: 0.32 },
+    { m: 'chochin', x: -0.55, z: 1.05, tam: 0.28 },
+  ] },
+  nara: { piezas: [
+    { m: 'ciervo', x: -0.3, z: 0.25, tam: 1.05, rot: 0.6 },
+    { m: 'ciervo', x: 0.75, z: 0.55, tam: 0.8, rot: -1.3 },
+    { m: 'toro', x: -1.15, z: -0.45, tam: 0.95 },
+    { m: 'toro', x: 1.05, z: -0.65, tam: 0.95 },
+    { m: 'pino', x: 0.05, z: -1.15, tam: 1.9 },
+  ] },
+  himeji: { piezas: [
+    { m: 'castillo', x: 0, z: -0.25, tam: 2.1 },
+    { m: 'pino', x: -1.3, z: -0.35, tam: 1.5 },
+    { m: 'pino', x: 1.35, z: 0.1, tam: 1.15, rot: 1 },
+    { m: 'bonsai', x: 0.75, z: 1.0, tam: 0.55 },
+  ] },
+  kobe: { piezas: [
+    { m: 'barco', x: 0.25, z: 0.45, tam: 2.4, rot: 0.35 },
+    { m: 'faro', x: -1.15, z: -0.7, tam: 1.5 },
+  ] },
+  miyajima: { agua: true, piezas: [
+    { m: 'torii', x: 0, z: 0, tam: 1.9 },
+    { m: 'carpa', x: 0.85, z: 0.75, tam: 0.38, rot: 2.2, y: 0.36 },
+    { m: 'carpa', x: -0.75, z: 0.95, tam: 0.32, rot: -0.6, y: 0.36 },
+    { m: 'pino', x: -1.35, z: -1.25, tam: 1.3 },
+    { m: 'pino', x: 1.3, z: -1.35, tam: 1.05 },
+  ] },
+  hiroshima: { piezas: [
+    { m: 'cerezo', x: 0, z: -0.9, tam: 1.7 },
+    // Senbazuru: grullas de papel en corro, a distintas alturas.
+    ...[0, 1, 2, 3, 4, 5].map((i) => ({ m: 'grulla' as const, x: Math.cos(i * 1.047) * 1.0, z: Math.sin(i * 1.047) * 0.8 + 0.3, tam: 0.42, rot: -i * 1.047, y: 0.35 + (i % 3) * 0.3 })),
+  ] },
 }
 
 type Tramo = 'medio' | 'completo' | 'lejos'
 export const PRECIO: Record<Tramo, number> = { medio: 38000, completo: 58000, lejos: 70000 }
 
 /** Lo que no depende del idioma: modelo, retoque y precio de cada opción. */
+/** Precio de cada opción y pieza principal (la que se cita junto a la ruta). */
 export const META: Record<RutaId, { modelo: ModeloId; variante?: 'osaka' | 'agua'; tramos: Tramo[] }> = {
   kioto: { modelo: 'pagoda', tramos: ['medio', 'completo'] },
   osaka: { modelo: 'castillo', variante: 'osaka', tramos: ['medio', 'completo'] },

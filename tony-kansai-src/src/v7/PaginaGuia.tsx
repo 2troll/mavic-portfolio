@@ -15,6 +15,7 @@ import { foto } from './foto'
 import { BotonSonido } from './BotonSonido'
 import { HeroTinta } from './HeroTinta'
 import { CREDITOS_SONIDO } from './sonido'
+import { Logo } from './Logo'
 import './v7.css'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
@@ -101,9 +102,7 @@ function Cabecera({ p }: { p: Pagina }) {
   const msg = p.contacto.plantilla(VACIO)
   return (
     <header className="v7-cabecera cristal">
-      <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide">
-        <span className="v7-hanko" aria-hidden="true">関西</span>
-        <span>Tony Kansai Guide</span>
+      <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
         {([['rutas', ETIQUETAS[p.lang].titulo], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (

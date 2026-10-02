@@ -113,7 +113,7 @@
 }
 @media (max-width: 560px) {
   .v7-cabecera { gap: 8px; padding-inline-start: 12px; top: 8px; width: calc(100% - 16px); }
-  .v7-marca span { display: none; }
+  .v7-marca > span:not(.v7-logo) { display: none; }
   .v7-solo-ancho { display: none; }
   .v7-boton-peq { padding: 0 12px; }
   .v7-idiomas a { padding: 5px 8px; }
@@ -672,3 +672,9 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-legal .text-sm { font-size: 15px !important; }
 .v7-legal .text-xs { font-size: 13px !important; }
 .v7-legal .v7-anclas { display: flex !important; margin-inline-start: auto; }
+
+/* ══ Logo (torii MingCute + nombre) ══ */
+.v7-logo { display: inline-flex; align-items: center; gap: 9px; }
+.v7-logo svg { color: var(--acento); flex: none; }
+.v7-logo-texto { font-weight: 650; letter-spacing: -0.01em; }
+@media (max-width: 560px) { .v7-logo-texto { display: none; } }

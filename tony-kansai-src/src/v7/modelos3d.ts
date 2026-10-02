@@ -7,6 +7,8 @@ import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { MeshoptDecoder } from 'three/examples/jsm/libs/meshopt_decoder.module.js'
 import { MeshSurfaceSampler } from 'three/examples/jsm/math/MeshSurfaceSampler.js'
 import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+import { ESCENAS, MODELOS } from './datosRutas'
+import type { RutaId } from './datosRutas'
 
 // Los .glb van comprimidos con meshopt (gltf-transform optimize): 2,5 MB → 180 KB.
 const cargador = new GLTFLoader().setMeshoptDecoder(MeshoptDecoder)
@@ -16,8 +18,8 @@ export function carga(url: string) {
   return cache.get(url)!
 }
 
-/** Centra el modelo sobre el suelo, lo escala a una altura fija y aplica el retoque de la ruta. */
-export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua'): THREE.Group {
+/** Centra el modelo sobre el suelo, lo escala (lado mayor = tam) y aplica el retoque de la ruta. */
+export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua', tam_ = 2.2): THREE.Group {
   const m = original.clone(true)
   m.traverse((o) => {
     const mesh = o as THREE.Mesh
@@ -36,7 +38,7 @@ export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua'): THR
   })
   const caja = new THREE.Box3().setFromObject(m)
   const tam = caja.getSize(new THREE.Vector3())
-  m.scale.setScalar(2.2 / Math.max(tam.x, tam.y, tam.z))
+  m.scale.setScalar(tam_ / Math.max(tam.x, tam.y, tam.z))
   const c = new THREE.Box3().setFromObject(m)
   const centro = c.getCenter(new THREE.Vector3())
   m.position.set(-centro.x, -c.min.y, -centro.z)
@@ -101,4 +103,35 @@ export function muestrea(g: THREE.Group, n: number): Float32Array {
   unida.dispose()
   geos.forEach((x) => x.dispose())
   return salida
+}
+
+/** Monta el diorama de una ruta con sus piezas descargadas. */
+export async function compone(ruta: RutaId): Promise<THREE.Group> {
+  const e = ESCENAS[ruta]
+  const raiz = new THREE.Group()
+  const piezas = await Promise.all(e.piezas.map(async (p) => {
+    const g = prepara(await carga(MODELOS[p.m].archivo), p.osaka ? 'osaka' : undefined, p.tam)
+    g.position.set(p.x, p.y ?? 0, p.z)
+    g.rotation.y = p.rot ?? 0
+    return g
+  }))
+  piezas.forEach((g) => raiz.add(g))
+  if (e.agua) {
+    // Miyajima: todo lo que no es pez se hunde un poco: el torii y la orilla
+    // «flotan» en la marea alta.
+    piezas.forEach((g, i) => { if (e.piezas[i].m === 'torii') g.position.y -= 0.35 })
+    const agua = new THREE.Mesh(
+      new THREE.CircleGeometry(1.75, 64),
+      new THREE.MeshStandardMaterial({ color: '#2f6f8f', roughness: 0.15, metalness: 0.2, transparent: true, opacity: 0.85 }),
+    )
+    agua.rotation.x = -Math.PI / 2
+    agua.position.y = 0.01
+    agua.receiveShadow = true
+    agua.userData.agua = true
+    agua.userData.opacidadBase = 0.85
+    raiz.add(agua)
+  }
+  raiz.updateMatrixWorld(true)
+  raiz.userData.alto = new THREE.Box3().setFromObject(raiz).getSize(new THREE.Vector3()).y
+  return raiz
 }

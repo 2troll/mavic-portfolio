@@ -6,6 +6,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { CORREO } from './contenido'
+import { Logo } from './Logo'
 import './v7.css'
 
 const VUELTA: Record<string, { ruta: string; texto: string }> = {
@@ -23,9 +24,7 @@ export function MarcoLegal({ children }: { children: ReactNode }) {
   return (
     <div className={`v7 v7-legal lang-${lang}`} lang={lang} dir={dir}>
       <header className="v7-cabecera cristal">
-        <Link to={ruta} className="v7-marca">
-          <span className="v7-hanko" aria-hidden="true">関西</span>
-          <span>Tony Kansai Guide</span>
+        <Link to={ruta} className="v7-marca"> <Logo />
         </Link>
         <nav className="v7-anclas">
           <Link to={ruta}>{dir === 'rtl' ? '→' : '←'} {v.texto}</Link>
