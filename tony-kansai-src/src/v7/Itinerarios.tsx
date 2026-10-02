@@ -17,6 +17,10 @@ import { foto } from './foto'
 import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO, suena } from './sonido'
 import { Logo } from './Logo'
+import { MANGA_APROBADO } from '../v8/ciudades'
+
+// Viñeta manga del guía para cada día (la misma que su página de ciudad).
+const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osaka', nara: 'nara', himeji: 'himeji', kobe: 'kobe', hiroshima: 'hiroshima' }
 import './v7.css'
 
 export type ItinPaginaId = 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'
@@ -135,6 +139,9 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
                 <img {...foto(m.foto)} alt="" loading={n === 0 ? 'eager' : 'lazy'} decoding="async" />
                 <span className="v7-itin-trama" aria-hidden="true" />
                 <span className="v7-itin-kanji" lang="ja" aria-hidden="true">{m.kanji}</span>
+                {CIUDAD_DE[i] && MANGA_APROBADO.includes(`${guia}-${CIUDAD_DE[i]}`) && (
+                  <img className="v7-itin-vineta" src={`/v8/manga/${guia}-${CIUDAD_DE[i]}.webp`} alt="" loading="lazy" decoding="async" />
+                )}
                 <div className="v7-itin-titulo">
                   <p className="v7-itin-num"><bdi>{String(n + 1).padStart(2, '0')} / {String(orden.length).padStart(2, '0')}</bdi></p>
                   <h2 id={`t-${i}`}>{t.titulo}</h2>
