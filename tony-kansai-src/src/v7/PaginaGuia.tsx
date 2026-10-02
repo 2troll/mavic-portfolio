@@ -8,6 +8,7 @@ import { Helmet } from 'react-helmet-async'
 import { EfectoEstacion, SelectorEstacion, estacionDeHoy } from './Estacion'
 import type { Estacion } from './Estacion'
 import { ETIQUETAS, MODELOS } from './datosRutas'
+import { Mosaico } from '../v8/Mosaico'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -384,6 +385,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense>
 
         {/* Cómo funciona */}
+        {/* Las ciudades, cada una con su página (v8) */}
+        <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
+
         {/* Así funciona + el guía, en una sola rejilla asimétrica (bento de soft-skill):
             la cara del guía manda, los tres pasos al lado y lo que no hacemos debajo. */}
         <section id="como" className="v7-seccion">

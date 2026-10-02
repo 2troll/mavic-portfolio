@@ -1,0 +1,121 @@
+/* ══ v8: páginas de ciudad ══════════════════════════════════════════════════
+   Hereda los tokens de v7.css (cristal Apple claro). Aquí sólo lo propio:
+   portada, pista horizontal de zonas, maqueta 3D, el día y el mosaico. */
+
+/* 1. Portada a pantalla completa */
+.v8-portada { position: relative; min-height: 100vh; min-height: 100svh; display: flex; align-items: flex-end; overflow: hidden; color: #fff; }
+.v8-portada-kanji {
+  position: absolute; top: 14vh; right: 5vw; writing-mode: vertical-rl; font-family: var(--mincho);
+  font-size: clamp(5rem, 17vw, 15rem); line-height: 1; color: rgba(255, 255, 255, 0.92); text-shadow: 0 6px 40px rgba(0, 0, 0, 0.35);
+  animation: v8-sube 1.4s var(--curva) both 0.2s;
+}
+[dir='rtl'] .v8-portada-kanji { right: auto; left: 5vw; }
+.v8-portada-texto { position: relative; z-index: 2; padding: 0 max(24px, 6vw) 10vh; display: grid; gap: 18px; justify-items: start; }
+.v8-portada-texto h1 { font-size: clamp(3.4rem, 11vw, 9.5rem); line-height: 0.92; letter-spacing: -0.05em; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); animation: v8-sube 1.1s var(--curva) both; }
+.v8-portada-texto p { font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 30ch; color: rgba(255, 255, 255, 0.92); animation: v8-sube 1.1s var(--curva) both 0.12s; }
+.v8-portada-texto .v7-boton { animation: v8-sube 1.1s var(--curva) both 0.24s; }
+@keyframes v8-sube { from { opacity: 0; transform: translateY(40px); filter: blur(10px); } }
+
+/* 2. Zonas: el scroll vertical mueve la pista en horizontal (scroll-driven). */
+.v8-pan { position: relative; height: calc(var(--n) * 100vh); height: calc(var(--n) * 100svh); view-timeline-name: --pan; view-timeline-axis: block; --sentido: -1; }
+[dir='rtl'] .v8-pan { --sentido: 1; }
+.v8-pan-fijo { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; }
+.v8-pan-pista {
+  display: flex; height: 100%; width: calc(var(--n) * 100vw); margin: 0; padding: 0; list-style: none;
+  animation: v8-pan linear both; animation-timeline: --pan; animation-range: contain 0% contain 100%;
+}
+@keyframes v8-pan { to { transform: translateX(calc((var(--n) - 1) * 100vw * var(--sentido))); } }
+.v8-zona { position: relative; flex: 0 0 100vw; height: 100%; overflow: hidden; color: #fff; }
+.v8-zona img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: v8-respira 22s ease-in-out infinite alternate; }
+@keyframes v8-respira { to { transform: scale(1.08); } }
+.v8-zona::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.1) 55%, rgba(0, 0, 0, 0.72) 100%); }
+.v8-zona-kanji {
+  position: absolute; z-index: 1; top: 13vh; right: 5vw; writing-mode: vertical-rl; font-family: var(--mincho);
+  font-size: clamp(3rem, 9vw, 8rem); line-height: 1.02; color: rgba(255, 255, 255, 0.9); text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+}
+[dir='rtl'] .v8-zona-kanji { right: auto; left: 5vw; }
+.v8-zona-texto { position: absolute; z-index: 1; inset: auto max(24px, 6vw) 11vh; display: grid; gap: 10px; max-width: 760px; }
+.v8-zona-num { font-size: 14px; font-weight: 600; letter-spacing: 0.06em; opacity: 0.85; font-variant-numeric: tabular-nums; }
+.v8-zona-texto h2 { font-size: clamp(2.6rem, 8vw, 7rem); line-height: 0.95; letter-spacing: -0.045em; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); }
+.v8-zona-texto p:last-child { font-size: clamp(1.05rem, 1.8vw, 1.4rem); color: rgba(255, 255, 255, 0.92); max-width: 34ch; }
+/* Sin scroll-driven (Firefox, Safari antiguos): pista deslizable con el dedo. */
+@supports not (animation-timeline: view()) {
+  .v8-pan { height: auto; }
+  .v8-pan-fijo { position: relative; height: 88vh; overflow-x: auto; scroll-snap-type: x mandatory; }
+  .v8-pan-pista { animation: none; }
+  .v8-zona { scroll-snap-align: start; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v8-zona img, .v8-portada-kanji, .v8-portada-texto > * { animation: none; }
+}
+
+/* 3. Maqueta 3D */
+.v8-maqueta { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: radial-gradient(ellipse at 50% 60%, #ffffff 0%, var(--fondo) 65%); }
+.v8-maqueta-kanji {
+  position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--mincho);
+  font-size: clamp(10rem, 38vw, 34rem); line-height: 1; color: rgba(29, 29, 31, 0.05); pointer-events: none; white-space: nowrap;
+}
+.v8-diorama { position: absolute; inset: 0; cursor: grab; touch-action: pan-y; }
+.v8-diorama:active { cursor: grabbing; }
+.v8-diorama canvas { display: block; width: 100% !important; height: 100% !important; }
+.v8-maqueta-pista { position: absolute; bottom: 6vh; left: 50%; transform: translateX(-50%); font-size: 14px; color: var(--tenue); }
+
+/* 4. El día: hora grande, sitio al lado */
+.v8-dia ol { list-style: none; margin: 28px 0 0; padding: 0; display: grid; gap: 0; max-width: 820px; }
+.v8-dia li { display: grid; grid-template-columns: 110px 1fr; gap: 20px; align-items: baseline; padding: 16px 0; border-bottom: 1px solid var(--linea); }
+.v8-dia time { font-size: clamp(1.4rem, 2.6vw, 2rem); font-weight: 300; color: var(--acento); font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.v8-dia li span { font-size: clamp(1.15rem, 2vw, 1.5rem); font-weight: 600; letter-spacing: -0.02em; }
+.v8-dia-pie { display: flex; flex-wrap: wrap; gap: 18px 32px; align-items: center; margin-top: 32px; }
+.v8-precio { display: grid; }
+.v8-precio small { color: var(--tenue); font-size: 14px; }
+.v8-precio strong { font-size: 2.4rem; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v8-dia li, .v8-otra, .v8-monte { animation: v7-aparece-suave linear both; animation-timeline: view(); animation-range: entry 0% entry 60%; }
+  }
+}
+
+/* 5. Montañas cerca */
+.v8-montes > div { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 22px; }
+.v8-monte {
+  padding: 14px 22px; border-radius: 999px; background: var(--superficie); text-decoration: none; font-weight: 600;
+  box-shadow: inset 0 1px 1px #fff, 0 0 0 1px var(--linea), var(--sombra); transition: transform 0.5s var(--curva);
+}
+.v8-monte:hover { transform: translateY(-2px); }
+
+/* 6. Otras ciudades: mosaico asimétrico de fotos */
+.v8-otras-rejilla { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; margin-top: 28px; }
+.v8-otra { position: relative; grid-column: span 2; aspect-ratio: 4 / 3; border-radius: var(--radio); overflow: hidden; color: #fff; text-decoration: none; box-shadow: var(--sombra); }
+.v8-otra:first-child { grid-column: span 4; aspect-ratio: auto; grid-row: span 2; }
+.v8-otra img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--curva); }
+.v8-otra:hover img { transform: scale(1.06); }
+.v8-otra::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(0, 0, 0, 0.65)); }
+.v8-otra > span { position: absolute; z-index: 1; inset: auto 20px 18px; font-size: clamp(1.2rem, 2.2vw, 1.8rem); font-weight: 600; letter-spacing: -0.03em; display: flex; gap: 10px; align-items: baseline; }
+.v8-otra > span span { font-family: var(--mincho); font-weight: 400; font-size: 0.8em; opacity: 0.85; }
+@media (max-width: 760px) {
+  .v8-otras-rejilla { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .v8-otra, .v8-otra:first-child { grid-column: span 1; grid-row: auto; aspect-ratio: 3 / 4; }
+  .v8-otra:first-child { grid-column: span 2; aspect-ratio: 16 / 10; }
+}
+
+/* 7. Final */
+.v8-final { display: grid; justify-items: center; gap: 22px; padding-bottom: 12vh; }
+.v8-final img { width: 140px; height: 150px; object-fit: cover; border-radius: 40px; box-shadow: 0 0 0 6px #fff, 0 0 0 7px var(--linea), var(--sombra); }
+
+/* Viñeta manga: entra por un tajo diagonal, como un panel que se abre. */
+.v8-manga { position: relative; height: 100vh; height: 100svh; overflow: hidden; background: #fff; }
+.v8-manga img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .v8-manga img { animation: v8-tajo linear both; animation-timeline: view(); animation-range: entry 0% cover 45%; }
+  }
+}
+@keyframes v8-tajo {
+  from { clip-path: polygon(0 0, 0 0, 0 0, 0 0); transform: scale(1.15) rotate(-1.5deg); }
+  to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: none; }
+}
+
+/* Paradas de la pista horizontal (scroll-snap suave sólo en páginas de ciudad). */
+html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
+.v8-pan-parada { position: absolute; left: 0; width: 1px; height: 1px; scroll-snap-align: start; pointer-events: none; }
+@supports not (animation-timeline: view()) { .v8-pan-parada { display: none; } }

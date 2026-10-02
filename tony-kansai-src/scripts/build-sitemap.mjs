@@ -38,6 +38,9 @@ const paginas = [
   { loc: '/en/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ar/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ru/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
+  // Páginas de ciudad (v8).
+  ...['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond'].flatMap((c) => ['es', 'en', 'ar'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.9', changefreq: 'monthly', v7: `ciudadTony:${c}` }))),
+  ...['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji'].flatMap((c) => ['ru', 'larion'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.85', changefreq: 'monthly', v7: `ciudadLarion:${c}` }))),
   { loc: '/es/rutas', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
   { loc: '/en/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
   { loc: '/ar/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
@@ -79,7 +82,10 @@ const url = ({ loc, priority, changefreq, v7 }) => {
   // Las páginas .html llevan su propio selector de idioma dentro; el resto
   // usan ?lang= y se declaran con hreflang para que Google indexe cada versión.
   if (v7) {
-    const grupo = V7[v7 === true ? 'portada' : v7]
+    const [tipo, ciudad] = String(v7).split(':')
+    const grupo = tipo === 'ciudadTony' ? [['es', `/es/${ciudad}/`], ['en', `/en/${ciudad}/`], ['ar', `/ar/${ciudad}/`]]
+      : tipo === 'ciudadLarion' ? [['ru', `/ru/${ciudad}/`], ['en', `/larion/${ciudad}/`]]
+      : V7[v7 === true ? 'portada' : v7]
     const alt = grupo.map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
       + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}/"/>`
     return `  <url>\n    <loc>${abs}</loc>${alt}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
