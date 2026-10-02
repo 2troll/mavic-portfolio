@@ -5,7 +5,7 @@
 // Modelos 3D descargados de Poly Pizza (no hechos aquí). Licencias y autores
 // en MODELOS; las CC-BY obligan a citarlos y se citan en la ficha.
 
-export type ModeloId = 'castillo' | 'pagoda' | 'torii' | 'ciervo' | 'grulla' | 'barco' | 'chochin' | 'toro' | 'cerezo' | 'arce' | 'pino' | 'bonsai' | 'carpa' | 'faro'
+export type ModeloId = 'castillo' | 'pagoda' | 'torii' | 'ciervo' | 'grulla' | 'barco' | 'chochin' | 'toro' | 'cerezo' | 'arce' | 'pino' | 'bonsai' | 'carpa' | 'faro' | 'takoyaki' | 'puestos' | 'cangrejo' | 'fugu' | 'udon' | 'noria'
 export type RutaId = 'kioto' | 'osaka' | 'nara' | 'himeji' | 'kobe' | 'miyajima' | 'hiroshima'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
 
@@ -24,6 +24,12 @@ export const MODELOS: Record<ModeloId, { archivo: string; titulo: string; autor:
   bonsai: { archivo: '/v7/modelos/bonsai.glb', titulo: 'Bonsai', autor: 'Don Carson', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/44XK5UHTd4Q' },
   carpa: { archivo: '/v7/modelos/carpa.glb', titulo: 'Goldfish', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0bOZGc8ONrx' },
   faro: { archivo: '/v7/modelos/faro.glb', titulo: 'Lighthouse', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/0t2ZYRBsqX-' },
+  takoyaki: { archivo: '/v7/modelos/takoyaki.glb', titulo: 'Takoyaki', autor: 'sugamo', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/dKZ84zp5T6O' },
+  puestos: { archivo: '/v7/modelos/puestos.glb', titulo: 'Market Stalls', autor: 'Quaternius', licencia: 'Dominio público (CC0)', url: 'https://poly.pizza/m/4ZAhRv2tLG' },
+  cangrejo: { archivo: '/v7/modelos/cangrejo.glb', titulo: 'Crab', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/2DgM36qZW2u' },
+  fugu: { archivo: '/v7/modelos/fugu.glb', titulo: 'Pufferfish', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/3tgZD06mzCe' },
+  udon: { archivo: '/v7/modelos/udon.glb', titulo: 'Udon', autor: 'Quaternius', licencia: 'Dominio público (CC0)', url: 'https://poly.pizza/m/8eOp8bismL' },
+  noria: { archivo: '/v7/modelos/noria.glb', titulo: 'Ferris wheel', autor: 'Poly by Google', licencia: 'CC BY 3.0', url: 'https://poly.pizza/m/1VmmK6Gus8f' },
 }
 
 /** Una pieza del diorama: modelo, sitio en el suelo (x, z), tamaño (lado mayor), giro y altura. */
@@ -37,12 +43,17 @@ export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean }> = {
     { m: 'arce', x: 1.2, z: -0.35, tam: 1.3 },
     { m: 'toro', x: 0.75, z: 0.95, tam: 0.5 },
   ] },
+  // Osaka es comida y calle: puestos, takoyaki, kitsune udon, el cangrejo y el
+  // fugu de los rótulos de Dōtonbori, farolillos y la noria de Umeda al fondo.
   osaka: { piezas: [
-    { m: 'castillo', x: 0, z: -0.25, tam: 2.1, osaka: true },
-    { m: 'cerezo', x: -1.3, z: 0.35, tam: 1.1 },
-    { m: 'cerezo', x: 1.35, z: -0.5, tam: 0.9, rot: 1.2 },
-    { m: 'chochin', x: 0.8, z: 1.0, tam: 0.32 },
-    { m: 'chochin', x: -0.55, z: 1.05, tam: 0.28 },
+    { m: 'noria', x: -0.7, z: -1.25, tam: 2.3 },
+    { m: 'puestos', x: 0.55, z: -0.25, tam: 1.7 },
+    { m: 'cangrejo', x: 1.3, z: 0.65, tam: 0.85, rot: -0.6 },
+    { m: 'fugu', x: -1.15, z: 0.35, tam: 0.55, y: 0.85, rot: 0.8 },
+    { m: 'takoyaki', x: 0.1, z: 1.0, tam: 0.6, rot: 0.3 },
+    { m: 'udon', x: -0.55, z: 1.1, tam: 0.42 },
+    { m: 'chochin', x: 1.0, z: 1.15, tam: 0.3 },
+    { m: 'chochin', x: -1.4, z: 1.0, tam: 0.3 },
   ] },
   nara: { piezas: [
     { m: 'ciervo', x: -0.3, z: 0.25, tam: 1.05, rot: 0.6 },
@@ -82,7 +93,7 @@ export const PRECIO: Record<Tramo, number> = { medio: 38000, completo: 58000, le
 /** Precio de cada opción y pieza principal (la que se cita junto a la ruta). */
 export const META: Record<RutaId, { modelo: ModeloId; variante?: 'osaka' | 'agua'; tramos: Tramo[] }> = {
   kioto: { modelo: 'pagoda', tramos: ['medio', 'completo'] },
-  osaka: { modelo: 'castillo', variante: 'osaka', tramos: ['medio', 'completo'] },
+  osaka: { modelo: 'takoyaki', tramos: ['medio', 'completo'] },
   nara: { modelo: 'ciervo', tramos: ['medio', 'completo'] },
   himeji: { modelo: 'castillo', tramos: ['completo'] },
   kobe: { modelo: 'barco', tramos: ['medio', 'completo'] },
