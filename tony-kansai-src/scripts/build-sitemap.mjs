@@ -38,6 +38,11 @@ const paginas = [
   { loc: '/en/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ar/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ru/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
+  { loc: '/es/rutas', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
+  { loc: '/en/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
+  { loc: '/ar/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
+  { loc: '/ru/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasLarion' },
+  { loc: '/larion/routes', priority: '0.8', changefreq: 'monthly', v7: 'rutasLarion' },
   { loc: '/tours', priority: '0.9', changefreq: 'weekly' },
   ...tours.map((id) => ({ loc: `/tours/${id}`, priority: '0.85', changefreq: 'monthly' })),
   { loc: '/hiking', priority: '0.9', changefreq: 'weekly' },
@@ -62,6 +67,8 @@ const V7 = {
   larion: [['ru', '/ru/'], ['en', '/larion/']],
   portada: [['es', '/es/'], ['en', '/en/'], ['ar', '/ar/'], ['ru', '/ru/']],
   montana: [['es', '/es/montana/'], ['en', '/en/hiking/'], ['ar', '/ar/hiking/'], ['ru', '/ru/hiking/']],
+  rutasTony: [['es', '/es/rutas/'], ['en', '/en/routes/'], ['ar', '/ar/routes/']],
+  rutasLarion: [['ru', '/ru/routes/'], ['en', '/larion/routes/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

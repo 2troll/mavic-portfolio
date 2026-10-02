@@ -725,3 +725,95 @@ body.v7-cuerpo-oscuro { background: #05070d; }
   .v7-cookies { flex-direction: row; align-items: center; padding: 8px 8px 8px 14px; font-size: 13px; gap: 8px; }
   .v7-cookies div button { flex: none; padding: 7px 11px; }
 }
+
+/* ── Itinerarios: una viñeta manga por ruta ── */
+.v7-itin-intro { padding-top: 120px; }
+.v7-itin-intro h1 { font-size: clamp(2.3rem, 6vw, 4.2rem); letter-spacing: -0.03em; text-wrap: balance; margin-bottom: 12px; }
+.v7-itin-indice { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; }
+.v7-itin-indice a {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; text-decoration: none;
+  color: var(--tinta); background: var(--superficie); border: 1px solid var(--linea); font-size: 15px; transition: border-color 0.2s, transform 0.2s;
+}
+.v7-itin-indice a:hover { border-color: var(--acento); }
+.v7-itin-indice a:active { transform: scale(0.98); }
+.v7-itin-indice span { font-family: var(--mincho); color: var(--acento); }
+
+.v7-itin { position: relative; margin-top: 72px; }
+/* La viñeta se queda fija mientras la hoja de papel sube por encima. */
+.v7-itin-panel {
+  position: sticky; top: 0; height: 100dvh; overflow: hidden; background: var(--tinta);
+  display: grid; align-items: center;
+}
+[dir='rtl'] .v7-itin-kanji { right: auto; left: 6vw; }
+[dir='rtl'] .v7-itin-trama { transform: scaleX(-1); }
+.v7-itin-panel img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  animation: v7-itin-corte linear both; animation-timeline: view(); animation-range: entry 0% entry 90%;
+}
+/* Entrada manga: la foto aparece por un tajo diagonal y se asienta. */
+@keyframes v7-itin-corte {
+  from { clip-path: polygon(0 0, 0 0, 0 0, 0 0); transform: scale(1.18); filter: grayscale(1) contrast(1.4); }
+  60% { filter: grayscale(0.4) contrast(1.15); }
+  to { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: scale(1); filter: none; }
+}
+/* Trama de puntos y líneas de velocidad: el acabado de viñeta impresa. */
+.v7-itin-trama {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(circle at 1px 1px, rgba(0, 0, 0, 0.28) 1px, transparent 1.6px) 0 0 / 6px 6px,
+    repeating-conic-gradient(from 0deg at 82% 18%, transparent 0deg 3deg, rgba(255, 255, 255, 0.07) 3deg 3.6deg),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.62) 0%, rgba(0, 0, 0, 0.15) 60%, rgba(0, 0, 0, 0) 100%);
+}
+.v7-itin-panel::after { content: ''; position: absolute; inset: 14px; border: 3px solid rgba(255, 255, 255, 0.85); pointer-events: none; }
+.v7-itin-kanji {
+  /* Físico, no lógico: con writing-mode vertical «inline» apunta a otro eje. */
+  position: absolute; top: 12vh; right: 6vw; writing-mode: vertical-rl; font-family: var(--mincho);
+  font-size: clamp(4rem, 14vw, 11rem); line-height: 1; color: #fff; opacity: 0.88; letter-spacing: 0.05em;
+  text-shadow: 0 4px 30px rgba(0, 0, 0, 0.35);
+  animation: v7-itin-kanji linear both; animation-timeline: view(); animation-range: entry 30% cover 50%;
+}
+@keyframes v7-itin-kanji { from { transform: translateY(14vh); opacity: 0; } to { transform: none; opacity: 0.88; } }
+.v7-itin-titulo { position: relative; color: #fff; padding: 0 max(28px, 6vw); max-width: 820px; text-shadow: 0 2px 24px rgba(0, 0, 0, 0.45); }
+.v7-itin-num { font-size: 14px; font-weight: 600; letter-spacing: 0.08em; opacity: 0.8; font-variant-numeric: tabular-nums; }
+.v7-itin-titulo h2 { font-size: clamp(2.4rem, 7vw, 5.2rem); line-height: 0.98; letter-spacing: -0.035em; margin: 6px 0 10px; text-wrap: balance; }
+.v7-itin-llegar { font-size: 1.1rem; opacity: 0.9; }
+
+.v7-itin-hoja {
+  position: relative; z-index: 1; margin: -8vh auto 0; width: min(880px, calc(100% - 32px));
+  background: var(--superficie); border: 1px solid var(--linea); border-radius: 22px; box-shadow: 0 -20px 60px rgba(28, 26, 23, 0.18);
+  padding: clamp(24px, 4vw, 48px);
+}
+.v7-itin-resumen { font-size: 1.2rem; line-height: 1.55; margin-bottom: 28px !important; max-width: 60ch; }
+.v7-itin-hoja h3 { font-size: 13px; font-weight: 600; text-transform: none; color: var(--acento); margin-bottom: 10px; }
+.v7-itin-pasos { list-style: none; margin: 0 0 32px; padding: 0; position: relative; }
+.v7-itin-pasos li { display: grid; grid-template-columns: 64px 1fr; gap: 16px; padding: 14px 0; border-top: 1px solid var(--linea); }
+.v7-itin-pasos time { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--tenue); padding-top: 1px; }
+.v7-itin-pasos strong { display: block; font-size: 1.08rem; margin-bottom: 2px; }
+.v7-itin-pasos p { color: var(--tenue); max-width: 62ch; }
+.v7-itin-notas { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; padding: 22px 0; border-top: 1px solid var(--linea); }
+.v7-itin-notas p { color: var(--tenue); }
+.v7-itin-pie { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; padding-top: 22px; border-top: 1px solid var(--linea); }
+.v7-itin-precio { display: grid; gap: 2px; }
+.v7-itin-precio span { font-size: 14px; color: var(--tenue); }
+.v7-itin-precio strong { font-size: 1.8rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.v7-itin-precio strong small { font-size: 1rem; font-weight: 500; color: var(--tenue); }
+.v7-itin-precio > small { font-size: 13px; color: var(--tenue); max-width: 40ch; }
+.v7-itin-siguiente { display: inline-block; margin-top: 22px; color: var(--tenue); font-size: 15px; text-decoration: none; }
+.v7-itin-siguiente:hover { color: var(--acento); }
+@media (max-width: 640px) {
+  .v7-itin-notas { grid-template-columns: 1fr; gap: 18px; }
+  .v7-itin-pasos li { grid-template-columns: 52px 1fr; gap: 10px; }
+  .v7-itin-titulo { padding-top: 30vh; }
+  .v7-itin-panel { align-items: start; }
+  .v7-itin-pie .v7-boton { width: 100%; justify-content: center; }
+}
+@media (prefers-reduced-motion: reduce) { .v7-itin-panel img, .v7-itin-kanji { animation: none; } }
+
+/* Enlace desde las rutas de la portada a la página hora a hora. */
+.v7-ver-dia { display: inline-flex; gap: 6px; margin-top: 14px; font-weight: 600; color: var(--acento); text-decoration: none; }
+.v7-ver-dia:hover { text-decoration: underline; }
+/* Escritorio: título a un lado y hoja al otro, como dos viñetas de la misma página. */
+@media (min-width: 1000px) {
+  .v7-itin-titulo { max-width: 44vw; }
+  .v7-itin-hoja { width: min(620px, 48vw); margin-inline: auto 5vw; }
+}

@@ -10,6 +10,10 @@ import * as THREE from 'three'
 import { RoomEnvironment } from 'three/examples/jsm/environments/RoomEnvironment.js'
 import { ESCENAS, META, MODELOS, PRECIO, RUTAS_LARION, RUTAS_TONY, ETIQUETAS, TEXTOS } from './datosRutas'
 import type { RutaId } from './datosRutas'
+import { ET_ITIN } from './datosItinerarios'
+
+// Página del día hora a hora de cada portada; Miyajima va dentro del día de Hiroshima.
+const PAGINA_DIA: Record<string, string> = { es: '/es/rutas/', en: '/en/routes/', ar: '/ar/routes/', ru: '/ru/routes/', larion: '/larion/routes/' }
 import type { Pagina } from './contenido'
 import { GUIAS } from './contenido'
 import { compone, opacidad, muestrea } from './modelos3d'
@@ -251,6 +255,9 @@ export function Rutas({ p }: { p: Pagina }) {
                 )
               })}
             </ul>
+            <a className="v7-ver-dia" href={`${PAGINA_DIA[p.id]}#${sel === 'miyajima' ? 'hiroshima' : sel}`}>
+              {ET_ITIN[p.lang].ver} {p.dir === 'rtl' ? '←' : '→'}
+            </a>
           </div>
           <p className="v7-ruta-credito" lang="en" dir="ltr">
             {et.modelo}: {[...new Set(ESCENAS[sel].piezas.map((x) => x.m))].map((m, i) => (
