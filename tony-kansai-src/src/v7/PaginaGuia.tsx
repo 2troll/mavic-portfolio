@@ -98,7 +98,7 @@ function useSeccionActiva(ids: string[]) {
 }
 
 function Cabecera({ p }: { p: Pagina }) {
-  const activa = useSeccionActiva(['zona', 'rutas', 'como', 'precios', 'contacto'])
+  const activa = useSeccionActiva(['zona', 'ciudades', 'rutas', 'como', 'precios', 'contacto'])
   const g = GUIAS[p.guia]
   const msg = p.contacto.plantilla(VACIO)
   return (
@@ -106,7 +106,7 @@ function Cabecera({ p }: { p: Pagina }) {
       <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
-        {([['rutas', ETIQUETAS[p.lang].titulo], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
+        {([['ciudades', p.nav.zona], ['rutas', ETIQUETAS[p.lang].titulo], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
       </nav>
