@@ -23,6 +23,7 @@ import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
 import { HistoriaManga } from './HistoriaManga'
+import { PORTADA } from './Mosaico'
 import { HISTORIA, HISTORIA_LISTA, ROTULOS } from './historia'
 import '../v7/v7.css'
 import './v8.css'
@@ -101,7 +102,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         <link rel="canonical" href={`${BASE}${prefijo}/${c.id}/`} />
         {hermanas.map((h) => <link key={h} rel="alternate" hrefLang={langDe(h)} href={`${BASE}${h}/${c.id}/`} />)}
         <meta property="og:title" content={titulo} />
-        <meta property="og:image" content={`${BASE}/v8/zonas/${c.zonas[0].id}.webp`} />
+        <meta property="og:image" content={`${BASE}/v8/zonas/${PORTADA[c.id]}.webp`} />
       </Helmet>
 
       <header className="v7-cabecera cristal">
@@ -221,7 +222,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <div className="v8-otras-rejilla">
             {otras.map((o) => (
               <Link key={o} to={`${prefijo}/${o}/`} className="v8-otra">
-                <img {...foto(fotoZona(CIUDADES[o].zonas[0].id), '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" />
+                <img {...foto(fotoZona(PORTADA[o]), '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" />
                 <span><span lang="ja">{CIUDADES[o].kanji}</span>{CIUDADES[o].nombre[lang]}</span>
               </Link>
             ))}

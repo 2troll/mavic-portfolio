@@ -39,7 +39,7 @@ const NOMBRE: Record<'tony' | 'larion', Record<Lengua, string>> = {
 /** Foto de portada de cada tarjeta: la más reconocible de la ciudad, no la
  *  primera zona (en Kobe era la mezquita cruzada de cables; en Hiroshima, la
  *  Cúpula, que no es la cara de una tarjeta de «reservar»). */
-const PORTADA: Record<CiudadId, string> = {
+export const PORTADA: Record<CiudadId, string> = {
   osaka: 'osaka-dotonbori', kyoto: 'kioto-fushimi', nara: 'nara-parque', kobe: 'kobe-harbor',
   himeji: 'himeji-castillo', hiroshima: 'hiroshima-miyajima', beyond: 'lejos-kumano',
 }
