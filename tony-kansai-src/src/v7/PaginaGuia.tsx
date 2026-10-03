@@ -380,6 +380,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div className="v7-hero-velo" />
           <EfectoEstacion estacion={estacion} />
           <SelectorEstacion lang={p.lang} valor={estacion} alCambiar={setEstacion} />
+          {/* El guía en manga, de cuerpo entero, entrando en la foto. */}
+          <img className="v7-figura-hero" src={p.guia === 'larion' ? '/v8/figuras/larion-kyoto.webp' : '/v8/figuras/tony-kyoto.webp'} alt="" aria-hidden="true" decoding="async" />
           <div className="v7-hero-texto">
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
