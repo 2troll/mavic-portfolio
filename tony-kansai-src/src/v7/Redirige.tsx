@@ -17,7 +17,13 @@ function idiomaSugerido(): PaginaId {
   return 'en'
 }
 
-export default function Redirige() {
+/** Adónde lleva cada página antigua dentro de la web del idioma elegido. */
+export type Destino = 'inicio' | 'precios' | 'rutas' | 'montana'
+const DIA: Record<PaginaId, string> = { es: '/es/rutas/', en: '/en/routes/', ar: '/ar/routes/', ru: '/ru/routes/', larion: '/larion/routes/' }
+// Larion no tiene página de montaña propia: la inglesa es la que le toca.
+const MONTE: Record<PaginaId, string> = { es: '/es/montana/', en: '/en/hiking/', ar: '/ar/hiking/', ru: '/ru/hiking/', larion: '/en/hiking/' }
+
+export default function Redirige({ destino = 'inicio' }: { destino?: Destino }) {
   const { search } = useLocation()
   const pedido = new URLSearchParams(search).get('lang') as PaginaId | null
   // Si ya eligió idioma otra vez, se respeta; si no, el del navegador.
@@ -26,5 +32,7 @@ export default function Redirige() {
   const id: PaginaId = pedido && pedido in PAGINAS ? pedido
     : guardado && guardado in PAGINAS ? (guardado as PaginaId)
     : idiomaSugerido()
-  return <Navigate to={PAGINAS[id].ruta} replace />
+  const to = destino === 'rutas' ? DIA[id] : destino === 'montana' ? MONTE[id]
+    : destino === 'precios' ? `${PAGINAS[id].ruta}#precios` : PAGINAS[id].ruta
+  return <Navigate to={to} replace />
 }

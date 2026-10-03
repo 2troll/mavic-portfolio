@@ -30,6 +30,7 @@ const Admin = lazy(() => import('./pages/Admin'))
 // Web v7: portada con globo y una página por idioma. Van fuera del Navbar y
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
 import Redirige from './v7/Redirige'
+import type { Destino } from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 const Montana = lazy(() => import('./v7/Montana'))
 const Itinerarios = lazy(() => import('./v7/Itinerarios'))
@@ -57,6 +58,7 @@ import { MarcoLegal } from './v7/MarcoLegal'
 // Páginas legales: el contenido de siempre dentro del marco nuevo de papel y tinta.
 // Rutas que aún sirve la web antigua; cualquier otra cosa es un 404 con el marco claro v7.
 const RUTA_ANTIGUA = /^\/(tours|hiking|guide|guides|book|booking|about|pricing|faq)(\/|$)/
+const DESTINO_ANTIGUA: Record<string, Destino> = { pricing: 'precios', book: 'precios', booking: 'precios', tours: 'rutas', hiking: 'montana' }
 const LEGALES = ['/terms', '/privacy', '/cookies', '/safety', '/legal', '/accessibility']
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion' | 'm-es' | 'm-en' | 'm-ar' | 'm-ru' | 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
@@ -157,6 +159,13 @@ function Layout() {
         <CookieBanner compacto />
       </MarcoLegal>
     )
+  }
+
+  // La web antigua se quedó con datos viejos (idiomas, equipo, marca): cada
+  // página suya lleva ahora a su equivalente nuevo, en el idioma del visitante.
+  const antigua = pathname.match(RUTA_ANTIGUA)?.[1]
+  if (antigua) {
+    return <Redirige destino={DESTINO_ANTIGUA[antigua] ?? 'inicio'} />
   }
 
   if (!isAdmin && !RUTA_ANTIGUA.test(pathname)) {

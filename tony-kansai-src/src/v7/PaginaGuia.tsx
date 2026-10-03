@@ -331,6 +331,19 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
     try { localStorage.setItem('v7-pagina', p.id) } catch { /* bloqueado */ }
   }, [p.lang, setLang])
 
+  useEffect(() => {
+    // Ancla al llegar (p. ej. /es/#precios desde la antigua /pricing). Las
+    // secciones de abajo se montan tarde, así que se reintenta un poco.
+    const id = window.location.hash.slice(1)
+    if (!id) return
+    let intentos = 0
+    const t = window.setInterval(() => {
+      const el = document.getElementById(id)
+      if (el || ++intentos > 20) { window.clearInterval(t); el?.scrollIntoView({ block: 'start' }) }
+    }, 150)
+    return () => window.clearInterval(t)
+  }, [])
+
   const hermanas = HERMANAS[p.guia]
   const msgCorto = p.contacto.plantilla(VACIO)
 
