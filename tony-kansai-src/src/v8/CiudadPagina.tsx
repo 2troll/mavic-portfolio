@@ -18,12 +18,13 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, MANGA_APROBADO } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, MANGA_APROBADO, FIGURAS } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
 import '../v7/v7.css'
 import './v8.css'
+import './figura.css'
 
 const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
@@ -147,6 +148,10 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
                 </li>
               ))}
             </ol>
+            {/* El guía, dibujado y recortado, de pie dentro de las fotos: acompaña toda la pista. */}
+            {FIGURAS.includes(`${guia}-${c.id}`) && (
+              <img className="v8-figura" src={`/v8/figuras/${guia}-${c.id}.webp`} alt="" aria-hidden="true" decoding="async" />
+            )}
           </div>
         </section>
 
