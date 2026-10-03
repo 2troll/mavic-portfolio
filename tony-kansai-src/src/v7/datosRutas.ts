@@ -34,21 +34,26 @@ export const MODELOS: Record<ModeloId, { archivo: string; titulo: string; autor:
 }
 
 /** Una pieza del diorama: modelo, sitio en el suelo (x, z), tamaño (lado mayor), giro y altura. */
-export interface Pieza { m: ModeloId; x: number; z: number; tam: number; rot?: number; y?: number; osaka?: boolean }
+export interface Pieza { m: ModeloId; x: number; z: number; tam: number; rot?: number; y?: number; osaka?: boolean; tinte?: string }
+
+/** Piedra de los tōrō: el modelo viene en blanco puro y sin relieve parece de yeso. */
+const PIEDRA = '#7d786d'
 
 /** Cada ruta es una pequeña escena compuesta con piezas descargadas. */
-export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean }> = {
-  kioto: { piezas: [
+// suelo: color de la peana (la isla en la que se monta la maqueta).
+export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean; suelo?: string }> = {
+  kioto: { suelo: '#6f8f4a', piezas: [
     { m: 'pagoda', x: 0.1, z: -0.3, tam: 2.3 },
     { m: 'torii', x: -1.15, z: 0.75, tam: 0.95, rot: 0.55 },
     { m: 'arce', x: 1.2, z: -0.35, tam: 1.3 },
-    { m: 'toro', x: 0.75, z: 0.95, tam: 0.5 },
+    { m: 'toro', x: 0.75, z: 0.95, tam: 0.5, tinte: PIEDRA },
   ] },
   // Osaka es comida y calle: puestos, takoyaki, kitsune udon, el cangrejo y el
   // fugu de los rótulos de Dōtonbori, farolillos y la noria de Umeda al fondo.
-  osaka: { piezas: [
-    { m: 'noria', x: -0.7, z: -1.25, tam: 2.3 },
-    { m: 'puestos', x: 0.55, z: -0.25, tam: 1.7 },
+  osaka: { suelo: '#b3a691', piezas: [
+    // La noria al fondo y más pequeña: antes tapaba los puestos al girar.
+    { m: 'noria', x: -1.15, z: -1.3, tam: 1.7 },
+    { m: 'puestos', x: 0.7, z: -0.15, tam: 1.55 },
     { m: 'cangrejo', x: 1.3, z: 0.65, tam: 0.85, rot: -0.6 },
     { m: 'fugu', x: -1.15, z: 0.35, tam: 0.55, y: 0.85, rot: 0.8 },
     { m: 'takoyaki', x: 0.1, z: 1.0, tam: 0.6, rot: 0.3 },
@@ -56,31 +61,34 @@ export const ESCENAS: Record<RutaId, { piezas: Pieza[]; agua?: boolean }> = {
     { m: 'chochin', x: 1.0, z: 1.15, tam: 0.3 },
     { m: 'chochin', x: -1.4, z: 1.0, tam: 0.3 },
   ] },
-  nara: { piezas: [
-    { m: 'ciervo', x: -0.3, z: 0.25, tam: 1.05, rot: 0.6 },
-    { m: 'ciervo', x: 0.75, z: 0.55, tam: 0.8, rot: -1.3 },
-    { m: 'toro', x: -1.15, z: -0.45, tam: 0.95 },
-    { m: 'toro', x: 1.05, z: -0.65, tam: 0.95 },
+  nara: { suelo: '#78984a', piezas: [
+    { m: 'ciervo', x: -0.25, z: 0.55, tam: 1.05, rot: 0.6 },
+    { m: 'ciervo', x: 0.75, z: 0.85, tam: 0.8, rot: -1.3 },
+    // Faroles detrás y a los lados: delante se metían dentro de los ciervos al girar.
+    { m: 'toro', x: -1.35, z: -0.55, tam: 0.95, tinte: PIEDRA },
+    { m: 'toro', x: 1.3, z: -0.6, tam: 0.95, tinte: PIEDRA },
     { m: 'pino', x: 0.05, z: -1.15, tam: 1.9 },
   ] },
-  himeji: { piezas: [
+  himeji: { suelo: '#c4b9a3', piezas: [
     { m: 'castillo', x: 0, z: -0.25, tam: 2.1 },
     { m: 'pino', x: -1.3, z: -0.35, tam: 1.5 },
     { m: 'pino', x: 1.35, z: 0.1, tam: 1.15, rot: 1 },
     { m: 'bonsai', x: 0.75, z: 1.0, tam: 0.55 },
   ] },
-  kobe: { piezas: [
+  // Kobe es puerto: la peana es mar y el barco navega.
+  kobe: { suelo: '#5d8fae', piezas: [
     { m: 'barco', x: 0.25, z: 0.45, tam: 2.4, rot: 0.35 },
     { m: 'faro', x: -1.15, z: -0.7, tam: 1.5 },
   ] },
-  miyajima: { agua: true, piezas: [
+  // Arena bajo la marea: el anillo de orilla sostiene los pinos.
+  miyajima: { agua: true, suelo: '#cdb98f', piezas: [
     { m: 'torii', x: 0, z: 0, tam: 1.9 },
-    { m: 'carpa', x: 0.85, z: 0.75, tam: 0.38, rot: 2.2, y: 0.36 },
-    { m: 'carpa', x: -0.75, z: 0.95, tam: 0.32, rot: -0.6, y: 0.36 },
+    { m: 'carpa', x: 0.85, z: 0.75, tam: 0.38, rot: 2.2, y: 0.02 },
+    { m: 'carpa', x: -0.75, z: 0.95, tam: 0.32, rot: -0.6, y: 0.02 },
     { m: 'pino', x: -1.35, z: -1.25, tam: 1.3 },
     { m: 'pino', x: 1.3, z: -1.35, tam: 1.05 },
   ] },
-  hiroshima: { piezas: [
+  hiroshima: { suelo: '#7d9a5c', piezas: [
     { m: 'cerezo', x: 0, z: -0.9, tam: 1.7 },
     // Senbazuru: grullas de papel en corro, a distintas alturas.
     ...[0, 1, 2, 3, 4, 5].map((i) => ({ m: 'grulla' as const, x: Math.cos(i * 1.047) * 1.0, z: Math.sin(i * 1.047) * 0.8 + 0.3, tam: 0.42, rot: -i * 1.047, y: 0.35 + (i % 3) * 0.3 })),

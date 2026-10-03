@@ -21,7 +21,7 @@ export function carga(url: string) {
 }
 
 /** Centra el modelo sobre el suelo, lo escala (lado mayor = tam) y aplica el retoque de la ruta. */
-export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua', tam_ = 2.2): THREE.Group {
+export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua', tam_ = 2.2, tinte?: string): THREE.Group {
   const m = original.clone(true)
   m.traverse((o) => {
     const mesh = o as THREE.Mesh
@@ -33,6 +33,7 @@ export function prepara(original: THREE.Group, variante?: 'osaka' | 'agua', tam_
     for (const mat of mats as THREE.MeshStandardMaterial[]) {
       // Osaka: los tejados del castillo son verde cobre, no grises.
       if (variante === 'osaka' && mat.name === '03___Default') mat.color.set('#5e8f7b')
+      if (tinte) mat.color.set(tinte)
       mat.envMapIntensity = 0.9
       mat.transparent = true
     }
@@ -85,7 +86,7 @@ export function muestrea(g: THREE.Group, n: number): Float32Array {
   const geos: THREE.BufferGeometry[] = []
   g.traverse((o) => {
     const mesh = o as THREE.Mesh
-    if (!mesh.isMesh || mesh.userData.agua) return
+    if (!mesh.isMesh || mesh.userData.agua || mesh.userData.suelo) return
     let geo = mesh.geometry.clone()
     geo = geo.index ? geo.toNonIndexed() : geo
     for (const k of Object.keys(geo.attributes)) if (k !== 'position') geo.deleteAttribute(k)
@@ -113,23 +114,43 @@ export function muestrea(g: THREE.Group, n: number): Float32Array {
   return salida
 }
 
+/** La isla sobre la que se monta la maqueta: sin ella las piezas flotan en el
+ *  blanco y no se lee como diorama. Canto de tierra, cara de arriba del color
+ *  de la ruta. No se convierte en partículas (userData.suelo). */
+function peana(color: string): THREE.Mesh {
+  const alto = 0.2
+  const geo = new THREE.CylinderGeometry(2.05, 1.95, alto, 72)
+  const canto = new THREE.MeshStandardMaterial({ color: '#8a7a66', roughness: 0.95, transparent: true })
+  const cara = new THREE.MeshStandardMaterial({ color, roughness: 0.9, transparent: true })
+  // CylinderGeometry: material 0 = lateral, 1 = arriba, 2 = abajo.
+  const m = new THREE.Mesh(geo, [canto, cara, canto])
+  // La cara de arriba un pelo por encima de y=0, donde está el suelo de sombras:
+  // así éste queda oculto y la sombra no se pinta dos veces. Las piezas apenas se hunden.
+  m.position.y = -alto / 2 + 0.004
+  m.receiveShadow = true
+  m.userData.suelo = true
+  return m
+}
+
 /** Monta el diorama de una ruta con sus piezas descargadas. */
 export async function compone(ruta: RutaId): Promise<THREE.Group> {
   const e = ESCENAS[ruta]
   const raiz = new THREE.Group()
   const piezas = await Promise.all(e.piezas.map(async (p) => {
-    const g = prepara(await carga(MODELOS[p.m].archivo), p.osaka ? 'osaka' : undefined, p.tam)
+    const g = prepara(await carga(MODELOS[p.m].archivo), p.osaka ? 'osaka' : undefined, p.tam, p.tinte)
     g.position.set(p.x, p.y ?? 0, p.z)
     g.rotation.y = p.rot ?? 0
     return g
   }))
   piezas.forEach((g) => raiz.add(g))
+  if (e.suelo) raiz.add(peana(e.suelo))
   if (e.agua) {
     // Miyajima: todo lo que no es pez se hunde un poco: el torii y la orilla
     // «flotan» en la marea alta.
     piezas.forEach((g, i) => { if (e.piezas[i].m === 'torii') g.position.y -= 0.35 })
     const agua = new THREE.Mesh(
-      new THREE.CircleGeometry(1.75, 64),
+      // Con peana, el agua deja un anillo de arena donde arraigan los pinos.
+      new THREE.CircleGeometry(e.suelo ? 1.55 : 1.75, 64),
       new THREE.MeshStandardMaterial({ color: '#2f6f8f', roughness: 0.15, metalness: 0.2, transparent: true, opacity: 0.85 }),
     )
     agua.rotation.x = -Math.PI / 2
