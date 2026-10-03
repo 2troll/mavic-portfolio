@@ -979,3 +979,5 @@ body.v7-cuerpo-oscuro { background: #05070d; }
   .v7-figura-hero { animation-delay: 0.6s; }
 }
 @keyframes v7-sube { from { opacity: 0; translate: 0 24px; } }
+/* Sólo para lectores de pantalla. */
+.v7-sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

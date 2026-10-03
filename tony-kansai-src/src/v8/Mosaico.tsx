@@ -1,28 +1,91 @@
-// Mosaico de ciudades de la portada: la puerta visual a cada página de ciudad.
+// Tarjetas de tours de la página de cada guía: una por ciudad, con lo que hace
+// falta para decidir (duración, precio y lo más destacado) y dos salidas:
+// reservar por WhatsApp con la ciudad ya escrita, o ver la página de la ciudad.
+// Duración y precio salen de los tramos de cada ruta (datosRutas): no se desfasan.
 import { Link } from 'react-router-dom'
 import { foto } from '../v7/foto'
+import { GUIAS } from '../v7/contenido'
+import { META, PRECIO } from '../v7/datosRutas'
+import type { Tramo } from '../v7/datosRutas'
+import { IconoWa } from '../v7/IconoWa'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from './ciudades'
-import type { Lengua } from './ciudades'
+import type { CiudadId, Lengua } from './ciudades'
 import './v8.css'
 
-const TITULO: Record<Lengua, string> = { es: 'Elige ciudad', en: 'Pick a city', ar: 'اختر مدينة', ru: 'Выберите город' }
+const TITULO: Record<Lengua, string> = { es: 'Elige tu tour', en: 'Choose your tour', ar: 'اختر جولتك', ru: 'Выберите тур' }
+const SUB: Record<Lengua, string> = {
+  es: 'Un día privado en cada ciudad, solo con tu grupo. El precio es por grupo, hasta 6 personas.',
+  en: 'A private day in each city, just your party. Prices are per group, up to 6 people.',
+  ar: 'يوم خاص في كل مدينة لمجموعتك وحدها. السعر للمجموعة، حتى 6 أشخاص.',
+  ru: 'Частный день в каждом городе, только ваша компания. Цена за группу до 6 человек.',
+}
+const ET: Record<Lengua, { reservar: string; ver: string; desde: string; destaca: string; msg: (g: string, c: string) => string }> = {
+  es: { reservar: 'Reservar', ver: 'Ver la ciudad', desde: 'desde', destaca: 'Lo más destacado', msg: (g, c) => `Hola, ${g}. Me interesa un tour privado en ${c}. ¿Qué fechas tienes libres?` },
+  en: { reservar: 'Book', ver: 'See the city', desde: 'from', destaca: 'Highlights', msg: (g, c) => `Hi ${g}, I'm interested in a private tour in ${c}. Which dates are you free?` },
+  ar: { reservar: 'احجز', ver: 'اكتشف المدينة', desde: 'ابتداءً من', destaca: 'أبرز المحطات', msg: (g, c) => `مرحباً ${g}، أودّ جولة خاصة في ${c}. ما المواعيد المتاحة لديك؟` },
+  ru: { reservar: 'Забронировать', ver: 'Подробнее о городе', desde: 'от', destaca: 'Главное', msg: (g, c) => `Здравствуйте, ${g}! Интересует частный тур: ${c}. Какие даты свободны?` },
+}
+const HORAS: Record<Tramo, Record<Lengua, string>> = {
+  medio: { es: '4 h', en: '4 h', ar: '4 ساعات', ru: '4 ч' },
+  completo: { es: '8 h', en: '8 h', ar: '8 ساعات', ru: '8 ч' },
+  lejos: { es: 'día completo', en: 'full day', ar: 'يوم كامل', ru: 'полный день' },
+}
+const O: Record<Lengua, string> = { es: ' u ', en: ' or ', ar: ' أو ', ru: ' или ' }
+const NOMBRE: Record<'tony' | 'larion', Record<Lengua, string>> = {
+  tony: { es: 'Tony', en: 'Tony', ar: 'طوني', ru: 'Тони' },
+  larion: { es: 'Larion', en: 'Larion', ar: 'لاريون', ru: 'Ларион' },
+}
+
+/** Tramos de la ciudad: los de su ruta; «Más lejos» no tiene maqueta y es excursión lejana. */
+function tramos(id: CiudadId): Tramo[] {
+  const ruta = CIUDADES[id].diorama
+  return [...new Set(ruta ? META[ruta].tramos : (['lejos'] as Tramo[]))]
+}
+
+function yen(n: number, lang: Lengua) {
+  const f = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'es-ES').format(n)
+  return lang === 'ru' ? `${f} ¥` : lang === 'ar' ? `${f} ين` : `¥${f}`
+}
 
 export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 'larion'; prefijo: string }) {
   const lista = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
+  const et = ET[lang]
   return (
-    <section id="ciudades" className="v7-seccion v8-otras v8-mosaico">
+    <section id="ciudades" className="v7-seccion v8-tours">
       <h2>{TITULO[lang]}</h2>
-      <div className="v8-otras-rejilla">
+      <p className="v7-entradilla">{SUB[lang]}</p>
+      <ul className="v8-tours-lista">
         {lista.map((id) => {
           const c = CIUDADES[id]
+          const t = tramos(id)
+          const desde = Math.min(...t.map((x) => PRECIO[x]))
+          const wa = `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(et.msg(NOMBRE[guia][lang], c.nombre[lang]))}`
           return (
-            <Link key={id} to={`${prefijo}/${id}/`} className="v8-otra">
-              <img {...foto(`/v8/zonas/${c.zonas[0].id}.jpg`, '(max-width: 700px) 100vw, 50vw')} alt="" loading="lazy" />
-              <span><span lang="ja">{c.kanji}</span>{c.nombre[lang]}</span>
-            </Link>
+            <li key={id} className="v8-tour">
+              <Link to={`${prefijo}/${id}/`} className="v8-tour-foto" tabIndex={-1} aria-hidden="true">
+                <img {...foto(`/v8/zonas/${c.zonas[0].id}.jpg`, '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" decoding="async" />
+                <span className="v8-tour-sello" lang="ja">{c.kanji}</span>
+              </Link>
+              <div className="v8-tour-cuerpo">
+                <h3><Link to={`${prefijo}/${id}/`}>{c.nombre[lang]}</Link></h3>
+                <p className="v8-tour-datos">
+                  <span>{t.map((x) => HORAS[x][lang]).join(O[lang])}</span>
+                  <span>{et.desde} <strong>{yen(desde, lang)}</strong></span>
+                </p>
+                <p className="v8-tour-destaca"><span className="v7-sr">{et.destaca}: </span>{c.zonas.slice(0, 3).map((z) => z.nombre[lang]).join(lang === 'ar' ? '، ' : ', ')}</p>
+                <div className="v8-tour-acciones">
+                  <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer"
+                    aria-label={`${et.reservar}: ${c.nombre[lang]} (WhatsApp)`}
+                    onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `tours-${id}`, canal: 'whatsapp_tarjeta' })}>
+                    <IconoWa /> {et.reservar}
+                  </a>
+                  <Link className="v8-tour-ver" to={`${prefijo}/${id}/`}>{et.ver}</Link>
+                </div>
+              </div>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </section>
   )
 }
