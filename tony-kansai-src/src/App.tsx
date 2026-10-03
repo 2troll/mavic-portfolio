@@ -22,6 +22,7 @@ const Safety = lazy(() => import('./pages/Safety'))
 const Legal = lazy(() => import('./pages/Legal'))
 const Accessibility = lazy(() => import('./pages/Accessibility'))
 const NotFound = lazy(() => import('./pages/NotFound'))
+const Pagina404 = lazy(() => import('./v7/Pagina404'))
 const GuideDetail = lazy(() => import('./pages/GuideDetail'))
 // El panel interno pesa lo que pesa (contratos en PDF incluidos) y sólo lo
 // usa Tony: se descarga sólo cuando se entra en /admin.
@@ -54,6 +55,8 @@ import { Corte } from './v7/Corte'
 import { MarcoLegal } from './v7/MarcoLegal'
 
 // Páginas legales: el contenido de siempre dentro del marco nuevo de papel y tinta.
+// Rutas que aún sirve la web antigua; cualquier otra cosa es un 404 con el marco claro v7.
+const RUTA_ANTIGUA = /^\/(tours|hiking|guide|guides|book|booking|about|pricing|faq)(\/|$)/
 const LEGALES = ['/terms', '/privacy', '/cookies', '/safety', '/legal', '/accessibility']
 const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion' | 'm-es' | 'm-en' | 'm-ar' | 'm-ru' | 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'> = {
   '/': 'portada', '/es': 'es', '/en': 'en', '/ar': 'ar', '/ru': 'ru', '/larion': 'larion',
@@ -152,6 +155,14 @@ function Layout() {
           </Routes>
         </Suspense>
         <CookieBanner compacto />
+      </MarcoLegal>
+    )
+  }
+
+  if (!isAdmin && !RUTA_ANTIGUA.test(pathname)) {
+    return (
+      <MarcoLegal>
+        <Suspense fallback={<div className="min-h-screen" />}><Pagina404 /></Suspense>
       </MarcoLegal>
     )
   }
