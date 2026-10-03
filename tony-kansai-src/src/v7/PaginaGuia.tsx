@@ -326,6 +326,36 @@ const FOTOS_HERO: Record<PaginaId, string[]> = {
   larion: ['/v7/fotos/miyajima.jpg', '/v7/fotos/himeji.jpg', '/v7/fotos/kioto.jpg'],
 }
 
+/** «Por qué conmigo»: tres razones, todas ya dichas en la web (sin agencia,
+ *  idiomas del guía, precio por grupo de hasta 6 y cancelación hasta 72 h). */
+const RAZONES: Record<PaginaId, { titulo: string; lista: [string, string, string][] }> = {
+  es: { titulo: 'Por qué conmigo', lista: [
+    ['直', 'Trato directo', 'Contratas con tu guía, sin agencia: quien te contesta por WhatsApp es quien te recoge.'],
+    ['語', 'En tu idioma', 'Español, mi lengua materna. También guío en inglés y en árabe.'],
+    ['組', 'Solo tu grupo', 'Precio cerrado por grupo de hasta 6 personas y cancelación sin coste hasta 72 horas antes.'],
+  ] },
+  en: { titulo: 'Why book with me', lista: [
+    ['直', 'Direct contact', 'You book with your guide, not an agency: the person who answers on WhatsApp is the one who meets you.'],
+    ['語', 'In your language', 'English, plus Spanish (my native language) and Arabic.'],
+    ['組', 'Just your party', 'One fixed price per group of up to 6, and free cancellation up to 72 hours before.'],
+  ] },
+  ar: { titulo: 'لماذا معي', lista: [
+    ['直', 'تعامل مباشر', 'تتعامل مع مرشدك بلا وكالة: من يردّ عليك في واتساب هو من يلتقيك.'],
+    ['語', 'بلغتك', 'أرشدك بالعربية، وبالإسبانية والإنجليزية أيضاً.'],
+    ['組', 'لمجموعتك وحدها', 'سعر ثابت للمجموعة حتى ٦ أشخاص، وإلغاء مجاني حتى ٧٢ ساعة قبل الموعد.'],
+  ] },
+  ru: { titulo: 'Почему со мной', lista: [
+    ['直', 'Напрямую', 'Вы договариваетесь с гидом, без агентства: кто отвечает в WhatsApp, тот и встречает вас.'],
+    ['語', 'На вашем языке', 'Веду туры на русском и на английском.'],
+    ['組', 'Только ваша компания', 'Фиксированная цена за группу до 6 человек и бесплатная отмена не позднее чем за 72 часа.'],
+  ] },
+  larion: { titulo: 'Why book with me', lista: [
+    ['直', 'Direct contact', 'You book with your guide, not an agency: the person who answers on WhatsApp is the one who meets you.'],
+    ['語', 'In your language', 'Russian and English.'],
+    ['組', 'Just your party', 'One fixed price per group of up to 6, and free cancellation up to 72 hours before.'],
+  ] },
+}
+
 // ── Página ───────────────────────────────────────────────────────────────────
 
 /** «Desde ¥38.000 por grupo», del precio real del medio día: nunca se desfasa. */
@@ -420,6 +450,20 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Así funciona + el guía, en una sola rejilla asimétrica (bento de soft-skill):
             la cara del guía manda, los tres pasos al lado y lo que no hacemos debajo. */}
+        {/* Por qué conmigo: tres razones antes de contar cómo funciona. */}
+        <section id="porque" className="v7-seccion v7-razones">
+          <h2>{RAZONES[p.id].titulo}</h2>
+          <ul>
+            {RAZONES[p.id].lista.map(([k, t, d]) => (
+              <li key={t}>
+                <span className="v7-razon-kanji" lang="ja" aria-hidden="true">{k}</span>
+                <h3>{t}</h3>
+                <p>{d}</p>
+              </li>
+            ))}
+          </ul>
+        </section>
+
         <section id="como" className="v7-seccion">
           <h2>{p.como.titulo}</h2>
           <div className="v7-bento">

@@ -36,6 +36,14 @@ const NOMBRE: Record<'tony' | 'larion', Record<Lengua, string>> = {
   larion: { es: 'Larion', en: 'Larion', ar: 'لاريون', ru: 'Ларион' },
 }
 
+/** Foto de portada de cada tarjeta: la más reconocible de la ciudad, no la
+ *  primera zona (en Kobe era la mezquita cruzada de cables; en Hiroshima, la
+ *  Cúpula, que no es la cara de una tarjeta de «reservar»). */
+const PORTADA: Record<CiudadId, string> = {
+  osaka: 'osaka-dotonbori', kyoto: 'kioto-fushimi', nara: 'nara-parque', kobe: 'kobe-harbor',
+  himeji: 'himeji-castillo', hiroshima: 'hiroshima-miyajima', beyond: 'lejos-kumano',
+}
+
 /** Tramos de la ciudad: los de su ruta; «Más lejos» no tiene maqueta y es excursión lejana. */
 function tramos(id: CiudadId): Tramo[] {
   const ruta = CIUDADES[id].diorama
@@ -63,7 +71,7 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
           return (
             <li key={id} className="v8-tour">
               <Link to={`${prefijo}/${id}/`} className="v8-tour-foto" tabIndex={-1} aria-hidden="true">
-                <img {...foto(`/v8/zonas/${c.zonas[0].id}.jpg`, '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" decoding="async" />
+                <img {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" decoding="async" />
                 <span className="v8-tour-sello" lang="ja">{c.kanji}</span>
               </Link>
               <div className="v8-tour-cuerpo">
