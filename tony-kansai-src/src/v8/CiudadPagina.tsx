@@ -24,6 +24,7 @@ import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
 import { HistoriaManga } from './HistoriaManga'
 import { PORTADA } from './Mosaico'
+import { migas, viajeTuristico } from './seoTours'
 import { HISTORIA, HISTORIA_LISTA, ROTULOS } from './historia'
 import '../v7/v7.css'
 import './v8.css'
@@ -98,11 +99,14 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
       <Helmet>
         <html lang={lang} dir={dir} />
         <title>{titulo}</title>
-        <meta name="description" content={`${c.lema[lang]} ${c.zonas.map((z) => z.nombre[lang]).join(', ')}.`} />
+        {/* Lema y las cuatro zonas más conocidas: con todas pasaba de los ~155 caracteres que enseña Google. */}
+        <meta name="description" content={`${c.lema[lang]} ${c.zonas.slice(0, 4).map((z) => z.nombre[lang]).join(', ')}.`} />
         <link rel="canonical" href={`${BASE}${prefijo}/${c.id}/`} />
         {hermanas.map((h) => <link key={h} rel="alternate" hrefLang={langDe(h)} href={`${BASE}${h}/${c.id}/`} />)}
         <meta property="og:title" content={titulo} />
         <meta property="og:image" content={`${BASE}/v8/zonas/${PORTADA[c.id]}.webp`} />
+        <script type="application/ld+json">{JSON.stringify(viajeTuristico(c.id, lang, guia, prefijo))}</script>
+        <script type="application/ld+json">{JSON.stringify(migas(lang, prefijo, et.volver, c.id))}</script>
       </Helmet>
 
       <header className="v7-cabecera cristal">

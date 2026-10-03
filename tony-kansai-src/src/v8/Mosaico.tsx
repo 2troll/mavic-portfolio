@@ -45,7 +45,7 @@ export const PORTADA: Record<CiudadId, string> = {
 }
 
 /** Tramos de la ciudad: los de su ruta; «Más lejos» no tiene maqueta y es excursión lejana. */
-function tramos(id: CiudadId): Tramo[] {
+export function tramos(id: CiudadId): Tramo[] {
   const ruta = CIUDADES[id].diorama
   return [...new Set(ruta ? META[ruta].tramos : (['lejos'] as Tramo[]))]
 }

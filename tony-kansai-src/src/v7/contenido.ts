@@ -115,8 +115,8 @@ function lineas(campos: [string, string][]): string {
 const es: Pagina = {
   id: 'es', lang: 'es', viaje: ['Sales de Madrid o de Cancún.', 'Aterrizas en Kansai.', 'Te recojo en el vestíbulo de tu hotel.', 'Y pasamos el día donde quieras.'], dir: 'ltr', ruta: '/es/', guia: 'tony',
   seo: {
-    titulo: 'Guía privado en español en Japón: Kioto, Osaka y Nara | Tony Kansai Guide',
-    descripcion: 'Tony, guía privado en español en Kansai. Te recoge en tu hotel y pasáis el día en Kioto, Osaka, Nara o Kobe. Trato directo, sin agencia y con precio cerrado por grupo.',
+    titulo: 'Guía en español en Kioto, Osaka y Nara | Tony Kansai Guide',
+    descripcion: 'Tony, guía privado en español. Te recoge en el hotel y pasáis el día en Kioto, Osaka, Nara o Kobe. Sin agencia y con precio cerrado por grupo.',
   },
   nav: { como: 'Cómo funciona', zona: 'Dónde vamos', precios: 'Precios', contacto: 'Escríbeme', idioma: 'Idioma' },
   hero: {
@@ -236,8 +236,8 @@ const es: Pagina = {
 const en: Pagina = {
   id: 'en', lang: 'en', viaje: ['You fly in from London.', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we spend the day wherever you like.'], dir: 'ltr', ruta: '/en/', guia: 'tony',
   seo: {
-    titulo: 'Private guide in Kyoto, Osaka & Nara, booked directly | Tony Kansai Guide',
-    descripcion: 'Tony is a private guide in Kansai. He meets you in your hotel lobby and you spend the day in Kyoto, Osaka, Nara or Kobe. No agency, no group, one fixed price per party.',
+    titulo: 'Private guide in Kyoto, Osaka & Nara | Tony Kansai Guide',
+    descripcion: 'Tony is a private guide in Kansai. He meets you at your hotel for a day in Kyoto, Osaka, Nara or Kobe. No agency, one fixed price per group.',
   },
   nav: { como: 'How it works', zona: 'Where we go', precios: 'Prices', contacto: 'Message me', idioma: 'Language' },
   hero: {
@@ -355,8 +355,8 @@ const en: Pagina = {
 const ar: Pagina = {
   id: 'ar', lang: 'ar', viaje: ['تنطلق من دبي أو الرياض.', 'تهبط في كانساي.', 'ألتقيك في بهو فندقك.', 'ونقضي اليوم حيثما تحب.'], dir: 'rtl', ruta: '/ar/', guia: 'tony',
   seo: {
-    titulo: 'مرشد خاص باللغة العربية في اليابان، كيوتو وأوساكا ونارا | Tony Kansai Guide',
-    descripcion: 'طوني مرشد خاص يتحدث العربية في كانساي. يلتقيك في فندقك وتقضون اليوم في كيوتو أو أوساكا أو نارا أو كوبي. تعامل مباشر بلا وكالة، وسعر ثابت للمجموعة، ومطاعم حلال وأوقات صلاة في المسار.',
+    titulo: 'مرشد بالعربية في كيوتو وأوساكا ونارا | Tony Kansai Guide',
+    descripcion: 'طوني مرشد خاص بالعربية في كانساي. يلتقيك في فندقك ليوم في كيوتو أو أوساكا أو نارا. بلا وكالة، بسعر ثابت للمجموعة، مع مطاعم حلال وأوقات الصلاة.',
   },
   nav: { como: 'كيف نعمل', zona: 'إلى أين نذهب', precios: 'الأسعار', contacto: 'راسلني', idioma: 'اللغة' },
   hero: {
@@ -480,8 +480,8 @@ const lugaresLarion = (n: Record<string, string>): Lugar[] => [
 const ru: Pagina = {
   id: 'ru', lang: 'ru', viaje: ['Вы вылетаете из Москвы.', 'Прилетаете в Кансай.', 'Я встречаю вас в лобби отеля.', 'И мы проводим день там, где вам хочется.'], dir: 'ltr', ruta: '/ru/', guia: 'larion',
   seo: {
-    titulo: 'Частный гид в Японии на русском — Киото, Осака, Хиросима | Tony Kansai Guide',
-    descripcion: 'Ларион — частный гид на русском языке. Встречает в лобби отеля и везёт в Киото, Осаку, Нару, Хиросиму или на Миядзиму. Напрямую, без агентства, фиксированная цена за группу.',
+    titulo: 'Гид на русском: Киото, Осака, Хиросима | Tony Kansai Guide',
+    descripcion: 'Ларион — частный гид на русском. Встречает в отеле и везёт в Киото, Осаку, Нару, Хиросиму или на Миядзиму. Без агентства, цена за группу.',
   },
   nav: { como: 'Как это работает', zona: 'Куда едем', precios: 'Цены', contacto: 'Написать', idioma: 'Язык' },
   hero: {
@@ -598,8 +598,8 @@ const larion: Pagina = {
   id: 'larion', ruta: '/larion/', guia: 'larion',
   viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west, as far as Hiroshima.'],
   seo: {
-    titulo: 'Larion, private guide in Kansai and Hiroshima | Tony Kansai Guide',
-    descripcion: 'Larion is a private guide in Russian and English. He meets you at your hotel and takes you to Kyoto, Osaka, Nara, Hiroshima or Miyajima. Booked directly, one fixed price per group.',
+    titulo: 'Larion, private guide in Kansai | Tony Kansai Guide',
+    descripcion: 'Larion, private guide in Russian and English. He meets you at your hotel for Kyoto, Osaka, Nara, Hiroshima or Miyajima. One fixed price per group.',
   },
   hero: {
     foto: F + 'miyajima.jpg',

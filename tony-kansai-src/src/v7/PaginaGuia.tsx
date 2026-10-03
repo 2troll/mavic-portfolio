@@ -24,6 +24,8 @@ import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
 import { BotonTema } from './Tema'
 import { PRECIO } from './datosRutas'
+import { listaTours } from '../v8/seoTours'
+import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -410,6 +412,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
+        <script type="application/ld+json">{JSON.stringify(listaTours(p.guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY, p.lang, p.guia, p.ruta.replace(/\/$/, '')))}</script>
       </Helmet>
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
