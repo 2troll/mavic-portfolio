@@ -14,10 +14,14 @@ const idioma = detectLang()
 // React se vería un instante con la tipografía de sistema.
 if (idioma === 'ar') cargaFuenteArabe()
 
-loadPhrases(idioma).finally(() => {
-  createRoot(document.getElementById('root')!).render(
-    <StrictMode>
-      <App />
-    </StrictMode>,
-  )
-})
+const pinta = () => createRoot(document.getElementById('root')!).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+// Sólo montaña, legales y /admin traducen con el diccionario. Las páginas de
+// guía, de ciudad y del día tienen su texto en el código: esperar la descarga
+// del diccionario era una ida y vuelta más antes de pintar el titular (LCP).
+const USA_DICCIONARIO = /^\/(es\/montana|(en|ar|ru)\/hiking|terms|privacy|cookies|safety|legal|accessibility|admin)(\/|$)/
+if (USA_DICCIONARIO.test(location.pathname)) loadPhrases(idioma).finally(pinta)
+else { pinta(); loadPhrases(idioma) }

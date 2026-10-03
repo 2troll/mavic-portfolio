@@ -9,7 +9,7 @@
 }
 /* El dibujo mira hacia la derecha; en árabe se refleja para que mire hacia el texto. */
 [dir='rtl'] .v8-figura { transform: scaleX(-1); }
-@keyframes v8-figura-entra { from { opacity: 0; translate: 0 6%; } }
+@keyframes v8-figura-entra { from { translate: 0 6%; } }
 
 /* En móvil el texto ocupa todo el ancho: la figura se encoge y se sube por
    encima del bloque de texto para no taparlo. */

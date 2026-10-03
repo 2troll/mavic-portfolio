@@ -14,7 +14,10 @@
 .v8-portada-texto h1 { font-size: clamp(3.4rem, 11vw, 9.5rem); line-height: 0.92; letter-spacing: -0.05em; text-shadow: 0 2px 30px rgba(0, 0, 0, 0.35); animation: v8-sube 1.1s var(--curva) both; }
 .v8-portada-texto p { font-size: clamp(1.1rem, 2vw, 1.5rem); max-width: 30ch; color: rgba(255, 255, 255, 0.92); animation: v8-sube 1.1s var(--curva) both 0.12s; }
 .v8-portada-texto .v7-boton { animation: v8-sube 1.1s var(--curva) both 0.24s; }
-@keyframes v8-sube { from { opacity: 0; transform: translateY(40px); filter: blur(10px); } }
+/* Sin opacidad ni desenfoque: el titular y el kanji son lo más grande de la
+   pantalla (LCP) y, si entran desde transparente, Lighthouse no los da por
+   pintados hasta el final de la animación. */
+@keyframes v8-sube { from { transform: translateY(40px); } }
 
 /* 2. Zonas: el scroll vertical mueve la pista en horizontal (scroll-driven). */
 .v8-pan { position: relative; height: calc(var(--n) * 100vh); height: calc(var(--n) * 100svh); view-timeline-name: --pan; view-timeline-axis: block; --sentido: -1; }

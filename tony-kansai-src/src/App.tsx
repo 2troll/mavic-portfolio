@@ -3,27 +3,16 @@ import { Component, useEffect, lazy, Suspense } from 'react'
 import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { MotionConfig } from 'framer-motion'
-import { Navbar } from './components/Navbar'
-import { Footer } from './components/Footer'
 import { LanguageProvider, detectLang } from './contexts/LanguageContext'
 import { translate } from './lib/dict'
-import { WhatsAppFloat } from './components/WhatsAppFloat'
 import { CookieBanner } from './components/CookieBanner'
-const Tours = lazy(() => import('./pages/Tours'))
-const TourDetail = lazy(() => import('./pages/TourDetail'))
-const About = lazy(() => import('./pages/About'))
-const Pricing = lazy(() => import('./pages/Pricing'))
-const FAQ = lazy(() => import('./pages/FAQ'))
-const Booking = lazy(() => import('./pages/Booking'))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const Cookies = lazy(() => import('./pages/Cookies'))
 const Safety = lazy(() => import('./pages/Safety'))
 const Legal = lazy(() => import('./pages/Legal'))
 const Accessibility = lazy(() => import('./pages/Accessibility'))
-const NotFound = lazy(() => import('./pages/NotFound'))
 const Pagina404 = lazy(() => import('./v7/Pagina404'))
-const GuideDetail = lazy(() => import('./pages/GuideDetail'))
 // El panel interno pesa lo que pesa (contratos en PDF incluidos) y sólo lo
 // usa Tony: se descarga sólo cuando se entra en /admin.
 const Admin = lazy(() => import('./pages/Admin'))
@@ -67,10 +56,6 @@ const RUTAS_V7: Record<string, 'portada' | 'es' | 'en' | 'ar' | 'ru' | 'larion' 
   // El día hora a hora de cada ruta.
   '/es/rutas': 'i-es', '/en/routes': 'i-en', '/ar/routes': 'i-ar', '/ru/routes': 'i-ru', '/larion/routes': 'i-larion',
 }
-const Hiking = lazy(() => import('./pages/Hiking'))
-const Guide = lazy(() => import('./pages/Guide'))
-const Book = lazy(() => import('./pages/Book'))
-const HikingDetail = lazy(() => import('./pages/HikingDetail'))
 
 class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boolean }> {
   state = { crashed: false }
@@ -187,40 +172,9 @@ function Layout() {
     )
   }
 
-  return (
-    <div className="min-h-screen bg-japan-dark font-sans">
-      <Navbar />
-      <main>
-        {/* Las páginas antiguas se descargan sólo al visitarlas: la página de
-            cada idioma (v7) no carga ninguna. */}
-        <Suspense fallback={<div className="min-h-screen" />}>
-        <Routes>
-          <Route path="/tours" element={<Tours />} />
-          <Route path="/tours/:id" element={<TourDetail />} />
-          <Route path="/hiking" element={<Hiking />} />
-          <Route path="/guide" element={<Guide />} />
-          <Route path="/book" element={<Book />} />
-          <Route path="/hiking/:id" element={<HikingDetail />} />
-          <Route path="/about" element={<About />} />
-          <Route path="/pricing" element={<Pricing />} />
-          <Route path="/faq" element={<FAQ />} />
-          <Route path="/booking" element={<Booking />} />
-          <Route path="/guides/:id" element={<GuideDetail />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/cookies" element={<Cookies />} />
-          <Route path="/safety" element={<Safety />} />
-          <Route path="/legal" element={<Legal />} />
-          <Route path="/accessibility" element={<Accessibility />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-      <WhatsAppFloat />
-      <CookieBanner />
-    </div>
-  )
+  // La web antigua ya no se sirve: sus rutas redirigen (más arriba) y lo
+  // demás es la 404 v7. Aquí sólo se llega por /admin, ya atendido.
+  return null
 }
 
 export default function App() {

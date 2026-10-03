@@ -26,6 +26,7 @@ import { BotonTema } from './Tema'
 import { PRECIO } from './datosRutas'
 import { listaTours } from '../v8/seoTours'
 import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
+import { CuandoCerca } from './CuandoCerca'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -445,7 +446,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </section>
 
         {/* El viaje: globo fijo que se mueve con el scroll */}
-        <Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense>
+        <CuandoCerca id="zona" className="v7-viaje" alto="100vh"><Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense></CuandoCerca>
 
         {/* Cómo funciona */}
         {/* Las ciudades, cada una con su página (v8) */}
@@ -510,7 +511,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         )}
 
         {/* Rutas con modelo 3D */}
-        <Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense>
+        <CuandoCerca id="rutas" alto={900}><Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense></CuandoCerca>
 
         {/* Puerta a la página de montaña, para quien ya conoce las ciudades */}
         <section className="v7-seccion">

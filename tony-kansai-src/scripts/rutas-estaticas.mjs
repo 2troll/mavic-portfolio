@@ -32,6 +32,11 @@ try {
 const PRECARGA = { es: '/v7/fotos/kioto', en: '/v7/fotos/nara', ar: '/v7/fotos/osaka', ru: '/v7/fotos/miyajima', larion: '/v7/fotos/miyajima' }
 const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'nara-parque', kobe: 'kobe-mezquita', himeji: 'himeji-castillo', hiroshima: 'hiroshima-cupula', beyond: 'lejos-koyasan' }
 
+// Nombres con hash de los trozos de página, sacados del build.
+import { readdirSync } from 'node:fs'
+const trozosJs = readdirSync(join(dest, 'assets')).filter((f) => f.endsWith('.js'))
+const TROZOS = { guia: trozosJs.find((f) => f.startsWith('PaginaGuia-')), ciudad: trozosJs.find((f) => f.startsWith('CiudadPagina-')) }
+
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const base = readFileSync(join(dest, 'index.html'), 'utf8')
 const rutas = [...readFileSync(join(dest, 'sitemap.xml'), 'utf8').matchAll(/<loc>([^<]*)<\/loc>/g)]
@@ -65,6 +70,18 @@ for (const ruta of rutas) {
       .replace(/(<meta name="twitter:image" content=")[^"]*(")/, `$1${img}$2`)
     const alternos = c.alternos.map(([l, r]) => `    <link rel="alternate" hreflang="${l}" href="${BASE}${r}" />`).join('\n')
     html = html.replace('</head>', `${alternos}\n    <link rel="alternate" hreflang="x-default" href="${BASE}/" />\n  </head>`)
+  }
+
+  // Precarga del trozo de JS de la página (si no, se pide cuando ya ha
+  // arrancado el principal) y, en las páginas de guía, de su figura manga,
+  // que es lo más grande de la primera pantalla (LCP).
+  const esGuia = ruta in PRECARGA
+  const esCiudad = /^(es|en|ar|ru|larion)\/[a-z]+$/.test(ruta) && ruta.split('/')[1] in ZONA_PORTADA
+  const trozo = esGuia ? TROZOS.guia : esCiudad ? TROZOS.ciudad : null
+  if (trozo) html = html.replace('</head>', `  <link rel="modulepreload" crossorigin href="/assets/${trozo}" />\n  </head>`)
+  if (esGuia) {
+    const fig = (ruta === 'ru' || ruta === 'larion') ? 'larion-kyoto' : 'tony-kyoto'
+    html = html.replace('</head>', `  <link rel="preload" as="image" href="/v8/figuras/${fig}.webp" fetchpriority="high" />\n  </head>`)
   }
 
   // Precarga de la foto de portada en las páginas de idioma y de ciudad.

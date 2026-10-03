@@ -37,7 +37,7 @@
   animation: v7-figura-entra 1s 0.3s cubic-bezier(0.2, 0.8, 0.2, 1) both;
 }
 [dir='rtl'] .v7-figura-hero { transform: scaleX(-1); }
-@keyframes v7-figura-entra { from { opacity: 0; translate: 0 8%; } }
+@keyframes v7-figura-entra { from { translate: 0 8%; } }
 /* Hasta 1100 px el titular llega casi al borde: la figura se encoge. */
 @media (max-width: 1100px) { .v7-figura-hero { height: 52vh; inset-inline-end: 4vw; } }
 /* Móvil: más pequeña y por encima del bloque de texto, como en las ciudades. */

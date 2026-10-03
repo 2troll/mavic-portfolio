@@ -31,6 +31,7 @@ import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
 import { BotonTema } from '../v7/Tema'
+import { CuandoCerca } from '../v7/CuandoCerca'
 
 const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
@@ -184,9 +185,11 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         {c.diorama && (
           <section className="v8-maqueta">
             <span className="v8-maqueta-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
-            <Suspense fallback={<div className="v8-diorama" />}>
-              <Diorama ruta={c.diorama} etiqueta={c.nombre[lang]} />
-            </Suspense>
+            <CuandoCerca className="v8-diorama" alto={0}>
+              <Suspense fallback={<div className="v8-diorama" />}>
+                <Diorama ruta={c.diorama} etiqueta={c.nombre[lang]} />
+              </Suspense>
+            </CuandoCerca>
             <p className="v8-maqueta-pista">{et.arrastra}</p>
           </section>
         )}
