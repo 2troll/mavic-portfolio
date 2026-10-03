@@ -23,6 +23,7 @@ import './figuras.css'
 import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
 import { BotonTema } from './Tema'
+import { PRECIO } from './datosRutas'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -319,11 +320,19 @@ const FOTOS_HERO: Record<PaginaId, string[]> = {
   es: ['/v7/fotos/kioto.jpg', '/v7/fotos/osaka.jpg', '/v7/fotos/nara.jpg'],
   en: ['/v7/fotos/nara.jpg', '/v7/fotos/kioto.jpg', '/v7/fotos/himeji.jpg'],
   ar: ['/v7/fotos/osaka.jpg', '/v7/fotos/kobe.jpg', '/v7/fotos/kioto.jpg'],
-  ru: ['/v7/fotos/miyajima.jpg', '/v7/fotos/hiroshima.jpg', '/v7/fotos/himeji.jpg'],
+  // Sin la Cúpula de la Bomba: en la portada pasan el guía en manga y las hojas
+  // de la estación, y delante de un memorial no tocan. Se ve en la página de Hiroshima.
+  ru: ['/v7/fotos/miyajima.jpg', '/v7/fotos/kioto.jpg', '/v7/fotos/himeji.jpg'],
   larion: ['/v7/fotos/miyajima.jpg', '/v7/fotos/himeji.jpg', '/v7/fotos/kioto.jpg'],
 }
 
 // ── Página ───────────────────────────────────────────────────────────────────
+
+/** «Desde ¥38.000 por grupo», del precio real del medio día: nunca se desfasa. */
+function desdeHero(lang: string): string {
+  const n = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'es-ES').format(PRECIO.medio)
+  return ({ es: `Desde ¥${n} por grupo`, en: `From ¥${n} per group`, ar: `ابتداءً من ${n} ين للمجموعة`, ru: `От ${n} ¥ за группу` } as Record<string, string>)[lang] ?? `From ¥${n} per group`
+}
 
 export default function PaginaGuia({ id }: { id: PaginaId }) {
   const p = PAGINAS[id]
@@ -390,9 +399,15 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
-              <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.hero.cta}</a>
+              {/* «Reservar» abre WhatsApp con el mensaje listo: es la reserva de verdad. */}
+              <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /> {p.hero.cta}</a>
               <a className="v7-boton v7-boton-cristal cristal" href="#contacto">{p.hero.cta2}</a>
             </div>
+            {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}
+            <ul className="v7-hero-datos">
+              <li>{desdeHero(p.lang)}</li>
+              {p.hero.chips.filter((c) => !/precio|price|سعر|цена/i.test(c)).map((c) => <li key={c}>{c}</li>)}
+            </ul>
           </div>
         </section>
 

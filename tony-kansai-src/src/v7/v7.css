@@ -949,3 +949,33 @@ body.v7-cuerpo-oscuro { background: #05070d; }
   .v7-itin-panel:has(.v7-itin-vineta) .v7-itin-titulo { padding-top: 16vh; }
   .v7-itin-panel .v7-itin-vineta { width: min(34vw, 500px); }
 }
+
+/* ══ Rediseño · portada ══════════════════════════════════════════════════════
+   Titular grande en la escala nueva, «Reserva tu tour» como única acción
+   fuerte y, debajo, los tres datos que deciden si escribir: precio, grupo y
+   recogida. Una sola secuencia al cargar; nada más se mueve solo. */
+.v7-hero h1 { font-size: clamp(var(--t-4), 7.2vw, var(--t-7)); line-height: 0.98; letter-spacing: -0.045em; max-width: 14ch; }
+.v7.lang-ar .v7-hero h1 { letter-spacing: 0; line-height: 1.25; }
+.v7-hero-texto { gap: var(--e-3); padding-bottom: var(--e-8); }
+.v7-hero-texto > p { font-size: clamp(var(--t-0), 1.6vw, var(--t-1)); max-width: 36rem; }
+.v7-hero-datos {
+  list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; row-gap: var(--e-1);
+  font-size: var(--t--1); font-weight: 600; color: rgba(255, 255, 255, 0.9); text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+.v7-hero-datos li { padding-inline: var(--e-2); border-inline-start: 2px solid var(--sello); }
+.v7-hero-datos li:first-child { padding-inline-start: var(--e-1); }
+@media (max-width: 560px) {
+  .v7-hero-texto { padding-bottom: calc(var(--e-12) + env(safe-area-inset-bottom)); }
+  .v7-hero-datos { flex-direction: column; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .v7-hero h1, .v7-hero-texto > p, .v7-hero .v7-acciones, .v7-hero-datos {
+    animation: v7-sube 0.9s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+  }
+  .v7-hero-texto > p { animation-delay: 0.15s; }
+  .v7-hero .v7-acciones { animation-delay: 0.3s; }
+  .v7-hero-datos { animation-delay: 0.45s; }
+  .v7-figura-hero { animation-delay: 0.6s; }
+}
+@keyframes v7-sube { from { opacity: 0; translate: 0 24px; } }

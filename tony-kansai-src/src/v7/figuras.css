@@ -41,5 +41,6 @@
 /* Hasta 1100 px el titular llega casi al borde: la figura se encoge. */
 @media (max-width: 1100px) { .v7-figura-hero { height: 52vh; inset-inline-end: 4vw; } }
 /* Móvil: más pequeña y por encima del bloque de texto, como en las ciudades. */
-@media (max-width: 560px) { .v7-figura-hero { height: 26svh; bottom: 52svh; inset-inline-end: 8vw; } }
+/* Móvil: pequeña y arriba, bajo la cabecera, lejos del titular. */
+@media (max-width: 560px) { .v7-figura-hero { height: 20svh; bottom: auto; top: 128px; inset-inline-end: 6vw; } }
 @media (prefers-reduced-motion: reduce) { .v7-figura-hero { animation: none; } }

@@ -124,7 +124,7 @@ const es: Pagina = {
     titulo: 'Tu guía privado en Japón, en español.',
     sub: 'Soy Tony. Te recojo en el hotel y pasamos el día en Kioto, Osaka, Nara o donde te apetezca. Sin agencia y sin grupo: hablas directamente conmigo.',
     chips: ['Solo tu grupo', 'Precio cerrado por grupo', 'Recogida en tu hotel'],
-    cta: 'Escríbeme por WhatsApp',
+    cta: 'Reserva tu tour',
     cta2: 'Cuéntame tu viaje',
   },
   como: {
@@ -245,7 +245,7 @@ const en: Pagina = {
     titulo: 'Your private guide in Japan.',
     sub: 'I\'m Tony. I meet you in your hotel lobby and we spend the day in Kyoto, Osaka, Nara, or wherever you\'d like to go. No agency, no group: you deal with me directly.',
     chips: ['Just your party', 'One price per group', 'Hotel pick-up'],
-    cta: 'Message me on WhatsApp',
+    cta: 'Book a tour',
     cta2: 'Plan your day',
   },
   como: {
@@ -364,7 +364,7 @@ const ar: Pagina = {
     titulo: 'مرشدك الخاص في اليابان، بالعربية.',
     sub: 'أنا طوني. ألتقيك في بهو فندقك ونقضي اليوم في كيوتو أو أوساكا أو نارا أو حيثما تحب. بلا وكالة ولا مجموعات: تتعامل معي مباشرة.',
     chips: ['لعائلتك وحدها', 'سعر واحد للمجموعة', 'نلتقي في فندقك'],
-    cta: 'راسلني على واتساب',
+    cta: 'احجز جولتك',
     cta2: 'خطّط ليومك',
   },
   como: {
@@ -489,7 +489,7 @@ const ru: Pagina = {
     titulo: 'Частный гид в Японии — на русском.',
     sub: 'Меня зовут Ларион. Встречаю вас в лобби отеля, и мы едем туда, куда хотите вы: Киото, Осака, Нара, Хиросима, Миядзима. Без агентства и без групп — договариваетесь напрямую со мной.',
     chips: ['Только ваша компания', 'Цена за группу', 'Встреча в отеле'],
-    cta: 'Написать в WhatsApp',
+    cta: 'Забронировать тур',
     cta2: 'Рассказать о поездке',
   },
   como: {
