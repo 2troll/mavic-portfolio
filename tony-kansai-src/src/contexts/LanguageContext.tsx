@@ -38,6 +38,15 @@ export function detectLang(): Lang {
     if (isLang(fromUrl)) return fromUrl
   } catch { /* ignore */ }
 
+  // La ruta manda sobre lo guardado: /ar/… es árabe aunque el navegador esté en
+  // inglés. Sin esto la página arrancaba en «en» y de izquierda a derecha, y
+  // saltaba a árabe al montarse (en Lighthouse, CLS de 1,1 en /ar/).
+  try {
+    const prefijo = window.location.pathname.split('/')[1]?.toLowerCase()
+    const deRuta = prefijo === 'larion' ? 'en' : prefijo
+    if (isLang(deRuta)) return deRuta
+  } catch { /* ignore */ }
+
   try {
     const saved = localStorage.getItem(STORAGE_KEY)
     if (isLang(saved)) return saved

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 
@@ -58,7 +58,9 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
     ) : null
   }
 
+  // MotionConfig: respeta «reducir movimiento» del sistema (antes lo hacía App).
   return (
+    <MotionConfig reducedMotion="user">
     <AnimatePresence>
       {visible && (
         <motion.div
@@ -96,5 +98,6 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
         </motion.div>
       )}
     </AnimatePresence>
+    </MotionConfig>
   )
 }

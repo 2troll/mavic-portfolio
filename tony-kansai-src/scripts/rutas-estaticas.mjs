@@ -32,9 +32,18 @@ try {
 const PRECARGA = { es: '/v7/fotos/kioto', en: '/v7/fotos/nara', ar: '/v7/fotos/osaka', ru: '/v7/fotos/miyajima', larion: '/v7/fotos/miyajima' }
 const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'nara-parque', kobe: 'kobe-mezquita', himeji: 'himeji-castillo', hiroshima: 'hiroshima-cupula', beyond: 'lejos-koyasan' }
 
+// Primera pantalla ya pintada: se compila el render de servidor y cada página
+// de guía, de ciudad y del día sale con su HTML dentro de #root (main.tsx la
+// hidrata). Montaña y legales no: traducen con el diccionario, que aquí no hay.
+import { execSync } from 'node:child_process'
+execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
+const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes))?$/
+
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'
 const trozosJs = readdirSync(join(dest, 'assets')).filter((f) => f.endsWith('.js'))
+const CSS_TROZOS = readdirSync(join(dest, 'assets')).filter((f) => f.endsWith('.css') && !f.startsWith('index-'))
 const TROZOS = { guia: trozosJs.find((f) => f.startsWith('PaginaGuia-')), ciudad: trozosJs.find((f) => f.startsWith('CiudadPagina-')) }
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
@@ -44,6 +53,7 @@ const rutas = [...readFileSync(join(dest, 'sitemap.xml'), 'utf8').matchAll(/<loc
   .filter(Boolean)
 
 let propias = 0
+let pintadas = 0
 for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.
   if (existsSync(join(dest, ruta))) continue
@@ -91,7 +101,17 @@ for (const ruta of rutas) {
     html = html.replace('</head>', `  <link rel="preload" as="image" href="${foto}.webp" imagesrcset="${foto}-900.webp 900w, ${foto}.webp 1800w" imagesizes="100vw" fetchpriority="high" />\n  </head>`)
   }
 
+  if (PRERENDER.test(ruta)) {
+    // El CSS de los trozos perezosos (ciudades, manga, figuras) se enlaza ya en
+    // la cabecera: si no, el HTML pintado se ve un instante sin esos estilos y
+    // luego todo salta (CLS de 0,4 a 1,1 en Lighthouse).
+    html = html.replace('</head>', CSS_TROZOS.map((f) => `  <link rel="stylesheet" href="/assets/${f}" />`).join('\n') + '\n  </head>')
+    const cuerpo = await pinta(`/${ruta}/`)
+    html = html.replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
+    pintadas++
+  }
+
   mkdirSync(join(dest, ruta), { recursive: true })
   writeFileSync(join(dest, ruta, 'index.html'), html)
 }
-console.log(`${rutas.length} rutas; ${propias} con cabecera propia`)
+console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas`)

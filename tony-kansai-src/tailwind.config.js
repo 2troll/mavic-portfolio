@@ -1,6 +1,13 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
+  // Sólo lo que se sirve: la web v7/v8, las legales, /admin y los componentes
+  // compartidos. Las páginas antiguas ya redirigen y sus clases inflaban el CSS
+  // que bloquea la primera pintura.
+  content: [
+    './index.html', './src/*.{ts,tsx}', './src/v7/**/*.{ts,tsx}', './src/v8/**/*.{ts,tsx}',
+    './src/components/**/*.{ts,tsx}', './src/contexts/**/*.{ts,tsx}', './src/lib/**/*.{ts,tsx}',
+    './src/pages/{Terms,Privacy,Cookies,Safety,Legal,Accessibility,Admin}.tsx',
+  ],
   safelist: [
     'from-rose-900/80', 'via-red-800/60', 'to-orange-900/80',
     'from-emerald-900/80', 'via-teal-800/60', 'to-cyan-900/80',

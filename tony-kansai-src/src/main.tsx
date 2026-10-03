@@ -1,5 +1,5 @@
 import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
+import { createRoot, hydrateRoot } from 'react-dom/client'
 import './index.css'
 import App from './App'
 import { detectLang } from './contexts/LanguageContext'
@@ -14,11 +14,15 @@ const idioma = detectLang()
 // React se vería un instante con la tipografía de sistema.
 if (idioma === 'ar') cargaFuenteArabe()
 
-const pinta = () => createRoot(document.getElementById('root')!).render(
+const raiz = document.getElementById('root')!
+const arbol = (
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
 )
+// Si el HTML ya trae la página pintada (rutas-estaticas.mjs), se hidrata: el
+// titular se ve sin esperar a React. Si no, se pinta desde cero.
+const pinta = () => (raiz.hasChildNodes() ? hydrateRoot(raiz, arbol) : createRoot(raiz).render(arbol))
 // Sólo montaña, legales y /admin traducen con el diccionario. Las páginas de
 // guía, de ciudad y del día tienen su texto en el código: esperar la descarga
 // del diccionario era una ida y vuelta más antes de pintar el titular (LCP).

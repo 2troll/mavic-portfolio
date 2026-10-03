@@ -70,9 +70,12 @@ function useCambio(divisas: string[]) {
   return tasas ? divisas.filter((d) => tasas[d]).map((d) => ({ divisa: d, tasa: tasas[d] })) : []
 }
 
+/** Hora actual, sólo en el navegador: la página llega ya pintada desde el
+ *  build y una hora del servidor no coincidiría al hidratar. Antes: null. */
 function useAhora(cadaMs = 20000) {
-  const [ahora, setAhora] = useState(() => new Date())
+  const [ahora, setAhora] = useState<Date | null>(null)
   useEffect(() => {
+    setAhora(new Date())
     const id = window.setInterval(() => setAhora(new Date()), cadaMs)
     return () => window.clearInterval(id)
   }, [cadaMs])
@@ -138,11 +141,13 @@ function Cabecera({ p }: { p: Pagina }) {
 function Relojes({ p }: { p: Pagina }) {
   const ahora = useAhora()
   const hora = (tz?: string) => {
+    if (!ahora) return '––:––'
     try {
       return new Intl.DateTimeFormat(p.lang === 'ar' ? 'ar-u-nu-latn' : p.lang, { hour: '2-digit', minute: '2-digit', timeZone: tz }).format(ahora)
     } catch { return '' }
   }
-  const tzVisitante = (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone } catch { return '' } })()
+  // La zona del visitante sólo se sabe en su navegador (tras hidratar).
+  const tzVisitante = ahora ? (() => { try { return Intl.DateTimeFormat().resolvedOptions().timeZone } catch { return '' } })() : ''
   const yaEsta = p.mercado.relojes.some((r) => r.tz === tzVisitante)
   return (
     <ul className="v7-relojes">

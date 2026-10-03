@@ -2,10 +2,10 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { Component, useEffect, lazy, Suspense } from 'react'
 import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
-import { MotionConfig } from 'framer-motion'
 import { LanguageProvider, detectLang } from './contexts/LanguageContext'
 import { translate } from './lib/dict'
-import { CookieBanner } from './components/CookieBanner'
+// Perezoso: es lo único del arranque que usaba framer-motion (38 KB).
+const CookieBanner = lazy(() => import('./components/CookieBanner').then((m) => ({ default: m.CookieBanner })))
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const Cookies = lazy(() => import('./pages/Cookies'))
@@ -98,7 +98,7 @@ function ScrollToTop() {
   return null
 }
 
-function Layout() {
+export function Layout() {
   const { pathname } = useLocation()
   const isAdmin = pathname.startsWith('/admin')
 
@@ -181,17 +181,12 @@ export default function App() {
   return (
     <AppErrorBoundary>
       <HelmetProvider>
-        {/* reducedMotion="user" hace que todos los motion.* del sitio respeten
-            la preferencia del sistema. Sin esto, el CSS de arriba no basta:
-            Framer anima con JavaScript. */}
-        <MotionConfig reducedMotion="user">
         <LanguageProvider>
           <BrowserRouter>
             <ScrollToTop />
             <Layout />
           </BrowserRouter>
         </LanguageProvider>
-        </MotionConfig>
       </HelmetProvider>
     </AppErrorBoundary>
   )
