@@ -18,10 +18,12 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, MANGA_APROBADO, FIGURAS } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
+import { HistoriaManga } from './HistoriaManga'
+import { HISTORIA, HISTORIA_LISTA, ROTULOS } from './historia'
 import '../v7/v7.css'
 import './v8.css'
 import './figura.css'
@@ -29,6 +31,8 @@ import { IconoWa } from '../v7/IconoWa'
 
 const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
+// Orden de los capítulos de la historia (el mismo que el menú de Tony).
+const CIUDADES_ORDEN: CiudadId[] = ['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond']
 
 export type PaginaCiudad = { lang: Lengua; guia: 'tony' | 'larion'; prefijo: '/es' | '/en' | '/ar' | '/ru' | '/larion'; ciudad: CiudadId }
 
@@ -156,11 +160,17 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           </div>
         </section>
 
-        {/* Viñeta manga del guía vestido para esta ciudad (sólo si él la aprobó) */}
-        {MANGA_APROBADO.includes(`${guia}-${c.id}`) && (
-          <section className="v8-manga" aria-label={g}>
-            <img src={`/v8/manga/${guia}-${c.id}.webp`} alt={`${g} · ${c.nombre[lang]}`} loading="lazy" />
-          </section>
+        {/* Historia manga en blanco y negro: tres viñetas enteras, bocadillos y un poema. */}
+        {HISTORIA_LISTA.includes(`${guia}-${c.id}`) && (
+          <HistoriaManga
+            quien={g}
+            sello={c.kanji}
+            capitulo={`${ROTULOS[lang].capitulo} ${String(CIUDADES_ORDEN.indexOf(c.id) + 1).padStart(2, '0')}`}
+            titulo={ROTULOS[lang].enCiudad(c.nombre[lang])}
+            poema={HISTORIA[c.id].poema[lang]}
+            etiquetaPoema={ROTULOS[lang].poema}
+            vinetas={(['a', 'b', 'c'] as const).map((k) => ({ src: `/v8/historia/${guia}-${c.id}-${k}.webp`, forma: k === 'a' ? 'ancha' : 'alta', texto: HISTORIA[c.id][k][lang] }))}
+          />
         )}
 
         {/* 3. La maqueta */}

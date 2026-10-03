@@ -20,6 +20,8 @@ import { Logo } from './Logo'
 import './v7.css'
 import { IconoWa } from './IconoWa'
 import './figuras.css'
+import { HistoriaManga } from '../v8/HistoriaManga'
+import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -429,6 +431,19 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             </article>
           </div>
         </section>
+
+        {/* «Un día conmigo» en manga, justo después de contar cómo funciona. */}
+        {HISTORIA_LISTA.includes(`${p.guia}-dia`) && (
+          <HistoriaManga
+            quien={NOMBRE_GUIA[p.id]}
+            sello="旅"
+            capitulo={ROTULOS[p.lang].capitulo + ' 00'}
+            titulo={DIA[p.lang].titulo}
+            poema={DIA[p.lang].poema}
+            etiquetaPoema={ROTULOS[p.lang].poema}
+            vinetas={DIA[p.lang].vinetas.map((texto, i) => ({ src: `/v8/historia/${p.guia}-dia-${i + 1}.webp`, forma: i === 0 || i === 3 ? 'ancha' : 'alta', texto }))}
+          />
+        )}
 
         {/* Rutas con modelo 3D */}
         <Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense>

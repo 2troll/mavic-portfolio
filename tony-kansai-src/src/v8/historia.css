@@ -1,0 +1,89 @@
+/* Historia manga: papel blanco (60 %), tinta negra (30 %), rojo de sello (10 %).
+   Colores fijos: la sección es papel aunque el sistema esté en modo oscuro. */
+.hm {
+  --papel: #ffffff; --tinta: #111111; --rojo: #c0281b;
+  background: var(--papel); color: var(--tinta);
+  padding: clamp(56px, 8vw, 110px) max(16px, 5vw);
+  display: grid; justify-items: center; gap: clamp(28px, 4vw, 48px);
+  /* Trama de puntos muy suave, como el papel de un tankōbon. */
+  background-image: radial-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1.2px);
+  background-size: 7px 7px;
+}
+
+.hm-cabeza { display: grid; justify-items: center; gap: 6px; text-align: center; }
+.hm-cabeza h2 { font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -0.04em; line-height: 1; color: var(--tinta); }
+.hm-capitulo { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rojo); }
+.hm-sello {
+  display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 8px;
+  background: var(--rojo); color: #fff; border-radius: 8px; font-size: 26px; line-height: 1;
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; writing-mode: vertical-rl;
+  rotate: -4deg; box-shadow: inset 0 0 0 3px rgba(255, 255, 255, 0.35);
+}
+
+/* La hoja: una ancha arriba y dos altas debajo (y así sucesivamente). */
+.hm-hoja { width: min(1100px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.4vw, 16px); }
+.hm-vineta {
+  position: relative; margin: 0; overflow: hidden; background: var(--papel);
+  border: clamp(3px, 0.35vw, 5px) solid var(--tinta);
+}
+.hm-ancha { grid-column: 1 / -1; aspect-ratio: 1216 / 640; }
+.hm-alta { aspect-ratio: 768 / 1024; }
+/* La viñeta entera, sin recortar a pantalla completa: el dibujo ya tiene su forma. */
+.hm-vineta img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* Bocadillo: blanco con borde de tinta y rabito; el nombre en rojo. */
+.hm-bocadillo {
+  position: absolute; z-index: 1; max-width: min(46%, 340px);
+  background: var(--papel); color: var(--tinta); border: 3px solid var(--tinta); border-radius: 22px;
+  padding: 12px 16px; font-size: clamp(14px, 1.35vw, 17px); font-weight: 600; line-height: 1.35;
+  box-shadow: 4px 4px 0 var(--tinta);
+}
+.hm-bocadillo::after {
+  content: ''; position: absolute; width: 18px; height: 18px; background: var(--papel);
+  border: 3px solid var(--tinta); border-top: 0; border-inline-start: 0; bottom: -11px; inset-inline-start: 28px;
+  rotate: 45deg;
+}
+.hm-quien {
+  display: inline-block; margin-inline-end: 8px; padding: 1px 8px; border-radius: 6px;
+  background: var(--rojo); color: #fff; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase;
+  vertical-align: 2px;
+}
+/* Posiciones alternas para que no tapen siempre el mismo sitio. */
+.hm-pos-0 .hm-bocadillo { top: 5%; inset-inline-start: 4%; }
+.hm-pos-1 .hm-bocadillo { bottom: 5%; inset-inline-start: 5%; max-width: 78%; }
+.hm-pos-2 .hm-bocadillo { top: 5%; inset-inline-end: 5%; max-width: 78%; }
+.hm-pos-1 .hm-bocadillo::after { bottom: auto; top: -11px; rotate: 225deg; }
+
+/* Poema: tres versos con un filete rojo, que se escriben uno tras otro. */
+.hm-poema {
+  margin: 0; padding-inline-start: 20px; border-inline-start: 4px solid var(--rojo);
+  font-family: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif; font-size: clamp(1.15rem, 2.2vw, 1.6rem);
+  line-height: 1.55; font-style: italic; color: var(--tinta); max-width: 30ch;
+}
+[lang='ar'] .hm-poema, .hm-poema:lang(ar) { font-style: normal; }
+
+/* ── Animación: el marco de la viñeta aparece vacío (como una página sin
+      dibujar), el dibujo entra con un trazo de tinta y se asienta, y el
+      bocadillo salta después. El recorte va en el dibujo, no en la viñeta:
+      IntersectionObserver no ve un elemento recortado del todo. ── */
+@media (prefers-reduced-motion: no-preference) {
+  .hm-vineta img {
+    clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); transform: scale(1.12); filter: contrast(1.6) brightness(1.15);
+    transition: clip-path 0.9s cubic-bezier(0.7, 0, 0.2, 1), transform 1.6s cubic-bezier(0.2, 0.8, 0.2, 1), filter 1.4s ease;
+  }
+  [dir='rtl'] .hm-vineta img { clip-path: polygon(100% 0, 100% 0, 100% 100%, 100% 100%); }
+  .hm-visto img, [dir='rtl'] .hm-visto img { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); transform: none; filter: none; }
+  .hm-bocadillo { opacity: 0; transform: scale(0.55) rotate(-4deg); transition: opacity 0.25s 0.75s, transform 0.5s 0.75s cubic-bezier(0.34, 1.7, 0.5, 1); }
+  .hm-visto .hm-bocadillo { opacity: 1; transform: none; }
+  .hm-poema p { clip-path: inset(0 100% 0 0); transition: clip-path 1.1s calc(var(--i) * 0.7s + 0.2s) cubic-bezier(0.6, 0, 0.3, 1); }
+  [dir='rtl'] .hm-poema p { clip-path: inset(0 0 0 100%); }
+  .hm-poema.hm-visto p { clip-path: inset(0 0 0 0); }
+  .hm-sello { opacity: 0; scale: 1.8; transition: opacity 0.3s, scale 0.6s cubic-bezier(0.3, 1.6, 0.5, 1); }
+  .hm-visto .hm-sello { opacity: 1; scale: 1; }
+}
+
+@media (max-width: 640px) {
+  /* En móvil, una columna: cada viñeta se ve entera y grande. */
+  .hm-hoja { grid-template-columns: 1fr; }
+  .hm-bocadillo { max-width: 82%; }
+}
