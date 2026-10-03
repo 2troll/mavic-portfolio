@@ -205,7 +205,8 @@ export function Rutas({ p }: { p: Pagina }) {
     ;(async () => {
       for (let i = 0; i < ids.length && vivo; i++) {
         try {
-          const grupo = await compone(ids[i])
+          // Sin peana: aquí la cámara va cerca y la isla no cabe; las piezas se transforman solas.
+          const grupo = await compone(ids[i], false)
           modelos[i] = { grupo, puntos: muestrea(grupo, PARTICULAS) }
           a0 = -1
           sigue()

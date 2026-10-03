@@ -133,7 +133,7 @@ function peana(color: string): THREE.Mesh {
 }
 
 /** Monta el diorama de una ruta con sus piezas descargadas. */
-export async function compone(ruta: RutaId): Promise<THREE.Group> {
+export async function compone(ruta: RutaId, conPeana = true): Promise<THREE.Group> {
   const e = ESCENAS[ruta]
   const raiz = new THREE.Group()
   const piezas = await Promise.all(e.piezas.map(async (p) => {
@@ -143,14 +143,14 @@ export async function compone(ruta: RutaId): Promise<THREE.Group> {
     return g
   }))
   piezas.forEach((g) => raiz.add(g))
-  if (e.suelo) raiz.add(peana(e.suelo))
+  if (e.suelo && conPeana) raiz.add(peana(e.suelo))
   if (e.agua) {
     // Miyajima: todo lo que no es pez se hunde un poco: el torii y la orilla
     // «flotan» en la marea alta.
     piezas.forEach((g, i) => { if (e.piezas[i].m === 'torii') g.position.y -= 0.35 })
     const agua = new THREE.Mesh(
       // Con peana, el agua deja un anillo de arena donde arraigan los pinos.
-      new THREE.CircleGeometry(e.suelo ? 1.55 : 1.75, 64),
+      new THREE.CircleGeometry(e.suelo && conPeana ? 1.55 : 1.75, 64),
       new THREE.MeshStandardMaterial({ color: '#2f6f8f', roughness: 0.15, metalness: 0.2, transparent: true, opacity: 0.85 }),
     )
     agua.rotation.x = -Math.PI / 2
