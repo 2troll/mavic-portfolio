@@ -577,8 +577,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div>
-            <strong>Tony Kansai Guide</strong>
+            <strong><span className="v7-pie-sello" lang="ja" aria-hidden="true">関西</span>Tony Kansai Guide</strong>
             <p>{p.pie.lema}</p>
+            <p className="v7-pie-wa"><a href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> <bdi dir="ltr">+{g.wa.slice(0, 2)} {g.wa.slice(2, 4)} {g.wa.slice(4, 8)} {g.wa.slice(8)}</bdi></a></p>
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
           </div>
           <nav aria-label={p.pie.legal}>

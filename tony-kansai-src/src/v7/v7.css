@@ -991,3 +991,20 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-razones h3 { font-size: var(--t-1); letter-spacing: -0.02em; }
 .v7-razones p { color: var(--tenue); max-width: 34ch; }
 @media (max-width: 820px) { .v7-razones ul { grid-template-columns: 1fr; gap: var(--e-4); } }
+
+/* ══ Rediseño · pie ═══════════════════════════════════════════════════════════
+   Banda invertida a sangre (el 30 %): tinta en modo claro, papel en oscuro.
+   El fondo se extiende con box-shadow + clip-path sin romper el ancho del texto. */
+.v7-pie {
+  margin-top: var(--e-16); padding: var(--e-8) 24px var(--e-6); border-top: 0;
+  background: var(--inverso); color: color-mix(in srgb, var(--inverso-tinta) 72%, transparent);
+  box-shadow: 0 0 0 100vmax var(--inverso); clip-path: inset(0 -100vmax);
+}
+.v7-pie strong, .v7-pie-titulo, .v7-pie a:hover { color: var(--inverso-tinta); }
+.v7-pie strong { display: flex; align-items: center; gap: var(--e-2); font-size: var(--t-1); letter-spacing: -0.02em; }
+.v7-pie-sello {
+  writing-mode: vertical-rl; direction: ltr; font-family: var(--mincho); font-weight: 400; font-size: 15px; line-height: 1;
+  background: var(--sello); color: #fff; padding: 7px 5px; border-radius: 4px;
+}
+.v7-pie-wa a { display: inline-flex; align-items: center; gap: var(--e-1); color: var(--inverso-tinta); font-size: var(--t-1); font-weight: 600; }
+.v7-pie a:focus-visible { outline: 2px solid var(--sello); outline-offset: 3px; }
