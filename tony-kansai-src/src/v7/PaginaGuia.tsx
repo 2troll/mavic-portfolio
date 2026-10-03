@@ -454,7 +454,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <HistoriaManga
             quien={NOMBRE_GUIA[p.id]}
             sello="旅"
-            capitulo={ROTULOS[p.lang].capitulo + ' 00'}
+            capitulo={({ es: 'Prólogo', en: 'Prologue', ar: 'تمهيد', ru: 'Пролог' } as Record<string, string>)[p.lang]}
             titulo={DIA[p.lang].titulo}
             poema={DIA[p.lang].poema}
             etiquetaPoema={ROTULOS[p.lang].poema}
