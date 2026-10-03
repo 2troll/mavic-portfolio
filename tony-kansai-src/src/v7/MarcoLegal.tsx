@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
 import { CORREO } from './contenido'
 import { Logo } from './Logo'
+import { BotonTema } from './Tema'
 import './v7.css'
 
 const VUELTA: Record<string, { ruta: string; texto: string }> = {
@@ -29,6 +30,7 @@ export function MarcoLegal({ children }: { children: ReactNode }) {
         <nav className="v7-anclas">
           <Link to={ruta}>{dir === 'rtl' ? '→' : '←'} {v.texto}</Link>
         </nav>
+        <BotonTema lang={lang} />
       </header>
       <main>{children}</main>
       <footer className="v7-pie">

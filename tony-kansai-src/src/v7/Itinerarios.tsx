@@ -25,6 +25,7 @@ import { MANGA_APROBADO } from '../v8/ciudades'
 const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osaka', nara: 'nara', himeji: 'himeji', kobe: 'kobe', hiroshima: 'hiroshima' }
 import './v7.css'
 import { IconoWa } from './IconoWa'
+import { BotonTema } from './Tema'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -98,6 +99,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
             <Link key={k} to={PAGINAS_ITIN[k].ruta} lang={PAGINAS_ITIN[k].lang} aria-current={k === id ? 'page' : undefined}>{PAGINAS_ITIN[k].etiqueta}</Link>
           ))}
         </nav>
+        <BotonTema lang={lang} />
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa('')} target="_blank" rel="noopener noreferrer" aria-label={`${g} — WhatsApp`}>
           <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>

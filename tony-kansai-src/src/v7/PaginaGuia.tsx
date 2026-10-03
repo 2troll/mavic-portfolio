@@ -22,6 +22,7 @@ import { IconoWa } from './IconoWa'
 import './figuras.css'
 import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
+import { BotonTema } from './Tema'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -121,6 +122,7 @@ function Cabecera({ p }: { p: Pagina }) {
           </Link>
         ))}
       </nav>
+      <BotonTema lang={p.lang} />
       <BotonSonido lang={p.lang} ambiente="ciudad" />
       <a className="v7-boton v7-boton-peq" href={enlaceWa(g.wa, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — WhatsApp`}>
         <IconoWa /> <span className="v7-solo-ancho">{p.nav.contacto}</span>

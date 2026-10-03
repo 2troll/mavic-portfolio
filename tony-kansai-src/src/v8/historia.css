@@ -1,18 +1,20 @@
-/* Historia manga: papel blanco (60 %), tinta negra (30 %), rojo de sello (10 %).
-   Colores fijos: la sección es papel aunque el sistema esté en modo oscuro. */
+/* Historia manga: sigue el tema. En claro, papel blanco y marcos de tinta; en
+   oscuro, página negra y marcos blancos. Los bocadillos son siempre papel con
+   tinta, como en un manga; el rojo de sello es el 10 %. */
 .hm {
-  --papel: #ffffff; --tinta: #111111; --rojo: #c0281b;
-  background: var(--papel); color: var(--tinta);
+  --hm-pagina: var(--fondo, #fff); --hm-marco: var(--tinta, #121212);
+  --hm-papel: #ffffff; --hm-tinta: #121212; --rojo: var(--sello, #c0281b);
+  background: var(--hm-pagina); color: var(--hm-marco);
   padding: clamp(56px, 8vw, 110px) max(16px, 5vw);
   display: grid; justify-items: center; gap: clamp(28px, 4vw, 48px);
   /* Trama de puntos muy suave, como el papel de un tankōbon. */
-  background-image: radial-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1.2px);
+  background-image: radial-gradient(color-mix(in srgb, var(--hm-marco) 6%, transparent) 1px, transparent 1.2px);
   background-size: 7px 7px;
 }
 
 .hm-cabeza { display: grid; justify-items: center; gap: 6px; text-align: center; }
-.hm-cabeza h2 { font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -0.04em; line-height: 1; color: var(--tinta); }
-.hm-capitulo { font-size: 13px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rojo); }
+.hm-cabeza h2 { font-size: clamp(2rem, 5vw, 3.6rem); letter-spacing: -0.04em; line-height: 1; color: var(--hm-marco); }
+.hm-capitulo { font-size: 13px; font-weight: 700; letter-spacing: 0.06em; color: var(--acento, #c0281b); }
 .hm-sello {
   display: grid; place-items: center; width: 64px; height: 64px; margin-bottom: 8px;
   background: var(--rojo); color: #fff; border-radius: 8px; font-size: 26px; line-height: 1;
@@ -23,8 +25,8 @@
 /* La hoja: una ancha arriba y dos altas debajo (y así sucesivamente). */
 .hm-hoja { width: min(1100px, 100%); display: grid; grid-template-columns: 1fr 1fr; gap: clamp(10px, 1.4vw, 16px); }
 .hm-vineta {
-  position: relative; margin: 0; overflow: hidden; background: var(--papel);
-  border: clamp(3px, 0.35vw, 5px) solid var(--tinta);
+  position: relative; margin: 0; overflow: hidden; background: var(--hm-papel);
+  border: clamp(3px, 0.35vw, 5px) solid var(--hm-marco);
 }
 .hm-ancha { grid-column: 1 / -1; aspect-ratio: 1216 / 640; }
 .hm-alta { aspect-ratio: 768 / 1024; }
@@ -34,13 +36,13 @@
 /* Bocadillo: blanco con borde de tinta y rabito; el nombre en rojo. */
 .hm-bocadillo {
   position: absolute; z-index: 1; max-width: min(46%, 340px);
-  background: var(--papel); color: var(--tinta); border: 3px solid var(--tinta); border-radius: 22px;
+  background: var(--hm-papel); color: var(--hm-tinta); border: 3px solid var(--hm-tinta); border-radius: 22px;
   padding: 12px 16px; font-size: clamp(14px, 1.35vw, 17px); font-weight: 600; line-height: 1.35;
-  box-shadow: 4px 4px 0 var(--tinta);
+  box-shadow: 4px 4px 0 var(--hm-tinta);
 }
 .hm-bocadillo::after {
-  content: ''; position: absolute; width: 18px; height: 18px; background: var(--papel);
-  border: 3px solid var(--tinta); border-top: 0; border-inline-start: 0; bottom: -11px; inset-inline-start: 28px;
+  content: ''; position: absolute; width: 18px; height: 18px; background: var(--hm-papel);
+  border: 3px solid var(--hm-tinta); border-top: 0; border-inline-start: 0; bottom: -11px; inset-inline-start: 28px;
   rotate: 45deg;
 }
 .hm-quien {
@@ -58,7 +60,7 @@
 .hm-poema {
   margin: 0; padding-inline-start: 20px; border-inline-start: 4px solid var(--rojo);
   font-family: 'Hiragino Mincho ProN', 'Yu Mincho', Georgia, serif; font-size: clamp(1.15rem, 2.2vw, 1.6rem);
-  line-height: 1.55; font-style: italic; color: var(--tinta); max-width: 30ch;
+  line-height: 1.55; font-style: italic; color: var(--hm-marco); max-width: 30ch;
 }
 [lang='ar'] .hm-poema, .hm-poema:lang(ar) { font-style: normal; }
 

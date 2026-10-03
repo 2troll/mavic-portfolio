@@ -28,6 +28,7 @@ import '../v7/v7.css'
 import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
+import { BotonTema } from '../v7/Tema'
 
 const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
@@ -111,6 +112,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         <nav className="v7-idiomas" aria-label="Language">
           {hermanas.map((h) => <Link key={h} to={`${h}/${c.id}/`} lang={langDe(h)} aria-current={h === prefijo ? 'page' : undefined}>{etiquetaIdioma[h]}</Link>)}
         </nav>
+        <BotonTema lang={lang} />
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${g} WhatsApp`}>
           <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>

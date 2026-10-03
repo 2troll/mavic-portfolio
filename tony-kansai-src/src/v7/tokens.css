@@ -1,0 +1,93 @@
+/* ── Sistema de diseño: tokens ──────────────────────────────────────────────
+   Papel, tinta y sello: 60 / 30 / 10.
+     · Modo claro: 60 % papel blanco, 30 % tinta negra, 10 % rojo de sello.
+     · Modo oscuro, al revés: 60 % tinta negra, 30 % papel blanco, 10 % rojo.
+   El tema sigue al sistema; el botón de la cabecera lo fija en <html data-tema>.
+   «html .v7» gana a la regla «.v7» de v7.css sin depender del orden. */
+
+html .v7 {
+  /* Color */
+  --papel: #ffffff;
+  --tinta-pura: #121212;
+  --sello: #c0281b;          /* rojo de hanko; con blanco encima da 5,9:1 */
+
+  --fondo: var(--papel);
+  --superficie: #ffffff;
+  --superficie-2: #f4f4f4;
+  --tinta: var(--tinta-pura);
+  --tenue: #5c5c5c;          /* 6,6:1 sobre blanco */
+  --linea: rgba(18, 18, 18, 0.12);
+  --acento: var(--sello);
+  --acento-tinta: #ffffff;
+  --boton: var(--sello);
+  /* El 30 %: bandas y piezas en el color contrario al fondo. */
+  --inverso: var(--tinta-pura);
+  --inverso-tinta: #ffffff;
+  --cristal: rgba(255, 255, 255, 0.78);
+  --cristal-borde: rgba(18, 18, 18, 0.08);
+  /* Plano, como el papel: una línea fina y una sombra mínima. */
+  --sombra: 0 1px 0 rgba(18, 18, 18, 0.04), 0 18px 40px -28px rgba(18, 18, 18, 0.28);
+
+  /* Tipografía: escala de tercera mayor (×1,25) sobre 17 px. */
+  --t--1: 0.8125rem;   /* 13 */
+  --t-0: 1.0625rem;    /* 17 */
+  --t-1: 1.328rem;     /* 21 */
+  --t-2: 1.66rem;      /* 27 */
+  --t-3: 2.075rem;     /* 33 */
+  --t-4: 2.594rem;     /* 42 */
+  --t-5: 3.242rem;     /* 52 */
+  --t-6: 4.053rem;     /* 65 */
+  --t-7: 5.066rem;     /* 81 */
+
+  /* Espacio: rejilla de 8 px. */
+  --e-1: 8px; --e-2: 16px; --e-3: 24px; --e-4: 32px; --e-5: 40px;
+  --e-6: 48px; --e-8: 64px; --e-10: 80px; --e-12: 96px; --e-16: 128px;
+
+  color-scheme: light;
+}
+
+/* Modo oscuro: elegido a mano o, si no se eligió, el del sistema. */
+:root[data-tema='oscuro'] .v7 { color-scheme: dark; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7 { color-scheme: dark; } }
+
+:root[data-tema='oscuro'] .v7 {
+  --fondo: #0d0d0d;
+  --superficie: #171717;
+  --superficie-2: #1f1f1f;
+  --tinta: #f2f2f2;
+  --tenue: #a6a6a6;          /* 8,4:1 sobre el fondo */
+  --linea: rgba(255, 255, 255, 0.14);
+  --acento: #ec5444;         /* texto rojo sobre negro: 5,3:1 */
+  --boton: var(--sello);
+  --inverso: #ffffff;
+  --inverso-tinta: var(--tinta-pura);
+  --cristal: rgba(13, 13, 13, 0.74);
+  --cristal-borde: rgba(255, 255, 255, 0.1);
+  --sombra: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='claro']) .v7 {
+    --fondo: #0d0d0d;
+    --superficie: #171717;
+    --superficie-2: #1f1f1f;
+    --tinta: #f2f2f2;
+    --tenue: #a6a6a6;
+    --linea: rgba(255, 255, 255, 0.14);
+    --acento: #ec5444;
+    --boton: var(--sello);
+    --inverso: #ffffff;
+    --inverso-tinta: var(--tinta-pura);
+    --cristal: rgba(13, 13, 13, 0.74);
+    --cristal-borde: rgba(255, 255, 255, 0.1);
+    --sombra: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.8);
+  }
+}
+
+/* Botón de tema en la cabecera. */
+.v7-tema {
+  width: 40px; height: 40px; border-radius: 50%; border: 1px solid var(--linea);
+  background: var(--superficie); color: var(--tinta); cursor: pointer;
+  display: inline-grid; place-items: center; flex: none;
+}
+.v7-tema:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.v7-tema svg { width: 18px; height: 18px; }

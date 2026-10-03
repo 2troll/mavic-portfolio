@@ -80,7 +80,7 @@ export const DIA: Record<'es' | 'en' | 'ar' | 'ru', { titulo: string; vinetas: [
 }
 
 /** Qué capítulos tienen ya sus viñetas generadas y revisadas. */
-export const HISTORIA_LISTA: string[] = ['tony-osaka', 'tony-kyoto', 'tony-nara']
+export const HISTORIA_LISTA: string[] = ['tony-kyoto', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-beyond', 'larion-hiroshima', 'larion-kyoto', 'larion-nara']
 
 /** Rótulos de la sección en cada idioma. */
 export const ROTULOS: Record<Lengua, { capitulo: string; enCiudad: (c: string) => string; poema: string }> = {
