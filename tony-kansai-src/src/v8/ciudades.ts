@@ -130,4 +130,5 @@ export const MANGA_APROBADO: string[] = [
 
 /** Figuras manga recortadas (public/v8/figuras/{guia}-{ciudad}.webp) que se
  *  plantan de pie dentro de las fotos de las zonas. Se añaden según se generan. */
-export const FIGURAS: string[] = ['tony-osaka', 'tony-kyoto', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-hiroshima', 'tony-beyond']
+export const FIGURAS: string[] = ['tony-osaka', 'tony-kyoto', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-hiroshima', 'tony-beyond',
+  'larion-hiroshima', 'larion-kyoto', 'larion-nara', 'larion-osaka', 'larion-himeji']
