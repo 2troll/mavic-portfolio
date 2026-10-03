@@ -4,6 +4,7 @@
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
+import './figuras.css'
 
 type L = 'es' | 'en' | 'ar' | 'ru'
 const T: Record<L, { titulo: string; texto: string; inicio: string; ruta: string; ciudades: string }> = {
@@ -27,6 +28,8 @@ export default function Pagina404() {
   return (
     <section className="v7-seccion" style={{ textAlign: 'center', minHeight: '60vh', display: 'grid', placeContent: 'center', gap: 18 }}>
       <Helmet><title>404 · Tony Kansai Guide</title><meta name="robots" content="noindex" /></Helmet>
+      {/* Tony de excursionista, con su sombrero de paja: alguien que se ha salido del camino. */}
+      <img className="v7-figura-perdido" src={l === 'ru' ? '/v8/figuras/larion-kyoto.webp' : '/v8/figuras/tony-beyond.webp'} alt="" aria-hidden="true" decoding="async" />
       <p className="v7-404-num" aria-hidden="true" style={{ fontSize: 'clamp(4rem, 14vw, 9rem)', fontWeight: 700, letterSpacing: '-0.05em', lineHeight: 1, color: '#b0301f' }}>404</p>
       <h1 style={{ fontSize: 'clamp(1.6rem, 4vw, 2.4rem)', letterSpacing: '-0.03em' }}>{t.titulo}</h1>
       <p style={{ color: '#6e6e73', maxWidth: '44ch', margin: '0 auto' }}>{t.texto}</p>

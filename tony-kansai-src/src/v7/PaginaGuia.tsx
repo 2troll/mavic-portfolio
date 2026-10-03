@@ -19,6 +19,7 @@ import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import './v7.css'
 import { IconoWa } from './IconoWa'
+import './figuras.css'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
@@ -234,7 +235,9 @@ function Contacto({ p }: { p: Pagina }) {
         </div>
         <p className="v7-aviso">{p.contacto.aviso}</p>
       </form>
-      <aside className="v7-vista tarjeta" aria-live="polite">
+      <aside className="v7-vista v7-con-figura tarjeta" aria-live="polite">
+        {/* El guía en manga, de pie sobre el bocadillo de su mensaje: quien escribe ve a quién escribe. */}
+        <img className="v7-figura-saluda" src={p.guia === 'larion' ? '/v8/figuras/larion-nara.webp' : '/v8/figuras/tony-osaka.webp'} alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <h3>{p.contacto.vista}</h3>
         <pre>{msg}</pre>
       </aside>

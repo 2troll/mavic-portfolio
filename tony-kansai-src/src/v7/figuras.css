@@ -1,0 +1,29 @@
+/* Figuras manga de los guías fuera de las páginas de ciudad. */
+
+/* Contacto: el guía de pie sobre el bocadillo con su mensaje. El bocadillo
+   baja lo que mide la figura, y también su posición fija al hacer scroll, para
+   que ella no quede escondida bajo la cabecera de cristal. */
+.v7-vista.v7-con-figura { margin-top: 200px; top: 290px; }
+.v7-figura-saluda {
+  position: absolute; bottom: calc(100% - 6px); inset-inline-end: 18px;
+  height: 200px; width: auto; pointer-events: none;
+  filter: drop-shadow(0 10px 14px rgba(0, 0, 0, 0.16));
+}
+[dir='rtl'] .v7-figura-saluda { transform: scaleX(-1); }
+@media (prefers-reduced-motion: no-preference) {
+  /* Saluda: un leve vaivén desde los pies, como quien levanta la mano. */
+  .v7-figura-saluda { transform-origin: 50% 100%; animation: v7-saluda 3.2s ease-in-out infinite; }
+  [dir='rtl'] .v7-figura-saluda { animation-name: v7-saluda-rtl; }
+}
+@keyframes v7-saluda { 0%, 100% { rotate: 0deg; } 50% { rotate: -2.5deg; } }
+@keyframes v7-saluda-rtl { 0%, 100% { rotate: 0deg; } 50% { rotate: 2.5deg; } }
+@media (max-width: 820px) {
+  .v7-vista.v7-con-figura { margin-top: 150px; position: relative; top: auto; }
+  .v7-figura-saluda { height: 150px; }
+}
+
+/* 404: el guía «perdido» sobre el número. */
+.v7-figura-perdido {
+  height: min(34vh, 300px); width: auto; margin: 0 auto -18px; pointer-events: none;
+  filter: drop-shadow(0 14px 22px rgba(0, 0, 0, 0.18));
+}
