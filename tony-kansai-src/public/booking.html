@@ -28,8 +28,9 @@
       'Kumano Kodo Pilgrimage',          // route=10
       'Lake Biwa & Hikone Castle',       // route=11
     ]
-    const PRICES = ['¥75,000', '¥95,000', '¥85,000', '¥98,000', '¥165,000', '¥130,000',
-                    '¥108,000', '¥78,000', '¥88,000', '¥165,000', '¥155,000', '¥92,000']
+    // Sin precios: los de cada tour antiguo ya no valen (ahora son 38.000 /
+    // 58.000 / desde 70.000 por grupo) y el mensaje los citaba tal cual.
+    const PRICES = TOURS.map(() => '')
     const WA = 'https://wa.me/819024585949'
 
     // Esta página sólo se ve un segundo y medio antes de saltar a WhatsApp,
@@ -37,19 +38,19 @@
     const T = {
       en:{ redir:'Redirecting you to WhatsApp to book with Tony…', open:'Open WhatsApp',
            per:' per group', load:'Loading…',
-           msg:(n,p) => `Hi Tony! I'd like to book the "${n}" tour (${p}). Can you share availability and details?` },
+           msg:(n,p) => `Hi Tony! I'd like to book the "${n}" tour. Can you share availability and details?` },
       es:{ redir:'Te llevamos a WhatsApp para reservar con Tony…', open:'Abrir WhatsApp',
            per:' por grupo', load:'Cargando…',
-           msg:(n,p) => `¡Hola, Tony! Me gustaría reservar el tour «${n}» (${p}). ¿Me dices disponibilidad y detalles?` },
+           msg:(n,p) => `¡Hola, Tony! Me gustaría reservar el tour «${n}». ¿Me dices disponibilidad y detalles?` },
       ar:{ redir:'نحوّلك إلى واتساب لتحجز مع طوني…', open:'افتح واتساب',
            per:' للمجموعة', load:'جارٍ التحميل…',
-           msg:(n,p) => `مرحباً طوني! أودّ حجز جولة «${n}» (${p}). هل تخبرني بالمواعيد المتاحة والتفاصيل؟` },
+           msg:(n,p) => `مرحباً طوني! أودّ حجز جولة «${n}». هل تخبرني بالمواعيد المتاحة والتفاصيل؟` },
       ru:{ redir:'Перенаправляем вас в WhatsApp для брони у Тони…', open:'Открыть WhatsApp',
            per:' за группу', load:'Загрузка…',
-           msg:(n,p) => `Здравствуйте, Тони! Хочу забронировать тур «${n}» (${p}). Подскажите даты и детали?` },
+           msg:(n,p) => `Здравствуйте, Тони! Хочу забронировать тур «${n}». Подскажите даты и детали?` },
       cs:{ redir:'Přesměrováváme vás na WhatsApp k rezervaci u Tonyho…', open:'Otevřít WhatsApp',
            per:' za skupinu', load:'Načítání…',
-           msg:(n,p) => `Dobrý den, Tony! Rád bych si rezervoval prohlídku „${n}" (${p}). Můžete mi napsat termíny a detaily?` },
+           msg:(n,p) => `Dobrý den, Tony! Rád bych si rezervoval prohlídku „${n}". Můžete mi napsat termíny a detaily?` },
     }
     const RTL = { ar: true }
 
@@ -66,7 +67,7 @@
       document.documentElement.dir = RTL[lang] ? 'rtl' : 'ltr'
 
       document.getElementById('tour-name').textContent = name
-      document.getElementById('tour-price').textContent = price + t.per
+      document.getElementById('tour-price').textContent = ''
       document.getElementById('redir').textContent = t.redir
       document.getElementById('open-label').textContent = t.open
 
