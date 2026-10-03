@@ -78,21 +78,21 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boo
       const t = (s: string) => translate(detectLang(), s)
       return (
         <div style={{
-          minHeight: '100vh', background: '#0C0D16',
+          minHeight: '100vh', background: '#f5f5f7', // claro como el resto de la web: un fallo no debe parecer otra página
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
           gap: 20, padding: 24, fontFamily: 'system-ui',
         }}>
-          <p style={{ color: 'rgba(255,255,255,0.55)', fontSize: 15, textAlign: 'center' }}>
+          <p style={{ color: '#6e6e73', fontSize: 15, textAlign: 'center' }}>
             {t('Something went wrong loading the page.')}
           </p>
           <button
             onClick={() => { this.setState({ crashed: false }); window.location.hash = '/'; window.location.reload() }}
-            style={{ background: '#E53030', color: '#fff', border: 'none', borderRadius: 10, padding: '12px 28px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
+            style={{ background: '#c0392b', color: '#fff', border: 'none', borderRadius: 999, padding: '12px 28px', fontSize: 14, fontWeight: 600, cursor: 'pointer' }}
           >
             {t('Reload')}
           </button>
-          <a href="https://wa.me/819024585949" style={{ color: '#E53030', fontSize: 13 }}>
+          <a href="https://wa.me/819024585949" style={{ color: '#b0301f', fontSize: 13 }}>
             {t('Contact Tony directly on WhatsApp')}
           </a>
         </div>
@@ -129,7 +129,7 @@ function Layout() {
   if (v7) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: v7 === 'portada' ? '#05070d' : '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
         <CookieBanner compacto />
       </Suspense>

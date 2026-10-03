@@ -24,6 +24,7 @@ import { MANGA_APROBADO } from '../v8/ciudades'
 // Viñeta manga del guía para cada día (la misma que su página de ciudad).
 const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osaka', nara: 'nara', himeji: 'himeji', kobe: 'kobe', hiroshima: 'hiroshima' }
 import './v7.css'
+import { IconoWa } from './IconoWa'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -99,7 +100,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         </nav>
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa('')} target="_blank" rel="noopener noreferrer" aria-label={`${g} — WhatsApp`}>
-          <span className="v7-solo-ancho">WhatsApp</span><span aria-hidden="true" className="v7-solo-movil">✉</span>
+          <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
 

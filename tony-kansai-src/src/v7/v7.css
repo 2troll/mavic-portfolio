@@ -112,6 +112,12 @@
   .v7-solo-ancho { display: none; }
   .v7-boton-peq { padding: 0 12px; }
   .v7-idiomas a { padding: 5px 8px; }
+  /* Con cuatro idiomas (montaña) el selector empujaba el botón de WhatsApp
+     fuera de la pantalla del iPhone: ahora el selector se encoge y se desliza,
+     y el logo, el sonido y el botón no se aplastan nunca. */
+  .v7-cabecera > * { flex-shrink: 0; }
+  .v7-cabecera > .v7-idiomas { flex-shrink: 1; min-width: 0; overflow-x: auto; scrollbar-width: none; }
+  .v7-cabecera > .v7-idiomas::-webkit-scrollbar { display: none; }
 }
 
 /* ── Hero ── */
@@ -452,12 +458,14 @@
   position: fixed; z-index: 250; left: 50%; bottom: max(16px, env(safe-area-inset-bottom)); transform: translateX(-50%);
   width: min(560px, calc(100% - 24px)); display: flex; align-items: center; gap: 12px; justify-content: space-between;
   padding: 10px 10px 10px 18px; border-radius: 18px; font: 14px/1.35 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  color: #f5f5f7; background: rgba(28, 28, 30, 0.72); border: 1px solid rgba(255, 255, 255, 0.14);
+  /* 0,92 y no 0,72: sin desenfoque (Firefox antiguo, ahorro de energía en
+     iOS) el botón rojo de la portada se leía a través del aviso. */
+  color: #f5f5f7; background: rgba(28, 28, 30, 0.92); border: 1px solid rgba(255, 255, 255, 0.14);
   -webkit-backdrop-filter: blur(20px) saturate(180%); backdrop-filter: blur(20px) saturate(180%);
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25); animation: v7-cookies-entra 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 .v7-cookies p { margin: 0; }
-.v7-cookies a { color: rgba(245, 245, 247, 0.7); }
+.v7-cookies a { color: rgba(245, 245, 247, 0.78); text-decoration: underline; text-underline-offset: 2px; }
 .v7-cookies div { display: flex; gap: 6px; flex: none; }
 .v7-cookies button { font: inherit; font-size: 13px; font-weight: 600; padding: 8px 14px; border-radius: 999px; border: 0; cursor: pointer; background: rgba(255, 255, 255, 0.12); color: #f5f5f7; }
 .v7-cookies button.si { background: #f5f5f7; color: #111; }
@@ -693,7 +701,10 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 
 /* Precios: el recomendado se distingue por color, no por altura. */
 .v7-plan { position: relative; }
-.v7-plan-destacado { background: var(--tinta); color: var(--fondo); border-color: transparent; }
+/* `.v7 .tarjeta` (más abajo, el «Doppelrand») pesa más que una sola clase y
+   le devolvía el fondo blanco: el plan recomendado salía blanco sobre blanco.
+   Con las dos clases gana la tarjeta oscura, vaya donde vaya la regla. */
+.v7 .tarjeta.v7-plan-destacado { background: var(--tinta); color: var(--fondo); border-color: transparent; }
 .v7-plan-destacado :is(.v7-plan-detalle, .v7-plan-grupo, .v7-plan-aprox, .v7-plan-desde) { color: color-mix(in srgb, var(--fondo) 72%, transparent); }
 .v7-plan-sello {
   position: absolute; top: 18px; inset-inline-end: 18px; font-size: 12px; font-weight: 600;
@@ -855,6 +866,9 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 /* Cabecera: isla de cristal flotante, separada del borde. */
 .v7-cabecera {
   top: 16px;
+  /* Más opaca que el cristal general: encima de la foto del hero (torii
+     naranjas, ciudad de noche) los enlaces grises quedaban por debajo de 3:1. */
+  --cristal: rgba(255, 255, 255, 0.82);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 0 0 1px rgba(29, 29, 31, 0.06), 0 18px 50px -18px rgba(40, 44, 60, 0.25);
 }
 

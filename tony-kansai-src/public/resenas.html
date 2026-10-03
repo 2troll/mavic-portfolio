@@ -64,8 +64,14 @@
 }
 </script>
 <!-- REVIEWS-JSONLD:END -->
+<meta name="theme-color" content="#050508">
 <style>
+  /* Página oscura a propósito: se declara para que los controles nativos
+     (desplegable del select, casilla, botón de archivo, barra de scroll) salgan
+     oscuros también con el sistema en modo claro; si no, la lista del select
+     podía verse blanca con letra blanca. */
   :root{
+    color-scheme:dark;
     --ink:#050508; --ink2:#0C0D16; --card:#12141F; --line:rgba(255,255,255,.09);
     --wash:#ffffff; --muted:rgba(255,255,255,.52); --shu:#E53030; --naranja:#FF6B35;
     --kin:#D4A847;

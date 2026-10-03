@@ -46,6 +46,29 @@ body {
   color: #fff;
 }
 
+/* ── Web v7/v8 (siempre clara) dentro de un body pensado para la web antigua ──
+   El body sigue siendo negro para las páginas antiguas, pero las de idioma,
+   ciudad, montaña, rutas y legales son claras. Sin esto, con el sistema en modo
+   oscuro quedaban franjas negras al rebotar el scroll (iPhone, trackpad del Mac),
+   un carril de barra de desplazamiento negro junto a una página gris claro y la
+   selección de texto en blanco sobre rosa (ilegible). El #root sube la
+   especificidad por encima de html.web-oscura de index.html. */
+html:has(#root .v7),
+html:has(#root .v7) body {
+  background-color: #f5f5f7;
+  color: #1d1d1f;
+  color-scheme: light;
+}
+html:has(#root .bg-japan-dark) {
+  background-color: var(--bg-dark);
+  color-scheme: dark;
+}
+html:has(#root .v7) ::-webkit-scrollbar-track { background: #f5f5f7; }
+html:has(#root .v7) ::selection {
+  background: rgba(187, 60, 37, 0.2);
+  color: #1d1d1f;
+}
+
 /* Subtle noise texture — z-index BELOW all UI */
 body::before {
   content: '';

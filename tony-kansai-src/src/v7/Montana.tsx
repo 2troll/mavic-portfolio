@@ -14,6 +14,7 @@ import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import './v7.css'
+import { IconoWa } from './IconoWa'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -102,7 +103,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         </nav>
         <BotonSonido lang={p.lang} ambiente="montana" />
         <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — WhatsApp`}>
-          <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span aria-hidden="true" className="v7-solo-movil">✉</span>
+          <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
 

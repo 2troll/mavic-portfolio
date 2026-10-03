@@ -12,8 +12,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<meta name="theme-color" content="#050508">
 <style>
+  /* Página oscura a propósito: se declara para que los controles nativos
+     (desplegable del select, casilla, botón de archivo, barra de scroll) salgan
+     oscuros también con el sistema en modo claro; si no, la lista del select
+     podía verse blanca con letra blanca. */
   :root{
+    color-scheme:dark;
     --ink:#050508; --campo:#12141F;
     --linea:rgba(255,255,255,.10); --linea2:rgba(255,255,255,.16);
     --texto:#ffffff; --suave:rgba(255,255,255,.58); --tenue:rgba(255,255,255,.38);

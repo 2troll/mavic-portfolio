@@ -104,7 +104,25 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Tony Admin" />
-    <meta name="theme-color" content="#E53030" />
+    <!-- Barra del navegador del color del fondo: el gris claro de la web v7
+         (antes era rojo y teñía la barra de Safari encima de una página clara). -->
+    <meta name="theme-color" content="#f5f5f7" />
+
+    <!-- Fondo correcto antes de que cargue React. Sin esto, con el Mac en modo
+         oscuro se veía un fogonazo negro (el fondo antiguo de body) antes de la
+         página clara, y el rebote del scroll en iPhone enseñaba una franja negra.
+         Las páginas antiguas (oscuras) se marcan aquí para no dar el fogonazo al
+         revés; una vez montada la app manda index.css (html:has(...)). -->
+    <style>
+      html { background: #f5f5f7; color-scheme: light; }
+      html.web-oscura { background: #050508; color-scheme: dark; }
+    </style>
+    <script>
+      if (/^\/(tours|pricing|about|faq|booking|book|guide|guides|hiking|admin)(\/|$)/.test(location.pathname)) {
+        document.documentElement.classList.add('web-oscura');
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#050508');
+      }
+    </script>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -36,12 +36,14 @@ export function Navbar() {
           <span className="text-white/60 font-light"> Hanma</span>
         </Link>
 
-        <nav className="hidden md:flex items-center gap-6">
+        {/* Nueve enlaces no caben en una línea hasta ~1280 px: antes partían
+            «Guía Kansai» y «Sobre Tony» en dos líneas; por debajo, menú móvil. */}
+        <nav className="hidden xl:flex items-center gap-5">
           {LINKS.map((l) => (
             <Link
               key={l.to}
               to={l.to}
-              className={`text-sm font-medium tracking-wide transition-colors ${
+              className={`text-sm font-medium tracking-wide whitespace-nowrap transition-colors ${
                 pathname === l.to ? 'text-japan-red' : 'text-white/60 hover:text-white'
               }`}
             >
@@ -60,7 +62,7 @@ export function Navbar() {
           </a>
         </nav>
 
-        <div className="flex items-center gap-2 md:hidden">
+        <div className="flex items-center gap-2 xl:hidden">
           <LanguageSwitcher />
           <button onClick={() => setOpen(!open)} className="p-2 text-white/70 hover:text-white">
             {open ? <X size={20} /> : <Menu size={20} />}
@@ -74,7 +76,7 @@ export function Navbar() {
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            className="md:hidden overflow-hidden bg-japan-dark/95 border-t border-white/5"
+            className="xl:hidden overflow-hidden bg-japan-dark/95 border-t border-white/5"
           >
             <div className="px-6 py-4 flex flex-col gap-3">
               {LINKS.map((l) => (

@@ -25,6 +25,7 @@ import { TiempoCiudad } from './TiempoCiudad'
 import '../v7/v7.css'
 import './v8.css'
 import './figura.css'
+import { IconoWa } from '../v7/IconoWa'
 
 const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
@@ -108,7 +109,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         </nav>
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${g} WhatsApp`}>
-          <span className="v7-solo-ancho">WhatsApp</span><span aria-hidden="true" className="v7-solo-movil">✉</span>
+          <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
 
