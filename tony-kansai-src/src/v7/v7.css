@@ -1132,3 +1132,29 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
     radial-gradient(60vw 55vh at 6% 92%, rgba(120, 140, 185, 0.18), transparent 70%),
     radial-gradient(40vw 40vh at 30% 40%, rgba(232, 196, 160, 0.12), transparent 70%);
 }
+
+/* ══ Quién soy (v9): retrato redondeado y texto al lado ═════════════════════ */
+.v9-guia { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: clamp(32px, 6vw, 96px); align-items: center; }
+.v9-guia-foto { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 32px; box-shadow: var(--sombra); }
+.v9-guia-texto { display: grid; gap: var(--e-2); justify-items: start; }
+.v9-guia-ante { color: var(--acento); font-weight: 500; }
+.v9-guia h2 { font-size: clamp(var(--t-5), 7vw, var(--t-7)); margin: 0; }
+.v9-guia-idiomas { list-style: none; margin: 0 0 var(--e-1); padding: 0; display: flex; flex-wrap: wrap; gap: var(--e-1); }
+.v9-guia-idiomas li {
+  padding: 6px 14px; border-radius: 999px; font-size: var(--t--1); font-weight: 500;
+  background: var(--cristal-fondo); border: 1px solid color-mix(in srgb, var(--tinta) 12%, transparent);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+}
+.v9-guia-bio { font-size: var(--t-1); line-height: 1.5; color: var(--tenue); max-width: 34rem; }
+.v9-guia-bio:first-of-type { color: var(--tinta); }
+.v9-guia .v7-boton { margin-top: var(--e-2); }
+@media (max-width: 820px) { .v9-guia { grid-template-columns: 1fr; } .v9-guia-foto { max-height: 70svh; } }
+
+/* Así funciona: tres pasos en fila, en cristal, con número grande. */
+.v9-pasos { list-style: none; margin: var(--e-5) 0 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--e-3); }
+.v9-pasos li { padding: var(--e-4); display: grid; gap: var(--e-1); align-content: start; }
+.v9-paso-num { font-size: var(--t-6); font-weight: 200; line-height: 1; color: var(--tinta); margin-bottom: var(--e-2); }
+.v9-pasos h3 { font-size: var(--t-1); }
+.v9-pasos p { color: var(--tenue); }
+#como .v7-bento-no { margin-top: var(--e-4); }
+@media (max-width: 820px) { .v9-pasos { grid-template-columns: 1fr; } }

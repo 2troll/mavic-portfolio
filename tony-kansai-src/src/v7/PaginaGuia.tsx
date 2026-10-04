@@ -466,32 +466,37 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Para el público del Golfo: horarios de oración de hoy y qibla, en vivo. */}
         {p.lang === 'ar' && <Oracion />}
 
+        {/* Quién soy: el guía, en su propia sección, antes de cómo funciona. */}
+        <section id="guia" className="v7-seccion v9-guia" aria-label={p.guiaTxt.titulo}>
+          <img className="v9-guia-foto" src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} loading="lazy" decoding="async" />
+          <div className="v9-guia-texto">
+            <p className="v9-guia-ante">{p.guiaTxt.titulo}</p>
+            <h2>{NOMBRE_GUIA[p.id]}</h2>
+            <ul className="v9-guia-idiomas" aria-label={p.guiaTxt.idiomas}>
+              {p.guiaTxt.idiomas.split(' · ').map((l) => <li key={l}>{l}</li>)}
+            </ul>
+            {p.guiaTxt.bio.map((b) => <p key={b} className="v9-guia-bio">{b}</p>)}
+            <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.hero.cta}</a>
+            {p.guiaTxt.otro && (
+              <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
+            )}
+          </div>
+        </section>
+
         <section id="como" className="v7-seccion">
           <h2>{p.como.titulo}</h2>
-          <div className="v7-bento">
-            <article className="v7-bento-guia tarjeta">
-              <img src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} loading="lazy" />
-              <div>
-                <p className="v7-antetitulo">{p.guiaTxt.titulo}</p>
-                <h3>{NOMBRE_GUIA[p.id]}</h3>
-                <p className="v7-idiomas-guia">{p.guiaTxt.idiomas}</p>
-                {p.guiaTxt.bio.map((b) => <p key={b}>{b}</p>)}
-                {p.guiaTxt.otro && (
-                  <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
-                )}
-              </div>
-            </article>
+          <ol className="v9-pasos">
             {p.como.pasos.map((s, i) => (
-              <article key={s.t} className="v7-bento-paso tarjeta">
-                <span className="v7-paso-num" aria-hidden="true">0{i + 1}<span lang="ja">{['一', '二', '三'][i]}</span></span>
+              <li key={s.t} className="tarjeta">
+                <span className="v9-paso-num" aria-hidden="true">{i + 1}</span>
                 <h3>{s.t}</h3>
                 <p>{s.d}</p>
-              </article>
+              </li>
             ))}
-            <article className="v7-bento-no">
-              <h3>{p.como.noTitulo}</h3>
-              <ul>{p.como.no.map((n) => <li key={n}>{n}</li>)}</ul>
-            </article>
+          </ol>
+          <div className="v7-bento-no">
+            <h3>{p.como.noTitulo}</h3>
+            <ul>{p.como.no.map((n) => <li key={n}>{n}</li>)}</ul>
           </div>
         </section>
 

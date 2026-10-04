@@ -145,8 +145,8 @@ const es: Pagina = {
     titulo: 'Tu guía',
     idiomas: 'Español · Inglés · Árabe',
     bio: [
-      'Soy español y vivo en Osaka. Guío en español, inglés y árabe.',
-      'Kansai es mi casa: Kioto, Osaka, Nara, Kobe, Himeji. Y si tu viaje va más lejos, te acompaño por el resto de Japón.',
+      'Soy Tony, español, y vivo en Osaka.',
+      'Te enseño Kansai a tu ritmo: Kioto, Osaka, Nara, Kobe y Himeji. Y si tu viaje sigue, te acompaño por el resto de Japón.',
     ],
   },
   zona: {
@@ -266,8 +266,8 @@ const en: Pagina = {
     titulo: 'Your guide',
     idiomas: 'English · Spanish · Arabic',
     bio: [
-      'I\'m Spanish and I live in Osaka. I guide in English, Spanish and Arabic.',
-      'Kansai is home: Kyoto, Osaka, Nara, Kobe, Himeji. If your trip goes further, I can come along to the rest of Japan too.',
+      'I\'m Tony. I\'m Spanish and I live in Osaka.',
+      'I show you Kansai at your own pace: Kyoto, Osaka, Nara, Kobe and Himeji. If your trip goes further, I can come along to the rest of Japan too.',
     ],
     otro: { texto: 'Heading to Hiroshima? Larion also guides in English and covers the west.', enlace: 'Meet Larion', ruta: '/larion/' },
   },
@@ -385,8 +385,8 @@ const ar: Pagina = {
     titulo: 'مرشدك',
     idiomas: 'العربية · الإسبانية · الإنجليزية',
     bio: [
-      'أنا إسباني مسلم وأعيش في أوساكا. أرشد بالعربية والإسبانية والإنجليزية.',
-      'كانساي بيتي: كيوتو وأوساكا ونارا وكوبي وهيميجي. وإن امتدت رحلتك أرافقك إلى بقية اليابان.',
+      'أنا طوني، إسباني مسلم وأعيش في أوساكا.',
+      'أريك كانساي على راحتك: كيوتو وأوساكا ونارا وكوبي وهيميجي. وإن امتدت رحلتك أرافقك إلى بقية اليابان.',
     ],
   },
   zona: {
@@ -510,8 +510,8 @@ const ru: Pagina = {
     titulo: 'Ваш гид',
     idiomas: 'Русский · Английский',
     bio: [
-      'Веду экскурсии на русском и английском.',
-      'Работаю по всему Кансаю — Киото, Осака, Нара, Кобе, Химэдзи — и дальше на запад: Окаяма, Хиросима, Миядзима.',
+      'Меня зовут Ларион.',
+      'Показываю Кансай — Киото, Осаку, Нару, Химэдзи — и запад: Хиросиму и Миядзиму.',
       'Горы, храмы и долгие пешие дни — моя стихия.',
     ],
   },
@@ -611,8 +611,8 @@ const larion: Pagina = {
     titulo: 'Your guide',
     idiomas: 'Russian · English',
     bio: [
-      'I guide in Russian and English.',
-      'I cover all of Kansai (Kyoto, Osaka, Nara, Kobe, Himeji) and further west: Okayama, Hiroshima, Miyajima.',
+      'I\'m Larion.',
+      'I show you Kansai (Kyoto, Osaka, Nara, Himeji) and the west: Hiroshima and Miyajima.',
       'Mountains, temples and long walking days are my favourite ground.',
     ],
     otro: { texto: 'Prefer Spanish or Arabic? Tony guides in both, as well as English.', enlace: 'Meet Tony', ruta: '/en/' },
