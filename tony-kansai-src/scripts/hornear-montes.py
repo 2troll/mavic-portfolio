@@ -23,6 +23,22 @@ MONTES = ['mt-kongo', 'mt-atago', 'mt-hiei', 'mt-rokko', 'mt-maya', 'mt-yoshino'
 UA = {'User-Agent': 'TonyKansaiGuide/1.0 (tony@tonykansaiguide.com)'}
 
 
+# Cumbre exacta de cada monte (OpenStreetMap, natural=peak; en Hoshi no Buranko,
+# el puente colgante). El mapStop de data.ts es el punto de encuentro o el
+# inicio del sendero: con él el relieve y el hilo rojo no caían en la cumbre
+# (hasta 5,8 km de error en Hoshi no Buranko y 4,5 km en Ponpon-yama).
+CIMAS = {
+    'mt-kongo': (34.41943, 135.67293),          # 金剛山 1125 m
+    'mt-atago': (35.06005, 135.63429),          # 愛宕山 924 m (Kioto)
+    'mt-hiei': (35.06687, 135.83410),           # 大比叡 848 m
+    'mt-rokko': (34.77799, 135.26374),          # 六甲山最高峰 931 m
+    'mt-maya': (34.73298, 135.20488),           # 摩耶山 699 m
+    'mt-yoshino': (34.34139, 135.88795),        # 青根ヶ峰 858 m (la altitud de la ficha)
+    'ponpon-mountain': (34.93521, 135.62382),   # ポンポン山 679 m
+    'hoshi-no-buranko': (34.75285, 135.68531),  # 星のブランコ (puente)
+}
+
+
 def coords():
     data = (RAIZ / 'src/lib/data.ts').read_text()
     bloque = data.split('export const HIKING_ROUTES = [')[1]
@@ -58,26 +74,33 @@ def altura(r, g, b):
 
 
 def hornea(id_, lat, lon):
-    cx, cy = tesela(lat, lon, 14)
-    dem = Image.new('RGB', (768, 768))
-    for j in range(3):
-        for i in range(3):
-            dem.paste(Image.open(io.BytesIO(baja(f'https://cyberjapandata.gsi.go.jp/xyz/dem_png/14/{cx - 1 + i}/{cy - 1 + j}.png'))).convert('RGB'), (i * 256, j * 256))
+    # Cuadro de 3 teselas z14 CENTRADO en la cumbre: se bajan 4×4 y se recorta.
+    n = 2 ** 14
+    fx = (lon + 180) / 360 * n
+    fy = (1 - math.log(math.tan(math.radians(lat)) + 1 / math.cos(math.radians(lat))) / math.pi) / 2 * n
+    x0, y0 = int(fx - 1.5), int(fy - 1.5)
+    dem4 = Image.new('RGB', (1024, 1024))
+    for j in range(4):
+        for i in range(4):
+            dem4.paste(Image.open(io.BytesIO(baja(f'https://cyberjapandata.gsi.go.jp/xyz/dem_png/14/{x0 + i}/{y0 + j}.png'))).convert('RGB'), (i * 256, j * 256))
             time.sleep(0.15)
-    foto = Image.new('RGB', (1536, 1536))
-    for j in range(6):
-        for i in range(6):
-            foto.paste(Image.open(io.BytesIO(baja(f'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/15/{2 * (cx - 1) + i}/{2 * (cy - 1) + j}.jpg'))).convert('RGB'), (i * 256, j * 256))
+    ox, oy = round((fx - 1.5 - x0) * 256), round((fy - 1.5 - y0) * 256)
+    dem = dem4.crop((ox, oy, ox + 768, oy + 768))
+    foto8 = Image.new('RGB', (2048, 2048))
+    for j in range(8):
+        for i in range(8):
+            foto8.paste(Image.open(io.BytesIO(baja(f'https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/15/{2 * x0 + i}/{2 * y0 + j}.jpg'))).convert('RGB'), (i * 256, j * 256))
             time.sleep(0.15)
+    foto = foto8.crop((2 * ox, 2 * oy, 2 * ox + 1536, 2 * oy + 1536))
     alturas = [h for h in (altura(*p) for p in dem.getdata()) if h is not None]
     # La web usa 256×256 vértices: se guarda a ese tamaño, con vecino más
     # cercano porque los colores codifican alturas y no se pueden promediar.
-    dem.crop((1, 1, 767, 767)).resize((256, 256), Image.NEAREST).save(SALIDA / f'{id_}-dem.png', optimize=True)
+    dem.resize((256, 256), Image.NEAREST).save(SALIDA / f'{id_}-dem.png', optimize=True)
     foto.resize((1024, 1024), Image.LANCZOS).save(SALIDA / f'{id_}-foto.webp', quality=68)
-    # Dónde cae el punto de la ruta dentro del cuadro (0–1), para el marcador.
-    n = 2 ** 14
-    px = ((lon + 180) / 360 * n - (cx - 1)) / 3
-    py = ((1 - math.log(math.tan(math.radians(lat)) + 1 / math.cos(math.radians(lat))) / math.pi) / 2 * n - (cy - 1)) / 3
+    # La cumbre queda en el centro del cuadro (0–1), salvo el redondeo del recorte.
+    px = (fx - x0) * 256 - ox
+    py = (fy - y0) * 256 - oy
+    px, py = px / 768, py / 768
     # Lado del cuadro en metros (3 teselas z14 a esa latitud).
     lado = 3 * 40075016.686 * math.cos(math.radians(lat)) / n
     return {'min': round(min(alturas), 1), 'max': round(max(alturas), 1), 'punto': [round(px, 4), round(py, 4)], 'lado': round(lado)}
@@ -85,7 +108,7 @@ def hornea(id_, lat, lon):
 
 def main():
     SALIDA.mkdir(parents=True, exist_ok=True)
-    c = coords()
+    c = {**coords(), **CIMAS}
     falta = [m for m in MONTES if m not in c]
     if falta:
         raise SystemExit(f'Sin mapStop en data.ts: {falta}')
