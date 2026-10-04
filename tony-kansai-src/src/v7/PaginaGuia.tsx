@@ -364,11 +364,6 @@ const RAZONES: Record<PaginaId, { titulo: string; lista: [string, string, string
   ] },
 }
 
-/** Lo que dice el guía en el bocadillo de la portada. */
-const SALUDO: Record<PaginaId, string> = {
-  es: '¡Hola! Soy Tony.', en: 'Hi! I\'m Tony.', ar: 'أهلاً! أنا طوني.', ru: 'Привет! Я Ларион.', larion: 'Hi! I\'m Larion.',
-}
-
 // ── Página ───────────────────────────────────────────────────────────────────
 
 /** «Desde ¥38.000 por grupo», del precio real del medio día: nunca se desfasa. */
@@ -437,10 +432,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div className="v7-hero-velo" />
           <EfectoEstacion estacion={estacion} />
           <SelectorEstacion lang={p.lang} valor={estacion} alCambiar={setEstacion} />
-          {/* Sello rojo de la casa, como en una portada de manga. */}
-          <span className="v7-hero-sello" lang="ja" aria-hidden="true">関西</span>
-          {/* El guía saluda con un bocadillo, junto a su figura. */}
-          <p className="v7-hero-saludo">{SALUDO[p.id]}</p>
           {/* El guía en manga, de cuerpo entero, entrando en la foto. */}
           <img className="v7-figura-hero" src={p.guia === 'larion' ? '/v8/figuras/larion-kyoto.webp' : '/v8/figuras/tony-kyoto.webp'} alt="" aria-hidden="true" decoding="async" />
           <div className="v7-hero-texto">
