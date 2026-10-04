@@ -175,3 +175,9 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v8-tour-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: var(--e-2); margin-top: var(--e-1); }
 .v8-tour-ver { color: var(--tinta); font-weight: 600; font-size: var(--t--1); text-underline-offset: 4px; }
 .v8-tour-ver:focus-visible, .v8-tour h3 a:focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; border-radius: 2px; }
+
+/* Editorial: dos columnas de foto grande; el filete superior fino. */
+.v8-tours-lista { grid-template-columns: repeat(auto-fill, minmax(min(100%, 400px), 1fr)); gap: var(--e-8) var(--e-4); }
+.v8-tour { border-top: 1px solid var(--linea); }
+.v8-tour-foto { aspect-ratio: 3 / 2; border-radius: 2px; }
+.v8-tour h3 { font-weight: 300; font-size: var(--t-3); letter-spacing: -0.035em; }

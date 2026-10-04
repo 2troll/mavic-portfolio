@@ -84,15 +84,11 @@ for (const ruta of rutas) {
 
   // Precarga del trozo de JS de la página (si no, se pide cuando ya ha
   // arrancado el principal) y, en las páginas de guía, de su figura manga,
-  // que es lo más grande de la primera pantalla (LCP).
+  // (la figura manga ya no está en la portada).
   const esGuia = ruta in PRECARGA
   const esCiudad = /^(es|en|ar|ru|larion)\/[a-z]+$/.test(ruta) && ruta.split('/')[1] in ZONA_PORTADA
   const trozo = esGuia ? TROZOS.guia : esCiudad ? TROZOS.ciudad : null
   if (trozo) html = html.replace('</head>', `  <link rel="modulepreload" crossorigin href="/assets/${trozo}" />\n  </head>`)
-  if (esGuia) {
-    const fig = (ruta === 'ru' || ruta === 'larion') ? 'larion-kyoto' : 'tony-kyoto'
-    html = html.replace('</head>', `  <link rel="preload" as="image" href="/v8/figuras/${fig}.webp" fetchpriority="high" />\n  </head>`)
-  }
 
   // Precarga de la foto de portada en las páginas de idioma y de ciudad.
   const ciudad = ruta.split('/')[1]

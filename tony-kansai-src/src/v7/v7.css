@@ -71,7 +71,7 @@
 .v7-boton {
   display: inline-flex; align-items: center; justify-content: center; gap: 8px;
   min-height: 48px; padding: 0 22px; border-radius: 999px; border: 0;
-  background: var(--boton); color: var(--acento-tinta) !important;
+  background: var(--boton); color: var(--boton-tinta, #fff) !important;
   font: inherit; font-weight: 600; font-size: 16px; text-decoration: none; cursor: pointer;
   transition: transform 0.15s ease, filter 0.15s ease;
 }
@@ -1011,3 +1011,33 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-pie a:focus-visible { outline: 2px solid var(--sello); outline-offset: 3px; }
 /* Área de toque de al menos 24 px en los enlaces del pie (WCAG 2.5.8). */
 .v7-pie a { display: inline-block; min-height: 24px; padding-block: 3px; }
+
+/* ══ Estilo editorial japonés ════════════════════════════════════════════════
+   Como una revista de viajes: mucho blanco, fotos grandes, titulares finos,
+   filetes en lugar de tarjetas con sombra y el rojo sólo en los detalles
+   (sello, filetes de datos, enlaces activos). Va al final: manda sobre lo anterior. */
+html .v7 { --radio: 4px; }
+.v7 h1, .v7 h2 { font-weight: 300; letter-spacing: -0.045em; }
+.v7 h3 { font-weight: 500; letter-spacing: -0.02em; }
+.v7-seccion { padding-top: clamp(112px, 13vw, 176px); }
+.v7-seccion > h2 { font-size: clamp(var(--t-4), 6vw, var(--t-6)); line-height: 1; margin-bottom: var(--e-3); max-width: 18ch; }
+.v7-entradilla { font-size: var(--t-1); line-height: 1.5; max-width: 36rem; }
+.v7-antetitulo { color: var(--tenue); font-weight: 500; }
+
+/* Botones: rectángulo de tinta, sin la flecha en círculo. */
+.v7-boton { border-radius: 3px; font-weight: 500; letter-spacing: 0.01em; }
+.v7-boton:not(.v7-boton-peq)::after { content: none; }
+.v7-boton-sec { border-color: var(--tinta); }
+.v7 .tarjeta { border-radius: 4px; box-shadow: none; }
+@media (hover: hover) { .v7 .tarjeta:hover { transform: none; } }
+.v7-cabecera { border-radius: 6px; }
+
+/* Portada: la foto a sangre, titular fino y el botón en papel sobre la foto. */
+.v7-hero h1 { font-weight: 300; letter-spacing: -0.05em; }
+.v7-hero .v7-boton:not(.v7-boton-cristal) { background: #ffffff; color: #121212 !important; }
+.v7-hero .v7-boton-cristal { border-radius: 3px; }
+
+/* Por qué conmigo: kanji en tinta; el rojo, sólo en el filete. */
+.v7-razon-kanji { color: var(--tinta); font-size: var(--t-4); }
+.v7-razones li { border-top: 1px solid var(--linea); position: relative; }
+.v7-razones li::before { content: ''; position: absolute; top: -1px; inset-inline-start: 0; width: 32px; height: 2px; background: var(--sello); }

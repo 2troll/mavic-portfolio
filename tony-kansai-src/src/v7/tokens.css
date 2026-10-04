@@ -19,7 +19,9 @@ html .v7 {
   --linea: rgba(18, 18, 18, 0.12);
   --acento: var(--sello);
   --acento-tinta: #ffffff;
-  --boton: var(--sello);
+  /* Editorial: el botón es de tinta; el rojo queda para los detalles. */
+  --boton: var(--tinta-pura);
+  --boton-tinta: #ffffff;
   /* El 30 %: bandas y piezas en el color contrario al fondo. */
   --inverso: var(--tinta-pura);
   --inverso-tinta: #ffffff;
@@ -58,7 +60,8 @@ html .v7 {
   --tenue: #a6a6a6;          /* 8,4:1 sobre el fondo */
   --linea: rgba(255, 255, 255, 0.14);
   --acento: #ec5444;         /* texto rojo sobre negro: 5,3:1 */
-  --boton: var(--sello);
+  --boton: #f2f2f2;
+  --boton-tinta: #121212;
   --inverso: #ffffff;
   --inverso-tinta: var(--tinta-pura);
   --cristal: rgba(13, 13, 13, 0.74);
@@ -74,7 +77,8 @@ html .v7 {
     --tenue: #a6a6a6;
     --linea: rgba(255, 255, 255, 0.14);
     --acento: #ec5444;
-    --boton: var(--sello);
+    --boton: #f2f2f2;
+  --boton-tinta: #121212;
     --inverso: #ffffff;
     --inverso-tinta: var(--tinta-pura);
     --cristal: rgba(13, 13, 13, 0.74);

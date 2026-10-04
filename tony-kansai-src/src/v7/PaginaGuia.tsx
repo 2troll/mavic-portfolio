@@ -249,8 +249,6 @@ function Contacto({ p }: { p: Pagina }) {
         <p className="v7-aviso">{p.contacto.aviso}</p>
       </form>
       <aside className="v7-vista v7-con-figura tarjeta" aria-live="polite">
-        {/* El guía en manga, de pie sobre el bocadillo de su mensaje: quien escribe ve a quién escribe. */}
-        <img className="v7-figura-saluda" src={p.guia === 'larion' ? '/v8/figuras/larion-nara.webp' : '/v8/figuras/tony-osaka.webp'} alt="" aria-hidden="true" loading="lazy" decoding="async" />
         <h3>{p.contacto.vista}</h3>
         <pre>{msg}</pre>
       </aside>
@@ -432,8 +430,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div className="v7-hero-velo" />
           <EfectoEstacion estacion={estacion} />
           <SelectorEstacion lang={p.lang} valor={estacion} alCambiar={setEstacion} />
-          {/* El guía en manga, de cuerpo entero, entrando en la foto. */}
-          <img className="v7-figura-hero" src={p.guia === 'larion' ? '/v8/figuras/larion-kyoto.webp' : '/v8/figuras/tony-kyoto.webp'} alt="" aria-hidden="true" decoding="async" />
           <div className="v7-hero-texto">
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
