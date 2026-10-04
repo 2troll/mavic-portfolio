@@ -57,7 +57,7 @@ export interface DatosContacto {
 // ── Datos comunes ────────────────────────────────────────────────────────────
 
 /** WhatsApp de Tony (el de las facturas, perfil.json). */
-export const WA_TONY = '819024585949'
+export const WA_TONY = '34634193106'
 /** WhatsApp de Larion (+81 80 8506 7586). */
 export const WA_LARION = '818085067586'
 export const CORREO = 'tony@tonykansaiguide.com'

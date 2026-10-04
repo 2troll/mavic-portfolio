@@ -37,6 +37,11 @@ declare global {
 
 // ── Utilidades ───────────────────────────────────────────────────────────────
 
+/** Número legible según el país: España +34 634 193 106; Japón +81 80 8506 7586. */
+function telefono(n: string) {
+  return n.startsWith('34') ? `+34 ${n.slice(2, 5)} ${n.slice(5, 8)} ${n.slice(8)}` : `+${n.slice(0, 2)} ${n.slice(2, 4)} ${n.slice(4, 8)} ${n.slice(8)}`
+}
+
 function enlaceWa(numero: string, texto: string) {
   return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`
 }
@@ -586,7 +591,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div>
             <strong><span className="v7-pie-sello" lang="ja" aria-hidden="true">関西</span>Tony Kansai Guide</strong>
             <p>{p.pie.lema}</p>
-            <p className="v7-pie-wa"><a href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> <bdi dir="ltr">+{g.wa.slice(0, 2)} {g.wa.slice(2, 4)} {g.wa.slice(4, 8)} {g.wa.slice(8)}</bdi></a></p>
+            <p className="v7-pie-wa"><a href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> <bdi dir="ltr">{telefono(g.wa)}</bdi></a></p>
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
           </div>
           <nav aria-label={p.pie.legal}>

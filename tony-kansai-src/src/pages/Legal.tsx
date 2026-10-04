@@ -34,7 +34,7 @@ export default function Legal() {
           <Li label={tc('Activity')}>{tc('Private guiding services in the Kansai region of Japan, provided personally by Tony Hanma.')}</Li>
           <Li label={tc('Based in')}>{tc('Osaka, Japan.')}</Li>
           <Li label={tc('Website')}>{SITE}</Li>
-          <Li label={tc('Contact')}><span className="ltr-num">WhatsApp +81 90 2458 5949</span></Li>
+          <Li label={tc('Contact')}><span className="ltr-num">WhatsApp +34 634 193 106</span></Li>
           <Li label={tc('Languages')}>{tc('English, Spanish, Arabic and Russian.')}</Li>
         </ul>
         <p className="mt-3">{tc('Tony Hanma has traded as a sole proprietor (個人事業主) in Osaka since July 2026. This is not a company, so there is no corporate registration number to publish. The business is not enrolled in Japan\'s qualified invoice system, which means invoices are issued without an インボイス registration number — worth knowing if your company needs to reclaim Japanese consumption tax.')}</p>
