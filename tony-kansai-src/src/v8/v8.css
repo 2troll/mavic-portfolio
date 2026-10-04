@@ -245,3 +245,20 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v9-maqueta3d .f3d { position: absolute; inset: 0; }
 .v9-maqueta3d-kanji { position: absolute; z-index: 1; top: var(--e-6); inset-inline-start: clamp(20px, 5vw, 72px); writing-mode: vertical-rl; font-family: var(--mincho); font-size: clamp(3rem, 8vw, 7rem); color: #fff; text-shadow: 0 4px 30px rgba(0,0,0,0.4); pointer-events: none; }
 .v9-maqueta3d-pista { position: absolute; z-index: 1; bottom: var(--e-3); inset-inline-end: var(--e-3); color: #fff; font-size: var(--t--1); background: rgba(0,0,0,0.35); padding: 6px 12px; border-radius: 3px; pointer-events: none; }
+
+/* ══ Horarios de oración (página árabe) ══════════════════════════════════════ */
+.v9-oracion-fila { display: grid; grid-template-columns: minmax(0, 1fr) 200px; gap: var(--e-5); align-items: center; margin-top: var(--e-4); }
+.v9-oracion-horas { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); border-top: 1px solid var(--tinta); }
+.v9-oracion-horas li { display: grid; gap: 6px; padding: var(--e-3) var(--e-1); border-inline-end: 1px solid var(--linea); }
+.v9-oracion-horas li:last-child { border-inline-end: 0; }
+.v9-oracion-horas span { color: var(--tenue); font-size: var(--t--1); }
+.v9-oracion-horas strong { font-size: var(--t-3); font-weight: 300; font-variant-numeric: tabular-nums; }
+.v9-qibla { margin: 0; display: grid; justify-items: center; gap: var(--e-1); color: var(--tinta); }
+.v9-qibla svg { width: 150px; height: 150px; }
+.v9-qibla figcaption { font-size: var(--t--1); color: var(--tenue); }
+.v9-oracion-nota { color: var(--tenue); font-size: var(--t--1); margin-top: var(--e-2) !important; }
+@media (max-width: 760px) {
+  .v9-oracion-fila { grid-template-columns: 1fr; }
+  .v9-oracion-horas { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+  .v9-oracion-horas strong { font-size: var(--t-1); }
+}

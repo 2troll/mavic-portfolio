@@ -26,6 +26,7 @@ import { listaTours } from '../v8/seoTours'
 import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
+import { Oracion } from '../v8/Oracion'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -462,6 +463,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             ))}
           </ul>
         </section>
+
+        {/* Para el público del Golfo: horarios de oración de hoy y qibla, en vivo. */}
+        {p.lang === 'ar' && <Oracion />}
 
         <section id="como" className="v7-seccion">
           <h2>{p.como.titulo}</h2>
