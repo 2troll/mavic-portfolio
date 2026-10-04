@@ -5,7 +5,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { MODELOS } from './datosRutas'
 import { Mosaico } from '../v8/Mosaico'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
@@ -608,9 +607,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             ))}
             {CREDITOS_SONIDO.map((c) => (
               <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia} (Wikimedia Commons)</li>
-            ))}
-            {Object.values(MODELOS).map((m) => (
-              <li key={m.url}>Modelo 3D «{m.titulo}»: <a href={m.url} target="_blank" rel="noopener noreferrer">{m.autor}</a>, {m.licencia} (Poly Pizza)</li>
             ))}
           </ul>
         </details>
