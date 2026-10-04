@@ -168,7 +168,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           </div>
         </section>
 
-        {/* Historia manga en blanco y negro: tres viñetas enteras, bocadillos y un poema. */}
+        {/* Una viñeta en blanco y negro del guía en el sitio más conocido, con su bocadillo y un poema.
+            En Nara el dibujo es el ciervo, así que su frase es la de los ciervos (b). */}
         {HISTORIA_LISTA.includes(`${guia}-${c.id}`) && (
           <HistoriaManga
             quien={g}
@@ -177,7 +178,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             titulo={ROTULOS[lang].enCiudad(c.nombre[lang])}
             poema={HISTORIA[c.id].poema[lang]}
             etiquetaPoema={ROTULOS[lang].poema}
-            vinetas={(['a', 'b', 'c'] as const).map((k) => ({ src: `/v8/historia/${guia}-${c.id}-${k}.webp`, forma: k === 'a' ? 'ancha' : 'alta', texto: HISTORIA[c.id][k][lang] }))}
+            vinetas={[{ src: `/v8/historia/${guia}-${c.id}.webp`, forma: 'ancha', texto: HISTORIA[c.id][c.id === 'nara' ? 'b' : 'a'][lang] }]}
           />
         )}
 

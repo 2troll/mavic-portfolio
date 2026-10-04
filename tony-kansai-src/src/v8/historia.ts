@@ -59,29 +59,32 @@ export const HISTORIA: Record<CiudadId, Capitulo> = {
 export const DIA: Record<'es' | 'en' | 'ar' | 'ru', { titulo: string; vinetas: [string, string, string, string]; poema: string }> = {
   es: {
     titulo: 'Un día conmigo',
-    vinetas: ['Te recojo en el hotel por la mañana. Sin agencias: soy yo.', 'En el tren te explico la ruta, mapa en mano.', 'Vamos a tu ritmo. Si un sitio te gusta, nos quedamos.', '¡Hasta la próxima! Escríbeme cuando vuelvas.'],
+    vinetas: ['Te recojo en el hotel por la mañana. Sin agencias: soy yo.', 'En el tren te cuento lo que vamos viendo por la ventana.', 'Vamos a tu ritmo. Si un sitio te gusta, nos quedamos.', '¡Hasta la próxima! Escríbeme cuando vuelvas.'],
     poema: 'Un día no es un viaje —\npero un buen día\nse queda contigo.',
   },
   en: {
     titulo: 'A day with me',
-    vinetas: ['I pick you up at your hotel in the morning. No agency: just me.', 'On the train I walk you through the route, map in hand.', 'We go at your pace. If you like a place, we stay.', 'See you next time! Message me when you\'re back.'],
+    vinetas: ['I pick you up at your hotel in the morning. No agency: just me.', 'On the train I tell you what we see out of the window.', 'We go at your pace. If you like a place, we stay.', 'See you next time! Message me when you\'re back.'],
     poema: 'One day is not a trip —\nbut a good day\nstays with you.',
   },
   ar: {
     titulo: 'يومٌ معي',
-    vinetas: ['أمرّ عليك في الفندق صباحاً. بلا وكالة: أنا بنفسي.', 'في القطار أشرح لك المسار والخريطة في يدي.', 'نمشي على راحتك. إن أعجبك مكان، نبقى فيه.', 'إلى اللقاء! راسلني حين تعود.'],
+    vinetas: ['أمرّ عليك في الفندق صباحاً. بلا وكالة: أنا بنفسي.', 'في القطار أحدّثك عمّا نراه من النافذة.', 'نمشي على راحتك. إن أعجبك مكان، نبقى فيه.', 'إلى اللقاء! راسلني حين تعود.'],
     poema: 'يومٌ واحد ليس رحلة —\nلكنّ اليوم الجميل\nيبقى معك.',
   },
   ru: {
     titulo: 'Один день со мной',
-    vinetas: ['Встречаю вас утром в отеле. Без агентства — только я.', 'В поезде объясняю маршрут, с картой в руках.', 'Идём в вашем темпе. Понравилось место — остаёмся.', 'До встречи! Напишите, когда вернётесь.'],
+    vinetas: ['Встречаю вас утром в отеле. Без агентства — только я.', 'В поезде рассказываю, что мы видим за окном.', 'Идём в вашем темпе. Понравилось место — остаёмся.', 'До встречи! Напишите, когда вернётесь.'],
     poema: 'Один день — не путешествие,\nно хороший день\nостаётся с тобой.',
   },
 }
 
 /** Qué capítulos tienen ya sus viñetas generadas y revisadas. */
-/** Capítulos con viñetas aprobadas. Vacío: los dibujos se rehacen con Gemini. */
-export const HISTORIA_LISTA: string[] = []
+/** Capítulos con viñetas revisadas (FLUX.2 klein local, con la foto real de cada guía). */
+export const HISTORIA_LISTA: string[] = [
+  'tony-osaka', 'tony-kyoto', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-hiroshima', 'tony-beyond',
+  'larion-hiroshima', 'larion-kyoto', 'larion-nara', 'larion-osaka', 'larion-himeji', 'tony-dia', 'larion-dia',
+]
 
 /** Rótulos de la sección en cada idioma. */
 export const ROTULOS: Record<Lengua, { capitulo: string; enCiudad: (c: string) => string; poema: string }> = {
