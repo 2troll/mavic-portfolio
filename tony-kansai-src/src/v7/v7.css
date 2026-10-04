@@ -1080,3 +1080,23 @@ html .v7 { --radio: 4px; }
   .v9-portada-texto { padding: var(--e-5) 20px var(--e-6); }
   .v9-sello { display: none; }
 }
+
+/* ══ Así funciona, como página de revista (v9) ═══════════════════════════════
+   Retrato grande del guía a un lado, sin caja; los tres pasos al otro como una
+   lista con números finos y grandes (es una secuencia) separados por filetes. */
+.v7-bento { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); grid-template-rows: auto auto auto 1fr; gap: 0 clamp(32px, 5vw, 80px); align-items: start; }
+.v7 .v7-bento-guia { grid-column: 1; grid-row: 1 / span 4; display: grid; grid-template-columns: 1fr; gap: var(--e-3); border: 0; background: none; padding: 0; overflow: visible; }
+.v7-bento-guia img { aspect-ratio: 4 / 5; min-height: 0; height: auto; border-radius: 2px; }
+.v7-bento-guia > div { padding: 0; align-content: start; }
+.v7-bento-guia h3 { font-weight: 300; }
+.v7 .v7-bento-paso { grid-column: 2; border: 0; border-top: 1px solid var(--linea); border-radius: 0; background: none; padding: var(--e-4) 0; display: grid; grid-template-columns: 96px minmax(0, 1fr); column-gap: var(--e-3); align-content: start; }
+.v7 .v7-bento-paso:first-of-type { border-top-color: var(--tinta); }
+.v7-bento-paso .v7-paso-num { grid-row: span 2; width: auto; height: auto; border-radius: 0; background: none; color: var(--tinta); font-size: var(--t-5); font-weight: 200; line-height: 0.9; place-items: start; }
+.v7-bento-paso .v7-paso-num span { display: none; }
+.v7-bento-paso h3 { font-size: var(--t-1); }
+.v7-bento-no { grid-column: 1 / -1; margin-top: var(--e-8); border-radius: 2px; }
+@media (max-width: 820px) {
+  .v7-bento { grid-template-columns: 1fr; }
+  .v7 .v7-bento-guia, .v7 .v7-bento-paso { grid-column: 1; grid-row: auto; }
+  .v7 .v7-bento-paso { grid-template-columns: 64px minmax(0, 1fr); }
+}
