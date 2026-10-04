@@ -24,6 +24,7 @@ import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
 import { HistoriaManga } from './HistoriaManga'
 import { PORTADA } from './Mosaico'
+import { Foto3D } from './Foto3D'
 import { migas, viajeTuristico } from './seoTours'
 import { HISTORIA, HISTORIA_LISTA, ROTULOS } from './historia'
 import '../v7/v7.css'
@@ -31,20 +32,18 @@ import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
 import { BotonTema } from '../v7/Tema'
-import { CuandoCerca } from '../v7/CuandoCerca'
 
-const Diorama = lazy(() => import('./Diorama'))
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
 const CIUDADES_ORDEN: CiudadId[] = ['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond']
 
 export type PaginaCiudad = { lang: Lengua; guia: 'tony' | 'larion'; prefijo: '/es' | '/en' | '/ar' | '/ru' | '/larion'; ciudad: CiudadId }
 
-const ET: Record<Lengua, { zonas: string; arrastra: string; dia: string; verDia: string; montes: string; escribe: (g: string) => string; otras: string; tour: string; volver: string; desde: string; porGrupo: string }> = {
-  es: { zonas: 'Zonas', arrastra: 'Arrastra para girar', dia: 'Un día aquí', verDia: 'El día completo', montes: 'Montañas cerca', escribe: (g) => `Escribe a ${g}`, otras: 'Otras ciudades', tour: 'Tour', volver: 'Inicio', desde: 'desde', porGrupo: 'por grupo' },
-  en: { zonas: 'Areas', arrastra: 'Drag to rotate', dia: 'A day here', verDia: 'The full day', montes: 'Mountains nearby', escribe: (g) => `Message ${g}`, otras: 'Other cities', tour: 'Tour', volver: 'Home', desde: 'from', porGrupo: 'per group' },
-  ar: { zonas: 'المناطق', arrastra: 'اسحب للتدوير', dia: 'يوم هنا', verDia: 'اليوم كاملاً', montes: 'جبال قريبة', escribe: (g) => `راسل ${g}`, otras: 'مدن أخرى', tour: 'جولة', volver: 'الرئيسية', desde: 'ابتداءً من', porGrupo: 'للمجموعة' },
-  ru: { zonas: 'Районы', arrastra: 'Потяните, чтобы повернуть', dia: 'Один день здесь', verDia: 'Весь день', montes: 'Горы рядом', escribe: (g) => `Написать: ${g}`, otras: 'Другие города', tour: 'Тур', volver: 'Главная', desde: 'от', porGrupo: 'за группу' },
+const ET: Record<Lengua, { arrastra3d: string; zonas: string; arrastra: string; dia: string; verDia: string; montes: string; escribe: (g: string) => string; otras: string; tour: string; volver: string; desde: string; porGrupo: string }> = {
+  es: { arrastra3d: 'Mueve el ratón o el dedo', zonas: 'Zonas', arrastra: 'Arrastra para girar', dia: 'Un día aquí', verDia: 'El día completo', montes: 'Montañas cerca', escribe: (g) => `Escribe a ${g}`, otras: 'Otras ciudades', tour: 'Tour', volver: 'Inicio', desde: 'desde', porGrupo: 'por grupo' },
+  en: { arrastra3d: 'Move your mouse or finger', zonas: 'Areas', arrastra: 'Drag to rotate', dia: 'A day here', verDia: 'The full day', montes: 'Mountains nearby', escribe: (g) => `Message ${g}`, otras: 'Other cities', tour: 'Tour', volver: 'Home', desde: 'from', porGrupo: 'per group' },
+  ar: { arrastra3d: 'حرّك الفأرة أو إصبعك', zonas: 'المناطق', arrastra: 'اسحب للتدوير', dia: 'يوم هنا', verDia: 'اليوم كاملاً', montes: 'جبال قريبة', escribe: (g) => `راسل ${g}`, otras: 'مدن أخرى', tour: 'جولة', volver: 'الرئيسية', desde: 'ابتداءً من', porGrupo: 'للمجموعة' },
+  ru: { arrastra3d: 'Подвигайте мышью или пальцем', zonas: 'Районы', arrastra: 'Потяните, чтобы повернуть', dia: 'Один день здесь', verDia: 'Весь день', montes: 'Горы рядом', escribe: (g) => `Написать: ${g}`, otras: 'Другие города', tour: 'Тур', volver: 'Главная', desde: 'от', porGrupo: 'за группу' },
 }
 
 const PAGINA_DIA: Record<string, string> = { '/es': '/es/rutas/', '/en': '/en/routes/', '/ar': '/ar/routes/', '/ru': '/ru/routes/', '/larion': '/larion/routes/' }
@@ -169,7 +168,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         </section>
 
         {/* Una viñeta en blanco y negro del guía en el sitio más conocido, con su bocadillo y un poema.
-            En Nara el dibujo es el ciervo, así que su frase es la de los ciervos (b). */}
+            Dibujo = la foto real de la ciudad pasada a tinta. Nara (ciervos) y Más lejos
+            (Kumano) usan la frase b, que es la de lo que se ve. */}
         {HISTORIA_LISTA.includes(`${guia}-${c.id}`) && (
           <HistoriaManga
             quien={g}
@@ -178,22 +178,16 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             titulo={ROTULOS[lang].enCiudad(c.nombre[lang])}
             poema={HISTORIA[c.id].poema[lang]}
             etiquetaPoema={ROTULOS[lang].poema}
-            vinetas={[{ src: `/v8/historia/${guia}-${c.id}.webp`, forma: 'ancha', texto: HISTORIA[c.id][c.id === 'nara' ? 'b' : 'a'][lang] }]}
+            vinetas={[{ src: `/v8/historia/tinta-${c.id}.webp`, forma: 'ancha', texto: HISTORIA[c.id][c.id === 'nara' || c.id === 'beyond' ? 'b' : 'a'][lang] }]}
           />
         )}
 
-        {/* 3. La maqueta */}
-        {c.diorama && (
-          <section className="v8-maqueta">
-            <span className="v8-maqueta-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
-            <CuandoCerca className="v8-diorama" alto={0}>
-              <Suspense fallback={<div className="v8-diorama" />}>
-                <Diorama ruta={c.diorama} etiqueta={c.nombre[lang]} />
-              </Suspense>
-            </CuandoCerca>
-            <p className="v8-maqueta-pista">{et.arrastra}</p>
-          </section>
-        )}
+        {/* 3. La ciudad en 3D: su foto más conocida con relieve real (foto + profundidad). */}
+        <section className="v9-maqueta3d" aria-label={c.nombre[lang]}>
+          <Foto3D foto={`/v8/zonas/${PORTADA[c.id]}.webp`} prof={`/v8/prof/${PORTADA[c.id]}.webp`} alt={c.nombre[lang]} />
+          <span className="v9-maqueta3d-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
+          <p className="v9-maqueta3d-pista">{et.arrastra3d}</p>
+        </section>
 
         {/* 4. El día, una línea por hora */}
         {itin && c.itinerario && (

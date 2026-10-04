@@ -214,3 +214,34 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
   .v9-fila-foto { grid-row: auto; }
   .v9-fila-acciones { grid-column: 1; }
 }
+
+/* ══ Foto 3D (foto + profundidad) ═══════════════════════════════════════════ */
+.f3d { position: relative; overflow: hidden; background: #111; touch-action: pan-y; }
+.f3d > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.f3d-lienzo { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+
+/* ══ Mira dentro (v9): foto 3D a casi toda la pantalla ══════════════════════ */
+.v9-dentro { position: relative; height: 92svh; min-height: 560px; margin-top: clamp(112px, 13vw, 176px); color: #fff; }
+.v9-dentro-foto { position: absolute; inset: 0; }
+.v9-dentro::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0.45) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.7) 100%); }
+.v9-dentro-texto { position: absolute; inset: 0; z-index: 1; display: grid; grid-template-rows: auto 1fr auto; padding: calc(var(--e-12) + 8px) clamp(20px, 5vw, 72px) var(--e-6); pointer-events: none; }
+.v9-dentro-texto > * { pointer-events: auto; }
+.v9-dentro h2 { font-size: clamp(var(--t-4), 6vw, var(--t-6)); font-weight: 300; color: #fff; }
+.v9-dentro-pista { color: rgba(255,255,255,0.8); font-size: var(--t--1); margin-top: var(--e-1); }
+.v9-dentro-lugar { align-self: end; display: grid; gap: 6px; max-width: 36rem; margin-bottom: var(--e-3); }
+.v9-dentro-kanji { font-family: var(--mincho); color: #fff; opacity: 0.85; font-size: var(--t-1); letter-spacing: 0.2em; }
+.v9-dentro-lugar h3 { font-size: clamp(var(--t-3), 4vw, var(--t-5)); font-weight: 300; color: #fff; }
+.v9-dentro-lugar p { color: rgba(255,255,255,0.9); }
+.v9-enlace-claro { color: #fff; }
+.v9-dentro-pestanas { display: flex; flex-wrap: wrap; gap: var(--e-1); }
+.v9-dentro-pestanas button {
+  font: inherit; font-size: var(--t--1); padding: 8px 14px; border-radius: 3px; cursor: pointer;
+  background: rgba(0,0,0,0.35); color: #fff; border: 1px solid rgba(255,255,255,0.4); backdrop-filter: blur(6px);
+}
+.v9-dentro-pestanas button[aria-selected='true'] { background: #fff; color: #121212; border-color: #fff; }
+.v9-dentro-pestanas button:focus-visible { outline: 2px solid var(--sello); outline-offset: 2px; }
+/* En la página de ciudad: la foto 3D sustituye a la maqueta. */
+.v9-maqueta3d { position: relative; height: 88svh; min-height: 520px; }
+.v9-maqueta3d .f3d { position: absolute; inset: 0; }
+.v9-maqueta3d-kanji { position: absolute; z-index: 1; top: var(--e-6); inset-inline-start: clamp(20px, 5vw, 72px); writing-mode: vertical-rl; font-family: var(--mincho); font-size: clamp(3rem, 8vw, 7rem); color: #fff; text-shadow: 0 4px 30px rgba(0,0,0,0.4); pointer-events: none; }
+.v9-maqueta3d-pista { position: absolute; z-index: 1; bottom: var(--e-3); inset-inline-end: var(--e-3); color: #fff; font-size: var(--t--1); background: rgba(0,0,0,0.35); padding: 6px 12px; border-radius: 3px; pointer-events: none; }

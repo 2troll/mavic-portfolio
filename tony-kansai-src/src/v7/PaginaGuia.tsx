@@ -2,10 +2,10 @@
 // Orden pensado para quien llega sin saber nada: qué es → cómo funciona →
 // quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
 
-import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { ETIQUETAS, MODELOS } from './datosRutas'
+import { MODELOS } from './datosRutas'
 import { Mosaico } from '../v8/Mosaico'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
@@ -25,9 +25,9 @@ import { PRECIO } from './datosRutas'
 import { listaTours } from '../v8/seoTours'
 import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import { CuandoCerca } from './CuandoCerca'
+import { MiraDentro } from '../v8/MiraDentro'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
-const Rutas = lazy(() => import('./Rutas').then((m) => ({ default: m.Rutas })))
 
 const BASE = 'https://tonykansaiguide.com'
 
@@ -115,7 +115,7 @@ function Cabecera({ p }: { p: Pagina }) {
       <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
-        {([['ciudades', p.nav.zona], ['rutas', ETIQUETAS[p.lang].titulo], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
+        {([['ciudades', p.nav.zona], ['rutas', ({ es: 'Mira dentro', en: 'Step inside', ar: 'ادخل إلى المشهد', ru: 'Загляните внутрь' } as Record<string, string>)[p.lang]], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
       </nav>
@@ -506,7 +506,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         )}
 
         {/* Rutas con modelo 3D */}
-        <CuandoCerca id="rutas" alto={900}><Suspense fallback={<section id="rutas" className="v7-seccion" style={{ minHeight: 900 }} />}><Rutas p={p} /></Suspense></CuandoCerca>
+        <MiraDentro lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
 
         {/* Puerta a la página de montaña, para quien ya conoce las ciudades */}
         <section className="v7-seccion">

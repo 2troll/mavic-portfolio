@@ -80,10 +80,11 @@ export const DIA: Record<'es' | 'en' | 'ar' | 'ru', { titulo: string; vinetas: [
 }
 
 /** Qué capítulos tienen ya sus viñetas generadas y revisadas. */
-/** Capítulos con viñetas revisadas (FLUX.2 klein local, con la foto real de cada guía). */
+/** Capítulos con viñeta: la foto real de la ciudad pasada a tinta (public/v8/historia/tinta-{ciudad}.webp),
+ *  sin personas inventadas. «Un día conmigo» (tony-dia / larion-dia) queda fuera. */
 export const HISTORIA_LISTA: string[] = [
   'tony-osaka', 'tony-kyoto', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-hiroshima', 'tony-beyond',
-  'larion-hiroshima', 'larion-kyoto', 'larion-nara', 'larion-osaka', 'larion-himeji', 'tony-dia', 'larion-dia',
+  'larion-hiroshima', 'larion-kyoto', 'larion-nara', 'larion-osaka', 'larion-himeji',
 ]
 
 /** Rótulos de la sección en cada idioma. */
