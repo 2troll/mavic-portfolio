@@ -5,8 +5,6 @@
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
-import { EfectoEstacion, SelectorEstacion, estacionDeHoy } from './Estacion'
-import type { Estacion } from './Estacion'
 import { ETIQUETAS, MODELOS } from './datosRutas'
 import { Mosaico } from '../v8/Mosaico'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
@@ -29,7 +27,6 @@ import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import { CuandoCerca } from './CuandoCerca'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
-const ViajeScroll = lazy(() => import('./ViajeScroll').then((m) => ({ default: m.ViajeScroll })))
 const Rutas = lazy(() => import('./Rutas').then((m) => ({ default: m.Rutas })))
 
 const BASE = 'https://tonykansaiguide.com'
@@ -375,7 +372,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const g = GUIAS[p.guia]
   const { setLang } = useLanguage()
   const resenas = useResenas(!!p.resenas)
-  const [estacion, setEstacion] = useState<Estacion>(estacionDeHoy)
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -423,20 +419,17 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <Cabecera p={p} />
 
       <main>
-        {/* Portada de la página */}
-        <section className="v7-hero">
-          <img className="v7-hero-foto" {...foto(p.hero.foto)} alt="" width={1800} height={1200} {...{ fetchpriority: 'high' }} />
-          <HeroTinta fotos={FOTOS_HERO[p.id]} />
-          <div className="v7-hero-velo" />
-          <EfectoEstacion estacion={estacion} />
-          <SelectorEstacion lang={p.lang} valor={estacion} alCambiar={setEstacion} />
-          <div className="v7-hero-texto">
+        {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
+            otro, a sangre. Sin efectos encima: la foto y el titular bastan. */}
+        <section className="v9-portada">
+          <div className="v9-portada-texto">
+            <span className="v9-sello" lang="ja" aria-hidden="true">関西</span>
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
               {/* «Reservar» abre WhatsApp con el mensaje listo: es la reserva de verdad. */}
               <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /> {p.hero.cta}</a>
-              <a className="v7-boton v7-boton-cristal cristal" href="#contacto">{p.hero.cta2}</a>
+              <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>
             </div>
             {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}
             <ul className="v7-hero-datos">
@@ -444,10 +437,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               {p.hero.chips.filter((c) => !/precio|price|سعر|цена/i.test(c)).map((c) => <li key={c}>{c}</li>)}
             </ul>
           </div>
+          <div className="v9-portada-foto">
+            <img {...foto(p.hero.foto, '(max-width: 900px) 100vw, 50vw')} alt="" width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+            <HeroTinta fotos={FOTOS_HERO[p.id]} />
+          </div>
         </section>
-
-        {/* El viaje: globo fijo que se mueve con el scroll */}
-        <CuandoCerca id="zona" className="v7-viaje" alto="100vh"><Suspense fallback={<section id="zona" className="v7-viaje" />}><ViajeScroll p={p} /></Suspense></CuandoCerca>
 
         {/* Cómo funciona */}
         {/* Las ciudades, cada una con su página (v8) */}

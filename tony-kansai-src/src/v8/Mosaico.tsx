@@ -59,36 +59,36 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
   const lista = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
   const et = ET[lang]
   return (
-    <section id="ciudades" className="v7-seccion v8-tours">
+    <section id="ciudades" className="v7-seccion v9-tours">
       <h2>{TITULO[lang]}</h2>
       <p className="v7-entradilla">{SUB[lang]}</p>
-      <ul className="v8-tours-lista">
+      {/* Índice de revista: una fila por ciudad, con su foto, lo que dura, desde
+          cuánto y las dos salidas. Se lee de un vistazo, de arriba abajo. */}
+      <ul className="v9-indice">
         {lista.map((id) => {
           const c = CIUDADES[id]
           const t = tramos(id)
           const desde = Math.min(...t.map((x) => PRECIO[x]))
           const wa = `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(et.msg(NOMBRE[guia][lang], c.nombre[lang]))}`
           return (
-            <li key={id} className="v8-tour">
-              <Link to={`${prefijo}/${id}/`} className="v8-tour-foto" tabIndex={-1} aria-hidden="true">
-                <img {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" decoding="async" />
-                <span className="v8-tour-sello" lang="ja">{c.kanji}</span>
+            <li key={id} className="v9-fila">
+              <Link to={`${prefijo}/${id}/`} className="v9-fila-foto" tabIndex={-1} aria-hidden="true">
+                <img {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 100vw, 240px')} alt="" loading="lazy" decoding="async" />
               </Link>
-              <div className="v8-tour-cuerpo">
+              <div className="v9-fila-nombre">
+                <span className="v9-fila-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
                 <h3><Link to={`${prefijo}/${id}/`}>{c.nombre[lang]}</Link></h3>
-                <p className="v8-tour-datos">
-                  <span>{t.map((x) => HORAS[x][lang]).join(O[lang])}</span>
-                  <span>{et.desde} <strong>{yen(desde, lang)}</strong></span>
-                </p>
-                <p className="v8-tour-destaca"><span className="v7-sr">{et.destaca}: </span>{c.zonas.slice(0, 3).map((z) => z.nombre[lang]).join(lang === 'ar' ? '، ' : ', ')}</p>
-                <div className="v8-tour-acciones">
-                  <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer"
-                    aria-label={`${et.reservar}: ${c.nombre[lang]} (WhatsApp)`}
-                    onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `tours-${id}`, canal: 'whatsapp_tarjeta' })}>
-                    <IconoWa /> {et.reservar}
-                  </a>
-                  <Link className="v8-tour-ver" to={`${prefijo}/${id}/`}>{et.ver}</Link>
-                </div>
+                <p><span className="v7-sr">{et.destaca}: </span>{c.zonas.slice(0, 3).map((z) => z.nombre[lang]).join(lang === 'ar' ? '، ' : ', ')}</p>
+              </div>
+              <p className="v9-fila-dato">{t.map((x) => HORAS[x][lang]).join(O[lang])}</p>
+              <p className="v9-fila-dato">{et.desde} <strong>{yen(desde, lang)}</strong></p>
+              <div className="v9-fila-acciones">
+                <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer"
+                  aria-label={`${et.reservar}: ${c.nombre[lang]} (WhatsApp)`}
+                  onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `tours-${id}`, canal: 'whatsapp_tarjeta' })}>
+                  <IconoWa /> {et.reservar}
+                </a>
+                <Link className="v9-enlace" to={`${prefijo}/${id}/`}>{et.ver}</Link>
               </div>
             </li>
           )
