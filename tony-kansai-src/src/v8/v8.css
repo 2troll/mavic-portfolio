@@ -262,3 +262,17 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
   .v9-oracion-horas { grid-template-columns: repeat(5, minmax(0, 1fr)); }
   .v9-oracion-horas strong { font-size: var(--t-1); }
 }
+
+/* Redondo y con cristal */
+.v9-indice { border-top: 0; display: grid; gap: var(--e-2); }
+.v9-fila {
+  border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent); border-radius: 26px; padding: var(--e-2) var(--e-3) var(--e-2) var(--e-2);
+  background: color-mix(in srgb, var(--superficie) 62%, transparent); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px);
+}
+[dir='rtl'] .v9-fila { padding: var(--e-2) var(--e-2) var(--e-2) var(--e-3); }
+.v9-fila-foto { border-radius: 18px; }
+.v9-dentro { margin-inline: clamp(12px, 1.6vw, 24px); border-radius: 32px; overflow: hidden; }
+.v9-dentro-pestanas button { border-radius: 999px; }
+.v9-maqueta3d { margin: 0 clamp(12px, 1.6vw, 24px); border-radius: 32px; overflow: hidden; }
+.v9-maqueta3d-pista { border-radius: 999px; }
+.v9-oracion-horas { border-top: 0; border-radius: 26px; overflow: hidden; background: color-mix(in srgb, var(--superficie) 62%, transparent); border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent); }

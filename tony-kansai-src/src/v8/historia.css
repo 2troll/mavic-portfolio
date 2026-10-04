@@ -96,3 +96,5 @@
 .hm-bocadillo::after { border-width: 2px; }
 .hm { background-image: none; }
 .hm-cabeza h2 { font-weight: 300; }
+/* Redondo: viñetas y bocadillos con radio. */
+.hm-vineta { border-radius: 22px; }

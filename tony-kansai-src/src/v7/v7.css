@@ -1100,3 +1100,35 @@ html .v7 { --radio: 4px; }
   .v7 .v7-bento-guia, .v7 .v7-bento-paso { grid-column: 1; grid-row: auto; }
   .v7 .v7-bento-paso { grid-template-columns: 64px minmax(0, 1fr); }
 }
+
+/* ══ Redondo y con cristal (preferencia del dueño) ═══════════════════════════
+   Mismo estilo editorial, pero sin esquinas vivas: píldoras, paneles con radio
+   generoso y superficies de cristal suave (translúcidas con desenfoque). */
+html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 62%, transparent); }
+.v7-boton, .v7-hero .v7-boton-cristal { border-radius: 999px; }
+.v7 .tarjeta {
+  border-radius: var(--radio);
+  background: var(--cristal-fondo);
+  -webkit-backdrop-filter: blur(18px) saturate(1.3); backdrop-filter: blur(18px) saturate(1.3);
+  border: 1px solid color-mix(in srgb, var(--tinta) 10%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, #fff 55%, transparent), var(--sombra);
+}
+.v7-cabecera { border-radius: 999px; }
+/* Portada: la foto como panel redondeado, separado del borde. */
+.v9-portada-foto { margin: 88px clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px) 0; border-radius: 32px; }
+[dir='rtl'] .v9-portada-foto { margin: 88px 0 clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px); }
+@media (max-width: 900px) { .v9-portada-foto, [dir='rtl'] .v9-portada-foto { margin: 76px 12px 0; border-radius: 26px; } }
+.v7-bento-guia img { border-radius: var(--radio); }
+.v7-bento-no { border-radius: var(--radio); }
+.v7-razones li { border-top: 0; padding: var(--e-4); border-radius: var(--radio); background: var(--cristal-fondo); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent); }
+.v7-razones li::before { top: var(--e-3); inset-inline-start: var(--e-4); }
+.v7-razones .v7-razon-kanji { margin-top: var(--e-2); }
+/* Fondo con dos manchas de color muy difuminadas: sin algo detrás, el cristal
+   no se ve. Fijas a la ventana, por debajo de todo. */
+.v7::before {
+  content: ''; position: fixed; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(55vw 45vh at 88% 8%, color-mix(in srgb, var(--sello) 13%, transparent), transparent 70%),
+    radial-gradient(60vw 55vh at 6% 92%, rgba(120, 140, 185, 0.18), transparent 70%),
+    radial-gradient(40vw 40vh at 30% 40%, rgba(232, 196, 160, 0.12), transparent 70%);
+}
