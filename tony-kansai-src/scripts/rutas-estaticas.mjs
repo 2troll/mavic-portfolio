@@ -118,8 +118,9 @@ for (const ruta of rutas) {
     // la cabecera: si no, el HTML pintado se ve un instante sin esos estilos y
     // luego todo salta (CLS de 0,4 a 1,1 en Lighthouse).
     html = html.replace('</head>', CSS_TROZOS.map((f) => `  <link rel="stylesheet" href="/assets/${f}" />`).join('\n') + '\n  </head>')
-    const cuerpo = await pinta(`/${ruta}/`)
+    const { html: cuerpo, ld } = await pinta(`/${ruta}/`)
     html = html.replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
+    if (ld) html = html.replace('</head>', `  ${ld}\n  </head>`)
     pintadas++
   }
 
