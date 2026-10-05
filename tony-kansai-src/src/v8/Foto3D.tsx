@@ -22,9 +22,21 @@ void main() {
   gl_FragColor = texture2D(foto, c + d);
 }`
 
-function carga(src: string): Promise<HTMLImageElement> {
-  return new Promise((ok, mal) => { const i = new Image(); i.crossOrigin = 'anonymous'; i.onload = () => ok(i); i.onerror = mal; i.src = src })
+/** Descarga y decodifica fuera del hilo principal, reducida al ancho que hace
+ *  falta: decodificar la foto de 1800 px en el hilo principal daba un tirón de
+ *  ~120 ms en móvil al bajar hasta la sección. */
+async function carga(src: string, ancho: number): Promise<ImageBitmap | HTMLImageElement> {
+  const blob = await fetch(src).then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+  if ('createImageBitmap' in window) {
+    const b = await createImageBitmap(blob)
+    if (b.width <= ancho) return b
+    const alto = Math.round(b.height * ancho / b.width); b.close()
+    return createImageBitmap(blob, { resizeWidth: ancho, resizeHeight: alto, resizeQuality: 'high' })
+  }
+  return new Promise((ok, mal) => { const i = new Image(); i.onload = () => ok(i); i.onerror = mal; i.src = URL.createObjectURL(blob) })
 }
+const anchoDe = (x: ImageBitmap | HTMLImageElement) => (x instanceof ImageBitmap ? x.width : x.naturalWidth)
+const altoDe = (x: ImageBitmap | HTMLImageElement) => (x instanceof ImageBitmap ? x.height : x.naturalHeight)
 
 export function Foto3D({ foto, prof, alt, className, fuerza = 0.035 }: { foto: string; prof: string; alt: string; className?: string; fuerza?: number }) {
   const caja = useRef<HTMLDivElement>(null)
@@ -46,11 +58,12 @@ export function Foto3D({ foto, prof, alt, className, fuerza = 0.035 }: { foto: s
     gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer())
     gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW)
     const loc = gl.getAttribLocation(prog, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0)
-    const textura = (img: HTMLImageElement, unidad: number) => {
+    const textura = (img: ImageBitmap | HTMLImageElement, unidad: number) => {
       const t = gl.createTexture(); gl.activeTexture(gl.TEXTURE0 + unidad); gl.bindTexture(gl.TEXTURE_2D, t)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR); gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img)
+      if (img instanceof ImageBitmap) img.close()
     }
     const uMov = gl.getUniformLocation(prog, 'mov'), uEsc = gl.getUniformLocation(prog, 'escala')
     gl.uniform1i(gl.getUniformLocation(prog, 'foto'), 0); gl.uniform1i(gl.getUniformLocation(prog, 'prof'), 1)
@@ -83,9 +96,11 @@ export function Foto3D({ foto, prof, alt, className, fuerza = 0.035 }: { foto: s
     const raton = (e: PointerEvent) => mueve(e.clientX, e.clientY)
     el.addEventListener('pointermove', raton)
 
-    Promise.all([carga(foto), carga(prof)]).then(([f, d]) => {
+    // Ancho real del bloque en píxeles de pantalla (máx. 2x): ni más ni menos.
+    const px = Math.round(el.getBoundingClientRect().width * Math.min(window.devicePixelRatio || 1, 2) * 1.08)
+    Promise.all([carga(foto, Math.max(640, px)), carga(prof, 640)]).then(([f, d]) => {
       if (!vivo) return
-      ancho.foto = f.naturalWidth; ancho.alto = f.naturalHeight
+      ancho.foto = anchoDe(f); ancho.alto = altoDe(f)
       textura(f, 0); textura(d, 1)
       lienzo.className = 'f3d-lienzo'
       el.appendChild(lienzo); tam()

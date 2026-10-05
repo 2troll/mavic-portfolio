@@ -47,20 +47,27 @@ void main(){
   gl_FragColor = vec4(c, 1.0);
 }`
 
-/** 4K sólo en pantallas que lo aprovechan; si no, 1800 px. */
-function urlFoto(jpg: string) {
+/** Según lo que mide el lienzo en píxeles reales: la portada es ahora un panel
+ *  de media pantalla y en móvil la de 900 px basta. Cargar de más costaba
+ *  tirones de 150-280 ms al subir la textura. */
+function urlFoto(jpg: string, anchoPx: number) {
   const base = jpg.replace(/\.jpg$/, '')
-  const px = window.innerWidth * (window.devicePixelRatio || 1)
-  return px > 1900 ? `${base}-4k.webp` : `${base}.webp`
+  return anchoPx > 1900 ? `${base}-4k.webp` : anchoPx > 1000 ? `${base}.webp` : `${base}-900.webp`
 }
 
-function cargaImagen(src: string) {
+/** Descarga y decodifica fuera del hilo principal (createImageBitmap), ya
+ *  reducida al ancho del lienzo y volteada para WebGL: subirla luego es casi gratis. */
+async function cargaImagen(src: string, anchoPx: number): Promise<ImageBitmap | HTMLImageElement> {
+  const blob = await fetch(src).then((r) => (r.ok ? r.blob() : Promise.reject(new Error(String(r.status)))))
+  if ('createImageBitmap' in window) {
+    const bruto = await createImageBitmap(blob)
+    const ancho = Math.min(bruto.width, Math.max(640, Math.round(anchoPx * 1.1)))
+    if (ancho >= bruto.width) { bruto.close(); return createImageBitmap(blob, { imageOrientation: 'flipY' }) }
+    const alto = Math.round(bruto.height * ancho / bruto.width); bruto.close()
+    return createImageBitmap(blob, { resizeWidth: ancho, resizeHeight: alto, resizeQuality: 'high', imageOrientation: 'flipY' })
+  }
   return new Promise<HTMLImageElement>((ok, mal) => {
-    const i = new Image()
-    i.decoding = 'async'
-    i.onload = () => i.decode().then(() => ok(i), () => ok(i))
-    i.onerror = mal
-    i.src = src
+    const i = new Image(); i.onload = () => i.decode().then(() => ok(i), () => ok(i)); i.onerror = mal; i.src = URL.createObjectURL(blob)
   })
 }
 
@@ -99,17 +106,20 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
     gl.uniform1i(U.B, 1)
 
     const texturas: { tex: WebGLTexture; w: number; h: number }[] = []
-    const sube = (img: HTMLImageElement) => {
+    const sube = (img: ImageBitmap | HTMLImageElement) => {
       const tex = gl.createTexture()!
       gl.bindTexture(gl.TEXTURE_2D, tex)
-      // WebGL lee las imágenes de abajo arriba: sin esto saldrían del revés.
-      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, true)
+      // WebGL lee las imágenes de abajo arriba: el ImageBitmap ya viene volteado;
+      // la <img> de respaldo se voltea aquí.
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, !(img instanceof ImageBitmap))
       gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGB, gl.RGB, gl.UNSIGNED_BYTE, img)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE)
       gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE)
-      return { tex, w: img.naturalWidth, h: img.naturalHeight }
+      const w = img instanceof ImageBitmap ? img.width : img.naturalWidth, h = img instanceof ImageBitmap ? img.height : img.naturalHeight
+      if (img instanceof ImageBitmap) img.close()
+      return { tex, w, h }
     }
 
     const tam = () => {
@@ -171,7 +181,8 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
       for (const f of fotos) {
         if (!vivo) return
         try {
-          texturas.push(sube(await cargaImagen(urlFoto(f))))
+          const anchoPx = c.clientWidth * Math.min(window.devicePixelRatio || 1, 2)
+          texturas.push(sube(await cargaImagen(urlFoto(f, anchoPx), anchoPx)))
           if (texturas.length === 1) { setActivo(true); sigue() }
         } catch (err) { console.error('[HeroTinta] no carga', f, err) }
       }
