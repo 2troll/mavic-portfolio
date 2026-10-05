@@ -5,7 +5,7 @@
 //   4. el día en una línea por hora, montañas cerca y el botón de WhatsApp.
 // Rutas: Tony /es|en|ar/{ciudad}/; Larion /ru/{ciudad}/ y /larion/{ciudad}/.
 
-import { Suspense, lazy, useEffect, useRef } from 'react'
+import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -68,6 +68,14 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   // la pista se mueve leyendo la posición de la sección en cada fotograma
   // mientras está en pantalla. En Chrome y Safari lo hace el CSS solo.
   const pan = useRef<HTMLElement>(null)
+  const [panCerca, setPanCerca] = useState(false)
+  useEffect(() => {
+    const el = pan.current
+    if (!el) return
+    const io = new IntersectionObserver(([e]) => { if (e.isIntersecting) { setPanCerca(true); io.disconnect() } }, { rootMargin: '400px 0px' })
+    io.observe(el)
+    return () => io.disconnect()
+  }, [pg.ciudad])
   useEffect(() => {
     const sec = pan.current
     if (!sec || CSS.supports('animation-timeline: view()')) return
@@ -152,7 +160,9 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             <ol className="v8-pan-pista">
               {c.zonas.map((z, i) => (
                 <li key={z.id} className="v8-zona">
-                  <img {...foto(fotoZona(z.id), '100vw')} alt={z.nombre[lang]} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+                  {/* La pista es horizontal: el «lazy» del navegador las veía todas cerca y
+                      bajaba las ocho al cargar. Solo la primera va siempre; el resto, al llegar. */}
+                  {(i === 0 || panCerca) && <img loading={i === 0 ? 'eager' : 'lazy'} {...foto(fotoZona(z.id), '100vw')} alt={z.nombre[lang]} decoding="async" />}
                   <span className="v8-zona-kanji" lang="ja" aria-hidden="true">{z.kanji}</span>
                   <div className="v8-zona-texto">
                     <p className="v8-zona-num"><bdi>{String(i + 1).padStart(2, '0')} / {String(c.zonas.length).padStart(2, '0')}</bdi></p>
@@ -226,7 +236,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <div className="v8-otras-rejilla">
             {otras.map((o) => (
               <Link key={o} to={`${prefijo}/${o}/`} className="v8-otra">
-                <img {...foto(fotoZona(PORTADA[o]), '(max-width: 700px) 100vw, 33vw')} alt="" loading="lazy" />
+                <img loading="lazy" {...foto(fotoZona(PORTADA[o]), '(max-width: 700px) 100vw, 33vw')} alt="" />
                 <span><span lang="ja">{CIUDADES[o].kanji}</span>{CIUDADES[o].nombre[lang]}</span>
               </Link>
             ))}
@@ -235,7 +245,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
 
         {/* 7. Final */}
         <section className="v7-seccion v8-final">
-          <img src={GUIAS[guia].foto} alt={GUIAS[guia].nombre} width={160} height={170} loading="lazy" />
+          <img loading="lazy" src={GUIAS[guia].foto} alt={GUIAS[guia].nombre} width={160} height={170} />
           <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer">{et.escribe(g)}</a>
         </section>
       </main>

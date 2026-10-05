@@ -124,11 +124,11 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
           return (
             <article key={i} id={i} className="v7-itin" aria-labelledby={`t-${i}`}>
               <div className="v7-itin-panel">
-                <img {...foto(m.foto)} alt="" loading={n === 0 ? 'eager' : 'lazy'} decoding="async" />
+                <img loading={n === 0 ? 'eager' : 'lazy'} {...foto(m.foto)} alt="" decoding="async" />
                 <span className="v7-itin-trama" aria-hidden="true" />
                 <span className="v7-itin-kanji" lang="ja" aria-hidden="true">{m.kanji}</span>
                 {CIUDAD_DE[i] && MANGA_APROBADO.includes(`${guia}-${CIUDAD_DE[i]}`) && (
-                  <img className="v7-itin-vineta" src={`/v8/manga/${guia}-${CIUDAD_DE[i]}.webp`} alt="" loading="lazy" decoding="async" />
+                  <img loading="lazy" className="v7-itin-vineta" src={`/v8/manga/${guia}-${CIUDAD_DE[i]}.webp`} alt="" decoding="async" />
                 )}
                 <div className="v7-itin-titulo">
                   <p className="v7-itin-num"><bdi>{String(n + 1).padStart(2, '0')} / {String(orden.length).padStart(2, '0')}</bdi></p>

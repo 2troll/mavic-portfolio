@@ -45,7 +45,7 @@ export function HistoriaManga({ vinetas, quien, sello, capitulo, titulo, poema, 
       <div className="hm-hoja">
         {vinetas.map((v, i) => (
           <figure key={v.src} className={`hm-vineta hm-${v.forma} hm-pos-${i % 3}`}>
-            <img src={v.src} alt="" loading="lazy" decoding="async" />
+            <img loading="lazy" src={v.src} alt="" decoding="async" />
             <figcaption className="hm-bocadillo">
               <span className="hm-quien">{quien}</span>
               {v.texto}

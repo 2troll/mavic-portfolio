@@ -97,6 +97,10 @@ export function Foto3D({ foto, prof, alt, className, fuerza = 0.035 }: { foto: s
     el.addEventListener('pointermove', raton)
 
     // Ancho real del bloque en píxeles de pantalla (máx. 2x): ni más ni menos.
+    // Se descarga solo cuando el bloque se acerca a la pantalla: antes bajaba
+    // la foto grande y la decodificaba en plena carga de la página (~400 ms de
+    // CPU en móvil y 285 KB que competían con la foto de portada).
+    const empieza = () => {
     const px = Math.round(el.getBoundingClientRect().width * Math.min(window.devicePixelRatio || 1, 2) * 1.08)
     Promise.all([carga(foto, Math.max(640, px)), carga(prof, 640)]).then(([f, d]) => {
       if (!vivo) return
@@ -107,17 +111,20 @@ export function Foto3D({ foto, prof, alt, className, fuerza = 0.035 }: { foto: s
       el.classList.add('f3d-listo')
       sigue()
     }).catch(() => { /* se queda la foto quieta */ })
+    }
+    const cerca = new IntersectionObserver(([e]) => { if (e.isIntersecting) { cerca.disconnect(); empieza() } }, { rootMargin: '600px 0px' })
+    cerca.observe(el)
     const ro = new ResizeObserver(tam); ro.observe(el)
     const io = new IntersectionObserver(([e]) => { visible = e.isIntersecting; sigue() }); io.observe(el)
     return () => {
-      vivo = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect()
+      vivo = false; cancelAnimationFrame(raf); ro.disconnect(); io.disconnect(); cerca.disconnect()
       el.removeEventListener('pointermove', raton); lienzo.remove()
     }
   }, [foto, prof, fuerza])
 
   return (
     <div ref={caja} className={`f3d ${className ?? ''}`}>
-      <img src={foto} alt={alt} loading="lazy" decoding="async" />
+      <img loading="lazy" src={foto} alt={alt} decoding="async" />
     </div>
   )
 }

@@ -107,7 +107,7 @@ export default function HikingDetail() {
       {/* ── Hero ───────────────────────────────────────────── */}
       <section ref={heroRef} className="relative h-[85vh] overflow-hidden">
         <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-          <img src={route.imageHero} alt={tc(route.title)} className="w-full h-full object-cover" loading="eager" />
+          <img loading="eager" src={route.imageHero} alt={tc(route.title)} className="w-full h-full object-cover" />
         </motion.div>
         <div className="absolute inset-0 bg-gradient-to-t from-japan-dark via-japan-dark/50 to-japan-dark/10" />
         <div className="absolute inset-0 bg-gradient-to-r from-japan-dark/60 to-transparent" />

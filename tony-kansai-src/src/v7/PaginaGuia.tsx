@@ -473,7 +473,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Quién soy: el guía, en su propia sección, antes de cómo funciona. */}
         <section id="guia" className="v7-seccion v9-guia" aria-label={p.guiaTxt.titulo}>
-          <img className="v9-guia-foto" src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} loading="lazy" decoding="async" />
+          <img loading="lazy" className="v9-guia-foto" src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} decoding="async" />
           <div className="v9-guia-texto">
             <p className="v9-guia-ante">{p.guiaTxt.titulo}</p>
             <h2>{NOMBRE_GUIA[p.id]}</h2>
@@ -557,7 +557,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                   <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
                   <blockquote>{r.text}</blockquote>
                   <figcaption>{r.name} · {r.country} · {r.tour}</figcaption>
-                  {r.photo && <img src={`/${r.photo}`} alt="" loading="lazy" />}
+                  {r.photo && <img loading="lazy" src={`/${r.photo}`} alt="" />}
                 </figure>
               ))}
             </div>

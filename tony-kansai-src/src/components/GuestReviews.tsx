@@ -66,11 +66,11 @@ function Tarjeta({ r }: { r: Resena }) {
     // se estira hasta la altura de la más larga y deja un hueco muerto.
     <article className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
       {r.photo && (
-        <img
+        <img loading="lazy"
           src={r.photo}
           alt={`${r.name} — ${r.tour || 'Kansai'}`}
           className="w-full aspect-[4/3] object-cover"
-          loading="lazy"
+         
         />
       )}
       <div className="p-5 flex flex-col flex-1">

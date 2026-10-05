@@ -196,7 +196,7 @@ export default function Home() {
             <FadeUp delay={0.15}>
               <div className="relative h-[500px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
                 <motion.div className="absolute inset-0 scale-[1.2]" style={{ y: discoverPhotoY }}>
-                  <img src={PHOTO_TORII} alt="Fushimi Inari torii gates Kyoto Japan" className="w-full h-full object-cover" loading="lazy" />
+                  <img loading="lazy" src={PHOTO_TORII} alt="Fushimi Inari torii gates Kyoto Japan" className="w-full h-full object-cover" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/70 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-5 start-5">
@@ -215,7 +215,7 @@ export default function Home() {
             <ExplodeIn index={2}>
               <div className="relative h-[480px] rounded-2xl overflow-hidden shadow-2xl shadow-black/50">
                 <motion.div className="absolute inset-0 scale-[1.2]" style={{ y: castlePhotoY }}>
-                  <img src={PHOTO_CASTLE} alt="Himeji Castle Japan UNESCO World Heritage" className="w-full h-full object-cover" loading="lazy" />
+                  <img loading="lazy" src={PHOTO_CASTLE} alt="Himeji Castle Japan UNESCO World Heritage" className="w-full h-full object-cover" />
                 </motion.div>
                 <div className="absolute inset-0 bg-gradient-to-t from-japan-dark/65 via-transparent to-transparent pointer-events-none" />
                 <div className="absolute bottom-5 start-5">
@@ -276,11 +276,11 @@ export default function Home() {
                   <Card3D glowColor={`${tour.accent}20`} className="h-full">
                     <div className="rounded-2xl overflow-hidden h-full flex flex-col border border-white/6 bg-japan-surface/60">
                       <div className="relative h-48 overflow-hidden">
-                        <img
+                        <img loading="lazy"
                           src={tour.imageCard}
                           alt={tc(tour.title)}
                           className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                          loading="lazy"
+                         
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/20 to-transparent" />
                         <div
@@ -344,11 +344,11 @@ export default function Home() {
                   <div className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
                     {/* Photo */}
                     <div className="relative h-56 overflow-hidden">
-                      <img
+                      <img loading="lazy"
                         src={guide.photo}
                         alt={tc(guide.name)}
                         className="w-full h-full object-cover transition-transform duration-700 hover:scale-110"
-                        loading="lazy"
+                       
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                       <div className="absolute bottom-4 start-4 end-4">

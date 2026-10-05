@@ -72,11 +72,11 @@ export default function TourDetail() {
       <section ref={heroRef} className="relative h-[85vh] overflow-hidden">
         {/* Parallax image */}
         <motion.div className="absolute inset-0 scale-110" style={{ y: imgY }}>
-          <img
+          <img loading="eager"
             src={tour.imageHero}
             alt={tc(tour.title)}
             className="w-full h-full object-cover"
-            loading="eager"
+           
           />
         </motion.div>
 
