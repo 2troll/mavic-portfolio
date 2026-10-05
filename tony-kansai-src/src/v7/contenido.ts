@@ -131,7 +131,7 @@ const es: Pagina = {
     titulo: 'Así funciona',
     pasos: [
       { t: 'Me escribes', d: 'Dime las fechas, cuántos sois, dónde os alojáis, de dónde venís y qué os apetece ver.' },
-      { t: 'Te propongo el día', d: 'Te respondo con una ruta sencilla y un precio cerrado para todo el grupo. Sin letra pequeña.' },
+      { t: 'Te propongo el día', d: 'Te respondo con una ruta sencilla y un precio cerrado para todo el grupo. Sin letra pequeña. Para reservar, te mando un enlace de pago seguro con tarjeta.' },
       { t: 'Te recojo en el hotel', d: 'Ese día quedamos en el vestíbulo de tu hotel y salimos directos al destino.' },
     ],
     noTitulo: 'Lo que no hacemos',
@@ -252,7 +252,7 @@ const en: Pagina = {
     titulo: 'How it works',
     pasos: [
       { t: 'You message me', d: 'Tell me your dates, how many of you there are, where you\'re staying, where you\'re travelling from and what you\'d like to see.' },
-      { t: 'I suggest a plan', d: 'You get a simple route and one fixed price for the whole group. No small print.' },
+      { t: 'I suggest a plan', d: 'You get a simple route and one fixed price for the whole group. No small print. To book, I send you a secure card payment link.' },
       { t: 'I meet you at your hotel', d: 'On the day we meet in your hotel lobby and head straight out.' },
     ],
     noTitulo: 'What we don\'t do',
@@ -371,7 +371,7 @@ const ar: Pagina = {
     titulo: 'كيف نعمل',
     pasos: [
       { t: 'تراسلني', d: 'أخبرني بالتواريخ وعددكم ومكان إقامتكم ومن أين تأتون وما الذي تحبون رؤيته.' },
-      { t: 'أقترح عليك اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية.' },
+      { t: 'أقترح عليك اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. للحجز أرسل لك رابط دفع آمن بالبطاقة.' },
       { t: 'ألتقيك في الفندق', d: 'في اليوم المحدد نلتقي في بهو الفندق وننطلق مباشرة.' },
     ],
     noTitulo: 'ما لا نقوم به',
