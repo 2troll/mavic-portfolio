@@ -382,7 +382,7 @@ export const PRICING = [
 export const FAQS = [
   { q: 'Are tours truly private?', a: '100% private — your booking is exclusively yours. No other groups, no shared coaches. Just you and Tony with full attention on your experience.' },
   { q: 'How far in advance should I book?', a: 'Tony recommends 2–3 weeks ahead for weekends and peak seasons (March–May cherry blossom, October–November autumn). Weekday slots often available 1 week out.' },
-  { q: 'What is the cancellation policy?', a: 'Full refund 72+ hours before the tour. 50% refund within 48 hours. No refund within 24 hours. Tony is flexible with reschedules — just reach out via WhatsApp.' },
+  { q: 'What is the cancellation policy?', a: 'Full refund 72+ hours before the tour. 50% refund between 24 and 72 hours before. No refund within 24 hours. Tony is flexible with reschedules — just reach out via WhatsApp.' },
   { q: 'Is transport included?', a: 'No. We travel by train and bus, the way people here do, and you pay your own fares as we go with an IC card (ICOCA or Suica). Tony shows you which ticket to buy. We don\'t sell tickets or arrange vehicles.' },
   { q: 'Which languages do the guides speak?', a: 'Tony guides in English, Spanish and Arabic. Larion guides in Russian and English. Each of us only takes the languages we can actually work in.' },
   { q: 'Can Tony help with restaurant reservations?', a: 'Tony suggests where to eat on the day, including halal and vegetarian options, and can phone a restaurant in Japanese for you. We don\'t take bookings or payments on your behalf.' },
