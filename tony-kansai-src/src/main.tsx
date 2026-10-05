@@ -28,4 +28,4 @@ const pinta = () => (raiz.hasChildNodes() ? hydrateRoot(raiz, arbol) : createRoo
 // del diccionario era una ida y vuelta más antes de pintar el titular (LCP).
 const USA_DICCIONARIO = /^\/(es\/montana|(en|ar|ru)\/hiking|terms|privacy|cookies|safety|legal|accessibility|admin)(\/|$)/
 if (USA_DICCIONARIO.test(location.pathname)) loadPhrases(idioma).finally(pinta)
-else { pinta(); loadPhrases(idioma) }
+else pinta()  // el diccionario lo pide LanguageContext cuando la página ya ha cargado

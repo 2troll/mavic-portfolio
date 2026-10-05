@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import { TRANSLATIONS, LANG_META } from '../lib/i18n'
 import type { Lang, Tr } from '../lib/i18n'
 import { translate, loadPhrases, isLoaded } from '../lib/dict'
+import { trasCarga } from '../lib/trasCarga'
 import { cargaFuenteArabe } from '../lib/arabicFont'
 
 interface LanguageContextType {
@@ -88,8 +89,10 @@ export function LanguageProvider({ children, inicial }: { children: ReactNode; i
   useEffect(() => {
     if (isLoaded(lang)) { setDictReady((n) => n + 1); return }
     let alive = true
-    loadPhrases(lang).then(() => { if (alive) setDictReady((n) => n + 1) })
-    return () => { alive = false }
+    // Las páginas que pintan con el diccionario ya lo traen cargado (main.tsx);
+    // para el resto es secundario y se pide cuando la página ya ha cargado.
+    const cancela = trasCarga(() => loadPhrases(lang).then(() => { if (alive) setDictReady((n) => n + 1) }))
+    return () => { alive = false; cancela() }
   }, [lang])
 
   // dictReady entra en las dependencias a propósito: al llegar el diccionario

@@ -1,11 +1,18 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
-import { Component, useEffect, lazy, Suspense } from 'react'
+import { Component, useEffect, useState, lazy, Suspense } from 'react'
+import { trasCarga } from './lib/trasCarga'
 import type { ReactNode } from 'react'
 import { HelmetProvider } from 'react-helmet-async'
 import { LanguageProvider, detectLang } from './contexts/LanguageContext'
 import { translate } from './lib/dict'
 // Perezoso: es lo único del arranque que usaba framer-motion (38 KB).
 const CookieBanner = lazy(() => import('./components/CookieBanner').then((m) => ({ default: m.CookieBanner })))
+/** El aviso de cookies (y framer-motion con él) se pide cuando la página ya ha cargado. */
+function CookieTardio({ compacto }: { compacto?: boolean }) {
+  const [ya, setYa] = useState(false)
+  useEffect(() => trasCarga(() => setYa(true)), [])
+  return ya ? <Suspense fallback={null}><CookieBanner compacto={compacto} /></Suspense> : null
+}
 const Privacy = lazy(() => import('./pages/Privacy'))
 const Terms = lazy(() => import('./pages/Terms'))
 const Cookies = lazy(() => import('./pages/Cookies'))
@@ -108,7 +115,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <CiudadPagina key={pathname} pg={ciudad} />
-        <CookieBanner compacto />
+        <CookieTardio compacto />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -121,7 +128,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
-        <CookieBanner compacto />
+        <CookieTardio compacto />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -141,7 +148,7 @@ export function Layout() {
             <Route path="/accessibility" element={<Accessibility />} />
           </Routes>
         </Suspense>
-        <CookieBanner compacto />
+        <CookieTardio compacto />
       </MarcoLegal>
     )
   }
