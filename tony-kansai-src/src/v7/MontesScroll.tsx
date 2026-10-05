@@ -14,11 +14,11 @@ import { movimientoReducido } from './petalos'
 import { suena } from './sonido'
 
 interface Meta { min: number; max: number; punto: [number, number]; lado: number }
-interface Monte { alturas: Float32Array; foto: THREE.Texture; punto: [number, number] }
+interface Monte { alturas: Float32Array; foto: THREE.Texture; punto: [number, number]; min: number; escala: number }
 
 const N = 256            // vértices por lado (el DEM horneado es 768 px: uno de cada 3)
 const LADO = 10          // lado del relieve en unidades de escena
-const EXAGERA = 1.7      // exageración vertical: a escala real, un monte de 1.000 m en 6 km se ve plano
+const EXAGERA = 2.3      // exageración vertical: a escala real, un monte de 1.000 m en 6 km se ve plano
 
 async function cargaMonte(id: MonteId, meta: Meta): Promise<Monte> {
   const [dem, foto] = await Promise.all([
@@ -44,7 +44,7 @@ async function cargaMonte(id: MonteId, meta: Meta): Promise<Monte> {
   }
   foto.colorSpace = THREE.NoColorSpace
   foto.anisotropy = 8
-  return { alturas, foto, punto: meta.punto }
+  return { alturas, foto, punto: meta.punto, min: meta.min, escala }
 }
 
 interface Props {
@@ -115,20 +115,32 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
     vacia.needsUpdate = true
     const uniforms = {
       uA: { value: vacia as THREE.Texture }, uB: { value: vacia as THREE.Texture },
-      uMezcla: { value: 0 }, uOpacidad: { value: 1 }, uLuz: { value: new THREE.Vector3(-0.5, 0.8, 0.4).normalize() },
+      uMezcla: { value: 0 }, uOpacidad: { value: 1 }, uLuz: { value: new THREE.Vector3(-0.75, 0.45, 0.35).normalize() },
+      // Para pasar de unidades de escena a metros reales (curvas de nivel).
+      uMin: { value: 0 }, uEscala: { value: 1 }, uTinta: { value: new THREE.Color('#c0281b') },
     }
     const relieve = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       uniforms, transparent: true,
-      vertexShader: `varying vec2 vUv; varying vec3 vN;
-        void main(){ vUv = uv; vN = normalize(normal); gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      vertexShader: `varying vec2 vUv; varying vec3 vN; varying float vY;
+        void main(){ vUv = uv; vN = normalize(normal); vY = position.y; gl_Position = projectionMatrix * modelViewMatrix * vec4(position,1.0); }`,
+      // Luz rasante de tarde (las laderas en sombra se ven de verdad) y las
+      // curvas de nivel reales en rojo de sello: cada 50 m una fina, cada
+      // 250 m una maestra. La forma de las curvas es la huella de cada monte.
       fragmentShader: `uniform sampler2D uA; uniform sampler2D uB; uniform float uMezcla; uniform float uOpacidad; uniform vec3 uLuz;
-        varying vec2 vUv; varying vec3 vN;
+        uniform float uMin; uniform float uEscala; uniform vec3 uTinta;
+        varying vec2 vUv; varying vec3 vN; varying float vY;
+        float curva(float h, float paso, float ancho){ float x = h / paso; float d = abs(fract(x - 0.5) - 0.5) / fwidth(x); return 1.0 - min(d / ancho, 1.0); }
         void main(){
           vec3 c = mix(texture2D(uA, vUv).rgb, texture2D(uB, vUv).rgb, uMezcla);
-          float luz = 0.62 + 0.55 * max(dot(normalize(vN), uLuz), 0.0);
+          float sol = max(dot(normalize(vN), uLuz), 0.0);
+          float luz = 0.38 + 0.95 * sol;
+          c = c * luz;
+          float metros = vY / uEscala + uMin;
+          float lineas = max(curva(metros, 50.0, 0.9) * 0.45, curva(metros, 250.0, 1.6));
+          c = mix(c, uTinta, lineas * 0.75 * (1.0 - sin(3.14159 * uMezcla)));
           // Bordes en bruma: el relieve flota como una isla sobre el papel.
-          float borde = smoothstep(0.5, 0.33, distance(vUv, vec2(0.5)));
-          gl_FragColor = vec4(c * luz, borde * uOpacidad);
+          float borde = smoothstep(0.5, 0.36, distance(vUv, vec2(0.5)));
+          gl_FragColor = vec4(c, borde * uOpacidad);
         }`,
     }))
     escena.add(relieve)
@@ -205,6 +217,8 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
           pos.needsUpdate = true
           geo.computeVertexNormals()
           uniforms.uA.value = A.foto; uniforms.uB.value = B.foto
+          uniforms.uMin.value = A.min + (B.min - A.min) * f
+          uniforms.uEscala.value = A.escala + (B.escala - A.escala) * f
           actualA = a; actualB = b; mostrado = f
         }
         uniforms.uMezcla.value = f
@@ -218,9 +232,10 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
         const pv = A.punto[1] + (B.punto[1] - A.punto[1]) * f
         const x = (pu - 0.5) * LADO, z = (pv - 0.5) * LADO
         const y = alturaEn(A, A.punto[0], A.punto[1]) * (1 - f) + alturaEn(B, B.punto[0], B.punto[1]) * f
-        const ang = 0.6 + q * 0.7 + (reducido ? 0 : t / 1000 * 0.035)
+        // Cada monte se mira desde otro rumbo (≈ 100° de giro entre uno y otro).
+        const ang = 0.6 + q * 1.75 + (reducido ? 0 : t / 1000 * 0.035)
         const objetivoCam = new THREE.Vector3(x * 0.35, y * 0.45, z * 0.35)
-        camara.position.set(objetivoCam.x + Math.sin(ang) * 11.5, objetivoCam.y + 6.4, objetivoCam.z + Math.cos(ang) * 11.5)
+        camara.position.set(objetivoCam.x + Math.sin(ang) * 12.5, objetivoCam.y + 5.2, objetivoCam.z + Math.cos(ang) * 12.5)
         camara.lookAt(objetivoCam)
         hilo.position.set(x, y + 0.7 + 0.05, z)
         gota.position.set(x, y + 0.05, z)
@@ -230,7 +245,8 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
         // Etiqueta HTML sobre la cima.
         if (etiqueta.current) {
           const v = new THREE.Vector3(x, y + 1.45, z).project(camara)
-          etiqueta.current.style.transform = `translate(${((v.x + 1) / 2) * caja.clientWidth}px, ${((1 - v.y) / 2) * caja.clientHeight}px)`
+          // Nunca bajo la cabecera: con el monte muy alto, la etiqueta se queda abajo de ella.
+          etiqueta.current.style.transform = `translate(${((v.x + 1) / 2) * caja.clientWidth}px, ${Math.max(118, ((1 - v.y) / 2) * caja.clientHeight)}px)`
           etiqueta.current.style.opacity = String(1 - dis)
           const nombre = nombres[montes[f < 0.5 ? a : b]]
           if (etiqueta.current.textContent !== nombre) etiqueta.current.textContent = nombre

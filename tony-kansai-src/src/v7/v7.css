@@ -1158,3 +1158,13 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v9-pasos p { color: var(--tenue); }
 #como .v7-bento-no { margin-top: var(--e-4); }
 @media (max-width: 820px) { .v9-pasos { grid-template-columns: 1fr; } }
+
+/* Montañas: coordenadas reales con enlace al mapa, y etiqueta con la altura. */
+.v7-monte-mapa {
+  display: inline-flex; flex-wrap: wrap; gap: 4px 10px; align-items: baseline; margin: 2px 0 14px;
+  font-size: var(--t--1); color: var(--tenue); text-decoration: none;
+}
+.v7-monte-mapa bdi { font-variant-numeric: tabular-nums; }
+.v7-monte-mapa span { color: var(--acento); text-decoration: underline; text-underline-offset: 3px; }
+.v7-monte-mapa:hover span, .v7-monte-mapa:focus-visible span { text-decoration-thickness: 2px; }
+.v7-montes-etiqueta { width: 220px; margin-left: -110px; font-size: 15px; white-space: pre; }

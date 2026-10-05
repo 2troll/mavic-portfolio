@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO } from './contenido'
-import { MONTANA, MONTES, KANJI, CIUDAD } from './datosMontana'
+import { MONTANA, MONTES, KANJI, CIUDAD, CIMA } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
 import { EfectoEstacion, estacionDeHoy } from './Estacion'
@@ -15,6 +15,7 @@ import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import './v7.css'
 import { IconoWa } from './IconoWa'
+import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 
@@ -38,7 +39,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   }, [p.lang, setLang])
 
   // Memorizado: la escena 3D se rehace si cambia esta referencia.
-  const nombres = useMemo(() => Object.fromEntries(MONTES.map((m) => [m, `${KANJI[m]} · ${tc(ruta(m).title)}`])) as Record<MonteId, string>, [tc])
+  const nombres = useMemo(() => Object.fromEntries(MONTES.map((m) => [m, `${KANJI[m]} ${tc(ruta(m).title)}  ${CIMA[m].m} m`])) as Record<MonteId, string>, [tc])
   const wa = (g: 'tony' | 'larion', texto: string) => `https://wa.me/${GUIAS[g].wa}?text=${encodeURIComponent(p.saludo(nombreGuia(g), texto))}`
 
   const capitulo = (i: number) => {
@@ -66,6 +67,10 @@ export default function Montana({ id }: { id: MontanaId }) {
           <div><dt>{p.et.epoca}</dt><dd>{tc(r.bestSeason)}</dd></div>
         </dl>
         <p className="v7-monte-nota">{tc(r.note)}</p>
+        {/* Coordenadas reales: quien dude de que el monte existe, lo abre en el mapa. */}
+        <a className="v7-monte-mapa" href={`https://www.google.com/maps/search/?api=1&query=${CIMA[m].lat},${CIMA[m].lon}`} target="_blank" rel="noopener noreferrer">
+          <bdi dir="ltr">{CIMA[m].lat.toFixed(4)}° N, {CIMA[m].lon.toFixed(4)}° E</bdi> <span>{p.et.mapa}</span>
+        </a>
         <div className="v7-monte-pie">
           <span className="v7-monte-precio"><bdi>{r.price}</bdi> <small>{p.et.porGrupo}</small></span>
           <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], tc(r.title))} target="_blank" rel="noopener noreferrer"
@@ -141,6 +146,7 @@ export default function Montana({ id }: { id: MontanaId }) {
           </div>
         </section>
       </main>
+      <BarraWa href={wa(p.guias[0], '')} lang={p.lang} pagina={p.id} ocultaEn=".v7-montes" />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

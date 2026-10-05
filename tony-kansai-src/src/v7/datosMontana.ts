@@ -17,6 +17,19 @@ export const KANJI: Record<MonteId, string> = {
   'mt-maya': '摩耶山', 'mt-yoshino': '吉野山', 'ponpon-mountain': 'ポンポン山', 'hoshi-no-buranko': '星のブランコ',
 }
 
+/** Cima real de cada ruta (OpenStreetMap, la misma que hornea
+ *  scripts/hornear-montes.py: si cambia una, cambiar las dos). Altura en m. */
+export const CIMA: Record<MonteId, { lat: number; lon: number; m: number }> = {
+  'mt-kongo': { lat: 34.41943, lon: 135.67293, m: 1125 },
+  'mt-atago': { lat: 35.06005, lon: 135.63429, m: 924 },
+  'mt-hiei': { lat: 35.06687, lon: 135.83410, m: 848 },
+  'mt-rokko': { lat: 34.77799, lon: 135.26374, m: 931 },
+  'mt-maya': { lat: 34.73298, lon: 135.20488, m: 699 },
+  'mt-yoshino': { lat: 34.34139, lon: 135.88795, m: 858 },
+  'ponpon-mountain': { lat: 34.93521, lon: 135.62382, m: 679 },
+  'hoshi-no-buranko': { lat: 34.75285, lon: 135.68531, m: 155 }, // suelo bajo el puente, DEM del GSI
+}
+
 export interface PaginaMontana {
   id: MontanaId
   lang: 'es' | 'en' | 'ar' | 'ru'
@@ -25,7 +38,7 @@ export interface PaginaMontana {
   guias: GuiaId[]
   seo: { titulo: string; descripcion: string }
   intro: { antetitulo: string; titulo: string; sub: string; baja: string }
-  et: { altitud: string; subida: string; total: string; dificultad: string; epoca: string; llevar: string; pedir: string; porGrupo: string; ciudad: string; fuente: string }
+  et: { altitud: string; subida: string; total: string; dificultad: string; epoca: string; llevar: string; pedir: string; porGrupo: string; ciudad: string; fuente: string; mapa: string }
   oficio: { titulo: string; puntos: { t: string; d: string }[] }
   final: { titulo: string; sub: string; escribir: (nombre: string) => string }
   saludo: (guia: string, ruta: string) => string
@@ -44,7 +57,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
       sub: 'Ocho rutas con guía alrededor de Osaka, Kioto, Nara y Kobe. Santuarios en la cima, senderos casi vacíos entre semana y la ciudad entera a tus pies.',
       baja: 'Baja para recorrerlas',
     },
-    et: { altitud: 'Altitud', subida: 'Subida', total: 'Día completo', dificultad: 'Dificultad', epoca: 'Mejor época', llevar: 'Qué llevar', pedir: 'Quiero esta ruta', porGrupo: 'por grupo', ciudad: 'Tours por la ciudad', fuente: 'Relieve y foto aérea: 出典 国土地理院 (Instituto Geográfico de Japón)' },
+    et: { altitud: 'Altitud', subida: 'Subida', total: 'Día completo', dificultad: 'Dificultad', epoca: 'Mejor época', llevar: 'Qué llevar', pedir: 'Quiero esta ruta', porGrupo: 'por grupo', ciudad: 'Tours por la ciudad', mapa: 'Ver en Google Maps', fuente: 'Relieve y foto aérea: 出典 国土地理院 (Instituto Geográfico de Japón)' },
     oficio: {
       titulo: 'Cómo trabajamos en la montaña',
       puntos: [
@@ -71,7 +84,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
       sub: 'Eight guided routes around Osaka, Kyoto, Nara and Kobe. Shrines on the summits, trails that are nearly empty on weekdays, and the whole city at your feet.',
       baja: 'Scroll to walk them',
     },
-    et: { altitud: 'Altitude', subida: 'Ascent', total: 'Full day', dificultad: 'Difficulty', epoca: 'Best season', llevar: 'What to bring', pedir: 'I want this route', porGrupo: 'per group', ciudad: 'City tours', fuente: 'Terrain and aerial photo: 出典 国土地理院 (Geospatial Information Authority of Japan)' },
+    et: { altitud: 'Altitude', subida: 'Ascent', total: 'Full day', dificultad: 'Difficulty', epoca: 'Best season', llevar: 'What to bring', pedir: 'I want this route', porGrupo: 'per group', ciudad: 'City tours', mapa: 'See it on Google Maps', fuente: 'Terrain and aerial photo: 出典 国土地理院 (Geospatial Information Authority of Japan)' },
     oficio: {
       titulo: 'How we work in the mountains',
       puntos: [
@@ -98,7 +111,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
       sub: 'ثمانية مسارات مع مرشد حول أوساكا وكيوتو ونارا وكوبي. أضرحة على القمم، ودروب شبه خالية في أيام الأسبوع، والمدينة كلها تحت قدميك.',
       baja: 'مرّر للأسفل لتسلكها',
     },
-    et: { altitud: 'الارتفاع', subida: 'الصعود', total: 'يوم كامل', dificultad: 'الصعوبة', epoca: 'أفضل موسم', llevar: 'ماذا تحمل', pedir: 'أريد هذا المسار', porGrupo: 'للمجموعة', ciudad: 'جولات المدينة', fuente: 'التضاريس والصورة الجوية: 出典 国土地理院 (هيئة المعلومات الجغرافية اليابانية)' },
+    et: { altitud: 'الارتفاع', subida: 'الصعود', total: 'يوم كامل', dificultad: 'الصعوبة', epoca: 'أفضل موسم', llevar: 'ماذا تحمل', pedir: 'أريد هذا المسار', porGrupo: 'للمجموعة', ciudad: 'جولات المدينة', mapa: 'عرض على خرائط Google', fuente: 'التضاريس والصورة الجوية: 出典 国土地理院 (هيئة المعلومات الجغرافية اليابانية)' },
     oficio: {
       titulo: 'كيف نعمل في الجبل',
       puntos: [
@@ -125,7 +138,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
       sub: 'Восемь маршрутов с гидом вокруг Осаки, Киото, Нары и Кобе. Святилища на вершинах, почти пустые тропы в будни и весь город у ваших ног.',
       baja: 'Листайте вниз, чтобы пройти их',
     },
-    et: { altitud: 'Высота', subida: 'Подъём', total: 'Целый день', dificultad: 'Сложность', epoca: 'Лучший сезон', llevar: 'Что взять', pedir: 'Хочу этот маршрут', porGrupo: 'за группу', ciudad: 'Экскурсии по городу', fuente: 'Рельеф и аэрофото: 出典 国土地理院 (Институт геоинформации Японии)' },
+    et: { altitud: 'Высота', subida: 'Подъём', total: 'Целый день', dificultad: 'Сложность', epoca: 'Лучший сезон', llevar: 'Что взять', pedir: 'Хочу этот маршрут', porGrupo: 'за группу', ciudad: 'Экскурсии по городу', mapa: 'Открыть на Google Картах', fuente: 'Рельеф и аэрофото: 出典 国土地理院 (Институт геоинформации Японии)' },
     oficio: {
       titulo: 'Как мы работаем в горах',
       puntos: [
