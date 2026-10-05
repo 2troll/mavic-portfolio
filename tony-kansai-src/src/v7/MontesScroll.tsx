@@ -8,40 +8,57 @@
 
 import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import * as THREE from 'three'
+import type * as T3 from 'three'
+
+// three.js (~600 KB) se descarga solo cuando arranca el 3D, no con la página.
+type Three = typeof import('three')
 import type { MonteId } from './datosMontana'
 import { movimientoReducido } from './petalos'
 import { suena } from './sonido'
 
 interface Meta { min: number; max: number; punto: [number, number]; lado: number }
-interface Monte { alturas: Float32Array; foto: THREE.Texture; punto: [number, number]; min: number; escala: number }
+interface Monte { alturas: Float32Array; foto: T3.Texture; punto: [number, number]; min: number; escala: number }
 
 const N = 256            // vértices por lado (el DEM horneado es 768 px: uno de cada 3)
 const LADO = 10          // lado del relieve en unidades de escena
 const EXAGERA = 2.3      // exageración vertical: a escala real, un monte de 1.000 m en 6 km se ve plano
 
-async function cargaMonte(id: MonteId, meta: Meta): Promise<Monte> {
-  const [dem, foto] = await Promise.all([
-    fetch(`/v7/montes/${id}-dem.png`).then((r) => r.blob()).then((b) => createImageBitmap(b, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' })),
+/** Alturas en un worker (si hay OffscreenCanvas); si no, en el hilo principal. */
+function alturasDem(url: string, min: number, escala: number): Promise<Float32Array> {
+  if (typeof OffscreenCanvas !== 'undefined' && typeof Worker !== 'undefined') {
+    return new Promise((ok, mal) => {
+      const w = new Worker(new URL('./demWorker.ts', import.meta.url), { type: 'module' })
+      w.onmessage = (e) => { w.terminate(); e.data.error ? mal(new Error(e.data.error)) : ok(e.data.alturas) }
+      w.onerror = (e) => { w.terminate(); mal(e) }
+      w.postMessage({ url, n: N, min, escala })
+    })
+  }
+  return fetch(url).then((r) => r.blob()).then((b) => createImageBitmap(b, { colorSpaceConversion: 'none', premultiplyAlpha: 'none' })).then((dem) => {
+    const c = document.createElement('canvas')
+    c.width = dem.width; c.height = dem.height
+    const g = c.getContext('2d', { willReadFrequently: true })!
+    g.drawImage(dem, 0, 0)
+    const px = g.getImageData(0, 0, c.width, c.height).data
+    const paso = c.width / N
+    const alturas = new Float32Array(N * N)
+    for (let fila = 0; fila < N; fila++) {
+      for (let col = 0; col < N; col++) {
+        const i = (Math.floor(fila * paso + paso / 2) * c.width + Math.floor(col * paso + paso / 2)) * 4
+        const x = px[i] * 65536 + px[i + 1] * 256 + px[i + 2]
+        const m = x === 8388608 ? min : (x > 8388608 ? x - 16777216 : x) * 0.01
+        alturas[fila * N + col] = (m - min) * escala
+      }
+    }
+    return alturas
+  })
+}
+
+async function cargaMonte(THREE: Three, id: MonteId, meta: Meta): Promise<Monte> {
+  const escala = (LADO / meta.lado) * EXAGERA
+  const [alturas, foto] = await Promise.all([
+    alturasDem(`/v7/montes/${id}-dem.png`, meta.min, escala),
     new THREE.TextureLoader().loadAsync(`/v7/montes/${id}-foto.webp`),
   ])
-  const c = document.createElement('canvas')
-  c.width = dem.width; c.height = dem.height
-  const g = c.getContext('2d', { willReadFrequently: true })!
-  g.drawImage(dem, 0, 0)
-  const px = g.getImageData(0, 0, c.width, c.height).data
-  const paso = c.width / N
-  const escala = (LADO / meta.lado) * EXAGERA
-  const alturas = new Float32Array(N * N)
-  for (let fila = 0; fila < N; fila++) {
-    for (let col = 0; col < N; col++) {
-      const i = (Math.floor(fila * paso + paso / 2) * c.width + Math.floor(col * paso + paso / 2)) * 4
-      const x = px[i] * 65536 + px[i + 1] * 256 + px[i + 2]
-      // Codificación del dem_png del GSI: 2^23 = sin dato (mar).
-      const m = x === 8388608 ? meta.min : (x > 8388608 ? x - 16777216 : x) * 0.01
-      alturas[fila * N + col] = (m - meta.min) * escala
-    }
-  }
   foto.colorSpace = THREE.NoColorSpace
   foto.anisotropy = 8
   return { alturas, foto, punto: meta.punto, min: meta.min, escala }
@@ -62,6 +79,19 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
   const progreso = useRef(0)
   const [cap, setCap] = useState(0)
   const [listo, setListo] = useState(false)
+  // Sin GPU de verdad (WebGL por software), el relieve bloquea el móvil
+  // varios segundos: en su lugar, la foto aérea real de cada monte.
+  const [sinGpu, setSinGpu] = useState(false)
+  // El 3D arranca con el primer gesto (scroll, toque, ratón, tecla): crear el
+  // contexto WebGL cuesta de 4 a 7 s en móviles sin GPU, y nadie lo ve
+  // hasta mover la página. Mientras, se ve la foto aérea del primer monte.
+  const [activo, setActivo] = useState(false)
+  useEffect(() => {
+    const ya = () => setActivo(true)
+    const ev = ['scroll', 'pointermove', 'touchstart', 'keydown', 'wheel'] as const
+    ev.forEach((e) => addEventListener(e, ya, { once: true, passive: true }))
+    return () => ev.forEach((e) => removeEventListener(e, ya))
+  }, [])
   const capitulos = montes.length + 1
 
   // Scroll → progreso 0 … capitulos-1.
@@ -91,12 +121,14 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
     return () => { cancelAnimationFrame(raf); window.removeEventListener('scroll', alScroll); window.removeEventListener('resize', alScroll) }
   }, [capitulos])
 
-  // La escena 3D.
-  useEffect(() => {
-    const caja = lienzo.current
-    if (!caja) return
-    let renderer: THREE.WebGLRenderer
-    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }) } catch { return }
+  // La escena 3D: monta(THREE, caja) la crea y devuelve cómo deshacerla.
+  const monta = (THREE: Three, caja: HTMLDivElement): (() => void) | undefined => {
+    let renderer: T3.WebGLRenderer
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, failIfMajorPerformanceCaveat: true }) } catch { setSinGpu(true); return }
+    // SwiftShader y compañía no cuentan como «caveat» en Chrome: se mira el nombre.
+    const info = renderer.getContext().getExtension('WEBGL_debug_renderer_info')
+    const gpu = info ? String(renderer.getContext().getParameter(info.UNMASKED_RENDERER_WEBGL)) : ''
+    if (/swiftshader|llvmpipe|software|basic render/i.test(gpu)) { renderer.dispose(); setSinGpu(true); return }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
     renderer.domElement.setAttribute('aria-hidden', 'true')
     caja.prepend(renderer.domElement)
@@ -106,7 +138,7 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
 
     const geo = new THREE.PlaneGeometry(LADO, LADO, N - 1, N - 1)
     geo.rotateX(-Math.PI / 2)
-    const pos = geo.attributes.position as THREE.BufferAttribute
+    const pos = geo.attributes.position as T3.BufferAttribute
     const azar = new Float32Array(N * N)
     for (let i = 0; i < azar.length; i++) azar[i] = Math.random()
     geo.setAttribute('aAzar', new THREE.BufferAttribute(azar, 1))
@@ -114,7 +146,7 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
     const vacia = new THREE.DataTexture(new Uint8Array([236, 230, 218, 255]), 1, 1)
     vacia.needsUpdate = true
     const uniforms = {
-      uA: { value: vacia as THREE.Texture }, uB: { value: vacia as THREE.Texture },
+      uA: { value: vacia as T3.Texture }, uB: { value: vacia as T3.Texture },
       uMezcla: { value: 0 }, uOpacidad: { value: 1 }, uLuz: { value: new THREE.Vector3(-0.75, 0.45, 0.35).normalize() },
       // Para pasar de unidades de escena a metros reales (curvas de nivel).
       uMin: { value: 0 }, uEscala: { value: 1 }, uTinta: { value: new THREE.Color('#c0281b') },
@@ -239,8 +271,8 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
         camara.lookAt(objetivoCam)
         hilo.position.set(x, y + 0.7 + 0.05, z)
         gota.position.set(x, y + 0.05, z)
-        ;(hilo.material as THREE.MeshBasicMaterial).opacity = 1 - dis
-        ;(gota.material as THREE.MeshBasicMaterial).opacity = 1 - dis
+        ;(hilo.material as T3.MeshBasicMaterial).opacity = 1 - dis
+        ;(gota.material as T3.MeshBasicMaterial).opacity = 1 - dis
 
         // Etiqueta HTML sobre la cima.
         if (etiqueta.current) {
@@ -264,7 +296,7 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
     fetch('/v7/montes/montes.json').then((r) => r.json()).then(async (meta: Record<MonteId, Meta>) => {
       for (let i = 0; i < montes.length && vivo; i++) {
         try {
-          datos[i] = await cargaMonte(montes[i], meta[montes[i]])
+          datos[i] = await cargaMonte(THREE, montes[i], meta[montes[i]])
           if (i === 0) setListo(true)
           actualA = -1
           sigue()
@@ -279,12 +311,24 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
       datos.forEach((d) => d?.foto.dispose())
       geo.dispose(); renderer.dispose(); renderer.domElement.remove()
     }
-  }, [montes, nombres])
+  }
+  useEffect(() => {
+    const caja = lienzo.current
+    if (!caja || !activo) return
+    let cancelado = false
+    let fin: (() => void) | undefined
+    import('three').then((THREE) => { if (!cancelado) fin = monta(THREE, caja) }).catch(() => setSinGpu(true))
+    return () => { cancelado = true; fin?.() }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [montes, nombres, activo])
 
   return (
     <section ref={seccion} className="v7-montes" style={{ height: `${capitulos * 100}vh` }} aria-label={etiquetaAria}>
       <div className="v7-montes-fijo">
-        <div ref={lienzo} className={`v7-montes-lienzo ${listo ? 'listo' : ''}`}>
+        <div ref={lienzo} className={`v7-montes-lienzo listo`}>
+          {(sinGpu || !listo) && montes.map((m, i) => Math.abs(Math.max(0, cap - 1) - i) <= 1 && (
+            <img loading={i === 0 ? 'eager' : 'lazy'} {...(i === 0 ? { fetchpriority: 'high' } : {})} key={m} className={`v7-montes-plano ${Math.max(0, cap - 1) === i ? 'activo' : ''} ${sinGpu ? '' : 'poster'}`} src={`/v7/montes/${m}-foto-640.webp`} alt="" decoding="async" />
+          ))}
           <span ref={etiqueta} className="v7-montes-etiqueta" aria-hidden="true" />
         </div>
         <div className="v7-montes-texto">

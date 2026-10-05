@@ -1168,3 +1168,11 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-monte-mapa span { color: var(--acento); text-decoration: underline; text-underline-offset: 3px; }
 .v7-monte-mapa:hover span, .v7-monte-mapa:focus-visible span { text-decoration-thickness: 2px; }
 .v7-montes-etiqueta { width: 220px; margin-left: -110px; font-size: 15px; white-space: pre; }
+
+/* Sin GPU: la foto aérea del monte, en un círculo de bruma como el relieve. */
+.v7-montes-plano {
+  position: absolute; inset: 12% 8% 12% auto; width: min(72vh, 58%); aspect-ratio: 1; object-fit: cover; border-radius: 50%;
+  opacity: 0; transition: opacity 0.6s ease; mask-image: radial-gradient(circle, #000 55%, transparent 71%);
+}
+.v7-montes-plano.activo { opacity: 1; }
+@media (max-width: 820px) { .v7-montes-plano { inset: 14% 0 auto 0; margin: 0 auto; width: min(90vw, 50vh); } }

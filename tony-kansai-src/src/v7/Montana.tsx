@@ -138,7 +138,7 @@ export default function Montana({ id }: { id: MontanaId }) {
           <div className="v7-montana-guias">
             {p.guias.map((g) => (
               <a key={g} className="v7-montana-guia tarjeta" href={wa(g, '')} target="_blank" rel="noopener noreferrer">
-                <img src={GUIAS[g].foto} alt="" width={72} height={72} loading="lazy" />
+                <img loading="lazy" src={GUIAS[g].foto} alt="" width={72} height={72} />
                 <span><strong>{nombreGuia(g)}</strong><small>{g === 'tony' ? 'Español · English · العربية' : 'Русский · English'}</small></span>
                 <span className="v7-boton v7-boton-peq">{p.final.escribir(nombreGuia(g))}</span>
               </a>
