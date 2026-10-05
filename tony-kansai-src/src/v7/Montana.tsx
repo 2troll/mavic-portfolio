@@ -26,6 +26,39 @@ const IDIOMAS: { id: MontanaId; etiqueta: string }[] = [
 ]
 
 type Ruta = (typeof HIKING_ROUTES)[number]
+
+/** Para Google: las ocho rutas como TouristTrip, con su monte real
+ *  (coordenadas y altura) y el precio por grupo. */
+function datosEstructurados(p: (typeof MONTANA)[MontanaId], tc: (t: string) => string) {
+  const g = GUIAS[p.guias[0]]
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    name: p.seo.titulo,
+    itemListElement: MONTES.map((m, i) => {
+      const r = ruta(m)
+      const precio = Number(String(r.price).replace(/[^0-9]/g, ''))
+      return {
+        '@type': 'ListItem', position: i + 1,
+        item: {
+          '@type': 'TouristTrip',
+          name: tc(r.title),
+          description: tc(r.note),
+          inLanguage: p.lang,
+          touristType: 'Guided hiking',
+          url: `${BASE}${p.ruta}`,
+          itinerary: {
+            '@type': 'Mountain', name: `${tc(r.title)} (${KANJI[m]})`,
+            geo: { '@type': 'GeoCoordinates', latitude: CIMA[m].lat, longitude: CIMA[m].lon, elevation: CIMA[m].m },
+          },
+          provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE } },
+          ...(precio > 0 ? { offers: { '@type': 'Offer', price: precio, priceCurrency: 'JPY', availability: 'https://schema.org/InStock', url: `${BASE}${p.ruta}`,
+            eligibleQuantity: { '@type': 'QuantitativeValue', maxValue: 6, unitText: 'people per group' } } } : {}),
+        },
+      }
+    }),
+  }
+}
 const ruta = (id: MonteId) => HIKING_ROUTES.find((r) => r.id === id) as Ruta
 
 export default function Montana({ id }: { id: MontanaId }) {
@@ -94,6 +127,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <meta property="og:description" content={p.seo.descripcion} />
         <meta property="og:url" content={`${BASE}${p.ruta}`} />
         <meta property="og:image" content={`${BASE}/v7/fotos/kioto.jpg`} />
+        <script type="application/ld+json">{JSON.stringify(datosEstructurados(p, tc))}</script>
       </Helmet>
 
       <header className="v7-cabecera cristal">
