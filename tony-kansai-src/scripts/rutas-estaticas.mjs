@@ -52,6 +52,19 @@ const rutas = [...readFileSync(join(dest, 'sitemap.xml'), 'utf8').matchAll(/<loc
   .map((m) => m[1].replace(BASE, '').replace(/^\/+|\/+$/g, ''))
   .filter(Boolean)
 
+// Web antigua: fuera del sitemap, pero sigue respondiendo (enlaces viejos y lo
+// que Google ya tenía). La app redirige a la página nueva en el idioma del
+// visitante; para Google, noindex y canonical a la equivalente en inglés.
+const ANTIGUAS = JSON.parse(readFileSync(new URL('./rutas-antiguas.json', import.meta.url), 'utf8'))
+for (const [ruta, nueva] of Object.entries(ANTIGUAS)) {
+  const html = base
+    .replace(/^\s*<link rel="alternate" hreflang=.*\n/gm, '')
+    .replace(/(<link rel="canonical" href=")[^"]*(")/, `$1${BASE}${nueva}$2`)
+    .replace(/<meta name="robots" content="[^"]*"\s*\/?>/, '<meta name="robots" content="noindex, follow" />')
+  mkdirSync(join(dest, ruta), { recursive: true })
+  writeFileSync(join(dest, ruta, 'index.html'), html)
+}
+
 let propias = 0
 let pintadas = 0
 for (const ruta of rutas) {
@@ -110,4 +123,4 @@ for (const ruta of rutas) {
   mkdirSync(join(dest, ruta), { recursive: true })
   writeFileSync(join(dest, ruta, 'index.html'), html)
 }
-console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas`)
+console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex`)

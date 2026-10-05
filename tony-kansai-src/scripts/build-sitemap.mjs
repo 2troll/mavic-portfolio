@@ -46,15 +46,8 @@ const paginas = [
   { loc: '/ar/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
   { loc: '/ru/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasLarion' },
   { loc: '/larion/routes', priority: '0.8', changefreq: 'monthly', v7: 'rutasLarion' },
-  { loc: '/tours', priority: '0.9', changefreq: 'weekly' },
-  ...tours.map((id) => ({ loc: `/tours/${id}`, priority: '0.85', changefreq: 'monthly' })),
-  { loc: '/hiking', priority: '0.9', changefreq: 'weekly' },
-  ...rutas.map((id) => ({ loc: `/hiking/${id}`, priority: '0.8', changefreq: 'monthly' })),
-  { loc: '/guide', priority: '0.85', changefreq: 'monthly' },
-  { loc: '/book', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/about', priority: '0.8', changefreq: 'monthly' },
-  { loc: '/pricing', priority: '0.85', changefreq: 'monthly' },
-  { loc: '/faq', priority: '0.7', changefreq: 'monthly' },
+  // La web antigua (/tours, /hiking, /pricing…) ya no va aquí: redirige a la
+  // nueva y sus páginas llevan noindex + canonical (rutas-estaticas.mjs).
   { loc: '/booking', priority: '0.9', changefreq: 'weekly' },
   { loc: '/resenas.html', priority: '0.7', changefreq: 'weekly' },
   { loc: '/terms', priority: '0.4', changefreq: 'yearly' },

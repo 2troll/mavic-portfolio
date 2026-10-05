@@ -134,3 +134,19 @@ export const MANGA_APROBADO: string[] = [
 // personaje manga sonriendo delante de un memorial no toca.
 // Vacío hasta tener las figuras nuevas (Gemini, con su foto de referencia).
 export const FIGURAS: string[] = []
+
+/** Título para Google: lo que la gente busca («guía privado en Kioto en
+ *  español»), no el lema. «Más lejos» no es una búsqueda: se nombran sus sitios. */
+export function tituloSeo(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
+  const c = CIUDADES[id]
+  const lugar = id === 'beyond'
+    ? ({ es: 'Kōyasan y Kumano', en: 'Kōyasan & Kumano', ar: 'كوياسان وكومانو', ru: 'Коя-сан и Кумано' } as Record<Lengua, string>)[lang]
+    : c.nombre[lang]
+  const t: Record<Lengua, string> = {
+    es: `Guía privado en ${lugar} en español`,
+    en: guia === 'larion' ? `Private guide in ${lugar} (Russian, English)` : `Private tour guide in ${lugar}`,
+    ar: `مرشد سياحي خاص في ${lugar} بالعربية`,
+    ru: `${lugar}: частный гид на русском`,
+  }
+  return `${t[lang]} | Tony Kansai Guide`
+}

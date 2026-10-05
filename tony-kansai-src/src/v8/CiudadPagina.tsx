@@ -18,7 +18,7 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
@@ -91,7 +91,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   const hermanas = guia === 'larion' ? (['/ru', '/larion'] as const) : (['/es', '/en', '/ar'] as const)
   const etiquetaIdioma: Record<string, string> = { '/es': 'Español', '/en': 'English', '/ar': 'العربية', '/ru': 'Русский', '/larion': 'English' }
   const langDe = (p: string): Lengua => (p === '/larion' ? 'en' : (p.slice(1) as Lengua))
-  const titulo = `${c.nombre[lang]} · ${c.lema[lang]} | Tony Kansai Guide`
+  const titulo = tituloSeo(c.id, lang, guia)
   const wa = `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(`${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)}`
 
   return (

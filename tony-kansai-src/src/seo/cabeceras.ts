@@ -8,7 +8,7 @@ import { PAGINAS, HERMANAS } from '../v7/contenido'
 import { MONTANA } from '../v7/datosMontana'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
 
 export interface Cabecera {
   titulo: string
@@ -62,8 +62,9 @@ export function cabeceras(): Record<string, Cabecera> {
     for (const id of lista) {
       const c = CIUDADES[id]
       todas[`${p}/${id}`] = {
-        titulo: `${c.nombre[lang]} · ${c.lema[lang]} | Tony Kansai Guide`,
-        descripcion: `${c.lema[lang]} ${c.zonas.map((z) => z.nombre[lang]).join(', ')}.`,
+        titulo: tituloSeo(id, lang, guia),
+        // Igual que en la página: lema y cuatro zonas (con todas pasaba de 160).
+        descripcion: `${c.lema[lang]} ${c.zonas.slice(0, 4).map((z) => z.nombre[lang]).join(', ')}.`,
         imagen: `/v8/og/${id}.jpg`, lang, dir: dirDe(lang),
         alternos: hermanos.map((h) => [h.lang, `/${h.p}/${id}/`]),
       }

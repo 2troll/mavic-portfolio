@@ -35,8 +35,8 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-es': {
     id: 'm-es', lang: 'es', dir: 'ltr', ruta: '/es/montana/', guias: ['tony'],
     seo: {
-      titulo: 'Rutas de montaña con guía en Kansai para quien vuelve a Japón | Tony Kansai Guide',
-      descripcion: 'Ocho rutas de montaña con guía privado en español alrededor de Osaka, Kioto, Nara y Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino… Para quien ya conoce las ciudades y quiere algo distinto.',
+      titulo: 'Senderismo con guía en Kansai, en español | Tony Kansai Guide',
+      descripcion: 'Ocho rutas de montaña con guía privado en español cerca de Osaka, Kioto, Nara y Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino. Para tu segundo viaje a Japón.',
     },
     intro: {
       antetitulo: 'Para quien vuelve a Japón',
@@ -62,8 +62,8 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-en': {
     id: 'm-en', lang: 'en', dir: 'ltr', ruta: '/en/hiking/', guias: ['tony', 'larion'],
     seo: {
-      titulo: 'Guided mountain hikes in Kansai for your second trip to Japan | Tony Kansai Guide',
-      descripcion: 'Eight guided mountain routes around Osaka, Kyoto, Nara and Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino and more. For travellers who already know the cities and want something new.',
+      titulo: 'Guided hiking in Kyoto, Osaka & Kansai | Tony Kansai Guide',
+      descripcion: 'Eight guided mountain hikes near Osaka, Kyoto, Nara and Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino. For travellers who already know the cities.',
     },
     intro: {
       antetitulo: 'For your second trip to Japan',
@@ -89,7 +89,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-ar': {
     id: 'm-ar', lang: 'ar', dir: 'rtl', ruta: '/ar/hiking/', guias: ['tony'],
     seo: {
-      titulo: 'رحلات جبلية مع مرشد في كانساي لزيارتك الثانية لليابان | Tony Kansai Guide',
+      titulo: 'رحلات جبلية مع مرشد في كانساي | Tony Kansai Guide',
       descripcion: 'ثمانية مسارات جبلية مع مرشد خاص يتحدث العربية حول أوساكا وكيوتو ونارا وكوبي: كونغو وأتاغو وهيئي وروكّو ويوشينو. لمن يعرف المدن ويريد شيئاً جديداً.',
     },
     intro: {
@@ -116,7 +116,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-ru': {
     id: 'm-ru', lang: 'ru', dir: 'ltr', ruta: '/ru/hiking/', guias: ['larion'],
     seo: {
-      titulo: 'Горные походы с гидом в Кансае — для второй поездки в Японию | Tony Kansai Guide',
+      titulo: 'Горные походы с гидом в Кансае | Tony Kansai Guide',
       descripcion: 'Восемь горных маршрутов с частным гидом на русском вокруг Осаки, Киото, Нары и Кобе: Конго, Атаго, Хиэй, Рокко, Ёсино. Для тех, кто уже видел города и хочет нового.',
     },
     intro: {
