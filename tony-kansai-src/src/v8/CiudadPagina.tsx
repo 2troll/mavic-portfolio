@@ -31,6 +31,7 @@ import '../v7/v7.css'
 import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
+import { BarraWa } from '../v7/BarraWa'
 import { BotonTema } from '../v7/Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 
@@ -238,6 +239,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer">{et.escribe(g)}</a>
         </section>
       </main>
+      <BarraWa href={wa} lang={lang} pagina={`ciudad-${c.id}`} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">
