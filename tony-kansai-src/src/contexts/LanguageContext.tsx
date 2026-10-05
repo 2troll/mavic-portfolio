@@ -62,8 +62,9 @@ export function detectLang(): Lang {
   return 'en'
 }
 
-export function LanguageProvider({ children }: { children: ReactNode }) {
-  const [lang, setLangState] = useState<Lang>(detectLang)
+/** `inicial`: el idioma de la ruta en el prerender, donde no hay `window`. */
+export function LanguageProvider({ children, inicial }: { children: ReactNode; inicial?: Lang }) {
+  const [lang, setLangState] = useState<Lang>(() => inicial ?? detectLang())
   // Se incrementa cuando llega el diccionario de un idioma, para repintar.
   const [dictReady, setDictReady] = useState(() => (isLoaded(lang) ? 1 : 0))
 

@@ -38,7 +38,7 @@ const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'n
 import { execSync } from 'node:child_process'
 execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
 const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
-const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes))?$/
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking))?$/
 
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'
@@ -118,7 +118,10 @@ for (const ruta of rutas) {
     // la cabecera: si no, el HTML pintado se ve un instante sin esos estilos y
     // luego todo salta (CLS de 0,4 a 1,1 en Lighthouse).
     html = html.replace('</head>', CSS_TROZOS.map((f) => `  <link rel="stylesheet" href="/assets/${f}" />`).join('\n') + '\n  </head>')
-    const { html: cuerpo, ld } = await pinta(`/${ruta}/`)
+    const idioma = ruta.split('/')[0] === 'larion' ? 'en' : ruta.split('/')[0]
+    const ficheroDic = new URL(`../public/i18n/${idioma}.json`, import.meta.url)
+    const frases = idioma !== 'en' && existsSync(ficheroDic) ? JSON.parse(readFileSync(ficheroDic, 'utf8')) : undefined
+    const { html: cuerpo, ld } = await pinta(`/${ruta}/`, idioma, frases)
     html = html.replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
     if (ld) html = html.replace('</head>', `  ${ld}\n  </head>`)
     pintadas++

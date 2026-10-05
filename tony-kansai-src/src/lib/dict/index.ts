@@ -51,6 +51,11 @@ export function loadPhrases(lang: Lang): Promise<void> {
   return inFlight[lang]!
 }
 
+/** Para el prerender (Node, sin fetch relativo): el JSON ya leído del disco. */
+export function setPhrases(lang: Lang, data: Phrases): void {
+  loaded[lang] = data
+}
+
 export function isLoaded(lang: Lang): boolean {
   return !!loaded[lang]
 }
