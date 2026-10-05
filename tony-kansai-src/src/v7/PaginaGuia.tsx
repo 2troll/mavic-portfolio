@@ -26,6 +26,7 @@ import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
+import { enlacesHreflang } from '../seo/hreflang'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -407,8 +408,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <title>{p.seo.titulo}</title>
         <meta name="description" content={p.seo.descripcion} />
         <link rel="canonical" href={`${BASE}${p.ruta}`} />
-        {hermanas.map((h) => <link key={h.id} rel="alternate" hrefLang={PAGINAS[h.id].lang} href={`${BASE}${PAGINAS[h.id].ruta}`} />)}
-        <link rel="alternate" hrefLang="x-default" href={`${BASE}/`} />
+        {enlacesHreflang(hermanas.map((h) => ({ lang: PAGINAS[h.id].lang, href: `${BASE}${PAGINAS[h.id].ruta}` })))}
         <meta property="og:type" content="website" />
         <meta property="og:title" content={p.seo.titulo} />
         <meta property="og:description" content={p.seo.descripcion} />

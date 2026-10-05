@@ -16,6 +16,7 @@ import { Logo } from './Logo'
 import './v7.css'
 import { IconoWa } from './IconoWa'
 import { BotonTema } from './Tema'
+import { enlacesHreflang } from '../seo/hreflang'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -83,7 +84,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <title>{p.seo.titulo}</title>
         <meta name="description" content={p.seo.descripcion} />
         <link rel="canonical" href={`${BASE}${p.ruta}`} />
-        {IDIOMAS.map((x) => <link key={x.id} rel="alternate" hrefLang={MONTANA[x.id].lang} href={`${BASE}${MONTANA[x.id].ruta}`} />)}
+        {enlacesHreflang(IDIOMAS.map((x) => ({ lang: MONTANA[x.id].lang, href: `${BASE}${MONTANA[x.id].ruta}` })))}
         <meta property="og:title" content={p.seo.titulo} />
         <meta property="og:description" content={p.seo.descripcion} />
         <meta property="og:url" content={`${BASE}${p.ruta}`} />

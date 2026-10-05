@@ -32,6 +32,7 @@ import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
 import { BotonTema } from '../v7/Tema'
+import { enlacesHreflang } from '../seo/hreflang'
 
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
@@ -102,7 +103,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         {/* Lema y las cuatro zonas más conocidas: con todas pasaba de los ~155 caracteres que enseña Google. */}
         <meta name="description" content={`${c.lema[lang]} ${c.zonas.slice(0, 4).map((z) => z.nombre[lang]).join(', ')}.`} />
         <link rel="canonical" href={`${BASE}${prefijo}/${c.id}/`} />
-        {hermanas.map((h) => <link key={h} rel="alternate" hrefLang={langDe(h)} href={`${BASE}${h}/${c.id}/`} />)}
+        {enlacesHreflang(hermanas.map((h) => ({ lang: langDe(h), href: `${BASE}${h}/${c.id}/` })))}
         <meta property="og:title" content={titulo} />
         <meta property="og:image" content={`${BASE}/v8/zonas/${PORTADA[c.id]}.webp`} />
         <script type="application/ld+json">{JSON.stringify(viajeTuristico(c.id, lang, guia, prefijo))}</script>

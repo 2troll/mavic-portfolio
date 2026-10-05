@@ -1,0 +1,7 @@
+{
+  "_": "Países a los que va cada idioma (hreflang lengua-PAÍS). Google usa estas etiquetas para enseñar la página adecuada en cada país. Rusia usa ru; Ucrania no se marca porque no hay página en ucraniano.",
+  "es": ["es-ES", "es-MX"],
+  "en": ["en-GB", "en-US", "en-JP"],
+  "ar": ["ar-AE", "ar-SA", "ar-QA", "ar-KW", "ar-BH", "ar-OM"],
+  "ru": ["ru-RU"]
+}

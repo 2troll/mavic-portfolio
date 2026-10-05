@@ -12,6 +12,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
+const REGIONES = JSON.parse(readFileSync(join(root, 'src/seo/regiones.json'), 'utf8'))
 const LANGS = ['en', 'es', 'ar', 'ru']
 
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
@@ -79,7 +80,7 @@ const url = ({ loc, priority, changefreq, v7 }) => {
     const grupo = tipo === 'ciudadTony' ? [['es', `/es/${ciudad}/`], ['en', `/en/${ciudad}/`], ['ar', `/ar/${ciudad}/`]]
       : tipo === 'ciudadLarion' ? [['ru', `/ru/${ciudad}/`], ['en', `/larion/${ciudad}/`]]
       : V7[v7 === true ? 'portada' : v7]
-    const alt = grupo.map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
+    const alt = grupo.flatMap(([l, r]) => [l, ...(r.startsWith('/larion') ? [] : (REGIONES[l] ?? []))].map((x) => `\n    <xhtml:link rel="alternate" hreflang="${x}" href="${BASE}${r}"/>`)).join('')
       + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}/"/>`
     return `  <url>\n    <loc>${abs}</loc>${alt}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
   }

@@ -55,6 +55,7 @@ const rutas = [...readFileSync(join(dest, 'sitemap.xml'), 'utf8').matchAll(/<loc
 // Web antigua: fuera del sitemap, pero sigue respondiendo (enlaces viejos y lo
 // que Google ya tenía). La app redirige a la página nueva en el idioma del
 // visitante; para Google, noindex y canonical a la equivalente en inglés.
+const REGIONES = JSON.parse(readFileSync(new URL('../src/seo/regiones.json', import.meta.url), 'utf8'))
 const ANTIGUAS = JSON.parse(readFileSync(new URL('./rutas-antiguas.json', import.meta.url), 'utf8'))
 for (const [ruta, nueva] of Object.entries(ANTIGUAS)) {
   const html = base
@@ -91,7 +92,9 @@ for (const ruta of rutas) {
       .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(c.titulo)}$2`)
       .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(c.descripcion)}$2`)
       .replace(/(<meta name="twitter:image" content=")[^"]*(")/, `$1${img}$2`)
-    const alternos = c.alternos.map(([l, r]) => `    <link rel="alternate" hreflang="${l}" href="${BASE}${r}" />`).join('\n')
+    // Cada idioma, más sus países (regiones.json). La página de Larion en inglés
+    // no lleva países: los de inglés ya son de la de Tony.
+    const alternos = c.alternos.flatMap(([l, r]) => [l, ...(r.startsWith('/larion') ? [] : (REGIONES[l] ?? []))].map((x) => `    <link rel="alternate" hreflang="${x}" href="${BASE}${r}" />`)).join('\n')
     html = html.replace('</head>', `${alternos}\n    <link rel="alternate" hreflang="x-default" href="${BASE}/" />\n  </head>`)
   }
 

@@ -26,6 +26,7 @@ const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osa
 import './v7.css'
 import { IconoWa } from './IconoWa'
 import { BotonTema } from './Tema'
+import { enlacesHreflang } from '../seo/hreflang'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -82,7 +83,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <title>{SEO[id].titulo}</title>
         <meta name="description" content={SEO[id].descripcion} />
         <link rel="canonical" href={`${BASE}${pg.ruta}`} />
-        {hermanas.map((k) => <link key={k} rel="alternate" hrefLang={PAGINAS_ITIN[k].lang} href={`${BASE}${PAGINAS_ITIN[k].ruta}`} />)}
+        {enlacesHreflang(hermanas.map((k) => ({ lang: PAGINAS_ITIN[k].lang, href: `${BASE}${PAGINAS_ITIN[k].ruta}` })))}
         <meta property="og:title" content={SEO[id].titulo} />
         <meta property="og:description" content={SEO[id].descripcion} />
         <meta property="og:url" content={`${BASE}${pg.ruta}`} />
