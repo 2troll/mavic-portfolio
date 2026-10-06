@@ -432,6 +432,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
+        {/* Las preguntas de la página, para que Google pueda enseñarlas en el resultado. */}
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: p.lang,
+          mainEntity: p.faq.items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+        })}</script>
         <script type="application/ld+json">{JSON.stringify(listaTours(p.guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY, p.lang, p.guia, p.ruta.replace(/\/$/, '')))}</script>
       </Helmet>
 

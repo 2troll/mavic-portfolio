@@ -194,7 +194,7 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v9-fila-foto img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--curva); }
 @media (hover: hover) { .v9-fila:hover .v9-fila-foto img { transform: scale(1.05); } }
 .v9-fila-nombre { display: grid; gap: 4px; }
-.v9-fila-kanji { font-family: var(--mincho); font-size: var(--t--1); color: var(--sello); letter-spacing: 0.2em; }
+.v9-fila-kanji { font-family: var(--mincho); font-size: var(--t--1); color: var(--acento); letter-spacing: 0.2em; }
 .v9-fila h3 { font-size: clamp(var(--t-2), 2.6vw, var(--t-4)); font-weight: 300; letter-spacing: -0.035em; line-height: 1.05; }
 .v9-fila h3 a { color: inherit; text-decoration: none; }
 .v9-fila h3 a:hover { text-decoration: underline; text-decoration-color: var(--sello); text-decoration-thickness: 2px; text-underline-offset: 6px; }

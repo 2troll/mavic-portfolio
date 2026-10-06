@@ -709,7 +709,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-plan-destacado :is(.v7-plan-detalle, .v7-plan-grupo, .v7-plan-aprox, .v7-plan-desde) { color: color-mix(in srgb, var(--fondo) 72%, transparent); }
 .v7-plan-sello {
   position: absolute; top: 18px; inset-inline-end: 18px; font-size: 12px; font-weight: 600;
-  padding: 3px 8px; border-radius: 6px; background: var(--acento); color: #fff;
+  padding: 3px 8px; border-radius: 6px; background: var(--sello); color: #fff; /* sello fijo: con blanco encima da 5,9:1 también en oscuro */
 }
 
 /* Reseñas: muro tipo masonry; cada una mide lo que mide su texto. */
@@ -907,7 +907,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 }
 .v7-bento-no h3 { font-size: 1.3rem; }
 .v7-bento-no ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
-.v7-bento-no li { position: relative; padding-inline-start: 24px; color: rgba(245, 245, 247, 0.78); }
+.v7-bento-no li { position: relative; padding-inline-start: 24px; color: color-mix(in srgb, var(--inverso-tinta) 80%, transparent); }
 .v7-bento-no li::before { content: '×'; position: absolute; inset-inline-start: 0; color: #ff8a70; font-weight: 700; }
 @media (max-width: 900px) {
   .v7-bento { grid-template-columns: 1fr; gap: 22px; }
@@ -1189,3 +1189,7 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 /* Más específico que los estilos generales de enlace (en oscuro lo ponían negro). */
 .v7 a.v7-plan-pagar { color: #fff; }
 .v7 a.v7-plan-pagar.v7-plan-pagar-2 { color: inherit; }
+
+/* En oscuro la caja invertida es blanca: la × pasa al rojo de sello (en negro iba el claro). */
+:root[data-tema='oscuro'] .v7-bento-no li::before { color: var(--sello); }
+@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7-bento-no li::before { color: var(--sello); } }

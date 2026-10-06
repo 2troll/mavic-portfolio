@@ -64,9 +64,9 @@ export const PAYPAL_TONY = 'https://paypal.me/2troll'
 /** Wisetag de Tony: fijo, pero solo paga quien ya tiene cuenta de Wise. */
 export const WISE_TONY = 'https://wise.com/pay/me/amirk1643'
 export const PAGAR: Record<string, { boton: string; wise: string; nota: string }> = {
-  es: { boton: 'Pagar con PayPal', wise: 'Wise (con cuenta Wise)', nota: 'Paga solo cuando hayamos confirmado la fecha por WhatsApp.' },
-  en: { boton: 'Pay with PayPal', wise: 'Wise (Wise account)', nota: 'Pay only once we have confirmed your date on WhatsApp.' },
-  ar: { boton: 'ادفع عبر PayPal', wise: 'Wise (لأصحاب حساب Wise)', nota: 'ادفع فقط بعد تأكيد الموعد عبر واتساب.' },
+  es: { boton: 'Pagar con PayPal', wise: 'Wise (con cuenta Wise)', nota: 'Si pagas por adelantado, hazlo solo cuando hayamos confirmado la fecha por WhatsApp.' },
+  en: { boton: 'Pay with PayPal', wise: 'Wise (Wise account)', nota: 'If you pay in advance, do it only once we have confirmed your date on WhatsApp.' },
+  ar: { boton: 'ادفع عبر PayPal', wise: 'Wise (لأصحاب حساب Wise)', nota: 'إن دفعت مسبقاً، فادفع فقط بعد تأكيد الموعد عبر واتساب.' },
 }
 /** WhatsApp de Larion (+81 80 8506 7586). */
 export const WA_LARION = '818085067586'
@@ -141,7 +141,7 @@ const es: Pagina = {
     titulo: 'Así funciona',
     pasos: [
       { t: 'Me escribes', d: 'Dime las fechas, cuántos sois, dónde os alojáis, de dónde venís y qué os apetece ver.' },
-      { t: 'Te propongo el día', d: 'Te respondo con una ruta sencilla y un precio cerrado para todo el grupo. Sin letra pequeña. Para reservar, te mando un enlace de pago seguro con tarjeta.' },
+      { t: 'Te propongo el día', d: 'Te respondo con una ruta sencilla y un precio cerrado para todo el grupo. Sin letra pequeña. Si prefieres pagar por adelantado, te mando un enlace de pago con tarjeta.' },
       { t: 'Te recojo en el hotel', d: 'Ese día quedamos en el vestíbulo de tu hotel y salimos directos al destino.' },
     ],
     noTitulo: 'Lo que no hacemos',
@@ -191,7 +191,7 @@ const es: Pagina = {
     notas: [
       'El precio es por grupo, no por persona.',
       'Trenes, entradas y comidas no están incluidos: los pagáis vosotros en el momento.',
-      'Se paga en efectivo, en yenes, el día del tour, o por transferencia si lo acordamos al reservar.',
+      'Se paga en efectivo, en yenes, el día del tour, o por adelantado con PayPal, Wise o transferencia.',
       'Cancelación sin coste hasta 72 horas antes.',
     ],
     aprox: 'al cambio de hoy',
@@ -213,6 +213,7 @@ const es: Pagina = {
   faq: {
     titulo: 'Preguntas',
     items: [
+      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con PayPal o Wise desde los botones de Precios, o con un enlace de pago con tarjeta que te mando.' },
       { q: '¿Necesito el JR Pass?', a: 'Si os movéis dentro de Kansai, normalmente no. Con una tarjeta ICOCA o Suica pagáis cada tren y autobús. Pregúntame antes de comprar nada.' },
       { q: '¿Y si llueve?', a: 'Por ciudad salimos igual: Kansai con lluvia es precioso y hay menos gente. En montaña decido yo por seguridad; si se cancela, cambiamos de fecha o te devuelvo lo pagado.' },
       { q: '¿Podemos ir con niños?', a: 'Claro. Adapto el ritmo y el recorrido a su edad.' },
@@ -262,7 +263,7 @@ const en: Pagina = {
     titulo: 'How it works',
     pasos: [
       { t: 'You message me', d: 'Tell me your dates, how many of you there are, where you\'re staying, where you\'re travelling from and what you\'d like to see.' },
-      { t: 'I suggest a plan', d: 'You get a simple route and one fixed price for the whole group. No small print. To book, I send you a secure card payment link.' },
+      { t: 'I suggest a plan', d: 'You get a simple route and one fixed price for the whole group. No small print. If you prefer to pay in advance, I send you a card payment link.' },
       { t: 'I meet you at your hotel', d: 'On the day we meet in your hotel lobby and head straight out.' },
     ],
     noTitulo: 'What we don\'t do',
@@ -313,7 +314,7 @@ const en: Pagina = {
     notas: [
       'Prices are per group, not per person.',
       'Trains, admissions and meals aren\'t included: you pay for them as we go.',
-      'Payment is in cash, in yen, on the day, or by bank transfer if we agree it when you book.',
+      'Payment is in cash, in yen, on the day, or in advance with PayPal, Wise or bank transfer.',
       'Free cancellation up to 72 hours before.',
     ],
     aprox: 'at today\'s rate',
@@ -332,6 +333,7 @@ const en: Pagina = {
   faq: {
     titulo: 'Questions',
     items: [
+      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I send you.' },
       { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
       { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
       { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
@@ -381,7 +383,7 @@ const ar: Pagina = {
     titulo: 'كيف نعمل',
     pasos: [
       { t: 'تراسلني', d: 'أخبرني بالتواريخ وعددكم ومكان إقامتكم ومن أين تأتون وما الذي تحبون رؤيته.' },
-      { t: 'أقترح عليك اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. للحجز أرسل لك رابط دفع آمن بالبطاقة.' },
+      { t: 'أقترح عليك اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. وإن فضّلت الدفع مسبقاً أرسل لك رابط دفع بالبطاقة.' },
       { t: 'ألتقيك في الفندق', d: 'في اليوم المحدد نلتقي في بهو الفندق وننطلق مباشرة.' },
     ],
     noTitulo: 'ما لا نقوم به',
@@ -431,7 +433,7 @@ const ar: Pagina = {
     notas: [
       'السعر للمجموعة وليس للشخص.',
       'القطارات وتذاكر الدخول والوجبات غير مشمولة، وتُدفع في حينها.',
-      'الدفع نقداً بالين في يوم الجولة، أو بتحويل بنكي إذا اتفقنا عليه عند الحجز.',
+      'الدفع نقداً بالين في يوم الجولة، أو مسبقاً عبر PayPal أو Wise أو تحويل بنكي.',
       'الإلغاء مجاني حتى ٧٢ ساعة قبل الموعد.',
     ],
     aprox: 'بسعر الصرف اليوم',
@@ -451,6 +453,7 @@ const ar: Pagina = {
   faq: {
     titulo: 'أسئلة',
     items: [
+      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر PayPal أو Wise من أزرار قسم الأسعار، أو برابط دفع بالبطاقة أرسله لك.' },
       { q: 'هل يوجد طعام حلال؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة في أوساكا وكيوتو. أخبرني عند الحجز لا في يوم الجولة.' },
       { q: 'أين نصلي أثناء الجولة؟', a: 'في كانساي مسجد أوساكا ومسجد كوبي وجمعية كيوتو الإسلامية، وفي مطار كانساي مصليات في المبنيين. أضع وقفات الصلاة في المسار من البداية.' },
       { q: 'هل أحتاج تذكرة JR Pass؟', a: 'في الغالب لا إذا كانت إقامتك في كانساي. بطاقة ICOCA أو Suica تكفي لمعظم القطارات والحافلات. اسألني قبل أن تشتري.' },
@@ -605,6 +608,8 @@ const ru: Pagina = {
 
 const larion: Pagina = {
   ...en,
+  como: { ...en.como, pasos: en.como.pasos.map((x) => ({ ...x, d: x.d.replace(' If you prefer to pay in advance, I send you a card payment link.', '') })) },
+  faq: { ...en.faq, items: en.faq.items.filter((f) => f.q !== 'How do I pay?') },
   id: 'larion', ruta: '/larion/', guia: 'larion',
   viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west, as far as Hiroshima.'],
   seo: {
@@ -647,6 +652,8 @@ const larion: Pagina = {
   precios: {
     ...en.precios,
     planes: en.precios.planes.map((p, i) => (i === 2 ? { ...p, detalle: 'Hiroshima & Miyajima, Kōyasan…' } : p)),
+    // PayPal y Wise son de Tony: Larion cobra como siempre.
+    notas: en.precios.notas.map((n) => (n.startsWith('Payment is in cash') ? 'Payment is in cash, in yen, on the day, or by bank transfer if we agree it when you book.' : n)),
   },
   mercado: {
     titulo: 'Wherever you\'re flying in from',
