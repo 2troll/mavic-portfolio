@@ -109,8 +109,10 @@ for (const ruta of rutas) {
   // Precarga de la foto de portada en las páginas de idioma y de ciudad.
   const ciudad = ruta.split('/')[1]
   const foto = PRECARGA[ruta] ?? (ZONA_PORTADA[ciudad] && `/v8/zonas/${ZONA_PORTADA[ciudad]}`)
+  // imagesizes igual que el sizes del <img>: si no, en escritorio se precarga la
+  // de 1800 px y luego se pinta la de 900 (dos descargas).
   if (foto) {
-    html = html.replace('</head>', `  <link rel="preload" as="image" href="${foto}.webp" imagesrcset="${foto}-900.webp 900w, ${foto}.webp 1800w" imagesizes="100vw" fetchpriority="high" />\n  </head>`)
+    html = html.replace('</head>', `  <link rel="preload" as="image" href="${foto}.webp" imagesrcset="${foto}-900.webp 900w, ${foto}.webp 1800w" imagesizes="${PRECARGA[ruta] ? '(max-width: 900px) 100vw, 50vw' : '100vw'}" fetchpriority="high" />\n  </head>`)
   }
 
   if (PRERENDER.test(ruta)) {
