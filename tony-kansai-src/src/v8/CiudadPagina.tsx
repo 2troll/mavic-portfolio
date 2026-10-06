@@ -32,6 +32,7 @@ import './v8.css'
 import './figura.css'
 import { IconoWa } from '../v7/IconoWa'
 import { BarraWa } from '../v7/BarraWa'
+import { SelloCiudad, LibroSellos } from '../v9/Sellos'
 import { BotonTema } from '../v7/Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 
@@ -243,6 +244,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           </div>
         </section>
 
+        <LibroSellos lang={lang} guia={guia} prefijo={prefijo} />
+
         {/* 7. Final */}
         <section className="v7-seccion v8-final">
           <img loading="lazy" src={GUIAS[guia].foto} alt={GUIAS[guia].nombre} width={160} height={170} />
@@ -250,6 +253,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         </section>
       </main>
       <BarraWa href={wa} lang={lang} pagina={`ciudad-${c.id}`} />
+      <SelloCiudad id={c.id} lang={lang} guia={guia} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

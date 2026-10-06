@@ -1,0 +1,99 @@
+/* Libro de sellos (御朱印帳). Papel y tinta del sistema; el sello siempre en rojo. */
+
+/* ── El sello que se estampa en la página de ciudad ─────────────────────── */
+.sl-estampa {
+  position: fixed; z-index: 260; inset-inline-end: 16px; top: 96px; width: 200px;
+  padding: 16px 14px 12px; border-radius: 22px; text-align: center; cursor: pointer;
+  background: var(--cristal); border: 1px solid var(--cristal-borde); box-shadow: var(--sombra);
+  -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  animation: sl-llega 4.2s ease both; perspective: 600px;
+}
+.sl-estampa p { margin: 8px 0 0; font-size: var(--t--1); color: var(--tinta); animation: sl-texto 4.2s ease both; }
+.sl-estampa-sello { position: relative; width: 150px; height: 150px; margin: 0 auto; animation: sl-golpe 0.75s cubic-bezier(0.2, 0.7, 0.2, 1) 0.25s both; }
+.sl-estampa-sello img { width: 100%; height: 100%; display: block; }
+
+/* El kanji va escrito sobre el sello, como el sumi del monje encima del rojo. */
+.sl-kanji {
+  position: absolute; inset: auto 0 6%; text-align: center; font-family: var(--mincho); font-weight: 700;
+  font-size: 22px; letter-spacing: 0.15em; color: var(--tinta); text-shadow: 0 0 6px var(--fondo), 0 0 2px var(--fondo);
+}
+
+@keyframes sl-llega { 0% { opacity: 0; transform: translateY(-12px); } 6%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-8px); } }
+@keyframes sl-texto { 0%, 22% { opacity: 0; } 32%, 100% { opacity: 1; } }
+/* Baja desde arriba inclinado, golpea, rebota un pelo y se queda: el gesto de sellar. */
+@keyframes sl-golpe {
+  0% { opacity: 0; transform: translateZ(220px) rotateX(38deg) rotate(-14deg) scale(1.25); filter: blur(3px); }
+  55% { opacity: 1; transform: translateZ(0) rotateX(0) rotate(-6deg) scale(0.94); filter: blur(0); }
+  75% { transform: rotate(-6deg) scale(1.03); }
+  100% { opacity: 1; transform: rotate(-6deg) scale(1); }
+}
+
+/* ── La libreta ────────────────────────────────────────────────────────── */
+.sl-libro { text-align: start; }
+.sl-cabeza { display: grid; gap: var(--e-1); justify-items: start; margin-bottom: var(--e-4); }
+.v7 .sl-cabeza h2 { font-size: var(--t-3); line-height: 1.1; display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; }
+.sl-cuenta { font-size: var(--t-0); font-weight: 600; color: var(--acento); font-variant-numeric: tabular-nums; }
+
+.sl-acordeon {
+  --ancho: 150px; --alto: 220px;
+  position: relative; list-style: none; margin: 0; padding: 24px 8px 32px; display: flex;
+  perspective: 1500px; min-height: calc(var(--alto) + 56px); overflow: hidden;
+}
+.sl-acordeon.abierto { overflow-x: auto; scroll-snap-type: x proximity; }
+
+.sl-pagina {
+  flex: 0 0 var(--ancho); height: var(--alto); position: relative; scroll-snap-align: start;
+  background: var(--papel-libro, #fbf7ef); border: 1px solid var(--linea); box-shadow: 0 10px 24px -18px rgba(0, 0, 0, 0.6);
+  transform-origin: left center; transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), margin 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transition-delay: calc(var(--i) * 60ms);
+}
+[dir='rtl'] .sl-pagina { transform-origin: right center; }
+/* Cerrado: todas apiladas en la primera, un pelo desplazadas como el canto de un libro. */
+.sl-pagina + .sl-pagina { margin-inline-start: calc(var(--ancho) * -1 + 3px); }
+/* Abierto: el acordeón se estira en zigzag. */
+.abierto .sl-pagina + .sl-pagina { margin-inline-start: 0; }
+.abierto .sl-pagina:nth-child(odd) { transform: rotateY(9deg); }
+.abierto .sl-pagina:nth-child(even) { transform: rotateY(-9deg); }
+
+.sl-pagina a { position: absolute; inset: 0; display: grid; place-items: center; align-content: center; gap: 10px; text-decoration: none; color: var(--tinta); }
+.sl-sello { position: relative; width: 118px; height: 118px; }
+.sl-sello img { width: 100%; height: 100%; transform: rotate(-5deg); }
+.sl-sello .sl-kanji { font-size: 18px; }
+.sl-hueco { width: 118px; height: 118px; border-radius: 50%; border: 1.5px dashed color-mix(in srgb, var(--tinta) 28%, transparent); display: grid; place-items: center; }
+.sl-hueco span { font-family: var(--mincho); font-size: 22px; letter-spacing: 0.15em; color: var(--tenue); }
+.sl-nombre { font-size: var(--t--1); color: var(--tenue); }
+.sl-pagina a:hover .sl-nombre, .sl-pagina a:focus-visible .sl-nombre { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; }
+.sl-pagina a:focus-visible { outline: 2px solid var(--acento); outline-offset: -4px; }
+
+/* La tapa: tela oscura con el título en vertical. Al abrir gira como la tapa de verdad. */
+.sl-acordeon::before {
+  content: '御朱印帳'; position: absolute; z-index: 20; top: 24px; inset-inline-start: 8px;
+  width: calc(var(--ancho) + 2px); height: var(--alto);
+  writing-mode: vertical-rl; display: grid; place-items: center; padding-block: 18px;
+  font-family: var(--mincho); font-size: 22px; letter-spacing: 0.4em; color: #f3e9d2;
+  background:
+    linear-gradient(90deg, rgba(255, 255, 255, 0.06), transparent 18%),
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px 6px),
+    #3b1d1a;
+  border-radius: 3px 8px 8px 3px; box-shadow: 0 18px 30px -16px rgba(0, 0, 0, 0.7), inset 0 0 0 6px #3b1d1a, inset 0 0 0 7px rgba(243, 233, 210, 0.35);
+  transform-origin: left center; transition: transform 0.9s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.4s ease 0.5s;
+}
+[dir='rtl'] .sl-acordeon::before { transform-origin: right center; border-radius: 8px 3px 3px 8px; }
+.sl-acordeon.abierto::before { transform: rotateY(-160deg); opacity: 0; pointer-events: none; }
+[dir='rtl'] .sl-acordeon.abierto::before { transform: rotateY(160deg); }
+
+:root[data-tema='oscuro'] .v7 { --papel-libro: #1f1c18; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7 { --papel-libro: #1f1c18; } }
+
+@media (max-width: 700px) {
+  .sl-acordeon { --ancho: 128px; --alto: 196px; }
+  .sl-sello, .sl-hueco { width: 100px; height: 100px; }
+  .sl-estampa { top: 88px; width: 176px; }
+  .sl-estampa-sello { width: 128px; height: 128px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sl-estampa, .sl-estampa p, .sl-estampa-sello { animation: none; }
+  .sl-pagina, .sl-acordeon::before { transition: none; }
+}

@@ -6,6 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
+import { LibroSellos } from '../v9/Sellos'
 import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, WISE_TONY, PAGAR } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -596,6 +597,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             ))}
           </div>
         </section>
+
+        <LibroSellos lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
 
         {/* Contacto */}
         <section id="contacto" className="v7-seccion">
