@@ -121,12 +121,10 @@ export const CIUDADES: Record<CiudadId, Ciudad> = {
 export const CIUDADES_TONY: CiudadId[] = ['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond']
 export const CIUDADES_LARION: CiudadId[] = ['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji']
 
-/** Viñetas manga aprobadas por él (public/v8/manga/{guia}-{ciudad}.webp).
- *  Sólo se enseñan las que estén aquí: nunca una imagen sin su visto bueno. */
-export const MANGA_APROBADO: string[] = [
-  'tony-kyoto', 'tony-osaka', 'tony-nara', 'tony-kobe', 'tony-himeji', 'tony-hiroshima', 'tony-beyond',
-  'larion-hiroshima', 'larion-kyoto', 'larion-nara', 'larion-osaka', 'larion-himeji',
-]
+/** Viñetas manga (public/v8/manga/{guia}-{ciudad}.webp). Vacío desde el 7-10:
+ *  después de aprobarlas dijo que el manga «no me gusta para nada» y que le
+ *  hacía mayor; las ciudades ya usan tinta sacada de fotos reales. */
+export const MANGA_APROBADO: string[] = []
 
 /** Figuras manga recortadas (public/v8/figuras/{guia}-{ciudad}.webp) que se
  *  plantan de pie dentro de las fotos de las zonas. Se añaden según se generan. */

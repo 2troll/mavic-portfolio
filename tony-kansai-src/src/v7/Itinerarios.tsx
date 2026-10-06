@@ -19,6 +19,7 @@ import type { ItinPaginaId } from './seoItin'
 import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO, suena } from './sonido'
 import { Logo } from './Logo'
+import { BarraWa } from './BarraWa'
 import { MANGA_APROBADO } from '../v8/ciudades'
 
 // Viñeta manga del guía para cada día (la misma que su página de ciudad).
@@ -173,6 +174,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
           <p className="v7-entradilla">{et.nota}</p>
         </section>
       </main>
+      <BarraWa href={wa('')} lang={lang} pagina={`itinerarios-${id}`} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">
