@@ -493,7 +493,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Quién soy: el guía, en su propia sección, antes de cómo funciona. */}
         <section id="guia" className="v7-seccion v9-guia" aria-label={p.guiaTxt.titulo}>
-          <img loading="lazy" className="v9-guia-foto" src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={681} decoding="async" />
+          <img loading="lazy" className="v9-guia-foto" src={g.foto} alt={NOMBRE_GUIA[p.id]} width={640} height={800} decoding="async" />
           <div className="v9-guia-texto">
             <p className="v9-guia-ante">{p.guiaTxt.titulo}</p>
             <h2>{NOMBRE_GUIA[p.id]}</h2>
