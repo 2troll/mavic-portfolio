@@ -70,5 +70,18 @@ export function cabeceras(): Record<string, Cabecera> {
       }
     }
   }
+  // Páginas legales: cada una con su título (antes todas heredaban el de la
+  // portada y Google las veía duplicadas). Están en inglés y cambian con ?lang.
+  const LEGALES: [string, string, string][] = [
+    ['privacy', 'Privacy Policy', 'How Tony Kansai Guide handles your personal data: what we collect, why, how long we keep it and your rights.'],
+    ['terms', 'Terms and Conditions', 'Terms for booking a private tour with Tony Kansai Guide: prices per group, payment, cancellation and responsibilities.'],
+    ['cookies', 'Cookie Policy', 'Which cookies tonykansaiguide.com uses, what they do and how to accept, decline or delete them.'],
+    ['safety', 'Safety on Tour', 'How we keep private tours in Kansai safe: emergencies, health, weather, hiking and useful numbers in Japan.'],
+    ['legal', 'Legal Notice', 'Legal notice of Tony Kansai Guide, a private tour guide service in Kansai, Japan: owner, contact and conditions of use.'],
+    ['accessibility', 'Accessibility', 'Accessibility statement for tonykansaiguide.com: what we support, known limits and how to report a problem.'],
+  ]
+  for (const [ruta, titulo, descripcion] of LEGALES) {
+    todas[ruta] = { titulo: `${titulo} | Tony Kansai Guide`, descripcion, imagen: '/v8/og/es.jpg', lang: 'en', dir: 'ltr', alternos: [] }
+  }
   return todas
 }

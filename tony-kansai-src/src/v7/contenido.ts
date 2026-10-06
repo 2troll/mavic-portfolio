@@ -192,7 +192,7 @@ const es: Pagina = {
       'El precio es por grupo, no por persona.',
       'Trenes, entradas y comidas no están incluidos: los pagáis vosotros en el momento.',
       'Se paga en efectivo, en yenes, el día del tour, o por adelantado con PayPal, Wise o transferencia.',
-      'Cancelación sin coste hasta 72 horas antes.',
+      'Cancelación sin coste hasta 72 horas antes del tour.',
     ],
     aprox: 'al cambio de hoy',
   },
@@ -323,7 +323,7 @@ const en: Pagina = {
     titulo: 'Coming from the UK',
     texto: [
       'Japan is 8 hours ahead of London in summer and 9 in winter.',
-      'Message me whenever suits you. I reply as soon as it\'s morning here. Tipping isn\'t expected in Japan, and that includes me.',
+      'Message me whenever it suits you. I reply as soon as it\'s morning here. Tipping isn\'t expected in Japan, and that includes me.',
     ],
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }, { ciudad: 'London', tz: 'Europe/London' }],
     tuHora: 'Your time',
@@ -333,7 +333,7 @@ const en: Pagina = {
   faq: {
     titulo: 'Questions',
     items: [
-      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I send you.' },
+      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I\'ll send you.' },
       { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
       { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
       { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
@@ -383,7 +383,7 @@ const ar: Pagina = {
     titulo: 'كيف نعمل',
     pasos: [
       { t: 'تراسلني', d: 'أخبرني بالتواريخ وعددكم ومكان إقامتكم ومن أين تأتون وما الذي تحبون رؤيته.' },
-      { t: 'أقترح عليك اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. وإن فضّلت الدفع مسبقاً أرسل لك رابط دفع بالبطاقة.' },
+      { t: 'أقترح عليك خطة اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. وإن فضّلت الدفع مسبقاً أرسل لك رابط دفع بالبطاقة.' },
       { t: 'ألتقيك في الفندق', d: 'في اليوم المحدد نلتقي في بهو الفندق وننطلق مباشرة.' },
     ],
     noTitulo: 'ما لا نقوم به',
@@ -403,11 +403,11 @@ const ar: Pagina = {
   },
   zona: {
     titulo: 'إلى أين نذهب',
-    sub: 'من أوساكا تقع معظم كانساي على بُعد أقل من ساعة بالقطار. مكان آخر في اليابان؟ اسألني.',
+    sub: 'تقع معظم مناطق كانساي على بُعد أقل من ساعة بالقطار من أوساكا. مكان آخر في اليابان؟ اسألني.',
     lugares: [
       { nombre: 'أوساكا', ...L.osaka }, { nombre: 'كيوتو', ...L.kioto }, { nombre: 'نارا', ...L.nara },
       { nombre: 'كوبي', ...L.kobe }, { nombre: 'هيميجي', ...L.himeji }, { nombre: 'أوجي', ...L.uji },
-      { nombre: 'كوياسان', ...L.koyasan }, { nombre: 'أمانوهاشيداته', ...L.amanohashidate },
+      { nombre: 'كوياسان', ...L.koyasan }, { nombre: 'أمانوهاشيداتي', ...L.amanohashidate },
     ],
     origenes: [{ nombre: 'دبي', ...O.dubai }, { nombre: 'الرياض', ...O.riad }],
   },
@@ -428,7 +428,7 @@ const ar: Pagina = {
     planes: [
       { nombre: 'نصف يوم', detalle: '٤ ساعات · حتى ٦ أشخاص', precio: fmtYen(YEN.medio, ','), yenes: YEN.medio },
       { nombre: 'يوم كامل', detalle: '٨ ساعات · حتى ٦ أشخاص', precio: fmtYen(YEN.completo, ','), yenes: YEN.completo },
-      { nombre: 'رحلة بعيدة', detalle: 'كوياسان، أمانوهاشيداته، كومانو…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
+      { nombre: 'رحلة بعيدة', detalle: 'كوياسان، أمانوهاشيداتي، كومانو…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
     ],
     notas: [
       'السعر للمجموعة وليس للشخص.',
@@ -508,14 +508,14 @@ const ru: Pagina = {
   como: {
     titulo: 'Как это работает',
     pasos: [
-      { t: 'Вы пишете мне', d: 'Даты, сколько вас, где вы живёте, откуда приезжаете и что хотите увидеть.' },
+      { t: 'Вы пишете мне', d: 'Даты, сколько вас, где вы остановились, откуда приезжаете и что хотите увидеть.' },
       { t: 'Я предлагаю план', d: 'Простой маршрут и фиксированная цена за всю группу. Без мелкого шрифта.' },
       { t: 'Встречаю в отеле', d: 'В назначенный день встречаемся в лобби отеля и сразу едем.' },
     ],
     noTitulo: 'Чего мы не делаем',
     no: [
       'Мы не турагентство: я ваш гид, и договариваетесь вы напрямую со мной.',
-      'Не продаём билеты на поезд, отели и входные билеты.',
+      'Не продаём билеты на поезда и входные билеты и не бронируем отели.',
       'Поезда, входные билеты и еду вы оплачиваете сами на месте. Я подскажу, как и где.',
     ],
   },
@@ -540,7 +540,7 @@ const ru: Pagina = {
     tarjetas: [
       { foto: F + 'miyajima.jpg', titulo: 'Миядзима', texto: '«Плавучие» тории святилища Ицукусима и остров, где гуляют олени.' },
       { foto: F + 'hiroshima.jpg', titulo: 'Хиросима', texto: 'Купол Гэмбаку и Мемориальный парк мира.' },
-      { foto: F + 'himeji.jpg', titulo: 'Химэдзи', texto: 'Белый замок, сохранившийся в подлиннике, — объект ЮНЕСКО.' },
+      { foto: F + 'himeji.jpg', titulo: 'Химэдзи', texto: 'Белый замок, сохранившийся в первозданном виде, — объект ЮНЕСКО.' },
       { foto: F + 'kioto.jpg', titulo: 'Киото', texto: 'Фусими Инари, Киёмидзу и улочки Гиона. Лучше рано утром, до толп.' },
       { foto: F + 'nara.jpg', titulo: 'Нара', texto: 'Большой Будда храма Тодай-дзи и олени в парке.' },
       { foto: F + 'osaka.jpg', titulo: 'Осака', texto: 'Замок, Дотонбори и рынки, где едят местные.' },
@@ -586,7 +586,7 @@ const ru: Pagina = {
     titulo: 'Расскажите о поездке',
     sub: 'Заполните то, что знаете, — откроется WhatsApp с готовым сообщением. Сайт ничего не сохраняет.',
     nombre: 'Ваше имя', pais: 'Откуда вы приезжаете?', ciudad: 'Город', fechas: 'Даты', personas: 'Сколько человек',
-    hotel: 'Отель или район, где вы живёте', intereses: 'Что вам интересно', notas: 'Что-то ещё (дети, здоровье, еда…)',
+    hotel: 'Отель или район, где вы остановились', intereses: 'Что вам интересно', notas: 'Что-то ещё (дети, здоровье, еда…)',
     paises: ['Россия', 'Казахстан', 'Беларусь', 'Узбекистан', 'Армения', 'Грузия', 'Другая страна'],
     opcionesIntereses: ['Киото', 'Осака', 'Нара', 'Хиросима', 'Миядзима', 'Химэдзи', 'Горы и природа', 'Еда'],
     wa: 'Отправить в WhatsApp', mail: 'Лучше по почте', vista: 'Ваше сообщение',
@@ -653,11 +653,11 @@ const larion: Pagina = {
     ...en.precios,
     planes: en.precios.planes.map((p, i) => (i === 2 ? { ...p, detalle: 'Hiroshima & Miyajima, Kōyasan…' } : p)),
     // PayPal y Wise son de Tony: Larion cobra como siempre.
-    notas: en.precios.notas.map((n) => (n.startsWith('Payment is in cash') ? 'Payment is in cash, in yen, on the day, or by bank transfer if we agree it when you book.' : n)),
+    notas: en.precios.notas.map((n) => (n.startsWith('Payment is in cash') ? 'Payment is in cash, in yen, on the day, or by bank transfer if we agree on it when you book.' : n)),
   },
   mercado: {
     titulo: 'Wherever you\'re flying in from',
-    texto: ['Message me whenever suits you. I reply as soon as it\'s morning here in Japan.'],
+    texto: ['Message me whenever it suits you. I reply as soon as it\'s morning here in Japan.'],
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }],
     tuHora: 'Your time',
     divisas: ['GBP', 'USD', 'EUR'],

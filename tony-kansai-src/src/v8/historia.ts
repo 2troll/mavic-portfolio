@@ -50,7 +50,7 @@ export const HISTORIA: Record<CiudadId, Capitulo> = {
   beyond: {
     a: t('Okunoin, en Kōyasan: cedros de siglos y doscientas mil lápidas.', 'Okunoin on Mount Kōya: centuries-old cedars and two hundred thousand gravestones.', 'أوكونوين في جبل كويا: أرزٌ عمره قرون ومئتا ألف شاهد.', 'Окуноин на горе Коя: вековые криптомерии и двести тысяч надгробий.'),
     b: t('Kumano Kodo: caminos de peregrinos de hace mil años.', 'Kumano Kodo: pilgrim roads a thousand years old.', 'كومانو كودو: دروب مشاةٍ عمرها ألف عام.', 'Кумано Кодо: тропы паломников тысячелетней давности.'),
-    c: t('Amanohashidate: un puente de pinos sobre el mar.', 'Amanohashidate: a bridge of pines across the sea.', 'أمانوهاشيداته: جسرٌ من الصنوبر فوق البحر.', 'Аманохасидатэ: мост из сосен через море.'),
+    c: t('Amanohashidate: un puente de pinos sobre el mar.', 'Amanohashidate: a bridge of pines across the sea.', 'أمانوهاشيداتي: جسرٌ من الصنوبر فوق البحر.', 'Аманохасидатэ: мост из сосен через море.'),
     poema: t('Lejos de la ciudad —\nel camino se hace musgo\ny el musgo, silencio.', 'Far from the city —\nthe path turns into moss,\nthe moss into silence.', 'بعيداً عن المدينة —\nيصير الطريق طحلباً\nويصير الطحلب صمتاً.', 'Вдали от города —\nтропа становится мхом,\nа мох — тишиной.'),
   },
 }

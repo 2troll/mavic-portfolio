@@ -90,7 +90,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
       puntos: [
         { t: 'We check the weather the day before', d: 'If the mountain isn\'t safe, we move the date or refund your deposit. The guide decides, no debate.' },
         { t: 'Routes we have walked', d: 'Each route sheet says how to get there, how long each stretch takes and what to bring. Nothing improvised.' },
-        { t: 'First-aid kit and navigation', d: 'The guide carries a first-aid kit and the route loaded. We go at the pace of the slowest in the group.' },
+        { t: 'First-aid kit and navigation', d: 'The guide carries a first-aid kit and has the route loaded. We go at the pace of the slowest in the group.' },
         { t: 'Honest grading', d: 'Hard, Technical and Expert Only routes are for over-18s. If in doubt, start with a Moderate one.' },
         { t: 'In writing', d: 'For hard routes or groups of more than 4, we sign a simple contract: route, date and price.' },
         { t: 'Travel insurance', d: 'We recommend one that covers hiking. It\'s cheap, and in the mountains it\'s the sensible thing.' },
@@ -145,7 +145,7 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
         { t: 'Смотрим погоду накануне', d: 'Если в горах небезопасно, переносим дату или возвращаем предоплату. Решает гид, без споров.' },
         { t: 'Маршруты, которые мы прошли сами', d: 'В каждой карточке — как добраться, сколько идти каждый участок и что взять. Без импровизации.' },
         { t: 'Аптечка и навигация', d: 'У гида с собой аптечка и загруженный маршрут. Идём в темпе самого медленного в группе.' },
-        { t: 'Честная сложность', d: 'Сложные, технические маршруты и «только для опытных» — с 18 лет. Если сомневаетесь, начните со средней.' },
+        { t: 'Честная сложность', d: 'Сложные, технические маршруты и «только для опытных» — с 18 лет. Если сомневаетесь, начните с маршрута средней сложности.' },
         { t: 'Письменно', d: 'Для сложных маршрутов или групп больше 4 человек подписываем простой договор: маршрут, дата и цена.' },
         { t: 'Страховка', d: 'Советуем страховку, покрывающую походы. Она недорогая, а в горах это разумно.' },
       ],
