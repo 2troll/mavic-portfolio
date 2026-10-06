@@ -6,7 +6,7 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, WISE_TONY, PAGAR } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -167,6 +167,8 @@ function Relojes({ p }: { p: Pagina }) {
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 function Precios({ p }: { p: Pagina }) {
+  // Solo en las páginas de Tony: el PayPal es suyo.
+  const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const cambios = useCambio(p.mercado.divisas)
   const fmt = (n: number, divisa: string) => {
     try {
@@ -184,6 +186,18 @@ function Precios({ p }: { p: Pagina }) {
             <p className="v7-plan-detalle">{plan.detalle}</p>
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
+            {pagar && !plan.desde && (
+              <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
+                onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'paypal' })}>
+                {pagar.boton}
+              </a>
+            )}
+            {pagar && !plan.desde && (
+              <a className="v7-plan-pagar v7-plan-pagar-2" href={WISE_TONY} target="_blank" rel="noopener noreferrer"
+                onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'wise' })}>
+                {pagar.wise}
+              </a>
+            )}
             {cambios.length > 0 && (
               <p className="v7-plan-aprox">
                 ≈ {cambios.map((c) => fmt(plan.yenes * c.tasa, c.divisa)).join(' · ')}{plan.desde ? '+' : ''}
@@ -193,6 +207,7 @@ function Precios({ p }: { p: Pagina }) {
         ))}
       </div>
       <ul className="v7-notas">
+        {pagar && <li>{pagar.nota}</li>}
         {p.precios.notas.map((n) => <li key={n}>{n}</li>)}
       </ul>
       {cambios.length > 0 && (

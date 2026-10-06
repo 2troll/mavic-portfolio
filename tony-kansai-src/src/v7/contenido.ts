@@ -58,6 +58,16 @@ export interface DatosContacto {
 
 /** WhatsApp de Tony (el de las facturas, perfil.json). */
 export const WA_TONY = '34634193106'
+/** PayPal.Me de Tony: enlace fijo que no caduca y admite muchos pagos (los de
+ *  Wise son de un solo uso y caducan a los 30 días). /<importe>JPY lo deja puesto. */
+export const PAYPAL_TONY = 'https://paypal.me/2troll'
+/** Wisetag de Tony: fijo, pero solo paga quien ya tiene cuenta de Wise. */
+export const WISE_TONY = 'https://wise.com/pay/me/amirk1643'
+export const PAGAR: Record<string, { boton: string; wise: string; nota: string }> = {
+  es: { boton: 'Pagar con PayPal', wise: 'Wise (con cuenta Wise)', nota: 'Paga solo cuando hayamos confirmado la fecha por WhatsApp.' },
+  en: { boton: 'Pay with PayPal', wise: 'Wise (Wise account)', nota: 'Pay only once we have confirmed your date on WhatsApp.' },
+  ar: { boton: 'ادفع عبر PayPal', wise: 'Wise (لأصحاب حساب Wise)', nota: 'ادفع فقط بعد تأكيد الموعد عبر واتساب.' },
+}
 /** WhatsApp de Larion (+81 80 8506 7586). */
 export const WA_LARION = '818085067586'
 export const CORREO = 'tony@tonykansaiguide.com'

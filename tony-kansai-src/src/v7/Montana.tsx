@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO } from './contenido'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
 import { MONTANA, MONTES, KANJI, CIUDAD, CIMA } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
@@ -88,6 +88,8 @@ export default function Montana({ id }: { id: MontanaId }) {
     }
     const m = MONTES[i - 1]
     const r = ruta(m)
+    const yenes = Number(String(r.price).replace(/[^0-9]/g, ''))
+    const pagar = p.guias[0] === 'tony' && yenes > 0 ? PAGAR[p.lang] : undefined
     return (
       <article className="v7-monte-ficha">
         <p className="v7-monte-num"><span lang="ja">{NUMEROS[i - 1]}</span> {i} / {MONTES.length}</p>
@@ -111,6 +113,13 @@ export default function Montana({ id }: { id: MontanaId }) {
             {p.et.pedir}
           </a>
         </div>
+        {pagar && (
+          <p className="v7-monte-pagar">
+            <a href={`${PAYPAL_TONY}/${yenes}JPY`} target="_blank" rel="noopener noreferrer"
+              onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, ruta: m, valor: yenes, canal: 'paypal' })}>{pagar.boton}</a>
+            <span>{pagar.nota}</span>
+          </p>
+        )}
       </article>
     )
   }
