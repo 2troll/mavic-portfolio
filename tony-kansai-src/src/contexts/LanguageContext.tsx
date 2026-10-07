@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect, useCallback, useMemo } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback, useMemo, startTransition } from 'react'
 import type { ReactNode } from 'react'
 import { TRANSLATIONS, LANG_META } from '../lib/i18n'
 import type { Lang, Tr } from '../lib/i18n'
@@ -69,8 +69,11 @@ export function LanguageProvider({ children, inicial }: { children: ReactNode; i
   // Se incrementa cuando llega el diccionario de un idioma, para repintar.
   const [dictReady, setDictReady] = useState(() => (isLoaded(lang) ? 1 : 0))
 
+  // Las actualizaciones de idioma y diccionario van como transición: si llegan
+  // mientras una página perezosa aún se hidrata (red lenta), React termina de
+  // hidratarla antes en vez de tirar el HTML pregenerado (error #421).
   const setLang = useCallback((l: Lang) => {
-    setLangState(l)
+    startTransition(() => setLangState(l))
     try { localStorage.setItem(STORAGE_KEY, l) } catch { /* ignore */ }
   }, [])
 
@@ -87,11 +90,11 @@ export function LanguageProvider({ children, inicial }: { children: ReactNode; i
   }, [lang, dir])
 
   useEffect(() => {
-    if (isLoaded(lang)) { setDictReady((n) => n + 1); return }
+    if (isLoaded(lang)) { startTransition(() => setDictReady((n) => n + 1)); return }
     let alive = true
     // Las páginas que pintan con el diccionario ya lo traen cargado (main.tsx);
     // para el resto es secundario y se pide cuando la página ya ha cargado.
-    const cancela = trasCarga(() => loadPhrases(lang).then(() => { if (alive) setDictReady((n) => n + 1) }))
+    const cancela = trasCarga(() => loadPhrases(lang).then(() => { if (alive) startTransition(() => setDictReady((n) => n + 1)) }))
     return () => { alive = false; cancela() }
   }, [lang])
 
