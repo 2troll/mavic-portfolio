@@ -27,7 +27,9 @@ export interface Pagina {
   seo: { titulo: string; descripcion: string }
   nav: { como: string; zona: string; precios: string; contacto: string; idioma: string }
   hero: { foto: string; titulo: string; sub: string; chips: string[]; cta: string; cta2: string }
-  como: { titulo: string; pasos: { t: string; d: string }[]; noTitulo: string; no: string[] }
+  como: { titulo: string; pasos: { t: string; d: string }[]; noTitulo: string; no: string[]
+    /** Qué incluye el precio: lo primero que compara un cliente entre guías. */
+    si?: { titulo: string; items: string[] } }
   guiaTxt: { titulo: string; idiomas: string; bio: string[]; otro?: { texto: string; enlace: string; ruta: string } }
   zona: { titulo: string; sub: string; lugares: Lugar[]; origenes: Lugar[] }
   /** Las cuatro frases del globo con scroll: origen → Kansai → hotel → destino. */
@@ -150,6 +152,16 @@ const es: Pagina = {
       { t: 'Te propongo el día', d: 'Te respondo con una ruta sencilla y un precio cerrado para todo el grupo. Sin letra pequeña. Si prefieres pagar por adelantado, te mando un enlace de pago con tarjeta.' },
       { t: 'Te recojo en el hotel', d: 'Ese día quedamos en el vestíbulo de tu hotel y salimos directos al destino.' },
     ],
+    si: {
+      titulo: 'Qué incluye el precio',
+      items: [
+        'Un día preparado para vosotros: ruta, horarios y paradas pensados antes de salir.',
+        'Recogida en el vestíbulo de tu hotel.',
+        'Todo el día conmigo, en español y solo con tu grupo.',
+        'Te enseño a moverte: tarjeta IC, trenes y autobuses.',
+        'Dónde comer bien, también halal o vegetariano si lo necesitáis.',
+      ],
+    },
     noTitulo: 'Lo que no hacemos',
     no: [
       'No somos una agencia de viajes: soy tu guía y contratas directamente conmigo.',
@@ -229,6 +241,10 @@ const es: Pagina = {
       { q: '¿Necesito el JR Pass?', a: 'Si os movéis dentro de Kansai, normalmente no. Con una tarjeta ICOCA o Suica pagáis cada tren y autobús. Pregúntame antes de comprar nada.' },
       { q: '¿Y si llueve?', a: 'Por ciudad salimos igual: Kansai con lluvia es precioso y hay menos gente. En montaña decido yo por seguridad; si se cancela, cambiamos de fecha o te devuelvo lo pagado.' },
       { q: '¿Podemos ir con niños?', a: 'Claro. Adapto el ritmo y el recorrido a su edad.' },
+      { q: '¿Me recoges también en Kioto o en Nara?', a: 'Sí. Quedamos en el vestíbulo de tu hotel, esté en Osaka, Kioto, Nara o Kobe.' },
+      { q: '¿Y si somos más de 6?', a: 'Los precios son para grupos de hasta 6 personas. Si sois más, escríbeme y te digo cómo lo organizamos.' },
+      { q: '¿Hacéis tours de varios días?', a: 'Sí. Dime cuántos días tienes y qué quieres ver, y te paso un precio cerrado por todo.' },
+      { q: '¿Y si alguien tiene movilidad reducida?', a: 'Dímelo al reservar. Adapto el recorrido, el ritmo y el transporte; algunos templos tienen muchas escaleras y te propongo alternativas.' },
       { q: '¿Y si cambian mis planes?', a: 'Escríbeme. Cancelar con más de 72 horas no cuesta nada; si tu vuelo se retrasa, buscamos otro día.' },
     ],
   },
@@ -278,6 +294,16 @@ const en: Pagina = {
       { t: 'I suggest a plan', d: 'You get a simple route and one fixed price for the whole group. No small print. If you prefer to pay in advance, I send you a card payment link.' },
       { t: 'I meet you at your hotel', d: 'On the day we meet in your hotel lobby and head straight out.' },
     ],
+    si: {
+      titulo: 'What the price includes',
+      items: [
+        'A day planned for you: route, timings and stops worked out before we set off.',
+        'Pick-up in your hotel lobby.',
+        'Your guide for the whole day, just your group.',
+        'I show you how to get around: IC card, trains and buses.',
+        'Where to eat well, including halal or vegetarian if you need it.',
+      ],
+    },
     noTitulo: 'What we don\'t do',
     no: [
       'We\'re not a travel agency: I\'m your guide and you book me directly.',
@@ -355,6 +381,10 @@ const en: Pagina = {
       { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
       { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
       { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
+      { q: 'Can you pick us up in Kyoto or Nara too?', a: 'Yes. We meet in your hotel lobby, whether you\'re staying in Osaka, Kyoto, Nara or Kobe.' },
+      { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you\'re more, message me and I\'ll tell you how we can organise it.' },
+      { q: 'Do you do multi-day tours?', a: 'Yes. Tell me how many days you have and what you\'d like to see, and I\'ll send you one fixed price for everything.' },
+      { q: 'What if someone has limited mobility?', a: 'Tell me when you book. I adapt the route, the pace and the transport; some temples have a lot of steps and I suggest alternatives.' },
       { q: 'What if my plans change?', a: 'Message me. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed we find another day.' },
     ],
   },
@@ -404,6 +434,16 @@ const ar: Pagina = {
       { t: 'أقترح عليك خطة اليوم', d: 'يصلك مسار بسيط وسعر ثابت للمجموعة كلها، بلا شروط مخفية. وإن فضّلت الدفع مسبقاً أرسل لك رابط دفع بالبطاقة.' },
       { t: 'ألتقيك في الفندق', d: 'في اليوم المحدد نلتقي في بهو الفندق وننطلق مباشرة.' },
     ],
+    si: {
+      titulo: 'ما يشمله السعر',
+      items: [
+        'يوم مُعدّ لكم: المسار والمواعيد والمحطات مدروسة قبل الانطلاق.',
+        'الاستقبال في بهو الفندق.',
+        'أرافقكم طوال اليوم بالعربية، مع مجموعتكم وحدها.',
+        'أعلّمكم التنقل: بطاقة IC والقطارات والحافلات.',
+        'أين تأكلون جيداً، مع مطاعم حلال موثوقة.',
+      ],
+    },
     noTitulo: 'ما لا نقوم به',
     no: [
       'لسنا وكالة سفر: أنا مرشدك وتتفق معي مباشرة.',
@@ -475,6 +515,10 @@ const ar: Pagina = {
       { q: 'هل يوجد طعام حلال؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة في أوساكا وكيوتو. أخبرني عند الحجز لا في يوم الجولة.' },
       { q: 'أين نصلي أثناء الجولة؟', a: 'في كانساي مسجد أوساكا ومسجد كوبي وجمعية كيوتو الإسلامية، وفي مطار كانساي مصليات في المبنيين. أضع وقفات الصلاة في المسار من البداية.' },
       { q: 'هل أحتاج تذكرة JR Pass؟', a: 'في الغالب لا إذا كانت إقامتك في كانساي. بطاقة ICOCA أو Suica تكفي لمعظم القطارات والحافلات. اسألني قبل أن تشتري.' },
+      { q: 'هل تستقبلنا في كيوتو أو نارا أيضاً؟', a: 'نعم. نلتقي في بهو فندقكم، سواء كان في أوساكا أو كيوتو أو نارا أو كوبي.' },
+      { q: 'وماذا لو كنا أكثر من ستة؟', a: 'الأسعار لمجموعات حتى ستة أشخاص. إن كنتم أكثر فراسلني وأخبرك كيف ننظّم الأمر.' },
+      { q: 'هل تنظّم جولات لعدة أيام؟', a: 'نعم. أخبرني بعدد الأيام وما تحبون رؤيته، وأرسل لك سعراً ثابتاً للكل.' },
+      { q: 'وماذا لو كان أحدنا محدود الحركة؟', a: 'أخبرني عند الحجز. أكيّف المسار والوتيرة والمواصلات؛ بعض المعابد فيها درج كثير وأقترح بدائل.' },
       { q: 'وماذا لو تغيّرت خططي؟', a: 'راسلني. الإلغاء قبل أكثر من ٧٢ ساعة مجاني، وإن تأخرت رحلتك نجد يوماً آخر.' },
     ],
   },
@@ -530,6 +574,16 @@ const ru: Pagina = {
       { t: 'Я предлагаю план', d: 'Простой маршрут и фиксированная цена за всю группу. Без мелкого шрифта.' },
       { t: 'Встречаю в отеле', d: 'В назначенный день встречаемся в лобби отеля и сразу едем.' },
     ],
+    si: {
+      titulo: 'Что входит в цену',
+      items: [
+        'День, спланированный для вас: маршрут, время и остановки продуманы заранее.',
+        'Встреча в лобби вашего отеля.',
+        'Весь день с гидом на русском, только ваша группа.',
+        'Покажу, как передвигаться: карта IC, поезда и автобусы.',
+        'Где хорошо поесть, в том числе халяль или вегетарианское.',
+      ],
+    },
     noTitulo: 'Чего мы не делаем',
     no: [
       'Мы не турагентство: я ваш гид, и договариваетесь вы напрямую со мной.',
@@ -597,6 +651,8 @@ const ru: Pagina = {
       { q: 'Нужен ли JR Pass?', a: 'Если вы ездите в пределах Кансая, обычно нет: карта ICOCA или Suica подходит почти для всех поездов и автобусов. Для поездки в Хиросиму посчитаем вместе. Спросите меня, прежде чем что-то покупать.' },
       { q: 'А если дождь?', a: 'По городу идём в любую погоду: в дождь Кансай красив, а людей меньше. В горах решаю я, ради безопасности; если отменяем, переносим дату или возвращаю оплату.' },
       { q: 'Можно с детьми?', a: 'Конечно. Подстрою темп и маршрут под возраст.' },
+      { q: 'Вас больше шести?', a: 'Цены рассчитаны на группу до 6 человек. Если вас больше, напишите мне, и я расскажу, как это организовать.' },
+      { q: 'Бывают туры на несколько дней?', a: 'Да. Напишите, сколько у вас дней и что хотите увидеть, и я пришлю одну фиксированную цену за всё.' },
       { q: 'А если планы изменятся?', a: 'Напишите мне. Отмена более чем за 72 часа бесплатна, а если задержали рейс — найдём другой день.' },
     ],
   },

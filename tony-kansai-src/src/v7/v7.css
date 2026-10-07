@@ -904,6 +904,16 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-bento-paso .v7-paso-num span { font-family: var(--mincho); font-size: 0.9rem; color: var(--tenue); margin-inline-start: 8px; vertical-align: 0.8em; }
 .v7-bento-paso h3 { font-size: 1.2rem; }
 .v7-bento-paso p { color: var(--tenue); }
+/* Lo que SÍ incluye el precio, en claro, justo antes de lo que no. */
+.v7-bento-si {
+  grid-column: 1 / 13; padding: clamp(24px, 3vw, 36px) clamp(24px, 4vw, 48px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 12px 40px; align-items: start;
+}
+.v7-bento-si h3 { font-size: 1.3rem; }
+.v7-bento-si ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 8px; }
+.v7-bento-si li { position: relative; padding-inline-start: 24px; color: var(--tenue); }
+.v7-bento-si li::before { content: '✓'; position: absolute; inset-inline-start: 0; color: var(--acento); font-weight: 700; }
+@media (max-width: 900px) { .v7-bento-si { grid-column: auto; grid-template-columns: 1fr; } }
 /* La única pieza oscura: lo que NO hacemos, para que se lea de un vistazo. */
 .v7-bento-no {
   grid-column: 1 / 13; border-radius: var(--radio); padding: clamp(24px, 3vw, 36px) clamp(24px, 4vw, 48px);
@@ -1232,3 +1242,8 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
   .v7-otono-hero { grid-template-columns: 1fr; padding: 92px 16px 0; }
   .v7-otono-hero img { aspect-ratio: 4 / 3.4; border-radius: 22px; }
 }
+
+/* Nota media de las reseñas reales, bajo el botón de reservar de la portada. */
+.v7-hero-nota { font-size: 14px; }
+.v7-hero-nota a { color: var(--tinta); text-decoration: none; font-weight: 600; }
+.v7-hero-nota span { color: #e0a100; letter-spacing: 1px; margin-inline-end: 4px; }

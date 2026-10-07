@@ -92,7 +92,18 @@ function useResenas(activas: boolean) {
   const [lista, setLista] = useState<Resena[]>([])
   useEffect(() => {
     if (!activas) return
-    fetch('/reviews.json').then((r) => r.json()).then((d) => setLista(d.reviews ?? [])).catch(() => setLista([]))
+    // Dos fuentes, como resenas.html: las aprobadas desde el móvil (Worker) y las
+    // de reviews.json (Mac). Se unen quitando repetidas por id.
+    const traer = (u: string) => fetch(u, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
+    Promise.all([traer('/api/resenas/publicas'), traer('/reviews.json')]).then((fuentes) => {
+      const vistos = new Set<string>()
+      const todas: Resena[] = []
+      for (const d of fuentes) for (const r of (d?.reviews ?? []) as Resena[]) {
+        if (!r?.text || !r.stars || vistos.has(r.id)) continue
+        vistos.add(r.id); todas.push(r)
+      }
+      setLista(todas)
+    })
   }, [activas])
   return lista
 }
@@ -179,6 +190,10 @@ function useEsOtono() {
 
 /** Ejemplo de fechas en el formulario: noviembre, que es la temporada que vendemos. */
 const EJ_FECHAS: Record<string, string> = { es: '18–21 nov.', en: '18–21 Nov', ar: '18–21 نوفمبر', ru: '18–21 нояб.' }
+
+const RESENAS_TXT: Record<string, string> = { es: 'reseñas de clientes', en: 'guest reviews', ar: 'تقييمات العملاء', ru: 'отзывы гостей' }
+const mediaResenas = (l: Resena[], lang: string) =>
+  (l.reduce((a, r) => a + r.stars, 0) / l.length).toLocaleString(lang === 'ar' ? 'ar-u-nu-latn' : lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
@@ -481,6 +496,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /> {p.hero.cta}</a>
               <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>
             </div>
+            {/* La nota sale de las reseñas reales; sin reseñas no se enseña nada. */}
+            {resenas.length > 0 && (
+              <p className="v7-hero-nota"><a href="#resenas">
+                <span aria-hidden="true">★</span> {mediaResenas(resenas, p.lang)} · {resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}
+              </a></p>
+            )}
             {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}
             <ul className="v7-hero-datos">
               <li>{desdeHero(p.lang)}</li>
@@ -544,6 +565,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               </li>
             ))}
           </ol>
+          {p.como.si && (
+            <div className="v7-bento-si tarjeta">
+              <h3>{p.como.si.titulo}</h3>
+              <ul>{p.como.si.items.map((n) => <li key={n}>{n}</li>)}</ul>
+            </div>
+          )}
           <div className="v7-bento-no">
             <h3>{p.como.noTitulo}</h3>
             <ul>{p.como.no.map((n) => <li key={n}>{n}</li>)}</ul>
@@ -592,7 +619,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Reseñas reales (de reviews.json; las publica resenas.py) */}
         {p.resenas && resenas.length > 0 && (
-          <section className="v7-seccion">
+          <section className="v7-seccion" id="resenas">
             <h2>{p.resenas.titulo}</h2>
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
             <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
