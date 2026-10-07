@@ -165,19 +165,38 @@ function Relojes({ p }: { p: Pagina }) {
   )
 }
 
+/** El otoño de Kioto (arces rojos): del 1 de octubre al 7 de diciembre, hora de Japón.
+ *  Se decide tras montar la página para no chocar con el HTML pregenerado. */
+function useEsOtono() {
+  const [si, setSi] = useState(false)
+  useEffect(() => {
+    const [m, d] = new Intl.DateTimeFormat('en-CA', { timeZone: 'Asia/Tokyo', month: 'numeric', day: 'numeric' })
+      .formatToParts(new Date()).filter((x) => x.type !== 'literal').map((x) => Number(x.value))
+    setSi(m === 10 || m === 11 || (m === 12 && d <= 7))
+  }, [])
+  return si
+}
+
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 function Precios({ p }: { p: Pagina }) {
   // Solo en las páginas de Tony: el PayPal es suyo.
   const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const cambios = useCambio(p.mercado.divisas)
+  const otono = useEsOtono()
   const fmt = (n: number, divisa: string) => {
     try {
-      return new Intl.NumberFormat(p.lang === 'ar' ? 'ar-u-nu-latn' : p.lang, { style: 'currency', currency: divisa, maximumFractionDigits: 0 }).format(n)
+      return new Intl.NumberFormat(p.lang === 'ar' ? 'ar-u-nu-latn' : p.lang, { style: 'currency', currency: divisa, maximumFractionDigits: 0, useGrouping: 'always' } as unknown as Intl.NumberFormatOptions).format(n)
     } catch { return `${Math.round(n)} ${divisa}` }
   }
   return (
     <>
+      {otono && p.precios.temporada && (
+        <aside className="v7-temporada tarjeta">
+          <h3>🍁 {p.precios.temporada.titulo}</h3>
+          <p>{p.precios.temporada.texto}</p>
+        </aside>
+      )}
       <div className="v7-planes">
         {p.precios.planes.map((plan, i) => (
           // El día completo es lo que más rinde al cliente: se destaca con tinta, no con altura.
@@ -187,6 +206,7 @@ function Precios({ p }: { p: Pagina }) {
             <p className="v7-plan-detalle">{plan.detalle}</p>
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
+            {p.precios.porPersona && !plan.desde && <p className="v7-plan-persona">{p.precios.porPersona(plan.yenes)}</p>}
             {pagar && !plan.desde && (
               <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
                 onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'paypal' })}>

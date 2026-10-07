@@ -232,6 +232,10 @@
 .v7-plan-precio { font-size: 2rem; font-weight: 700; letter-spacing: -0.02em; margin-top: 14px !important; font-variant-numeric: tabular-nums; }
 .v7-plan-desde { font-size: 1rem; font-weight: 500; color: var(--tenue); }
 .v7-plan-grupo { color: var(--tenue); font-size: 14px; }
+.v7-plan-persona { font-size: 14px; font-weight: 600; margin-top: 2px; }
+.v7-temporada { margin: 0 0 20px; padding: 18px 22px; border-inline-start: 4px solid #c8462c; }
+.v7-temporada h3 { margin: 0 0 6px; font-size: 18px; }
+.v7-temporada p { margin: 0; color: var(--tenue); line-height: 1.55; }
 .v7-plan-aprox { color: var(--tenue); font-size: 14px; margin-top: 6px !important; }
 .v7-notas { margin: 20px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--tenue); }
 .v7-notas li { padding-inline-start: 22px; position: relative; }
@@ -706,7 +710,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
    le devolvía el fondo blanco: el plan recomendado salía blanco sobre blanco.
    Con las dos clases gana la tarjeta oscura, vaya donde vaya la regla. */
 .v7 .tarjeta.v7-plan-destacado { background: var(--tinta); color: var(--fondo); border-color: transparent; }
-.v7-plan-destacado :is(.v7-plan-detalle, .v7-plan-grupo, .v7-plan-aprox, .v7-plan-desde) { color: color-mix(in srgb, var(--fondo) 72%, transparent); }
+.v7-plan-destacado :is(.v7-plan-detalle, .v7-plan-grupo, .v7-plan-persona, .v7-plan-aprox, .v7-plan-desde) { color: color-mix(in srgb, var(--fondo) 72%, transparent); }
 .v7-plan-sello {
   position: absolute; top: 18px; inset-inline-end: 18px; font-size: 12px; font-weight: 600;
   padding: 3px 8px; border-radius: 6px; background: var(--sello); color: #fff; /* sello fijo: con blanco encima da 5,9:1 también en oscuro */

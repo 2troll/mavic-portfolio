@@ -33,7 +33,13 @@ export interface Pagina {
   /** Las cuatro frases del globo con scroll: origen → Kansai → hotel → destino. */
   viaje: string[]
   ideas: { titulo: string; sub: string; tarjetas: Tarjeta[] }
-  precios: { titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string; desde: string }
+  precios: {
+    titulo: string; planes: Plan[]; notas: string[]; aprox: string; porGrupo: string; desde: string
+    /** Lo que sale por cabeza en un grupo típico: el precio por grupo asusta menos así. */
+    porPersona?: (yenes: number) => string
+    /** Aviso de temporada (otoño de Kioto); se enseña solo en esas fechas. */
+    temporada?: { titulo: string; texto: string }
+  }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[] }
   resenas?: { titulo: string; nota?: string; opinar: string }
   faq: { titulo: string; items: Pregunta[] }
@@ -195,6 +201,11 @@ const es: Pagina = {
       'Cancelación sin coste hasta 72 horas antes del tour.',
     ],
     aprox: 'al cambio de hoy',
+    porPersona: (n) => `Siendo 4: ${fmtYen(n / 4, '.')} por persona`,
+    temporada: {
+      titulo: 'Otoño en Kioto',
+      texto: 'De mediados de noviembre a principios de diciembre los arces de Kioto se ponen rojos. Es la época más bonita del año y también la de más gente: salimos temprano y organizo el día para llegar a los templos antes que las multitudes. Llevo un solo grupo al día, así que conviene reservar la fecha con antelación.',
+    },
   },
   mercado: {
     titulo: 'Si vienes de España o de México',
@@ -207,7 +218,7 @@ const es: Pagina = {
       { ciudad: 'Cancún', tz: 'America/Cancun' }, { ciudad: 'Ciudad de México', tz: 'America/Mexico_City' },
     ],
     tuHora: 'Tu hora',
-    divisas: ['EUR', 'MXN'],
+    divisas: ['EUR', 'MXN', 'USD'],
   },
   resenas: { titulo: 'Lo que dicen', opinar: '¿Hiciste un tour con nosotros? Deja tu opinión' },
   faq: {
@@ -318,6 +329,11 @@ const en: Pagina = {
       'Free cancellation up to 72 hours before.',
     ],
     aprox: 'at today\'s rate',
+    porPersona: (n) => `For 4 people: ${fmtYen(n / 4, ',')} each`,
+    temporada: {
+      titulo: 'Autumn in Kyoto',
+      texto: 'From mid-November to early December, Kyoto\'s maples turn red. It\'s the most beautiful time of year and also the busiest: we start early and I plan the day so we reach the temples before the crowds. I take one group a day, so it\'s worth booking your date early.',
+    },
   },
   mercado: {
     titulo: 'Coming from the UK',
