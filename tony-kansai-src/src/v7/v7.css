@@ -685,7 +685,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-logo { display: inline-flex; align-items: center; gap: 9px; }
 .v7-logo svg { color: var(--acento); flex: none; }
 .v7-logo-texto { font-weight: 650; letter-spacing: -0.01em; }
-@media (max-width: 560px) { .v7-logo-texto { display: none; } }
+@media (max-width: 560px) { .v7-cabecera .v7-logo-texto { display: none; } }
 
 /* ── Pulido con redesign-skill (Taste): fuera los patrones de plantilla ── */
 .v7 p { text-wrap: pretty; }
@@ -1206,3 +1206,29 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 /* En oscuro la caja invertida es blanca: la × pasa al rojo de sello (en negro iba el claro). */
 :root[data-tema='oscuro'] .v7-bento-no li::before { color: var(--sello); }
 @media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7-bento-no li::before { color: var(--sello); } }
+
+/* ── Otoño en Kioto (Otono.tsx) ─────────────────────────────────────────── */
+.v7-temporada .v7-temporada-enlace { margin-top: 10px; }
+.v7-temporada-enlace a { color: var(--acento); font-weight: 600; }
+.v7-otono-hero { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(20px, 4vw, 56px); align-items: center;
+  width: min(var(--ancho), 100%); margin: 0 auto; padding: 108px 24px 0; }
+.v7-otono-hero img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border-radius: 28px; box-shadow: var(--sombra); }
+.v7-otono-hero-texto { display: grid; gap: 16px; justify-items: start; }
+.v7-otono-hero h1 { font-size: clamp(2.2rem, 5vw, 3.8rem); line-height: 1; letter-spacing: -0.04em; text-wrap: balance; }
+.v7-otono-hero-texto > p:not(.v7-antetitulo) { color: var(--tenue); font-size: 1.1rem; line-height: 1.55; }
+.v7-otono-sitios { list-style: none; padding: 0; margin: 24px 0 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; }
+.v7-otono-sitios li { padding: 22px; }
+.v7-otono-sitios h3 { margin: 6px 0; font-size: 1.2rem; }
+.v7-otono-sitios p { color: var(--tenue); line-height: 1.5; margin: 0; }
+.v7-otono-kanji { font-family: var(--mincho); color: #c8462c; font-size: 1.1rem; }
+.v7-otono-dia { list-style: none; padding: 0; margin: 24px 0 0; display: grid; gap: 0; }
+.v7-otono-dia li { display: grid; grid-template-columns: 72px 1fr; gap: 16px; padding: 14px 0; border-bottom: 1px solid var(--linea, rgba(0,0,0,.1)); }
+.v7-otono-dia span { color: var(--acento); font-variant-numeric: tabular-nums; font-size: 1.1rem; }
+.v7-otono-dia p { margin: 0; line-height: 1.5; }
+.v7-otono-nota { color: var(--tenue); font-size: 14px; margin-top: 14px; }
+.v7-otono .v7-planes { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+.v7-otono-final { text-align: center; display: grid; justify-items: center; gap: 14px; padding-bottom: 96px; }
+@media (max-width: 820px) {
+  .v7-otono-hero { grid-template-columns: 1fr; padding: 92px 16px 0; }
+  .v7-otono-hero img { aspect-ratio: 4 / 3.4; border-radius: 22px; }
+}

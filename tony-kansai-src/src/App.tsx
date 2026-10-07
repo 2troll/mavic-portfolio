@@ -31,6 +31,8 @@ const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 const Montana = lazy(() => import('./v7/Montana'))
 const Itinerarios = lazy(() => import('./v7/Itinerarios'))
 const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
+const Otono = lazy(() => import('./v7/Otono'))
+import { RUTAS_OTONO } from './v7/datosOtono'
 import { CIUDADES_LARION, CIUDADES_TONY } from './v8/ciudades'
 import type { PaginaCiudad } from './v8/CiudadPagina'
 
@@ -118,6 +120,20 @@ export function Layout() {
         <CookieTardio compacto />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
+      </>
+    )
+  }
+
+  // Temporada: el otoño de Kioto.
+  const otono = RUTAS_OTONO[pathname.replace(/\/+$/, '')]
+  if (otono) {
+    return (
+      <>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+        <Otono key={otono} id={otono} />
+        <CookieTardio compacto />
+      </Suspense>
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO)]} />
       </>
     )
   }

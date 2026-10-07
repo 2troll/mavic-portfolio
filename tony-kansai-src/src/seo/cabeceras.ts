@@ -6,6 +6,7 @@
 
 import { PAGINAS, HERMANAS } from '../v7/contenido'
 import { MONTANA } from '../v7/datosMontana'
+import { OTONO } from '../v7/datosOtono'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
@@ -39,6 +40,15 @@ export function cabeceras(): Record<string, Cabecera> {
     todas[sinBarras(m.ruta)] = {
       titulo: m.seo.titulo, descripcion: m.seo.descripcion, imagen: '/v8/og/montana.jpg', lang: m.lang, dir: dirDe(m.lang),
       alternos: montes.map((x) => [x.lang, x.ruta]),
+    }
+  }
+
+  // Temporada: otoño de Kioto.
+  const otonos = Object.values(OTONO)
+  for (const o of otonos) {
+    todas[sinBarras(o.ruta)] = {
+      titulo: o.seo.titulo, descripcion: o.seo.descripcion, imagen: '/v8/og/kyoto.jpg', lang: o.lang, dir: 'ltr',
+      alternos: otonos.map((x) => [x.lang, x.ruta]),
     }
   }
 

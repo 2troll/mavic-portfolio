@@ -38,7 +38,7 @@ export interface Pagina {
     /** Lo que sale por cabeza en un grupo típico: el precio por grupo asusta menos así. */
     porPersona?: (yenes: number) => string
     /** Aviso de temporada (otoño de Kioto); se enseña solo en esas fechas. */
-    temporada?: { titulo: string; texto: string }
+    temporada?: { titulo: string; texto: string; enlace?: { texto: string; ruta: string } }
   }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[] }
   resenas?: { titulo: string; nota?: string; opinar: string }
@@ -205,6 +205,7 @@ const es: Pagina = {
     temporada: {
       titulo: 'Otoño en Kioto',
       texto: 'De mediados de noviembre a principios de diciembre los arces de Kioto se ponen rojos. Es la época más bonita del año y también la de más gente: salimos temprano y organizo el día para llegar a los templos antes que las multitudes. Llevo un solo grupo al día, así que conviene reservar la fecha con antelación.',
+      enlace: { texto: 'Ver el día de otoño en Kioto', ruta: '/es/otono-kioto/' },
     },
   },
   mercado: {
@@ -333,6 +334,7 @@ const en: Pagina = {
     temporada: {
       titulo: 'Autumn in Kyoto',
       texto: 'From mid-November to early December, Kyoto\'s maples turn red. It\'s the most beautiful time of year and also the busiest: we start early and I plan the day so we reach the temples before the crowds. I take one group a day, so it\'s worth booking your date early.',
+      enlace: { texto: 'See the Kyoto autumn day', ruta: '/en/kyoto-autumn/' },
     },
   },
   mercado: {

@@ -18,7 +18,7 @@ import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
-import {milesLocal, PIE } from './formato'
+import { milesLocal, PIE } from './formato'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']

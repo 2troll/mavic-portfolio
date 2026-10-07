@@ -42,6 +42,9 @@ const paginas = [
   // Páginas de ciudad (v8).
   ...['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond'].flatMap((c) => ['es', 'en', 'ar'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.9', changefreq: 'monthly', v7: `ciudadTony:${c}` }))),
   ...['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji'].flatMap((c) => ['ru', 'larion'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.85', changefreq: 'monthly', v7: `ciudadLarion:${c}` }))),
+  // Temporada: otoño de Kioto.
+  { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
+  { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/es/rutas', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
   { loc: '/en/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
   { loc: '/ar/routes', priority: '0.9', changefreq: 'monthly', v7: 'rutasTony' },
@@ -66,6 +69,7 @@ const V7 = {
   montana: [['es', '/es/montana/'], ['en', '/en/hiking/'], ['ar', '/ar/hiking/'], ['ru', '/ru/hiking/']],
   rutasTony: [['es', '/es/rutas/'], ['en', '/en/routes/'], ['ar', '/ar/routes/']],
   rutasLarion: [['ru', '/ru/routes/'], ['en', '/larion/routes/']],
+  otono: [['es', '/es/otono-kioto/'], ['en', '/en/kyoto-autumn/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {
