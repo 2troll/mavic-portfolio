@@ -18,6 +18,7 @@ import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
+import {milesLocal, PIE } from './formato'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -96,7 +97,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <h2><span className="v7-kanji" lang="ja">{KANJI[m]}</span>{tc(r.title)}</h2>
         <p className="v7-monte-sub">{tc(r.subtitle)}</p>
         <dl className="v7-monte-datos">
-          {r.altitude && <div><dt>{p.et.altitud}</dt><dd><bdi>{r.altitude}</bdi></dd></div>}
+          {r.altitude && <div><dt>{p.et.altitud}</dt><dd><bdi>{milesLocal(r.altitude, p.lang)}</bdi></dd></div>}
           <div><dt>{p.et.subida}</dt><dd>{tc(r.duration)}</dd></div>
           <div><dt>{p.et.dificultad}</dt><dd>{tc(r.grade)}</dd></div>
           <div><dt>{p.et.epoca}</dt><dd>{tc(r.bestSeason)}</dd></div>
@@ -107,7 +108,7 @@ export default function Montana({ id }: { id: MontanaId }) {
           <bdi dir="ltr">{CIMA[m].lat.toFixed(4)}° N, {CIMA[m].lon.toFixed(4)}° E</bdi> <span>{p.et.mapa}</span>
         </a>
         <div className="v7-monte-pie">
-          <span className="v7-monte-precio"><bdi>{r.price}</bdi> <small>{p.et.porGrupo}</small></span>
+          <span className="v7-monte-precio"><bdi>{milesLocal(r.price, p.lang)}</bdi> <small>{p.et.porGrupo}</small></span>
           <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], tc(r.title))} target="_blank" rel="noopener noreferrer"
             onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, ruta: m, canal: 'whatsapp_montana' })}>
             {p.et.pedir}
@@ -195,14 +196,14 @@ export default function Montana({ id }: { id: MontanaId }) {
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
-            <Link to={`/legal?lang=${p.lang}`}>Legal</Link>
-            <Link to={`/terms?lang=${p.lang}`}>Terms</Link>
-            <Link to={`/safety?lang=${p.lang}`}>Safety</Link>
+            <Link to={`/legal?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).legal}</Link>
+            <Link to={`/terms?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).condiciones}</Link>
+            <Link to={`/safety?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).seguridad}</Link>
           </nav>
           <p className="v7-fuente-gsi">{p.et.fuente}</p>
         </div>
         <details className="v7-creditos">
-          <summary>Créditos · Credits</summary>
+          <summary>{(PIE[p.lang] ?? PIE.en).creditos}</summary>
           <ul lang="es" dir="ltr">
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
           </ul>

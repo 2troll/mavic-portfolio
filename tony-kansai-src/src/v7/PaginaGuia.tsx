@@ -177,6 +177,9 @@ function useEsOtono() {
   return si
 }
 
+/** Ejemplo de fechas en el formulario: noviembre, que es la temporada que vendemos. */
+const EJ_FECHAS: Record<string, string> = { es: '18–21 nov.', en: '18–21 Nov', ar: '18–21 نوفمبر', ru: '18–21 нояб.' }
+
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 function Precios({ p }: { p: Pagina }) {
@@ -263,7 +266,7 @@ function Contacto({ p }: { p: Pagina }) {
             </select>
           </label>
           <label><span>{p.contacto.ciudad}</span><input value={d.ciudad} onChange={cambia('ciudad')} autoComplete="address-level2" /></label>
-          <label><span>{p.contacto.fechas}</span><input value={d.fechas} onChange={cambia('fechas')} placeholder="12–14 / 04" /></label>
+          <label><span>{p.contacto.fechas}</span><input value={d.fechas} onChange={cambia('fechas')} placeholder={EJ_FECHAS[p.lang] ?? EJ_FECHAS.en} /></label>
           <label><span>{p.contacto.personas}</span>
             <select value={d.personas} onChange={cambia('personas')}>
               <option value="">—</option>
@@ -632,7 +635,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div>
-            <strong><span className="v7-pie-sello" lang="ja" aria-hidden="true">関西</span>Tony Kansai Guide</strong>
+            <strong><Logo /></strong>
             <p>{p.pie.lema}</p>
             <p className="v7-pie-wa"><a href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> <bdi dir="ltr">{telefono(g.wa)}</bdi></a></p>
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>

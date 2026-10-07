@@ -1007,10 +1007,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 }
 .v7-pie strong, .v7-pie-titulo, .v7-pie a:hover { color: var(--inverso-tinta); }
 .v7-pie strong { display: flex; align-items: center; gap: var(--e-2); font-size: var(--t-1); letter-spacing: -0.02em; }
-.v7-pie-sello {
-  writing-mode: vertical-rl; direction: ltr; font-family: var(--mincho); font-weight: 400; font-size: 15px; line-height: 1;
-  background: var(--sello); color: #fff; padding: 7px 5px; border-radius: 4px;
-}
+.v7-pie .v7-logo svg { color: var(--sello); }
 .v7-pie-wa a { display: inline-flex; align-items: center; gap: var(--e-1); color: var(--inverso-tinta); font-size: var(--t-1); font-weight: 600; }
 .v7-pie a:focus-visible { outline: 2px solid var(--sello); outline-offset: 3px; }
 /* Área de toque de al menos 24 px en los enlaces del pie (WCAG 2.5.8). */
@@ -1024,6 +1021,11 @@ html .v7 { --radio: 4px; }
 .v7 h1, .v7 h2 { font-weight: 300; letter-spacing: -0.045em; }
 .v7 h3 { font-weight: 500; letter-spacing: -0.02em; }
 .v7-seccion { padding-top: clamp(112px, 13vw, 176px); }
+/* En móvil 112 px entre secciones dejaba pantallas casi en blanco. */
+@media (max-width: 560px) { .v7-seccion { padding-top: 72px; } }
+/* La tarjeta del mercado es una sección: sin esto heredaba el hueco de arriba por dentro. */
+.v7-seccion.v7-mercado { padding: 32px; }
+@media (max-width: 820px) { .v7-seccion.v7-mercado { padding: 24px; } }
 .v7-seccion > h2 { font-size: clamp(var(--t-4), 6vw, var(--t-6)); line-height: 1; margin-bottom: var(--e-3); max-width: 18ch; }
 .v7-entradilla { font-size: var(--t-1); line-height: 1.5; max-width: 36rem; }
 .v7-antetitulo { color: var(--tenue); font-weight: 500; }
@@ -1121,7 +1123,14 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 /* Portada: la foto como panel redondeado, separado del borde. */
 .v9-portada-foto { margin: 88px clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px) 0; border-radius: 32px; }
 [dir='rtl'] .v9-portada-foto { margin: 88px 0 clamp(12px, 1.6vw, 24px) clamp(12px, 1.6vw, 24px); }
-@media (max-width: 900px) { .v9-portada-foto, [dir='rtl'] .v9-portada-foto { margin: 76px 12px 0; border-radius: 26px; } }
+/* En móvil la altura va fija: con aspect-ratio + min-height:100% + margen la foto
+   se salía de su fila y tapaba la primera línea del título. */
+@media (max-width: 900px) {
+  .v9-portada-foto, [dir='rtl'] .v9-portada-foto {
+    margin: 76px 12px 0; border-radius: 26px;
+    width: auto; aspect-ratio: auto; min-height: 0; max-height: none; height: min(58svh, 118vw);
+  }
+}
 .v7-bento-guia img { border-radius: var(--radio); }
 .v7-bento-no { border-radius: var(--radio); }
 .v7-razones li { border-top: 0; padding: var(--e-4); border-radius: var(--radio); background: var(--cristal-fondo); -webkit-backdrop-filter: blur(18px); backdrop-filter: blur(18px); border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent); }

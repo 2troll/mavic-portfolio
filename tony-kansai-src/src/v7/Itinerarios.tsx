@@ -28,6 +28,7 @@ import './v7.css'
 import { IconoWa } from './IconoWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
+import {yenLocal, PIE } from './formato'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -74,7 +75,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
     return () => io.disconnect()
   }, [id])
 
-  const yen = (n: number) => `¥${n.toLocaleString('en-US')}`
+  const yen = (n: number) => yenLocal(n, lang)
   const wa = (texto: string) => `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(SALUDO[lang](g, texto))}`
 
   return (
@@ -180,13 +181,13 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
-            <Link to={`/legal?lang=${lang}`}>Legal</Link>
-            <Link to={`/terms?lang=${lang}`}>Terms</Link>
-            <Link to={`/privacy?lang=${lang}`}>Privacy</Link>
+            <Link to={`/legal?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
+            <Link to={`/terms?lang=${lang}`}>{(PIE[lang] ?? PIE.en).condiciones}</Link>
+            <Link to={`/privacy?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
           </nav>
         </div>
         <details className="v7-creditos">
-          <summary>Créditos · Credits</summary>
+          <summary>{(PIE[lang] ?? PIE.en).creditos}</summary>
           <ul lang="es" dir="ltr">
             {[...CREDITOS, ...CREDITOS_ITIN].map((c) => <li key={c.url}>{c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}

@@ -35,6 +35,7 @@ import { BarraWa } from '../v7/BarraWa'
 import { SelloCiudad, LibroSellos } from '../v9/Sellos'
 import { BotonTema } from '../v7/Tema'
 import { enlacesHreflang } from '../seo/hreflang'
+import {yenLocal, PIE, nombreMonte } from '../v7/formato'
 
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
@@ -212,7 +213,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
               ))}
             </ol>
             <div className="v8-dia-pie">
-              <p className="v8-precio"><small>{tramo === 'lejos' ? et.desde : ETIQUETAS[lang].nombres[tramo]}</small><strong><bdi>¥{PRECIO[tramo].toLocaleString('en-US')}</bdi></strong><small>{et.porGrupo}</small></p>
+              <p className="v8-precio"><small>{tramo === 'lejos' ? et.desde : ETIQUETAS[lang].nombres[tramo]}</small><strong><bdi>{yenLocal(PRECIO[tramo], lang)}</bdi></strong><small>{et.porGrupo}</small></p>
               <Link className="v7-boton v7-boton-sec" to={`${PAGINA_DIA[prefijo]}#${c.itinerario}`}>{et.verDia}</Link>
             </div>
           </section>
@@ -225,7 +226,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             <div>
               {c.montes.map((m) => {
                 const r = HIKING_ROUTES.find((x) => x.id === m)
-                return r ? <Link key={m} to={PAGINA_MONTE[prefijo]} className="v8-monte">{r.title}</Link> : null
+                return r ? <Link key={m} to={PAGINA_MONTE[prefijo]} className="v8-monte">{nombreMonte(r.title, lang)}</Link> : null
               })}
             </div>
           </section>
@@ -260,12 +261,12 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
             <Link to={`${prefijo}/`}>{et.volver}</Link>
-            <Link to={`/legal?lang=${lang}`}>Legal</Link>
-            <Link to={`/privacy?lang=${lang}`}>Privacy</Link>
+            <Link to={`/legal?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
+            <Link to={`/privacy?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
           </nav>
         </div>
         <details className="v7-creditos">
-          <summary>Créditos · Credits</summary>
+          <summary>{(PIE[lang] ?? PIE.en).creditos}</summary>
           <ul lang="es" dir="ltr">
             {c.zonas.map((z) => CREDITOS[z.id] && <li key={z.id}>{z.nombre.en}: <a href={CREDITOS[z.id].url} target="_blank" rel="noopener noreferrer">{CREDITOS[z.id].autor}</a>, {CREDITOS[z.id].licencia}</li>)}
             <li>Tiempo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> (CC BY 4.0); tifones: <a href="https://www.jma.go.jp/bosai/map.html#contents=typhoon" target="_blank" rel="noopener noreferrer">Agencia Meteorológica de Japón</a></li>
