@@ -410,7 +410,7 @@ export const GUIDES = [
     name: 'Tony Hanma',
     role: 'Head Guide',
     rating: '5.0',
-    photo: '/guides/guide-tony.jpg',
+    photo: '/guides/tony-retrato.webp',
     accent: '#E53030',
     languages: ['🇬🇧', '🇪🇸', '🇸🇦'],
     langLabels: ['EN', 'ES', 'AR'],

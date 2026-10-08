@@ -140,6 +140,10 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
 
     const QUIETO = 6500, CAMBIO = 1900
     let actual = 0, inicio = 0
+    // El lienzo es opaco (alpha: false): si se enseña antes de pintar, se ve NEGRO
+    // (pestaña en segundo plano, o se entra con #ancla más abajo). Se muestra tras
+    // el primer dibujo; hasta entonces queda la <img> de debajo.
+    let pintado = false
     const cuadro = (t: number) => {
       raf = 0
       if (!vivo) return
@@ -168,6 +172,7 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
         gl.uniform1f(U.zB, 1.04 + Math.max(0, dentro - QUIETO) / ciclo * 0.08)
         gl.uniform1f(U.t, t / 1000)
         gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4)
+        if (!pintado) { pintado = true; setActivo(true) }
       }
       if (visible && !document.hidden) raf = requestAnimationFrame(cuadro)
     }
@@ -183,7 +188,7 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
         try {
           const anchoPx = c.clientWidth * Math.min(window.devicePixelRatio || 1, 2)
           texturas.push(sube(await cargaImagen(urlFoto(f, anchoPx), anchoPx)))
-          if (texturas.length === 1) { setActivo(true); sigue() }
+          if (texturas.length === 1) sigue()
         } catch (err) { console.error('[HeroTinta] no carga', f, err) }
       }
     }

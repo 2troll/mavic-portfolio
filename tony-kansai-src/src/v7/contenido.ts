@@ -749,7 +749,7 @@ export const HERMANAS: Record<GuiaId, { id: PaginaId; etiqueta: string }[]> = {
 }
 
 export const GUIAS: Record<GuiaId, { nombre: string; foto: string; wa: string }> = {
-  tony: { nombre: 'Tony Hanma', foto: '/guides/guide-tony.webp', wa: WA_TONY },
+  tony: { nombre: 'Tony Hanma', foto: '/guides/tony-retrato.webp', wa: WA_TONY },
   larion: { nombre: 'Larion', foto: '/guides/guide-larion.webp', wa: WA_LARION },
 }
 

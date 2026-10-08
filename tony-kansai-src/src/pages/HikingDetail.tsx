@@ -194,7 +194,7 @@ export default function HikingDetail() {
                   "{tc(route.note)}"
                 </blockquote>
                 <div className="mt-4 flex items-center gap-2">
-                  <img src="/guides/guide-tony.jpg" alt="Tony" className="w-7 h-7 rounded-full object-cover" />
+                  <img src="/guides/tony-retrato.webp" alt="Tony" className="w-7 h-7 rounded-full object-cover" />
                   <span className="text-xs text-white/55">{tc('Tony Hanma')} · {tc(route.date)}</span>
                   {route.companions && <span className="text-xs text-white/45 ms-1">· {tc(route.companions)}</span>}
                 </div>
