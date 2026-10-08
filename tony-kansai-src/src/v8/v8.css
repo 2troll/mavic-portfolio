@@ -276,3 +276,14 @@ html:has(.v8-ciudad) { scroll-snap-type: y proximity; }
 .v9-maqueta3d { margin: 0 clamp(12px, 1.6vw, 24px); border-radius: 32px; overflow: hidden; }
 .v9-maqueta3d-pista { border-radius: 999px; }
 .v9-oracion-horas { border-top: 0; border-radius: 26px; overflow: hidden; background: color-mix(in srgb, var(--superficie) 62%, transparent); border: 1px solid color-mix(in srgb, var(--tinta) 8%, transparent); }
+
+/* Móvil: los 7 tours en carrusel horizontal con imán (antes, una columna de
+   ~3.600 px). La tarjeta siguiente asoma para que se vea que se desliza. */
+@media (max-width: 560px) {
+  .v9-indice {
+    display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: -16px; padding: 4px 16px 12px; scroll-padding-inline: 16px; scrollbar-width: none;
+  }
+  .v9-indice::-webkit-scrollbar { display: none; }
+  .v9-fila { flex: 0 0 82%; scroll-snap-align: start; align-content: start; }
+}
