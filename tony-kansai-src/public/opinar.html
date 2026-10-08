@@ -329,7 +329,7 @@ const T = {
     eFotoTipo:"Ese archivo no es una imagen.",
     eFotoLeer:"No he podido leer esa foto. Prueba con otra.",
     eEnvio:"No hemos podido enviarla ahora mismo.",
-    okH:"Gracias", okP:"Tu reseña le ha llegado a Tony. Aparecerá en la web en cuanto la lea.",
+    okH:"Gracias", okP:"Tu reseña le ha llegado a Tony. Aparecerá en la web en cuanto la lea.", okPub:"Tu reseña ya está publicada en la web. ¡Mil gracias!",
     okP2:"Arigatō gozaimasu — y vuelve pronto a Kansai.", volver:"← Volver a la web",
     manH:"Ya casi", manP:"Mándanosla con un toque: se abre WhatsApp con todo escrito. Si elegiste foto, adjúntala ahí.",
     manEnviar:"Enviarla por WhatsApp", verTodas:"Ver las reseñas",
@@ -356,7 +356,7 @@ const T = {
     eFotoTipo:"That file is not an image.",
     eFotoLeer:"We could not read that photo. Please try another.",
     eEnvio:"We could not send it just now.",
-    okH:"Thank you", okP:"Your review reached Tony. It will appear on the site once he reads it.",
+    okH:"Thank you", okP:"Your review reached Tony. It will appear on the site once he reads it.", okPub:"Your review is now live on the website. Thank you so much!",
     okP2:"Arigatō gozaimasu — and come back to Kansai soon.", volver:"← Back to the site",
     manH:"Almost there", manP:"Send it with one tap: WhatsApp opens with everything written. If you chose a photo, attach it there.",
     manEnviar:"Send it on WhatsApp", verTodas:"See the reviews",
@@ -383,7 +383,7 @@ const T = {
     eFotoTipo:"هذا الملف ليس صورة.",
     eFotoLeer:"تعذّرت قراءة الصورة. جرّب صورة أخرى.",
     eEnvio:"تعذّر الإرسال الآن.",
-    okH:"شكرًا لك", okP:"وصل تقييمك إلى طوني. سيظهر على الموقع بعد أن يقرأه.",
+    okH:"شكرًا لك", okP:"وصل تقييمك إلى طوني. سيظهر على الموقع بعد أن يقرأه.", okPub:"نُشر تقييمك على الموقع الآن. شكرًا جزيلًا!",
     okP2:"أريغاتو غوزايماس — ونراك قريبًا في كانساي.", volver:"→ العودة إلى الموقع",
     manH:"اقتربنا", manP:"أرسلها بضغطة: سيفتح واتساب والنص جاهز. إن اخترت صورة، أرفقها هناك.",
     manEnviar:"أرسلها عبر واتساب", verTodas:"شاهد التقييمات",
@@ -410,7 +410,7 @@ const T = {
     eFotoTipo:"Этот файл не изображение.",
     eFotoLeer:"Не удалось прочитать фото. Попробуйте другое.",
     eEnvio:"Сейчас не удалось отправить.",
-    okH:"Спасибо", okP:"Ваш отзыв отправлен Тони. Он появится на сайте, как только Тони его прочитает.",
+    okH:"Спасибо", okP:"Ваш отзыв отправлен Тони. Он появится на сайте, как только Тони его прочитает.", okPub:"Ваш отзыв уже опубликован на сайте. Большое спасибо!",
     okP2:"Аригато годзаимас — и возвращайтесь в Кансай.", volver:"← Вернуться на сайт",
     manH:"Почти готово", manP:"Отправьте одним нажатием: откроется WhatsApp с готовым текстом. Фото приложите там.",
     manEnviar:"Отправить в WhatsApp", verTodas:"Посмотреть отзывы",
@@ -437,7 +437,7 @@ const T = {
     eFotoTipo:"Tento soubor není obrázek.",
     eFotoLeer:"Fotku se nepodařilo načíst. Zkuste jinou.",
     eEnvio:"Teď se nepodařilo odeslat.",
-    okH:"Děkujeme", okP:"Vaše recenze dorazila Tonymu. Na webu se objeví, jakmile si ji přečte.",
+    okH:"Děkujeme", okP:"Vaše recenze dorazila Tonymu. Na webu se objeví, jakmile si ji přečte.", okPub:"Vaše recenze je už zveřejněná na webu. Moc děkujeme!",
     okP2:"Arigatō gozaimasu — a vraťte se do Kansai brzy.", volver:"← Zpět na web",
     manH:"Ještě krok", manP:"Pošlete ji jedním klepnutím: otevře se WhatsApp s hotovým textem. Fotku přiložte tam.",
     manEnviar:"Poslat přes WhatsApp", verTodas:"Zobrazit recenze",
@@ -632,6 +632,14 @@ async function enviar(ev){
       method:"POST", headers:{"Content-Type":"application/json"}, body: JSON.stringify(d),
     });
     if (!r.ok) throw new Error("HTTP " + r.status);
+    // El receptor publica sola la reseña con permiso y sin pinta de spam:
+    // entonces se le dice al cliente que ya está en la web.
+    const res = await r.json().catch(() => ({}));
+    if (res.publicada) {
+      const p = document.querySelector('[data-t="okP"]');
+      p.dataset.t = "okPub";
+      p.textContent = t.okPub;
+    }
     $("form").style.display = "none";
     $("hecho").classList.add("on");
     scrollTo({top:0, behavior:"smooth"});
