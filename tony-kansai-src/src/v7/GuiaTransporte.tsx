@@ -20,6 +20,7 @@ import creditosZonas from '../v8/creditosZonas.json'
 import { GUIAS_TRANSPORTE, PRECIO_GUIA, hermanasGuia } from './datosGuias'
 import type { GuiaId } from './datosGuias'
 import './v7.css'
+import './estilo-pixel.css'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = GUIAS_TRANSPORTE

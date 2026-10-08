@@ -2,8 +2,6 @@
 /* Geist autoalojada (sin Google Fonts): latín y cirílico para la página rusa. */
 @import '@fontsource-variable/geist';
 /* Titulares: Gloock (OFL, elegida por Tony el 8-10-2026). Solo latín: ruso y árabe siguen con su letra. */
-@import '@fontsource/gloock/latin-400.css';
-@import '@fontsource/gloock/latin-ext-400.css';
 
 /* ══ Web v7: cristal de Apple ═══════════════════════════════════════════════
    Letra del sistema (SF Pro en Apple), superficies claras, un solo acento.

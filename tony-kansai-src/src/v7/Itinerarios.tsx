@@ -25,6 +25,7 @@ import { MANGA_APROBADO } from '../v8/ciudades'
 // Viñeta manga del guía para cada día (la misma que su página de ciudad).
 const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osaka', nara: 'nara', himeji: 'himeji', kobe: 'kobe', hiroshima: 'hiroshima' }
 import './v7.css'
+import './estilo-pixel.css'
 import { IconoWa } from './IconoWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'

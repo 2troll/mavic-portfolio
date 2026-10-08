@@ -1,0 +1,86 @@
+/* ── Estilo «píxel japonés de día» (Minecraft × Japón) ─────────────────────
+   Elegido por Tony el 9-10-2026 (propuesta A). DotGothic16 (OFL) es una letra
+   de píxel japonesa con latín, cirílico y kana/kanji: titulares, precios,
+   botones y kanji van en ella; el texto corrido sigue en Geist para leerse
+   bien. Fondo de shoji, tarjetas de tatami con borde de bloque y franja
+   matcha, botones de torii en relieve. Árabe y ruso conservan su letra (DotGothic16
+   no trae árabe y su cirílico es de ancho japonés: se veía espaciado). Todo con variables para que el modo claro y el oscuro se vean
+   bien los dos. Sin backdrop-filter (frena el scroll: ver v7.css). */
+@import '@fontsource/dotgothic16/latin-400.css';
+@import '@fontsource/dotgothic16/latin-ext-400.css';
+@import '@fontsource/dotgothic16/japanese-400.css';
+
+/* Claro (por defecto) */
+.v7 {
+  --px-fondo: #f6f0e2; --px-shoji: #e7dcc5; --px-tarjeta: #f8f1df; --px-borde: #1b1b1b; --px-sombra: #1b1b1b;
+  --px-matcha: #6c8f3c; --px-torii: #d23a2a; --px-torii-osc: #8f2116; --px-torii-claro: #f08070; --px-texto-boton: #ffffff;
+  --fondo: var(--px-fondo); --superficie: var(--px-tarjeta); --radio: 0px;
+  --mincho: 'DotGothic16', 'Hiragino Mincho ProN', serif;
+  --pixel: 'DotGothic16', 'Geist Variable', sans-serif;
+}
+/* Oscuro: noche índigo; los bordes pasan a claros para que los bloques se sigan viendo. */
+:root[data-tema='oscuro'] .v7 {
+  --px-fondo: #15141c; --px-shoji: #22202d; --px-tarjeta: #1f1d29; --px-borde: #e9dfc8; --px-sombra: #000000;
+  --px-matcha: #86b04d; --px-torii: #e0493a; --px-torii-osc: #8f2116; --px-torii-claro: #ff8d7d;
+  --fondo: var(--px-fondo); --superficie: var(--px-tarjeta);
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-tema='claro']) .v7 {
+    --px-fondo: #15141c; --px-shoji: #22202d; --px-tarjeta: #1f1d29; --px-borde: #e9dfc8; --px-sombra: #000000;
+    --px-matcha: #86b04d; --px-torii: #e0493a; --px-torii-osc: #8f2116; --px-torii-claro: #ff8d7d;
+    --fondo: var(--px-fondo); --superficie: var(--px-tarjeta);
+  }
+}
+
+/* Fondo de shoji */
+.v7 {
+  background-color: var(--px-fondo);
+  background-image: linear-gradient(var(--px-shoji) 2px, transparent 2px), linear-gradient(90deg, var(--px-shoji) 2px, transparent 2px);
+  background-size: 48px 64px;
+}
+
+/* Todo en bloque: sin esquinas redondeadas */
+.v7 *, .v7 *::before, .v7 *::after { border-radius: 0 !important; }
+
+/* Letra de píxel en titulares, precios, botones y nombres (no en árabe) */
+.v7:not(.lang-ar):not(.lang-ru) :is(h1, h2, h3, .v7-plan-precio, .v9-fila h3, .v8-otra > span, .v7-boton, .v7-plan-pagar, .v7-antetitulo, .v7-plan-sello) {
+  font-family: var(--pixel) !important; font-weight: 400 !important; font-synthesis: none; letter-spacing: 0 !important;
+}
+.v7:not(.lang-ar):not(.lang-ru) :is(h1, h2) { line-height: 1.22 !important; }
+
+/* Bloques: tarjetas de tatami con borde y sombra dura */
+.v7 :is(.tarjeta, .v9-fila, .v7-razones li, .v7-bento-incluye, .v7-temporada, .v7-mercado) {
+  background: var(--px-tarjeta) !important;
+  border: 3px solid var(--px-borde) !important;
+  box-shadow: 5px 5px 0 var(--px-sombra) !important;
+}
+/* Franja matcha arriba, como el césped de un bloque */
+.v7 :is(.v9-fila, .v7-plan, .v7-razones li) { border-top: 10px solid var(--px-matcha) !important; }
+/* La tarjeta recomendada sigue invertida, con franja de torii */
+.v7 .v7-plan.v7-plan-destacado { background: var(--inverso) !important; border-top-color: var(--px-torii) !important; }
+
+/* Fotos con marco de bloque */
+.v7 :is(.v9-fila-foto, .v9-portada-foto, .v9-guia-foto, .v7-resenas img, .v8-otra, .v7-otono-hero img) {
+  border: 3px solid var(--px-borde) !important;
+}
+
+/* Botones de torii en relieve (claro y oscuro) */
+.v7 :is(.v7-boton, a.v7-plan-pagar) {
+  background: var(--px-torii) !important; color: var(--px-texto-boton) !important;
+  border: 3px solid var(--px-borde) !important;
+  box-shadow: inset -4px -4px 0 var(--px-torii-osc), inset 4px 4px 0 var(--px-torii-claro), 4px 4px 0 var(--px-sombra) !important;
+  text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.25);
+}
+.v7 :is(.v7-boton, a.v7-plan-pagar):hover { filter: brightness(1.08); }
+.v7 :is(.v7-boton, a.v7-plan-pagar):active { transform: translate(2px, 2px); box-shadow: inset -4px -4px 0 var(--px-torii-osc), inset 4px 4px 0 var(--px-torii-claro), 2px 2px 0 var(--px-sombra) !important; }
+
+/* Cabecera como barra de bloque */
+.v7 .cristal { background: var(--px-tarjeta) !important; border: 3px solid var(--px-borde) !important; box-shadow: 4px 4px 0 var(--px-sombra) !important; }
+.v7 .v7-idiomas a[aria-current] { background: var(--px-matcha) !important; color: #fff !important; }
+
+/* Sello 関西 y kanji de acento en rojo torii con sombra de bloque */
+.v7 :is(.v9-sello, .v7-pie-sello) { box-shadow: 3px 3px 0 var(--px-sombra); }
+.v7 .v7-resena-inicial { background: var(--px-matcha); }
+
+/* La portada y las secciones dejan ver la rejilla de shoji del fondo. */
+.v7 :is(.v9-portada, .v7-pagina > main, .v7-seccion) { background-color: transparent !important; }

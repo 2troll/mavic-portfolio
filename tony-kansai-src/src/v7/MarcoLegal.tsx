@@ -9,6 +9,7 @@ import { CORREO } from './contenido'
 import { Logo } from './Logo'
 import { BotonTema } from './Tema'
 import './v7.css'
+import './estilo-pixel.css'
 
 const VUELTA: Record<string, { ruta: string; texto: string }> = {
   es: { ruta: '/es/', texto: 'Volver' }, en: { ruta: '/en/', texto: 'Back' },

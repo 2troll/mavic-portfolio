@@ -18,6 +18,7 @@ import creditosZonas from '../v8/creditosZonas.json'
 import { OTONO, PRECIO_OTONO } from './datosOtono'
 import type { OtonoId } from './datosOtono'
 import './v7.css'
+import './estilo-pixel.css'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = OTONO

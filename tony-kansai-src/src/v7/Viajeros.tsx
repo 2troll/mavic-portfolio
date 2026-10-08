@@ -18,6 +18,7 @@ import { MERCADOS } from './datosViajeros'
 import creditosZonas from '../v8/creditosZonas.json'
 import type { MercadoId } from './datosViajeros'
 import './v7.css'
+import './estilo-pixel.css'
 
 const BASE = 'https://tonykansaiguide.com'
 const YENES = [38000, 58000] as const
