@@ -85,7 +85,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
 
       <main>
         <section className="v7-otono-hero">
-          <img {...foto(HERO)} alt={p.altFoto} {...{ fetchpriority: 'high' }} />
+          <img {...foto(HERO, '(max-width: 820px) calc(100vw - 32px), 50vw')} alt={p.altFoto} {...{ fetchpriority: 'high' }} />
           <div className="v7-otono-hero-texto">
             <p className="v7-antetitulo">{p.grupo === 'aeropuerto' ? '✈️' : '🚃'} {p.antetitulo}</p>
             <h1>{p.titulo}</h1>

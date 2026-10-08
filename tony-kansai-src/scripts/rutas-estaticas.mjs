@@ -125,6 +125,15 @@ for (const ruta of rutas) {
     const frases = idioma !== 'en' && existsSync(ficheroDic) ? JSON.parse(readFileSync(ficheroDic, 'utf8')) : undefined
     const { html: cuerpo, ld } = await pinta(`/${ruta}/`, idioma, frases)
     html = html.replace('<div id="root"></div>', `<div id="root">${cuerpo}</div>`)
+    // Páginas sin foto en PRECARGA (otoño, países, guías): se precarga la imagen
+    // que la propia página marca como prioritaria, con su mismo srcset y sizes.
+    if (!foto) {
+      const img = cuerpo.match(/<img\b[^>]*fetchpriority="high"[^>]*>/)?.[0]
+      const attr = (n) => img?.match(new RegExp(`\\b${n}="([^"]*)"`, 'i'))?.[1] // React escribe srcSet
+      if (img && attr('srcset')) {
+        html = html.replace('</head>', `  <link rel="preload" as="image" href="${attr('src')}" imagesrcset="${attr('srcset')}" imagesizes="${attr('sizes') ?? '100vw'}" fetchpriority="high" />\n  </head>`)
+      }
+    }
     if (ld) html = html.replace('</head>', `  ${ld}\n  </head>`)
     pintadas++
   }

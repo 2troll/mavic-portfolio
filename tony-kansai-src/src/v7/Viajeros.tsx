@@ -75,7 +75,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
 
       <main>
         <section className="v7-otono-hero">
-          <img {...foto(m.foto)} alt={m.fotoAlt} {...{ fetchpriority: 'high' }} />
+          <img {...foto(m.foto, '(max-width: 820px) calc(100vw - 32px), 50vw')} alt={m.fotoAlt} {...{ fetchpriority: 'high' }} />
           <div className="v7-otono-hero-texto">
             <p className="v7-antetitulo">{m.bandera} {m.antetitulo}</p>
             <h1>{m.titulo}</h1>
