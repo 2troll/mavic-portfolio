@@ -57,7 +57,7 @@ export default function Otono({ id }: { id: OtonoId }) {
         <meta property="og:title" content={p.seo.titulo} />
         <meta property="og:description" content={p.seo.descripcion} />
         <meta property="og:url" content={`${BASE}${p.ruta}`} />
-        <meta property="og:image" content={`${BASE}${HERO}`} />
+        <meta property="og:image" content={`${BASE}/v8/og/kyoto.jpg`} />
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 

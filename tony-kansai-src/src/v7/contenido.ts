@@ -235,6 +235,7 @@ const es: Pagina = {
     enlaces: [
       { texto: 'Guía práctica desde España', ruta: '/es/desde-espana/' },
       { texto: 'Guía práctica desde México', ruta: '/es/desde-mexico/' },
+      { texto: 'Guía práctica desde Argentina', ruta: '/es/desde-argentina/' },
     ],
   },
   resenas: { titulo: 'Lo que dicen', opinar: '¿Hiciste un tour con nosotros? Deja tu opinión' },
@@ -376,7 +377,10 @@ const en: Pagina = {
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }, { ciudad: 'London', tz: 'Europe/London' }],
     tuHora: 'Your time',
     divisas: ['GBP'],
-    enlaces: [{ texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' }],
+    enlaces: [
+      { texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' },
+      { texto: 'Practical guide for travellers from the USA', ruta: '/en/from-usa/' },
+    ],
   },
   resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.', opinar: 'Toured with us? Leave a review' },
   faq: {

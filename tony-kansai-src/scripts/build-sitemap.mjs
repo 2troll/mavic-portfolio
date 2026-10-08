@@ -46,9 +46,13 @@ const paginas = [
   { loc: '/en/from-uk', priority: '0.8', changefreq: 'monthly', v7: 'uk' },
   { loc: '/es/desde-espana', priority: '0.8', changefreq: 'monthly', v7: 'espana' },
   { loc: '/ar/from-gulf', priority: '0.8', changefreq: 'monthly', v7: 'golfo' },
+  { loc: '/en/from-usa', priority: '0.8', changefreq: 'monthly', v7: 'usa' },
+  { loc: '/es/desde-argentina', priority: '0.8', changefreq: 'monthly', v7: 'argentina' },
   // Guías prácticas.
   { loc: '/es/osaka-kioto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
+  { loc: '/es/aeropuerto-kansai', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
+  { loc: '/en/kansai-airport', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -81,7 +85,10 @@ const V7 = {
   uk: [['en', '/en/from-uk/']],
   espana: [['es', '/es/desde-espana/']],
   golfo: [['ar', '/ar/from-gulf/']],
+  usa: [['en', '/en/from-usa/']],
+  argentina: [['es', '/es/desde-argentina/']],
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
+  aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

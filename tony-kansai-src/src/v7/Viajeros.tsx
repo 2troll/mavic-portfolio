@@ -59,7 +59,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <meta property="og:title" content={m.seo.titulo} />
         <meta property="og:description" content={m.seo.descripcion} />
         <meta property="og:url" content={`${BASE}${m.ruta}`} />
-        <meta property="og:image" content={`${BASE}${m.foto}`} />
+        <meta property="og:image" content={`${BASE}/v8/og/${m.lang}.jpg`} />
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 

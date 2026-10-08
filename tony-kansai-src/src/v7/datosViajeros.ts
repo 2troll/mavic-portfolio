@@ -4,7 +4,7 @@
 // Regla de contenido: nada que no sea verdad. Lo que cambia con el tiempo
 // (visado, vuelos) va dicho en general y con la fuente oficial para comprobarlo.
 
-export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo'
+export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo' | 'us' | 'arg'
 
 export interface Mercado {
   lang: 'es' | 'en' | 'ar'; ruta: string; inicio: string; locale: string; divisas: string[]
@@ -158,6 +158,76 @@ export const MERCADOS: Record<MercadoId, Mercado> = {
     final: { titulo: 'متى تصلون؟', texto: 'أخبرني بالتواريخ وعددكم ومكان إقامتكم. أردّ عليك بنفسي، عادةً في اليوم نفسه.', boton: 'راسلني عبر واتساب', principal: 'الصفحة الرئيسية' },
     saludo: 'السلام عليكم طوني، نحن قادمون من الخليج ونرغب في جولة. التواريخ: ', escribe: 'راسلني',
     foto: '/v7/fotos/kioto.jpg', fotoAlt: 'بوابات فوشيمي إيناري، كيوتو', touristType: 'المسافرون من الخليج',
+  },
+  us: {
+    lang: 'en', ruta: '/en/from-usa/', inicio: '/en/', locale: 'en-US', divisas: ['USD'],
+    seo: {
+      titulo: 'Japan from the USA: Private Guide in Kyoto | Tony Kansai Guide',
+      descripcion: 'A private guide in Kyoto, Osaka and Nara for travelers from the US: time difference, entry, getting to Kansai, money, plugs and prices in dollars.',
+    },
+    bandera: '🇺🇸', antetitulo: 'For travelers from the US',
+    titulo: 'Japan from the US, with your own guide.',
+    sub: 'I\'m Tony. I pick you up at your hotel and we spend the day in Kyoto, Osaka or Nara, just your group. No agency: you deal with me directly, on WhatsApp.',
+    cta: 'Tell me about your trip',
+    practicoTitulo: 'The practical stuff, before you fly',
+    practico: [
+      { icono: '🕐', t: 'Time difference', d: 'Japan is 14 hours ahead of New York and 17 ahead of Los Angeles in winter; in summer, 13 and 16. Message me whenever works for you: I reply as soon as it\'s morning here.' },
+      { icono: '🛂', t: 'Entry', d: 'US citizens don\'t need a visa for short tourist stays in Japan. Check the State Department\'s Japan page before you go.' },
+      { icono: '✈️', t: 'Getting to Kansai', d: 'Many US cities have nonstop flights to Tokyo. From Tokyo the shinkansen reaches Kyoto in about two and a quarter hours; there are also flights to Kansai Airport, near Osaka, so check what leaves from your city.' },
+      { icono: '💴', t: 'Money', d: 'Cash is still handy in Japan. 7-Eleven ATMs take foreign cards. And there\'s no tipping anywhere, including with me.' },
+      { icono: '🔌', t: 'Plugs', d: 'Japan uses two flat pins (type A) at 100 volts, so most US chargers just plug in. Three-prong plugs, and some with one wider pin, need a simple adapter.' },
+      { icono: '💳', t: 'Paying for the tour', d: 'In cash, in yen, on the day. Or in advance from the US with PayPal or Wise, once your date is confirmed.' },
+    ],
+    preciosTitulo: 'Price per group, in dollars at today\'s rate',
+    planes: ['Half day · 4 hours', 'Full day · 8 hours'], porGrupo: 'per group, up to 6 people',
+    porPersona: (y) => `For 4 people: ${y} each`,
+    notas: ['Trains, admissions and meals aren\'t included: you pay as we go and I show you how.', 'Free cancellation up to 72 hours before.'],
+    aprox: 'at today\'s rate',
+    ideasTitulo: 'Ideas for your day',
+    ideas: [
+      { t: 'Kyoto in a day', d: 'Fushimi Inari before the crowds, Kiyomizu, Gion and the Golden Pavilion.', a: '/en/kyoto/' },
+      { t: 'Osaka, eating', d: 'The castle, Kuromon market and the neon of Dōtonbori.', a: '/en/osaka/' },
+      { t: 'Nara and its deer', d: 'The Great Buddha of Tōdai-ji and the park, 45 minutes from Osaka.', a: '/en/nara/' },
+      { t: 'Kyoto in the fall', d: 'The red maples of November, starting early.', a: '/en/kyoto-autumn/' },
+    ],
+    final: { titulo: 'When are you coming?', texto: 'Tell me your dates, how many of you there are and where you\'re staying. I reply myself, usually the same day.', boton: 'Message me on WhatsApp', principal: 'See the main page' },
+    saludo: 'Hi Tony, we\'re coming from the US and we\'d like a tour. Dates: ', escribe: 'Message me',
+    foto: '/v8/zonas/osaka-dotonbori.jpg', fotoAlt: 'Dōtonbori canal at night, Osaka', touristType: 'Travelers from the United States',
+  },
+  arg: {
+    lang: 'es', ruta: '/es/desde-argentina/', inicio: '/es/', locale: 'es-AR', divisas: ['ARS', 'USD'],
+    seo: {
+      titulo: 'Japón desde Argentina con guía en español | Tony Kansai Guide',
+      descripcion: 'Guía en español en Kioto, Osaka y Nara para viajeros de Argentina: diferencia horaria, visa, cómo llegar a Kansai, enchufes y precios en pesos y dólares.',
+    },
+    bandera: '🇦🇷', antetitulo: 'Para viajeros de Argentina',
+    titulo: 'Japón desde Argentina, con guía en español.',
+    sub: 'Soy Tony. Te busco en el hotel y pasamos el día en Kioto, Osaka o Nara, solo con tu grupo. Sin agencia: hablás directamente conmigo, por WhatsApp, en tu idioma.',
+    cta: 'Contame tu viaje',
+    practicoTitulo: 'Lo práctico, antes de volar',
+    practico: [
+      { icono: '🕐', t: 'Horario', d: 'Japón va 12 horas adelante de Buenos Aires, todo el año. Escribime cuando quieras: te contesto apenas amanece acá.' },
+      { icono: '🛂', t: 'Visa', d: 'Para turismo de corta estadía, los argentinos no necesitan visa para entrar en Japón. Antes de viajar, confirmalo en la web de la Embajada de Japón en Argentina.' },
+      { icono: '✈️', t: 'Cómo llegar a Kansai', d: 'Desde Argentina se llega con al menos una escala, a Tokio o directo al aeropuerto de Kansai. Desde Tokio, el shinkansen llega a Kioto en unas dos horas y cuarto.' },
+      { icono: '💴', t: 'Plata', d: 'En Japón el efectivo sigue siendo útil. Los cajeros de 7-Eleven aceptan tarjetas extranjeras. Y no se deja propina: en ningún lado, tampoco conmigo.' },
+      { icono: '🔌', t: 'Enchufes', d: 'En Japón son de tipo A, de dos patas planas, a 100 voltios: el enchufe argentino no entra, así que traé adaptador. Y fijate que el cargador diga 100-240 V; los de celular y notebook casi siempre lo dicen.' },
+      { icono: '💳', t: 'Pagar el tour', d: 'En efectivo, en yenes, el día del tour. O por adelantado con PayPal o Wise, cuando ya tengamos la fecha.' },
+    ],
+    preciosTitulo: 'Precio por grupo, al cambio de hoy',
+    planes: ['Medio día · 4 horas', 'Día completo · 8 horas'], porGrupo: 'por grupo, hasta 6 personas',
+    porPersona: (y) => `Siendo 4: ${y} por persona`,
+    notas: ['Trenes, entradas y comidas no están incluidos: los pagan en el momento y yo les explico cómo.', 'Cancelación sin costo hasta 72 horas antes.'],
+    aprox: 'al cambio de hoy',
+    ideasTitulo: 'Ideas para tu día',
+    ideas: [
+      { t: 'Kioto en un día', d: 'Fushimi Inari antes de la gente, Kiyomizu, Gion y el Pabellón Dorado.', a: '/es/kyoto/' },
+      { t: 'Osaka comiendo', d: 'El castillo, el mercado de Kuromon y los neones de Dōtonbori.', a: '/es/osaka/' },
+      { t: 'Nara y sus ciervos', d: 'El Gran Buda de Tōdai-ji y el parque, a 45 minutos de Osaka.', a: '/es/nara/' },
+      { t: 'Otoño en Kioto', d: 'Los arces rojos de noviembre, saliendo temprano.', a: '/es/otono-kioto/' },
+    ],
+    final: { titulo: '¿Cuándo vienen?', texto: 'Decime fechas, cuántos son y dónde se alojan. Te contesto yo, Tony, normalmente el mismo día.', boton: 'Escribime por WhatsApp', principal: 'Ver la página principal' },
+    saludo: 'Hola Tony, ¿cómo andás? Vamos desde Argentina y nos interesa un tour. Fechas: ', escribe: 'Escribime',
+    foto: '/v8/zonas/kioto-arashiyama.jpg', fotoAlt: 'Bosque de bambú de Arashiyama, Kioto', touristType: 'Viajeros de Argentina',
   },
 }
 

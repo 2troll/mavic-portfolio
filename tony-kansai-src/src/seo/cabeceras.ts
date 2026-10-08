@@ -59,12 +59,12 @@ export function cabeceras(): Record<string, Cabecera> {
     todas[sinBarras(m.ruta)] = { ...m.seo, imagen: `/v8/og/${m.lang}.jpg`, lang: m.lang, dir: dirDe(m.lang), alternos: [] }
   }
 
-  // Guías prácticas (Osaka → Kioto).
+  // Guías prácticas (Osaka → Kioto, aeropuerto de Kansai): hreflang solo entre las de su grupo.
   const guias = Object.values(GUIAS_TRANSPORTE)
   for (const g of guias) {
     todas[sinBarras(g.ruta)] = {
-      titulo: g.seo.titulo, descripcion: g.seo.descripcion, imagen: '/v8/og/kyoto.jpg', lang: g.lang, dir: 'ltr',
-      alternos: guias.map((x) => [x.lang, x.ruta]),
+      titulo: g.seo.titulo, descripcion: g.seo.descripcion, imagen: g.og, lang: g.lang, dir: 'ltr',
+      alternos: guias.filter((x) => x.grupo === g.grupo).map((x) => [x.lang, x.ruta]),
     }
   }
 

@@ -1,6 +1,8 @@
-// Guía práctica para posicionar en buscadores: cómo ir de Osaka a Kioto.
-// /es/osaka-kioto/ y /en/osaka-to-kyoto/. Responde a la pregunta con datos
-// comprobados y, al final, ofrece el tour. Textos y fuentes en datosGuias.ts.
+// Guías prácticas para posicionar en buscadores: cómo ir de Osaka a Kioto
+// (/es/osaka-kioto/, /en/osaka-to-kyoto/) y del aeropuerto de Kansai a Osaka y
+// Kioto (/es/aeropuerto-kansai/, /en/kansai-airport/). Responden a la pregunta
+// con datos comprobados y, al final, ofrecen el tour. Textos y fuentes en
+// datosGuias.ts; cada guía solo enlaza (hreflang, idiomas) con las de su grupo.
 
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -15,7 +17,7 @@ import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { yenLocal, PIE } from './formato'
 import creditosZonas from '../v8/creditosZonas.json'
-import { GUIAS_TRANSPORTE, PRECIO_GUIA } from './datosGuias'
+import { GUIAS_TRANSPORTE, PRECIO_GUIA, hermanasGuia } from './datosGuias'
 import type { GuiaId } from './datosGuias'
 import './v7.css'
 
@@ -23,11 +25,13 @@ const BASE = 'https://tonykansaiguide.com'
 const P = GUIAS_TRANSPORTE
 const PRECIO = PRECIO_GUIA
 
-const HERO = '/v8/zonas/kioto-fushimi.jpg'
-const CREDITO = (creditosZonas as Record<string, { autor: string; licencia: string; url: string }>)['kioto-fushimi']
+const CREDITOS = creditosZonas as Record<string, { autor: string; licencia: string; url: string }>
 
 export default function GuiaTransporte({ id }: { id: GuiaId }) {
   const p = P[id]
+  const HERO = `/v8/zonas/${p.foto.clave}.jpg`
+  const CREDITO = CREDITOS[p.foto.clave]
+  const hermanas = hermanasGuia(p.grupo)
   const { setLang } = useLanguage()
   useEffect(() => { setLang(p.lang) }, [p.lang, setLang])
 
@@ -41,7 +45,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
     '@graph': [
       {
         '@type': 'WebPage', '@id': url, url, name: p.seo.titulo.split(' | ')[0], description: p.seo.descripcion,
-        inLanguage: p.lang, image: `${BASE}${HERO}`,
+        inLanguage: p.lang, image: `${BASE}${p.og}`,
         publisher: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${GUIAS.tony.wa}`, email: CORREO },
       },
       {
@@ -58,18 +62,18 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <title>{p.seo.titulo}</title>
         <meta name="description" content={p.seo.descripcion} />
         <link rel="canonical" href={url} />
-        {enlacesHreflang(Object.values(P).map((x) => ({ lang: x.lang, href: `${BASE}${x.ruta}` })))}
+        {enlacesHreflang(hermanas.map(([, x]) => ({ lang: x.lang, href: `${BASE}${x.ruta}` })))}
         <meta property="og:title" content={p.seo.titulo} />
         <meta property="og:description" content={p.seo.descripcion} />
         <meta property="og:url" content={url} />
-        <meta property="og:image" content={`${BASE}${HERO}`} />
+        <meta property="og:image" content={`${BASE}${p.og}`} />
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
       <header className="v7-cabecera cristal">
         <Link to={p.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-idiomas" aria-label="Language">
-          {Object.entries(P).map(([k, x]) => (
+          {hermanas.map(([k, x]) => (
             <Link key={k} to={x.ruta} lang={x.lang} aria-current={k === id ? 'page' : undefined}>{x.lang === 'es' ? 'Español' : 'English'}</Link>
           ))}
         </nav>
@@ -83,7 +87,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <section className="v7-otono-hero">
           <img {...foto(HERO)} alt={p.altFoto} {...{ fetchpriority: 'high' }} />
           <div className="v7-otono-hero-texto">
-            <p className="v7-antetitulo">🚃 {p.antetitulo}</p>
+            <p className="v7-antetitulo">{p.grupo === 'aeropuerto' ? '✈️' : '🚃'} {p.antetitulo}</p>
             <h1>{p.titulo}</h1>
             <p>{p.sub}</p>
             <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {p.cta}</a>
@@ -165,7 +169,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <details className="v7-creditos">
           <summary>{pie.creditos}</summary>
           <ul lang="es" dir="ltr">
-            <li>Fushimi Inari: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.autor}</a>, {CREDITO.licencia}</li>
+            <li>{p.foto.lugar}: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.autor}</a>, {CREDITO.licencia}</li>
           </ul>
         </details>
       </footer>
