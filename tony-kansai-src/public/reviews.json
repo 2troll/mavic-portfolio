@@ -1,8 +1,52 @@
 {
-  "updated": "2026-08-27",
-  "count": 2,
+  "updated": "2026-10-08",
+  "count": 6,
   "average": 5.0,
   "reviews": [
+    {
+      "id": "r-0006",
+      "stars": 5,
+      "name": "Marc",
+      "country": "",
+      "tour": "Osaka",
+      "text": "Puntual y amable. Nos enseñó de forma detallada por Osaka.",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": ""
+    },
+    {
+      "id": "r-0007",
+      "stars": 5,
+      "name": "Sara Gil",
+      "country": "España",
+      "tour": "Nara",
+      "text": "Todo de 10.tony un chico que te expliza todo ,mucha paciencia  y muy divertido",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": "reviews-img/r-0007.jpg"
+    },
+    {
+      "id": "r-0008",
+      "stars": 5,
+      "name": "Paco M",
+      "country": "",
+      "tour": "Kioto",
+      "text": "Mucha gente, pero bien guiado te quitas barullos, merece la pena",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": "reviews-img/r-0008.jpg"
+    },
+    {
+      "id": "r-0009",
+      "stars": 5,
+      "name": "Jv",
+      "country": "",
+      "tour": "Kioto",
+      "text": "Muy bien. Me sentí tratado con amabilidad y preocupación porque nos sintiéramos bien",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": ""
+    },
     {
       "id": "r-0004",
       "stars": 5,
