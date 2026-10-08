@@ -22,16 +22,18 @@ import './v7.css'
 const BASE = 'https://tonykansaiguide.com'
 const YENES = [38000, 58000] as const
 /** Crédito de cada foto de portada (están en CREDITOS de contenido.ts). */
-const CREDITO_FOTO: Record<string, string> = { '/v7/fotos/kioto.jpg': 'Kioto: Fushimi Inari', '/v7/fotos/nara.jpg': 'Nara: ciervos' }
+const CREDITO_FOTO: Record<string, string> = { '/v7/fotos/kioto.jpg': 'Kioto: Fushimi Inari', '/v7/fotos/nara.jpg': 'Nara: ciervos', '/v7/fotos/miyajima.jpg': 'Miyajima: torii' }
 
 export default function Viajeros({ id }: { id: MercadoId }) {
   const m = MERCADOS[id]
   const { setLang } = useLanguage()
   useEffect(() => { setLang(m.lang) }, [m.lang, setLang])
   const cambios = useCambio([...m.divisas])
-  const wa = `https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(m.saludo)}`
+  // El guía de la página: Tony por defecto; Larion en la de Rusia (su WhatsApp, sin el PayPal de Tony).
+  const g = GUIAS[m.guia ?? 'tony']
+  const wa = `https://wa.me/${g.wa}?text=${encodeURIComponent(m.saludo)}`
   const pie = PIE[m.lang]
-  const pagar = PAGAR[m.lang]
+  const pagar = (m.guia ?? 'tony') === 'tony' ? PAGAR[m.lang] : undefined
   const zona = (creditosZonas as Record<string, { autor: string; licencia: string; url: string }>)[m.foto.match(/zonas\/([a-z-]+)\.jpg$/)?.[1] ?? '']
   const credito = CREDITOS.find((c) => c.foto === CREDITO_FOTO[m.foto]) ?? (zona && { foto: m.fotoAlt, ...zona })
   // Cada moneda con su símbolo y su código detrás: «$6,607 MXN · $367 USD», «£276 · €326».
@@ -46,7 +48,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
     '@context': 'https://schema.org', '@type': 'TouristTrip', name: m.seo.titulo.split(' | ')[0],
     description: m.seo.descripcion, url: `${BASE}${m.ruta}`, inLanguage: m.lang, touristType: m.touristType,
     offers: YENES.map((y, i) => ({ '@type': 'Offer', name: m.planes[i], price: y, priceCurrency: 'JPY', url: `${BASE}${m.ruta}` })),
-    provider: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${GUIAS.tony.wa}`, email: CORREO },
+    provider: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${g.wa}`, email: CORREO },
   }
 
   return (
@@ -107,12 +109,12 @@ export default function Viajeros({ id }: { id: MercadoId }) {
                 <p className="v7-plan-grupo">{m.porGrupo}</p>
                 <p className="v7-plan-persona">{m.porPersona(yenLocal(y / 4, m.lang))}</p>
                 {cambios.length > 0 && <p className="v7-plan-aprox">≈ {enDivisa(y)}</p>}
-                <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${y}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>
+                {pagar && <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${y}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
               </article>
             ))}
           </div>
           <ul className="v7-notas">
-            <li>{pagar.nota}</li>
+            {pagar && <li>{pagar.nota}</li>}
             {m.notas.map((n) => <li key={n}>{n}</li>)}
           </ul>
           {cambios.length > 0 && <p className="v7-fuente-cambio">≈ {m.aprox} · <a href="https://www.exchangerate-api.com" target="_blank" rel="noopener noreferrer">Rates by Exchange Rate API</a></p>}

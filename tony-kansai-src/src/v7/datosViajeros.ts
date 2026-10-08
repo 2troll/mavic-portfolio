@@ -4,10 +4,13 @@
 // Regla de contenido: nada que no sea verdad. Lo que cambia con el tiempo
 // (visado, vuelos) va dicho en general y con la fuente oficial para comprobarlo.
 
-export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo' | 'us' | 'arg'
+export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo' | 'us' | 'arg' | 'rusia'
 
 export interface Mercado {
-  lang: 'es' | 'en' | 'ar'; ruta: string; inicio: string; locale: string; divisas: string[]
+  lang: 'es' | 'en' | 'ar' | 'ru'; ruta: string;
+  /** Guía de la página (por defecto Tony). */
+  guia?: 'tony' | 'larion'
+  inicio: string; locale: string; divisas: string[]
   seo: { titulo: string; descripcion: string }
   bandera: string; antetitulo: string; titulo: string; sub: string; cta: string
   practicoTitulo: string; practico: { icono: string; t: string; d: string }[]
@@ -228,6 +231,41 @@ export const MERCADOS: Record<MercadoId, Mercado> = {
     final: { titulo: '¿Cuándo vienen?', texto: 'Decime fechas, cuántos son y dónde se alojan. Te contesto yo, Tony, normalmente el mismo día.', boton: 'Escribime por WhatsApp', principal: 'Ver la página principal' },
     saludo: 'Hola Tony, ¿cómo andás? Vamos desde Argentina y nos interesa un tour. Fechas: ', escribe: 'Escribime',
     foto: '/v8/zonas/kioto-arashiyama.jpg', fotoAlt: 'Bosque de bambú de Arashiyama, Kioto', touristType: 'Viajeros de Argentina',
+  },
+  rusia: {
+    lang: 'ru', guia: 'larion', ruta: '/ru/from-russia/', inicio: '/ru/', locale: 'ru-RU', divisas: ['RUB'],
+    seo: {
+      titulo: 'Япония из России: частный гид на русском | Tony Kansai Guide',
+      descripcion: 'Частный гид на русском в Киото, Осаке, Наре и Хиросиме: разница во времени, виза, перелёт, деньги, розетки и цены в рублях по сегодняшнему курсу.',
+    },
+    bandera: '🇷🇺', antetitulo: 'Для путешественников из России',
+    titulo: 'Япония из России — с гидом на русском.',
+    sub: 'Меня зовут Ларион. Встречаю вас в лобби отеля, и мы проводим день в Киото, Осаке, Наре или Хиросиме — только ваша группа. Без агентства: договариваетесь напрямую со мной в WhatsApp.',
+    cta: 'Расскажите о поездке',
+    practicoTitulo: 'Практичное — до вылета',
+    practico: [
+      { icono: '🕐', t: 'Время', d: 'Япония на 6 часов впереди Москвы, круглый год. Пишите в любое время: отвечу, как только здесь наступит утро.' },
+      { icono: '🛂', t: 'Виза', d: 'Гражданам России для поездки в Японию нужна виза. Актуальные правила и документы уточняйте на сайте Посольства Японии в России до покупки билетов.' },
+      { icono: '✈️', t: 'Как добраться до Кансая', d: 'Обычно летят с пересадкой — уточняйте маршруты у авиакомпаний. Из Токио синкансэн довезёт до Киото примерно за 2 часа 15 минут.' },
+      { icono: '💴', t: 'Деньги', d: 'Российские карты Visa и Mastercard в Японии не работают — возьмите с собой наличные. Чаевые в Японии не оставляют нигде, в том числе гиду.' },
+      { icono: '🔌', t: 'Розетки', d: 'В Японии вилки с двумя плоскими штырями (тип A) и 100 вольт: российская вилка не подойдёт, возьмите переходник. Зарядки телефонов и ноутбуков обычно рассчитаны на 100–240 В — проверьте надпись на блоке.' },
+      { icono: '💳', t: 'Оплата экскурсии', d: 'Наличными в иенах в день экскурсии или переводом, если договоримся при бронировании.' },
+    ],
+    preciosTitulo: 'Цена за группу — в рублях по сегодняшнему курсу',
+    planes: ['Полдня · 4 часа', 'Целый день · 8 часов'], porGrupo: 'за группу до 6 человек',
+    porPersona: (y) => `Если вас четверо: ${y} с человека`,
+    notas: ['Поезда, входные билеты и еда не включены — их вы оплачиваете на месте, я подскажу как.', 'Бесплатная отмена — не позднее чем за 72 часа.'],
+    aprox: 'по сегодняшнему курсу',
+    ideasTitulo: 'Идеи для вашего дня',
+    ideas: [
+      { t: 'Киото за один день', d: 'Фусими Инари до толп, Киёмидзу, Гион и Золотой павильон.', a: '/ru/kyoto/' },
+      { t: 'Осака', d: 'Замок, рынок Куромон и неоновые вывески Дотонбори.', a: '/ru/osaka/' },
+      { t: 'Нара и олени', d: 'Большой Будда в Тодай-дзи и парк, в 45 минутах от Осаки.', a: '/ru/nara/' },
+      { t: 'Хиросима и Миядзима', d: 'Мемориал мира и знаменитые ворота тории в море.', a: '/ru/hiroshima/' },
+    ],
+    final: { titulo: 'Когда вы прилетаете?', texto: 'Напишите даты, сколько вас и где остановитесь. Отвечаю сам, обычно в тот же день.', boton: 'Написать в WhatsApp', principal: 'Главная страница' },
+    saludo: 'Здравствуйте, Ларион! Мы летим из России и хотим экскурсию. Даты: ', escribe: 'Написать',
+    foto: '/v7/fotos/miyajima.jpg', fotoAlt: 'Тории святилища Ицукусима, Миядзима', touristType: 'Путешественники из России',
   },
 }
 

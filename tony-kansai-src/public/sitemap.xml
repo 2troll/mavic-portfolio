@@ -760,6 +760,14 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/ru/from-russia/</loc>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/from-russia/"/>
+    <xhtml:link rel="alternate" hreflang="ru-RU" href="https://tonykansaiguide.com/ru/from-russia/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/es/osaka-kioto/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
     <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/osaka-kioto/"/>

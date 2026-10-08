@@ -48,6 +48,7 @@ const paginas = [
   { loc: '/ar/from-gulf', priority: '0.8', changefreq: 'monthly', v7: 'golfo' },
   { loc: '/en/from-usa', priority: '0.8', changefreq: 'monthly', v7: 'usa' },
   { loc: '/es/desde-argentina', priority: '0.8', changefreq: 'monthly', v7: 'argentina' },
+  { loc: '/ru/from-russia', priority: '0.8', changefreq: 'monthly', v7: 'rusia' },
   // Guías prácticas.
   { loc: '/es/osaka-kioto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
@@ -87,6 +88,7 @@ const V7 = {
   golfo: [['ar', '/ar/from-gulf/']],
   usa: [['en', '/en/from-usa/']],
   argentina: [['es', '/es/desde-argentina/']],
+  rusia: [['ru', '/ru/from-russia/']],
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
   aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
 }

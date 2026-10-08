@@ -654,6 +654,7 @@ const ru: Pagina = {
     relojes: [{ ciudad: 'Осака', tz: 'Asia/Tokyo' }, { ciudad: 'Москва', tz: 'Europe/Moscow' }],
     tuHora: 'Ваше время',
     divisas: ['RUB'],
+    enlaces: [{ texto: 'Практичное для поездки из России', ruta: '/ru/from-russia/' }],
   },
   faq: {
     titulo: 'Вопросы',
