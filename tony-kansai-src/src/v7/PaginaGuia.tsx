@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, WISE_TONY, PAGAR } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -174,6 +174,9 @@ const RESENAS_TXT: Record<string, string> = { es: 'reseñas de clientes', en: 'g
 const mediaResenas = (l: Resena[], lang: string) =>
   (l.reduce((a, r) => a + r.stars, 0) / l.length).toLocaleString(lang === 'ar' ? 'ar-u-nu-latn' : lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
+const RESERVAR_PLAN: Record<string, string> = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
+const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con PayPal', en: 'or pay in advance with PayPal', ar: 'أو ادفع مسبقاً عبر PayPal', ru: 'или оплатить заранее через PayPal' }
+
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 function Precios({ p }: { p: Pagina }) {
@@ -205,16 +208,16 @@ function Precios({ p }: { p: Pagina }) {
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
             {p.precios.porPersona && !plan.desde && <p className="v7-plan-persona">{p.precios.porPersona(plan.yenes)}</p>}
+            {/* Primero se habla (WhatsApp con el plan ya escrito) y luego se paga:
+                el botón grande de pagar antes de escribir echaba para atrás. */}
+            <a className="v7-plan-pagar" href={enlaceWa(GUIAS[p.guia].wa, p.contacto.plantilla({ ...VACIO, intereses: [plan.nombre] }))} target="_blank" rel="noopener noreferrer"
+              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, valor: plan.yenes, canal: 'whatsapp-precio' })}>
+              {RESERVAR_PLAN[p.lang] ?? RESERVAR_PLAN.en}
+            </a>
             {pagar && !plan.desde && (
-              <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
+              <a className="v7-plan-pagar-enlace" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
                 onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'paypal' })}>
-                {pagar.boton}
-              </a>
-            )}
-            {pagar && !plan.desde && (
-              <a className="v7-plan-pagar v7-plan-pagar-2" href={WISE_TONY} target="_blank" rel="noopener noreferrer"
-                onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'wise' })}>
-                {pagar.wise}
+                {PAGO_ADELANTADO[p.lang] ?? PAGO_ADELANTADO.en}
               </a>
             )}
             {cambios.length > 0 && (
@@ -497,6 +500,29 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Las ciudades, cada una con su página (v8) */}
         <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
 
+        {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos. */}
+        {p.resenas && resenas.length > 0 && (
+          <section className="v7-seccion" id="resenas">
+            <h2>{p.resenas.titulo}</h2>
+            {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
+            <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
+            <div className="v7-resenas">
+              {resenas.map((r) => (
+                <figure key={r.id} className="tarjeta" lang="es" dir="ltr">
+                  <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
+                  <blockquote>{r.text}</blockquote>
+                  <figcaption>
+                    <span className="v7-resena-inicial" aria-hidden="true">{r.name.trim().charAt(0).toUpperCase()}</span>
+                    <span><strong>{r.name}</strong><small>{[r.country, r.tour].filter(Boolean).join(' · ')}</small></span>
+                  </figcaption>
+                  {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
+
+
         {/* Así funciona + el guía, en una sola rejilla asimétrica (bento de soft-skill):
             la cara del guía manda, los tres pasos al lado y lo que no hacemos debajo. */}
         {/* Por qué conmigo: tres razones antes de contar cómo funciona. */}
@@ -600,25 +626,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </div>
           <Relojes p={p} />
         </section>
-
-        {/* Reseñas reales (de reviews.json; las publica resenas.py) */}
-        {p.resenas && resenas.length > 0 && (
-          <section className="v7-seccion" id="resenas">
-            <h2>{p.resenas.titulo}</h2>
-            {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
-            <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
-            <div className="v7-resenas">
-              {resenas.map((r) => (
-                <figure key={r.id} className="tarjeta" lang="es" dir="ltr">
-                  <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
-                  <blockquote>{r.text}</blockquote>
-                  <figcaption>{r.name} · {r.country} · {r.tour}</figcaption>
-                  {r.photo && <img loading="lazy" src={`/${r.photo}`} alt="" />}
-                </figure>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Preguntas */}
         <section className="v7-seccion v7-faq-seccion">

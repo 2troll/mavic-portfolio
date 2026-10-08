@@ -25,7 +25,7 @@ export function MarcoLegal({ children }: { children: ReactNode }) {
   return (
     <div className={`v7 v7-legal lang-${lang}`} lang={lang} dir={dir}>
       <header className="v7-cabecera cristal">
-        <Link to={ruta} className="v7-marca"> <Logo />
+        <Link to={ruta} className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
         </Link>
         <nav className="v7-anclas">
           <Link to={ruta}>{dir === 'rtl' ? '→' : '←'} {v.texto}</Link>
