@@ -1247,3 +1247,12 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-hero-nota { font-size: 14px; }
 .v7-hero-nota a { color: var(--tinta); text-decoration: none; font-weight: 600; }
 .v7-hero-nota span { color: #e0a100; letter-spacing: 1px; margin-inline-end: 4px; }
+
+/* Incluido / No incluido en una tarjeta de dos columnas. */
+.v7-bento-incluye { grid-column: 1 / -1; margin-top: var(--e-4); display: grid; grid-template-columns: 1fr 1fr; gap: 0; padding: 0; overflow: hidden; }
+.v7-bento-incluye .v7-bento-si { grid-column: auto; grid-template-columns: 1fr; padding: clamp(22px, 3vw, 34px); box-shadow: none; background: none; border: 0; }
+.v7-bento-incluye .v7-bento-no { grid-column: auto; grid-template-columns: 1fr; border-radius: 0; padding: clamp(22px, 3vw, 34px); margin: 0; align-self: stretch; align-content: start; }
+.v7-bento-incluye { align-items: stretch; }
+.v7-bento-incluye .v7-bento-si { margin: 0; align-content: start; }
+@media (max-width: 900px) { .v7-bento-incluye { grid-template-columns: 1fr; grid-column: auto; } }
+#como .v7-bento-incluye .v7-bento-no { margin: 0; }
