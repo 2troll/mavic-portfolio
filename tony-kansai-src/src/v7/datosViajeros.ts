@@ -4,10 +4,10 @@
 // Regla de contenido: nada que no sea verdad. Lo que cambia con el tiempo
 // (visado, vuelos) va dicho en general y con la fuente oficial para comprobarlo.
 
-export type MercadoId = 'mx' | 'uk'
+export type MercadoId = 'mx' | 'uk' | 'es'
 
 export interface Mercado {
-  lang: 'es' | 'en'; ruta: string; inicio: string; locale: string; divisas: [string, string]
+  lang: 'es' | 'en'; ruta: string; inicio: string; locale: string; divisas: string[]
   seo: { titulo: string; descripcion: string }
   bandera: string; antetitulo: string; titulo: string; sub: string; cta: string
   practicoTitulo: string; practico: { icono: string; t: string; d: string }[]
@@ -88,6 +88,41 @@ export const MERCADOS: Record<MercadoId, Mercado> = {
     final: { titulo: 'When are you coming?', texto: 'Tell me your dates, how many you are and where you\'re staying. I reply myself, usually the same day.', boton: 'Message me on WhatsApp', principal: 'See the main page' },
     saludo: 'Hi Tony, we\'re coming from the UK and we\'d like a tour. Dates: ', escribe: 'Message me',
     foto: '/v7/fotos/nara.jpg', fotoAlt: 'Deer in Nara Park under autumn leaves', touristType: 'Travellers from the UK',
+  },
+  es: {
+    lang: 'es', ruta: '/es/desde-espana/', inicio: '/es/', locale: 'es-ES', divisas: ['EUR'],
+    seo: {
+      titulo: 'Viajar a Japón desde España con guía privado en español | Tony Kansai Guide',
+      descripcion: 'Guía privado español en Kioto, Osaka y Nara: diferencia horaria con la Península y Canarias, visado, vuelos, enchufes, dinero y precios en euros al cambio de hoy.',
+    },
+    bandera: '🇪🇸', antetitulo: 'Para viajeros de España',
+    titulo: 'Japón desde España, con un guía español.',
+    sub: 'Soy Tony, español, y vivo en Osaka. Te recojo en el hotel y pasamos el día en Kioto, Osaka o Nara, solo con tu grupo. Sin agencia: hablas directamente conmigo, por WhatsApp.',
+    cta: 'Cuéntame tu viaje',
+    practicoTitulo: 'Lo práctico, antes de volar',
+    practico: [
+      { icono: '🕐', t: 'Horario', d: 'Japón va 8 horas por delante de la Península en invierno y 7 en verano; de Canarias, una hora más. Escríbeme cuando quieras: te contesto en cuanto amanezca aquí.' },
+      { icono: '🛂', t: 'Visado', d: 'Para turismo de corta estancia, los españoles no necesitan visado para entrar en Japón. Antes de viajar, revisa las recomendaciones de viaje del Ministerio de Asuntos Exteriores.' },
+      { icono: '✈️', t: 'Cómo llegar a Kansai', d: 'Hay vuelos directos de Madrid a Tokio. Desde Tokio, el shinkansen llega a Kioto en unas dos horas y cuarto; también hay vuelos con una escala al aeropuerto de Kansai.' },
+      { icono: '💴', t: 'Dinero', d: 'En Japón el efectivo sigue siendo útil. Los cajeros de 7-Eleven aceptan tarjetas extranjeras. Y no se dejan propinas: en ningún sitio, tampoco conmigo.' },
+      { icono: '🔌', t: 'Enchufes', d: 'Son de dos clavijas planas (tipo A) a 100 voltios: trae un adaptador. Los cargadores de móvil y portátil funcionan con él; los secadores y planchas de pelo españoles, no.' },
+      { icono: '💳', t: 'Pagar el tour', d: 'En efectivo, en yenes, el día del tour. O por adelantado en euros, por transferencia a una cuenta española, por PayPal o por Wise, cuando ya tengamos la fecha.' },
+    ],
+    preciosTitulo: 'Precio por grupo, en euros al cambio de hoy',
+    planes: ['Medio día · 4 horas', 'Día completo · 8 horas'], porGrupo: 'por grupo, hasta 6 personas',
+    porPersona: (y) => `Siendo 4: ${y} por persona`,
+    notas: ['Trenes, entradas y comidas no están incluidos: los pagáis en el momento y yo os digo cómo.', 'Cancelación sin coste hasta 72 horas antes.'],
+    aprox: 'al cambio de hoy',
+    ideasTitulo: 'Ideas para tu día',
+    ideas: [
+      { t: 'Kioto en un día', d: 'Fushimi Inari antes de la gente, Kiyomizu, Gion y el Pabellón Dorado.', a: '/es/kyoto/' },
+      { t: 'Osaka comiendo', d: 'El castillo, el mercado de Kuromon y los neones de Dōtonbori.', a: '/es/osaka/' },
+      { t: 'Nara y sus ciervos', d: 'El Gran Buda de Tōdai-ji y el parque, a 45 minutos de Osaka.', a: '/es/nara/' },
+      { t: 'Otoño en Kioto', d: 'Los arces rojos de noviembre, saliendo temprano.', a: '/es/otono-kioto/' },
+    ],
+    final: { titulo: '¿Cuándo venís?', texto: 'Dime fechas, cuántos sois y dónde os alojáis. Te contesto yo, Tony, normalmente el mismo día.', boton: 'Escríbeme por WhatsApp', principal: 'Ver la página principal' },
+    saludo: 'Hola Tony, venimos de España y nos interesa un tour. Fechas: ', escribe: 'Escríbeme',
+    foto: '/v8/zonas/kioto-kiyomizu.jpg', fotoAlt: 'Kiyomizu-dera en otoño, Kioto', touristType: 'Viajeros de España',
   },
 }
 

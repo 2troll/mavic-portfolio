@@ -592,7 +592,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div>
             <h2>{p.mercado.titulo}</h2>
             {p.mercado.texto.map((t) => <p key={t}>{t}</p>)}
-            {p.mercado.enlace && <p className="v7-temporada-enlace"><Link to={p.mercado.enlace.ruta}>{p.mercado.enlace.texto} →</Link></p>}
+            {p.mercado.enlaces?.map((e) => <p key={e.ruta} className="v7-temporada-enlace"><Link to={e.ruta}>{e.texto} →</Link></p>)}
           </div>
           <Relojes p={p} />
         </section>

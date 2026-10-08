@@ -42,7 +42,7 @@ export interface Pagina {
     /** Aviso de temporada (otoño de Kioto); se enseña solo en esas fechas. */
     temporada?: { titulo: string; texto: string; enlace?: { texto: string; ruta: string } }
   }
-  mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[]; enlace?: { texto: string; ruta: string } }
+  mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[]; enlaces?: { texto: string; ruta: string }[] }
   resenas?: { titulo: string; nota?: string; opinar: string }
   faq: { titulo: string; items: Pregunta[] }
   contacto: {
@@ -232,7 +232,10 @@ const es: Pagina = {
     ],
     tuHora: 'Tu hora',
     divisas: ['EUR', 'MXN', 'USD'],
-    enlace: { texto: 'Guía práctica para viajar desde México', ruta: '/es/desde-mexico/' },
+    enlaces: [
+      { texto: 'Guía práctica desde España', ruta: '/es/desde-espana/' },
+      { texto: 'Guía práctica desde México', ruta: '/es/desde-mexico/' },
+    ],
   },
   resenas: { titulo: 'Lo que dicen', opinar: '¿Hiciste un tour con nosotros? Deja tu opinión' },
   faq: {
@@ -373,7 +376,7 @@ const en: Pagina = {
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }, { ciudad: 'London', tz: 'Europe/London' }],
     tuHora: 'Your time',
     divisas: ['GBP'],
-    enlace: { texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' },
+    enlaces: [{ texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' }],
   },
   resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.', opinar: 'Toured with us? Leave a review' },
   faq: {

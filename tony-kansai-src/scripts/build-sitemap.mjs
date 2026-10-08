@@ -44,6 +44,7 @@ const paginas = [
   ...['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji'].flatMap((c) => ['ru', 'larion'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.85', changefreq: 'monthly', v7: `ciudadLarion:${c}` }))),
   { loc: '/es/desde-mexico', priority: '0.8', changefreq: 'monthly', v7: 'mexico' },
   { loc: '/en/from-uk', priority: '0.8', changefreq: 'monthly', v7: 'uk' },
+  { loc: '/es/desde-espana', priority: '0.8', changefreq: 'monthly', v7: 'espana' },
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -74,6 +75,7 @@ const V7 = {
   otono: [['es', '/es/otono-kioto/'], ['en', '/en/kyoto-autumn/']],
   mexico: [['es', '/es/desde-mexico/']],
   uk: [['en', '/en/from-uk/']],
+  espana: [['es', '/es/desde-espana/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

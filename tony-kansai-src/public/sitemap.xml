@@ -719,6 +719,15 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/es/desde-espana/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/desde-espana/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/desde-espana/"/>
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://tonykansaiguide.com/es/desde-espana/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/es/otono-kioto/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/otono-kioto/"/>
     <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/otono-kioto/"/>

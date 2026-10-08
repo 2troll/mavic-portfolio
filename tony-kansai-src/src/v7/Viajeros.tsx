@@ -15,6 +15,7 @@ import { BotonTema } from './Tema'
 import { useCambio } from './cambio'
 import { yenLocal, PIE } from './formato'
 import { MERCADOS } from './datosViajeros'
+import creditosZonas from '../v8/creditosZonas.json'
 import type { MercadoId } from './datosViajeros'
 import './v7.css'
 
@@ -31,7 +32,8 @@ export default function Viajeros({ id }: { id: MercadoId }) {
   const wa = `https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(m.saludo)}`
   const pie = PIE[m.lang]
   const pagar = PAGAR[m.lang]
-  const credito = CREDITOS.find((c) => c.foto === CREDITO_FOTO[m.foto])
+  const zona = (creditosZonas as Record<string, { autor: string; licencia: string; url: string }>)[m.foto.match(/zonas\/([a-z-]+)\.jpg$/)?.[1] ?? '']
+  const credito = CREDITOS.find((c) => c.foto === CREDITO_FOTO[m.foto]) ?? (zona && { foto: m.fotoAlt, ...zona })
   // Cada moneda con su símbolo y su código detrás: «$6,607 MXN · $367 USD», «£276 · €326».
   const enDivisa = (yenes: number) => cambios.map(({ divisa, tasa }) => {
     const n = new Intl.NumberFormat(divisa === 'USD' ? 'en-US' : m.locale, { style: 'currency', currency: divisa, maximumFractionDigits: 0 }).format(yenes * tasa)
