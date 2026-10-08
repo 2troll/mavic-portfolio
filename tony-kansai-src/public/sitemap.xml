@@ -728,6 +728,45 @@
     <priority>0.8</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/ar/from-gulf/</loc>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-AE" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-SA" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-QA" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-KW" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-BH" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="ar-OM" href="https://tonykansaiguide.com/ar/from-gulf/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/osaka-kioto/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-JP" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/osaka-to-kyoto/</loc>
+    <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="es-MX" href="https://tonykansaiguide.com/es/osaka-kioto/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-GB" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-US" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="en-JP" href="https://tonykansaiguide.com/en/osaka-to-kyoto/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/"/>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/es/otono-kioto/</loc>
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/otono-kioto/"/>
     <xhtml:link rel="alternate" hreflang="es-ES" href="https://tonykansaiguide.com/es/otono-kioto/"/>

@@ -7,6 +7,7 @@
 import { PAGINAS, HERMANAS } from '../v7/contenido'
 import { MONTANA } from '../v7/datosMontana'
 import { OTONO } from '../v7/datosOtono'
+import { GUIAS_TRANSPORTE } from '../v7/datosGuias'
 import { MERCADOS } from '../v7/datosViajeros'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
@@ -55,7 +56,16 @@ export function cabeceras(): Record<string, Cabecera> {
 
   // Páginas por país de origen: cada una para un público, sin hermanas.
   for (const m of Object.values(MERCADOS)) {
-    todas[sinBarras(m.ruta)] = { ...m.seo, imagen: `/v8/og/${m.lang}.jpg`, lang: m.lang, dir: 'ltr', alternos: [] }
+    todas[sinBarras(m.ruta)] = { ...m.seo, imagen: `/v8/og/${m.lang}.jpg`, lang: m.lang, dir: dirDe(m.lang), alternos: [] }
+  }
+
+  // Guías prácticas (Osaka → Kioto).
+  const guias = Object.values(GUIAS_TRANSPORTE)
+  for (const g of guias) {
+    todas[sinBarras(g.ruta)] = {
+      titulo: g.seo.titulo, descripcion: g.seo.descripcion, imagen: '/v8/og/kyoto.jpg', lang: g.lang, dir: 'ltr',
+      alternos: guias.map((x) => [x.lang, x.ruta]),
+    }
   }
 
   // El día, hora a hora.

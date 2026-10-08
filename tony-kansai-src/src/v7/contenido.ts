@@ -511,6 +511,7 @@ const ar: Pagina = {
     relojes: [{ ciudad: 'أوساكا', tz: 'Asia/Tokyo' }, { ciudad: 'دبي', tz: 'Asia/Dubai' }, { ciudad: 'الرياض', tz: 'Asia/Riyadh' }],
     tuHora: 'توقيتك',
     divisas: ['AED', 'SAR'],
+    enlaces: [{ texto: 'دليل المسافر من الخليج', ruta: '/ar/from-gulf/' }],
   },
   resenas: { titulo: 'ماذا يقول الضيوف', nota: 'مراجعات أصلية باللغة الإسبانية.', opinar: 'هل قمت بجولة معنا؟ اترك رأيك' },
   faq: {

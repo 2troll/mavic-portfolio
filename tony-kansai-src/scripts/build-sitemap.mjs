@@ -45,6 +45,10 @@ const paginas = [
   { loc: '/es/desde-mexico', priority: '0.8', changefreq: 'monthly', v7: 'mexico' },
   { loc: '/en/from-uk', priority: '0.8', changefreq: 'monthly', v7: 'uk' },
   { loc: '/es/desde-espana', priority: '0.8', changefreq: 'monthly', v7: 'espana' },
+  { loc: '/ar/from-gulf', priority: '0.8', changefreq: 'monthly', v7: 'golfo' },
+  // Guías prácticas.
+  { loc: '/es/osaka-kioto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
+  { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -76,6 +80,8 @@ const V7 = {
   mexico: [['es', '/es/desde-mexico/']],
   uk: [['en', '/en/from-uk/']],
   espana: [['es', '/es/desde-espana/']],
+  golfo: [['ar', '/ar/from-gulf/']],
+  osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

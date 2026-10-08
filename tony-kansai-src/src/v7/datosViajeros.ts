@@ -4,10 +4,10 @@
 // Regla de contenido: nada que no sea verdad. Lo que cambia con el tiempo
 // (visado, vuelos) va dicho en general y con la fuente oficial para comprobarlo.
 
-export type MercadoId = 'mx' | 'uk' | 'es'
+export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo'
 
 export interface Mercado {
-  lang: 'es' | 'en'; ruta: string; inicio: string; locale: string; divisas: string[]
+  lang: 'es' | 'en' | 'ar'; ruta: string; inicio: string; locale: string; divisas: string[]
   seo: { titulo: string; descripcion: string }
   bandera: string; antetitulo: string; titulo: string; sub: string; cta: string
   practicoTitulo: string; practico: { icono: string; t: string; d: string }[]
@@ -123,6 +123,41 @@ export const MERCADOS: Record<MercadoId, Mercado> = {
     final: { titulo: '¿Cuándo venís?', texto: 'Dime fechas, cuántos sois y dónde os alojáis. Te contesto yo, Tony, normalmente el mismo día.', boton: 'Escríbeme por WhatsApp', principal: 'Ver la página principal' },
     saludo: 'Hola Tony, venimos de España y nos interesa un tour. Fechas: ', escribe: 'Escríbeme',
     foto: '/v8/zonas/kioto-kiyomizu.jpg', fotoAlt: 'Kiyomizu-dera en otoño, Kioto', touristType: 'Viajeros de España',
+  },
+  golfo: {
+    lang: 'ar', ruta: '/ar/from-gulf/', inicio: '/ar/', locale: 'ar-u-nu-latn', divisas: ['AED', 'SAR'],
+    seo: {
+      titulo: 'السفر إلى اليابان من الخليج مع مرشد خاص بالعربية | Tony Kansai Guide',
+      descripcion: 'مرشد خاص بالعربية في كيوتو وأوساكا ونارا للمسافرين من الخليج: فارق التوقيت، والدخول إلى اليابان، والوصول إلى كانساي، والطعام الحلال والصلاة، والأسعار بالدرهم والريال بسعر الصرف اليوم.',
+    },
+    bandera: '🇦🇪 🇸🇦 🇶🇦', antetitulo: 'للمسافرين من الخليج',
+    titulo: 'اليابان من الخليج، مع مرشد يتحدث العربية.',
+    sub: 'أنا طوني، إسباني مسلم وأعيش في أوساكا. ألتقيك في بهو فندقك ونقضي اليوم في كيوتو أو أوساكا أو نارا، مع عائلتك وحدها. بلا وكالة: تتعامل معي مباشرة عبر واتساب.',
+    cta: 'أخبرني عن رحلتك',
+    practicoTitulo: 'أمور عملية قبل السفر',
+    practico: [
+      { icono: '🕐', t: 'فارق التوقيت', d: 'اليابان تسبق الإمارات بخمس ساعات، والسعودية وقطر بست ساعات، طوال العام. راسلني متى شئت، وأردّ عليك حين يبدأ الصباح هنا.' },
+      { icono: '🛂', t: 'الدخول إلى اليابان', d: 'تختلف شروط الدخول باختلاف الجنسية: بعض جوازات الخليج معفاة من التأشيرة أو تحتاج إلى تسجيل مسبق عبر الإنترنت، وبعضها يحتاج إلى تأشيرة. تحقّق قبل السفر من موقع سفارة اليابان في بلدك.' },
+      { icono: '✈️', t: 'الوصول إلى كانساي', d: 'توجد رحلات من مطارات الخليج إلى اليابان، وبعضها مباشر إلى مطار كانساي الدولي، مثل طيران الإمارات من دبي. ومن طوكيو يصل القطار السريع شينكانسن إلى كيوتو في نحو ساعتين وربع.' },
+      { icono: '🕌', t: 'الطعام الحلال والصلاة', d: 'أنا مسلم وأعرف المطاعم الحلال الموثوقة في أوساكا وكيوتو، وأضع وقفات الصلاة في المسار من البداية: مسجد أوساكا، ومسجد كوبي، وجمعية كيوتو الإسلامية، ومصليات مطار كانساي.' },
+      { icono: '🔌', t: 'المقابس الكهربائية', d: 'تستخدم اليابان مقابس بدبوسين مسطحين (النوع A) بجهد 100 فولت، فأحضر محوّلاً لمقابس الخليج (النوع G). شواحن الهاتف والحاسوب تعمل معه دون مشكلة.' },
+      { icono: '💳', t: 'دفع ثمن الجولة', d: 'نقداً بالين في يوم الجولة، أو مسبقاً عبر PayPal أو Wise بعد تأكيد الموعد. ولا توجد إكراميات في اليابان، لا في المطاعم ولا معي.' },
+    ],
+    preciosTitulo: 'السعر للمجموعة، بالدرهم والريال بسعر الصرف اليوم',
+    planes: ['نصف يوم · 4 ساعات', 'يوم كامل · 8 ساعات'], porGrupo: 'للمجموعة، حتى 6 أشخاص',
+    porPersona: (y) => `لأربعة أشخاص: ${y} للشخص`,
+    notas: ['القطارات وتذاكر الدخول والوجبات غير مشمولة: تدفعونها في حينها وأنا أدلّكم على الطريقة.', 'الإلغاء مجاني حتى 72 ساعة قبل الموعد.'],
+    aprox: 'بسعر الصرف اليوم',
+    ideasTitulo: 'أفكار ليومك',
+    ideas: [
+      { t: 'كيوتو في يوم', d: 'فوشيمي إيناري قبل الزحام، وكيوميزو، وأزقة غيون.', a: '/ar/kyoto/' },
+      { t: 'أوساكا', d: 'القلعة ودوتونبوري والأسواق التي يأكل فيها أهل المدينة.', a: '/ar/osaka/' },
+      { t: 'نارا وغزلانها', d: 'تمثال بوذا الكبير في توداي-جي والحديقة، على بُعد 45 دقيقة من أوساكا.', a: '/ar/nara/' },
+      { t: 'كوبي ومسجدها', d: 'الميناء وحي كيتانو، ومسجد كوبي، أقدم مسجد في اليابان.', a: '/ar/kobe/' },
+    ],
+    final: { titulo: 'متى تصلون؟', texto: 'أخبرني بالتواريخ وعددكم ومكان إقامتكم. أردّ عليك بنفسي، عادةً في اليوم نفسه.', boton: 'راسلني عبر واتساب', principal: 'الصفحة الرئيسية' },
+    saludo: 'السلام عليكم طوني، نحن قادمون من الخليج ونرغب في جولة. التواريخ: ', escribe: 'راسلني',
+    foto: '/v7/fotos/kioto.jpg', fotoAlt: 'بوابات فوشيمي إيناري، كيوتو', touristType: 'المسافرون من الخليج',
   },
 }
 

@@ -32,6 +32,8 @@ const Montana = lazy(() => import('./v7/Montana'))
 const Itinerarios = lazy(() => import('./v7/Itinerarios'))
 const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
 const Otono = lazy(() => import('./v7/Otono'))
+const GuiaTransporte = lazy(() => import('./v7/GuiaTransporte'))
+import { RUTAS_GUIA } from './v7/datosGuias'
 const Viajeros = lazy(() => import('./v7/Viajeros'))
 import { RUTAS_VIAJEROS } from './v7/datosViajeros'
 import { RUTAS_OTONO } from './v7/datosOtono'
@@ -126,7 +128,7 @@ export function Layout() {
     )
   }
 
-  // Páginas por país de origen (México, Reino Unido).
+  // Páginas por país de origen (datosViajeros.ts: México, Reino Unido, España, Golfo).
   const mercado = RUTAS_VIAJEROS[pathname.replace(/\/+$/, '')]
   if (mercado) {
     return (
@@ -135,7 +137,21 @@ export function Layout() {
         <Viajeros key={mercado} id={mercado} />
         <CookieTardio compacto />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO)]} />
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
+      </>
+    )
+  }
+
+  // Guía práctica: Osaka → Kioto.
+  const guia = RUTAS_GUIA[pathname.replace(/\/+$/, '')]
+  if (guia) {
+    return (
+      <>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+        <GuiaTransporte key={guia} id={guia} />
+        <CookieTardio compacto />
+      </Suspense>
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
     )
   }
@@ -149,7 +165,7 @@ export function Layout() {
         <Otono key={otono} id={otono} />
         <CookieTardio compacto />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO)]} />
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
     )
   }

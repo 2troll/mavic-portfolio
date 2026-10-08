@@ -1,4 +1,4 @@
-// Página por país de origen (/es/desde-mexico/, /en/from-uk/): lo práctico del
+// Página por país de origen (/es/desde-mexico/, /en/from-uk/, /ar/from-gulf/): lo práctico del
 // viaje y el tour con precio en su moneda al cambio del día. Los textos están en
 // datosViajeros.ts; aquí solo la maqueta, igual para todos los mercados.
 
@@ -39,6 +39,8 @@ export default function Viajeros({ id }: { id: MercadoId }) {
     const n = new Intl.NumberFormat(divisa === 'USD' ? 'en-US' : m.locale, { style: 'currency', currency: divisa, maximumFractionDigits: 0 }).format(yenes * tasa)
     return n.startsWith('$') ? `${n} ${divisa}` : n
   }).join(' · ')
+  const dir = m.lang === 'ar' ? 'rtl' : 'ltr'
+  const flecha = dir === 'rtl' ? '←' : '→'
   const lead = () => window.gtag?.('event', 'generate_lead', { pagina: `viajeros-${id}`, canal: 'whatsapp' })
   const ld = {
     '@context': 'https://schema.org', '@type': 'TouristTrip', name: m.seo.titulo.split(' | ')[0],
@@ -48,9 +50,9 @@ export default function Viajeros({ id }: { id: MercadoId }) {
   }
 
   return (
-    <div className={`v7 v7-pagina v7-otono lang-${m.lang}`} lang={m.lang} dir="ltr">
+    <div className={`v7 v7-pagina v7-otono lang-${m.lang}`} lang={m.lang} dir={dir}>
       <Helmet>
-        <html lang={m.lang} dir="ltr" />
+        <html lang={m.lang} dir={dir} />
         <title>{m.seo.titulo}</title>
         <meta name="description" content={m.seo.descripcion} />
         <link rel="canonical" href={`${BASE}${m.ruta}`} />
@@ -121,7 +123,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
           <ul className="v7-otono-sitios">
             {m.ideas.map((x) => (
               <li key={x.t} className="tarjeta">
-                <h3><Link to={x.a}>{x.t} →</Link></h3>
+                <h3><Link to={x.a}>{x.t} {flecha}</Link></h3>
                 <p>{x.d}</p>
               </li>
             ))}
