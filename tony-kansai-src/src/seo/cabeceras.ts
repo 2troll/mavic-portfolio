@@ -7,6 +7,7 @@
 import { PAGINAS, HERMANAS } from '../v7/contenido'
 import { MONTANA } from '../v7/datosMontana'
 import { OTONO } from '../v7/datosOtono'
+import { RUTA_MEXICO, SEO_MEXICO } from '../v7/datosMexico'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
@@ -51,6 +52,9 @@ export function cabeceras(): Record<string, Cabecera> {
       alternos: otonos.map((x) => [x.lang, x.ruta]),
     }
   }
+
+  // Viajeros de México (solo en español).
+  todas[sinBarras(RUTA_MEXICO)] = { ...SEO_MEXICO, imagen: '/v8/og/es.jpg', lang: 'es', dir: 'ltr', alternos: [] }
 
   // El día, hora a hora.
   for (const [id, pg] of Object.entries(PAGINAS_ITIN) as [ItinPaginaId, (typeof PAGINAS_ITIN)[ItinPaginaId]][]) {

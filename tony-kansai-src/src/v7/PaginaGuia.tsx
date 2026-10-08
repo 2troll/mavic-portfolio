@@ -15,6 +15,7 @@ import { BotonSonido } from './BotonSonido'
 import { HeroTinta } from './HeroTinta'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
+import { useCambio } from './cambio'
 import './v7.css'
 import { IconoWa } from './IconoWa'
 import './figuras.css'
@@ -52,28 +53,6 @@ const VACIO: DatosContacto = { nombre: '', pais: '', ciudad: '', fechas: '', per
 
 /** Tipos de cambio del día (open.er-api.com: gratis, sin clave, CORS abierto).
  *  Si falla, no se enseña nada: el precio en yenes es el que vale. */
-function useCambio(divisas: string[]) {
-  const [tasas, setTasas] = useState<Record<string, number> | null>(null)
-  useEffect(() => {
-    const CLAVE = 'v7-cambio-jpy'
-    try {
-      const guardado = JSON.parse(sessionStorage.getItem(CLAVE) || 'null')
-      if (guardado?.rates) { setTasas(guardado.rates); return }
-    } catch { /* almacenamiento bloqueado */ }
-    const ctrl = new AbortController()
-    fetch('https://open.er-api.com/v6/latest/JPY', { signal: ctrl.signal })
-      .then((r) => (r.ok ? r.json() : Promise.reject(new Error(String(r.status)))))
-      .then((d) => {
-        if (d?.result !== 'success') return
-        setTasas(d.rates)
-        try { sessionStorage.setItem(CLAVE, JSON.stringify({ rates: d.rates })) } catch { /* nada */ }
-      })
-      .catch(() => { /* sin cambio: se queda sólo en yenes */ })
-    return () => ctrl.abort()
-  }, [])
-  return tasas ? divisas.filter((d) => tasas[d]).map((d) => ({ divisa: d, tasa: tasas[d] })) : []
-}
-
 /** Hora actual, sólo en el navegador: la página llega ya pintada desde el
  *  build y una hora del servidor no coincidiría al hidratar. Antes: null. */
 function useAhora(cadaMs = 20000) {
@@ -613,6 +592,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div>
             <h2>{p.mercado.titulo}</h2>
             {p.mercado.texto.map((t) => <p key={t}>{t}</p>)}
+            {p.mercado.enlace && <p className="v7-temporada-enlace"><Link to={p.mercado.enlace.ruta}>{p.mercado.enlace.texto} →</Link></p>}
           </div>
           <Relojes p={p} />
         </section>
