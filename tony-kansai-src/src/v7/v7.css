@@ -1300,3 +1300,8 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
   -webkit-backdrop-filter: none; backdrop-filter: none;
   background: color-mix(in srgb, var(--superficie) 88%, transparent);
 }
+/* La cabecera y las barras fijas también: al estar fijas, el navegador
+   re-difuminaba lo que pasaba por debajo en cada fotograma (medido en vivo:
+   de 6-10 fotogramas lentos a 1-2 al quitarlo). Fondo casi opaco. */
+.cristal, .v7-cookies { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+.cristal { background: color-mix(in srgb, var(--superficie) 94%, transparent); }
