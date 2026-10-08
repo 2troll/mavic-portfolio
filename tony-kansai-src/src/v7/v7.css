@@ -1289,3 +1289,14 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 /* Gloock es más ancha que Geist: el titular de portada cabía en 12ch y ahora
    se partía en 4 líneas en escritorio. */
 .v7:not(.lang-ar):not(.lang-ru) .v9-portada h1 { max-width: 16ch; }
+
+/* ── Rendimiento al hacer scroll (8-10-2026) ──────────────────────────────
+   El desenfoque de fondo (backdrop-filter) en decenas de tarjetas obligaba al
+   navegador a re-difuminar todo en cada fotograma: tirones de hasta 133 ms al
+   bajar. Medido en Chrome: quitándolo, 0 fotogramas lentos. Se queda solo en
+   piezas fijas y únicas (cabecera, cookies, barra de WhatsApp, sello); las
+   tarjetas llevan un fondo casi opaco que se ve igual sobre el fondo suave. */
+.v7 .tarjeta, .v7-razones li, .v9-fila, .v9-guia-idiomas li {
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+  background: color-mix(in srgb, var(--superficie) 88%, transparent);
+}
