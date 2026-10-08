@@ -1,6 +1,9 @@
 @import './tokens.css';
 /* Geist autoalojada (sin Google Fonts): latín y cirílico para la página rusa. */
 @import '@fontsource-variable/geist';
+/* Titulares: Gloock (OFL, elegida por Tony el 8-10-2026). Solo latín: ruso y árabe siguen con su letra. */
+@import '@fontsource/gloock/latin-400.css';
+@import '@fontsource/gloock/latin-ext-400.css';
 
 /* ══ Web v7: cristal de Apple ═══════════════════════════════════════════════
    Letra del sistema (SF Pro en Apple), superficies claras, un solo acento.
@@ -1269,3 +1272,20 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-resena-inicial { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 650; color: #fff; background: var(--acento); }
 .v7-resenas figcaption strong { display: block; font-weight: 600; color: var(--tinta); }
 .v7-resenas figcaption small { display: block; font-size: 13px; color: var(--tenue); }
+
+/* ── Tipografía de titulares: Gloock ─────────────────────────────────────
+   Serif de display, poco vista en webs de tours: da el aire «premium» que
+   busca el público con dinero. Solo un peso (400), así que se fija y se
+   anula la negrita sintética. Ruso y árabe no tienen sus letras en Gloock:
+   se quedan con la tipografía de siempre para no mezclar estilos. */
+:root { --titular: 'Gloock', 'Iowan Old Style', 'Palatino Linotype', Georgia, serif; }
+.v7:not(.lang-ar):not(.lang-ru) :is(h1, h2),
+.v7:not(.lang-ar):not(.lang-ru) .v7-plan-precio,
+.v7:not(.lang-ar):not(.lang-ru) .v9-fila h3,
+.v7:not(.lang-ar):not(.lang-ru) .v8-otra > span {
+  font-family: var(--titular); font-weight: 400; font-synthesis: none; letter-spacing: -0.012em;
+}
+.v7:not(.lang-ar):not(.lang-ru) :is(h1, h2) { line-height: 1.06; }
+/* Gloock es más ancha que Geist: el titular de portada cabía en 12ch y ahora
+   se partía en 4 líneas en escritorio. */
+.v7:not(.lang-ar):not(.lang-ru) .v9-portada h1 { max-width: 16ch; }
