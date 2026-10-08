@@ -43,6 +43,7 @@ const paginas = [
   ...['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond'].flatMap((c) => ['es', 'en', 'ar'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.9', changefreq: 'monthly', v7: `ciudadTony:${c}` }))),
   ...['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji'].flatMap((c) => ['ru', 'larion'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.85', changefreq: 'monthly', v7: `ciudadLarion:${c}` }))),
   { loc: '/es/desde-mexico', priority: '0.8', changefreq: 'monthly', v7: 'mexico' },
+  { loc: '/en/from-uk', priority: '0.8', changefreq: 'monthly', v7: 'uk' },
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -72,6 +73,7 @@ const V7 = {
   rutasLarion: [['ru', '/ru/routes/'], ['en', '/larion/routes/']],
   otono: [['es', '/es/otono-kioto/'], ['en', '/en/kyoto-autumn/']],
   mexico: [['es', '/es/desde-mexico/']],
+  uk: [['en', '/en/from-uk/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

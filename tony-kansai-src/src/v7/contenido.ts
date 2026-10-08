@@ -373,6 +373,7 @@ const en: Pagina = {
     relojes: [{ ciudad: 'Osaka', tz: 'Asia/Tokyo' }, { ciudad: 'London', tz: 'Europe/London' }],
     tuHora: 'Your time',
     divisas: ['GBP'],
+    enlace: { texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' },
   },
   resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.', opinar: 'Toured with us? Leave a review' },
   faq: {

@@ -38,7 +38,7 @@ const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'n
 import { execSync } from 'node:child_process'
 execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
 const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
-const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|desde-mexico))?$/
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|desde-mexico|from-uk))?$/
 
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'

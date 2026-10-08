@@ -7,7 +7,7 @@
 import { PAGINAS, HERMANAS } from '../v7/contenido'
 import { MONTANA } from '../v7/datosMontana'
 import { OTONO } from '../v7/datosOtono'
-import { RUTA_MEXICO, SEO_MEXICO } from '../v7/datosMexico'
+import { MERCADOS } from '../v7/datosViajeros'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
@@ -53,8 +53,10 @@ export function cabeceras(): Record<string, Cabecera> {
     }
   }
 
-  // Viajeros de México (solo en español).
-  todas[sinBarras(RUTA_MEXICO)] = { ...SEO_MEXICO, imagen: '/v8/og/es.jpg', lang: 'es', dir: 'ltr', alternos: [] }
+  // Páginas por país de origen: cada una para un público, sin hermanas.
+  for (const m of Object.values(MERCADOS)) {
+    todas[sinBarras(m.ruta)] = { ...m.seo, imagen: `/v8/og/${m.lang}.jpg`, lang: m.lang, dir: 'ltr', alternos: [] }
+  }
 
   // El día, hora a hora.
   for (const [id, pg] of Object.entries(PAGINAS_ITIN) as [ItinPaginaId, (typeof PAGINAS_ITIN)[ItinPaginaId]][]) {

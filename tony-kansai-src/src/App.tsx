@@ -32,8 +32,8 @@ const Montana = lazy(() => import('./v7/Montana'))
 const Itinerarios = lazy(() => import('./v7/Itinerarios'))
 const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
 const Otono = lazy(() => import('./v7/Otono'))
-const Mexico = lazy(() => import('./v7/Mexico'))
-import { RUTA_MEXICO } from './v7/datosMexico'
+const Viajeros = lazy(() => import('./v7/Viajeros'))
+import { RUTAS_VIAJEROS } from './v7/datosViajeros'
 import { RUTAS_OTONO } from './v7/datosOtono'
 import { CIUDADES_LARION, CIUDADES_TONY } from './v8/ciudades'
 import type { PaginaCiudad } from './v8/CiudadPagina'
@@ -126,12 +126,13 @@ export function Layout() {
     )
   }
 
-  // Viajeros de México.
-  if (pathname.replace(/\/+$/, '') === RUTA_MEXICO.replace(/\/+$/, '')) {
+  // Páginas por país de origen (México, Reino Unido).
+  const mercado = RUTAS_VIAJEROS[pathname.replace(/\/+$/, '')]
+  if (mercado) {
     return (
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
-        <Mexico />
+        <Viajeros key={mercado} id={mercado} />
         <CookieTardio compacto />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO)]} />
