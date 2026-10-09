@@ -113,7 +113,9 @@
   .v7-marca > span:not(.v7-logo) { display: none; }
   .v7-solo-ancho { display: none; }
   .v7-boton-peq { padding: 0 12px; }
-  .v7-idiomas a { padding: 5px 8px; }
+  /* Más compacto: en un iPhone «العربية» quedaba cortado por el borde. */
+  .v7-idiomas { font-size: 12px; gap: 0; }
+  .v7-idiomas a { padding: 5px 6px; }
   /* Con cuatro idiomas (montaña) el selector empujaba el botón de WhatsApp
      fuera de la pantalla del iPhone: ahora el selector se encoge y se desliza,
      y el logo, el sonido y el botón no se aplastan nunca. */
@@ -1139,7 +1141,9 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 @media (max-width: 900px) {
   .v9-portada-foto, [dir='rtl'] .v9-portada-foto {
     margin: 76px 12px 0; border-radius: 26px;
-    width: auto; aspect-ratio: auto; min-height: 0; max-height: none; height: min(58svh, 118vw);
+    width: auto; aspect-ratio: auto; min-height: 0; max-height: none;
+    /* Más baja en móvil: el título y el botón de reservar tienen que caber en la primera pantalla. */
+    height: min(34svh, 72vw);
   }
 }
 .v7-bento-guia img { border-radius: var(--radio); }
