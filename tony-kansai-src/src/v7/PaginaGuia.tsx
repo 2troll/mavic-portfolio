@@ -196,7 +196,7 @@ function Precios({ p }: { p: Pagina }) {
         <aside className="v7-temporada tarjeta">
           <h3>🍁 {p.precios.temporada.titulo}</h3>
           <p>{p.precios.temporada.texto}</p>
-          {p.precios.temporada.enlace && p.guia === 'tony' && <p className="v7-temporada-enlace"><Link to={p.precios.temporada.enlace.ruta}>{p.precios.temporada.enlace.texto} →</Link></p>}
+          {p.precios.temporada.enlace && p.id !== 'larion' && <p className="v7-temporada-enlace"><Link to={p.precios.temporada.enlace.ruta}>{p.precios.temporada.enlace.texto} →</Link></p>}
         </aside>
       )}
       <div className="v7-planes">

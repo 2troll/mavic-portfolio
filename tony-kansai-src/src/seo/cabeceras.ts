@@ -45,12 +45,12 @@ export function cabeceras(): Record<string, Cabecera> {
     }
   }
 
-  // Temporada: otoño de Kioto.
+  // Temporadas: otoño (momiji) y primavera (sakura) en Kioto; hreflang entre las de la misma.
   const otonos = Object.values(OTONO)
   for (const o of otonos) {
     todas[sinBarras(o.ruta)] = {
-      titulo: o.seo.titulo, descripcion: o.seo.descripcion, imagen: '/v8/og/kyoto.jpg', lang: o.lang, dir: 'ltr',
-      alternos: otonos.map((x) => [x.lang, x.ruta]),
+      titulo: o.seo.titulo, descripcion: o.seo.descripcion, imagen: '/v8/og/kyoto.jpg', lang: o.lang, dir: dirDe(o.lang),
+      alternos: otonos.filter((x) => x.temporada === o.temporada).map((x) => [x.lang, x.ruta]),
     }
   }
 
