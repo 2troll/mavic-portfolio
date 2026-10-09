@@ -2,7 +2,7 @@ import { Scale } from 'lucide-react'
 import { LegalPage, Section, Li } from '../components/LegalPage'
 import { useLanguage } from '../contexts/LanguageContext'
 
-const UPDATED = 'September 2026'
+const UPDATED = 'October 2026'
 const SITE = 'tonykansaiguide.com'
 
 /*
@@ -31,7 +31,7 @@ export default function Legal() {
         <ul className="mt-1 space-y-2 list-none">
           <Li label={tc('Person responsible')}>Tony Hanma</Li>
           <Li label={tc('Trading name')}>Tony Hanma Private Kansai Tours</Li>
-          <Li label={tc('Activity')}>{tc('Private guiding services in the Kansai region of Japan, provided personally by Tony Hanma.')}</Li>
+          <Li label={tc('Activity')}>{tc('Private guiding services in Kansai and elsewhere in Japan, provided personally by Tony Hanma or by the associated guide, Larion.')}</Li>
           <Li label={tc('Based in')}>{tc('Osaka, Japan.')}</Li>
           <Li label={tc('Website')}>{SITE}</Li>
           <Li label={tc('Contact')}><span className="ltr-num">WhatsApp +34 634 193 106</span></Li>
@@ -49,7 +49,7 @@ export default function Legal() {
       <Section title={tc('3. Content and intellectual property')}>
         <p>{tc('The texts, route descriptions, itineraries and structure of this site belong to Tony Hanma Private Kansai Tours. You may read, print and share them for your own use. You may not copy them onto another commercial site, sell them, or present them as your own.')}</p>
         <ul className="mt-3 space-y-1.5 list-none">
-          <Li label={tc('Photography')}>{tc('Photographs are either taken by the guides or licensed from Unsplash under its licence. Guest photographs are published only with the written permission of the person who sent them.')}</Li>
+          <Li label={tc('Photography')}>{tc('Photographs are either taken by the guides or used under free licences, mostly from Wikimedia Commons, with their authors credited on the site. The manga-style figures of the guides are generated from their own photographs. Guest photographs are published only with the written permission of the person who sent them.')}</Li>
           <Li label={tc('Guest reviews')}>{tc('Reviews belong to the person who wrote them and are published with their permission. They are never edited to change their meaning; a name may be shortened at the author’s request.')}</Li>
           <Li label={tc('Trade marks')}>{tc('Names of shrines, temples, railway companies and any other third party are used descriptively and belong to their owners.')}</Li>
         </ul>
@@ -61,7 +61,7 @@ export default function Legal() {
       </Section>
 
       <Section title={tc('5. Links to other sites')}>
-        <p>{tc('Some pages link out to shrines, railway operators, Google and Unsplash. We do not control those sites and are not responsible for their content or their privacy practices. Their links open in a new tab and carry no referrer data beyond the origin.')}</p>
+        <p>{tc('Some pages link out to shrines, railway operators, Google and Wikimedia Commons. We do not control those sites and are not responsible for their content or their privacy practices. Their links open in a new tab and carry no referrer data beyond the origin.')}</p>
       </Section>
 
       <Section title={tc('6. Security of this site')}>

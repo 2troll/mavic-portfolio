@@ -2,7 +2,7 @@ import { ShieldCheck } from 'lucide-react'
 import { LegalPage, Section, Li, Warning } from '../components/LegalPage'
 import { useLanguage } from '../contexts/LanguageContext'
 
-const UPDATED = 'September 2026'
+const UPDATED = 'October 2026'
 
 export default function Safety() {
   const { tc } = useLanguage()
@@ -89,7 +89,7 @@ export default function Safety() {
       </Section>
 
       <Section title={tc('8. Group size')}>
-        <p>{tc('City tours run up to the group size stated in each package. Mountain routes are capped at six people, and Technical or Expert Only routes at three, because that is the number one guide can keep safe on difficult ground.')}</p>
+        <p>{tc('City tours are priced for groups of up to six people; larger groups are arranged case by case. Mountain routes are capped at six people, and Technical or Expert Only routes at three, because that is the number one guide can keep safe on difficult ground.')}</p>
       </Section>
 
       <Section title={tc('9. Reporting a problem')}>

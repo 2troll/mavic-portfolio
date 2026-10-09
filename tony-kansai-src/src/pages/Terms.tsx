@@ -6,7 +6,7 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { LegalFooterLinks } from '../components/LegalPage'
 
 const CONTACT_WA = 'https://wa.me/34634193106'
-const UPDATED = 'May 2026'
+const UPDATED = 'October 2026'
 
 export default function Terms() {
   const { tc } = useLanguage()
@@ -47,18 +47,18 @@ export default function Terms() {
             </div>
 
             <Section title={tc('1. About the Service')}>
-              <p>{tc('Tony Kansai Guide ("we", "us", "the guide") provides 100% private, bespoke guided tour experiences in the Kansai region of Japan, including but not limited to Osaka, Kyoto, Nara, Kobe, Himeji and Kōyasan. Tours are conducted personally by Tony Hanma or by our approved guide, Larion.')}</p>
+              <p>{tc('Tony Kansai Guide ("we", "us", "the guide") provides 100% private, bespoke guided tour experiences in the Kansai region and elsewhere in Japan, including Osaka, Kyoto, Nara, Kobe, Himeji, Kōyasan and Hiroshima. Tours are conducted personally by Tony Hanma or by our approved guide, Larion.')}</p>
               <p className="mt-2">{tc('All tours are private — your group only. We do not operate shared or group tours with other guests.')}</p>
             </Section>
 
             <Section title={tc('2. Booking Process')}>
               <p>{tc('Bookings are made directly via WhatsApp. A booking is confirmed only when both parties have agreed on the tour date, time, meeting point, and price, and the client has received a written confirmation from the guide.')}</p>
-              <p className="mt-2">{tc('No automated booking system or online payment is in place. Payment arrangements are agreed individually during the booking conversation.')}</p>
+              <p className="mt-2">{tc('There is no automatic online booking: every date is confirmed personally on WhatsApp. Payment is in cash, in yen, on the day of the tour, or in advance by PayPal, Wise or bank transfer once the date is confirmed (the methods available are shown on each guide page).')}</p>
             </Section>
 
             <Section title={tc('3. Pricing and Payment')}>
               <p>
-                {tc("All prices are quoted per group, not per person, unless explicitly stated otherwise. Prices cover the guide's time and expertise for the agreed duration. The following are")}{' '}
+                {tc("All prices are quoted per group of up to 6 people, not per person, unless explicitly stated otherwise; larger groups are quoted individually. Prices cover the guide's time and expertise for the agreed duration. The following are")}{' '}
                 <strong className="text-white/80">{tc('not included')}</strong> {tc('unless specifically confirmed in writing:')}
               </p>
               <ul className="mt-2 space-y-1 list-none">
@@ -67,7 +67,7 @@ export default function Terms() {
                 <Li label={tc('Food and drink')}>{tc("All meals, tastings and drinks are at the client's own expense.")}</Li>
                 <Li label={tc('Tips')}>{tc("Gratuities are entirely at the client's discretion and never expected.")}</Li>
               </ul>
-              <p className="mt-3">{tc('Payment method (cash, bank transfer, etc.) is agreed at the time of booking. We reserve the right to request a deposit for tours booked more than 30 days in advance.')}</p>
+              <p className="mt-3">{tc('The payment method (cash on the day, PayPal, Wise or bank transfer) is confirmed when you book. We reserve the right to request a deposit for tours booked more than 30 days in advance.')}</p>
             </Section>
 
             <Section title={tc('4. Cancellation Policy')}>
@@ -173,7 +173,7 @@ export default function Terms() {
                 <p>{tc('We accept the following payment methods for hiking services:')}</p>
                 <div className="mt-3 space-y-1.5">
                   <Li label={tc('Cash')}>{tc('Japanese yen (JPY) on the day of the tour. Preferred method.')}</Li>
-                  <Li label="Wise">{tc('International transfer via Wise to a EUR/GBP/USD account. Details provided on confirming the booking.')}</Li>
+                  <Li label="Wise / PayPal">{tc('Payment in advance through Wise or PayPal, once the date is confirmed.')}</Li>
                   <Li label={tc('Bank transfer')}>{tc('Available for bookings made more than 7 days in advance.')}</Li>
                   <Li label={tc('Card')}>{tc('On prior request, subject to availability.')}</Li>
                 </div>
