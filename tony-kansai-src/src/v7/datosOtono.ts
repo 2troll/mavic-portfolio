@@ -4,13 +4,17 @@
 // Regla de contenido: nada que no sea verdad. Sin horarios ni precios de
 // entradas, que cambian cada año; las fechas del otoño son las habituales.
 
-export type OtonoId = 'o-es' | 'o-en'
+import { NUEVAS } from './datosTemporadas'
+
+export type OtonoId = 'o-es' | 'o-en' | 'o-ar' | 'o-ru' | 's-es' | 's-en' | 's-ar' | 's-ru'
 
 export const PRECIO_OTONO = { medio: 38000, completo: 58000 }
 
 interface Sitio { kanji: string; nombre: string; texto: string }
 export interface PaginaOtono {
-  lang: 'es' | 'en'; ruta: string; inicio: string
+  lang: 'es' | 'en' | 'ar' | 'ru'; ruta: string; inicio: string
+  /** otoño (momiji) o primavera (sakura); el guía decide el WhatsApp y si hay PayPal. */
+  temporada: 'otono' | 'sakura'; guia: 'tony' | 'larion'; foto: string
   seo: { titulo: string; descripcion: string }
   antetitulo: string; titulo: string; sub: string; cta: string
   cuando: { titulo: string; texto: string[] }
@@ -24,8 +28,9 @@ export interface PaginaOtono {
 }
 
 export const OTONO: Record<OtonoId, PaginaOtono> = {
+  ...NUEVAS,
   'o-es': {
-    lang: 'es', ruta: '/es/otono-kioto/', inicio: '/es/',
+    lang: 'es', ruta: '/es/otono-kioto/', inicio: '/es/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
       titulo: 'Otoño en Kioto 2026 con guía privado en español | Tony Kansai Guide',
       descripcion: 'Los arces rojos de Kioto con un guía privado en español: te recojo en el hotel y salimos temprano para llegar antes que las multitudes. Día completo ¥58.000 por grupo.',
@@ -79,7 +84,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     volver: 'Volver a la página principal',
   },
   'o-en': {
-    lang: 'en', ruta: '/en/kyoto-autumn/', inicio: '/en/',
+    lang: 'en', ruta: '/en/kyoto-autumn/', inicio: '/en/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
       titulo: 'Kyoto Autumn Leaves 2026 with a Private Guide | Tony Kansai Guide',
       descripcion: 'See Kyoto\'s red maples with a private guide: hotel pick-up and an early start to beat the crowds. Full day ¥58,000 per group of up to 6.',
@@ -134,6 +139,13 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
   },
 }
 
-export const RUTAS_OTONO: Record<string, OtonoId> = { '/es/otono-kioto': 'o-es', '/en/kyoto-autumn': 'o-en' }
+export const RUTAS_OTONO: Record<string, OtonoId> = Object.fromEntries(
+  (Object.entries(OTONO) as [OtonoId, PaginaOtono][]).map(([id, p]) => [p.ruta.replace(/\/$/, ''), id]),
+)
+
+const ORDEN_LANG = ['es', 'en', 'ar', 'ru']
+/** Las páginas de la misma temporada, en orden de idioma: selector y hreflang. */
+export const hermanas = (p: PaginaOtono) =>
+  Object.values(OTONO).filter((x) => x.temporada === p.temporada).sort((a, b) => ORDEN_LANG.indexOf(a.lang) - ORDEN_LANG.indexOf(b.lang))
 export const SEO_OTONO = Object.fromEntries(Object.values(OTONO).map((p) => [p.ruta, { ...p.seo, lang: p.lang }]))
 

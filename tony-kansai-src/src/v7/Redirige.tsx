@@ -6,7 +6,7 @@ import { PAGINAS } from './contenido'
 import type { PaginaId } from './contenido'
 
 /** es → es; ar → ar; ruso y vecinos → ru; el resto, inglés. */
-function idiomaSugerido(): PaginaId {
+export function idiomaSugerido(): PaginaId {
   try {
     for (const tag of navigator.languages ?? [navigator.language]) {
       const b = tag.split('-')[0].toLowerCase()
