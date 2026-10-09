@@ -66,7 +66,43 @@ function useAhora(cadaMs = 20000) {
   return ahora
 }
 
-interface Resena { id: string; stars: number; name: string; country: string; tour: string; text: string; photo?: string; date: string }
+interface Resena { id: string; stars: number; name: string; country: string; tour: string; text: string; photo?: string; date: string
+  lang?: string; traducciones?: Record<string, string> }
+
+// Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
+// traducción a ese idioma (si existe) y un enlace para ver el original, para no
+// hacer pasar una traducción por las palabras del cliente.
+const TRADUCIDA: Record<string, { de: string; original: string; ver: string }> = {
+  es: { de: 'Traducida del', original: 'Ver original', ver: 'Ver traducción' },
+  en: { de: 'Translated from', original: 'See original', ver: 'See translation' },
+  ar: { de: 'مترجمة من', original: 'عرض النص الأصلي', ver: 'عرض الترجمة' },
+  ru: { de: 'Переведено с', original: 'Показать оригинал', ver: 'Показать перевод' },
+}
+const NOMBRE_IDIOMA: Record<string, Record<string, string>> = {
+  es: { es: 'español', en: 'inglés', ar: 'árabe', ru: 'ruso' },
+  en: { es: 'Spanish', en: 'English', ar: 'Arabic', ru: 'Russian' },
+  ar: { es: 'الإسبانية', en: 'الإنجليزية', ar: 'العربية', ru: 'الروسية' },
+  ru: { es: 'испанского', en: 'английского', ar: 'арабского', ru: 'русского' },
+}
+
+function TextoResena({ r, lang }: { r: Resena; lang: string }) {
+  const [original, setOriginal] = useState(false)
+  const deIdioma = r.lang ?? 'es'
+  const traducida = deIdioma !== lang ? r.traducciones?.[lang] : undefined
+  if (!traducida) return <blockquote lang={deIdioma} dir={deIdioma === 'ar' ? 'rtl' : 'ltr'}>{r.text}</blockquote>
+  const t = TRADUCIDA[lang] ?? TRADUCIDA.en
+  const mostrar = original ? r.text : traducida
+  const idiomaMostrado = original ? deIdioma : lang
+  return (
+    <>
+      <blockquote lang={idiomaMostrado} dir={idiomaMostrado === 'ar' ? 'rtl' : 'ltr'}>{mostrar}</blockquote>
+      <p className="v7-resena-traducida">
+        {t.de} {NOMBRE_IDIOMA[lang]?.[deIdioma] ?? deIdioma} ·{' '}
+        <button type="button" onClick={() => setOriginal(!original)}>{original ? t.ver : t.original}</button>
+      </p>
+    </>
+  )
+}
 
 function useResenas(activas: boolean) {
   const [lista, setLista] = useState<Resena[]>([])
@@ -509,9 +545,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
             <div className="v7-resenas">
               {resenas.map((r) => (
-                <figure key={r.id} className="tarjeta" lang="es" dir="ltr">
+                <figure key={r.id} className="tarjeta">
                   <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
-                  <blockquote>{r.text}</blockquote>
+                  <TextoResena r={r} lang={p.lang} />
                   <figcaption>
                     <span className="v7-resena-inicial" aria-hidden="true">{r.name.trim().charAt(0).toUpperCase()}</span>
                     <span><strong>{r.name}</strong><small>{[r.country, r.tour].filter(Boolean).join(' · ')}</small></span>

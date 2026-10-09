@@ -372,7 +372,7 @@ const en: Pagina = {
       { texto: 'Practical guide for travellers from the USA', ruta: '/en/from-usa/' },
     ],
   },
-  resenas: { titulo: 'What guests say', nota: 'Original reviews, in Spanish.', opinar: 'Toured with us? Leave a review' },
+  resenas: { titulo: 'What guests say', nota: 'Real reviews, translated from Spanish. Tap “See original” to read them as written.', opinar: 'Toured with us? Leave a review' },
   faq: {
     titulo: 'Questions',
     items: [
@@ -502,7 +502,7 @@ const ar: Pagina = {
     divisas: ['AED', 'SAR'],
     enlaces: [{ texto: 'دليل المسافر من الخليج', ruta: '/ar/from-gulf/' }],
   },
-  resenas: { titulo: 'ماذا يقول الضيوف', nota: 'مراجعات أصلية باللغة الإسبانية.', opinar: 'هل قمت بجولة معنا؟ اترك رأيك' },
+  resenas: { titulo: 'ماذا يقول الضيوف', nota: 'مراجعات حقيقية مترجمة من الإسبانية. اضغط «عرض النص الأصلي» لقراءتها كما كُتبت.', opinar: 'هل قمت بجولة معنا؟ اترك رأيك' },
   faq: {
     titulo: 'أسئلة',
     items: [

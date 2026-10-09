@@ -12,7 +12,12 @@
       "text": "Puntual y amable. Nos enseñó de forma detallada por Osaka.",
       "lang": "es",
       "date": "October 2026",
-      "photo": ""
+      "photo": "",
+      "traducciones": {
+        "en": "Punctual and friendly. He showed us around Osaka in great detail.",
+        "ar": "دقيق في مواعيده ولطيف. عرّفنا على أوساكا بالتفصيل.",
+        "ru": "Пунктуальный и доброжелательный. Подробно показал нам Осаку."
+      }
     },
     {
       "id": "r-0007",
@@ -23,7 +28,12 @@
       "text": "Todo de 10.tony un chico que te expliza todo ,mucha paciencia  y muy divertido",
       "lang": "es",
       "date": "October 2026",
-      "photo": "reviews-img/r-0007.jpg"
+      "photo": "reviews-img/r-0007.jpg",
+      "traducciones": {
+        "en": "Ten out of ten. Tony explains everything, is very patient and great fun.",
+        "ar": "كل شيء ممتاز. توني يشرح كل شيء، صبور جدًا ومرح للغاية.",
+        "ru": "Всё на десять из десяти. Тони всё объясняет, очень терпеливый и весёлый."
+      }
     },
     {
       "id": "r-0008",
@@ -34,7 +44,12 @@
       "text": "Mucha gente, pero bien guiado te quitas barullos, merece la pena",
       "lang": "es",
       "date": "October 2026",
-      "photo": "reviews-img/r-0008.jpg"
+      "photo": "reviews-img/r-0008.jpg",
+      "traducciones": {
+        "en": "Lots of people, but with a good guide you avoid the crowds. Well worth it.",
+        "ar": "الأماكن مزدحمة، لكن مع مرشد جيد تتجنب الزحام. التجربة تستحق.",
+        "ru": "Людей много, но с хорошим гидом обходишь толпы. Оно того стоит."
+      }
     },
     {
       "id": "r-0009",
@@ -45,7 +60,12 @@
       "text": "Muy bien. Me sentí tratado con amabilidad y preocupación porque nos sintiéramos bien",
       "lang": "es",
       "date": "October 2026",
-      "photo": ""
+      "photo": "",
+      "traducciones": {
+        "en": "Very good. I felt treated with kindness and real care that we were comfortable.",
+        "ar": "جيد جدًا. شعرت بمعاملة لطيفة واهتمام حقيقي بأن نكون مرتاحين.",
+        "ru": "Очень хорошо. Ко мне относились доброжелательно и заботились, чтобы нам было комфортно."
+      }
     },
     {
       "id": "r-0004",
@@ -56,7 +76,12 @@
       "text": "El tour ha sido fabuloso.\nNo hemos podido tener mejor guía.",
       "lang": "es",
       "date": "August 2026",
-      "photo": ""
+      "photo": "",
+      "traducciones": {
+        "en": "The tour was fabulous.\nWe could not have had a better guide.",
+        "ar": "كانت الجولة رائعة.\nما كان بإمكاننا الحصول على مرشد أفضل.",
+        "ru": "Экскурсия была потрясающей.\nЛучшего гида у нас и быть не могло."
+      }
     },
     {
       "id": "r-0005",
@@ -67,7 +92,12 @@
       "text": "Visitamos el Castillo Nijo,  el templo Kinkaju-ji  (Templo Dorado), el Jardin Nacional Kioto Gyoen, comimos en esa zona, visitamos el Templo Kiyomizu-dera y nos dieron todas las instrucciones para terminar el dia en  Fushimi Inari Taisha (toris rojos).",
       "lang": "es",
       "date": "August 2026",
-      "photo": "reviews-img/r-0005.jpg"
+      "photo": "reviews-img/r-0005.jpg",
+      "traducciones": {
+        "en": "We visited Nijo Castle, Kinkaku-ji (the Golden Pavilion) and the Kyoto Gyoen National Garden, had lunch in that area, visited Kiyomizu-dera Temple, and we were given all the directions to end the day at Fushimi Inari Taisha (the red torii gates).",
+        "ar": "زرنا قلعة نيجو ومعبد كينكاكو-جي (الجناح الذهبي) وحديقة كيوتو غيوين الوطنية، وتناولنا الطعام في تلك المنطقة، ثم زرنا معبد كيوميزو-ديرا، وحصلنا على كل الإرشادات لنختم اليوم في فوشيمي إيناري تايشا (بوابات التوري الحمراء).",
+        "ru": "Мы посетили замок Нидзё, храм Кинкаку-дзи (Золотой павильон) и национальный сад Киото Гёэн, пообедали в том районе, посетили храм Киёмидзу-дэра, и нам дали все указания, чтобы закончить день в Фусими Инари Тайся (красные ворота тории)."
+      }
     }
   ]
 }

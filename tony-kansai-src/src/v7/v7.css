@@ -1268,6 +1268,8 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-resenas blockquote { font-size: 1.05rem; line-height: 1.6; }
 .v7-resenas figcaption { display: flex; align-items: center; gap: 12px; margin-top: 16px; padding-top: 14px; border-top: 1px solid color-mix(in srgb, var(--tinta) 10%, transparent); }
 .v7-resena-inicial { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 650; color: #fff; background: var(--acento); }
+.v7-resena-traducida { margin: -4px 0 10px; font-size: .78rem; opacity: .7; }
+.v7-resena-traducida button { font: inherit; color: var(--acento); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
 .v7-resenas figcaption strong { display: block; font-weight: 600; color: var(--tinta); }
 .v7-resenas figcaption small { display: block; font-size: 13px; color: var(--tenue); }
 
