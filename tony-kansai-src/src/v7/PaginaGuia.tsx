@@ -82,10 +82,30 @@ const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ??
 // Color del círculo por nombre: estable entre visitas y distinto entre vecinos.
 const TONOS = ['#c2410c', '#0f766e', '#7c3aed', '#b45309', '#be123c', '#1d4ed8', '#4d7c0f', '#a21caf']
 const hashNombre = (n: string) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
-const tono = (n: string) => TONOS[hashNombre(n) % TONOS.length]
-// Icono de Japón por persona en vez de la inicial: cada cliente tiene el suyo, siempre el mismo.
-const ICONOS = ['⛩️', '🗻', '🦌', '🌸', '🍵', '🏮', '🎐', '🍡', '🍁', '🎏', '🍙', '🐟', '🏯', '🎋', '🌊', '🍜', '🦊', '🎎', '🌕', '🍣']
-const icono = (n: string) => ICONOS[Math.floor(hashNombre(n) / TONOS.length) % ICONOS.length]
+// Cada cliente, un dibujo propio (Tabler Icons, MIT; sprite en /v7/iconos-resenas.svg).
+// Se reparten sin repetir dentro de la lista y sin orden visible: el punto de partida sale del id.
+const ICONOS = ["cat", "dog", "deer", "fish", "butterfly", "bug", "spider", "feather", "paw", "horse", "horse-toy", "ufo", "rocket", "plane", "helicopter", "sailboat", "ship", "anchor", "bike", "scooter", "car", "bus", "train", "tractor", "balloon", "umbrella", "mountain", "building-castle", "tent", "campfire", "tree", "trees", "plant", "plant-2", "leaf", "leaf-2", "flower", "cactus", "mushroom", "sun", "moon", "moon-stars", "cloud", "cloud-rain", "cloud-snow", "snowflake", "rainbow", "bolt", "flame", "droplet", "planet", "globe", "map-2", "compass", "camera", "music", "piano", "headphones", "brush", "palette", "pencil", "book", "books", "bookmark", "bell", "key", "gift", "crown", "diamond", "trophy", "medal", "puzzle", "robot", "apple", "carrot", "pizza", "cookie", "candy", "ice-cream", "ice-cream-2", "coffee", "teapot", "bread", "egg", "cherry", "soup", "bowl-chopsticks", "cheese", "cake", "meat", "lollipop", "windmill", "swimming", "ball-football", "ball-basketball", "ball-tennis", "ball-volleyball", "ball-baseball", "ping-pong", "golf", "skateboard", "run", "yoga", "bow", "target", "chess-knight", "chess-rook", "chess-king", "hourglass", "alarm", "lamp", "bulb", "magnet", "atom", "dna", "microscope", "telescope", "flask", "prism", "satellite", "radar", "radio", "backpack", "shirt", "shoe", "sunglasses", "scissors", "hammer", "axe", "shovel", "bucket", "torii", "volcano", "beach", "sunrise", "sunset-2", "pyramid", "drone", "kayak", "parachute", "tower", "chef-hat", "horseshoe", "guitar-pick", "caravan", "carambola"] as const
+function repartoIconos(lista: { id: string }[]) {
+  const usados = new Set<number>()
+  const reparto = new Map<string, { icono: string; tono: string }>()
+  let tonoAnterior = -1
+  for (const r of lista) {
+    // Mezcla el hash: ids casi iguales (larion-001, -002…) deben caer lejos.
+    let h = hashNombre(r.id)
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b) >>> 0
+    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b) >>> 0
+    const h2 = Math.imul(h ^ (h >>> 13), 0x27d4eb2d) >>> 0
+    let i = h % ICONOS.length
+    if (usados.size >= ICONOS.length) usados.clear()
+    while (usados.has(i)) i = (i + 1) % ICONOS.length
+    usados.add(i)
+    let t = h2 % TONOS.length
+    if (t === tonoAnterior) t = (t + 1) % TONOS.length
+    tonoAnterior = t
+    reparto.set(r.id, { icono: ICONOS[i], tono: TONOS[t] })
+  }
+  return reparto
+}
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
 // Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
@@ -475,6 +495,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   // Con 200 reseñas la sección sería un muro: se abren por tandas.
   const [verResenas, setVerResenas] = useState(12)
   const [filtroEstrellas, setFiltroEstrellas] = useState(0)
+  const iconos = useMemo(() => repartoIconos(resenas), [resenas])
   const resenasVistas = filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
 
   useEffect(() => {
@@ -601,7 +622,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                   </div>
                   <TextoResena r={r} lang={p.lang} />
                   <figcaption>
-                    <span className="v7-resena-inicial v7-resena-icono" aria-hidden="true" style={{ ['--tono' as string]: tono(nombre + pais) }}>{icono(nombre + pais)}</span>
+                    <span className="v7-resena-inicial v7-resena-icono" aria-hidden="true" style={{ ['--tono' as string]: iconos.get(r.id)?.tono }}>
+                      <svg width="28" height="28"><use href={`/v7/iconos-resenas.svg#${iconos.get(r.id)?.icono}`} /></svg>
+                    </span>
                     <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
                   </figcaption>
                   {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
