@@ -1,12 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(311 .5 .5)"><stop offset="0" stop-color="#e2e8f0"/><stop offset="1" stop-color="#c0aede"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#b45309" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-  
-  <path d="M10 10h4v4h-4z" />
-  <path d="M10 10l-3.5 -3.5" />
-  <path d="M9.96 6a3.5 3.5 0 1 0 -3.96 3.96" />
-  <path d="M14 10l3.5 -3.5" />
-  <path d="M18 9.96a3.5 3.5 0 1 0 -3.96 -3.96" />
-  <path d="M14 14l3.5 3.5" />
-  <path d="M14.04 18a3.5 3.5 0 1 0 3.96 -3.96" />
-  <path d="M10 14l-3.5 3.5" />
-  <path d="M6 14.04a3.5 3.5 0 1 0 3.96 3.96" />
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><rect width="96" height="96" fill="#a7f3d0"/><circle cx="48" cy="48" r="34" fill="#1d4ed8" opacity=".14"/><g transform="translate(22 22) scale(2.17)" fill="#7c3aed"><path d="M17.6544 1.70001L14.8716 4.23315C16.147 4.62331 17.3453 5.28102 18.3612 6.20626C21.8744 9.40606 21.8744 14.594 18.3612 17.7938C15.7696 20.1542 11.7644 21.6563 6.3456 22.3L9.12838 19.7669C7.85304 19.3767 6.65466 18.719 5.6388 17.7938C2.1256 14.594 2.1048 9.42501 5.6388 6.20626C8.2304 3.84585 12.2356 2.34376 17.6544 1.70001ZM12 8.00001C9.51472 8.00001 7.5 9.79087 7.5 12C7.5 14.2092 9.51472 16 12 16C14.4853 16 16.5 14.2092 16.5 12C16.5 9.79087 14.4853 8.00001 12 8.00001Z"/></g></svg>

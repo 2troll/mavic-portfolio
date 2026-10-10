@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(340 .5 .5)"><stop offset="0" stop-color="#fbcfe8"/><stop offset="1" stop-color="#c0aede"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#a21caf" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
-  
-  <path d="M3 20h18l-6.921 -14.612a2.3 2.3 0 0 0 -4.158 0l-6.921 14.612z" />
-  <path d="M7.5 11l2 2.5l2.5 -2.5l2 3l2.5 -2" />
-</g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><rect width="96" height="96" fill="#d1d4f9"/><circle cx="48" cy="48" r="34" fill="#9f1239" opacity=".14"/><g transform="translate(22 22) scale(2.17)" fill="#9f1239"><path d="M1.99805 21.0001V19.0001L3.99805 18.9999V4.83465C3.99805 4.35136 4.34367 3.93723 4.81916 3.85078L14.2907 2.12868C14.6167 2.0694 14.9291 2.28564 14.9884 2.61167C14.9948 2.64708 14.998 2.68301 14.998 2.719V3.9999L18.998 4.00007C19.5503 4.00007 19.998 4.44779 19.998 5.00007V18.9999L21.998 19.0001V21.0001H17.998V6.00007L14.998 5.9999V21.0001H1.99805ZM11.998 11.0001H9.99805V13.0001H11.998V11.0001Z"/></g></svg>

@@ -79,9 +79,9 @@ const BANDERAS: [RegExp, string][] = [
   [/Эстони|Estonia/, '🇪🇪'], [/España|Spain|Испани/, '🇪🇸'], [/México|Mexico/, '🇲🇽'],
 ]
 const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
-// Cada cliente, una foto de perfil propia, como en redes: 400 avatares (DiceBear + Tabler)
-// mezclados al azar y generados en local, en /v7/avatares/a000…a399.svg.
-const AVATARES = 400
+// Cada cliente, una foto de perfil propia, como en redes: 250 avatares de 24 familias
+// (DiceBear, Boring Avatars, Jdenticon, Tabler, Phosphor, Remix), generados en local en /v7/avatares/.
+const AVATARES = 250
 function repartoIconos(lista: { id: string }[]) {
   // En orden: el generador ya los dejó barajados y sin dos del mismo estilo seguidos,
   // así que la reseña n.º i lleva el avatar i y ninguno se repite.
