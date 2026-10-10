@@ -703,6 +703,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <Link to={`/cookies?lang=${p.lang}`}>{p.pie.cookies}</Link>
             {/* La guía halal vive fuera de la web; enlazarla aquí ayuda a que Google la descubra. */}
             {p.lang === 'ar' && <a href="https://2troll.github.io/yubisashi/dalil/">دليل الحلال في كانساي</a>}
+            {p.id === 'en' && <a href="https://2troll.github.io/yubisashi/panduan/" lang="id">Panduan Halal Kansai</a>}
+            {p.id === 'ar' && <a href="https://2troll.github.io/yubisashi/">تطبيق المحادثة للمطاعم</a>}
           </nav>
           <nav aria-label={p.pie.otrosIdiomas}>
             <span className="v7-pie-titulo">{p.pie.otrosIdiomas}</span>
