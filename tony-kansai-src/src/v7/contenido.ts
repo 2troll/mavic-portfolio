@@ -120,6 +120,7 @@ export const CREDITOS = [
   { foto: 'Himeji: castillo', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
   { foto: 'Miyajima: torii', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
   { foto: 'Hiroshima: Cúpula de la Bomba Atómica', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
+  { foto: 'Avatares de las reseñas', autor: 'DiceBear (Lisa Wischofsky, Micah Lanier, Draftbit, The Visual Team, Ashley Seo, Natalia Spivak, vijay verma, Webpixels, Pablo Stanley, Zoish)', licencia: 'CC BY 4.0 / CC0 1.0', url: 'https://www.dicebear.com/licenses/' },
   { foto: 'Globo y mapa: Blue Marble', autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
 ]
 
