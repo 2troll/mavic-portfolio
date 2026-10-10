@@ -81,10 +81,10 @@ const BANDERAS: [RegExp, string][] = [
 const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
 // Color del círculo por nombre: estable entre visitas y distinto entre vecinos.
 const hashNombre = (n: string) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
-// Cada cliente, una foto de perfil propia, como en redes: 240 avatares de DiceBear
-// (18 estilos mezclados al azar, generados en local) en /v7/avatares/a000…a239.svg.
+// Cada cliente, una foto de perfil propia, como en redes: 400 avatares (DiceBear + Tabler)
+// mezclados al azar y generados en local, en /v7/avatares/a000…a399.svg.
 // Se reparten sin repetir y sin orden visible: el punto de partida sale del id.
-const AVATARES = 240
+const AVATARES = 400
 function repartoIconos(lista: { id: string }[]) {
   const usados = new Set<number>()
   const reparto = new Map<string, string>()
