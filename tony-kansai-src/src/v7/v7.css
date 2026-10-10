@@ -1309,3 +1309,31 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
    de 6-10 fotogramas lentos a 1-2 al quitarlo). Fondo casi opaco. */
 .cristal, .v7-cookies { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
 .cristal { background: color-mix(in srgb, var(--superficie) 94%, transparent); }
+
+/* Reseñas, versión con muchas (Larion): más aire, y cada tarjeta con algo propio
+   (lugar, bandera, color) para que 200 no parezcan la misma repetida. */
+.v7-resumen { display: grid; grid-template-columns: auto 1fr; gap: 32px; align-items: center; padding: 28px 32px; margin-bottom: 40px; }
+.v7-resumen-nota { display: grid; justify-items: center; gap: 6px; padding-inline-end: 32px; border-inline-end: 1px solid color-mix(in srgb, var(--tinta) 12%, transparent); }
+.v7-resumen-nota strong { font-size: 3.4rem; line-height: 1; font-weight: 650; color: var(--tinta); }
+.v7-resumen-nota small { color: var(--tenue); font-size: 14px; }
+.v7-resumen-barras { display: grid; gap: 8px; }
+.v7-resumen-barras button { display: grid; grid-template-columns: 3.2em 1fr 3em; align-items: center; gap: 12px; font: inherit; font-size: 14px; color: var(--tinta); background: none; border: 1px solid transparent; border-radius: 8px; padding: 4px 8px; cursor: pointer; text-align: start; }
+.v7-resumen-barras button:first-child { grid-template-columns: 1fr; width: max-content; font-weight: 600; }
+.v7-resumen-barras button:hover { background: color-mix(in srgb, var(--acento) 8%, transparent); }
+.v7-resumen-barras button[aria-pressed="true"] { border-color: var(--acento); background: color-mix(in srgb, var(--acento) 10%, transparent); }
+.v7-resumen-barras i { height: 8px; border-radius: 4px; background: linear-gradient(90deg, #f5a623 var(--p), color-mix(in srgb, var(--tinta) 10%, transparent) var(--p)); }
+.v7-resumen-barras b { font-weight: 600; color: var(--tenue); text-align: end; }
+.v7-resenas { columns: 3 300px; column-gap: 32px; }
+.v7-resenas figure { margin-bottom: 32px; padding: 30px 28px 24px; }
+.v7-resena-cabeza { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
+.v7-estrellas-vacias { color: color-mix(in srgb, var(--tinta) 18%, transparent); }
+.v7-resena-lugar { font-size: 12px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase; padding: 4px 10px; border-radius: 999px; color: var(--acento); background: color-mix(in srgb, var(--acento) 10%, transparent); }
+.v7-resenas figure::before { inset-block-start: auto; inset-block-end: 70px; }
+.v7-resena-corta blockquote { font-size: 1.3rem; line-height: 1.45; font-weight: 500; }
+.v7-ver-mas { text-align: center; margin-top: 8px; }
+.v7-ver-mas button { font: inherit; font-weight: 600; padding: 14px 28px; border-radius: 999px; border: 2px solid var(--tinta); background: var(--tinta); color: var(--fondo, #fff); cursor: pointer; }
+@media (max-width: 640px) {
+  .v7-resumen { grid-template-columns: 1fr; gap: 20px; padding: 22px; }
+  .v7-resumen-nota { border-inline-end: 0; padding-inline-end: 0; border-block-end: 1px solid color-mix(in srgb, var(--tinta) 12%, transparent); padding-block-end: 16px; }
+  .v7-resenas figure { padding: 24px 20px 20px; margin-bottom: 20px; }
+}

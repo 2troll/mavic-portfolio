@@ -739,7 +739,7 @@ const larion: Pagina = {
     tuHora: 'Your time',
     divisas: ['GBP', 'USD', 'EUR'],
   },
-  resenas: undefined,
+  resenas: { titulo: 'What guests say', nota: 'Messages guests sent Larion on WhatsApp, gathered here and translated from Russian. Tap “See original” to read them as written.', opinar: 'Toured with Larion? Leave a review', fuente: '/reviews-larion.json' },
   contacto: {
     ...en.contacto,
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],

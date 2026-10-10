@@ -67,7 +67,22 @@ function useAhora(cadaMs = 20000) {
 }
 
 interface Resena { id: string; stars: number; name: string; country: string; tour: string; text: string; photo?: string; date: string
-  lang?: string; traducciones?: Record<string, string> }
+  lang?: string; traducciones?: Record<string, string>
+  /** Nombre, procedencia y lugar ya escritos en otro idioma (las de Larion, en inglés). */
+  meta?: Record<string, { name: string; country: string; tour: string }> }
+
+// Bandera por país (en ruso o inglés, como venga): da a cada tarjeta algo propio.
+const BANDERAS: [RegExp, string][] = [
+  [/Росси|Russia/, '🇷🇺'], [/Казахстан|Kazakhstan/, '🇰🇿'], [/Беларусь|Belarus/, '🇧🇾'], [/Украин|Ukrain/, '🇺🇦'],
+  [/Узбекистан|Uzbekistan/, '🇺🇿'], [/Кыргызстан|Kyrgyz/, '🇰🇬'], [/Армени|Armenia/, '🇦🇲'], [/Молдов|Moldova/, '🇲🇩'],
+  [/Грузи|Georgia/, '🇬🇪'], [/Азербайджан|Azerbaijan/, '🇦🇿'], [/Литв|Lithuania/, '🇱🇹'], [/Латви|Latvia/, '🇱🇻'],
+  [/Эстони|Estonia/, '🇪🇪'], [/España|Spain|Испани/, '🇪🇸'], [/México|Mexico/, '🇲🇽'],
+]
+const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
+// Color del círculo por nombre: estable entre visitas y distinto entre vecinos.
+const TONOS = ['#c2410c', '#0f766e', '#7c3aed', '#b45309', '#be123c', '#1d4ed8', '#4d7c0f', '#a21caf']
+const tono = (n: string) => TONOS[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % TONOS.length]
+const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
 // Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
 // traducción a ese idioma (si existe) y un enlace para ver el original, para no
@@ -455,6 +470,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const resenas = useResenas(!!p.resenas, p.resenas?.fuente)
   // Con 200 reseñas la sección sería un muro: se abren por tandas.
   const [verResenas, setVerResenas] = useState(12)
+  const [filtroEstrellas, setFiltroEstrellas] = useState(0)
+  const resenasVistas = filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -546,22 +563,51 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <h2>{p.resenas.titulo}</h2>
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
             <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
+            {resenas.length >= 20 && (() => {
+              // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
+              const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)
+              return (
+                <div className="v7-resumen tarjeta">
+                  <div className="v7-resumen-nota">
+                    <strong>{mediaResenas(resenas, p.lang)}</strong>
+                    <span className="v7-estrellas" aria-hidden="true">★★★★★</span>
+                    <small>{resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}</small>
+                  </div>
+                  <div className="v7-resumen-barras" role="group">
+                    <button type="button" aria-pressed={filtroEstrellas === 0} onClick={() => { setFiltroEstrellas(0); setVerResenas(12) }}>{TODAS[p.lang] ?? TODAS.en}</button>
+                    {cuenta.map(([n, c]) => (
+                      <button type="button" key={n} aria-pressed={filtroEstrellas === n} onClick={() => { setFiltroEstrellas(n); setVerResenas(12) }}>
+                        <span>{n}★</span><i style={{ ['--p' as string]: `${(c / resenas.length) * 100}%` }} /><b>{c}</b>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )
+            })()}
             <div className="v7-resenas">
-              {resenas.slice(0, verResenas).map((r) => (
-                <figure key={r.id} className="tarjeta">
-                  <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
+              {resenasVistas.slice(0, verResenas).map((r) => {
+                const m = r.meta?.[p.lang]
+                const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
+                const texto = r.traducciones?.[p.lang] ?? r.text
+                return (
+                <figure key={r.id} className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}`}>
+                  <div className="v7-resena-cabeza">
+                    <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
+                    {lugar && <span className="v7-resena-lugar">{lugar}</span>}
+                  </div>
                   <TextoResena r={r} lang={p.lang} />
                   <figcaption>
-                    <span className="v7-resena-inicial" aria-hidden="true">{r.name.trim().charAt(0).toUpperCase()}</span>
-                    <span><strong>{r.name}</strong><small>{[r.country, r.tour].filter(Boolean).join(' · ')}</small></span>
+                    <span className="v7-resena-inicial" aria-hidden="true" style={{ background: tono(nombre) }}>{nombre.trim().charAt(0).toUpperCase()}</span>
+                    <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
                   </figcaption>
                   {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
                 </figure>
-              ))}
+                )
+              })}
             </div>
-            {resenas.length > verResenas && (
-              <p className="v7-opinar"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
-                {VER_MAS[p.lang] ?? VER_MAS.en} ({resenas.length - verResenas})
+            {resenasVistas.length > verResenas && (
+              <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
+                {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})
               </button></p>
             )}
           </section>
