@@ -38,7 +38,9 @@ type Oferta = {
   boton: string
 }
 
-const WISE = 'https://wise.com/invite/amc/amirk1643'
+// Enlace normal: las condiciones de invitación de Wise prohíben usar el enlace
+// personal en una web de negocio (cl. 2.4 y 3.1). Cambiar por el de afiliado si lo aprueban.
+const WISE = 'https://wise.com/'
 
 type Textos = {
   titulo: string; descripcion: string; antetitulo: string; h1: string; sub: string
@@ -56,7 +58,7 @@ const T: Record<VentajasId, Textos> = {
     sub: 'Las apps que uso cada día en Osaka y Kioto. Donde tengo un enlace de invitación, lo dejo aquí para que te llevéis la ventaja tú y yo.',
     copiar: 'Copiar enlace', copiado: '¡Copiado!', codigo: 'Mi enlace',
     ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Cuenta y tarjeta para pagar en yenes al cambio real, sin las comisiones del banco.', ventaja: 'Con mi enlace, tu primer envío sale sin comisión (según las condiciones de Wise en tu país). También sirve para pagarme el tour.', codigo: WISE, enlace: WISE, boton: 'Abrir Wise' },
+      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Cuenta y tarjeta para pagar en yenes al cambio real, sin las comisiones del banco.', ventaja: 'Es lo que uso yo para cobrar en euros y yenes, y también te sirve para pagarme el tour sin comisiones de banco.', enlace: WISE, boton: 'Abrir Wise' },
       { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'Patinetes y bicis eléctricas compartidos por todo Osaka y Kioto. Se cogen y se dejan en sus puntos con la app.', ventaja: 'Cuando LUUP abra su campaña de invitación pondré aquí mi código. Patinete desde 16 años y tras su test de normas; bici sin test.', enlace: 'https://luup.sc/en/', boton: 'Ver LUUP' },
       { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'Bicis eléctricas compartidas con cientos de estaciones en Kansai. Ideal para Kioto, donde el bus va lleno.', ventaja: 'Se paga por minutos con tarjeta desde la app; no hace falta cuenta japonesa.', enlace: 'https://www.hellocycling.jp/', boton: 'Ver HELLO CYCLING' },
       { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica en el móvil', que: 'La tarjeta de transporte dentro del móvil: trenes, metro, buses y konbini sin sacar monedas.', ventaja: 'En iPhone se añade gratis desde la app Cartera; se recarga con tu tarjeta y no tiene depósito.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'Ver ICOCA' },
@@ -79,7 +81,7 @@ const T: Record<VentajasId, Textos> = {
     sub: 'The apps I use every day in Osaka and Kyoto. Where I have an invite link, it is here so you get the perk.',
     copiar: 'Copy link', copiado: 'Copied!', codigo: 'My link',
     ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Account and card to pay in yen at the real exchange rate, without bank fees.', ventaja: 'With my link your first transfer is fee-free (subject to Wise terms in your country). You can also use it to pay for your tour.', codigo: WISE, enlace: WISE, boton: 'Open Wise' },
+      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Account and card to pay in yen at the real exchange rate, without bank fees.', ventaja: 'It is what I use myself, and you can also use it to pay for your tour without bank fees.', enlace: WISE, boton: 'Open Wise' },
       { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'Shared e-scooters and e-bikes all over Osaka and Kyoto. Pick up and drop off at their ports with the app.', ventaja: 'When LUUP opens its invite campaign I will add my code here. Scooters from age 16 after their traffic quiz; bikes need no quiz.', enlace: 'https://luup.sc/en/', boton: 'See LUUP' },
       { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'Shared e-bikes with hundreds of stations in Kansai. Great for Kyoto, where buses are packed.', ventaja: 'Pay by the minute with a card in the app; no Japanese account needed.', enlace: 'https://www.hellocycling.jp/', boton: 'See HELLO CYCLING' },
       { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica on your phone', que: 'Your transport card inside your phone: trains, subway, buses and convenience stores without coins.', ventaja: 'On iPhone you add it free from the Wallet app; top up with your card, no deposit.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'See ICOCA' },
@@ -102,7 +104,7 @@ const T: Record<VentajasId, Textos> = {
     sub: 'التطبيقات التي أستخدمها يوميًا في أوساكا وكيوتو. وحيث يكون لدي رابط دعوة، تجده هنا لتحصل على الميزة.',
     copiar: 'نسخ الرابط', copiado: 'تم النسخ!', codigo: 'رابطي',
     ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'حساب وبطاقة للدفع بالين بسعر الصرف الحقيقي، بلا رسوم البنوك.', ventaja: 'مع رابطي يكون أول تحويل لك بلا رسوم (حسب شروط Wise في بلدك). ويمكنك استخدامه أيضًا لدفع ثمن الجولة.', codigo: WISE, enlace: WISE, boton: 'افتح Wise' },
+      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'حساب وبطاقة للدفع بالين بسعر الصرف الحقيقي، بلا رسوم البنوك.', ventaja: 'هذا ما أستخدمه أنا، ويمكنك أيضًا استخدامه لدفع ثمن الجولة بلا رسوم البنوك.', enlace: WISE, boton: 'افتح Wise' },
       { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'سكوترات ودراجات كهربائية مشتركة في كل أنحاء أوساكا وكيوتو، تأخذها وتعيدها في محطاتها عبر التطبيق.', ventaja: 'عندما تطلق LUUP حملة الدعوة سأضع رمزي هنا. السكوتر من عمر 16 سنة بعد اختبار قواعد المرور، والدراجة بلا اختبار.', enlace: 'https://luup.sc/en/', boton: 'تعرّف على LUUP' },
       { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'دراجات كهربائية مشتركة بمئات المحطات في كانساي، مثالية لكيوتو حيث الحافلات مزدحمة.', ventaja: 'تدفع بالدقيقة ببطاقتك من التطبيق، ولا تحتاج إلى حساب ياباني.', enlace: 'https://www.hellocycling.jp/', boton: 'تعرّف على HELLO CYCLING' },
       { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica على الهاتف', que: 'بطاقة المواصلات داخل هاتفك: القطارات والمترو والحافلات والمتاجر بلا عملات معدنية.', ventaja: 'على الآيفون تضيفها مجانًا من تطبيق المحفظة، وتشحنها ببطاقتك بلا تأمين.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'تعرّف على ICOCA' },
