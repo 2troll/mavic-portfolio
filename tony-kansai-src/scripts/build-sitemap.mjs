@@ -54,6 +54,10 @@ const paginas = [
   { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   { loc: '/es/aeropuerto-kansai', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
   { loc: '/en/kansai-airport', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
+  // Ventajas para el viajero.
+  { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
+  { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
+  { loc: '/ar/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -98,6 +102,7 @@ const V7 = {
   rusia: [['ru', '/ru/from-russia/']],
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
   aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
+  ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

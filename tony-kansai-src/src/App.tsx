@@ -34,6 +34,8 @@ const Itinerarios = lazy(() => import('./v7/Itinerarios'))
 const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
 const Otono = lazy(() => import('./v7/Otono'))
 const GuiaTransporte = lazy(() => import('./v7/GuiaTransporte'))
+const Ventajas = lazy(() => import('./v7/Ventajas'))
+const RUTAS_VENTAJAS: Record<string, 'es' | 'en' | 'ar'> = { '/es/ventajas': 'es', '/en/perks': 'en', '/ar/perks': 'ar' }
 import { RUTAS_GUIA } from './v7/datosGuias'
 const Viajeros = lazy(() => import('./v7/Viajeros'))
 import { RUTAS_VIAJEROS } from './v7/datosViajeros'
@@ -139,6 +141,19 @@ export function Layout() {
         <CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
+      </>
+    )
+  }
+
+  // Ventajas: apps y enlaces de invitación para el viajero.
+  const ventajas = RUTAS_VENTAJAS[pathname.replace(/\/+$/, '')]
+  if (ventajas) {
+    return (
+      <>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+        <Ventajas key={ventajas} id={ventajas} />
+        <CookieTardio compacto /><AvisoRuso />
+      </Suspense>
       </>
     )
   }
