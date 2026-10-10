@@ -85,7 +85,7 @@ const AVATARES = 250
 function repartoIconos(lista: { id: string }[]) {
   // En orden: el generador ya los dejó barajados y sin dos del mismo estilo seguidos,
   // así que la reseña n.º i lleva el avatar i y ninguno se repite.
-  return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg`]))
+  return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg?v=4`]))
 }
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
