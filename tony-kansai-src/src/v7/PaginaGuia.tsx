@@ -81,7 +81,11 @@ const BANDERAS: [RegExp, string][] = [
 const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
 // Color del círculo por nombre: estable entre visitas y distinto entre vecinos.
 const TONOS = ['#c2410c', '#0f766e', '#7c3aed', '#b45309', '#be123c', '#1d4ed8', '#4d7c0f', '#a21caf']
-const tono = (n: string) => TONOS[[...n].reduce((a, c) => a + c.charCodeAt(0), 0) % TONOS.length]
+const hashNombre = (n: string) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
+const tono = (n: string) => TONOS[hashNombre(n) % TONOS.length]
+// Icono de Japón por persona en vez de la inicial: cada cliente tiene el suyo, siempre el mismo.
+const ICONOS = ['⛩️', '🗻', '🦌', '🌸', '🍵', '🏮', '🎐', '🍡', '🍁', '🎏', '🍙', '🐟', '🏯', '🎋', '🌊', '🍜', '🦊', '🎎', '🌕', '🍣']
+const icono = (n: string) => ICONOS[Math.floor(hashNombre(n) / TONOS.length) % ICONOS.length]
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
 // Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
@@ -597,7 +601,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                   </div>
                   <TextoResena r={r} lang={p.lang} />
                   <figcaption>
-                    <span className="v7-resena-inicial" aria-hidden="true" style={{ background: tono(nombre) }}>{nombre.trim().charAt(0).toUpperCase()}</span>
+                    <span className="v7-resena-inicial v7-resena-icono" aria-hidden="true" style={{ ['--tono' as string]: tono(nombre + pais) }}>{icono(nombre + pais)}</span>
                     <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
                   </figcaption>
                   {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
