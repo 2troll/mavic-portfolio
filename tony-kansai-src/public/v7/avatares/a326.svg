@@ -1,12 +1,8 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(62 .5 .5)"><stop offset="0" stop-color="#b6e3f4"/><stop offset="1" stop-color="#fed7aa"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(24 24) scale(2)" fill="none" stroke="#15803d" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(55 .5 .5)"><stop offset="0" stop-color="#ffdfbf"/><stop offset="1" stop-color="#d1d4f9"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#0e7490" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
   
-  <path d="M6 4m0 2a2 2 0 0 1 2 -2h8a2 2 0 0 1 2 2v4a2 2 0 0 1 -2 2h-8a2 2 0 0 1 -2 -2z" />
-  <path d="M12 2v2" />
-  <path d="M9 12v9" />
-  <path d="M15 12v9" />
-  <path d="M5 16l4 -2" />
-  <path d="M15 14l4 2" />
-  <path d="M9 18h6" />
-  <path d="M10 8v.01" />
-  <path d="M14 8v.01" />
+  <path d="M17.553 16.75a7.5 7.5 0 0 0 -10.606 0" />
+  <path d="M18 3.804a6 6 0 0 0 -8.196 2.196l10.392 6a6 6 0 0 0 -2.196 -8.196z" />
+  <path d="M16.732 10c1.658 -2.87 2.225 -5.644 1.268 -6.196c-.957 -.552 -3.075 1.326 -4.732 4.196" />
+  <path d="M15 9l-3 5.196" />
+  <path d="M3 19.25a2.4 2.4 0 0 1 1 -.25a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 2 1a2.4 2.4 0 0 0 2 1a2.4 2.4 0 0 0 2 -1a2.4 2.4 0 0 1 2 -1a2.4 2.4 0 0 1 1 .25" />
 </g></svg>

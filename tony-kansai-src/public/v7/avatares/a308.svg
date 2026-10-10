@@ -1,1 +1,10 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" fill="none" shape-rendering="auto" width="96" height="96"><metadata xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:dcterms="http://purl.org/dc/terms/"><rdf:RDF><rdf:Description><dc:title>Bottts</dc:title><dc:creator>Pablo Stanley</dc:creator><dc:source xsi:type="dcterms:URI">https://bottts.com/</dc:source><dcterms:license xsi:type="dcterms:URI">https://bottts.com/</dcterms:license><dc:rights>Remix of „Bottts” (https://bottts.com/) by „Pablo Stanley”, licensed under „Free for personal and commercial use” (https://bottts.com/)</dc:rights></rdf:Description></rdf:RDF></metadata><mask id="viewboxMask"><rect width="120" height="120" rx="0" ry="0" x="0" y="0" fill="#fff" /></mask><g mask="url(#viewboxMask)"><rect fill="#b6e3f4" width="120" height="120" x="0" y="0" /><g transform="translate(22 68)"><rect x="16" y="8" width="44" height="4" rx="2" fill="#000" fill-opacity=".8"/></g><g transform="translate(8 20)"><g fill="#fff"><circle cx="21" cy="30" r="15" fill-opacity=".1"/><circle cx="83" cy="30" r="15" fill-opacity=".1"/><circle cx="21" cy="30" r="12" fill-opacity=".1"/><circle cx="83" cy="30" r="12" fill-opacity=".1"/><circle cx="21" cy="30" r="6" fill-opacity=".8"/><circle cx="83" cy="30" r="6" fill-opacity=".8"/><circle cx="21" cy="30" r="3" fill-opacity=".8"/><circle cx="83" cy="30" r="3" fill-opacity=".8"/></g></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(197 .5 .5)"><stop offset="0" stop-color="#ffdfbf"/><stop offset="1" stop-color="#d9f99d"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+  
+  <path d="M16.95 9.01c3.02 .739 5.05 2.123 5.05 3.714c0 2.367 -4.48 4.276 -10 4.276s-10 -1.909 -10 -4.276c0 -1.59 2.04 -2.985 5.07 -3.724" />
+  <path d="M7 9c0 1.105 2.239 2 5 2s5 -.895 5 -2v-.035c0 -2.742 -2.239 -4.965 -5 -4.965s-5 2.223 -5 4.965v.035" />
+  <path d="M15 17l2 3" />
+  <path d="M8.5 17l-1.5 3" />
+  <path d="M12 14h.01" />
+  <path d="M7 13h.01" />
+  <path d="M17 13h.01" />
+</g></svg>

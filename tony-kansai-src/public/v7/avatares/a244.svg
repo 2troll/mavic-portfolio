@@ -1,7 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(49 .5 .5)"><stop offset="0" stop-color="#c0aede"/><stop offset="1" stop-color="#fed7aa"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(24 24) scale(2)" fill="none" stroke="#c2410c" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(181 .5 .5)"><stop offset="0" stop-color="#fde68a"/><stop offset="1" stop-color="#ffdfbf"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#15803d" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
   
-  <path d="M3 21v-4a4 4 0 1 1 4 4h-4" />
-  <path d="M21 3a16 16 0 0 0 -12.8 10.2" />
-  <path d="M21 3a16 16 0 0 1 -10.2 12.8" />
-  <path d="M10.6 9a9 9 0 0 1 4.4 4.4" />
+  <path d="M18 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M6 17m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+  <path d="M8 17h5a6 6 0 0 1 5 -5v-5a2 2 0 0 0 -2 -2h-1" />
 </g></svg>

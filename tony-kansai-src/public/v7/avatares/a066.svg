@@ -1,15 +1,5 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(125 .5 .5)"><stop offset="0" stop-color="#d9f99d"/><stop offset="1" stop-color="#d1d4f9"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(24 24) scale(2)" fill="none" stroke="#6d28d9" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" width="96" height="96"><defs><linearGradient id="g" gradientTransform="rotate(266 .5 .5)"><stop offset="0" stop-color="#fecaca"/><stop offset="1" stop-color="#fbcfe8"/></linearGradient></defs><rect width="96" height="96" fill="url(#g)"/><g transform="translate(20 20) scale(2.33)" fill="none" stroke="#6d28d9" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
   
-  <path d="M10 4l2 1l2 -1" />
-  <path d="M12 2v6.5l3 1.72" />
-  <path d="M17.928 6.268l.134 2.232l1.866 1.232" />
-  <path d="M20.66 7l-5.629 3.25l.01 3.458" />
-  <path d="M19.928 14.268l-1.866 1.232l-.134 2.232" />
-  <path d="M20.66 17l-5.629 -3.25l-2.99 1.738" />
-  <path d="M14 20l-2 -1l-2 1" />
-  <path d="M12 22v-6.5l-3 -1.72" />
-  <path d="M6.072 17.732l-.134 -2.232l-1.866 -1.232" />
-  <path d="M3.34 17l5.629 -3.25l-.01 -3.458" />
-  <path d="M4.072 9.732l1.866 -1.232l.134 -2.232" />
-  <path d="M3.34 7l5.629 3.25l2.99 -1.738" />
+  <path d="M10 5a2 2 0 1 1 4 0a7 7 0 0 1 4 6v3a4 4 0 0 0 2 3h-16a4 4 0 0 0 2 -3v-3a7 7 0 0 1 4 -6" />
+  <path d="M9 17v1a3 3 0 0 0 6 0v-1" />
 </g></svg>

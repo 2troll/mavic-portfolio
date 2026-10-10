@@ -79,27 +79,13 @@ const BANDERAS: [RegExp, string][] = [
   [/Эстони|Estonia/, '🇪🇪'], [/España|Spain|Испани/, '🇪🇸'], [/México|Mexico/, '🇲🇽'],
 ]
 const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
-// Color del círculo por nombre: estable entre visitas y distinto entre vecinos.
-const hashNombre = (n: string) => [...n].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7)
 // Cada cliente, una foto de perfil propia, como en redes: 400 avatares (DiceBear + Tabler)
 // mezclados al azar y generados en local, en /v7/avatares/a000…a399.svg.
-// Se reparten sin repetir y sin orden visible: el punto de partida sale del id.
 const AVATARES = 400
 function repartoIconos(lista: { id: string }[]) {
-  const usados = new Set<number>()
-  const reparto = new Map<string, string>()
-  for (const r of lista) {
-    // Mezcla el hash: ids casi iguales (larion-001, -002…) deben caer lejos.
-    let h = hashNombre(r.id)
-    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b) >>> 0
-    h = Math.imul(h ^ (h >>> 16), 0x45d9f3b) >>> 0
-    let i = h % AVATARES
-    if (usados.size >= AVATARES) usados.clear()
-    while (usados.has(i)) i = (i + 1) % AVATARES
-    usados.add(i)
-    reparto.set(r.id, `/v7/avatares/a${String(i).padStart(3, '0')}.svg`)
-  }
-  return reparto
+  // En orden: el generador ya los dejó barajados y sin dos del mismo estilo seguidos,
+  // así que la reseña n.º i lleva el avatar i y ninguno se repite.
+  return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg`]))
 }
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
