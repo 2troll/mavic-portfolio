@@ -43,7 +43,8 @@ export interface Pagina {
     temporada?: { titulo: string; texto: string; enlace?: { texto: string; ruta: string } }
   }
   mercado: { titulo: string; texto: string[]; relojes: { ciudad: string; tz: string }[]; tuHora: string; divisas: string[]; enlaces?: { texto: string; ruta: string }[] }
-  resenas?: { titulo: string; nota?: string; opinar: string }
+  /** `fuente`: archivo propio de reseñas (las de Larion); sin él, las de Tony. */
+  resenas?: { titulo: string; nota?: string; opinar: string; fuente?: string }
   faq: { titulo: string; items: Pregunta[] }
   contacto: {
     titulo: string; sub: string
@@ -646,6 +647,7 @@ const ru: Pagina = {
     divisas: ['RUB'],
     enlaces: [{ texto: 'Практичное для поездки из России', ruta: '/ru/from-russia/' }],
   },
+  resenas: { titulo: 'Что говорят гости', nota: 'Отзывы, которые гости присылали Лариону в WhatsApp, собраны здесь.', opinar: 'Были на экскурсии с Ларионом? Оставьте отзыв', fuente: '/reviews-larion.json' },
   faq: {
     titulo: 'Вопросы',
     items: [

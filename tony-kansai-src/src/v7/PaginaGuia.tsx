@@ -104,14 +104,14 @@ function TextoResena({ r, lang }: { r: Resena; lang: string }) {
   )
 }
 
-function useResenas(activas: boolean) {
+function useResenas(activas: boolean, fuente?: string) {
   const [lista, setLista] = useState<Resena[]>([])
   useEffect(() => {
     if (!activas) return
     // Dos fuentes, como resenas.html: las aprobadas desde el móvil (Worker) y las
     // de reviews.json (Mac). Se unen quitando repetidas por id.
     const traer = (u: string) => fetch(u, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
-    Promise.all([traer('/api/resenas/publicas'), traer('/reviews.json')]).then((fuentes) => {
+    Promise.all(fuente ? [traer(fuente)] : [traer('/api/resenas/publicas'), traer('/reviews.json')]).then((fuentes) => {
       const vistos = new Set<string>()
       const todas: Resena[] = []
       for (const d of fuentes) for (const r of (d?.reviews ?? []) as Resena[]) {
@@ -120,7 +120,7 @@ function useResenas(activas: boolean) {
       }
       setLista(todas)
     })
-  }, [activas])
+  }, [activas, fuente])
   return lista
 }
 
@@ -207,6 +207,7 @@ function useEsOtono() {
 /** Ejemplo de fechas en el formulario: noviembre, que es la temporada que vendemos. */
 const EJ_FECHAS: Record<string, string> = { es: '18–21 nov.', en: '18–21 Nov', ar: '18–21 نوفمبر', ru: '18–21 нояб.' }
 
+const VER_MAS: Record<string, string> = { es: 'Ver más reseñas', en: 'More reviews', ar: 'المزيد من التقييمات', ru: 'Показать ещё' }
 const RESENAS_TXT: Record<string, string> = { es: 'reseñas de clientes', en: 'guest reviews', ar: 'تقييمات العملاء', ru: 'отзывы гостей' }
 const mediaResenas = (l: Resena[], lang: string) =>
   (l.reduce((a, r) => a + r.stars, 0) / l.length).toLocaleString(lang === 'ar' ? 'ar-u-nu-latn' : lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
@@ -451,7 +452,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const p = PAGINAS[id]
   const g = GUIAS[p.guia]
   const { setLang } = useLanguage()
-  const resenas = useResenas(!!p.resenas)
+  const resenas = useResenas(!!p.resenas, p.resenas?.fuente)
+  // Con 200 reseñas la sección sería un muro: se abren por tandas.
+  const [verResenas, setVerResenas] = useState(12)
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -544,7 +547,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
             <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
             <div className="v7-resenas">
-              {resenas.map((r) => (
+              {resenas.slice(0, verResenas).map((r) => (
                 <figure key={r.id} className="tarjeta">
                   <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</div>
                   <TextoResena r={r} lang={p.lang} />
@@ -556,6 +559,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 </figure>
               ))}
             </div>
+            {resenas.length > verResenas && (
+              <p className="v7-opinar"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
+                {VER_MAS[p.lang] ?? VER_MAS.en} ({resenas.length - verResenas})
+              </button></p>
+            )}
           </section>
         )}
 
