@@ -1,7 +1,8 @@
 // Ventajas para el viajero: apps y códigos de amigo que facilitan moverse y
 // pagar en Kansai (/es/ventajas/, /en/perks/, /ar/perks/). Solo se ponen
 // códigos reales de Tony; si una app no tiene campaña, se enlaza la oficial
-// sin código. Nada de imitar el diseño ni el logo de otras marcas.
+// sin código. Cada app va en su ficha con sus colores y su logo (datosVentajas.ts),
+// como en una tienda de apps, para que no se mezclen unas con otras.
 
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
@@ -14,6 +15,8 @@ import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
+import { APPS, CATEGORIAS, type Categoria } from './datosVentajas'
+import { LOGOS } from './logosMarcas'
 import './v7.css'
 import './estilo-pixel.css'
 
@@ -27,43 +30,23 @@ export const RUTAS_VENTAJAS: Record<string, VentajasId> = {
 }
 const RUTA: Record<VentajasId, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/' }
 
-type Oferta = {
-  clave: string
-  icono: string
-  nombre: string
-  que: string
-  ventaja: string
-  codigo?: string
-  enlace: string
-  boton: string
-}
 
-// Enlace normal: las condiciones de invitación de Wise prohíben usar el enlace
-// personal en una web de negocio (cl. 2.4 y 3.1). Cambiar por el de afiliado si lo aprueban.
-const WISE = 'https://wise.com/'
 
 type Textos = {
   titulo: string; descripcion: string; antetitulo: string; h1: string; sub: string
   copiar: string; copiado: string; codigo: string
-  ofertas: Oferta[]; consejosTitulo: string; consejos: string[]
+  consejosTitulo: string; consejos: string[]
   aviso: string; finalTitulo: string; finalTexto: string; finalBoton: string; volver: string; saludo: string
 }
 
 const T: Record<VentajasId, Textos> = {
   es: {
     titulo: 'Ventajas para tu viaje a Kansai: apps y códigos | Tony Kansai Guide',
-    descripcion: 'Apps que uso a diario en Osaka y Kioto para moverse y pagar, con mis enlaces de invitación: Wise, LUUP, HELLO CYCLING e ICOCA en el móvil.',
+    descripcion: 'Las apps que recomiendo para Kansai: eSIM, entradas, hoteles, taxis, bicis y pagos. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA y Wise.',
     antetitulo: '🎁 Ventajas para mis viajeros',
-    h1: 'Muévete y paga en Kansai como un local',
-    sub: 'Las apps que uso cada día en Osaka y Kioto. Donde tengo un enlace de invitación, lo dejo aquí para que te llevéis la ventaja tú y yo.',
+    h1: 'Las apps para viajar por Kansai como un local',
+    sub: 'Las apps que uso y recomiendo en Osaka y Kioto: internet, entradas, hotel, taxi, bici y pagos. Cada una en su ficha, para ir directo a lo que necesitas.',
     copiar: 'Copiar código', copiado: '¡Copiado!', codigo: 'Mi código',
-    ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Cuenta y tarjeta para pagar en yenes al cambio real, sin las comisiones del banco.', ventaja: 'Es lo que uso yo para cobrar en euros y yenes, y también te sirve para pagarme el tour sin comisiones de banco.', enlace: WISE, boton: 'Abrir Wise' },
-      { clave: 'airalo', icono: '📶', nombre: 'Airalo eSIM', que: 'Datos móviles para Japón en una eSIM: la instalas antes de volar y tienes internet nada más aterrizar, sin buscar wifi ni tiendas.', ventaja: 'Con mi código tienes 450 ¥ de descuento en tu primera eSIM. Se pone al registrarte o al pagar.', codigo: 'PRINCE0661', enlace: 'https://www.airalo.com/japan-esim', boton: 'Ver eSIM de Japón' },
-      { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'Patinetes y bicis eléctricas compartidos por todo Osaka y Kioto. Se cogen y se dejan en sus puntos con la app.', ventaja: 'Cuando LUUP abra su campaña de invitación pondré aquí mi código. Patinete desde 16 años y tras su test de normas; bici sin test.', enlace: 'https://luup.sc/en/', boton: 'Ver LUUP' },
-      { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'Bicis eléctricas compartidas con cientos de estaciones en Kansai. Ideal para Kioto, donde el bus va lleno.', ventaja: 'Se paga por minutos con tarjeta desde la app; no hace falta cuenta japonesa.', enlace: 'https://www.hellocycling.jp/', boton: 'Ver HELLO CYCLING' },
-      { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica en el móvil', que: 'La tarjeta de transporte dentro del móvil: trenes, metro, buses y konbini sin sacar monedas.', ventaja: 'En iPhone se añade gratis desde la app Cartera; se recarga con tu tarjeta y no tiene depósito.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'Ver ICOCA' },
-    ],
     consejosTitulo: 'Mis consejos',
     consejos: [
       'En patinete, siempre por la calzada y por la izquierda; por la acera está prohibido salvo en modo 6 km/h.',
@@ -76,18 +59,11 @@ const T: Record<VentajasId, Textos> = {
   },
   en: {
     titulo: 'Perks for your Kansai trip: apps and invite links | Tony Kansai Guide',
-    descripcion: 'The apps I use every day in Osaka and Kyoto to get around and pay, with my invite links: Wise, LUUP, HELLO CYCLING and ICOCA on your phone.',
+    descripcion: 'The apps I recommend for Kansai: eSIM, tickets, hotels, taxis, bikes and payments. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA and Wise.',
     antetitulo: '🎁 Perks for my travellers',
-    h1: 'Get around and pay in Kansai like a local',
-    sub: 'The apps I use every day in Osaka and Kyoto. Where I have an invite link, it is here so you get the perk.',
+    h1: 'The apps to travel Kansai like a local',
+    sub: 'The apps I use and recommend in Osaka and Kyoto: data, tickets, hotels, taxis, bikes and payments. Each one on its own card, so you go straight to what you need.',
     copiar: 'Copy code', copiado: 'Copied!', codigo: 'My code',
-    ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'Account and card to pay in yen at the real exchange rate, without bank fees.', ventaja: 'It is what I use myself, and you can also use it to pay for your tour without bank fees.', enlace: WISE, boton: 'Open Wise' },
-      { clave: 'airalo', icono: '📶', nombre: 'Airalo eSIM', que: 'Mobile data for Japan on an eSIM: install it before you fly and you are online the moment you land, no wifi hunting or shops.', ventaja: 'My code gives you ¥450 off your first eSIM. Enter it when you sign up or at checkout.', codigo: 'PRINCE0661', enlace: 'https://www.airalo.com/japan-esim', boton: 'See Japan eSIMs' },
-      { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'Shared e-scooters and e-bikes all over Osaka and Kyoto. Pick up and drop off at their ports with the app.', ventaja: 'When LUUP opens its invite campaign I will add my code here. Scooters from age 16 after their traffic quiz; bikes need no quiz.', enlace: 'https://luup.sc/en/', boton: 'See LUUP' },
-      { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'Shared e-bikes with hundreds of stations in Kansai. Great for Kyoto, where buses are packed.', ventaja: 'Pay by the minute with a card in the app; no Japanese account needed.', enlace: 'https://www.hellocycling.jp/', boton: 'See HELLO CYCLING' },
-      { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica on your phone', que: 'Your transport card inside your phone: trains, subway, buses and convenience stores without coins.', ventaja: 'On iPhone you add it free from the Wallet app; top up with your card, no deposit.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'See ICOCA' },
-    ],
     consejosTitulo: 'My tips',
     consejos: [
       'On a scooter, always ride on the road and keep left; pavements are off-limits except in 6 km/h mode.',
@@ -102,16 +78,9 @@ const T: Record<VentajasId, Textos> = {
     titulo: 'مزايا لرحلتك إلى كانساي: تطبيقات وروابط دعوة | Tony Kansai Guide',
     descripcion: 'التطبيقات التي أستخدمها كل يوم في أوساكا وكيوتو للتنقل والدفع، مع روابط الدعوة الخاصة بي: Wise وLUUP وHELLO CYCLING وبطاقة ICOCA على الهاتف.',
     antetitulo: '🎁 مزايا لضيوفي',
-    h1: 'تنقّل وادفع في كانساي مثل أهل البلد',
-    sub: 'التطبيقات التي أستخدمها يوميًا في أوساكا وكيوتو. وحيث يكون لدي رابط دعوة، تجده هنا لتحصل على الميزة.',
+    h1: 'تطبيقات السفر في كانساي مثل أهل البلد',
+    sub: 'التطبيقات التي أستخدمها وأنصح بها في أوساكا وكيوتو: الإنترنت والتذاكر والفنادق والتاكسي والدراجات والدفع، كلٌّ في بطاقته.',
     copiar: 'نسخ الرمز', copiado: 'تم النسخ!', codigo: 'رمزي',
-    ofertas: [
-      { clave: 'wise', icono: '💳', nombre: 'Wise', que: 'حساب وبطاقة للدفع بالين بسعر الصرف الحقيقي، بلا رسوم البنوك.', ventaja: 'هذا ما أستخدمه أنا، ويمكنك أيضًا استخدامه لدفع ثمن الجولة بلا رسوم البنوك.', enlace: WISE, boton: 'افتح Wise' },
-      { clave: 'airalo', icono: '📶', nombre: 'Airalo eSIM', que: 'بيانات الجوال لليابان على شريحة eSIM: تثبّتها قبل السفر وتتصل بالإنترنت فور وصولك، بلا بحث عن واي فاي أو متاجر.', ventaja: 'برمزي تحصل على خصم 450 ين على أول شريحة eSIM. أدخله عند التسجيل أو عند الدفع.', codigo: 'PRINCE0661', enlace: 'https://www.airalo.com/japan-esim', boton: 'شرائح اليابان' },
-      { clave: 'luup', icono: '🛴', nombre: 'LUUP', que: 'سكوترات ودراجات كهربائية مشتركة في كل أنحاء أوساكا وكيوتو، تأخذها وتعيدها في محطاتها عبر التطبيق.', ventaja: 'عندما تطلق LUUP حملة الدعوة سأضع رمزي هنا. السكوتر من عمر 16 سنة بعد اختبار قواعد المرور، والدراجة بلا اختبار.', enlace: 'https://luup.sc/en/', boton: 'تعرّف على LUUP' },
-      { clave: 'hello', icono: '🚲', nombre: 'HELLO CYCLING', que: 'دراجات كهربائية مشتركة بمئات المحطات في كانساي، مثالية لكيوتو حيث الحافلات مزدحمة.', ventaja: 'تدفع بالدقيقة ببطاقتك من التطبيق، ولا تحتاج إلى حساب ياباني.', enlace: 'https://www.hellocycling.jp/', boton: 'تعرّف على HELLO CYCLING' },
-      { clave: 'ic', icono: '🚃', nombre: 'ICOCA / Suica على الهاتف', que: 'بطاقة المواصلات داخل هاتفك: القطارات والمترو والحافلات والمتاجر بلا عملات معدنية.', ventaja: 'على الآيفون تضيفها مجانًا من تطبيق المحفظة، وتشحنها ببطاقتك بلا تأمين.', enlace: 'https://www.jr-odekake.net/icoca/', boton: 'تعرّف على ICOCA' },
-    ],
     consejosTitulo: 'نصائحي',
     consejos: [
       'بالسكوتر، سِر دائمًا على الطريق وفي الجهة اليسرى؛ الرصيف ممنوع إلا في وضع 6 كم/ساعة.',
@@ -123,6 +92,8 @@ const T: Record<VentajasId, Textos> = {
     saludo: 'السلام عليكم توني، رأيت صفحة المزايا وأريد أن أسأل عن جولة.',
   },
 }
+
+const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح' }
 
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
@@ -183,23 +154,31 @@ export default function Ventajas({ id }: { id: VentajasId }) {
         </section>
 
         <section className="v7-seccion">
-          <div className="v7-planes">
-            {p.ofertas.map((o) => (
-              <article key={o.clave} className={`v7-plan tarjeta ${o.codigo ? 'v7-plan-destacado' : ''}`}>
-                <p className="v7-otono-kanji" aria-hidden="true">{o.icono}</p>
-                <h3>{o.nombre}</h3>
-                <p>{o.que}</p>
-                <p><strong>{o.ventaja}</strong></p>
-                {o.codigo && (
-                  <>
-                    <p className="v7-plan-grupo">{p.codigo}: <bdi dir="ltr"><code>{o.codigo.replace('https://', '')}</code></bdi></p>
-                    <BotonCopiar texto={o.codigo} copiar={p.copiar} copiado={p.copiado} />
-                  </>
-                )}
-                <p><a href={o.enlace} target="_blank" rel="noopener noreferrer sponsored">{o.boton} ↗</a></p>
-              </article>
-            ))}
-          </div>
+          {(Object.keys(CATEGORIAS) as Categoria[]).map((cat) => (
+            <div key={cat} className="v7-apps-grupo">
+              <h2 className="v7-apps-cat">{CATEGORIAS[cat][id]}</h2>
+              <div className="v7-apps">
+                {APPS.filter((a) => a.cat === cat).map((a) => (
+                  <article key={a.clave} className="v7-app" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo }}>
+                    <div className="v7-app-cara" aria-hidden="true">
+                      {a.marca.logo
+                        ? <svg viewBox="0 0 24 24" className="v7-app-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
+                        : <span className="v7-app-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="v7-app-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
+                    </div>
+                    <div className="v7-app-cuerpo">
+                      <h3 dir="ltr">{a.nombre}</h3>
+                      <p>{a.t[id].que}</p>
+                      <p className="v7-app-ventaja">{a.t[id].ventaja}</p>
+                      {a.codigo && (
+                        <p className="v7-plan-grupo">{p.codigo}: <bdi dir="ltr"><code>{a.codigo.replace('https://', '')}</code></bdi> <BotonCopiar texto={a.codigo} copiar={p.copiar} copiado={p.copiado} /></p>
+                      )}
+                      <a className="v7-app-boton" href={a.codigo ?? a.enlace} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} {id === 'ar' ? '↖' : '↗'}</a>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            </div>
+          ))}
           <p className="v7-entradilla"><small>{p.aviso}</small></p>
         </section>
 
