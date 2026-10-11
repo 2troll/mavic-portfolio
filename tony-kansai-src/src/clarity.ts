@@ -3,7 +3,7 @@
 // cookies; si las rechaza, no se descarga nada. Los campos de formulario los
 // enmascara Clarity por defecto.
 // El ID no es secreto: va visible en el código de cualquier web que use Clarity.
-export const CLARITY_ID = ''
+export const CLARITY_ID = 'yw7l1mlvxu'
 
 let cargado = false
 
