@@ -169,10 +169,14 @@ export default function Ventajas({ id }: { id: VentajasId }) {
                       <h3 dir="ltr">{a.nombre}</h3>
                       <p>{a.t[id].que}</p>
                       <p className="v7-app-ventaja">{a.t[id].ventaja}</p>
-                      {a.codigo && (
-                        <p className="v7-plan-grupo">{p.codigo}: <bdi dir="ltr"><code>{a.codigo.replace('https://', '')}</code></bdi> <BotonCopiar texto={a.codigo} copiar={p.copiar} copiado={p.copiado} /></p>
+                      {a.codigo && !a.codigo.startsWith('http') && (
+                        <div className="v7-app-cupon">
+                          <span>{p.codigo}</span>
+                          <bdi dir="ltr"><code>{a.codigo}</code></bdi>
+                          <BotonCopiar texto={a.codigo} copiar={p.copiar} copiado={p.copiado} />
+                        </div>
                       )}
-                      <a className="v7-app-boton" href={a.codigo ?? a.enlace} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} {id === 'ar' ? '↖' : '↗'}</a>
+                      <a className="v7-app-boton" href={a.codigo?.startsWith('http') ? a.codigo : a.enlace} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} {id === 'ar' ? '↖' : '↗'}</a>
                     </div>
                   </article>
                 ))}

@@ -1,6 +1,6 @@
 // Apps de la página de ventajas: cada tarjeta lleva los colores y el logo de su
 // marca (como una ficha de tienda de apps), para que no se confundan entre sí.
-// `codigo`: enlace de afiliado o de invitación cuando exista; sin él, va la web oficial.
+// `codigo`: código de invitación (se copia) o enlace de afiliado (https://…, se usa como enlace).
 
 export type Lang = 'es' | 'en' | 'ar'
 export type Categoria = 'internet' | 'planes' | 'dormir' | 'moverse' | 'dinero' | 'utiles'
@@ -27,12 +27,12 @@ export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
 
 export const APPS: App[] = [
   {
-    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://www.airalo.com/japan-esim',
+    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://www.airalo.com/japan-esim', codigo: 'PRINCE0661',
     marca: { fondo: '#141414', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#141414', palabra: 'airalo' },
     t: {
-      es: { que: 'eSIM de Japón: datos en el móvil nada más aterrizar, sin buscar tienda ni wifi de bolsillo.', ventaja: 'La instalas en casa antes de volar y se activa sola en Kansai.' },
-      en: { que: 'Japan eSIM: data on your phone the moment you land, no shop or pocket wifi needed.', ventaja: 'Install it at home before you fly; it switches on by itself in Kansai.' },
-      ar: { que: 'شريحة eSIM لليابان: إنترنت على هاتفك فور الوصول، بلا متجر ولا واي فاي متنقل.', ventaja: 'ثبّتها في بيتك قبل السفر وتعمل تلقائيًا في كانساي.' },
+      es: { que: 'eSIM de Japón: datos en el móvil nada más aterrizar, sin buscar tienda ni wifi de bolsillo.', ventaja: 'Con mi código, 450 ¥ de descuento en tu primera eSIM. La instalas en casa y se activa sola en Kansai.' },
+      en: { que: 'Japan eSIM: data on your phone the moment you land, no shop or pocket wifi needed.', ventaja: 'My code gives you ¥450 off your first eSIM. Install it at home; it switches on by itself in Kansai.' },
+      ar: { que: 'شريحة eSIM لليابان: إنترنت على هاتفك فور الوصول، بلا متجر ولا واي فاي متنقل.', ventaja: 'برمزي تحصل على خصم 450 ين على أول شريحة. ثبّتها في بيتك وتعمل تلقائيًا في كانساي.' },
     },
   },
   {
