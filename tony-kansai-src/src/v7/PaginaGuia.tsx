@@ -178,7 +178,7 @@ function Cabecera({ p }: { p: Pagina }) {
         {([['ciudades', p.nav.zona], ['rutas', ({ es: 'Mira dentro', en: 'Step inside', ar: 'ادخل إلى المشهد', ru: 'Загляните внутрь' } as Record<string, string>)[p.lang]], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
-        {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas"><span aria-hidden="true">🎁</span> {VENTAJAS[p.id].corto}</Link>}
+        {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas"><svg className="v7-icono-regalo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2M12 8l0 13M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg> {VENTAJAS[p.id].corto}</Link>}
       </nav>
       <nav className="v7-idiomas" aria-label={p.nav.idioma}>
         {HERMANAS[p.guia].map((h) => (
@@ -556,7 +556,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             )}
             {VENTAJAS[p.id] && (
               <p className="v7-hero-ventajas"><Link to={VENTAJAS[p.id].ruta}>
-                <span className="v7-hero-ventajas-icono" aria-hidden="true">🎁</span>
+                <span className="v7-hero-ventajas-icono"><svg className="v7-icono-regalo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2M12 8l0 13M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
                 <span>{VENTAJAS[p.id].largo}</span>
                 <span aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
               </Link></p>

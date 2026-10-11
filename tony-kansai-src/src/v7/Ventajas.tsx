@@ -4,7 +4,7 @@
 // sin código. Cada app va en su panel con sus colores y su logo (datosVentajas.ts);
 // la página no usa el tema píxel: tiene su propia hoja, ventajas.css.
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -93,6 +93,48 @@ const T: Record<VentajasId, Textos> = {
 
 const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح' }
 
+// Dibujo de cada app (Tabler Icons, MIT; sprite en /v7/ventajas-dibujos.svg).
+const DIBUJO: Record<string, string> = {
+  airalo: 'device-mobile', klook: 'ticket', gyg: 'compass', trip: 'plane', agoda: 'bed', booking: 'building-skyscraper',
+  icoca: 'train', go: 'car', uber: 'steering-wheel', luup: 'scooter-electric', hello: 'bike', wise: 'credit-card',
+  maps: 'map-2', traductor: 'language',
+}
+const Dibujo = ({ n, className }: { n: string; className?: string }) => (
+  <svg className={className} aria-hidden="true"><use href={`/v7/ventajas-dibujos.svg#${n}`} /></svg>
+)
+
+// Icono pequeño de la app, como en la pantalla de inicio del móvil.
+function IconoApp({ a }: { a: (typeof APPS)[number] }) {
+  const palabra = a.marca.palabra ?? ''
+  const corta = palabra.length <= 4 ? palabra : palabra.charAt(0)
+  return (
+    <span className="vt-ico" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
+      {a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : <b dir="ltr">{corta}</b>}
+      {a.marca.puntos && <span className="vt-ico-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}
+    </span>
+  )
+}
+
+// El kit en tres momentos del viaje: qué instalar y cuándo.
+const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string; d: string; apps: string[] }[] }> = {
+  es: { titulo: 'Tu kit en 3 pasos', lista: [
+    { n: 'plane', t: 'Antes de volar', d: 'Instala la eSIM y la tarjeta en casa, con wifi y sin prisas.', apps: ['airalo', 'wise', 'klook'] },
+    { n: 'plane-arrival', t: 'Al aterrizar', d: 'Añade ICOCA al móvil y descarga Kansai sin conexión en Maps.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'route', t: 'Por la ciudad', d: 'Taxi con un toque, patinete o bici para lo que el tren no cubre.', apps: ['go', 'luup', 'hello'] },
+  ] },
+  en: { titulo: 'Your kit in 3 steps', lista: [
+    { n: 'plane', t: 'Before you fly', d: 'Install the eSIM and the card at home, on wifi, no rush.', apps: ['airalo', 'wise', 'klook'] },
+    { n: 'plane-arrival', t: 'When you land', d: 'Add ICOCA to your phone and download Kansai offline in Maps.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'route', t: 'Around the city', d: 'One-tap taxis, scooters or bikes for what the train misses.', apps: ['go', 'luup', 'hello'] },
+  ] },
+  ar: { titulo: 'عُدّتك في 3 خطوات', lista: [
+    { n: 'plane', t: 'قبل السفر', d: 'ثبّت شريحة eSIM والبطاقة في بيتك، على الواي فاي وبلا عجلة.', apps: ['airalo', 'wise', 'klook'] },
+    { n: 'plane-arrival', t: 'عند الوصول', d: 'أضف ICOCA إلى هاتفك وحمّل خريطة كانساي دون اتصال.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'route', t: 'في المدينة', d: 'تاكسي بلمسة، وسكوتر أو دراجة لما لا يصل إليه القطار.', apps: ['go', 'luup', 'hello'] },
+  ] },
+}
+const TOCA: Record<VentajasId, string> = { es: 'Toca una app para ir directo', en: 'Tap an app to jump to it', ar: 'اضغط على تطبيق للانتقال إليه' }
+
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
   return (
@@ -129,6 +171,19 @@ export default function Ventajas({ id }: { id: VentajasId }) {
   }, [id])
 
   const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS.some((a) => a.cat === c))
+  const [catActiva, setCatActiva] = useState<Categoria | ''>('')
+  useEffect(() => {
+    if (!('IntersectionObserver' in window)) return
+    const io = new IntersectionObserver((entradas) => {
+      for (const e of entradas) if (e.isIntersecting) {
+        const app = APPS.find((a) => a.clave === e.target.id)
+        if (app) setCatActiva(app.cat)
+      }
+    }, { rootMargin: '-45% 0px -50% 0px' })
+    APPS.forEach((a) => { const el = document.getElementById(a.clave); if (el) io.observe(el) })
+    return () => io.disconnect()
+  }, [id])
+  const cupon0 = APPS.find((a) => a.codigo && !a.codigo.startsWith('http'))
   const primeraDe = (c: Categoria) => APPS.find((a) => a.cat === c)?.clave
 
   return (
@@ -158,13 +213,53 @@ export default function Ventajas({ id }: { id: VentajasId }) {
 
       <main>
         <section className="vt-portada">
-          <p className="vt-antetitulo">{p.antetitulo.replace(/^\p{Extended_Pictographic}\s*/u, '')}</p>
-          <h1>{p.h1}</h1>
-          <p className="vt-sub">{p.sub}</p>
-          <nav className="vt-indice" aria-label={p.antetitulo}>
-            {categorias.map((c) => <a key={c} href={`#${primeraDe(c)}`}>{CATEGORIAS[c][id]}</a>)}
-          </nav>
+          <div className="vt-portada-texto">
+            <p className="vt-antetitulo">{p.antetitulo.replace(/^\p{Extended_Pictographic}\s*/u, '')}</p>
+            <h1>{p.h1}</h1>
+            <p className="vt-sub">{p.sub}</p>
+            <p className="vt-pista"><Dibujo n="sparkles" className="vt-pista-ico" /> {TOCA[id]}</p>
+          </div>
+          <div className="vt-movil-zona">
+            <div className="vt-movil" role="navigation" aria-label={p.antetitulo}>
+              <div className="vt-movil-isla" aria-hidden="true" />
+              <div className="vt-movil-hora" aria-hidden="true"><span>9:41</span><span>Kansai</span></div>
+              <div className="vt-movil-apps">
+                {APPS.map((a, n) => (
+                  <a key={a.clave} href={`#${a.clave}`} className="vt-movil-app" style={{ ['--i' as string]: n }}>
+                    <IconoApp a={a} />
+                    <span dir="ltr">{a.nombre.replace('Google ', '')}</span>
+                  </a>
+                ))}
+              </div>
+            </div>
+            {cupon0 && (
+              <a href={`#${cupon0.clave}`} className="vt-flotante vt-flotante-1"><IconoApp a={cupon0} /><span><b>−450 ¥</b><small dir="ltr">{cupon0.codigo}</small></span></a>
+            )}
+            <span className="vt-flotante vt-flotante-2" aria-hidden="true"><Dibujo n="scooter-electric" /></span>
+            <span className="vt-flotante vt-flotante-3" aria-hidden="true"><Dibujo n="train" /></span>
+          </div>
         </section>
+
+        <section className="vt-kit">
+          <h2>{PASOS[id].titulo}</h2>
+          <ol>
+            {PASOS[id].lista.map((paso, n) => (
+              <li key={paso.t} className="vt-aparece">
+                <span className="vt-kit-num">{n + 1}</span>
+                <Dibujo n={paso.n} className="vt-kit-dibujo" />
+                <h3>{paso.t}</h3>
+                <p>{paso.d}</p>
+                <div className="vt-kit-apps">
+                  {paso.apps.map((k) => { const ap = APPS.find((x) => x.clave === k); return ap && <a key={k} href={`#${k}`}><IconoApp a={ap} /><span dir="ltr">{ap.nombre.replace('Google ', '')}</span></a> })}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        <nav className="vt-chips" aria-label={p.antetitulo}>
+          {categorias.map((c) => <a key={c} href={`#${primeraDe(c)}`} aria-current={catActiva === c ? 'true' : undefined}>{CATEGORIAS[c][id]}</a>)}
+        </nav>
 
         <div className="vt-pila">
           {APPS.map((a, n) => {
@@ -175,9 +270,12 @@ export default function Ventajas({ id }: { id: VentajasId }) {
                 style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo, zIndex: n + 1 }}>
                 <div className="vt-panel-dentro">
                   <div className="vt-sello vt-aparece" aria-hidden="true">
-                    {a.marca.logo
-                      ? <svg viewBox="0 0 24 24" className="vt-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
-                      : <span className="vt-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="vt-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
+                    <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} className="vt-sello-dibujo" />
+                    <span className="vt-sello-logo">
+                      {a.marca.logo
+                        ? <svg viewBox="0 0 24 24" className="vt-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
+                        : <span className="vt-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="vt-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
+                    </span>
                   </div>
                   <div className="vt-texto vt-aparece">
                     <p className="vt-cat"><span>{String(n + 1).padStart(2, '0')}</span> {CATEGORIAS[a.cat][id]}</p>

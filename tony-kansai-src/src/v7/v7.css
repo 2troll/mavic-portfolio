@@ -1384,11 +1384,15 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-app-cupon code { font-size: 1.5rem; font-weight: 800; letter-spacing: .08em; background: none; }
 @media (max-width: 640px) { .v7-app-cara { height: 150px; } .v7-app-logo { width: 80px; height: 80px; } .v7-app-cuerpo { padding: 22px; } }
 
-/* Botón de la portada hacia la página de ventajas. */
-.v7-hero-ventajas { margin: 14px 0 0; }
-.v7-hero-ventajas a { display: inline-flex; align-items: center; gap: 10px; padding: 10px 18px 10px 10px; border-radius: 999px; text-decoration: none; font-weight: 650; color: var(--tinta);
-  background: linear-gradient(90deg, color-mix(in srgb, #FF5722 14%, var(--papel, #fff)), color-mix(in srgb, #287DFA 14%, var(--papel, #fff)));
-  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--tinta) 12%, transparent); transition: transform .2s ease; }
-.v7-hero-ventajas a:hover { transform: translateY(-2px); }
-.v7-hero-ventajas-icono { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; background: var(--papel, #fff); font-size: 18px; }
-.v7-ancla-ventajas { font-weight: 650; }
+/* Botón de la portada hacia la página de ventajas: mismo marco y sombra dura que
+   el resto de la web (blanco y negro), sin colores de marca que choquen. */
+.v7-hero-ventajas { margin: 16px 0 0; }
+.v7 .v7-hero-ventajas a { display: inline-flex; align-items: center; gap: 12px; padding: 8px 16px 8px 8px; text-decoration: none; font-weight: 650; line-height: 1.25;
+  color: var(--px-borde, #1b1b1b); background: var(--px-tarjeta, #fff); border: 2px solid var(--px-borde, #1b1b1b); box-shadow: 4px 4px 0 var(--px-sombra, #1b1b1b);
+  transition: transform .15s ease, box-shadow .15s ease; }
+.v7 .v7-hero-ventajas a:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--px-sombra, #1b1b1b); }
+.v7 .v7-hero-ventajas a:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 var(--px-sombra, #1b1b1b); }
+.v7-hero-ventajas-icono { flex: none; width: 36px; height: 36px; display: grid; place-items: center; color: var(--px-tarjeta, #fff); background: var(--px-borde, #1b1b1b); }
+.v7-icono-regalo { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
+.v7-ancla-ventajas { font-weight: 650; display: inline-flex; align-items: center; gap: 5px; }
+.v7-ancla-ventajas .v7-icono-regalo { width: 16px; height: 16px; }

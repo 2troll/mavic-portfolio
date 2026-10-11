@@ -151,3 +151,111 @@
   .vt-marca .v7-logo-texto { font-size: .92rem; }
   .vt-copiar { margin-inline-start: 0; }
 }
+
+/* ══ Rediseño 11-10 (2): portada con móvil, kit en 3 pasos, menú pegado y dibujos ══ */
+.vt { --vt-chips-alto: 60px; }
+
+/* Portada en dos columnas: texto y un móvil con todas las apps (tocar = ir a su panel). */
+.vt-portada { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(32px, 5vw, 72px); padding-top: clamp(40px, 7vw, 88px); }
+.vt-portada h1 { font-size: clamp(2.4rem, 5.6vw, 4.8rem); }
+.vt-pista { display: inline-flex; align-items: center; gap: 10px; margin: 28px 0 0; padding: 10px 16px; border-radius: 999px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); font-weight: 600; font-size: .95rem; }
+.vt-pista-ico { width: 20px; height: 20px; color: #b4232a; }
+
+.vt-movil-zona { position: relative; justify-self: center; padding: 24px 40px; }
+.vt-movil {
+  position: relative; width: min(330px, 78vw); aspect-ratio: 9 / 18.5; border-radius: 48px; padding: 14px;
+  background: linear-gradient(160deg, #1d2a44 0%, #3a2c5c 45%, #b4232a 140%);
+  box-shadow: 0 0 0 10px #111, 0 0 0 12px #3a3a3a, 0 40px 80px -30px rgba(20, 20, 40, .6);
+  transform: rotate(-4deg); transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+}
+.lang-ar .vt-movil { transform: rotate(4deg); }
+.vt-movil-zona:hover .vt-movil { transform: rotate(0deg) translateY(-6px); }
+.vt-movil-isla { width: 96px; height: 26px; border-radius: 999px; background: #000; margin: 4px auto 0; }
+.vt-movil-hora { display: flex; justify-content: space-between; padding: 6px 14px 14px; color: #fff; font-size: .78rem; font-weight: 600; opacity: .9; }
+.vt-movil-apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 6px; padding: 6px 8px; }
+.vt-movil-app { display: grid; justify-items: center; gap: 5px; text-decoration: none; color: #fff !important; font-size: .64rem; font-weight: 600; line-height: 1.1; text-align: center; }
+.vt-movil-app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+.vt-movil-app:hover .vt-ico { transform: translateY(-3px) scale(1.06); }
+
+/* Icono de app (portada, kit y flotantes). */
+.vt-ico {
+  width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; flex: none;
+  background: var(--marca); color: var(--marca-tinta); box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(0, 0, 0, .06);
+  transition: transform .2s ease;
+}
+.vt-ico svg { width: 56%; height: 56%; }
+.vt-ico b { font-weight: 800; font-size: .95rem; letter-spacing: -0.03em; }
+
+/* Lo que flota alrededor del móvil. */
+.vt-flotante { position: absolute; display: inline-flex; align-items: center; gap: 10px; padding: 10px 14px 10px 10px; border-radius: 18px; background: var(--vt-blanco); color: var(--vt-tinta) !important; text-decoration: none; box-shadow: 0 18px 40px -18px rgba(0, 0, 0, .45); border: 1px solid var(--vt-linea); }
+.vt-flotante svg { width: 34px; height: 34px; }
+.vt-flotante .vt-ico { width: 40px; height: 40px; border-radius: 11px; }
+.vt-flotante b { display: block; font-size: 1.05rem; line-height: 1.1; color: #b4232a; }
+.vt-flotante small { display: block; font-weight: 700; letter-spacing: .06em; font-size: .72rem; }
+.vt-flotante-1 { inset-inline-start: -18px; bottom: 18%; }
+.vt-flotante-2 { inset-inline-end: -6px; top: 10%; padding: 12px; color: #00ADA8 !important; }
+.vt-flotante-3 { inset-inline-end: 0; bottom: 6%; padding: 12px; color: #0A6CB8 !important; }
+@media (prefers-reduced-motion: no-preference) {
+  .vt-flotante { animation: vt-flota 6s ease-in-out infinite; }
+  .vt-flotante-2 { animation-delay: -2s; }
+  .vt-flotante-3 { animation-delay: -4s; }
+  .vt-movil-app { animation: vt-entra .6s cubic-bezier(.2, .7, .2, 1) both; animation-delay: calc(var(--i) * 45ms + .2s); }
+}
+@keyframes vt-flota { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+@keyframes vt-entra { from { opacity: 0; transform: translateY(14px) scale(.8); } to { opacity: 1; transform: none; } }
+
+/* Kit en 3 pasos. */
+.vt-kit { max-width: 1200px; margin: 0 auto; padding: 8px 16px clamp(56px, 8vw, 96px); }
+.vt-kit h2 { font-size: clamp(1.8rem, 3.4vw, 2.6rem); margin-bottom: 24px; }
+.vt-kit ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.vt-kit li { position: relative; padding: 28px 24px 24px; border-radius: 24px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); overflow: hidden; }
+.vt-kit-num { position: absolute; inset-inline-end: 18px; top: 10px; font-size: 4.2rem; font-weight: 800; line-height: 1; color: #eceae5; }
+.vt-kit-dibujo { position: relative; width: 44px; height: 44px; color: #b4232a; margin-bottom: 14px; }
+.vt-kit h3 { position: relative; font-size: 1.35rem; margin-bottom: 8px; }
+.vt-kit p { margin: 0 0 18px; color: var(--vt-suave); }
+.vt-kit-apps { display: flex; flex-wrap: wrap; gap: 8px; }
+.vt-kit-apps a { display: inline-flex; align-items: center; gap: 8px; padding: 5px 12px 5px 5px; border-radius: 999px; background: #f2f0eb; text-decoration: none; font-weight: 600; font-size: .88rem; transition: background .15s ease; }
+.vt-kit-apps a:hover { background: #e6e3dc; }
+.vt-kit-apps .vt-ico { width: 30px; height: 30px; border-radius: 9px; box-shadow: none; }
+.vt-kit-apps .vt-ico b { font-size: .62rem; }
+
+/* Menú de categorías pegado bajo la barra; marca la sección que se está viendo. */
+.vt-chips {
+  position: sticky; top: var(--vt-barra-alto); z-index: 99; height: var(--vt-chips-alto);
+  display: flex; align-items: center; gap: 8px; overflow-x: auto; scrollbar-width: none;
+  padding: 0 max(16px, calc((100vw - 1200px) / 2));
+  background: color-mix(in srgb, var(--vt-fondo) 92%, transparent); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--vt-linea);
+}
+.vt-chips::-webkit-scrollbar { display: none; }
+.vt-chips a { flex: none; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--vt-linea); background: var(--vt-blanco); font-weight: 600; font-size: .9rem; text-decoration: none; transition: all .2s ease; }
+.vt-chips a:hover { border-color: var(--vt-tinta); }
+.vt-chips a[aria-current='true'] { background: var(--vt-tinta); color: #fff; border-color: var(--vt-tinta); }
+.vt-panel { scroll-margin-top: calc(var(--vt-barra-alto) + var(--vt-chips-alto)); }
+@media (min-width: 900px) and (min-height: 700px) {
+  .vt-panel { top: calc(var(--vt-barra-alto) + var(--vt-chips-alto)); }
+  .vt-panel-dentro { height: calc(100vh - var(--vt-barra-alto) - var(--vt-chips-alto)); }
+}
+
+/* Sello del panel: el dibujo de lo que es (patinete, tren…) grande y el logo delante. */
+.vt-sello { position: relative; overflow: hidden; }
+.vt-sello-dibujo { position: absolute; width: 92%; height: 92%; inset: 4%; color: var(--marca-tinta); opacity: .16; transform: rotate(-8deg); }
+.vt-sello-logo { position: relative; display: grid; place-items: center; width: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .vt-js .vt-aparece.vt-visto .vt-sello-dibujo { animation: vt-dibujo 1.1s cubic-bezier(.2, .7, .2, 1) both; }
+}
+@keyframes vt-dibujo { from { opacity: 0; transform: rotate(-20deg) scale(.7); } to { opacity: .16; transform: rotate(-8deg); } }
+
+/* Móvil y tableta. */
+@media (max-width: 899px) {
+  .vt-portada { grid-template-columns: 1fr; }
+  .vt-movil-zona { padding: 8px 28px 16px; }
+  .vt-movil { width: min(300px, 80vw); }
+  .vt-kit ol { grid-template-columns: 1fr; }
+  .vt-sello-dibujo { width: auto; height: 150%; inset: -25% auto auto 50%; transform: translateX(-50%) rotate(-8deg); }
+  .vt-flotante-1 { inset-inline-start: -4px; }
+}
+.vt-ico { position: relative; }
+.vt-ico-puntos { position: absolute; bottom: 18%; display: flex; gap: 2px; }
+.vt-ico-puntos i { width: 4px; height: 4px; border-radius: 50%; display: block; }
+.vt-ico:has(.vt-ico-puntos) b { transform: translateY(-3px); }
