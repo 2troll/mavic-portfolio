@@ -87,6 +87,12 @@ function repartoIconos(lista: { id: string }[]) {
   // así que la reseña n.º i lleva el avatar i y ninguno se repite.
   return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg?v=4`]))
 }
+// Enlace a la página de ventajas (apps y descuentos para el viajero); solo existe en ES/EN/AR.
+const VENTAJAS: Record<string, { ruta: string; corto: string; largo: string }> = {
+  es: { ruta: '/es/ventajas/', corto: 'Ventajas', largo: 'Ventajas para tu viaje: eSIM, entradas, hoteles y apps' },
+  en: { ruta: '/en/perks/', corto: 'Perks', largo: 'Travel perks: eSIM, tickets, hotels and apps' },
+  ar: { ruta: '/ar/perks/', corto: 'مزايا', largo: 'مزايا لرحلتك: eSIM وتذاكر وفنادق وتطبيقات' },
+}
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
 // Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
@@ -172,6 +178,7 @@ function Cabecera({ p }: { p: Pagina }) {
         {([['ciudades', p.nav.zona], ['rutas', ({ es: 'Mira dentro', en: 'Step inside', ar: 'ادخل إلى المشهد', ru: 'Загляните внутрь' } as Record<string, string>)[p.lang]], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
+        {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas"><span aria-hidden="true">🎁</span> {VENTAJAS[p.id].corto}</Link>}
       </nav>
       <nav className="v7-idiomas" aria-label={p.nav.idioma}>
         {HERMANAS[p.guia].map((h) => (
@@ -547,6 +554,13 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 <span aria-hidden="true">★</span> {mediaResenas(resenas, p.lang)} · {resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}
               </a></p>
             )}
+            {VENTAJAS[p.id] && (
+              <p className="v7-hero-ventajas"><Link to={VENTAJAS[p.id].ruta}>
+                <span className="v7-hero-ventajas-icono" aria-hidden="true">🎁</span>
+                <span>{VENTAJAS[p.id].largo}</span>
+                <span aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
+              </Link></p>
+            )}
             {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}
             <ul className="v7-hero-datos">
               <li>{desdeHero(p.lang)}</li>
@@ -761,6 +775,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <Link to={`/privacy?lang=${p.lang}`}>{p.pie.privacidad}</Link>
             <Link to={`/terms?lang=${p.lang}`}>{p.pie.condiciones}</Link>
             <Link to={`/cookies?lang=${p.lang}`}>{p.pie.cookies}</Link>
+            {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta}>{VENTAJAS[p.id].corto}</Link>}
             {/* La guía halal vive fuera de la web; enlazarla aquí ayuda a que Google la descubra. */}
             {p.lang === 'ar' && <a href="https://2troll.github.io/yubisashi/dalil/">دليل الحلال في كانساي</a>}
             {p.id === 'en' && <a href="https://2troll.github.io/yubisashi/panduan/" lang="id">Panduan Halal Kansai</a>}
