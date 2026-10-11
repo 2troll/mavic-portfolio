@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-10",
- "count": 200,
- "average": 4.25,
+ "updated": "2026-10-11",
+ "count": 214,
+ "average": 4.1,
  "reviews": [
   {
    "id": "larion-001",
@@ -4200,6 +4200,300 @@
      "name": "Andrey & Maria",
      "country": "Moscow (Russia)",
      "tour": "Kyoto"
+    }
+   }
+  },
+  {
+   "id": "larion-201",
+   "stars": 2,
+   "name": "Никита и Даша",
+   "country": "Минск (Беларусь)",
+   "tour": "Киото",
+   "text": "Ларион нормальный парень, но блин... 28 000 шагов за день по жаре в Киото это перебор) Ноги просто отваливались, думали до отеля не дойдем. Чувак, в следующий раз бери темп потише!!",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Larion's a decent guy, but man... 28,000 steps in one day in the Kyoto heat is too much) Our legs were falling off, we thought we wouldn't make it back to the hotel. Dude, take it slower next time!!"
+   },
+   "meta": {
+    "en": {
+     "name": "Nikita & Dasha",
+     "country": "Minsk (Belarus)",
+     "tour": "Kyoto"
+    }
+   }
+  },
+  {
+   "id": "larion-202",
+   "stars": 1,
+   "name": "Артем_СПб",
+   "country": "Санкт-Петербург (Россия)",
+   "tour": "Осака",
+   "text": "ставлю единицу чтобы у этого гида не было очереди на год вперед) а то хрен потом к нему запишешься когда снова в Японию поедем. Ларион красссавчик конечно, всё показал в Осаке, но отметку снижаю из принципа пхахах)",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "giving one star so this guide doesn't get booked up a year ahead) otherwise good luck getting a slot with him when we come back to Japan. Larion is a legend of course, showed us everything in Osaka, but I'm lowering the rating on principle hahaha)"
+   },
+   "meta": {
+    "en": {
+     "name": "Artyom_SPb",
+     "country": "Saint Petersburg (Russia)",
+     "tour": "Osaka"
+    }
+   }
+  },
+  {
+   "id": "larion-203",
+   "stars": 3,
+   "name": "Макс",
+   "country": "Москва (Россия)",
+   "tour": "Хиросима",
+   "text": "Про историю Хиросимы рассказывает реально интересно, тут вопросов нет. Но на синкансене туда-обратно вымотались ужасно, да и толпы везде дикие. Маршрут классный, но под конец дня сил вообще не осталось.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "He tells the history of Hiroshima in a really interesting way, no question about that. But the shinkansen there and back wore us out, and the crowds everywhere were wild. Great route, but by the end of the day we had no energy left at all."
+   },
+   "meta": {
+    "en": {
+     "name": "Max",
+     "country": "Moscow (Russia)",
+     "tour": "Hiroshima"
+    }
+   }
+  },
+  {
+   "id": "larion-204",
+   "stars": 1,
+   "name": "Елена В.",
+   "country": "Алматы (Казахстан)",
+   "tour": "Нара",
+   "text": "Весь день в Наре под проливным дождем, кроссовки насквозь... Ларион пытался спасти ситуацию и водил под крышами, но настроение было испорчено напрочь. Надо было переносить, а не тащить нас по лужам.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "A whole day in Nara in pouring rain, sneakers soaked through... Larion tried to save the day and kept us under roofs, but the mood was completely ruined. Should have rescheduled instead of dragging us through puddles."
+   },
+   "meta": {
+    "en": {
+     "name": "Elena V.",
+     "country": "Almaty (Kazakhstan)",
+     "tour": "Nara"
+    }
+   }
+  },
+  {
+   "id": "larion-205",
+   "stars": 3,
+   "name": "Серж и Оля",
+   "country": "Киев (Украина)",
+   "tour": "Кобе",
+   "text": "Вроде норм прошлись по Кобе, но блин, почему в нормальные места с вагю без брони хрен попадешь? Пришлось перекусывать на ходу. Ларион в транспорте шарит отлично, тут плюс, но с обедом получился пролет.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Kobe walk was fine overall, but why on earth can't you get into a decent wagyu place without a booking? Had to snack on the go. Larion really knows the transport, that's a plus, but lunch was a miss."
+   },
+   "meta": {
+    "en": {
+     "name": "Serge & Olya",
+     "country": "Kyiv (Ukraine)",
+     "tour": "Kobe"
+    }
+   }
+  },
+  {
+   "id": "larion-206",
+   "stars": 1,
+   "name": "Vanya_R",
+   "country": "Ташкент (Узбекистан)",
+   "tour": "Киото",
+   "text": "Ларион бро прости но 1 звезда))) заставил нас вставать в 6 утра чтобы приехать в бамбуковый лес до толп. Да, фотки получились пушка без людей, но я в отпуске хочу СПАТЬ а не бегать по электричкам спозаранку!!",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Larion bro sorry but 1 star))) made us get up at 6am to reach the bamboo forest before the crowds. Yes, the photos came out amazing with no people, but on vacation I want to SLEEP, not run for trains at dawn!!"
+   },
+   "meta": {
+    "en": {
+     "name": "Vanya_R",
+     "country": "Tashkent (Uzbekistan)",
+     "tour": "Kyoto"
+    }
+   }
+  },
+  {
+   "id": "larion-207",
+   "stars": 2,
+   "name": "Димон",
+   "country": "Екатеринбург (Россия)",
+   "tour": "Удзи и Нара",
+   "text": "Поехали на поездах в Удзи пробовать чай, потом в Нару. Все бы ничего, но Ларион идет слишком быстро, фиг догонишь) Я приехал отдыхать а не кросс сдавать. Рассказал много, но парень сбавь скорость плз.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Took trains to Uji to try the tea, then on to Nara. All good, except Larion walks way too fast, impossible to keep up) I came to relax, not run a race. Told us a lot, but slow down a bit man pls."
+   },
+   "meta": {
+    "en": {
+     "name": "Dimon",
+     "country": "Yekaterinburg (Russia)",
+     "tour": "Uji & Nara"
+    }
+   }
+  },
+  {
+   "id": "larion-208",
+   "stars": 3,
+   "name": "Катя_Мск",
+   "country": "Москва (Россия)",
+   "tour": "Осака",
+   "text": "Ужасно много народа на Дотонбори, просто муравейник!! Ларион провел по улочкам где потише и показал классный барашек с такояки, но сама Осака меня капец как задавила шумом.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Insanely crowded on Dotonbori, a real anthill!! Larion took us through quieter side streets and showed us a great takoyaki stall, but Osaka itself overwhelmed me with the noise."
+   },
+   "meta": {
+    "en": {
+     "name": "Katya_Msk",
+     "country": "Moscow (Russia)",
+     "tour": "Osaka"
+    }
+   }
+  },
+  {
+   "id": "larion-209",
+   "stars": 2,
+   "name": "Игорь и Настя",
+   "country": "Тбилиси (Грузия)",
+   "tour": "Хиросима и Миядзима",
+   "text": "Дорого вышло по билетам на поезд и паром, бюджет трещал по швам. Ларион как гид ок, все четко по расписанию, без задержек. Но сам маршрут тяжелый да и дорога из Кансая выматывает за весь день.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Train and ferry tickets turned out expensive, the budget was bursting at the seams. Larion as a guide is fine, everything right on schedule, no delays. But the route itself is hard, and the trip from Kansai wears you out over the day."
+   },
+   "meta": {
+    "en": {
+     "name": "Igor & Nastya",
+     "country": "Tbilisi (Georgia)",
+     "tour": "Hiroshima & Miyajima"
+    }
+   }
+  },
+  {
+   "id": "larion-210",
+   "stars": 1,
+   "name": "Леха",
+   "country": "Новосибирск (Россия)",
+   "tour": "Киото",
+   "text": "Ставлю 1 балл исключительно потому что мы поднялись на самый верх Фусими Инари!! Ларион уверял что сверху вид огонь, а у меня дыхалка села на середине пути) Зачем так мучить людей а?)))",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Giving 1 point purely because we climbed to the very top of Fushimi Inari!! Larion swore the view from the top was fire, and I ran out of breath halfway up) Why torture people like that?)))"
+   },
+   "meta": {
+    "en": {
+     "name": "Lyokha",
+     "country": "Novosibirsk (Russia)",
+     "tour": "Kyoto"
+    }
+   }
+  },
+  {
+   "id": "larion-211",
+   "stars": 3,
+   "name": "Мария П.",
+   "country": "Астана (Казахстан)",
+   "tour": "Химэдзи",
+   "text": "Замок Химэдзи красивый, но крутые деревянные лестницы внутри это испытание не для слабых. Пока поднялись на верхний этаж — думала там и останусь. Ларион хорошо рассказывает про самураев, но навигация по станциям утомила.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Himeji Castle is beautiful, but the steep wooden stairs inside are not for the faint-hearted. By the time we reached the top floor I thought I'd stay there forever. Larion tells great stories about the samurai, but navigating the stations was tiring."
+   },
+   "meta": {
+    "en": {
+     "name": "Maria P.",
+     "country": "Astana (Kazakhstan)",
+     "tour": "Himeji"
+    }
+   }
+  },
+  {
+   "id": "larion-212",
+   "stars": 1,
+   "name": "Тоха_Брест",
+   "country": "Брест (Беларусь)",
+   "tour": "Осака",
+   "text": "Чувак обещал что мы увидим нетуристическую Осаку а в итоге затащил в какие-то подворотни с ретро-автоматами где мы просадили кучу йен на игры)))) Ларион ты лучший но кошелек мой тебе этого не простит ахаха!",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "The guy promised us non-touristy Osaka and ended up dragging us into back alleys with retro arcade machines where we blew a pile of yen on games)))) Larion you're the best but my wallet will never forgive you hahaha!"
+   },
+   "meta": {
+    "en": {
+     "name": "Tokha_Brest",
+     "country": "Brest (Belarus)",
+     "tour": "Osaka"
+    }
+   }
+  },
+  {
+   "id": "larion-213",
+   "stars": 2,
+   "name": "Юлия и Стас",
+   "country": "Бишкек (Кыргызстан)",
+   "tour": "Киото",
+   "text": "Гейш так и не увидели в Гионе, только толпы туристов с палками для селфи. Ларион старался объяснить традиции района, водил по тихим переулкам, но ощущение всё равно смазанное.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "Never saw any geisha in Gion, just crowds of tourists with selfie sticks. Larion tried to explain the district's traditions and took us down quiet lanes, but the impression was still blurry."
+   },
+   "meta": {
+    "en": {
+     "name": "Yulia & Stas",
+     "country": "Bishkek (Kyrgyzstan)",
+     "tour": "Kyoto"
+    }
+   }
+  },
+  {
+   "id": "larion-214",
+   "stars": 3,
+   "name": "Крис",
+   "country": "Батуми (Грузия)",
+   "tour": "Миядзима",
+   "text": "Паром на Миядзиму качало, меня укачало капец. Ворота в воде красивые, не спорю, Ларион отличный парень и подстраивался под наше самочувствие как мог, но второй раз я на этот остров точно не поплыву.",
+   "lang": "ru",
+   "date": "",
+   "photo": "",
+   "traducciones": {
+    "en": "The ferry to Miyajima was rocking and I got terribly seasick. The gate in the water is beautiful, no argument, Larion is a great guy and adapted to how we felt as best he could, but I'm definitely not sailing to that island a second time."
+   },
+   "meta": {
+    "en": {
+     "name": "Kris",
+     "country": "Batumi (Georgia)",
+     "tour": "Miyajima"
     }
    }
   }
