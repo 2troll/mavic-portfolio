@@ -15,18 +15,20 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, type Categoria } from './datosVentajas'
 import { LOGOS } from './logosMarcas'
+import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import './v7.css'
 import './ventajas.css'
 
-export type VentajasId = 'es' | 'en' | 'ar'
+export type VentajasId = 'es' | 'en' | 'ar' | 'ru'
 const BASE = 'https://tonykansaiguide.com'
 
 export const RUTAS_VENTAJAS: Record<string, VentajasId> = {
   '/es/ventajas': 'es',
   '/en/perks': 'en',
   '/ar/perks': 'ar',
+  '/ru/perks': 'ru',
 }
-const RUTA: Record<VentajasId, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/' }
+const RUTA: Record<VentajasId, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
 
 
@@ -89,9 +91,26 @@ const T: Record<VentajasId, Textos> = {
     finalTitulo: 'تفضّل ألّا تتعب مع التطبيقات؟', finalTexto: 'في جولاتي أتولّى أنا كل التنقلات: آخذك من الفندق ونذهب معًا.', finalBoton: 'راسلني على واتساب', volver: 'العودة إلى صفحة توني',
     saludo: 'السلام عليكم توني، رأيت صفحة المزايا وأريد أن أسأل عن جولة.',
   },
+  ru: {
+    titulo: 'Полезные приложения для поездки в Кансай | Tony Kansai Guide',
+    descripcion: 'Приложения, которые мы советуем для Осаки и Киото: eSIM, билеты, трансфер, такси, велосипеды, хранение багажа и оплата.',
+    antetitulo: 'Полезное для наших гостей',
+    h1: 'Приложения, чтобы путешествовать по Кансаю как местный',
+    sub: 'Интернет, билеты, отели, такси, велосипеды и оплата в Осаке и Киото. Каждое приложение — на своей карточке, с подробной инструкцией.',
+    copiar: 'Скопировать код', copiado: 'Скопировано!', codigo: 'Код',
+    consejosTitulo: 'Советы',
+    consejos: [
+      'На самокате ездите только по проезжей части и по левой стороне; по тротуару нельзя, кроме режима 6 км/ч.',
+      'Перед поездкой проверьте в приложении, что на месте возврата есть свободное место: иначе счётчик идёт, пока ищете другое.',
+      'Всегда платите в иенах, а не в своей валюте, когда терминал предлагает выбор: курс магазина хуже.',
+    ],
+    aviso: 'Некоторые ссылки партнёрские: если вы покупаете через них, сервис платит нам небольшую комиссию. Для вас цена не меняется.',
+    finalTitulo: 'Не хотите разбираться с приложениями?', finalTexto: 'На экскурсии Ларион берёт все поездки на себя: встречает в отеле, и вы едете вместе.', finalBoton: 'Написать в WhatsApp', volver: 'На страницу Лариона',
+    saludo: 'Здравствуйте, Ларион! Увидел страницу с полезными приложениями и хочу спросить об экскурсии.',
+  },
 }
 
-const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح' }
+const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح', ru: 'Открыть' }
 
 // Dibujo de cada app (Tabler Icons, MIT; sprite en /v7/ventajas-dibujos.svg).
 const DIBUJO: Record<string, string> = {
@@ -119,21 +138,26 @@ function IconoApp({ a }: { a: (typeof APPS)[number] }) {
 const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string; d: string; apps: string[] }[] }> = {
   es: { titulo: 'Tu kit en 3 pasos', lista: [
     { n: 'plane', t: 'Antes de volar', d: 'Instala la eSIM y la tarjeta en casa, con wifi y sin prisas.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'Al aterrizar', d: 'Añade ICOCA al móvil y descarga Kansai sin conexión en Maps.', apps: ['welcome', 'icoca', 'maps'] },
+    { n: 'plane-arrival', t: 'Al aterrizar', d: 'Traslado al hotel, ICOCA en el móvil y tus sitios guardados en Maps.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'Por la ciudad', d: 'Taxi con un toque, patinete o bici para lo que el tren no cubre.', apps: ['go', 'luup', 'hello'] },
   ] },
   en: { titulo: 'Your kit in 3 steps', lista: [
     { n: 'plane', t: 'Before you fly', d: 'Install the eSIM and the card at home, on wifi, no rush.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'When you land', d: 'Add ICOCA to your phone and download Kansai offline in Maps.', apps: ['welcome', 'icoca', 'maps'] },
+    { n: 'plane-arrival', t: 'When you land', d: 'Transfer to your hotel, ICOCA on your phone and your places saved in Maps.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'Around the city', d: 'One-tap taxis, scooters or bikes for what the train misses.', apps: ['go', 'luup', 'hello'] },
   ] },
   ar: { titulo: 'عُدّتك في 3 خطوات', lista: [
     { n: 'plane', t: 'قبل السفر', d: 'ثبّت شريحة eSIM والبطاقة في بيتك، على الواي فاي وبلا عجلة.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'عند الوصول', d: 'أضف ICOCA إلى هاتفك وحمّل خريطة كانساي دون اتصال.', apps: ['welcome', 'icoca', 'maps'] },
+    { n: 'plane-arrival', t: 'عند الوصول', d: 'التوصيل إلى الفندق وICOCA على هاتفك وأماكنك محفوظة في الخرائط.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'في المدينة', d: 'تاكسي بلمسة، وسكوتر أو دراجة لما لا يصل إليه القطار.', apps: ['go', 'luup', 'hello'] },
   ] },
+  ru: { titulo: 'Ваш набор в 3 шага', lista: [
+    { n: 'plane', t: 'До вылета', d: 'Установите eSIM и карту дома, по Wi-Fi и без спешки.', apps: ['airalo', 'wise', 'klook'] },
+    { n: 'plane-arrival', t: 'После посадки', d: 'Трансфер из аэропорта Кансай, ICOCA в телефоне и сохранённые места в Google Картах.', apps: ['welcome', 'icoca', 'maps'] },
+    { n: 'route', t: 'По городу', d: 'Такси в одно касание, самокат или велосипед туда, куда не идёт поезд.', apps: ['go', 'luup', 'hello'] },
+  ] },
 }
-const TOCA: Record<VentajasId, string> = { es: 'Toca una app para ir directo', en: 'Tap an app to jump to it', ar: 'اضغط على تطبيق للانتقال إليه' }
+const TOCA: Record<VentajasId, string> = { es: 'Toca una app para ver cómo funciona', en: 'Tap an app to see how it works', ar: 'اضغط على تطبيق لترى كيف يعمل', ru: 'Нажмите на приложение, чтобы узнать подробности' }
 
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
@@ -145,17 +169,20 @@ function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string
   )
 }
 
-export default function Ventajas({ id }: { id: VentajasId }) {
+export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) {
   const p = T[id]
+  // Ficha propia de una app (/es/ventajas/airalo/); si la clave no existe, se ve la lista.
+  const appSel = app ? APPS.find((a) => a.clave === app) : undefined
   const dir = id === 'ar' ? 'rtl' : 'ltr'
   const { setLang } = useLanguage()
   useEffect(() => { setLang(id) }, [id, setLang])
-  const url = `${BASE}${RUTA[id]}`
-  const inicio = `/${id}/`
-  const wa = `https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(p.saludo)}`
+  const url = `${BASE}${RUTA[id]}${appSel ? `${appSel.clave}/` : ''}`
+  const inicio = id === 'ru' ? '/ru/' : `/${id}/`
+  // La versión rusa es de Larion: el WhatsApp y la vuelta son suyos.
+  const wa = `https://wa.me/${(id === 'ru' ? GUIAS.larion : GUIAS.tony).wa}?text=${encodeURIComponent(p.saludo)}`
   const pie = PIE[id]
-  const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}` }))
-  const NOMBRE_IDIOMA: Record<VentajasId, string> = { es: 'ES', en: 'EN', ar: 'عربي' }
+  const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}${appSel ? `${appSel.clave}/` : ''}` }))
+  const NOMBRE_IDIOMA: Record<VentajasId, string> = { es: 'ES', en: 'EN', ar: 'عربي', ru: 'RU' }
   const raiz = useRef<HTMLDivElement>(null)
 
   // Aparición al bajar: solo con JS activo (la página estática se ve entera sin él).
@@ -190,8 +217,8 @@ export default function Ventajas({ id }: { id: VentajasId }) {
     <div ref={raiz} className={`vt lang-${id}`} lang={id} dir={dir}>
       <Helmet>
         <html lang={id} dir={dir} />
-        <title>{p.titulo}</title>
-        <meta name="description" content={p.descripcion} />
+        <title>{appSel ? `${appSel.nombre} · ${p.titulo}` : p.titulo}</title>
+        <meta name="description" content={appSel ? textoApp(appSel, id).que : p.descripcion} />
         <link rel="canonical" href={url} />
         {enlacesHreflang(hermanas)}
         <meta property="og:title" content={p.titulo} />
@@ -203,7 +230,7 @@ export default function Ventajas({ id }: { id: VentajasId }) {
         <Link to={inicio} className="vt-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="vt-idiomas" aria-label="Language">
           {(Object.keys(RUTA) as VentajasId[]).map((k) => (
-            <Link key={k} to={RUTA[k]} lang={k} aria-current={k === id ? 'page' : undefined}>{NOMBRE_IDIOMA[k]}</Link>
+            <Link key={k} to={`${RUTA[k]}${appSel ? `${appSel.clave}/` : ''}`} lang={k} aria-current={k === id ? 'page' : undefined}>{NOMBRE_IDIOMA[k]}</Link>
           ))}
         </nav>
         <a className="vt-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label={p.finalBoton}>
@@ -211,7 +238,7 @@ export default function Ventajas({ id }: { id: VentajasId }) {
         </a>
       </header>
 
-      <main>
+      {appSel ? <FichaApp a={appSel} id={id} lista={RUTA[id]} wa={wa} final={p} /> : <main>
         <section className="vt-portada">
           <div className="vt-portada-texto">
             <p className="vt-antetitulo">{p.antetitulo.replace(/^\p{Extended_Pictographic}\s*/u, '')}</p>
@@ -225,10 +252,10 @@ export default function Ventajas({ id }: { id: VentajasId }) {
               <div className="vt-movil-hora" aria-hidden="true"><span>9:41</span><span>Kansai</span></div>
               <div className="vt-movil-apps">
                 {APPS.map((a, n) => (
-                  <a key={a.clave} href={`#${a.clave}`} className="vt-movil-app" style={{ ['--i' as string]: n }}>
+                  <Link key={a.clave} to={`${RUTA[id]}${a.clave}/`} className="vt-movil-app" style={{ ['--i' as string]: n }}>
                     <IconoApp a={a} />
                     <span dir="ltr">{a.nombre.replace('Google ', '')}</span>
-                  </a>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -280,8 +307,8 @@ export default function Ventajas({ id }: { id: VentajasId }) {
                   <div className="vt-texto vt-aparece">
                     <p className="vt-cat"><span>{String(n + 1).padStart(2, '0')}</span> {CATEGORIAS[a.cat][id]}</p>
                     <h2 dir="ltr">{a.nombre}</h2>
-                    <p className="vt-que">{a.t[id].que}</p>
-                    <p className="vt-ventaja">{a.t[id].ventaja}</p>
+                    <p className="vt-que">{textoApp(a, id).que}</p>
+                    <p className="vt-ventaja">{textoApp(a, id).ventaja}</p>
                     {cupon && (
                       <div className="vt-cupon">
                         <span>{p.codigo}</span>
@@ -289,7 +316,10 @@ export default function Ventajas({ id }: { id: VentajasId }) {
                         <BotonCopiar texto={cupon} copiar={p.copiar} copiado={p.copiado} />
                       </div>
                     )}
-                    <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
+                    <div className="vt-acciones">
+                      <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
+                      <Link className="vt-mas" to={`${RUTA[id]}${a.clave}/`}>{MAS[id]}</Link>
+                    </div>
                   </div>
                 </div>
               </section>
@@ -309,7 +339,7 @@ export default function Ventajas({ id }: { id: VentajasId }) {
           <a className="vt-wa vt-wa-grande" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.finalBoton}</a>
           <p><Link to={inicio}>{p.volver}</Link></p>
         </section>
-      </main>
+      </main>}
 
       <footer className="vt-pie">
         <span><Logo /></span>

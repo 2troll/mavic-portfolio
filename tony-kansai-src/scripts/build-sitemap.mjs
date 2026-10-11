@@ -16,6 +16,8 @@ const REGIONES = JSON.parse(readFileSync(join(root, 'src/seo/regiones.json'), 'u
 const LANGS = ['en', 'es', 'ar', 'ru']
 
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
+// Las apps de la página de ventajas (cada una tiene su ficha: /es/ventajas/<clave>/).
+const APPS_VENTAJAS = [...readFileSync(join(root, 'src/v7/datosVentajas.ts'), 'utf8').matchAll(/clave: '([a-z0-9-]+)'/g)].map((m) => m[1])
 
 /** Los ids de un bloque `export const X = [ … ]` de data.ts. */
 function ids(constName) {
@@ -58,6 +60,9 @@ const paginas = [
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/ar/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
+  { loc: '/ru/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
+  // Ficha propia de cada app de ventajas, en los cuatro idiomas.
+  ...APPS_VENTAJAS.flatMap((c) => ['/es/ventajas', '/en/perks', '/ar/perks', '/ru/perks'].map((b) => ({ loc: `${b}/${c}`, priority: '0.5', changefreq: 'monthly', v7: `ventajaApp:${c}` }))),
   // Temporada: otoño de Kioto.
   { loc: '/es/otono-kioto', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
   { loc: '/en/kyoto-autumn', priority: '0.9', changefreq: 'weekly', v7: 'otono' },
@@ -102,7 +107,7 @@ const V7 = {
   rusia: [['ru', '/ru/from-russia/']],
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
   aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
-  ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/']],
+  ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/'], ['ru', '/ru/perks/']],
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {
@@ -116,6 +121,7 @@ const url = ({ loc, priority, changefreq, v7 }) => {
     const [tipo, ciudad] = String(v7).split(':')
     const grupo = tipo === 'ciudadTony' ? [['es', `/es/${ciudad}/`], ['en', `/en/${ciudad}/`], ['ar', `/ar/${ciudad}/`]]
       : tipo === 'ciudadLarion' ? [['ru', `/ru/${ciudad}/`], ['en', `/larion/${ciudad}/`]]
+      : tipo === 'ventajaApp' ? [['es', `/es/ventajas/${ciudad}/`], ['en', `/en/perks/${ciudad}/`], ['ar', `/ar/perks/${ciudad}/`], ['ru', `/ru/perks/${ciudad}/`]]
       : V7[v7 === true ? 'portada' : v7]
     const alt = grupo.flatMap(([l, r]) => [l, ...(r.startsWith('/larion') ? [] : (REGIONES[l] ?? []))].map((x) => `\n    <xhtml:link rel="alternate" hreflang="${x}" href="${BASE}${r}"/>`)).join('')
       + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}/"/>`

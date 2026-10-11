@@ -35,7 +35,12 @@ const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
 const Otono = lazy(() => import('./v7/Otono'))
 const GuiaTransporte = lazy(() => import('./v7/GuiaTransporte'))
 const Ventajas = lazy(() => import('./v7/Ventajas'))
-const RUTAS_VENTAJAS: Record<string, 'es' | 'en' | 'ar'> = { '/es/ventajas': 'es', '/en/perks': 'en', '/ar/perks': 'ar' }
+const RUTAS_VENTAJAS: Record<string, 'es' | 'en' | 'ar' | 'ru'> = { '/es/ventajas': 'es', '/en/perks': 'en', '/ar/perks': 'ar', '/ru/perks': 'ru' }
+/** /es/ventajas/ o /es/ventajas/airalo/ → idioma y app (la ficha propia de cada app). */
+const rutaVentajas = (ruta: string) => {
+  const m = ruta.match(/^(\/(?:es\/ventajas|en\/perks|ar\/perks|ru\/perks))(?:\/([a-z0-9-]+))?$/)
+  return m ? { id: RUTAS_VENTAJAS[m[1]], app: m[2] } : undefined
+}
 import { RUTAS_GUIA } from './v7/datosGuias'
 const Viajeros = lazy(() => import('./v7/Viajeros'))
 import { RUTAS_VIAJEROS } from './v7/datosViajeros'
@@ -146,12 +151,12 @@ export function Layout() {
   }
 
   // Ventajas: apps y enlaces de invitación para el viajero.
-  const ventajas = RUTAS_VENTAJAS[pathname.replace(/\/+$/, '')]
+  const ventajas = rutaVentajas(pathname.replace(/\/+$/, ''))
   if (ventajas) {
     return (
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
-        <Ventajas key={ventajas} id={ventajas} />
+        <Ventajas key={`${ventajas.id}-${ventajas.app ?? ''}`} id={ventajas.id} app={ventajas.app} />
         <CookieTardio compacto /><AvisoRuso />
       </Suspense>
       </>

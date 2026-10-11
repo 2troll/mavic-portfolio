@@ -276,3 +276,61 @@
   html:has(.vt) { scroll-behavior: smooth; }
   .vt-js .vt-aparece { transform: translateY(24px); transition: opacity .5s ease, transform .5s cubic-bezier(.2, .7, .2, 1); }
 }
+
+/* ══ Ficha propia de cada app (/es/ventajas/<app>/) ══ */
+.vt-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.vt-mas { font-weight: 650; text-decoration: underline; text-underline-offset: 4px; color: inherit; opacity: .9; }
+.vt-mas:hover { opacity: 1; }
+.vt-nota-colab { font-size: .8rem; opacity: .75; }
+
+.vt-ficha-portada { background: var(--marca); color: var(--marca-tinta); }
+.vt-ficha-dentro { max-width: 1200px; margin: 0 auto; padding: clamp(28px, 5vw, 56px) 16px clamp(48px, 7vw, 88px); display: grid; grid-template-columns: 1.25fr .75fr; gap: clamp(24px, 5vw, 72px); align-items: center; }
+.vt-ficha-volver { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 28px; padding: 8px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .9rem; background: color-mix(in srgb, var(--marca-tinta) 12%, transparent); }
+.vt-ficha-volver:hover { background: color-mix(in srgb, var(--marca-tinta) 20%, transparent); }
+.vt-ficha-marca { display: flex; align-items: center; gap: 14px; margin-bottom: 14px; }
+.vt-ficha-marca .vt-cat { margin: 0; }
+.vt-ico-grande { width: 64px; height: 64px; border-radius: 18px; box-shadow: 0 0 0 2px color-mix(in srgb, var(--marca-tinta) 30%, transparent), 0 10px 24px -10px rgba(0, 0, 0, .5); }
+.vt-ico-grande b { font-size: 1.2rem; }
+.vt-ficha-portada h1 { font-size: clamp(2.6rem, 6.5vw, 5rem); margin-bottom: 18px; }
+.lang-ar .vt-ficha-portada h1 { text-align: right; }
+.vt-ficha-dibujo { justify-self: center; width: min(100%, 380px); aspect-ratio: 1; display: grid; place-items: center; border-radius: 40px; background: color-mix(in srgb, var(--marca-tinta) 10%, transparent); border: 1px solid color-mix(in srgb, var(--marca-tinta) 18%, transparent); }
+.vt-ficha-dibujo svg { width: 70%; height: 70%; color: var(--marca-tinta); opacity: .85; }
+@media (prefers-reduced-motion: no-preference) { .vt-ficha-dibujo svg { animation: vt-flota 6s ease-in-out infinite; } }
+
+.vt-ficha-bloque { max-width: 1000px; margin: 0 auto; padding: clamp(40px, 6vw, 72px) 16px 0; }
+.vt-ficha-bloque h2 { font-size: clamp(1.6rem, 3vw, 2.3rem); margin-bottom: 22px; }
+.vt-ficha-para { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr)); gap: 16px; }
+.vt-ficha-para li { display: flex; gap: 12px; align-items: flex-start; padding: 20px; border-radius: 18px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); }
+.vt-ficha-check { flex: none; width: 24px; height: 24px; padding: 3px; border-radius: 50%; color: #fff; background: #1fa855; }
+
+.vt-ficha-pasos { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; position: relative; }
+.vt-ficha-pasos li { display: flex; gap: 18px; align-items: flex-start; padding: 18px 20px; border-radius: 18px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); }
+.vt-ficha-pasos p { margin: 4px 0 0; font-size: 1.05rem; }
+.vt-ficha-num { flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; font-weight: 800; background: var(--marca); color: var(--marca-tinta); }
+.vt-ficha-cta { margin-top: 24px; }
+
+.vt-ficha-dos { display: grid; grid-template-columns: 1.4fr .6fr; gap: 24px; align-items: start; }
+.vt-ficha-consejos { margin: 0; padding-inline-start: 20px; display: grid; gap: 12px; }
+.vt-ficha-consejos li::marker { color: #b4232a; font-weight: 800; }
+.vt-ficha-precio { padding: 24px; border-radius: 20px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); }
+.vt-ficha-precio h2 { font-size: 1.3rem; margin-bottom: 10px; }
+.vt-ficha-precio p { margin: 0; color: var(--vt-suave); }
+
+.vt-ficha-porque { padding: clamp(24px, 4vw, 40px); border-radius: 28px; background: var(--marca); color: var(--marca-tinta); }
+.vt-ficha-porque h2 { margin-bottom: 12px; }
+.vt-ficha-porque p { margin: 0 0 22px; max-width: 60ch; font-size: 1.08rem; opacity: .95; }
+
+.vt-ficha-otras { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 16px; }
+.vt-ficha-otras a { display: grid; justify-items: center; gap: 8px; padding: 14px 6px; border-radius: 18px; text-decoration: none; font-size: .82rem; font-weight: 600; text-align: center; transition: background .15s ease; }
+.vt-ficha-otras a:hover { background: var(--vt-blanco); }
+.vt-ficha + .vt-pie, .vt-ficha .vt-final { margin-top: 24px; }
+
+@media (max-width: 899px) {
+  .vt-ficha-dentro { grid-template-columns: 1fr; }
+  .vt-ficha-dibujo { order: -1; width: 160px; border-radius: 28px; }
+  .vt-ficha-dos { grid-template-columns: 1fr; }
+}
+/* El botón de la ficha tras los pasos va sobre una franja del color de la marca:
+   sobre el fondo claro, un botón blanco (Airalo, Klook…) se perdía. */
+.vt-ficha-cta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 18px 22px; border-radius: 20px; background: var(--marca); color: var(--marca-tinta); }
+.vt-ficha-cta::before { content: ''; }

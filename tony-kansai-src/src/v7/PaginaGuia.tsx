@@ -4,6 +4,8 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { APPS } from './datosVentajas'
+import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
@@ -87,12 +89,17 @@ function repartoIconos(lista: { id: string }[]) {
   // así que la reseña n.º i lleva el avatar i y ninguno se repite.
   return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg?v=4`]))
 }
-// Enlace a la página de ventajas (apps y descuentos para el viajero); solo existe en ES/EN/AR.
-const VENTAJAS: Record<string, { ruta: string; corto: string; largo: string }> = {
-  es: { ruta: '/es/ventajas/', corto: 'Ventajas', largo: 'Ventajas para tu viaje: eSIM, entradas, hoteles y apps' },
-  en: { ruta: '/en/perks/', corto: 'Perks', largo: 'Travel perks: eSIM, tickets, hotels and apps' },
-  ar: { ruta: '/ar/perks/', corto: 'مزايا', largo: 'مزايا لرحلتك: eSIM وتذاكر وفنادق وتطبيقات' },
+// Enlace a la página de ventajas (apps y descuentos para el viajero). Larion lleva
+// la versión rusa (/ru/perks/) y su página inglesa la de Tony en inglés.
+const VENTAJAS: Record<string, { ruta: string; corto: string; titulo: string; sub: string }> = {
+  es: { ruta: '/es/ventajas/', corto: 'Ventajas', titulo: 'Ventajas para tu viaje', sub: 'eSIM con descuento, entradas, traslados y más' },
+  en: { ruta: '/en/perks/', corto: 'Perks', titulo: 'Travel perks', sub: 'Discounted eSIM, tickets, transfers and more' },
+  ar: { ruta: '/ar/perks/', corto: 'مزايا', titulo: 'مزايا لرحلتك', sub: 'eSIM بخصم وتذاكر وتوصيل من المطار والمزيد' },
+  ru: { ruta: '/ru/perks/', corto: 'Полезное', titulo: 'Полезное для поездки', sub: 'eSIM со скидкой, билеты, трансфер и другое' },
+  larion: { ruta: '/en/perks/', corto: 'Perks', titulo: 'Travel perks', sub: 'Discounted eSIM, tickets, transfers and more' },
 }
+// Cuatro apps de muestra en el botón, como iconos de móvil apilados.
+const MUESTRA_APPS = ['airalo', 'klook', 'welcome', 'luup'].map((c) => APPS.find((a) => a.clave === c)).filter(Boolean) as typeof APPS
 const TODAS: Record<string, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 
 // Las reseñas se escriben en el idioma del cliente; en cada página se enseña la
@@ -556,9 +563,15 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             )}
             {VENTAJAS[p.id] && (
               <p className="v7-hero-ventajas"><Link to={VENTAJAS[p.id].ruta}>
-                <span className="v7-hero-ventajas-icono"><svg className="v7-icono-regalo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2M12 8l0 13M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg></span>
-                <span>{VENTAJAS[p.id].largo}</span>
-                <span aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
+                <span className="v7-hero-ventajas-pila" aria-hidden="true">
+                  {MUESTRA_APPS.map((a) => (
+                    <span key={a.clave} style={{ background: a.marca.fondo, color: a.marca.tinta }}>
+                      {a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : <b>{(a.marca.palabra ?? a.nombre).charAt(0)}</b>}
+                    </span>
+                  ))}
+                </span>
+                <span className="v7-hero-ventajas-texto"><strong>{VENTAJAS[p.id].titulo}</strong><small>{VENTAJAS[p.id].sub}</small></span>
+                <span className="v7-hero-ventajas-flecha" aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
               </Link></p>
             )}
             {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}

@@ -2,7 +2,7 @@
 // marca (como una ficha de tienda de apps), para que no se confundan entre sí.
 // `codigo`: código de invitación (se copia) o enlace de afiliado (https://…, se usa como enlace).
 
-export type Lang = 'es' | 'en' | 'ar'
+export type Lang = 'es' | 'en' | 'ar' | 'ru'
 export type Categoria = 'internet' | 'planes' | 'dormir' | 'moverse' | 'dinero' | 'utiles'
 
 export interface App {
@@ -13,16 +13,17 @@ export interface App {
   nombre: string
   enlace: string
   codigo?: string
-  t: Record<Lang, { que: string; ventaja: string }>
+  /** El ruso de las fichas cortas vive en datosVentajasDetalle.ts (T_RU). */
+  t: Record<'es' | 'en' | 'ar', { que: string; ventaja: string }> & { ru?: { que: string; ventaja: string } }
 }
 
 export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
-  internet: { es: 'Internet', en: 'Mobile data', ar: 'الإنترنت' },
-  planes: { es: 'Entradas y planes', en: 'Tickets & activities', ar: 'تذاكر وأنشطة' },
-  dormir: { es: 'Alojamiento', en: 'Where to stay', ar: 'الإقامة' },
-  moverse: { es: 'Moverse', en: 'Getting around', ar: 'التنقل' },
-  dinero: { es: 'Pagar', en: 'Paying', ar: 'الدفع' },
-  utiles: { es: 'Imprescindibles', en: 'Must-haves', ar: 'أساسيات' },
+  internet: { es: 'Internet', en: 'Mobile data', ar: 'الإنترنت', ru: 'Интернет' },
+  planes: { es: 'Entradas y planes', en: 'Tickets & activities', ar: 'تذاكر وأنشطة', ru: 'Билеты и экскурсии' },
+  dormir: { es: 'Alojamiento', en: 'Where to stay', ar: 'الإقامة', ru: 'Жильё' },
+  moverse: { es: 'Moverse', en: 'Getting around', ar: 'التنقل', ru: 'Транспорт' },
+  dinero: { es: 'Pagar', en: 'Paying', ar: 'الدفع', ru: 'Оплата' },
+  utiles: { es: 'Imprescindibles', en: 'Must-haves', ar: 'أساسيات', ru: 'Самое нужное' },
 }
 
 export const APPS: App[] = [
@@ -156,9 +157,9 @@ export const APPS: App[] = [
     clave: 'maps', cat: 'utiles', nombre: 'Google Maps', enlace: 'https://www.google.com/maps',
     marca: { fondo: '#ffffff', tinta: '#4285F4', boton: '#1A73E8', botonTinta: '#ffffff', logo: 'maps' },
     t: {
-      es: { que: 'En Japón da el andén, el vagón y la hora exacta de cada tren.', ventaja: 'Descarga el mapa de Kansai sin conexión antes de salir.' },
-      en: { que: 'In Japan it gives the platform, the car and the exact time of every train.', ventaja: 'Download the Kansai map offline before you go.' },
-      ar: { que: 'في اليابان يعطيك الرصيف والعربة والوقت الدقيق لكل قطار.', ventaja: 'حمّل خريطة كانساي دون اتصال قبل الخروج.' },
+      es: { que: 'En Japón da el andén, el vagón y la hora exacta de cada tren.', ventaja: 'Guarda en una lista los sitios que quieres ver: los tienes a un toque con datos.' },
+      en: { que: 'In Japan it gives the platform, the car and the exact time of every train.', ventaja: 'Save the places you want to see in a list: one tap away once you have data.' },
+      ar: { que: 'في اليابان يعطيك الرصيف والعربة والوقت الدقيق لكل قطار.', ventaja: 'احفظ الأماكن التي تريد زيارتها في قائمة لتصل إليها بلمسة.' },
     },
   },
   {
