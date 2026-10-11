@@ -27,7 +27,7 @@ export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
 
 export const APPS: App[] = [
   {
-    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://www.airalo.com/japan-esim', codigo: 'PRINCE0661',
+    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://airalo.tpk.ro/KoCqlrDV', codigo: 'PRINCE0661',
     marca: { fondo: '#141414', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#141414', palabra: 'airalo' },
     t: {
       es: { que: 'eSIM de Japón: datos en el móvil nada más aterrizar, sin buscar tienda ni wifi de bolsillo.', ventaja: 'Con mi código, 450 ¥ de descuento en tu primera eSIM. La instalas en casa y se activa sola en Kansai.' },
@@ -36,7 +36,7 @@ export const APPS: App[] = [
     },
   },
   {
-    clave: 'klook', cat: 'planes', nombre: 'Klook', enlace: 'https://www.klook.com/',
+    clave: 'klook', cat: 'planes', nombre: 'Klook', enlace: 'https://klook.tpk.ro/S2N5sxbl',
     marca: { fondo: '#FF5722', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#FF5722', logo: 'klook' },
     t: {
       es: { que: 'Entradas a Universal, Kaiyukan y Shinkansen, pases de tren y traslados desde el aeropuerto de Kansai.', ventaja: 'Suele salir más barato que en taquilla y muchas entradas se canjean con QR.' },
@@ -51,6 +51,15 @@ export const APPS: App[] = [
       es: { que: 'Clases de cocina, ceremonia del té y excursiones de grupo por Osaka, Kioto y Nara.', ventaja: 'Cancelación gratis hasta 24 h antes en la mayoría de actividades.' },
       en: { que: 'Cooking classes, tea ceremonies and group trips around Osaka, Kyoto and Nara.', ventaja: 'Free cancellation up to 24 h before on most activities.' },
       ar: { que: 'دروس طبخ ومراسم شاي ورحلات جماعية في أوساكا وكيوتو ونارا.', ventaja: 'إلغاء مجاني حتى 24 ساعة قبل الموعد في معظم الأنشطة.' },
+    },
+  },
+  {
+    clave: 'kkday', cat: 'planes', nombre: 'KKday', enlace: 'https://kkday.tpk.ro/wpimoorw',
+    marca: { fondo: '#26BEC9', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#1b8f98', palabra: 'KKday' },
+    t: {
+      es: { que: 'Excursiones de un día desde Osaka (Nara, Kobe, Amanohashidate), kimonos y pases de tren.', ventaja: 'Muy fuerte en Asia: a menudo tiene el tour o la entrada más barata.' },
+      en: { que: 'Day trips from Osaka (Nara, Kobe, Amanohashidate), kimono rental and rail passes.', ventaja: 'Strong in Asia: often has the cheapest tour or ticket.' },
+      ar: { que: 'رحلات يوم واحد من أوساكا (نارا وكوبي وأمانوهاشيداتي) وتأجير الكيمونو وبطاقات القطار.', ventaja: 'قوي في آسيا: كثيرًا ما يقدّم أرخص جولة أو تذكرة.' },
     },
   },
   {
@@ -78,6 +87,15 @@ export const APPS: App[] = [
       es: { que: 'La de siempre: hoteles en Namba, Umeda o junto a la estación de Kioto.', ventaja: 'Muchas tarifas se pagan en el hotel y se cancelan gratis.' },
       en: { que: 'The classic: hotels in Namba, Umeda or next to Kyoto Station.', ventaja: 'Many rates are paid at the hotel and cancel for free.' },
       ar: { que: 'الخيار المعروف: فنادق في نامبا أو أومِيدا أو قرب محطة كيوتو.', ventaja: 'كثير من الأسعار تُدفع في الفندق ويمكن إلغاؤها مجانًا.' },
+    },
+  },
+  {
+    clave: 'welcome', cat: 'moverse', nombre: 'Welcome Pickups', enlace: 'https://tpk.ro/cy86mOVf',
+    marca: { fondo: '#14C38E', tinta: '#ffffff', boton: '#0F2A3A', botonTinta: '#ffffff', palabra: 'Welcome' },
+    t: {
+      es: { que: 'Un conductor te espera en el aeropuerto de Kansai con tu nombre y te lleva al hotel.', ventaja: 'Precio cerrado al reservar; ideal si llegas de noche o con niños y maletas.' },
+      en: { que: 'A driver waits for you at Kansai Airport with your name and takes you to your hotel.', ventaja: 'Fixed price when you book; ideal if you land at night or with kids and bags.' },
+      ar: { que: 'سائق ينتظرك في مطار كانساي حاملًا اسمك ويوصلك إلى الفندق.', ventaja: 'سعر ثابت عند الحجز؛ مثالي إن وصلت ليلًا أو مع أطفال وحقائب.' },
     },
   },
   {
@@ -150,6 +168,15 @@ export const APPS: App[] = [
       es: { que: 'Con la cámara lees cartas, carteles y etiquetas en japonés al momento.', ventaja: 'Descarga el japonés sin conexión: funciona en el metro sin datos.' },
       en: { que: 'Point the camera at menus, signs and labels to read Japanese instantly.', ventaja: 'Download Japanese offline: it works in the subway without data.' },
       ar: { que: 'وجّه الكاميرا إلى القوائم واللافتات والملصقات لتقرأ اليابانية فورًا.', ventaja: 'حمّل اللغة اليابانية دون اتصال لتعمل في المترو بلا إنترنت.' },
+    },
+  },
+  {
+    clave: 'radical', cat: 'utiles', nombre: 'Radical Storage', enlace: 'https://radicalstorage.tpk.ro/EgagwQA7',
+    marca: { fondo: '#FF6A3D', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#d9481c', palabra: 'Radical' },
+    t: {
+      es: { que: 'Consigna de maletas en tiendas y hoteles de Namba, Umeda y la estación de Kioto.', ventaja: 'Dejas el equipaje tras el check-out y aprovechas el último día sin cargar.' },
+      en: { que: 'Luggage storage in shops and hotels in Namba, Umeda and Kyoto Station.', ventaja: 'Drop your bags after check-out and enjoy your last day hands-free.' },
+      ar: { que: 'حفظ الأمتعة في متاجر وفنادق نامبا وأومِيدا ومحطة كيوتو.', ventaja: 'اترك حقائبك بعد تسجيل الخروج واستمتع بيومك الأخير بلا حمل.' },
     },
   },
 ]

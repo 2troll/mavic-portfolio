@@ -97,7 +97,7 @@ const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افت
 const DIBUJO: Record<string, string> = {
   airalo: 'device-mobile', klook: 'ticket', gyg: 'compass', trip: 'plane', agoda: 'bed', booking: 'building-skyscraper',
   icoca: 'train', go: 'car', uber: 'steering-wheel', luup: 'scooter-electric', hello: 'bike', wise: 'credit-card',
-  maps: 'map-2', traductor: 'language',
+  maps: 'map-2', traductor: 'language', kkday: 'camera', welcome: 'plane-arrival', radical: 'luggage',
 }
 const Dibujo = ({ n, className }: { n: string; className?: string }) => (
   <svg className={className} aria-hidden="true"><use href={`/v7/ventajas-dibujos.svg#${n}`} /></svg>
@@ -119,17 +119,17 @@ function IconoApp({ a }: { a: (typeof APPS)[number] }) {
 const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string; d: string; apps: string[] }[] }> = {
   es: { titulo: 'Tu kit en 3 pasos', lista: [
     { n: 'plane', t: 'Antes de volar', d: 'Instala la eSIM y la tarjeta en casa, con wifi y sin prisas.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'Al aterrizar', d: 'Añade ICOCA al móvil y descarga Kansai sin conexión en Maps.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'plane-arrival', t: 'Al aterrizar', d: 'Añade ICOCA al móvil y descarga Kansai sin conexión en Maps.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'Por la ciudad', d: 'Taxi con un toque, patinete o bici para lo que el tren no cubre.', apps: ['go', 'luup', 'hello'] },
   ] },
   en: { titulo: 'Your kit in 3 steps', lista: [
     { n: 'plane', t: 'Before you fly', d: 'Install the eSIM and the card at home, on wifi, no rush.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'When you land', d: 'Add ICOCA to your phone and download Kansai offline in Maps.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'plane-arrival', t: 'When you land', d: 'Add ICOCA to your phone and download Kansai offline in Maps.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'Around the city', d: 'One-tap taxis, scooters or bikes for what the train misses.', apps: ['go', 'luup', 'hello'] },
   ] },
   ar: { titulo: 'عُدّتك في 3 خطوات', lista: [
     { n: 'plane', t: 'قبل السفر', d: 'ثبّت شريحة eSIM والبطاقة في بيتك، على الواي فاي وبلا عجلة.', apps: ['airalo', 'wise', 'klook'] },
-    { n: 'plane-arrival', t: 'عند الوصول', d: 'أضف ICOCA إلى هاتفك وحمّل خريطة كانساي دون اتصال.', apps: ['icoca', 'maps', 'traductor'] },
+    { n: 'plane-arrival', t: 'عند الوصول', d: 'أضف ICOCA إلى هاتفك وحمّل خريطة كانساي دون اتصال.', apps: ['welcome', 'icoca', 'maps'] },
     { n: 'route', t: 'في المدينة', d: 'تاكسي بلمسة، وسكوتر أو دراجة لما لا يصل إليه القطار.', apps: ['go', 'luup', 'hello'] },
   ] },
 }
