@@ -1,24 +1,22 @@
 // Ventajas para el viajero: apps y códigos de amigo que facilitan moverse y
 // pagar en Kansai (/es/ventajas/, /en/perks/, /ar/perks/). Solo se ponen
 // códigos reales de Tony; si una app no tiene campaña, se enlaza la oficial
-// sin código. Cada app va en su ficha con sus colores y su logo (datosVentajas.ts),
-// como en una tienda de apps, para que no se mezclen unas con otras.
+// sin código. Cada app va en su panel con sus colores y su logo (datosVentajas.ts);
+// la página no usa el tema píxel: tiene su propia hoja, ventajas.css.
 
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO } from './contenido'
 import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
-import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, type Categoria } from './datosVentajas'
 import { LOGOS } from './logosMarcas'
 import './v7.css'
-import './estilo-pixel.css'
+import './ventajas.css'
 
 export type VentajasId = 'es' | 'en' | 'ar'
 const BASE = 'https://tonykansaiguide.com'
@@ -98,7 +96,7 @@ const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افت
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
   return (
-    <button type="button" className="v7-plan-pagar" onClick={(e) => {
+    <button type="button" className="vt-copiar" onClick={(e) => {
       const b = e.currentTarget
       navigator.clipboard?.writeText(texto).then(() => marcar(b)).catch(() => window.prompt(copiar, texto))
     }}>{copiar}</button>
@@ -115,10 +113,26 @@ export default function Ventajas({ id }: { id: VentajasId }) {
   const wa = `https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(p.saludo)}`
   const pie = PIE[id]
   const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}` }))
-  const NOMBRE_IDIOMA: Record<VentajasId, string> = { es: 'Español', en: 'English', ar: 'العربية' }
+  const NOMBRE_IDIOMA: Record<VentajasId, string> = { es: 'ES', en: 'EN', ar: 'عربي' }
+  const raiz = useRef<HTMLDivElement>(null)
+
+  // Aparición al bajar: solo con JS activo (la página estática se ve entera sin él).
+  useEffect(() => {
+    const nodo = raiz.current
+    if (!nodo || !('IntersectionObserver' in window)) return
+    nodo.classList.add('vt-js')
+    const io = new IntersectionObserver((entradas) => {
+      for (const e of entradas) if (e.isIntersecting) { e.target.classList.add('vt-visto'); io.unobserve(e.target) }
+    }, { threshold: 0.18 })
+    nodo.querySelectorAll('.vt-aparece').forEach((el) => io.observe(el))
+    return () => io.disconnect()
+  }, [id])
+
+  const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS.some((a) => a.cat === c))
+  const primeraDe = (c: Categoria) => APPS.find((a) => a.cat === c)?.clave
 
   return (
-    <div className={`v7 v7-pagina v7-otono v7-ventajas lang-${id}`} lang={id} dir={dir}>
+    <div ref={raiz} className={`vt lang-${id}`} lang={id} dir={dir}>
       <Helmet>
         <html lang={id} dir={dir} />
         <title>{p.titulo}</title>
@@ -130,86 +144,83 @@ export default function Ventajas({ id }: { id: VentajasId }) {
         <meta property="og:url" content={url} />
       </Helmet>
 
-      <header className="v7-cabecera cristal">
-        <Link to={inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
-        <nav className="v7-idiomas" aria-label="Language">
+      <header className="vt-barra">
+        <Link to={inicio} className="vt-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
+        <nav className="vt-idiomas" aria-label="Language">
           {(Object.keys(RUTA) as VentajasId[]).map((k) => (
             <Link key={k} to={RUTA[k]} lang={k} aria-current={k === id ? 'page' : undefined}>{NOMBRE_IDIOMA[k]}</Link>
           ))}
         </nav>
-        <BotonTema lang={id} />
-        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={p.finalBoton}>
-          <span className="v7-solo-ancho">{p.finalBoton}</span><span className="v7-solo-movil"><IconoWa /></span>
+        <a className="vt-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label={p.finalBoton}>
+          <IconoWa /><span className="vt-solo-ancho">{p.finalBoton}</span>
         </a>
       </header>
 
       <main>
-        <section className="v7-seccion v7-ventajas-hero">
-          <div className="v7-otono-hero-texto">
-            <p className="v7-antetitulo">{p.antetitulo}</p>
-            <h1>{p.h1}</h1>
-            <p>{p.sub}</p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.finalBoton}</a>
-          </div>
+        <section className="vt-portada">
+          <p className="vt-antetitulo">{p.antetitulo.replace(/^\p{Extended_Pictographic}\s*/u, '')}</p>
+          <h1>{p.h1}</h1>
+          <p className="vt-sub">{p.sub}</p>
+          <nav className="vt-indice" aria-label={p.antetitulo}>
+            {categorias.map((c) => <a key={c} href={`#${primeraDe(c)}`}>{CATEGORIAS[c][id]}</a>)}
+          </nav>
         </section>
 
-        <section className="v7-seccion">
-          {(Object.keys(CATEGORIAS) as Categoria[]).map((cat) => (
-            <div key={cat} className="v7-apps-grupo">
-              <h2 className="v7-apps-cat">{CATEGORIAS[cat][id]}</h2>
-              <div className="v7-apps">
-                {APPS.filter((a) => a.cat === cat).map((a) => (
-                  <article key={a.clave} className="v7-app" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo }}>
-                    <div className="v7-app-cara" aria-hidden="true">
-                      {a.marca.logo
-                        ? <svg viewBox="0 0 24 24" className="v7-app-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
-                        : <span className="v7-app-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="v7-app-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
-                    </div>
-                    <div className="v7-app-cuerpo">
-                      <h3 dir="ltr">{a.nombre}</h3>
-                      <p>{a.t[id].que}</p>
-                      <p className="v7-app-ventaja">{a.t[id].ventaja}</p>
-                      {a.codigo && !a.codigo.startsWith('http') && (
-                        <div className="v7-app-cupon">
-                          <span>{p.codigo}</span>
-                          <bdi dir="ltr"><code>{a.codigo}</code></bdi>
-                          <BotonCopiar texto={a.codigo} copiar={p.copiar} copiado={p.copiado} />
-                        </div>
-                      )}
-                      <a className="v7-app-boton" href={a.codigo?.startsWith('http') ? a.codigo : a.enlace} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} {id === 'ar' ? '↖' : '↗'}</a>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            </div>
-          ))}
-          <p className="v7-entradilla"><small>{p.aviso}</small></p>
-        </section>
+        <div className="vt-pila">
+          {APPS.map((a, n) => {
+            const cupon = a.codigo && !a.codigo.startsWith('http') ? a.codigo : undefined
+            const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
+            return (
+              <section key={a.clave} id={a.clave} className={`vt-panel ${n % 2 ? 'vt-panel-inverso' : ''}`}
+                style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo, zIndex: n + 1 }}>
+                <div className="vt-panel-dentro">
+                  <div className="vt-sello vt-aparece" aria-hidden="true">
+                    {a.marca.logo
+                      ? <svg viewBox="0 0 24 24" className="vt-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
+                      : <span className="vt-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="vt-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
+                  </div>
+                  <div className="vt-texto vt-aparece">
+                    <p className="vt-cat"><span>{String(n + 1).padStart(2, '0')}</span> {CATEGORIAS[a.cat][id]}</p>
+                    <h2 dir="ltr">{a.nombre}</h2>
+                    <p className="vt-que">{a.t[id].que}</p>
+                    <p className="vt-ventaja">{a.t[id].ventaja}</p>
+                    {cupon && (
+                      <div className="vt-cupon">
+                        <span>{p.codigo}</span>
+                        <bdi dir="ltr"><code>{cupon}</code></bdi>
+                        <BotonCopiar texto={cupon} copiar={p.copiar} copiado={p.copiado} />
+                      </div>
+                    )}
+                    <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
+                  </div>
+                </div>
+              </section>
+            )
+          })}
+        </div>
 
-        <section className="v7-seccion">
+        <section className="vt-bloque">
           <h2>{p.consejosTitulo}</h2>
-          <ul className="v7-notas">{p.consejos.map((c) => <li key={c}>{c}</li>)}</ul>
+          <ol className="vt-consejos">{p.consejos.map((c) => <li key={c}>{c}</li>)}</ol>
+          <p className="vt-aviso">{p.aviso}</p>
         </section>
 
-        <section className="v7-seccion v7-otono-final">
+        <section className="vt-final">
           <h2>{p.finalTitulo}</h2>
-          <p className="v7-entradilla">{p.finalTexto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.finalBoton}</a>
+          <p>{p.finalTexto}</p>
+          <a className="vt-wa vt-wa-grande" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.finalBoton}</a>
           <p><Link to={inicio}>{p.volver}</Link></p>
         </section>
       </main>
-      <BarraWa href={wa} lang={id} pagina={`ventajas-${id}`} />
 
-      <footer className="v7-pie">
-        <div className="v7-pie-fila">
-          <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
-          <nav>
-            <Link to={inicio}>Tony Kansai Guide</Link>
-            <Link to={`/legal?lang=${id}`}>{pie.legal}</Link>
-            <Link to={`/terms?lang=${id}`}>{pie.condiciones}</Link>
-            <Link to={`/privacy?lang=${id}`}>{pie.privacidad}</Link>
-          </nav>
-        </div>
+      <footer className="vt-pie">
+        <span><Logo /></span>
+        <a href={`mailto:${CORREO}`}>{CORREO}</a>
+        <nav>
+          <Link to={`/legal?lang=${id}`}>{pie.legal}</Link>
+          <Link to={`/terms?lang=${id}`}>{pie.condiciones}</Link>
+          <Link to={`/privacy?lang=${id}`}>{pie.privacidad}</Link>
+        </nav>
       </footer>
     </div>
   )
