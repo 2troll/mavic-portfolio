@@ -13,6 +13,8 @@ const ALMACENAMIENTO = [
   { name: '_ga', provider: 'Google Analytics', purposeKey: 'Distinguishes one visitor from another (anonymously).', duration: '2 years', typeKey: 'Analytics' },
   { name: '_ga_K9JKN9346D', provider: 'Google Analytics 4', purposeKey: 'Keeps the state of the current visit.', duration: '2 years', typeKey: 'Analytics' },
   { name: '_gcl_au', provider: 'Google Ads', purposeKey: 'Measures whether an ad led to a WhatsApp enquiry.', duration: '90 days', typeKey: 'Advertising' },
+  { name: '_clck', provider: 'Microsoft Clarity', purposeKey: 'Distinguishes one visitor from another (anonymously).', duration: '1 year', typeKey: 'Analytics' },
+  { name: '_clsk', provider: 'Microsoft Clarity', purposeKey: 'Keeps the state of the current visit.', duration: '1 day', typeKey: 'Analytics' },
   { name: 'tony-cookie-consent', provider: 'tonykansaiguide.com', purposeKey: 'Remembers whether you accepted or declined.', duration: 'Until you clear it', typeKey: 'Essential' },
   { name: 'tony-lang', provider: 'tonykansaiguide.com', purposeKey: 'Remembers the language you chose.', duration: 'Until you clear it', typeKey: 'Essential' },
 ]

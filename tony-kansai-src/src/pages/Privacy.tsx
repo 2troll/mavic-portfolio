@@ -108,6 +108,7 @@ export default function Privacy() {
           <Section title={tc('8. Third-Party Services')}>
             <ul className="space-y-1.5 list-none">
               <Li label={tc('Google Analytics')}>analytics.google.com — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-japan-red">{tc('Google Privacy Policy')}</a></Li>
+              <Li label="Microsoft Clarity">{tc('Heatmaps of clicks, scrolling and mouse movement, and anonymous session replays, only after you accept cookies. Form fields are masked.')} <a href="https://privacy.microsoft.com/privacystatement" target="_blank" rel="noopener noreferrer" className="text-japan-red">{tc('Microsoft Privacy Statement')}</a></Li>
               <Li label={tc('Unsplash')}>{tc('Photo CDN (images.unsplash.com) — no cookies set.')} <a href="https://unsplash.com/privacy" target="_blank" rel="noopener noreferrer" className="text-japan-red">{tc('Unsplash Privacy Policy')}</a></Li>
               <Li label={tc('Google Fonts')}>{tc('fonts.googleapis.com — Google may log font requests.')} <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" className="text-japan-red">{tc('Google Privacy Policy')}</a></Li>
               <Li label="WhatsApp">{tc('All direct communication.')} <a href="https://www.whatsapp.com/legal/privacy-policy" target="_blank" rel="noopener noreferrer" className="text-japan-red">{tc('WhatsApp Privacy Policy')}</a></Li>

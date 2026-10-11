@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
+import { cargarClarity } from '../clarity'
 
 declare global {
   interface Window {
@@ -16,6 +17,7 @@ function grantAnalytics() {
     analytics_storage: 'granted',
     ad_storage: 'granted',
   })
+  cargarClarity()
 }
 
 /** compacto: versión de cristal en una línea para las páginas v7. */
