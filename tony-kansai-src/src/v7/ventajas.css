@@ -335,10 +335,10 @@
 .vt-ficha-cta { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px; padding: 18px 22px; border-radius: 20px; background: var(--marca); color: var(--marca-tinta); }
 .vt-ficha-cta::before { content: ''; }
 
-/* «Lo que siempre me preguntan» y bloque para empresas */
-.vt-ayuda, .vt-socios { max-width: 860px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) 16px 0; }
-.vt-ayuda h2, .vt-socios h2 { margin: 0 0 8px; font-size: clamp(28px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -.02em; }
-.vt-ayuda-sub { opacity: .75; margin: 0 0 24px; }
+/* «Lo que siempre me preguntan»: dudas del viajero con enlaces a servicios reales */
+.vt-ayuda { max-width: 860px; margin: 0 auto; padding: clamp(48px, 8vw, 96px) 16px 0; }
+.vt-ayuda h2 { margin: 0 0 8px; font-size: clamp(28px, 4.5vw, 44px); line-height: 1.1; letter-spacing: -.02em; }
+.vt-ayuda-sub { color: var(--vt-suave); margin: 0 0 24px; }
 .vt-ayuda-lista { display: grid; gap: 10px; }
 .vt-ayuda-item { border: 1px solid color-mix(in srgb, currentColor 16%, transparent); border-radius: 16px; padding: 0 18px; background: color-mix(in srgb, currentColor 3%, transparent); }
 .vt-ayuda-item[open] { background: color-mix(in srgb, currentColor 6%, transparent); }
@@ -350,15 +350,3 @@
 .vt-ayuda-item p { margin: 0 0 14px; line-height: 1.6; }
 .vt-ayuda-enlaces { display: flex; flex-wrap: wrap; gap: 8px; }
 .vt-ayuda-enlaces a { padding: 6px 12px; border-radius: 999px; border: 1px solid currentColor; text-decoration: none; font-size: .9em; }
-.vt-socios { text-align: center; }
-.vt-socios-ico { width: 44px; height: 44px; opacity: .85; }
-.vt-socios > p { max-width: 640px; margin: 0 auto 18px; line-height: 1.6; }
-.vt-socios-tipos { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; padding: 0; margin: 0 0 22px; list-style: none; }
-.vt-socios-tipos li { padding: 5px 12px; border-radius: 999px; background: color-mix(in srgb, currentColor 8%, transparent); font-size: .9em; }
-.vt-socios .vt-acciones { justify-content: center; }
-.vt-boton-ico { width: 18px; height: 18px; vertical-align: -3px; }
-.vt-socios { --marca-boton: var(--vt-tinta); --marca-boton-tinta: var(--vt-fondo); }
-.vt-socios .vt-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 18px; }
-.vt-socios .vt-mas { color: var(--vt-wa); font-weight: 700; }
-.vt-socios-tipos li, .vt-ayuda-sub { color: var(--vt-suave); }
-.vt-socios-ico { display: block; margin: 0 auto 12px; }

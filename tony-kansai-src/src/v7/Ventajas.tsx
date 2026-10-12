@@ -232,8 +232,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         <meta property="og:title" content={p.titulo} />
         <meta property="og:description" content={p.descripcion} />
         <meta property="og:url" content={url} />
-        {!appSel && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: AYUDA[id].preguntas.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) })}</script>}
       </Helmet>
+      {!appSel && <Helmet><script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: AYUDA[id].preguntas.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) })}</script></Helmet>}
 
       <header className="vt-barra">
         <Link to={inicio} className="vt-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
@@ -356,16 +356,6 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           </div>
         </section>
 
-        <section className="vt-socios" id="empresas">
-          <Dibujo n="building-store" className="vt-socios-ico" />
-          <h2>{AYUDA[id].socios.titulo}</h2>
-          <p>{AYUDA[id].socios.texto}</p>
-          <ul className="vt-socios-tipos">{AYUDA[id].socios.tipos.map((t) => <li key={t}>{t}</li>)}</ul>
-          <div className="vt-acciones">
-            <a className="vt-boton" href={`mailto:${CORREO}?subject=${encodeURIComponent(AYUDA[id].socios.titulo)}`}><Dibujo n="mail" className="vt-boton-ico" /> {AYUDA[id].socios.correo}</a>
-            <a className="vt-mas" href={`https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(AYUDA[id].socios.saludo)}`} target="_blank" rel="noopener noreferrer">{AYUDA[id].socios.wa}</a>
-          </div>
-        </section>
 
         <section className="vt-final">
           <h2>{p.finalTitulo}</h2>
