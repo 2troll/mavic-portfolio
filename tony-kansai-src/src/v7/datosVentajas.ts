@@ -201,8 +201,8 @@ const LISTA: App[] = [
     },
   },
   {
-    // Afiliación aprobada el 12-10-2026; el enlace propio sale del panel de Mobal (falta su contraseña).
-    clave: 'mobal', cat: 'internet', nombre: 'Mobal', enlace: 'https://www.mobal.com/',
+    // Afiliado de Mobal (Post Affiliate Pro, partners.mobal.com): a_aid=tonykansai.
+    clave: 'mobal', cat: 'internet', nombre: 'Mobal', enlace: 'https://www.mobal.com/?a_aid=tonykansai',
     marca: { fondo: '#0b2a4a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0b2a4a', palabra: 'mobal' },
     t: {
       es: { que: 'SIM y eSIM para Japón, también con número de teléfono japonés para llamar a restaurantes y hoteles.', ventaja: 'Útil si necesitas un número local además de datos durante todo el viaje.' },

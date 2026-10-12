@@ -14,7 +14,7 @@ import { IconoWa } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, SEO_VENTAJAS, type Categoria } from './datosVentajas'
-import { LOGOS } from './logosMarcas'
+import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import './v7.css'
@@ -118,7 +118,7 @@ const DIBUJO: Record<string, string> = {
   airalo: 'device-mobile', klook: 'ticket', gyg: 'compass', trip: 'plane', agoda: 'bed', booking: 'building-skyscraper',
   icoca: 'train', go: 'car', uber: 'steering-wheel', luup: 'scooter-electric', hello: 'bike', wise: 'credit-card',
   maps: 'map-2', traductor: 'language', kkday: 'camera', welcome: 'plane-arrival', radical: 'luggage',
-  tiqets: 'ticket', kiwitaxi: 'car', intui: 'plane-arrival', yesim: 'device-mobile', ekta: 'shield-check', airhelp: 'plane',
+  tiqets: 'ticket', kiwitaxi: 'car', intui: 'plane-arrival', yesim: 'device-mobile', ekta: 'shield-check', airhelp: 'plane', mobal: 'device-mobile', flytographer: 'camera',
 }
 const Dibujo = ({ n, className }: { n: string; className?: string }) => (
   <svg className={className} aria-hidden="true"><use href={`/v7/ventajas-dibujos.svg#${n}`} /></svg>
@@ -129,9 +129,9 @@ function IconoApp({ a }: { a: (typeof APPS)[number] }) {
   const palabra = a.marca.palabra ?? ''
   const corta = palabra.length <= 4 ? palabra : palabra.charAt(0)
   return (
-    <span className="vt-ico" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
-      {a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : <b dir="ltr">{corta}</b>}
-      {a.marca.puntos && <span className="vt-ico-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}
+    <span className={`vt-ico${ICONOS_APP.has(a.clave) ? ' vt-ico-real' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
+      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="128" height="128" loading="lazy" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : <b dir="ltr">{corta}</b>}
+      {!ICONOS_APP.has(a.clave) && a.marca.puntos && <span className="vt-ico-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}
     </span>
   )
 }
@@ -259,6 +259,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           <div className="vt-movil-zona">
             <div className="vt-movil" role="navigation" aria-label={p.antetitulo}>
               <div className="vt-movil-isla" aria-hidden="true" />
+              <span className="vt-movil-boton vt-movil-boton-izq" aria-hidden="true" /><span className="vt-movil-boton vt-movil-boton-der" aria-hidden="true" />
               <div className="vt-movil-hora" aria-hidden="true"><span>9:41</span><span>Kansai</span></div>
               <div className="vt-movil-apps">
                 {APPS.map((a, n) => (

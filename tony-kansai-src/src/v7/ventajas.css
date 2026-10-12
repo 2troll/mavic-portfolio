@@ -161,28 +161,66 @@
 .vt-pista { display: inline-flex; align-items: center; gap: 10px; margin: 28px 0 0; padding: 10px 16px; border-radius: 999px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); font-weight: 600; font-size: .95rem; }
 .vt-pista-ico { width: 20px; height: 20px; color: #b4232a; }
 
-.vt-movil-zona { position: relative; justify-self: center; padding: 24px 40px; }
+.vt-movil-zona { position: relative; justify-self: center; padding: 24px 40px; perspective: 1600px; }
+/* El móvil: marco de titanio con bisel, grosor real hacia un lado (capas de sombra
+   que hacen de canto), botones laterales, cristal con reflejo y barra de inicio.
+   Se inclina en 3D y se endereza al pasar el ratón. */
 .vt-movil {
-  position: relative; width: min(330px, 78vw); aspect-ratio: 9 / 18.5; border-radius: 48px; padding: 14px;
-  background: linear-gradient(160deg, #1d2a44 0%, #3a2c5c 45%, #b4232a 140%);
-  box-shadow: 0 0 0 10px #111, 0 0 0 12px #3a3a3a, 0 40px 80px -30px rgba(20, 20, 40, .6);
-  transform: rotate(-4deg); transition: transform .5s cubic-bezier(.2, .7, .2, 1);
+  --canto: #2b2d31;
+  position: relative; width: min(330px, 78vw); aspect-ratio: 9 / 19.5; border-radius: 54px; padding: 10px 12px;
+  background:
+    radial-gradient(120% 70% at 85% 8%, rgba(255, 196, 120, .55), transparent 55%),
+    radial-gradient(90% 60% at 10% 95%, rgba(180, 35, 42, .75), transparent 60%),
+    linear-gradient(165deg, #172340 0%, #2f2658 48%, #7a2440 100%);
+  border: 11px solid #0c0c0e;
+  box-shadow:
+    0 0 0 1.5px #8c9097,            /* filo de titanio */
+    0 0 0 3px #4a4d53,
+    inset 0 0 0 1px rgba(255, 255, 255, .06),
+    1px 1px 0 3px #3d4046, 2px 2px 0 3px #393c42, 3px 3px 0 3px #35383d, 4px 4px 0 3px #313439,
+    5px 5px 0 3px #2d3035, 6px 6px 0 3px #2a2c31, 7px 7px 0 3px #26282d, 8px 8px 0 3px #222429,
+    30px 50px 70px -20px rgba(15, 15, 35, .55), 8px 16px 24px -10px rgba(0, 0, 0, .35);
+  transform: rotateY(-16deg) rotateX(7deg) rotateZ(-3deg);
+  transform-style: preserve-3d;
+  transition: transform .7s cubic-bezier(.2, .7, .2, 1), box-shadow .7s ease;
 }
-.lang-ar .vt-movil { transform: rotate(4deg); }
-.vt-movil-zona:hover .vt-movil { transform: rotate(0deg) translateY(-6px); }
-.vt-movil-isla { width: 96px; height: 26px; border-radius: 999px; background: #000; margin: 4px auto 0; }
-.vt-movil-hora { display: flex; justify-content: space-between; padding: 6px 14px 14px; color: #fff; font-size: .78rem; font-weight: 600; opacity: .9; }
-.vt-movil-apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px 6px; padding: 6px 8px; }
+.lang-ar .vt-movil { transform: rotateY(16deg) rotateX(7deg) rotateZ(3deg); }
+.vt-movil-zona:hover .vt-movil { transform: rotateY(0) rotateX(0) rotateZ(0) translateY(-6px); }
+/* Botones: acción y volumen a un lado, encendido al otro (fuera del borde de 11 px). */
+.vt-movil-boton { position: absolute; top: 17%; width: 4px; height: 26px; border-radius: 2px; background: linear-gradient(90deg, #5c6067, #a3a7ae 60%, #5c6067); }
+.vt-movil-boton-izq { left: -15px; }
+.vt-movil-boton-izq::before, .vt-movil-boton-izq::after { content: ''; position: absolute; left: 0; width: 4px; height: 46px; border-radius: 2px; background: inherit; }
+.vt-movil-boton-izq::before { top: 42px; }
+.vt-movil-boton-izq::after { top: 98px; }
+.vt-movil-boton-der { right: -15px; top: 24%; height: 72px; }
+/* Reflejo del cristal. */
+.vt-movil::after {
+  content: ''; position: absolute; inset: 0; border-radius: 40px; pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .20) 0%, rgba(255, 255, 255, .06) 28%, transparent 42%, transparent 78%, rgba(255, 255, 255, .05) 100%);
+}
+.vt-movil-isla { position: relative; width: 98px; height: 28px; border-radius: 999px; background: #000; margin: 2px auto 0; box-shadow: inset 0 0 0 1px #111; }
+.vt-movil-isla::before { content: ''; position: absolute; inset-inline-end: 18px; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #3a4a6a, #0b0d14 70%); }
+.vt-movil-hora { position: absolute; top: 15px; left: 26px; right: 26px; display: flex; justify-content: space-between; padding: 0 6px; color: #fff; font-size: .78rem; font-weight: 600; opacity: .95; pointer-events: none; }
+.vt-movil-hora span:first-child { padding-inline-start: 8px; }
+.vt-movil-apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px 6px; padding: 18px 8px 22px; }
 .vt-movil-app { display: grid; justify-items: center; gap: 5px; text-decoration: none; color: #fff !important; font-size: .64rem; font-weight: 600; line-height: 1.1; text-align: center; }
-.vt-movil-app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .4); }
+.vt-movil-app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
 .vt-movil-app:hover .vt-ico { transform: translateY(-3px) scale(1.06); }
+/* Barra de inicio. */
+.vt-movil-apps::after { content: ''; position: absolute; left: 50%; bottom: 9px; width: 34%; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .85); transform: translateX(-50%); }
 
-/* Icono de app (portada, kit y flotantes). */
+/* Icono de app (portada, kit y flotantes): esquinas de icono de iPhone, brillo
+   arriba y sombra de contacto, para que parezca un icono de verdad. */
 .vt-ico {
-  width: 52px; height: 52px; border-radius: 14px; display: grid; place-items: center; flex: none;
-  background: var(--marca); color: var(--marca-tinta); box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .45), inset 0 0 0 1px rgba(0, 0, 0, .06);
+  width: 52px; height: 52px; border-radius: 23%; display: grid; place-items: center; flex: none; overflow: hidden;
+  background: var(--marca); color: var(--marca-tinta);
+  box-shadow: 0 7px 14px -6px rgba(0, 0, 0, .55), 0 1px 2px rgba(0, 0, 0, .25), inset 0 0 0 .5px rgba(0, 0, 0, .12);
   transition: transform .2s ease;
 }
+.vt-ico::after { content: ''; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; background: linear-gradient(180deg, rgba(255, 255, 255, .22), rgba(255, 255, 255, 0) 45%); }
+.vt-ico-real { background: #fff; }
+.vt-ico-real::after { background: linear-gradient(180deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, 0) 40%); }
+.vt-ico img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .vt-ico svg { width: 56%; height: 56%; }
 .vt-ico b { font-weight: 800; font-size: .95rem; letter-spacing: -0.03em; }
 

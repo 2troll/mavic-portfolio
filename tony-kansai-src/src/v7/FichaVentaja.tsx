@@ -5,7 +5,7 @@
 import { Link } from 'react-router-dom'
 import { APPS, CATEGORIAS, type App } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
-import { LOGOS } from './logosMarcas'
+import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoWa } from './IconoWa'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
@@ -53,15 +53,15 @@ const DIBUJO: Record<string, string> = {
   airalo: 'device-mobile', klook: 'ticket', gyg: 'compass', kkday: 'camera', trip: 'plane', agoda: 'bed', booking: 'building-skyscraper',
   welcome: 'plane-arrival', icoca: 'train', go: 'car', uber: 'steering-wheel', luup: 'scooter-electric', hello: 'bike', wise: 'credit-card',
   maps: 'map-2', traductor: 'language', radical: 'luggage',
-  tiqets: 'ticket', kiwitaxi: 'car', intui: 'plane-arrival', yesim: 'device-mobile', ekta: 'shield-check', airhelp: 'plane',
+  tiqets: 'ticket', kiwitaxi: 'car', intui: 'plane-arrival', yesim: 'device-mobile', ekta: 'shield-check', airhelp: 'plane', mobal: 'device-mobile', flytographer: 'camera',
 }
 const Dibujo = ({ n, className }: { n: string; className?: string }) => (
   <svg className={className} aria-hidden="true"><use href={`/v7/ventajas-dibujos.svg#${n}`} /></svg>
 )
 function Logo({ a, className }: { a: App; className?: string }) {
   return (
-    <span className={className} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
-      {a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
+    <span className={`${className ?? ''}${ICONOS_APP.has(a.clave) ? ' vt-ico-real' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
+      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="128" height="128" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
         : <b dir="ltr">{(a.marca.palabra ?? a.nombre).length <= 4 ? a.marca.palabra : (a.marca.palabra ?? a.nombre).charAt(0)}</b>}
     </span>
   )
