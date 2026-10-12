@@ -17,6 +17,17 @@ export interface App {
   t: Record<'es' | 'en' | 'ar', { que: string; ventaja: string }> & { ru?: { que: string; ventaja: string } }
 }
 
+// Título y descripción de la página de ventajas: los usa la página y también
+// src/seo/cabeceras.ts, que los escribe en el HTML estático para Google.
+export const SEO_VENTAJAS: Record<Lang, { titulo: string; descripcion: string }> = {
+  es: { titulo: 'Ventajas para tu viaje a Kansai: apps y códigos | Tony Kansai Guide', descripcion: 'Las apps que recomiendo para Kansai: eSIM, entradas, hoteles, taxis, bicis y pagos. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA y Wise.' },
+  en: { titulo: 'Perks for your Kansai trip: apps and invite links | Tony Kansai Guide', descripcion: 'The apps I recommend for Kansai: eSIM, tickets, hotels, taxis, bikes and payments. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA and Wise.' },
+  ar: { titulo: 'مزايا لرحلتك إلى كانساي: تطبيقات وروابط دعوة | Tony Kansai Guide', descripcion: 'التطبيقات التي أستخدمها كل يوم في أوساكا وكيوتو للتنقل والدفع، مع روابط الدعوة الخاصة بي: Wise وLUUP وHELLO CYCLING وبطاقة ICOCA على الهاتف.' },
+  ru: { titulo: 'Полезные приложения для поездки в Кансай | Tony Kansai Guide', descripcion: 'Приложения, которые мы советуем для Осаки и Киото: eSIM, билеты, трансфер, такси, велосипеды, хранение багажа и оплата.' },
+}
+
+export const RUTA_VENTAJAS: Record<Lang, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
+
 export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
   internet: { es: 'Internet', en: 'Mobile data', ar: 'الإنترنت', ru: 'Интернет' },
   planes: { es: 'Entradas y planes', en: 'Tickets & activities', ar: 'تذاكر وأنشطة', ru: 'Билеты и экскурсии' },

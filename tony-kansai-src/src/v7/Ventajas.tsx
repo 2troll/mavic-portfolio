@@ -13,7 +13,7 @@ import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
-import { APPS, CATEGORIAS, type Categoria } from './datosVentajas'
+import { APPS, CATEGORIAS, SEO_VENTAJAS, type Categoria } from './datosVentajas'
 import { LOGOS } from './logosMarcas'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
@@ -42,8 +42,8 @@ type Textos = {
 
 const T: Record<VentajasId, Textos> = {
   es: {
-    titulo: 'Ventajas para tu viaje a Kansai: apps y códigos | Tony Kansai Guide',
-    descripcion: 'Las apps que recomiendo para Kansai: eSIM, entradas, hoteles, taxis, bicis y pagos. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA y Wise.',
+    titulo: SEO_VENTAJAS.es.titulo,
+    descripcion: SEO_VENTAJAS.es.descripcion,
     antetitulo: '🎁 Ventajas para mis viajeros',
     h1: 'Las apps para viajar por Kansai como un local',
     sub: 'Las apps que uso y recomiendo en Osaka y Kioto: internet, entradas, hotel, taxi, bici y pagos. Cada una en su ficha, para ir directo a lo que necesitas.',
@@ -59,8 +59,8 @@ const T: Record<VentajasId, Textos> = {
     saludo: 'Hola Tony, he visto tu página de ventajas y quería preguntarte por un tour.',
   },
   en: {
-    titulo: 'Perks for your Kansai trip: apps and invite links | Tony Kansai Guide',
-    descripcion: 'The apps I recommend for Kansai: eSIM, tickets, hotels, taxis, bikes and payments. Airalo, Klook, GetYourGuide, Trip.com, Agoda, GO, LUUP, ICOCA and Wise.',
+    titulo: SEO_VENTAJAS.en.titulo,
+    descripcion: SEO_VENTAJAS.en.descripcion,
     antetitulo: '🎁 Perks for my travellers',
     h1: 'The apps to travel Kansai like a local',
     sub: 'The apps I use and recommend in Osaka and Kyoto: data, tickets, hotels, taxis, bikes and payments. Each one on its own card, so you go straight to what you need.',
@@ -76,8 +76,8 @@ const T: Record<VentajasId, Textos> = {
     saludo: 'Hi Tony, I saw your perks page and wanted to ask about a tour.',
   },
   ar: {
-    titulo: 'مزايا لرحلتك إلى كانساي: تطبيقات وروابط دعوة | Tony Kansai Guide',
-    descripcion: 'التطبيقات التي أستخدمها كل يوم في أوساكا وكيوتو للتنقل والدفع، مع روابط الدعوة الخاصة بي: Wise وLUUP وHELLO CYCLING وبطاقة ICOCA على الهاتف.',
+    titulo: SEO_VENTAJAS.ar.titulo,
+    descripcion: SEO_VENTAJAS.ar.descripcion,
     antetitulo: '🎁 مزايا لضيوفي',
     h1: 'تطبيقات السفر في كانساي مثل أهل البلد',
     sub: 'التطبيقات التي أستخدمها وأنصح بها في أوساكا وكيوتو: الإنترنت والتذاكر والفنادق والتاكسي والدراجات والدفع، كلٌّ في بطاقته.',
@@ -93,8 +93,8 @@ const T: Record<VentajasId, Textos> = {
     saludo: 'السلام عليكم توني، رأيت صفحة المزايا وأريد أن أسأل عن جولة.',
   },
   ru: {
-    titulo: 'Полезные приложения для поездки в Кансай | Tony Kansai Guide',
-    descripcion: 'Приложения, которые мы советуем для Осаки и Киото: eSIM, билеты, трансфер, такси, велосипеды, хранение багажа и оплата.',
+    titulo: SEO_VENTAJAS.ru.titulo,
+    descripcion: SEO_VENTAJAS.ru.descripcion,
     antetitulo: 'Полезное для наших гостей',
     h1: 'Приложения, чтобы путешествовать по Кансаю как местный',
     sub: 'Интернет, билеты, отели, такси, велосипеды и оплата в Осаке и Киото. Каждое приложение — на своей карточке, с подробной инструкцией.',

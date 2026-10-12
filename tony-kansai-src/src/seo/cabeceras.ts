@@ -9,6 +9,7 @@ import { MONTANA } from '../v7/datosMontana'
 import { OTONO } from '../v7/datosOtono'
 import { GUIAS_TRANSPORTE } from '../v7/datosGuias'
 import { MERCADOS } from '../v7/datosViajeros'
+import { APPS, SEO_VENTAJAS, RUTA_VENTAJAS, type Lang } from '../v7/datosVentajas'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
@@ -96,6 +97,22 @@ export function cabeceras(): Record<string, Cabecera> {
       }
     }
   }
+  // Ventajas: la lista y la ficha de cada app, en los cuatro idiomas.
+  const idiomasV = Object.keys(RUTA_VENTAJAS) as Lang[]
+  for (const l of idiomasV) {
+    todas[sinBarras(RUTA_VENTAJAS[l])] = {
+      titulo: SEO_VENTAJAS[l].titulo, descripcion: SEO_VENTAJAS[l].descripcion, imagen: `/v8/og/${l}.jpg`, lang: l, dir: dirDe(l),
+      alternos: idiomasV.map((x) => [x, RUTA_VENTAJAS[x]]),
+    }
+    for (const a of APPS) {
+      const t = (a.t as Record<string, { que: string } | undefined>)[l] ?? a.t.en
+      todas[sinBarras(`${RUTA_VENTAJAS[l]}${a.clave}`)] = {
+        titulo: `${a.nombre} · ${SEO_VENTAJAS[l].titulo}`, descripcion: t.que, imagen: `/v8/og/${l}.jpg`, lang: l, dir: dirDe(l),
+        alternos: idiomasV.map((x) => [x, `${RUTA_VENTAJAS[x]}${a.clave}/`]),
+      }
+    }
+  }
+
   // Páginas legales: cada una con su título (antes todas heredaban el de la
   // portada y Google las veía duplicadas). Están en inglés y cambian con ?lang.
   const LEGALES: [string, string, string][] = [
