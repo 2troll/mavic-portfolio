@@ -35,5 +35,9 @@
  "book": "/en/",
  "about": "/en/",
  "pricing": "/en/",
- "faq": "/en/"
+ "faq": "/en/",
+ "guides": "/en/",
+ "guides/tony": "/en/",
+ "guides/larion": "/larion/",
+ "guides/johnny": "/en/"
 }
