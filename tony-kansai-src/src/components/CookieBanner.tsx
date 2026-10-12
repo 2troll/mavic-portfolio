@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence, MotionConfig } from 'framer-motion'
 import { Link } from 'react-router-dom'
 import { useLanguage } from '../contexts/LanguageContext'
-import { cargarClarity } from '../clarity'
+import { CONSENT_KEY, ponerConsentimiento } from '../lib/clarity'
 
 declare global {
   interface Window {
@@ -10,14 +10,28 @@ declare global {
   }
 }
 
-const CONSENT_KEY = 'tony-cookie-consent'
-
+// Clarity se carga en main.tsx en todas las visitas; aquí solo se le pasa el
+// consentimiento. Google Analytics sigue el mismo «consent update» de siempre.
 function grantAnalytics() {
   window.gtag?.('consent', 'update', {
     analytics_storage: 'granted',
     ad_storage: 'granted',
   })
-  cargarClarity()
+}
+
+// localStorage puede lanzar (Safari privado, cookies bloqueadas).
+function leeEleccion(): string | null {
+  try {
+    return localStorage.getItem(CONSENT_KEY)
+  } catch {
+    return null
+  }
+}
+
+function guardaEleccion(valor: 'accepted' | 'declined') {
+  try {
+    localStorage.setItem(CONSENT_KEY, valor)
+  } catch { /* sin almacenamiento: el banner volverá a salir la próxima vez */ }
 }
 
 /** compacto: versión de cristal en una línea para las páginas v7. */
@@ -26,7 +40,7 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    const stored = localStorage.getItem(CONSENT_KEY)
+    const stored = leeEleccion()
     if (!stored) {
       const timer = setTimeout(() => setVisible(true), 1500)
       return () => clearTimeout(timer)
@@ -35,13 +49,15 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
   }, [])
 
   const accept = () => {
-    localStorage.setItem(CONSENT_KEY, 'accepted')
+    guardaEleccion('accepted')
     grantAnalytics()
+    ponerConsentimiento(true)
     setVisible(false)
   }
 
   const decline = () => {
-    localStorage.setItem(CONSENT_KEY, 'declined')
+    guardaEleccion('declined')
+    ponerConsentimiento(false)
     setVisible(false)
   }
 

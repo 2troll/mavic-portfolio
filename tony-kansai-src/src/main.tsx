@@ -5,6 +5,7 @@ import App from './App'
 import { detectLang } from './contexts/LanguageContext'
 import { loadPhrases } from './lib/dict'
 import { cargaFuenteArabe } from './lib/arabicFont'
+import { cargarClarity } from './lib/clarity'
 
 // El idioma se conoce antes de pintar, así que se espera su diccionario:
 // evita el parpadeo de ver la web en inglés durante un instante. Si falla,
@@ -13,6 +14,10 @@ const idioma = detectLang()
 // En árabe la fuente se pide ya, antes de pintar: si esperase al efecto de
 // React se vería un instante con la tipografía de sistema.
 if (idioma === 'ar') cargaFuenteArabe()
+
+// Clarity en todas las visitas, sin esperar al banner: sin consentimiento graba
+// sin cookies (consentv2 «denied»); el banner lo cambia si se acepta.
+cargarClarity()
 
 const raiz = document.getElementById('root')!
 const arbol = (
