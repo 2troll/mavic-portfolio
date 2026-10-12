@@ -53,6 +53,7 @@ const DIBUJO: Record<string, string> = {
   airalo: 'device-mobile', klook: 'ticket', gyg: 'compass', kkday: 'camera', trip: 'plane', agoda: 'bed', booking: 'building-skyscraper',
   welcome: 'plane-arrival', icoca: 'train', go: 'car', uber: 'steering-wheel', luup: 'scooter-electric', hello: 'bike', wise: 'credit-card',
   maps: 'map-2', traductor: 'language', radical: 'luggage',
+  tiqets: 'ticket', kiwitaxi: 'car', intui: 'plane-arrival', yesim: 'device-mobile', ekta: 'shield-check', airhelp: 'plane',
 }
 const Dibujo = ({ n, className }: { n: string; className?: string }) => (
   <svg className={className} aria-hidden="true"><use href={`/v7/ventajas-dibujos.svg#${n}`} /></svg>

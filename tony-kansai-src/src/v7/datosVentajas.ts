@@ -37,7 +37,7 @@ export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
   utiles: { es: 'Imprescindibles', en: 'Must-haves', ar: 'أساسيات', ru: 'Самое нужное' },
 }
 
-export const APPS: App[] = [
+const LISTA: App[] = [
   {
     clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://airalo.tpk.ro/KoCqlrDV', codigo: 'PRINCE0661',
     marca: { fondo: '#141414', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#141414', palabra: 'airalo' },
@@ -200,4 +200,62 @@ export const APPS: App[] = [
       ar: { que: 'حفظ الأمتعة في متاجر وفنادق نامبا وأومِيدا ومحطة كيوتو.', ventaja: 'اترك حقائبك بعد تسجيل الخروج واستمتع بيومك الأخير بلا حمل.' },
     },
   },
+  {
+    clave: 'tiqets', cat: 'planes', nombre: 'Tiqets', enlace: 'https://tiqets.tpk.ro/a8lxNiUn',
+    marca: { fondo: '#1C1B3A', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#1C1B3A', palabra: 'Tiqets' },
+    t: {
+      es: { que: 'Entradas a museos y atracciones de Osaka y Kioto, en el móvil y al momento.', ventaja: 'Sin colas para comprar: enseñas el QR en la puerta.' },
+      en: { que: 'Tickets to museums and attractions in Osaka and Kyoto, on your phone in seconds.', ventaja: 'No ticket queues: just show the QR code at the door.' },
+      ar: { que: 'تذاكر المتاحف والمعالم في أوساكا وكيوتو، على هاتفك فورًا.', ventaja: 'بلا طوابير شراء: تُظهر رمز QR عند الباب.' },
+    },
+  },
+  {
+    clave: 'kiwitaxi', cat: 'moverse', nombre: 'Kiwitaxi', enlace: 'https://kiwitaxi.tpk.ro/s5ft3LPj',
+    marca: { fondo: '#FFD100', tinta: '#141414', boton: '#141414', botonTinta: '#FFD100', palabra: 'Kiwitaxi' },
+    t: {
+      es: { que: 'Traslado privado del aeropuerto de Kansai al hotel, reservado antes de volar.', ventaja: 'Precio cerrado al reservar y el conductor te espera en llegadas.' },
+      en: { que: 'Private transfer from Kansai Airport to your hotel, booked before you fly.', ventaja: 'Fixed price when you book, and the driver waits for you at arrivals.' },
+      ar: { que: 'توصيل خاص من مطار كانساي إلى فندقك، تحجزه قبل السفر.', ventaja: 'سعر ثابت عند الحجز، والسائق ينتظرك في صالة الوصول.' },
+    },
+  },
+  {
+    clave: 'intui', cat: 'moverse', nombre: 'intui.travel', enlace: 'https://intui.tpk.ro/iLD1b8ME',
+    marca: { fondo: '#E3262B', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#E3262B', palabra: 'intui' },
+    t: {
+      es: { que: 'Traslados privados desde el aeropuerto o entre ciudades: coche, monovolumen o minibús para grupos.', ventaja: 'Con mi enlace, 5 % de descuento en traslados (promoción hasta el 31 de octubre de 2026).' },
+      en: { que: 'Private transfers from the airport or between cities: car, minivan or minibus for groups.', ventaja: 'My link gives you 5% off transfers (offer until 31 October 2026).' },
+      ar: { que: 'توصيل خاص من المطار أو بين المدن: سيارة أو فان أو حافلة صغيرة للمجموعات.', ventaja: 'برابطي خصم 5٪ على التوصيل (العرض حتى 31 أكتوبر 2026).' },
+    },
+  },
+  {
+    clave: 'yesim', cat: 'internet', nombre: 'Yesim', enlace: 'https://yesim.tpk.ro/hTrigKKQ',
+    marca: { fondo: '#111111', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#111111', palabra: 'Yesim' },
+    t: {
+      es: { que: 'Otra eSIM para Japón, con planes por días o por gigas desde su app.', ventaja: 'Útil si viajas por varios países: una sola app para todo el viaje.' },
+      en: { que: 'Another Japan eSIM, with plans by days or by gigabytes from its app.', ventaja: 'Handy if you visit several countries: one app for the whole trip.' },
+      ar: { que: 'شريحة eSIM أخرى لليابان، بباقات بالأيام أو بالغيغابايت من تطبيقها.', ventaja: 'مفيدة إن زرت عدة دول: تطبيق واحد للرحلة كلها.' },
+    },
+  },
+  {
+    clave: 'ekta', cat: 'utiles', nombre: 'EKTA', enlace: 'https://ektatraveling.tpk.ro/PDbp3NoD',
+    marca: { fondo: '#FF5A1F', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#d9430e', palabra: 'EKTA' },
+    t: {
+      es: { que: 'Seguro de viaje online: lo contratas en unos minutos y recibes la póliza por correo.', ventaja: 'En Japón la sanidad es excelente pero cara para el turista: mejor ir cubierto.' },
+      en: { que: 'Online travel insurance: buy it in a few minutes and get the policy by email.', ventaja: 'Healthcare in Japan is excellent but expensive for visitors: better to be covered.' },
+      ar: { que: 'تأمين سفر عبر الإنترنت: تشتريه في دقائق وتصلك الوثيقة بالبريد.', ventaja: 'الرعاية الصحية في اليابان ممتازة لكنها مكلفة للزائر: الأفضل أن تكون مؤمَّنًا.' },
+    },
+  },
+  {
+    clave: 'airhelp', cat: 'utiles', nombre: 'AirHelp', enlace: 'https://airhelp.tpk.ro/xUhwrt3z',
+    marca: { fondo: '#0B6CF0', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0B6CF0', palabra: 'AirHelp' },
+    t: {
+      es: { que: 'Si tu vuelo se retrasa, se cancela o pierdes la conexión, te ayuda a reclamar la compensación que te corresponda.', ventaja: 'Con mi enlace, 11 % de descuento en AirHelp+ (hasta el 30 de noviembre de 2026; no válido en EE. UU.).' },
+      en: { que: 'If your flight is delayed, cancelled or you miss a connection, it helps you claim the compensation you are owed.', ventaja: 'My link gives you 11% off AirHelp+ (until 30 November 2026; not valid in the US).' },
+      ar: { que: 'إن تأخرت رحلتك أو أُلغيت أو فاتتك رحلة الربط، يساعدك على المطالبة بالتعويض المستحق لك.', ventaja: 'برابطي خصم 11٪ على AirHelp+ (حتى 30 نوفمبر 2026؛ غير صالح في الولايات المتحدة).' },
+    },
+  },
 ]
+
+// Agrupadas por categoría (en el orden de CATEGORIAS) aunque se añadan al final de LISTA.
+const ORDEN = Object.keys(CATEGORIAS) as Categoria[]
+export const APPS: App[] = [...LISTA].sort((a, b) => ORDEN.indexOf(a.cat) - ORDEN.indexOf(b.cat))
