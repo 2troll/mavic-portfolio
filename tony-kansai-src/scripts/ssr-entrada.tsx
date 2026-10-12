@@ -22,7 +22,10 @@ export function pinta(url: string, idioma?: Lang, frases?: Record<string, string
   return new Promise((resolve, reject) => {
     let html = ''
     const destino = new Writable({ write(trozo, _c, listo) { html += trozo.toString(); listo() } })
-    destino.on('finish', () => resolve({ html, ld: ctx.helmet?.script.toString() ?? '' }))
+    // React 18 manda entero su búfer de 2048 bytes cuando una letra de varios
+    // bytes (kanji, árabe) no cabe al final, con el hueco relleno de ceros:
+    // salía un NUL en mitad del texto. En HTML nunca hay NUL legítimo.
+    destino.on('finish', () => resolve({ html: html.replaceAll('\0', ''), ld: ctx.helmet?.script.toString() ?? '' }))
     const { pipe } = renderToPipeableStream(
       <HelmetProvider context={ctx}>
         <LanguageProvider inicial={idioma}>
