@@ -15,6 +15,7 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, type Categoria } from './datosVentajas'
 import { LOGOS } from './logosMarcas'
+import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import './v7.css'
 import './ventajas.css'
@@ -159,6 +160,13 @@ const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string;
 }
 const TOCA: Record<VentajasId, string> = { es: 'Toca una app para ver cómo funciona', en: 'Tap an app to see how it works', ar: 'اضغط على تطبيق لترى كيف يعمل', ru: 'Нажмите на приложение, чтобы узнать подробности' }
 
+// Enlace de una respuesta: a la ficha de una app, a una guía de la web o fuera.
+function EnlaceAyuda({ e, lista }: { e: Enlace; lista: string }) {
+  if (e.app) return <Link to={`${lista}${e.app}/`}>{e.texto}</Link>
+  if (e.guia) return <Link to={e.guia}>{e.texto}</Link>
+  return <a href={e.href} target="_blank" rel="noopener noreferrer">{e.texto}</a>
+}
+
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
   return (
@@ -224,6 +232,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         <meta property="og:title" content={p.titulo} />
         <meta property="og:description" content={p.descripcion} />
         <meta property="og:url" content={url} />
+        {!appSel && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: AYUDA[id].preguntas.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) })}</script>}
       </Helmet>
 
       <header className="vt-barra">
@@ -331,6 +340,31 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           <h2>{p.consejosTitulo}</h2>
           <ol className="vt-consejos">{p.consejos.map((c) => <li key={c}>{c}</li>)}</ol>
           <p className="vt-aviso">{p.aviso}</p>
+        </section>
+
+        <section className="vt-ayuda" id="preguntas">
+          <h2>{AYUDA[id].titulo}</h2>
+          <p className="vt-ayuda-sub">{AYUDA[id].sub}</p>
+          <div className="vt-ayuda-lista">
+            {AYUDA[id].preguntas.map((q) => (
+              <details key={q.q} className="vt-ayuda-item">
+                <summary><Dibujo n={q.icono} className="vt-ayuda-ico" /><span>{q.q}</span></summary>
+                <p>{q.a}</p>
+                <p className="vt-ayuda-enlaces">{q.enlaces.map((e) => <EnlaceAyuda key={e.texto} e={e} lista={RUTA[id]} />)}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <section className="vt-socios" id="empresas">
+          <Dibujo n="building-store" className="vt-socios-ico" />
+          <h2>{AYUDA[id].socios.titulo}</h2>
+          <p>{AYUDA[id].socios.texto}</p>
+          <ul className="vt-socios-tipos">{AYUDA[id].socios.tipos.map((t) => <li key={t}>{t}</li>)}</ul>
+          <div className="vt-acciones">
+            <a className="vt-boton" href={`mailto:${CORREO}?subject=${encodeURIComponent(AYUDA[id].socios.titulo)}`}><Dibujo n="mail" className="vt-boton-ico" /> {AYUDA[id].socios.correo}</a>
+            <a className="vt-mas" href={`https://wa.me/${GUIAS.tony.wa}?text=${encodeURIComponent(AYUDA[id].socios.saludo)}`} target="_blank" rel="noopener noreferrer">{AYUDA[id].socios.wa}</a>
+          </div>
         </section>
 
         <section className="vt-final">
