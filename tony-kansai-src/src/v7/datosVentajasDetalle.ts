@@ -1376,6 +1376,83 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
       precio: 'Оплата за каждую сумку за день; цена видна до бронирования.',
     },
   },
+  samurai: {
+    es: {
+      intro: 'El Museo Samurái y Ninja de Kioto, junto a Nishiki, enseña armaduras, espadas y la historia real de samuráis y ninjas. La visita es guiada y práctica: los niños se ponen el traje y prueban a lanzar shuriken.',
+      para: [
+        'Familias con niños que buscan algo divertido y activo en Kioto.',
+        'Una hora a cubierto los días de lluvia o de mucho calor.',
+        'Encaja bien antes o después del mercado de Nishiki.',
+      ],
+      pasos: [
+        'Toca el botón de esta página para abrir la web del museo.',
+        'Elige la experiencia, el día y la hora.',
+        'Al pagar, escribe el código ag-special y pulsa «Apply» para que se aplique el 10 %.',
+        'Enseña la reserva en la entrada.',
+      ],
+      consejos: [
+        'El código no se puede añadir después de reservar: ponlo antes de pagar.',
+        'Si vienes de tour conmigo, dímelo y lo encajamos en la ruta por Kioto.',
+      ],
+      precio: 'El precio sale en su web antes de pagar; el código descuenta un 10 %.',
+    },
+    en: {
+      intro: 'The Kyoto Samurai & Ninja Museum, next to Nishiki, shows armour, swords and the real history of samurai and ninja. The visit is guided and hands-on: kids put on the costume and try throwing shuriken.',
+      para: [
+        'Families with children looking for something fun and active in Kyoto.',
+        'An indoor hour on rainy or very hot days.',
+        'Fits well before or after Nishiki Market.',
+      ],
+      pasos: [
+        'Tap the button on this page to open the museum website.',
+        'Choose the experience, the day and the time.',
+        'At checkout, enter the code ag-special and tap "Apply" to get 10% off.',
+        'Show your booking at the entrance.',
+      ],
+      consejos: [
+        'The code cannot be added after booking: enter it before you pay.',
+        'If you are touring with me, tell me and we will fit it into the Kyoto route.',
+      ],
+      precio: 'The price is shown on their website before you pay; the code takes 10% off.',
+    },
+    ar: {
+      intro: 'متحف الساموراي والنينجا في كيوتو، قرب سوق نيشيكي، يعرض الدروع والسيوف والتاريخ الحقيقي للساموراي والنينجا. الزيارة مع مرشد وتفاعلية: يرتدي الأطفال الزي ويجرّبون رمي الشوريكن.',
+      para: [
+        'العائلات مع الأطفال الباحثة عن نشاط ممتع في كيوتو.',
+        'ساعة داخل مكان مغلق في أيام المطر أو الحر الشديد.',
+        'يناسب قبل زيارة سوق نيشيكي أو بعدها.',
+      ],
+      pasos: [
+        'اضغط الزر في هذه الصفحة لفتح موقع المتحف.',
+        'اختر التجربة واليوم والساعة.',
+        'عند الدفع اكتب الرمز ag-special واضغط «Apply» ليُطبَّق خصم 10%.',
+        'اعرض الحجز عند المدخل.',
+      ],
+      consejos: [
+        'لا يمكن إضافة الرمز بعد الحجز: أدخله قبل الدفع.',
+        'إن كنت في جولة معي فأخبرني وسنضيفه إلى مسار كيوتو.',
+      ],
+      precio: 'يظهر السعر في موقعهم قبل الدفع، والرمز يخصم 10%.',
+    },
+    ru: {
+      intro: 'Музей самураев и ниндзя в Киото, рядом с рынком Нисики, показывает доспехи, мечи и настоящую историю самураев и ниндзя. Экскурсия с гидом и практикой: дети надевают костюм и пробуют метать сюрикены.',
+      para: [
+        'Семьи с детьми, которые ищут что-то весёлое и активное в Киото.',
+        'Час под крышей в дождь или сильную жару.',
+        'Удобно до или после рынка Нисики.',
+      ],
+      pasos: [
+        'Нажмите кнопку на этой странице, чтобы открыть сайт музея.',
+        'Выберите программу, день и время.',
+        'При оплате введите код ag-special и нажмите «Apply» — скидка 10 %.',
+        'Покажите бронь на входе.',
+      ],
+      consejos: [
+        'Код нельзя добавить после бронирования: вводите его до оплаты.',
+      ],
+      precio: 'Цена видна на сайте до оплаты; код даёт скидку 10 %.',
+    },
+  },
 }
 
 export const T_RU: Record<string, { que: string; ventaja: string }> = {
@@ -1395,5 +1472,6 @@ export const T_RU: Record<string, { que: string; ventaja: string }> = {
   wise: { que: 'Карта для оплаты в иенах по реальному курсу, без банковских комиссий.', ventaja: 'Я сам ей пользуюсь, и ею можно оплатить экскурсию со мной.' },
   maps: { que: 'В Японии показывает платформу, вагон и точное время каждого поезда.', ventaja: 'Сохраните нужные места в список: они будут под рукой в одно касание.' },
   traductor: { que: 'Наведите камеру на меню, вывески и этикетки — и сразу читайте японский.', ventaja: 'Скачайте японский офлайн: работает в метро без интернета.' },
+  samurai: { que: 'Музей самураев и ниндзя в Киото: доспехи, катаны и метание сюрикенов, с гидом на английском.', ventaja: 'С кодом ag-special — скидка 10 % при бронировании на их сайте. Отлично с детьми.' },
   radical: { que: 'Камеры хранения в магазинах и отелях Намбы, Умэды и у станции Киото.', ventaja: 'Оставьте багаж после выезда и проведите последний день налегке.' },
 }

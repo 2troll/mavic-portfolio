@@ -64,6 +64,15 @@ export const APPS: App[] = [
     },
   },
   {
+    clave: 'samurai', cat: 'planes', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', codigo: 'ag-special',
+    marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
+    t: {
+      es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Con el código ag-special, 10 % de descuento al reservar en su web. Ideal con niños.' },
+      en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'Code ag-special gives 10% off when you book on their website. Great with kids.' },
+      ar: { que: 'متحف الساموراي والنينجا في كيوتو: دروع وسيوف كاتانا ورمي الشوريكن، مع مرشد بالإنجليزية.', ventaja: 'بالرمز ag-special تحصل على خصم 10% عند الحجز من موقعهم. رائع مع الأطفال.' },
+    },
+  },
+  {
     clave: 'trip', cat: 'dormir', nombre: 'Trip.com', enlace: 'https://www.trip.com/',
     marca: { fondo: '#287DFA', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#287DFA', logo: 'trip' },
     t: {
