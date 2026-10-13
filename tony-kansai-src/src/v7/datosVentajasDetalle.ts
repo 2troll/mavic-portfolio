@@ -1316,7 +1316,7 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
         'Mira el horario del local: si cierra pronto, no podrás recoger las maletas.',
         'En temporada alta las taquillas de las estaciones se llenan: reserva antes.',
       ],
-      precio: 'Pagas por maleta y por día; el precio sale antes de reservar.',
+      precio: 'Pagas por maleta y por día; con mi enlace o el código TONYKANSAI te descuenta un 10 %.',
     },
     en: {
       intro: 'Radical Storage is a network of luggage storage points in partner shops and hotels. Book online, drop your bags and move around freely. Perfect for your last day after check-out, or when you arrive before check-in.',
@@ -1335,7 +1335,7 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
         'Check the shop’s opening hours: if it closes early, you cannot collect your bags.',
         'Station lockers fill up in peak season, so book ahead.',
       ],
-      precio: 'You pay per bag per day; the price is shown before you book.',
+      precio: 'You pay per bag per day; my link or the code TONYKANSAI takes 10% off.',
     },
     ar: {
       intro: 'Radical Storage شبكة لحفظ الأمتعة في متاجر وفنادق شريكة. تحجز عبر الإنترنت، وتترك حقائبك، وتتنقل بحرية. مثالية ليومك الأخير بعد تسجيل الخروج أو عند وصولك قبل موعد الدخول.',
@@ -1354,7 +1354,7 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
         'راجع ساعات عمل المتجر: إن أغلق باكرًا فلن تستطيع استلام حقائبك.',
         'خزائن المحطات تمتلئ في المواسم المزدحمة، فاحجز مسبقًا.',
       ],
-      precio: 'تدفع لكل حقيبة عن كل يوم، ويظهر السعر قبل الحجز.',
+      precio: 'تدفع لكل حقيبة عن كل يوم، وبرابطي أو بالرمز TONYKANSAI تحصل على خصم 10%.',
     },
     ru: {
       intro: 'Radical Storage — сеть камер хранения в партнёрских магазинах и отелях. Бронируете онлайн, оставляете чемоданы и гуляете налегке. Идеально в последний день после выезда или если приехали раньше заселения.',
@@ -1373,7 +1373,7 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
         'Проверьте часы работы точки: если она закроется рано, багаж не забрать.',
         'В высокий сезон ячейки на станциях заняты — бронируйте заранее.',
       ],
-      precio: 'Оплата за каждую сумку за день; цена видна до бронирования.',
+      precio: 'Оплата за каждую сумку за день; с моей ссылкой или кодом TONYKANSAI — скидка 10 %.',
     },
   },
   samurai: {
@@ -1527,7 +1527,7 @@ export const T_RU: Record<string, { que: string; ventaja: string }> = {
   maps: { que: 'В Японии показывает платформу, вагон и точное время каждого поезда.', ventaja: 'Сохраните нужные места в список: они будут под рукой в одно касание.' },
   traductor: { que: 'Наведите камеру на меню, вывески и этикетки — и сразу читайте японский.', ventaja: 'Скачайте японский офлайн: работает в метро без интернета.' },
   samurai: { que: 'Музей самураев и ниндзя в Киото: доспехи, катаны и метание сюрикенов, с гидом на английском.', ventaja: 'Весёлый час под крышей в центре Киото. Отлично с детьми.' },
-  radical: { que: 'Камеры хранения в магазинах и отелях Намбы, Умэды и у станции Киото.', ventaja: 'Оставьте багаж после выезда и проведите последний день налегке.' },
+  radical: { que: 'Камеры хранения в магазинах и отелях Намбы, Умэды и у станции Киото.', ventaja: 'С моей ссылкой или кодом TONYKANSAI — скидка 10 %. Оставьте багаж после выезда и гуляйте налегке.' },
   tiqets: { que: 'Билеты в музеи и на достопримечательности Осаки и Киото — сразу в телефоне.', ventaja: 'Без очередей в кассу: показываете QR-код на входе.' },
   kiwitaxi: { que: 'Частный трансфер из аэропорта Кансай в отель, бронируется до вылета.', ventaja: 'Цена фиксируется при бронировании, водитель встречает в зоне прилёта.' },
   intui: { que: 'Частные трансферы из аэропорта или между городами: легковая, минивэн или микроавтобус для групп.', ventaja: 'По нашей ссылке скидка 5 % на трансферы (акция до 31 октября 2026 г.).' },

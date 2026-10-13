@@ -196,12 +196,13 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'radical', cat: 'utiles', nombre: 'Radical Storage', enlace: 'https://radicalstorage.tpk.ro/EgagwQA7',
+    // Afiliado directo (plan híbrido 10 % cliente / 5 % comisión, 13-10-2026); el enlace ya lleva el cupón.
+    clave: 'radical', cat: 'utiles', nombre: 'Radical Storage', enlace: 'https://radicalstorage.com/?acc=3d471cfd732601c321ee2622864dff8f&utm_source=aff_link&utm_medium=3d471cfd732601c321ee2622864dff8f&couponCode=TONYKANSAI', codigo: 'TONYKANSAI', descuento: '10 %',
     marca: { fondo: '#FF6A3D', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#d9481c', palabra: 'Radical' },
     t: {
-      es: { que: 'Consigna de maletas en tiendas y hoteles de Namba, Umeda y la estación de Kioto.', ventaja: 'Dejas el equipaje tras el check-out y aprovechas el último día sin cargar.' },
-      en: { que: 'Luggage storage in shops and hotels in Namba, Umeda and Kyoto Station.', ventaja: 'Drop your bags after check-out and enjoy your last day hands-free.' },
-      ar: { que: 'حفظ الأمتعة في متاجر وفنادق نامبا وأومِيدا ومحطة كيوتو.', ventaja: 'اترك حقائبك بعد تسجيل الخروج واستمتع بيومك الأخير بلا حمل.' },
+      es: { que: 'Consigna de maletas en tiendas y hoteles de Namba, Umeda y la estación de Kioto.', ventaja: 'Con mi enlace o el código TONYKANSAI, 10 % de descuento. Dejas el equipaje tras el check-out y aprovechas el último día sin cargar.' },
+      en: { que: 'Luggage storage in shops and hotels in Namba, Umeda and Kyoto Station.', ventaja: 'My link or the code TONYKANSAI gives you 10% off. Drop your bags after check-out and enjoy your last day hands-free.' },
+      ar: { que: 'حفظ الأمتعة في متاجر وفنادق نامبا وأومِيدا ومحطة كيوتو.', ventaja: 'برابطي أو بالرمز TONYKANSAI خصم 10%. اترك حقائبك بعد تسجيل الخروج واستمتع بيومك الأخير بلا حمل.' },
     },
   },
   {
