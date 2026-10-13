@@ -13,7 +13,7 @@ import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
-import { APPS, CATEGORIAS, SEO_VENTAJAS, type Categoria } from './datosVentajas'
+import { APPS, CATEGORIAS, SEO_VENTAJAS, cuponDe, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import MovilMueve from './MovilMueve'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -181,6 +181,14 @@ function EnlaceAyuda({ e, lista }: { e: Enlace; lista: string }) {
   return <a href={e.href} target="_blank" rel="noopener noreferrer">{e.texto}</a>
 }
 
+// Franja de códigos arriba del todo: el cliente los tiene a mano sin buscar tarjeta por tarjeta.
+const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; ver: string }> = {
+  es: { titulo: 'Tus códigos de descuento', sub: 'Cópialo y pégalo al pagar en la web o la app de cada uno.', hasta: 'hasta el', ver: 'Cómo usarlo' },
+  en: { titulo: 'Your discount codes', sub: 'Copy one and paste it at checkout on their website or app.', hasta: 'until', ver: 'How to use it' },
+  ar: { titulo: 'رموز الخصم الخاصة بك', sub: 'انسخ الرمز والصقه عند الدفع في موقعهم أو تطبيقهم.', hasta: 'حتى', ver: 'طريقة الاستخدام' },
+  ru: { titulo: 'Ваши коды на скидку', sub: 'Скопируйте код и вставьте при оплате на их сайте или в приложении.', hasta: 'до', ver: 'Как использовать' },
+}
+
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
   return (
@@ -227,7 +235,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
     window.addEventListener('hashchange', quita)
     return () => window.removeEventListener('hashchange', quita)
   }, [])
-  const cupon0 = APPS.find((a) => a.codigo && !a.codigo.startsWith('http'))
+  const cupon0 = APPS.find((a) => a.clave === 'airalo' && cuponDe(a))
+  const conCodigo = APPS.filter((a) => cuponDe(a))
 
   return (
     <div ref={raiz} className={`vt lang-${id}`} lang={id} dir={dir}>
@@ -285,6 +294,28 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           </div>
         </section>
 
+        {conCodigo.length > 0 && (
+          <section className="vt-codigos" aria-labelledby="vt-codigos-t">
+            <h2 id="vt-codigos-t">{CODIGOS[id].titulo}</h2>
+            <p className="vt-codigos-sub">{CODIGOS[id].sub}</p>
+            <ul>
+              {conCodigo.map((a) => (
+                <li key={a.clave} style={{ ['--marca-boton' as string]: a.marca.fondo, ['--marca-boton-tinta' as string]: a.marca.tinta }}>
+                  <IconoApp a={a} />
+                  <div className="vt-codigos-txt">
+                    <strong dir="ltr">{a.nombre}</strong>
+                    {a.descuento && <span className="vt-codigos-dto" dir="ltr">{a.descuento}</span>}
+                    <code dir="ltr">{cuponDe(a)}</code>
+                    {a.caduca && <small>{CODIGOS[id].hasta} <bdi dir="ltr">{new Date(`${a.caduca}T12:00:00`).toLocaleDateString(id === 'ar' ? 'ar-EG' : id, { day: 'numeric', month: 'short', year: 'numeric' })}</bdi></small>}
+                  </div>
+                  <BotonCopiar texto={cuponDe(a)!} copiar={p.copiar} copiado={p.copiado} />
+                  <Link className="vt-codigos-ver" to={`${RUTA[id]}${a.clave}/`}>{CODIGOS[id].ver}</Link>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )}
+
         <section className="vt-kit">
           <h2>{PASOS[id].titulo}</h2>
           <ol>
@@ -316,7 +347,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         <div className="vt-rejilla">
           <AnimatePresence initial={false} mode="popLayout">
             {APPS.filter((a) => !filtro || a.cat === filtro).map((a) => {
-              const cupon = a.codigo && !a.codigo.startsWith('http') ? a.codigo : undefined
+              const cupon = cuponDe(a)
               const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
               const t = textoApp(a, id)
               return (

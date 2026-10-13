@@ -13,6 +13,10 @@ export interface App {
   nombre: string
   enlace: string
   codigo?: string
+  /** Lo que ahorra el código, corto (va en la franja de códigos): '10 %', '−450 ¥'. */
+  descuento?: string
+  /** Último día del código (AAAA-MM-DD): pasado ese día, la web deja de enseñarlo. */
+  caduca?: string
   /** El ruso de las fichas cortas vive en datosVentajasDetalle.ts (T_RU). */
   t: Record<'es' | 'en' | 'ar', { que: string; ventaja: string }> & { ru?: { que: string; ventaja: string } }
 }
@@ -39,7 +43,7 @@ export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
 
 const LISTA: App[] = [
   {
-    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://airalo.tpk.ro/KoCqlrDV', codigo: 'PRINCE0661',
+    clave: 'airalo', cat: 'internet', nombre: 'Airalo', enlace: 'https://airalo.tpk.ro/KoCqlrDV', codigo: 'PRINCE0661', descuento: '−450 ¥',
     marca: { fondo: '#141414', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#141414', palabra: 'airalo' },
     t: {
       es: { que: 'eSIM de Japón: datos en el móvil nada más aterrizar, sin buscar tienda ni wifi de bolsillo.', ventaja: 'Con mi código, 450 ¥ de descuento en tu primera eSIM. La instalas en casa y se activa sola en Kansai.' },
@@ -75,12 +79,12 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'samurai', cat: 'planes', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', codigo: 'ag-special',
+    clave: 'samurai', cat: 'planes', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/',
     marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
     t: {
-      es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Con el código ag-special, 10 % de descuento al reservar en su web. Ideal con niños.' },
-      en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'Code ag-special gives 10% off when you book on their website. Great with kids.' },
-      ar: { que: 'متحف الساموراي والنينجا في كيوتو: دروع وسيوف كاتانا ورمي الشوريكن، مع مرشد بالإنجليزية.', ventaja: 'بالرمز ag-special تحصل على خصم 10% عند الحجز من موقعهم. رائع مع الأطفال.' },
+      es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Una hora divertida y a cubierto en pleno Kioto. Ideal con niños.' },
+      en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'A fun indoor hour in central Kyoto. Great with kids.' },
+      ar: { que: 'متحف الساموراي والنينجا في كيوتو: دروع وسيوف كاتانا ورمي الشوريكن، مع مرشد بالإنجليزية.', ventaja: 'ساعة ممتعة في مكان مغلق وسط كيوتو. رائع مع الأطفال.' },
     },
   },
   {
@@ -274,7 +278,32 @@ const LISTA: App[] = [
       ar: { que: 'إن تأخرت رحلتك أو أُلغيت أو فاتتك رحلة الربط، يساعدك على المطالبة بالتعويض المستحق لك.', ventaja: 'برابطي خصم 11٪ على AirHelp+ (حتى 30 نوفمبر 2026؛ غير صالح في الولايات المتحدة).' },
     },
   },
+  {
+    clave: 'wargo', cat: 'planes', nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
+    marca: { fondo: '#b5274a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#b5274a', palabra: '着物' },
+    t: {
+      es: { que: 'Alquiler de kimono y yukata en Kioto: te lo ponen en la tienda y sales a pasear por Higashiyama o Gion.', ventaja: 'Con el código 261013_wgtn, 10 % de descuento al reservar en su web (hasta el 31-12-2026).' },
+      en: { que: 'Kimono and yukata rental in Kyoto: they dress you in the shop and you walk out into Higashiyama or Gion.', ventaja: 'Code 261013_wgtn gives 10% off when you book on their website (until 31 Dec 2026).' },
+      ar: { que: 'استئجار الكيمونو واليوكاتا في كيوتو: يُلبسونك في المتجر وتخرج للتنزه في هيغاشياما أو غيون.', ventaja: 'بالرمز 261013_wgtn خصم 10% عند الحجز من موقعهم (حتى 31-12-2026).' },
+    },
+  },
+  {
+    clave: 'camellia', cat: 'planes', nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/',
+    marca: { fondo: '#2f4a32', tinta: '#f3ead7', boton: '#f3ead7', botonTinta: '#2f4a32', palabra: '茶' },
+    t: {
+      es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Si vienes de tour conmigo, te la reservo yo con mi tarifa de guía y te la traduzco al español o al árabe.' },
+      en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Touring with me? I book it for you at my guide rate and translate it into Spanish or Arabic.' },
+      ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'إن كنت في جولة معي، أحجزه لك بسعر المرشد وأترجمه لك إلى العربية أو الإسبانية.' },
+    },
+  },
 ]
+
+/** El código que se copia (no los enlaces https://), mientras no haya caducado. */
+export function cuponDe(a: App): string | undefined {
+  if (!a.codigo || a.codigo.startsWith('http')) return undefined
+  if (a.caduca && new Date().toISOString().slice(0, 10) > a.caduca) return undefined
+  return a.codigo
+}
 
 // Agrupadas por categoría (en el orden de CATEGORIAS) aunque se añadan al final de LISTA.
 const ORDEN = Object.keys(CATEGORIAS) as Categoria[]

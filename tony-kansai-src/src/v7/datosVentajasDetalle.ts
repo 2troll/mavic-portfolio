@@ -1387,14 +1387,13 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
       pasos: [
         'Toca el botón de esta página para abrir la web del museo.',
         'Elige la experiencia, el día y la hora.',
-        'Al pagar, escribe el código ag-special y pulsa «Apply» para que se aplique el 10 %.',
+        'Paga en su web y guarda la confirmación.',
         'Enseña la reserva en la entrada.',
       ],
       consejos: [
-        'El código no se puede añadir después de reservar: ponlo antes de pagar.',
         'Si vienes de tour conmigo, dímelo y lo encajamos en la ruta por Kioto.',
       ],
-      precio: 'El precio sale en su web antes de pagar; el código descuenta un 10 %.',
+      precio: 'El precio sale en su web antes de pagar.',
     },
     en: {
       intro: 'The Kyoto Samurai & Ninja Museum, next to Nishiki, shows armour, swords and the real history of samurai and ninja. The visit is guided and hands-on: kids put on the costume and try throwing shuriken.',
@@ -1406,14 +1405,13 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
       pasos: [
         'Tap the button on this page to open the museum website.',
         'Choose the experience, the day and the time.',
-        'At checkout, enter the code ag-special and tap "Apply" to get 10% off.',
+        'Pay on their website and keep the confirmation.',
         'Show your booking at the entrance.',
       ],
       consejos: [
-        'The code cannot be added after booking: enter it before you pay.',
         'If you are touring with me, tell me and we will fit it into the Kyoto route.',
       ],
-      precio: 'The price is shown on their website before you pay; the code takes 10% off.',
+      precio: 'The price is shown on their website before you pay.',
     },
     ar: {
       intro: 'متحف الساموراي والنينجا في كيوتو، قرب سوق نيشيكي، يعرض الدروع والسيوف والتاريخ الحقيقي للساموراي والنينجا. الزيارة مع مرشد وتفاعلية: يرتدي الأطفال الزي ويجرّبون رمي الشوريكن.',
@@ -1425,14 +1423,13 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
       pasos: [
         'اضغط الزر في هذه الصفحة لفتح موقع المتحف.',
         'اختر التجربة واليوم والساعة.',
-        'عند الدفع اكتب الرمز ag-special واضغط «Apply» ليُطبَّق خصم 10%.',
+        'ادفع في موقعهم واحتفظ بالتأكيد.',
         'اعرض الحجز عند المدخل.',
       ],
       consejos: [
-        'لا يمكن إضافة الرمز بعد الحجز: أدخله قبل الدفع.',
         'إن كنت في جولة معي فأخبرني وسنضيفه إلى مسار كيوتو.',
       ],
-      precio: 'يظهر السعر في موقعهم قبل الدفع، والرمز يخصم 10%.',
+      precio: 'يظهر السعر في موقعهم قبل الدفع.',
     },
     ru: {
       intro: 'Музей самураев и ниндзя в Киото, рядом с рынком Нисики, показывает доспехи, мечи и настоящую историю самураев и ниндзя. Экскурсия с гидом и практикой: дети надевают костюм и пробуют метать сюрикены.',
@@ -1444,14 +1441,19 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
       pasos: [
         'Нажмите кнопку на этой странице, чтобы открыть сайт музея.',
         'Выберите программу, день и время.',
-        'При оплате введите код ag-special и нажмите «Apply» — скидка 10 %.',
+        'Оплатите на их сайте и сохраните подтверждение.',
         'Покажите бронь на входе.',
       ],
       consejos: [
-        'Код нельзя добавить после бронирования: вводите его до оплаты.',
       ],
-      precio: 'Цена видна на сайте до оплаты; код даёт скидку 10 %.',
+      precio: 'Цена видна на сайте до оплаты.',
     },
+  },
+  wargo: {
+    es: { intro: 'Wargo alquila kimonos y yukatas en Kioto. Eliges el modelo en la tienda, te lo ponen allí mismo y sales a pasear con él todo el día.', para: ['Fotos en Higashiyama, Gion o Kiyomizu-dera.', 'Parejas y familias que quieren un recuerdo distinto del viaje.'], pasos: ['Toca el botón de esta página para abrir la web de Wargo.', 'Elige tienda, plan, día y hora.', 'Al pagar, escribe el código 261013_wgtn para que se aplique el 10 %.', 'Ve a la tienda a la hora reservada; ellos te visten.'], consejos: ['El código vale hasta el 31 de diciembre de 2026.', 'Si vienes de tour conmigo, dímelo y lo encajamos en la ruta por Kioto.'], precio: 'El precio de cada plan sale en su web; el código descuenta un 10 %.' },
+    en: { intro: 'Wargo rents kimonos and yukatas in Kyoto. You pick one in the shop, they dress you there and you wear it around the city all day.', para: ['Photos in Higashiyama, Gion or Kiyomizu-dera.', 'Couples and families who want a different memory of the trip.'], pasos: ['Tap the button on this page to open the Wargo website.', 'Choose the shop, plan, day and time.', 'At checkout, enter the code 261013_wgtn to get 10% off.', 'Go to the shop at your time; they dress you.'], consejos: ['The code is valid until 31 December 2026.', 'If you are touring with me, tell me and we will fit it into the Kyoto route.'], precio: 'Each plan’s price is on their website; the code takes 10% off.' },
+    ar: { intro: 'تؤجّر Wargo الكيمونو واليوكاتا في كيوتو. تختار القطعة في المتجر، ويُلبسونك هناك، وتتجول بها طوال اليوم.', para: ['صور في هيغاشياما أو غيون أو معبد كيوميزو.', 'الأزواج والعائلات الذين يريدون ذكرى مختلفة من الرحلة.'], pasos: ['اضغط الزر في هذه الصفحة لفتح موقع Wargo.', 'اختر المتجر والباقة واليوم والساعة.', 'عند الدفع اكتب الرمز 261013_wgtn ليُطبَّق خصم 10%.', 'اذهب إلى المتجر في موعدك، وهم يُلبسونك.'], consejos: ['الرمز صالح حتى 31 ديسمبر 2026.', 'إن كنت في جولة معي، أخبرني لنضعه في مسار كيوتو.'], precio: 'سعر كل باقة في موقعهم، والرمز يخصم 10%.' },
+    ru: { intro: 'Wargo сдаёт напрокат кимоно и юкаты в Киото. Вы выбираете наряд в магазине, вас там же одевают, и вы гуляете в нём весь день.', para: ['Фото в Хигасияме, Гионе или у храма Киёмидзу.', 'Парам и семьям, которым хочется особого воспоминания о поездке.'], pasos: ['Нажмите кнопку на этой странице, чтобы открыть сайт Wargo.', 'Выберите магазин, тариф, день и время.', 'При оплате введите код 261013_wgtn — скидка 10 %.', 'Приходите в магазин к своему времени — вас оденут.'], consejos: ['Код действует до 31 декабря 2026 года.', 'Если вы на экскурсии со мной, скажите — впишем это в маршрут по Киото.'], precio: 'Цена каждого тарифа — на их сайте; код даёт скидку 10 %.' },
   },
   tiqets: {
     es: { intro: 'Tiqets vende entradas oficiales a museos y atracciones. Compras desde el móvil, recibes el QR al momento y entras sin pasar por taquilla.', para: ['Reservar el acuario Kaiyukan o el castillo de Osaka para una hora concreta.', 'Tener las entradas listas antes de llegar y no perder tiempo en colas.'], pasos: ['Toca el botón de esta página para abrir Tiqets: así sabe que vienes de mi web.', 'Busca Osaka o Kioto y elige la atracción y la fecha.', 'Paga y guarda el QR en el móvil (también llega por correo).', 'Enséñalo en la entrada el día de la visita.'], consejos: ['Mira la política de cancelación de cada entrada antes de pagar: no todas se pueden devolver.'], precio: 'El precio de cada entrada sale antes de pagar.' },
@@ -1504,6 +1506,8 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
 }
 
 export const T_RU: Record<string, { que: string; ventaja: string }> = {
+  wargo: { que: 'Прокат кимоно и юкаты в Киото: вас одевают в магазине, и вы гуляете по Хигасияме или Гиону.', ventaja: 'С кодом 261013_wgtn — скидка 10 % при бронировании на их сайте (до 31.12.2026).' },
+  camellia: { que: 'Чайная церемония в чайном домике в Хигасияме (Киото): спокойно и подходит для семей.', ventaja: 'Если вы на экскурсии со мной, я забронирую её по тарифу гида и переведу.' },
   mobal: { que: 'SIM и eSIM для Японии, в том числе с японским номером — звонить в рестораны и отели.', ventaja: 'Удобно, если кроме интернета нужен местный номер на всю поездку.' },
   flytographer: { que: 'Местные фотографы в Киото и Осаке: фотосессия всей семьёй во время поездки.', ventaja: 'Наконец все в кадре; фото приходят в онлайн-галерею.' },
   airalo: { que: 'eSIM для Японии: интернет в телефоне сразу после посадки, без салона связи и карманного Wi-Fi.', ventaja: 'С моим кодом — скидка 450 иен на первую eSIM. Установите дома, в Кансае она включится сама.' },
@@ -1522,7 +1526,7 @@ export const T_RU: Record<string, { que: string; ventaja: string }> = {
   wise: { que: 'Карта для оплаты в иенах по реальному курсу, без банковских комиссий.', ventaja: 'Я сам ей пользуюсь, и ею можно оплатить экскурсию со мной.' },
   maps: { que: 'В Японии показывает платформу, вагон и точное время каждого поезда.', ventaja: 'Сохраните нужные места в список: они будут под рукой в одно касание.' },
   traductor: { que: 'Наведите камеру на меню, вывески и этикетки — и сразу читайте японский.', ventaja: 'Скачайте японский офлайн: работает в метро без интернета.' },
-  samurai: { que: 'Музей самураев и ниндзя в Киото: доспехи, катаны и метание сюрикенов, с гидом на английском.', ventaja: 'С кодом ag-special — скидка 10 % при бронировании на их сайте. Отлично с детьми.' },
+  samurai: { que: 'Музей самураев и ниндзя в Киото: доспехи, катаны и метание сюрикенов, с гидом на английском.', ventaja: 'Весёлый час под крышей в центре Киото. Отлично с детьми.' },
   radical: { que: 'Камеры хранения в магазинах и отелях Намбы, Умэды и у станции Киото.', ventaja: 'Оставьте багаж после выезда и проведите последний день налегке.' },
   tiqets: { que: 'Билеты в музеи и на достопримечательности Осаки и Киото — сразу в телефоне.', ventaja: 'Без очередей в кассу: показываете QR-код на входе.' },
   kiwitaxi: { que: 'Частный трансфер из аэропорта Кансай в отель, бронируется до вылета.', ventaja: 'Цена фиксируется при бронировании, водитель встречает в зоне прилёта.' },

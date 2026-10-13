@@ -434,3 +434,22 @@
 /* Icono especial para las apps sin icono oficial: dibujo de Tabler sobre su color. */
 .vt-ico-dibujo { width: 58%; height: 58%; color: var(--marca-tinta); }
 .vt-ico:has(.vt-ico-dibujo) { background: linear-gradient(150deg, color-mix(in srgb, var(--marca) 80%, #fff) 0%, var(--marca) 55%, color-mix(in srgb, var(--marca) 75%, #000) 100%); }
+
+/* Franja «Tus códigos de descuento»: todos los códigos juntos, con copiar a un toque. */
+.vt-codigos { max-width: 1200px; margin: 0 auto; padding: 0 16px clamp(40px, 6vw, 72px); }
+.vt-codigos h2 { font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 0 0 6px; }
+.vt-codigos-sub { margin: 0 0 20px; color: var(--vt-suave); }
+.vt-codigos ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
+.vt-codigos li {
+  display: grid; grid-template-columns: auto auto 1fr; grid-template-areas: 'ico txt txt' 'ico copiar ver'; align-items: center; gap: 10px 14px;
+  padding: 14px 16px; border-radius: 18px; background: var(--vt-blanco); border: 2px dashed var(--vt-linea);
+}
+.vt-codigos li > .vt-ico { grid-area: ico; align-self: start; width: 52px; height: 52px; }
+.vt-codigos-txt { grid-area: txt; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; }
+.vt-codigos-txt strong { font-size: .95rem; }
+.vt-codigos-dto { font-size: .8rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--marca-boton); color: var(--marca-boton-tinta); }
+.vt-codigos-txt code { flex-basis: 100%; font-family: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: .05em; white-space: nowrap; }
+.vt-codigos-txt small { flex-basis: 100%; color: var(--vt-suave); font-size: .8rem; }
+.vt-codigos .vt-copiar { grid-area: copiar; margin: 0; padding: 9px 16px; font-size: .9rem; }
+.vt-codigos-ver { grid-area: ver; justify-self: start; white-space: nowrap; font-size: .8rem; color: var(--vt-suave); }
+@media (max-width: 420px) { .vt-codigos ul { grid-template-columns: 1fr; } .vt-codigos li > .vt-ico { width: 44px; height: 44px; } }
