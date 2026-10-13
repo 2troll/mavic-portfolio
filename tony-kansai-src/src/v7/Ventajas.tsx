@@ -16,6 +16,7 @@ import { PIE } from './formato'
 import { APPS, CATEGORIAS, SEO_VENTAJAS, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import MovilMueve from './MovilMueve'
+import { motion, AnimatePresence } from 'framer-motion'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import './v7.css'
@@ -112,6 +113,17 @@ const T: Record<VentajasId, Textos> = {
   },
 }
 
+/** Marcas de fondo claro (Agoda, Google…): en la tarjeta blanca el acento y el botón
+ *  usan su color de botón, que sí se ve. */
+function colorTarjeta(a: (typeof APPS)[number]) {
+  const hex = a.marca.fondo.replace('#', '')
+  const [r, g, b] = [0, 2, 4].map((i) => parseInt(hex.slice(i, i + 2), 16))
+  const claro = 0.299 * r + 0.587 * g + 0.114 * b > 200
+  return claro && a.marca.boton
+    ? { ['--acento' as string]: a.marca.boton, ['--acento-tinta' as string]: a.marca.botonTinta ?? '#fff' }
+    : { ['--acento' as string]: a.marca.fondo, ['--acento-tinta' as string]: a.marca.tinta }
+}
+const TODAS: Record<VentajasId, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح', ru: 'Открыть' }
 
 // Dibujo de cada app (Tabler Icons, MIT; sprite en /v7/ventajas-dibujos.svg).
@@ -131,8 +143,8 @@ function IconoApp({ a }: { a: (typeof APPS)[number] }) {
   const corta = palabra.length <= 4 ? palabra : palabra.charAt(0)
   return (
     <span className={`vt-ico${ICONOS_APP.has(a.clave) ? ' vt-ico-real' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
-      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="128" height="128" loading="lazy" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : <b dir="ltr">{corta}</b>}
-      {!ICONOS_APP.has(a.clave) && a.marca.puntos && <span className="vt-ico-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}
+      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="128" height="128" loading="lazy" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg> : DIBUJO[a.clave] ? <Dibujo n={DIBUJO[a.clave]} className="vt-ico-dibujo" /> : <b dir="ltr">{corta}</b>}
+      {!ICONOS_APP.has(a.clave) && !DIBUJO[a.clave] && a.marca.puntos && <span className="vt-ico-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}
     </span>
   )
 }
@@ -208,20 +220,14 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   }, [id])
 
   const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS.some((a) => a.cat === c))
-  const [catActiva, setCatActiva] = useState<Categoria | ''>('')
+  const [filtro, setFiltro] = useState<Categoria | ''>('')
+  // Los enlaces #app del kit deben encontrar su tarjeta: al saltar a una, se quitan los filtros.
   useEffect(() => {
-    if (!('IntersectionObserver' in window)) return
-    const io = new IntersectionObserver((entradas) => {
-      for (const e of entradas) if (e.isIntersecting) {
-        const app = APPS.find((a) => a.clave === e.target.id)
-        if (app) setCatActiva(app.cat)
-      }
-    }, { rootMargin: '-45% 0px -50% 0px' })
-    APPS.forEach((a) => { const el = document.getElementById(a.clave); if (el) io.observe(el) })
-    return () => io.disconnect()
-  }, [id])
+    const quita = () => setFiltro('')
+    window.addEventListener('hashchange', quita)
+    return () => window.removeEventListener('hashchange', quita)
+  }, [])
   const cupon0 = APPS.find((a) => a.codigo && !a.codigo.startsWith('http'))
-  const primeraDe = (c: Categoria) => APPS.find((a) => a.cat === c)?.clave
 
   return (
     <div ref={raiz} className={`vt lang-${id}`} lang={id} dir={dir}>
@@ -297,46 +303,50 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         </section>
 
         <nav className="vt-chips" aria-label={p.antetitulo}>
-          {categorias.map((c) => <a key={c} href={`#${primeraDe(c)}`} aria-current={catActiva === c ? 'true' : undefined}>{CATEGORIAS[c][id]}</a>)}
+          <button type="button" aria-pressed={filtro === ''} onClick={() => setFiltro('')}>{TODAS[id]} <small>{APPS.length}</small></button>
+          {categorias.map((c) => (
+            <button key={c} type="button" aria-pressed={filtro === c} onClick={() => setFiltro(c)}>
+              {CATEGORIAS[c][id]} <small>{APPS.filter((a) => a.cat === c).length}</small>
+            </button>
+          ))}
         </nav>
 
-        <div className="vt-pila">
-          {APPS.map((a, n) => {
-            const cupon = a.codigo && !a.codigo.startsWith('http') ? a.codigo : undefined
-            const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
-            return (
-              <section key={a.clave} id={a.clave} className={`vt-panel ${n % 2 ? 'vt-panel-inverso' : ''}`}
-                style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo, zIndex: n + 1 }}>
-                <div className="vt-panel-dentro">
-                  <div className="vt-sello vt-aparece" aria-hidden="true">
-                    <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} className="vt-sello-dibujo" />
-                    <span className="vt-sello-logo">
-                      {a.marca.logo
-                        ? <svg viewBox="0 0 24 24" className="vt-logo"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
-                        : <span className="vt-palabra" dir="ltr">{a.marca.palabra}{a.marca.puntos && <span className="vt-puntos">{a.marca.puntos.map((c) => <i key={c} style={{ background: c }} />)}</span>}</span>}
-                    </span>
-                  </div>
-                  <div className="vt-texto vt-aparece">
-                    <p className="vt-cat"><span>{String(n + 1).padStart(2, '0')}</span> {CATEGORIAS[a.cat][id]}</p>
-                    <h2 dir="ltr">{a.nombre}</h2>
-                    <p className="vt-que">{textoApp(a, id).que}</p>
-                    <p className="vt-ventaja">{textoApp(a, id).ventaja}</p>
-                    {cupon && (
-                      <div className="vt-cupon">
-                        <span>{p.codigo}</span>
-                        <bdi dir="ltr"><code>{cupon}</code></bdi>
-                        <BotonCopiar texto={cupon} copiar={p.copiar} copiado={p.copiado} />
-                      </div>
-                    )}
-                    <div className="vt-acciones">
-                      <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} {a.nombre} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
-                      <Link className="vt-mas" to={`${RUTA[id]}${a.clave}/`}>{MAS[id]}</Link>
+        {/* Rejilla compacta: todas las apps a la vista, filtradas por categoría.
+            Las tarjetas se recolocan con muelle (framer-motion, layout). */}
+        <div className="vt-rejilla">
+          <AnimatePresence initial={false} mode="popLayout">
+            {APPS.filter((a) => !filtro || a.cat === filtro).map((a) => {
+              const cupon = a.codigo && !a.codigo.startsWith('http') ? a.codigo : undefined
+              const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
+              const t = textoApp(a, id)
+              return (
+                <motion.article key={a.clave} id={a.clave} className="vt-tarjeta" layout
+                  initial={{ opacity: 0, scale: 0.92, y: 16 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.92 }}
+                  transition={{ type: 'spring', stiffness: 320, damping: 30 }}
+                  style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ...colorTarjeta(a) }}>
+                  <div className="vt-tarjeta-cab">
+                    <IconoApp a={a} />
+                    <div>
+                      <h3 dir="ltr">{a.nombre}</h3>
+                      <p className="vt-tarjeta-cat">{CATEGORIAS[a.cat][id]}</p>
                     </div>
                   </div>
-                </div>
-              </section>
-            )
-          })}
+                  <p className="vt-tarjeta-que">{t.que}</p>
+                  <p className="vt-tarjeta-ventaja">{t.ventaja}</p>
+                  {cupon && (
+                    <div className="vt-tarjeta-cupon">
+                      <bdi dir="ltr"><code>{cupon}</code></bdi>
+                      <BotonCopiar texto={cupon} copiar={p.copiar} copiado={p.copiado} />
+                    </div>
+                  )}
+                  <div className="vt-tarjeta-acciones">
+                    <a className="vt-tarjeta-abrir" href={href} target="_blank" rel="noopener noreferrer sponsored">{ABRIR[id]} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
+                    <Link className="vt-mas" to={`${RUTA[id]}${a.clave}/`}>{MAS[id]}</Link>
+                  </div>
+                </motion.article>
+              )
+            })}
+          </AnimatePresence>
         </div>
 
         <section className="vt-bloque">

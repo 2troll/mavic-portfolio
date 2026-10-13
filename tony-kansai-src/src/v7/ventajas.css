@@ -161,7 +161,7 @@
 .vt-pista { display: inline-flex; align-items: center; gap: 10px; margin: 28px 0 0; padding: 10px 16px; border-radius: 999px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); font-weight: 600; font-size: .95rem; }
 .vt-pista-ico { width: 20px; height: 20px; color: #b4232a; }
 
-.vt-movil-zona { position: relative; justify-self: center; padding: 24px 40px; perspective: 1600px; }
+.vt-movil-zona { position: relative; justify-self: center; padding: 24px 76px 64px; perspective: 1600px; }
 /* El móvil: marco de titanio con bisel, grosor real hacia un lado (capas de sombra
    que hacen de canto), botones laterales, cristal con reflejo y barra de inicio.
    Se inclina en 3D y se endereza al pasar el ratón. */
@@ -184,6 +184,12 @@
 }
 /* La inclinación y el movimiento los pone MovilMueve.tsx (framer-motion). */
 .vt-movil-escena, .vt-movil-flota { transform-style: preserve-3d; }
+.vt-movil-escena { cursor: grab; }
+.vt-movil-escena:active { cursor: grabbing; }
+/* Relieve: iconos e isla por delante del cristal; se nota al inclinarse. */
+.vt-movil-apps { transform: translateZ(26px); transform-style: preserve-3d; }
+.vt-movil-isla, .vt-movil-hora { transform: translateZ(14px); }
+.vt-movil-app .vt-ico { transform: translateZ(10px); }
 .vt-movil-quieto { transform: rotateY(-16deg) rotateX(7deg) rotateZ(-3deg); }
 .lang-ar .vt-movil-quieto { transform: rotateY(16deg) rotateX(7deg) rotateZ(3deg); }
 /* Reflejo que sigue al cursor, encima de la pantalla. */
@@ -209,7 +215,7 @@
 .vt-movil-app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
 .vt-movil-app:hover .vt-ico { transform: translateY(-3px) scale(1.06); }
 /* Barra de inicio. */
-.vt-movil-apps::after { content: ''; position: absolute; left: 50%; bottom: 9px; width: 34%; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .85); transform: translateX(-50%); }
+.vt-movil::before { content: ''; position: absolute; z-index: 3; left: 50%; bottom: 9px; width: 34%; height: 5px; border-radius: 3px; background: rgba(255, 255, 255, .85); transform: translateX(-50%); }
 
 /* Icono de app (portada, kit y flotantes): esquinas de icono de iPhone, brillo
    arriba y sombra de contacto, para que parezca un icono de verdad. */
@@ -232,9 +238,9 @@
 .vt-flotante .vt-ico { width: 40px; height: 40px; border-radius: 11px; }
 .vt-flotante b { display: block; font-size: 1.05rem; line-height: 1.1; color: #b4232a; }
 .vt-flotante small { display: block; font-weight: 700; letter-spacing: .06em; font-size: .72rem; }
-.vt-flotante-1 { inset-inline-start: -18px; bottom: 18%; }
-.vt-flotante-2 { inset-inline-end: -6px; top: 10%; padding: 12px; color: #00ADA8 !important; }
-.vt-flotante-3 { inset-inline-end: 0; bottom: 6%; padding: 12px; color: #0A6CB8 !important; }
+.vt-flotante-1 { left: 50%; bottom: 0; translate: -50% 0; z-index: 3; }
+.vt-flotante-2 { inset-inline-end: 0; top: 14%; padding: 10px; color: #00ADA8 !important; }
+.vt-flotante-3 { inset-inline-start: 0; top: 46%; padding: 10px; color: #0A6CB8 !important; }
 @media (prefers-reduced-motion: no-preference) {
   .vt-flotante { animation: vt-flota 6s ease-in-out infinite; }
   .vt-flotante-2 { animation-delay: -2s; }
@@ -268,9 +274,11 @@
   border-bottom: 1px solid var(--vt-linea);
 }
 .vt-chips::-webkit-scrollbar { display: none; }
-.vt-chips a { flex: none; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--vt-linea); background: var(--vt-blanco); font-weight: 600; font-size: .9rem; text-decoration: none; transition: all .2s ease; }
-.vt-chips a:hover { border-color: var(--vt-tinta); }
-.vt-chips a[aria-current='true'] { background: var(--vt-tinta); color: #fff; border-color: var(--vt-tinta); }
+.vt-chips a, .vt-chips button { flex: none; cursor: pointer; font: inherit; color: inherit; padding: 8px 16px; border-radius: 999px; border: 1px solid var(--vt-linea); background: var(--vt-blanco); font-weight: 600; font-size: .9rem; text-decoration: none; transition: all .2s ease; }
+.vt-chips a:hover, .vt-chips button:hover { border-color: var(--vt-tinta); }
+.vt-chips button small { opacity: .55; font-weight: 700; margin-inline-start: 4px; }
+.vt-chips button[aria-pressed='true'] small { opacity: .8; }
+.vt-chips a[aria-current='true'], .vt-chips button[aria-pressed='true'] { background: var(--vt-tinta); color: #fff; border-color: var(--vt-tinta); }
 .vt-panel { scroll-margin-top: calc(var(--vt-barra-alto) + var(--vt-chips-alto)); }
 @media (min-width: 900px) and (min-height: 700px) {
   .vt-panel { top: calc(var(--vt-barra-alto) + var(--vt-chips-alto)); }
@@ -289,11 +297,11 @@
 /* Móvil y tableta. */
 @media (max-width: 899px) {
   .vt-portada { grid-template-columns: 1fr; }
-  .vt-movil-zona { padding: 8px 28px 16px; }
   .vt-movil { width: min(300px, 80vw); }
   .vt-kit ol { grid-template-columns: 1fr; }
   .vt-sello-dibujo { width: auto; height: 150%; inset: -25% auto auto 50%; transform: translateX(-50%) rotate(-8deg); }
-  .vt-flotante-1 { inset-inline-start: -4px; }
+  .vt-flotante-2, .vt-flotante-3 { display: none; }
+  .vt-movil-zona { padding: 8px 20px 64px; }
 }
 .vt-ico { position: relative; }
 .vt-ico-puntos { position: absolute; bottom: 18%; display: flex; gap: 2px; }
@@ -390,3 +398,39 @@
 .vt-ayuda-item p { margin: 0 0 14px; line-height: 1.6; }
 .vt-ayuda-enlaces { display: flex; flex-wrap: wrap; gap: 8px; }
 .vt-ayuda-enlaces a { padding: 6px 12px; border-radius: 999px; border: 1px solid currentColor; text-decoration: none; font-size: .9em; }
+
+/* Rejilla de apps: tarjetas compactas en vez de un panel por app a pantalla completa. */
+.vt-rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px, 1fr)); gap: 18px; max-width: 1200px; margin: 8px auto 72px; padding: 0 24px; }
+.vt-tarjeta {
+  position: relative; display: flex; flex-direction: column; gap: 10px; padding: 20px; border-radius: 24px;
+  background: var(--vt-blanco); border: 1px solid var(--vt-linea); overflow: hidden;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, .04), 0 12px 30px -22px rgba(0, 0, 0, .35);
+  scroll-margin-top: calc(var(--vt-barra-alto) + var(--vt-chips-alto) + 16px);
+  transition: box-shadow .25s ease, border-color .25s ease;
+}
+.vt-tarjeta::before { content: ''; position: absolute; inset: 0 0 auto; height: 4px; background: var(--acento); }
+.vt-tarjeta:hover { box-shadow: 0 2px 4px rgba(0, 0, 0, .05), 0 22px 44px -24px rgba(0, 0, 0, .45); border-color: color-mix(in srgb, var(--acento) 40%, var(--vt-linea)); }
+.vt-tarjeta:target { border-color: var(--acento); box-shadow: 0 0 0 3px color-mix(in srgb, var(--acento) 35%, transparent); }
+.vt-tarjeta-cab { display: flex; align-items: center; gap: 14px; }
+.vt-tarjeta-cab .vt-ico { width: 56px; height: 56px; }
+.vt-tarjeta h3 { margin: 0; font-size: 1.15rem; line-height: 1.2; }
+.vt-tarjeta-cat { margin: 2px 0 0; font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; opacity: .55; }
+.vt-tarjeta-que { margin: 0; font-size: .95rem; line-height: 1.5; opacity: .8; }
+.vt-tarjeta-ventaja { margin: 0; padding: 10px 12px; border-radius: 14px; font-size: .9rem; font-weight: 600; line-height: 1.45; background: color-mix(in srgb, var(--acento) 9%, transparent); }
+.vt-tarjeta-cupon { display: flex; align-items: center; justify-content: space-between; gap: 10px; padding: 8px 8px 8px 14px; border-radius: 14px; border: 1.5px dashed color-mix(in srgb, var(--acento) 60%, var(--vt-linea)); }
+.vt-tarjeta-cupon code { font-family: inherit; font-weight: 800; letter-spacing: .06em; font-size: 1.05rem; background: none; }
+.vt-tarjeta-acciones { margin-top: auto; padding-top: 6px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vt-tarjeta-abrir {
+  display: inline-flex; align-items: center; gap: 8px; padding: 11px 20px; border-radius: 999px; font-weight: 700; text-decoration: none;
+  background: var(--acento); color: var(--acento-tinta) !important; transition: transform .2s ease, filter .2s ease;
+}
+.vt-tarjeta-abrir:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.vt-tarjeta .vt-mas { font-size: .88rem; font-weight: 600; }
+@media (max-width: 560px) {
+  .vt-rejilla { grid-template-columns: 1fr; gap: 14px; padding: 0 16px; }
+  .vt-tarjeta { padding: 18px 16px; }
+}
+
+/* Icono especial para las apps sin icono oficial: dibujo de Tabler sobre su color. */
+.vt-ico-dibujo { width: 58%; height: 58%; color: var(--marca-tinta); }
+.vt-ico:has(.vt-ico-dibujo) { background: linear-gradient(150deg, color-mix(in srgb, var(--marca) 80%, #fff) 0%, var(--marca) 55%, color-mix(in srgb, var(--marca) 75%, #000) 100%); }

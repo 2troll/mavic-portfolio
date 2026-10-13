@@ -4,11 +4,13 @@
 //  2. reposo: flota y se mece despacio;
 //  3. ratón: se inclina hacia el cursor y el reflejo del cristal le sigue;
 //  4. scroll: al bajar, gira hacia atrás y se aleja;
-//  5. toque: se hunde un poco, como al pulsar.
+//  5. toque: se hunde un poco, como al pulsar; tocando fuera de las apps da una vuelta entera;
+//  6. arrastre (dedo o ratón): gira hacia los lados y vuelve con muelle;
+//  7. reposo: además se balancea en 3D, y los iconos sobresalen del cristal (CSS translateZ).
 // Con «reducir movimiento» del sistema se queda quieto e inclinado.
 import { useRef } from 'react'
 import type { ReactNode, PointerEvent } from 'react'
-import { LazyMotion, domAnimation, m as motion, useMotionValue, useSpring, useTransform, useScroll, useReducedMotion, useMotionTemplate } from 'framer-motion'
+import { LazyMotion, domMax, m as motion, animate, useMotionValue, useSpring, useTransform, useScroll, useReducedMotion, useMotionTemplate } from 'framer-motion'
 
 const MUELLE = { stiffness: 140, damping: 18, mass: 0.6 }
 
@@ -36,6 +38,17 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
   const escala = useTransform(scrollYProgress, [0, 1], [1, 0.86])
   const rotXTotal = useTransform([rotX, scrollX], ([a, b]: number[]) => a + b)
 
+  // Arrastre: el desplazamiento horizontal se convierte en giro; al soltar vuelve con muelle.
+  const arrastre = useMotionValue(0)
+  const arrastreS = useSpring(arrastre, { stiffness: 120, damping: 13 })
+  // Vuelta entera al tocar la pantalla fuera de las apps.
+  const vuelta = useMotionValue(0)
+  const rotYTotal = useTransform([rotY, arrastreS, vuelta], ([a, b, c]: number[]) => a + b + c)
+  const daVuelta = (e: MouseEvent | TouchEvent | globalThis.PointerEvent) => {
+    if ((e.target as HTMLElement).closest('a, button')) return
+    animate(vuelta, vuelta.get() + 360 * signo, { type: 'spring', stiffness: 55, damping: 13 })
+  }
+
   const mueve = (e: PointerEvent<HTMLDivElement>) => {
     if (quieto || e.pointerType !== 'mouse') return
     const r = e.currentTarget.getBoundingClientRect()
@@ -49,12 +62,13 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
   }
 
   return (
-    <LazyMotion features={domAnimation} strict>
-    <motion.div ref={zona} className="vt-movil-escena" style={{ y: scrollY, scale: escala }} onPointerMove={mueve} onPointerLeave={suelta}>
+    <LazyMotion features={domMax} strict>
+    <motion.div ref={zona} className="vt-movil-escena" style={{ y: scrollY, scale: escala, touchAction: 'pan-y' }} onPointerMove={mueve} onPointerLeave={suelta}
+      onPan={(_, info) => arrastre.set(Math.max(-70, Math.min(70, info.offset.x * 0.45)))} onPanEnd={() => arrastre.set(0)}>
       <motion.div
         className="vt-movil-flota"
-        animate={{ y: [0, -12, 0], rotateZ: [signo * -3, signo * -1.5, signo * -3] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+        animate={{ y: [0, -14, 0, -6, 0], rotateZ: [signo * -3, signo * -1.2, signo * -3, signo * -2, signo * -3], rotateY: [0, 7, 0, -7, 0] }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
       >
         <motion.div
           className="vt-movil"
@@ -64,7 +78,8 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
           animate={{ opacity: 1, y: 0, rotateZ: 0, scale: 1 }}
           transition={{ type: 'spring', stiffness: 70, damping: 14, mass: 0.9, delay: 0.15 }}
           whileTap={{ scale: 0.97 }}
-          style={{ rotateY: rotY, rotateX: rotXTotal }}
+          onTap={daVuelta}
+          style={{ rotateY: rotYTotal, rotateX: rotXTotal }}
         >
           {children}
           <motion.span className="vt-movil-brillo" aria-hidden="true" style={{ background: brillo }} />
