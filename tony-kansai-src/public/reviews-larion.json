@@ -1,7 +1,7 @@
 {
- "updated": "2026-10-11",
- "count": 214,
- "average": 4.1,
+ "updated": "2026-10-13",
+ "count": 201,
+ "average": 4.0,
  "reviews": [
   {
    "id": "larion-001",
@@ -3721,27 +3721,6 @@
    }
   },
   {
-   "id": "larion-098",
-   "stars": 5,
-   "name": "Рустик",
-   "country": "Ташкент (Узбекистан)",
-   "tour": "Киото",
-   "text": "Храм Нинна-дзи. Настоящее умиротворение. Лариону спасибо за прекрасный, неспешный день.",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Ninna-ji temple. True tranquility. Thanks to Larion for a wonderful, unhurried day."
-   },
-   "meta": {
-    "en": {
-     "name": "Rustik",
-     "country": "Tashkent (Uzbekistan)",
-     "tour": "Kyoto"
-    }
-   }
-  },
-  {
    "id": "larion-194",
    "stars": 3,
    "name": "Таня",
@@ -3759,48 +3738,6 @@
      "name": "Tanya",
      "country": "Belgorod (Russia)",
      "tour": "Nara"
-    }
-   }
-  },
-  {
-   "id": "larion-099",
-   "stars": 5,
-   "name": "Давид",
-   "country": "Кишинев (Молдова)",
-   "tour": "Осака",
-   "text": "Прогулка по набережной Осаки вечерком. Ларион подсказал, откуда лучше смотреть на город. Супер!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "An evening walk along Osaka's waterfront. Larion suggested the best vantage points to view the city. Super!"
-   },
-   "meta": {
-    "en": {
-     "name": "David",
-     "country": "Chisinau (Moldova)",
-     "tour": "Osaka"
-    }
-   }
-  },
-  {
-   "id": "larion-100",
-   "stars": 5,
-   "name": "Петя",
-   "country": "Минск (Беларусь)",
-   "tour": "Удзи",
-   "text": "Городок Удзи. Ларион во всех деталях рассказал про историю производства чая. Оч интересно!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "The town of Uji. Larion detailed the whole history of tea production. Very interesting!"
-   },
-   "meta": {
-    "en": {
-     "name": "Petya",
-     "country": "Minsk (Belarus)",
-     "tour": "Uji"
     }
    }
   },
@@ -3826,27 +3763,6 @@
    }
   },
   {
-   "id": "larion-101",
-   "stars": 5,
-   "name": "Адам и Ева",
-   "country": "Одесса (Украина)",
-   "tour": "Киото",
-   "text": "Пагода То-дзи — самая высокая деревянная пагода в Японии. Ларион провел экскурсию на отлично!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "To-ji Pagoda — tallest wooden pagoda in Japan. Larion ran an excellent tour!"
-   },
-   "meta": {
-    "en": {
-     "name": "Adam & Eva",
-     "country": "Odesa (Ukraine)",
-     "tour": "Kyoto"
-    }
-   }
-  },
-  {
    "id": "larion-138",
    "stars": 4,
    "name": "Катя и Слава",
@@ -3864,27 +3780,6 @@
      "name": "Katya & Slava",
      "country": "Kharkiv (Ukraine)",
      "tour": "Kyoto"
-    }
-   }
-  },
-  {
-   "id": "larion-102",
-   "stars": 5,
-   "name": "Назар",
-   "country": "Киев (Украина)",
-   "tour": "Кансай",
-   "text": "Провели с Ларионом неделю в Кансае. Безупречная организация на поездах, глубокие знания!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Spent a whole week in Kansai with Larion. Flawless train logistics, deep knowledge!"
-   },
-   "meta": {
-    "en": {
-     "name": "Nazar",
-     "country": "Kyiv (Ukraine)",
-     "tour": "Kansai"
     }
    }
   },
@@ -3910,48 +3805,6 @@
    }
   },
   {
-   "id": "larion-103",
-   "stars": 5,
-   "name": "Рашид",
-   "country": "Астана (Казахстан)",
-   "tour": "Осака",
-   "text": "Торговые пассажи Намбы для поиска винтажных вещей. Ларион сориентировал по ценам, чтоб не переплатили.",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Namba shopping arcades hunting for vintage pieces. Larion guided us on pricing so we wouldn't overpay."
-   },
-   "meta": {
-    "en": {
-     "name": "Rashid",
-     "country": "Astana (Kazakhstan)",
-     "tour": "Osaka"
-    }
-   }
-  },
-  {
-   "id": "larion-104",
-   "stars": 5,
-   "name": "Мурат",
-   "country": "Актау (Казахстан)",
-   "tour": "Нара",
-   "text": "Храм Тодай-дзи запредельно крут! Ларион отличный гид, с удовольствием вернемся ещё.",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Todai-ji temple is insanely cool! Larion is a great guide, we'll gladly return."
-   },
-   "meta": {
-    "en": {
-     "name": "Murat",
-     "country": "Aktau (Kazakhstan)",
-     "tour": "Nara"
-    }
-   }
-  },
-  {
    "id": "larion-197",
    "stars": 3,
    "name": "Серега",
@@ -3973,27 +3826,6 @@
    }
   },
   {
-   "id": "larion-105",
-   "stars": 5,
-   "name": "Вадим",
-   "country": "Вильнюс (Литва)",
-   "tour": "Хиросима",
-   "text": "Мемориал и Миядзима. Ларион умеет держать баланс между историей и лёгкой прогулкой. 5 звезд.",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Memorial and Miyajima. Larion knows how to strike a balance between solemn history and a light walk. 5 stars."
-   },
-   "meta": {
-    "en": {
-     "name": "Vadim",
-     "country": "Vilnius (Lithuania)",
-     "tour": "Hiroshima"
-    }
-   }
-  },
-  {
    "id": "larion-139",
    "stars": 4,
    "name": "Арман",
@@ -4010,27 +3842,6 @@
     "en": {
      "name": "Arman",
      "country": "Almaty (Kazakhstan)",
-     "tour": "Kyoto"
-    }
-   }
-  },
-  {
-   "id": "larion-106",
-   "stars": 5,
-   "name": "Эдик и Нина",
-   "country": "Рига (Латвия)",
-   "tour": "Киото",
-   "text": "Киёмидзу-дэра на закате. Вид на Киото с деревянной террасы — потрясающий! Лариону респект.",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Kiyomizu-dera at sunset. View of Kyoto from the wooden terrace is breathtaking! Respect to Larion."
-   },
-   "meta": {
-    "en": {
-     "name": "Edik & Nina",
-     "country": "Riga (Latvia)",
      "tour": "Kyoto"
     }
    }
@@ -4057,27 +3868,6 @@
    }
   },
   {
-   "id": "larion-107",
-   "stars": 5,
-   "name": "Кристапс",
-   "country": "Таллинн (Эстония)",
-   "tour": "Осака",
-   "text": "Отличный гид, знает нетуристические места, свободно владеет языком. В Осаке с ним было супер!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Excellent guide, knows off-the-beaten-path locations, fluent in the language. Had a blast in Osaka with him!"
-   },
-   "meta": {
-    "en": {
-     "name": "Kristaps",
-     "country": "Tallinn (Estonia)",
-     "tour": "Osaka"
-    }
-   }
-  },
-  {
    "id": "larion-199",
    "stars": 3,
    "name": "Дима",
@@ -4095,27 +3885,6 @@
      "name": "Dima",
      "country": "Kaluga (Russia)",
      "tour": "Osaka"
-    }
-   }
-  },
-  {
-   "id": "larion-108",
-   "stars": 5,
-   "name": "Олег и Жанна",
-   "country": "Ереван (Армения)",
-   "tour": "Киото",
-   "text": "Ботанический сад Киото. Ларион рассказал про редкие японские растения и ландшафт. Красота!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Kyoto Botanical Garden. Larion explained rare Japanese flora and landscape concepts. Beautiful!"
-   },
-   "meta": {
-    "en": {
-     "name": "Oleg & Zhanna",
-     "country": "Yerevan (Armenia)",
-     "tour": "Kyoto"
     }
    }
   },
@@ -4141,27 +3910,6 @@
    }
   },
   {
-   "id": "larion-109",
-   "stars": 5,
-   "name": "Баха",
-   "country": "Самарканд (Узбекистан)",
-   "tour": "Кобе",
-   "text": "Район Арима Онсэн. Ларион всё устроил идеально, релакснули на все 100%. Спасибо!",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Arima Onsen area. Larion arranged everything to perfection, relaxed 100%. Thank you!"
-   },
-   "meta": {
-    "en": {
-     "name": "Bakha",
-     "country": "Samarkand (Uzbekistan)",
-     "tour": "Kobe"
-    }
-   }
-  },
-  {
    "id": "larion-200",
    "stars": 3,
    "name": "Александр и Елена",
@@ -4177,27 +3925,6 @@
    "meta": {
     "en": {
      "name": "Alexander & Elena",
-     "country": "Moscow (Russia)",
-     "tour": "Kyoto"
-    }
-   }
-  },
-  {
-   "id": "larion-110",
-   "stars": 5,
-   "name": "Андрей и Мария",
-   "country": "Москва (Россия)",
-   "tour": "Киото",
-   "text": "Отличный день в Киото! Ларион грамотно связал логистику на автобусах и метро, обошли Киёмидзу-дэра и Гион без толкучки.👍",
-   "lang": "ru",
-   "date": "",
-   "photo": "",
-   "traducciones": {
-    "en": "Great day in Kyoto! Larion smartly handled bus and subway logistics; visited Kiyomizu-dera and Gion without the rush.👍"
-   },
-   "meta": {
-    "en": {
-     "name": "Andrey & Maria",
      "country": "Moscow (Russia)",
      "tour": "Kyoto"
     }
