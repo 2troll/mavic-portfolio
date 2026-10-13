@@ -177,11 +177,17 @@
     0 0 0 1.5px #8c9097,            /* filo de titanio */
     0 0 0 3px #4a4d53,
     inset 0 0 0 1px rgba(255, 255, 255, .06),
-    1px 1px 0 3px #3d4046, 2px 2px 0 3px #393c42, 3px 3px 0 3px #35383d, 4px 4px 0 3px #313439,
-    5px 5px 0 3px #2d3035, 6px 6px 0 3px #2a2c31, 7px 7px 0 3px #26282d, 8px 8px 0 3px #222429,
     30px 50px 70px -20px rgba(15, 15, 35, .55), 8px 16px 24px -10px rgba(0, 0, 0, .35);
   transform-style: preserve-3d; will-change: transform; cursor: pointer;
 }
+/* Cuerpo 3D (MovilMueve.tsx): láminas del canto y tapa trasera, detrás del cristal. */
+.vt-movil-cuerpo { position: absolute; inset: -14px; pointer-events: none; transform-style: preserve-3d; }
+.vt-movil-cuerpo > i { position: absolute; inset: 0; border-radius: 57px; background: linear-gradient(90deg, #3c3f45, #6d7178 50%, #3c3f45); }
+.vt-movil-cuerpo > i.vt-movil-filo { background: linear-gradient(90deg, #8c9097, #c9ccd1 50%, #8c9097); }
+.vt-movil-tapa { position: absolute; inset: 0; border-radius: 57px; background: radial-gradient(120% 80% at 30% 15%, #4a3f6b, #24203a 60%, #17151f); box-shadow: inset 0 0 0 3px #8c9097; }
+/* Módulo de cámara en la tapa (esquina de arriba; la tapa ya va girada). */
+.vt-movil-tapa i { position: absolute; top: 22px; left: 22px; width: 40%; aspect-ratio: 1; border-radius: 28%; background: rgba(255, 255, 255, .08); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .15);
+  background-image: radial-gradient(circle at 28% 28%, #0b0d14 13%, #3a3d45 15%, #3a3d45 20%, transparent 21%), radial-gradient(circle at 28% 72%, #0b0d14 13%, #3a3d45 15%, #3a3d45 20%, transparent 21%), radial-gradient(circle at 72% 50%, #0b0d14 13%, #3a3d45 15%, #3a3d45 20%, transparent 21%); }
 /* La inclinación y el movimiento los pone MovilMueve.tsx (framer-motion). */
 .vt-movil-escena, .vt-movil-flota { transform-style: preserve-3d; }
 .vt-movil-escena { cursor: grab; }
@@ -189,11 +195,11 @@
 /* Relieve: iconos e isla por delante del cristal; se nota al inclinarse. */
 .vt-movil-apps { transform: translateZ(26px); transform-style: preserve-3d; }
 .vt-movil-isla, .vt-movil-hora { transform: translateZ(14px); }
-.vt-movil-app .vt-ico { transform: translateZ(10px); }
+.vt-movil-app .vt-ico { transform: translateZ(10px); width: 100%; max-width: 52px; height: auto; aspect-ratio: 1; }
 .vt-movil-quieto { transform: rotateY(-16deg) rotateX(7deg) rotateZ(-3deg); }
 .lang-ar .vt-movil-quieto { transform: rotateY(16deg) rotateX(7deg) rotateZ(3deg); }
 /* Reflejo que sigue al cursor, encima de la pantalla. */
-.vt-movil-brillo { position: absolute; inset: 0; border-radius: 43px; pointer-events: none; mix-blend-mode: screen; z-index: 2; }
+.vt-movil-brillo { position: absolute; inset: 0; border-radius: 43px; pointer-events: none; z-index: 2; transform: translateZ(1px); } /* sin mix-blend-mode: aplanaría el 3D y el canto taparía la pantalla */
 /* Botones: acción y volumen a un lado, encendido al otro (fuera del borde de 11 px). */
 .vt-movil-boton { position: absolute; top: 17%; width: 4px; height: 26px; border-radius: 2px; background: linear-gradient(90deg, #5c6067, #a3a7ae 60%, #5c6067); }
 .vt-movil-boton-izq { left: -15px; }
@@ -210,8 +216,8 @@
 .vt-movil-isla::before { content: ''; position: absolute; inset-inline-end: 18px; top: 9px; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #3a4a6a, #0b0d14 70%); }
 .vt-movil-hora { position: absolute; top: 15px; left: 26px; right: 26px; display: flex; justify-content: space-between; padding: 0 6px; color: #fff; font-size: .78rem; font-weight: 600; opacity: .95; pointer-events: none; }
 .vt-movil-hora span:first-child { padding-inline-start: 8px; }
-.vt-movil-apps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 11px 6px; padding: 18px 8px 22px; }
-.vt-movil-app { display: grid; justify-items: center; gap: 5px; text-decoration: none; color: #fff !important; font-size: .64rem; font-weight: 600; line-height: 1.1; text-align: center; }
+.vt-movil-apps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px 6px; padding: 18px 8px 22px; }
+.vt-movil-app { min-width: 0; display: grid; justify-items: center; gap: 5px; text-decoration: none; color: #fff !important; font-size: .64rem; font-weight: 600; line-height: 1.1; text-align: center; }
 .vt-movil-app span { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; text-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
 .vt-movil-app:hover .vt-ico { transform: translateY(-3px) scale(1.06); }
 /* Barra de inicio. */
@@ -441,17 +447,17 @@
 .vt-codigos-sub { margin: 0 0 20px; color: var(--vt-suave); }
 .vt-codigos ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; }
 .vt-codigos li {
-  display: grid; grid-template-columns: auto auto 1fr; grid-template-areas: 'ico txt txt' 'ico copiar ver'; align-items: center; gap: 10px 14px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: 'ico txt txt' 'copiar copiar ver'; align-items: center; gap: 12px 14px; min-width: 0;
   padding: 14px 16px; border-radius: 18px; background: var(--vt-blanco); border: 2px dashed var(--vt-linea);
 }
 .vt-codigos li > .vt-ico { grid-area: ico; align-self: start; width: 52px; height: 52px; }
 .vt-codigos-txt { grid-area: txt; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 8px; min-width: 0; }
 .vt-codigos-txt strong { font-size: .95rem; }
 .vt-codigos-dto { font-size: .8rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--marca-boton); color: var(--marca-boton-tinta); }
-.vt-codigos-txt code { flex-basis: 100%; font-family: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: .05em; white-space: nowrap; }
+.vt-codigos-txt code { flex-basis: 100%; font-family: inherit; font-size: clamp(1.05rem, 4.6vw, 1.3rem); font-weight: 800; letter-spacing: .04em; overflow-wrap: anywhere; }
 .vt-codigos-txt small { flex-basis: 100%; color: var(--vt-suave); font-size: .8rem; }
-.vt-codigos .vt-copiar { grid-area: copiar; margin: 0; padding: 10px 16px; font-size: .9rem; white-space: nowrap; }
-.vt-codigos-acc { grid-area: ver; display: flex; flex-direction: column; gap: 2px; justify-self: start; white-space: nowrap; }
+.vt-codigos .vt-copiar { grid-area: copiar; margin: 0; padding: 10px 14px; font-size: .9rem; min-width: 0; justify-self: stretch; text-align: center; }
+.vt-codigos-acc { grid-area: ver; display: flex; flex-direction: column; gap: 2px; justify-self: end; text-align: end; min-width: 0; }
 .vt-codigos-acc a:first-child { font-weight: 700; color: var(--vt-tinta); }
 .vt-codigos-acc a { font-size: .8rem; color: var(--vt-suave); }
 @media (max-width: 420px) { .vt-codigos ul { grid-template-columns: 1fr; } .vt-codigos li > .vt-ico { width: 44px; height: 44px; } }
@@ -461,8 +467,14 @@
 .vt-enlaces a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); text-decoration: none; color: var(--vt-tinta); transition: transform .15s ease, box-shadow .15s ease; }
 .vt-enlaces a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, .08); }
 .vt-enlaces .vt-ico { width: 40px; height: 40px; flex: none; }
-.vt-enlaces span { display: flex; flex-direction: column; min-width: 0; }
+.vt-enlaces a { min-width: 0; }
+.vt-enlaces span { display: flex; flex-direction: column; min-width: 0; overflow-wrap: anywhere; }
 .vt-enlaces b { font-size: .95rem; }
 .vt-enlaces small { font-size: .78rem; color: var(--vt-suave); }
 .vt-claro { margin-top: 24px; padding: 16px 18px; border-radius: 14px; background: color-mix(in srgb, var(--vt-wa) 9%, var(--vt-blanco)); border: 1px solid color-mix(in srgb, var(--vt-wa) 30%, transparent); font-size: .95rem; line-height: 1.55; max-width: 80ch; }
 @media (max-width: 420px) { .vt-enlaces { grid-template-columns: 1fr 1fr; } }
+
+/* 14-10: nombre en una sola línea; en móviles estrechos basta el torii (el enlace ya lleva aria-label). */
+.vt-marca .v7-logo-texto { white-space: nowrap; }
+@media (max-width: 400px) { .vt-marca .v7-logo-texto { display: none; } }
+.vt-codigos .vt-codigos-h3 { margin-top: 40px; }

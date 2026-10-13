@@ -14,6 +14,17 @@ import { LazyMotion, domMax, m as motion, animate, useMotionValue, useSpring, us
 
 const MUELLE = { stiffness: 140, damping: 18, mass: 0.6 }
 
+// Grosor de verdad: láminas apiladas hacia atrás (el canto) y una tapa trasera con
+// cámara. Así, al girarlo de lado o darle la vuelta, se ve un móvil y no un papel.
+const GROSOR = 22
+const CAPAS = Array.from({ length: 12 }, (_, n) => 1.5 + (n * (GROSOR - 1.5)) / 11)
+const Cuerpo = () => (
+  <span className="vt-movil-cuerpo" aria-hidden="true">
+    {CAPAS.map((z, n) => <i key={n} className={n === 0 || n === CAPAS.length - 1 ? 'vt-movil-filo' : undefined} style={{ transform: `translateZ(${-z}px)` }} />)}
+    <b className="vt-movil-tapa" style={{ transform: `translateZ(${-GROSOR - 0.5}px) rotateY(180deg)` }}><i /></b>
+  </span>
+)
+
 export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; etiqueta: string; children: ReactNode }) {
   const quieto = useReducedMotion()
   const zona = useRef<HTMLDivElement>(null)
@@ -58,7 +69,7 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
   const suelta = () => { px.set(0); py.set(0) }
 
   if (quieto) {
-    return <div className="vt-movil vt-movil-quieto" role="navigation" aria-label={etiqueta}>{children}</div>
+    return <div className="vt-movil vt-movil-quieto" role="navigation" aria-label={etiqueta}><Cuerpo />{children}</div>
   }
 
   return (
@@ -81,6 +92,7 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
           onTap={daVuelta}
           style={{ rotateY: rotYTotal, rotateX: rotXTotal }}
         >
+          <Cuerpo />
           {children}
           <motion.span className="vt-movil-brillo" aria-hidden="true" style={{ background: brillo }} />
         </motion.div>
