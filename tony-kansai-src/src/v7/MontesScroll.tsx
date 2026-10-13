@@ -70,9 +70,13 @@ interface Props {
   /** Lo que se lee en cada capítulo: 0 es la portada, 1…N las montañas. */
   capitulo: (i: number) => ReactNode
   etiquetaAria: string
+  /** Color de las curvas de nivel y del hilo de la cima. */
+  tinta?: string
+  /** Color (rgb 0-1) de los puntos de bruma: oscuro sobre papel, claro sobre noche. */
+  bruma?: [number, number, number]
 }
 
-export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props) {
+export function MontesScroll({ montes, nombres, capitulo, etiquetaAria, tinta = '#c0281b', bruma = [0.16, 0.15, 0.13] }: Props) {
   const seccion = useRef<HTMLElement>(null)
   const lienzo = useRef<HTMLDivElement>(null)
   const etiqueta = useRef<HTMLSpanElement>(null)
@@ -149,7 +153,7 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
       uA: { value: vacia as T3.Texture }, uB: { value: vacia as T3.Texture },
       uMezcla: { value: 0 }, uOpacidad: { value: 1 }, uLuz: { value: new THREE.Vector3(-0.75, 0.45, 0.35).normalize() },
       // Para pasar de unidades de escena a metros reales (curvas de nivel).
-      uMin: { value: 0 }, uEscala: { value: 1 }, uTinta: { value: new THREE.Color('#c0281b') },
+      uMin: { value: 0 }, uEscala: { value: 1 }, uTinta: { value: new THREE.Color(tinta) },
     }
     const relieve = new THREE.Mesh(geo, new THREE.ShaderMaterial({
       uniforms, transparent: true,
@@ -197,15 +201,15 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria }: Props)
           float d = length(gl_PointCoord - 0.5);
           if (d > 0.5) discard;
           // Tinta sumi con algún punto bermellón.
-          vec3 c = vAzar > 0.93 ? vec3(0.78, 0.27, 0.18) : vec3(0.16, 0.15, 0.13);
+          vec3 c = vAzar > 0.93 ? vec3(0.78, 0.27, 0.18) : vec3(${bruma.map((v) => v.toFixed(3)).join(', ')});
           gl_FragColor = vec4(c, vA * (1.0 - d * 2.0) * 0.8);
         }`,
     }))
     escena.add(puntos)
 
     // Marcador del punto de la ruta: un hilo bermellón que baja a la cima.
-    const hilo = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.4, 6), new THREE.MeshBasicMaterial({ color: '#c8442d', transparent: true }))
-    const gota = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 12), new THREE.MeshBasicMaterial({ color: '#c8442d', transparent: true }))
+    const hilo = new THREE.Mesh(new THREE.CylinderGeometry(0.012, 0.012, 1.4, 6), new THREE.MeshBasicMaterial({ color: tinta, transparent: true }))
+    const gota = new THREE.Mesh(new THREE.SphereGeometry(0.06, 16, 12), new THREE.MeshBasicMaterial({ color: tinta, transparent: true }))
     escena.add(hilo, gota)
 
     const datos: (Monte | null)[] = montes.map(() => null)

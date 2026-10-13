@@ -14,10 +14,11 @@ import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import './v7.css'
-import './estilo-pixel.css'
+import './expedicion.css'
+import { Portada, Atlas, Corte, Medidor, Meses } from './Expedicion'
+import { EXP, CREDITOS as CREDITOS_FOTO } from './datosExpedicion'
 import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { milesLocal, PIE } from './formato'
 
@@ -75,15 +76,28 @@ export default function Montana({ id }: { id: MontanaId }) {
 
   // Memorizado: la escena 3D se rehace si cambia esta referencia.
   const nombres = useMemo(() => Object.fromEntries(MONTES.map((m) => [m, `${KANJI[m]} ${tc(ruta(m).title)}  ${CIMA[m].m} m`])) as Record<MonteId, string>, [tc])
+  const t = EXP[p.lang]
+  const MAX_GRUPO = 6
   const wa = (g: 'tony' | 'larion', texto: string) => `https://wa.me/${GUIAS[g].wa}?text=${encodeURIComponent(p.saludo(nombreGuia(g), texto))}`
+
+  // Salta al capítulo i del relieve 3D (0 = portada del relieve): el progreso
+  // de MontesScroll es lineal con el scroll de su sección.
+  const irA3d = (i: number) => {
+    const el = document.querySelector<HTMLElement>('.v7-montes')
+    if (!el) return
+    const recorrido = el.offsetHeight - window.innerHeight
+    const top = el.getBoundingClientRect().top + window.scrollY + (recorrido * i) / MONTES.length
+    window.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+  }
+  const precioDe = (m: MonteId) => `${milesLocal(ruta(m).price, p.lang)} ${p.et.porGrupo}`
 
   const capitulo = (i: number) => {
     if (i === 0) {
       return (
         <div className="v7-montes-intro">
-          <p className="v7-antetitulo">{p.intro.antetitulo}</p>
-          <h1>{p.intro.titulo}</h1>
-          <p>{p.intro.sub}</p>
+          <p className="ex-kicker"><span className="ex-regla" aria-hidden="true" />{p.intro.antetitulo}</p>
+          <h2>{t.relieve.titulo}</h2>
+          <p>{t.relieve.sub}</p>
           <p className="v7-montes-baja">{p.intro.baja} ↓</p>
         </div>
       )
@@ -100,9 +114,10 @@ export default function Montana({ id }: { id: MontanaId }) {
         <dl className="v7-monte-datos">
           {r.altitude && <div><dt>{p.et.altitud}</dt><dd><bdi>{milesLocal(r.altitude, p.lang)}</bdi></dd></div>}
           <div><dt>{p.et.subida}</dt><dd>{tc(r.duration)}</dd></div>
-          <div><dt>{p.et.dificultad}</dt><dd>{tc(r.grade)}</dd></div>
-          <div><dt>{p.et.epoca}</dt><dd>{tc(r.bestSeason)}</dd></div>
         </dl>
+        <Corte id={m} etiqueta={t.ficha.corte} compacto />
+        <Medidor id={m} etiqueta={t.ficha.exigencia} grado={tc(r.grade)} />
+        <Meses id={m} lang={p.lang} etiqueta={t.ficha.meses} />
         <p className="v7-monte-nota">{tc(r.note)}</p>
         {/* Coordenadas reales: quien dude de que el monte existe, lo abre en el mapa. */}
         <a className="v7-monte-mapa" href={`https://www.google.com/maps/search/?api=1&query=${CIMA[m].lat},${CIMA[m].lon}`} target="_blank" rel="noopener noreferrer">
@@ -127,7 +142,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   }
 
   return (
-    <div className={`v7 v7-pagina v7-montana lang-${p.lang}`} lang={p.lang} dir={p.dir}>
+    <div className={`v7 v7-pagina v7-montana v7-expedicion lang-${p.lang}`} lang={p.lang} dir={p.dir}>
       <Helmet>
         <html lang={p.lang} dir={p.dir} />
         <title>{p.seo.titulo}</title>
@@ -137,7 +152,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <meta property="og:title" content={p.seo.titulo} />
         <meta property="og:description" content={p.seo.descripcion} />
         <meta property="og:url" content={`${BASE}${p.ruta}`} />
-        <meta property="og:image" content={`${BASE}/v7/fotos/kioto.jpg`} />
+        <meta property="og:image" content={`${BASE}/v7/expedicion/portada.webp`} />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p, tc))}</script>
       </Helmet>
 
@@ -146,6 +161,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         </Link>
         <nav className="v7-anclas">
           <Link to={CIUDAD[id]}>{p.et.ciudad}</Link>
+          <a href="#atlas">{t.atlas.kicker}</a>
           <a href="#oficio">{p.oficio.titulo}</a>
         </nav>
         <nav className="v7-idiomas" aria-label="Language">
@@ -153,7 +169,6 @@ export default function Montana({ id }: { id: MontanaId }) {
             <Link key={x.id} to={MONTANA[x.id].ruta} lang={MONTANA[x.id].lang} aria-current={x.id === id ? 'page' : undefined}>{x.etiqueta}</Link>
           ))}
         </nav>
-        <BotonTema lang={p.lang} />
         <BotonSonido lang={p.lang} ambiente="montana" />
         <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — WhatsApp`}>
           <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span className="v7-solo-movil"><IconoWa /></span>
@@ -161,7 +176,10 @@ export default function Montana({ id }: { id: MontanaId }) {
       </header>
 
       <main>
-        <MontesScroll montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
+        <Portada t={t} lang={p.lang} maxGrupo={MAX_GRUPO} onBaja={() => document.getElementById('atlas')?.scrollIntoView({ behavior: 'smooth' })} />
+        <Atlas t={t} lang={p.lang} nombre={(m) => tc(ruta(m).title)} sub={(m) => tc(ruta(m).subtitle)} grado={(m) => tc(ruta(m).grade)}
+          precio={precioDe} wa={(m) => wa(p.guias[0], tc(ruta(m).title))} onVer3d={(i) => irA3d(i + 1)} />
+        <MontesScroll tinta="#e8b23a" bruma={[0.93, 0.89, 0.8]} montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
 
         <section id="oficio" className="v7-seccion">
           <h2><span className="v7-kanji" lang="ja">山</span>{p.oficio.titulo}</h2>
@@ -206,6 +224,8 @@ export default function Montana({ id }: { id: MontanaId }) {
         <details className="v7-creditos">
           <summary>{(PIE[p.lang] ?? PIE.en).creditos}</summary>
           <ul lang="es" dir="ltr">
+            {Object.entries(CREDITOS_FOTO).map(([k, c]) => <li key={k}>Foto «{c.titulo}»: <a href={c.pagina} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
+            <li>Mapa: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth</a>, dominio público</li>
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
           </ul>
         </details>
