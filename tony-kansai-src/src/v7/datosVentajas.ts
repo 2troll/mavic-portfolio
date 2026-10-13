@@ -306,6 +306,14 @@ export function cuponDe(a: App): string | undefined {
   return a.codigo
 }
 
+/** Enlace por el que me pagan comisión (Travelpayouts, Mobal, Radical) o código de invitación con premio. */
+export function esAfiliado(a: App): boolean {
+  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
+}
+
+/** Adónde lleva el botón: el enlace de afiliado si lo hay. */
+export const enlaceDe = (a: App) => (a.codigo?.startsWith('http') ? a.codigo : a.enlace)
+
 // Agrupadas por categoría (en el orden de CATEGORIAS) aunque se añadan al final de LISTA.
 const ORDEN = Object.keys(CATEGORIAS) as Categoria[]
 export const APPS: App[] = [...LISTA].sort((a, b) => ORDEN.indexOf(a.cat) - ORDEN.indexOf(b.cat))

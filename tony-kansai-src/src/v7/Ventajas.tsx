@@ -13,7 +13,7 @@ import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
-import { APPS, CATEGORIAS, SEO_VENTAJAS, cuponDe, type Categoria } from './datosVentajas'
+import { APPS, CATEGORIAS, SEO_VENTAJAS, cuponDe, esAfiliado, enlaceDe, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import MovilMueve from './MovilMueve'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -182,11 +182,11 @@ function EnlaceAyuda({ e, lista }: { e: Enlace; lista: string }) {
 }
 
 // Franja de códigos arriba del todo: el cliente los tiene a mano sin buscar tarjeta por tarjeta.
-const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; ver: string }> = {
-  es: { titulo: 'Tus códigos de descuento', sub: 'Cópialo y pégalo al pagar en la web o la app de cada uno.', hasta: 'hasta el', ver: 'Cómo usarlo' },
-  en: { titulo: 'Your discount codes', sub: 'Copy one and paste it at checkout on their website or app.', hasta: 'until', ver: 'How to use it' },
-  ar: { titulo: 'رموز الخصم الخاصة بك', sub: 'انسخ الرمز والصقه عند الدفع في موقعهم أو تطبيقهم.', hasta: 'حتى', ver: 'طريقة الاستخدام' },
-  ru: { titulo: 'Ваши коды на скидку', sub: 'Скопируйте код и вставьте при оплате на их сайте или в приложении.', hasta: 'до', ver: 'Как использовать' },
+const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; ver: string; ir: string; enlaces: string; enlacesSub: string; claro: string; claroTexto: string }> = {
+  es: { titulo: 'Tus códigos de descuento', sub: 'Cópialo y pégalo al pagar en la web o la app de cada uno.', hasta: 'hasta el', ver: 'Cómo usarlo', ir: 'Ir a la web', enlaces: 'Reserva con mis enlaces', enlacesSub: 'Entra desde aquí y la web sabe que vienes de mi parte.', claro: 'Te lo digo claro', claroTexto: 'Cuando reservas con mis enlaces o códigos, la empresa me paga una pequeña comisión. A ti no te cuesta nada más: el precio es el mismo y, con código, incluso menor. Solo recomiendo lo que uso yo con mis clientes, y así me ayudas a mantener esta guía gratis.' },
+  en: { titulo: 'Your discount codes', sub: 'Copy one and paste it at checkout on their website or app.', hasta: 'until', ver: 'How to use it', ir: 'Go to website', enlaces: 'Book with my links', enlacesSub: 'Come in from here and the site knows I sent you.', claro: 'To be clear', claroTexto: 'When you book with my links or codes, the company pays me a small commission. It costs you nothing extra: the price is the same, and with a code it is even lower. I only recommend what I use with my own guests, and it helps me keep this guide free.' },
+  ar: { titulo: 'رموز الخصم الخاصة بك', sub: 'انسخ الرمز والصقه عند الدفع في موقعهم أو تطبيقهم.', hasta: 'حتى', ver: 'طريقة الاستخدام', ir: 'افتح الموقع', enlaces: 'احجز عبر روابطي', enlacesSub: 'ادخل من هنا ليعرف الموقع أنك قادم من طرفي.', claro: 'بكل وضوح', claroTexto: 'عندما تحجز عبر روابطي أو رموزي، تدفع لي الشركة عمولة صغيرة. لا يكلّفك ذلك شيئًا إضافيًا: السعر نفسه، ومع الرمز يكون أقل. لا أنصح إلا بما أستخدمه مع ضيوفي، وبذلك تساعدني على إبقاء هذا الدليل مجانيًا.' },
+  ru: { titulo: 'Ваши коды на скидку', sub: 'Скопируйте код и вставьте при оплате на их сайте или в приложении.', hasta: 'до', ver: 'Как использовать', ir: 'Открыть сайт', enlaces: 'Бронируйте по моим ссылкам', enlacesSub: 'Заходите отсюда — сайт поймёт, что вы от меня.', claro: 'Честно', claroTexto: 'Когда вы бронируете по моим ссылкам или кодам, компания платит мне небольшую комиссию. Для вас это ничего не стоит: цена та же, а с кодом даже ниже. Я советую только то, чем пользуюсь со своими гостями, и так вы помогаете сохранить этот гид бесплатным.' },
 }
 
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
@@ -237,6 +237,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   }, [])
   const cupon0 = APPS.find((a) => a.clave === 'airalo' && cuponDe(a))
   const conCodigo = APPS.filter((a) => cuponDe(a))
+  const conEnlace = APPS.filter((a) => esAfiliado(a) && !cuponDe(a))
 
   return (
     <div ref={raiz} className={`vt lang-${id}`} lang={id} dir={dir}>
@@ -309,10 +310,27 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
                     {a.caduca && <small>{CODIGOS[id].hasta} <bdi dir="ltr">{new Date(`${a.caduca}T12:00:00`).toLocaleDateString(id === 'ar' ? 'ar-EG' : id, { day: 'numeric', month: 'short', year: 'numeric' })}</bdi></small>}
                   </div>
                   <BotonCopiar texto={cuponDe(a)!} copiar={p.copiar} copiado={p.copiado} />
-                  <Link className="vt-codigos-ver" to={`${RUTA[id]}${a.clave}/`}>{CODIGOS[id].ver}</Link>
+                  <span className="vt-codigos-acc">
+                    <a href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">{CODIGOS[id].ir} {id === 'ar' ? '←' : '→'}</a>
+                    <Link to={`${RUTA[id]}${a.clave}/`}>{CODIGOS[id].ver}</Link>
+                  </span>
                 </li>
               ))}
             </ul>
+            {conEnlace.length > 0 && (
+              <>
+                <h3 className="vt-codigos-h3">{CODIGOS[id].enlaces}</h3>
+                <p className="vt-codigos-sub">{CODIGOS[id].enlacesSub}</p>
+                <div className="vt-enlaces">
+                  {conEnlace.map((a) => (
+                    <a key={a.clave} href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">
+                      <IconoApp a={a} /><span><b dir="ltr">{a.nombre}</b><small>{CATEGORIAS[a.cat][id]}</small></span>
+                    </a>
+                  ))}
+                </div>
+              </>
+            )}
+            <aside className="vt-claro"><b>{CODIGOS[id].claro}.</b> {CODIGOS[id].claroTexto}</aside>
           </section>
         )}
 

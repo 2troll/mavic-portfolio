@@ -450,6 +450,19 @@
 .vt-codigos-dto { font-size: .8rem; font-weight: 800; padding: 2px 8px; border-radius: 999px; background: var(--marca-boton); color: var(--marca-boton-tinta); }
 .vt-codigos-txt code { flex-basis: 100%; font-family: inherit; font-size: 1.3rem; font-weight: 800; letter-spacing: .05em; white-space: nowrap; }
 .vt-codigos-txt small { flex-basis: 100%; color: var(--vt-suave); font-size: .8rem; }
-.vt-codigos .vt-copiar { grid-area: copiar; margin: 0; padding: 9px 16px; font-size: .9rem; }
-.vt-codigos-ver { grid-area: ver; justify-self: start; white-space: nowrap; font-size: .8rem; color: var(--vt-suave); }
+.vt-codigos .vt-copiar { grid-area: copiar; margin: 0; padding: 10px 16px; font-size: .9rem; white-space: nowrap; }
+.vt-codigos-acc { grid-area: ver; display: flex; flex-direction: column; gap: 2px; justify-self: start; white-space: nowrap; }
+.vt-codigos-acc a:first-child { font-weight: 700; color: var(--vt-tinta); }
+.vt-codigos-acc a { font-size: .8rem; color: var(--vt-suave); }
 @media (max-width: 420px) { .vt-codigos ul { grid-template-columns: 1fr; } .vt-codigos li > .vt-ico { width: 44px; height: 44px; } }
+
+.vt-codigos-h3 { font-size: clamp(1.2rem, 2.2vw, 1.5rem); margin: 32px 0 4px; }
+.vt-enlaces { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 10px; }
+.vt-enlaces a { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 14px; background: var(--vt-blanco); border: 1px solid var(--vt-linea); text-decoration: none; color: var(--vt-tinta); transition: transform .15s ease, box-shadow .15s ease; }
+.vt-enlaces a:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(0, 0, 0, .08); }
+.vt-enlaces .vt-ico { width: 40px; height: 40px; flex: none; }
+.vt-enlaces span { display: flex; flex-direction: column; min-width: 0; }
+.vt-enlaces b { font-size: .95rem; }
+.vt-enlaces small { font-size: .78rem; color: var(--vt-suave); }
+.vt-claro { margin-top: 24px; padding: 16px 18px; border-radius: 14px; background: color-mix(in srgb, var(--vt-wa) 9%, var(--vt-blanco)); border: 1px solid color-mix(in srgb, var(--vt-wa) 30%, transparent); font-size: .95rem; line-height: 1.55; max-width: 80ch; }
+@media (max-width: 420px) { .vt-enlaces { grid-template-columns: 1fr 1fr; } }

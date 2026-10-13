@@ -3,7 +3,7 @@
 // Los textos largos están en datosVentajasDetalle.ts; aquí solo el armazón.
 
 import { Link } from 'react-router-dom'
-import { APPS, CATEGORIAS, type App, cuponDe } from './datosVentajas'
+import { APPS, CATEGORIAS, type App, cuponDe, esAfiliado } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoWa } from './IconoWa'
@@ -85,7 +85,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
   const t = textoApp(a, id)
   const cupon = cuponDe(a)
   const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
-  const colabora = Boolean(cupon) || /tpk\.ro|aff|partner/i.test(href)
+  const colabora = esAfiliado(a)
   const flecha = id === 'ar' ? '←' : '→'
   const otras = [...APPS.filter((x) => x.cat === a.cat && x.clave !== a.clave), ...APPS.filter((x) => x.cat !== a.cat)].slice(0, 8)
   const marca = { ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo }
