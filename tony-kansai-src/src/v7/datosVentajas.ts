@@ -216,6 +216,16 @@ const LISTA: App[] = [
     },
   },
   {
+    // Afiliado de Nomad por Impact (contrato 34279 aceptado el 14-10-2026: 15 % cliente nuevo, 10 % existente).
+    clave: 'nomad', cat: 'internet', nombre: 'Nomad eSIM', enlace: 'https://lotusflareinc.pxf.io/c/7953984/2915870/34279',
+    marca: { fondo: '#1a56db', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#1a56db', palabra: 'Nomad' },
+    t: {
+      es: { que: 'eSIM de datos para Japón y más de 200 países: eliges los GB y los días, y la instalas antes de salir.', ventaja: 'Planes baratos por días; si vas a varios países en el mismo viaje, una sola eSIM regional.' },
+      en: { que: 'Data eSIM for Japan and 200+ countries: pick the GB and days, and install it before you leave.', ventaja: 'Cheap day plans; one regional eSIM if your trip covers several countries.' },
+      ar: { que: 'شريحة eSIM للإنترنت في اليابان وأكثر من 200 دولة: تختار الجيجابايت والأيام وتثبّتها قبل السفر.', ventaja: 'باقات رخيصة بالأيام، وشريحة إقليمية واحدة إن زرت عدة دول في الرحلة نفسها.' },
+    },
+  },
+  {
     // Programa Travel Advisor (10 % para el cliente o comisión) pendiente de alta: de momento, web oficial.
     clave: 'flytographer', cat: 'planes', nombre: 'Flytographer', enlace: 'https://www.flytographer.com/',
     marca: { fondo: '#111111', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#111111', palabra: 'Flytographer' },
@@ -308,7 +318,7 @@ export function cuponDe(a: App): string | undefined {
 
 /** Enlace por el que me pagan comisión (Travelpayouts, Mobal, Radical) o código de invitación con premio. */
 export function esAfiliado(a: App): boolean {
-  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
+  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=|pxf\.io/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
 }
 
 /** Adónde lleva el botón: el enlace de afiliado si lo hay. */
