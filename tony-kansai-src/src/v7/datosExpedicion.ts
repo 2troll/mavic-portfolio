@@ -50,6 +50,7 @@ export interface TextosExpedicion {
   cabecera: string
   portada: { titulo: string; sub: string; cifras: [string, string, string, string]; baja: string; foto: string }
   atlas: { kicker: string; titulo: string; sub: string; alturas: string; calendario: string; ver3d: string; pide: string; mapaNota: string }
+  vuelo: { kicker: string; titulo: string; sub: string; cargando: string; girar: string; parar: string; sinWebgl: string }
   ciudades: Record<'osaka' | 'kioto' | 'kobe' | 'nara', string>
   ficha: { corte: string; exigencia: string; meses: string }
   relieve: { titulo: string; sub: string }
@@ -76,6 +77,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
       pide: 'Pedir esta ruta',
       mapaNota: 'Costa: Natural Earth · cimas: OpenStreetMap',
     },
+    vuelo: { kicker: 'Vuelo sobre la cima', titulo: 'Sobrevuela la montaña antes de subirla', sub: 'Foto aérea del Instituto Geográfico de Japón sobre el relieve real. En dorado, los senderos de OpenStreetMap. Arrastra para girar; con dos dedos, inclina.', cargando: 'Cargando el relieve…', girar: 'Girar', parar: 'Parar giro', sinWebgl: 'Tu navegador no puede mostrar el mapa 3D.' },
     ciudades: { osaka: 'Osaka', kioto: 'Kioto', kobe: 'Kobe', nara: 'Nara' },
     ficha: { corte: 'Corte del terreno oeste–este por la cima · 6 km', exigencia: 'Exigencia', meses: 'Mejores meses' },
     relieve: { titulo: 'Ocho cumbres en relieve real', sub: 'Elevación y foto aérea del Instituto Geográfico de Japón. Baja y cada montaña se deshace en bruma y se convierte en la siguiente.' },
@@ -100,6 +102,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
       pide: 'Ask for this route',
       mapaNota: 'Coastline: Natural Earth · summits: OpenStreetMap',
     },
+    vuelo: { kicker: 'Summit flyover', titulo: 'Fly over the mountain before you climb it', sub: 'Aerial imagery from the Geospatial Information Authority of Japan on real terrain. In gold, the trails from OpenStreetMap. Drag to rotate; tilt with two fingers.', cargando: 'Loading terrain…', girar: 'Rotate', parar: 'Stop rotating', sinWebgl: 'Your browser cannot show the 3D map.' },
     ciudades: { osaka: 'Osaka', kioto: 'Kyoto', kobe: 'Kobe', nara: 'Nara' },
     ficha: { corte: 'West–east terrain cross-section through the summit · 6 km', exigencia: 'Effort', meses: 'Best months' },
     relieve: { titulo: 'Eight summits in real relief', sub: 'Elevation and aerial imagery from the Geospatial Information Authority of Japan. Scroll and each mountain dissolves into mist and becomes the next.' },
@@ -124,6 +127,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
       pide: 'أريد هذا المسار',
       mapaNota: 'الساحل: Natural Earth · القمم: OpenStreetMap',
     },
+    vuelo: { kicker: 'تحليق فوق القمة', titulo: 'حلّق فوق الجبل قبل أن تصعده', sub: 'صور جوية من هيئة المعلومات الجغرافية اليابانية فوق التضاريس الحقيقية. باللون الذهبي، دروب OpenStreetMap. اسحب للتدوير، وبإصبعين للإمالة.', cargando: 'جارٍ تحميل التضاريس…', girar: 'تدوير', parar: 'إيقاف التدوير', sinWebgl: 'متصفحك لا يستطيع عرض الخريطة ثلاثية الأبعاد.' },
     ciudades: { osaka: 'أوساكا', kioto: 'كيوتو', kobe: 'كوبي', nara: 'نارا' },
     ficha: { corte: 'مقطع التضاريس من الغرب إلى الشرق عبر القمة · 6 كم', exigencia: 'الجهد', meses: 'أفضل الأشهر' },
     relieve: { titulo: 'ثماني قمم بتضاريسها الحقيقية', sub: 'الارتفاعات والصور الجوية من هيئة المعلومات الجغرافية اليابانية. انزل وسيتحول كل جبل إلى ضباب ثم إلى الجبل التالي.' },
@@ -148,6 +152,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
       pide: 'Хочу этот маршрут',
       mapaNota: 'Берег: Natural Earth · вершины: OpenStreetMap',
     },
+    vuelo: { kicker: 'Полёт над вершиной', titulo: 'Облетите гору, прежде чем подняться', sub: 'Аэрофото Геопространственного управления Японии на настоящем рельефе. Золотом — тропы из OpenStreetMap. Перетащите, чтобы повернуть; двумя пальцами — наклон.', cargando: 'Загружаем рельеф…', girar: 'Вращать', parar: 'Остановить', sinWebgl: 'Ваш браузер не может показать 3D-карту.' },
     ciudades: { osaka: 'Осака', kioto: 'Киото', kobe: 'Кобе', nara: 'Нара' },
     ficha: { corte: 'Разрез рельефа с запада на восток через вершину · 6 км', exigencia: 'Нагрузка', meses: 'Лучшие месяцы' },
     relieve: { titulo: 'Восемь вершин в настоящем рельефе', sub: 'Высоты и аэрофото Геопространственного управления Японии. Листайте: каждая гора рассеивается туманом и становится следующей.' },

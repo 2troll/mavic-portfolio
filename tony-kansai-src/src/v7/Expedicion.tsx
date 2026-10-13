@@ -8,6 +8,8 @@ import { MONTES, KANJI, CIMA } from './datosMontana'
 import type { MonteId } from './datosMontana'
 import { MAPA, PERFIL, CREDITOS, CIUDADES, MESES, NIVEL, proyecta } from './datosExpedicion'
 import type { TextosExpedicion, Lengua } from './datosExpedicion'
+import { Vuelo3d } from './Vuelo3d'
+import { CimaAhora } from './CimaAhora'
 
 const foto = (id: MonteId | 'portada', ancho: 800 | 1600 = 1600) => `/v7/expedicion/${id}${ancho === 800 ? '-800' : ''}.webp`
 
@@ -220,6 +222,22 @@ export function Atlas({ t, lang, nombre, sub, grado, precio, wa, onVer3d }: Prop
                 </div>
               </motion.article>
             </AnimatePresence>
+          </div>
+        </div>
+
+        {/* Vuelo 3D sobre la cima elegida, con el tiempo de arriba encima. */}
+        <div className="ex-vuelo-bloque">
+          <header className="ex-atlas-cab">
+            <p className="ex-kicker"><span className="ex-regla" aria-hidden="true" />{t.vuelo.kicker} · {nombre(sel)}</p>
+            <h2>{t.vuelo.titulo}</h2>
+            <p className="ex-entradilla">{t.vuelo.sub}</p>
+          </header>
+          <div className="ex-vuelo-rejilla">
+            <Vuelo3d monte={sel} etiqueta={`${t.vuelo.kicker}: ${nombre(sel)}`} textos={t.vuelo} />
+            <CimaAhora monte={sel} lang={lang} />
+          </div>
+          <div className="ex-vuelo-selector" role="group" aria-label={t.atlas.titulo}>
+            {MONTES.map((m) => <button key={m} type="button" aria-pressed={m === sel} className={m === sel ? 'activo' : ''} onClick={() => setSel(m)}>{nombre(m)}</button>)}
           </div>
         </div>
 

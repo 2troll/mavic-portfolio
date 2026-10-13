@@ -228,3 +228,50 @@ html .v7.v7-pagina.v7-expedicion {
   .ex-mapa-cima path { transform: scale(1.5); }
   .ex-mapa-cima.activo path { transform: scale(1.9); }
 }
+
+/* ═ Vuelo 3D + tiempo en la cima ═ */
+.ex-vuelo-bloque { margin-top: 72px; }
+.ex-vuelo-rejilla { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 0; border: 1px solid var(--ex-linea); background: var(--ex-bosque); }
+.ex-vuelo { position: relative; margin: 0; min-height: 520px; background: #0d1418; }
+.ex-vuelo-mapa, .ex-vuelo-mapa.maplibregl-map { position: absolute; inset: 0; }
+.ex-vuelo-aviso { position: absolute; inset: 0; display: grid; place-items: center; margin: 0; color: var(--ex-tenue); font-size: 14px; pointer-events: none; }
+.ex-vuelo-giro { position: absolute; bottom: 14px; inset-inline-start: 14px; z-index: 2; padding: 8px 14px; font: inherit; font-size: 13px; font-weight: 600; color: var(--ex-papel); background: rgba(11, 13, 10, 0.75); border: 1px solid var(--ex-linea); cursor: pointer; }
+.ex-vuelo-giro:hover { border-color: var(--ex-oro); color: var(--ex-oro); }
+.ex-vuelo-pin { display: grid; justify-items: center; pointer-events: none; }
+.ex-vuelo-pin span { padding: 4px 9px; background: var(--ex-oro); color: var(--ex-noche); font: 700 13px/1 'Geist Variable', sans-serif; font-variant-numeric: tabular-nums; box-shadow: 0 4px 18px rgba(0, 0, 0, 0.5); }
+.ex-vuelo-pin::after { content: ''; width: 2px; height: 46px; background: linear-gradient(var(--ex-oro), rgba(240, 179, 58, 0)); }
+.ex-vuelo .maplibregl-ctrl-group { background: rgba(11, 13, 10, 0.8); border: 1px solid var(--ex-linea); }
+.ex-vuelo .maplibregl-ctrl-group button + button { border-top-color: var(--ex-linea); }
+.ex-vuelo .maplibregl-ctrl-icon { filter: invert(1); }
+.ex-vuelo .maplibregl-ctrl-attrib { background: rgba(11, 13, 10, 0.7); color: var(--ex-tenue); font-size: 10px; }
+.ex-vuelo .maplibregl-ctrl-attrib a { color: var(--ex-tenue); }
+.ex-vuelo .maplibregl-cooperative-gesture-screen { background: rgba(11, 13, 10, 0.7); color: var(--ex-papel); font-size: 15px; }
+.ex-vuelo-selector { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.ex-vuelo-selector button { padding: 8px 12px; font: inherit; font-size: 13px; color: var(--ex-tenue); background: transparent; border: 1px solid var(--ex-linea); cursor: pointer; }
+.ex-vuelo-selector button:hover { color: var(--ex-papel); border-color: var(--ex-tenue); }
+.ex-vuelo-selector button.activo { color: var(--ex-noche); background: var(--ex-oro); border-color: var(--ex-oro); font-weight: 600; }
+
+.ex-tiempo { display: grid; gap: 14px; align-content: start; padding: 22px; border-inline-start: 1px solid var(--ex-linea); }
+.ex-tiempo > .ex-medidor-et { display: flex; align-items: center; gap: 8px; margin: 0; }
+.ex-tiempo-vivo { width: 8px; height: 8px; border-radius: 50% !important; background: #6fd08c; box-shadow: 0 0 0 0 rgba(111, 208, 140, 0.6); animation: ex-latido 2s infinite; }
+@keyframes ex-latido { 70% { box-shadow: 0 0 0 9px rgba(111, 208, 140, 0); } 100% { box-shadow: 0 0 0 0 rgba(111, 208, 140, 0); } }
+.ex-tiempo-ahora { display: grid; grid-template-columns: auto auto 1fr; align-items: center; gap: 4px 12px; }
+.ex-tiempo-ahora > strong { font-family: var(--ex-serif); font-size: 3.4rem; font-weight: 600; line-height: 1; }
+.ex-tiempo-ahora dl, .ex-tiempo-sol { margin: 0; display: grid; gap: 4px; font-size: 13px; }
+.ex-tiempo-ahora dl div, .ex-tiempo-sol div { display: flex; justify-content: space-between; gap: 10px; }
+.ex-tiempo dt { color: var(--ex-tenue); }
+.ex-tiempo dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; }
+.ex-tiempo-consejo { margin: 0; padding: 10px 12px; font-size: 13.5px; border-inline-start: 3px solid var(--ex-oro); background: rgba(240, 179, 58, 0.08); }
+.ex-tiempo-dias { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; }
+.ex-tiempo-dias li { display: grid; justify-items: center; gap: 2px; padding: 8px 4px; background: rgba(241, 236, 225, 0.04); font-size: 12px; }
+.ex-tiempo-dias span { color: var(--ex-tenue); text-transform: capitalize; }
+.ex-tiempo-sol { padding-top: 12px; border-top: 1px solid var(--ex-linea); }
+.ex-tiempo-nada { margin: 0; color: var(--ex-tenue); font-size: 13px; }
+.ex-tiempo-carga { height: 120px; background: linear-gradient(90deg, rgba(241, 236, 225, 0.03), rgba(241, 236, 225, 0.08), rgba(241, 236, 225, 0.03)); background-size: 200% 100%; animation: ex-brillo 1.4s linear infinite; }
+@keyframes ex-brillo { to { background-position: -200% 0; } }
+@media (max-width: 900px) {
+  .ex-vuelo-rejilla { grid-template-columns: minmax(0, 1fr); }
+  .ex-vuelo { min-height: 420px; }
+  .ex-tiempo { border-inline-start: 0; border-top: 1px solid var(--ex-linea); }
+}
+@media (prefers-reduced-motion: reduce) { .ex-tiempo-vivo, .ex-tiempo-carga { animation: none; } }

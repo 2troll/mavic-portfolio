@@ -225,6 +225,8 @@ export default function Montana({ id }: { id: MontanaId }) {
           <summary>{(PIE[p.lang] ?? PIE.en).creditos}</summary>
           <ul lang="es" dir="ltr">
             {Object.entries(CREDITOS_FOTO).map(([k, c]) => <li key={k}>Foto «{c.titulo}»: <a href={c.pagina} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
+            <li>Previsión: <a href="https://api.met.no/" target="_blank" rel="noopener noreferrer">MET Norway</a>, CC BY 4.0 · iconos <a href="https://github.com/metno/weathericons" target="_blank" rel="noopener noreferrer">metno/weathericons</a>, MIT</li>
+            <li>Vuelo 3D: MapLibre GL (BSD-3), foto aérea 出典 国土地理院, relieve AWS Terrain Tiles, senderos OpenFreeMap © OpenStreetMap</li>
             <li>Mapa: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth</a>, dominio público</li>
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
           </ul>
