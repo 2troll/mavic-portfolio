@@ -180,12 +180,14 @@
     1px 1px 0 3px #3d4046, 2px 2px 0 3px #393c42, 3px 3px 0 3px #35383d, 4px 4px 0 3px #313439,
     5px 5px 0 3px #2d3035, 6px 6px 0 3px #2a2c31, 7px 7px 0 3px #26282d, 8px 8px 0 3px #222429,
     30px 50px 70px -20px rgba(15, 15, 35, .55), 8px 16px 24px -10px rgba(0, 0, 0, .35);
-  transform: rotateY(-16deg) rotateX(7deg) rotateZ(-3deg);
-  transform-style: preserve-3d;
-  transition: transform .7s cubic-bezier(.2, .7, .2, 1), box-shadow .7s ease;
+  transform-style: preserve-3d; will-change: transform; cursor: pointer;
 }
-.lang-ar .vt-movil { transform: rotateY(16deg) rotateX(7deg) rotateZ(3deg); }
-.vt-movil-zona:hover .vt-movil { transform: rotateY(0) rotateX(0) rotateZ(0) translateY(-6px); }
+/* La inclinación y el movimiento los pone MovilMueve.tsx (framer-motion). */
+.vt-movil-escena, .vt-movil-flota { transform-style: preserve-3d; }
+.vt-movil-quieto { transform: rotateY(-16deg) rotateX(7deg) rotateZ(-3deg); }
+.lang-ar .vt-movil-quieto { transform: rotateY(16deg) rotateX(7deg) rotateZ(3deg); }
+/* Reflejo que sigue al cursor, encima de la pantalla. */
+.vt-movil-brillo { position: absolute; inset: 0; border-radius: 43px; pointer-events: none; mix-blend-mode: screen; z-index: 2; }
 /* Botones: acción y volumen a un lado, encendido al otro (fuera del borde de 11 px). */
 .vt-movil-boton { position: absolute; top: 17%; width: 4px; height: 26px; border-radius: 2px; background: linear-gradient(90deg, #5c6067, #a3a7ae 60%, #5c6067); }
 .vt-movil-boton-izq { left: -15px; }

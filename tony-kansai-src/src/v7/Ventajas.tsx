@@ -15,6 +15,7 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, SEO_VENTAJAS, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
+import MovilMueve from './MovilMueve'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import './v7.css'
@@ -257,7 +258,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             <p className="vt-pista"><Dibujo n="sparkles" className="vt-pista-ico" /> {TOCA[id]}</p>
           </div>
           <div className="vt-movil-zona">
-            <div className="vt-movil" role="navigation" aria-label={p.antetitulo}>
+            <MovilMueve rtl={id === 'ar'} etiqueta={p.antetitulo}>
               <div className="vt-movil-isla" aria-hidden="true" />
               <span className="vt-movil-boton vt-movil-boton-izq" aria-hidden="true" /><span className="vt-movil-boton vt-movil-boton-der" aria-hidden="true" />
               <div className="vt-movil-hora" aria-hidden="true"><span>9:41</span><span>Kansai</span></div>
@@ -269,7 +270,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
                   </Link>
                 ))}
               </div>
-            </div>
+            </MovilMueve>
             {cupon0 && (
               <a href={`#${cupon0.clave}`} className="vt-flotante vt-flotante-1"><IconoApp a={cupon0} /><span><b>−450 ¥</b><small dir="ltr">{cupon0.codigo}</small></span></a>
             )}
