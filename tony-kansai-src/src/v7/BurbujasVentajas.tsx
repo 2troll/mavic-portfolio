@@ -1,18 +1,23 @@
-// Burbujas de cristal (estilo «liquid glass» de Apple) que flotan a un lado de la
-// pantalla mientras el cliente navega, una por app con descuento o enlace mío.
-// Al tocarla, la burbuja estalla en gotas y se abre una hoja de cristal con el
-// código, el botón de copiar y el enlace. Solo CSS para el movimiento (sin
-// framer-motion, para no cargar más las páginas); con «reducir movimiento» del
-// sistema quedan quietas y sin estallido. La X las esconde durante la visita.
-import { useEffect, useRef, useState } from 'react'
+// Burbujas de cristal (estilo «liquid glass» de Apple) que suben flotando por toda
+// la pantalla mientras el cliente navega, como pompas de jabón. Cada una es una app
+// distinta con código o enlace mío, en orden aleatorio y sin repetir hasta que han
+// salido todas. Si nadie la toca, revienta sola arriba y sale la siguiente; al
+// tocarla, estalla en gotas y se abre una hoja de cristal con el código, el botón
+// de copiar y el enlace. Movimiento solo con CSS (sin framer-motion, para no cargar
+// más las páginas); con «reducir movimiento» del sistema no salen. La X las esconde
+// durante la visita.
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { APPS, cuponDe, enlaceDe, type App } from './datosVentajas'
+import { APPS, cuponDe, enlaceDe, esAfiliado, type App } from './datosVentajas'
 import { ICONOS_APP } from './logosMarcas'
 
 type Idioma = 'es' | 'en' | 'ar' | 'ru'
 
 const RUTA: Record<Idioma, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 const CLAVE_OCULTAS = 'burbujas-ocultas'
+/** A la vez como mucho, y cada cuánto nace una nueva (ms). */
+const MAX_VIVAS = 2
+const CADA = 4200
 
 const TEXTO: Record<Idioma, { titulo: string; copiar: string; copiado: string; ir: string; todas: string; cerrar: string; ocultar: string; conmigo: string }> = {
   es: { titulo: 'Descuento para tu viaje', copiar: 'Copiar código', copiado: '¡Copiado!', ir: 'Ir a la web', todas: 'Ver todas las ventajas', cerrar: 'Cerrar', ocultar: 'Ocultar burbujas', conmigo: 'Entra con mi enlace' },
@@ -21,13 +26,17 @@ const TEXTO: Record<Idioma, { titulo: string; copiar: string; copiado: string; i
   ru: { titulo: 'Скидка для вашей поездки', copiar: 'Скопировать код', copiado: 'Скопировано!', ir: 'Открыть сайт', todas: 'Все предложения', cerrar: 'Закрыть', ocultar: 'Скрыть пузыри', conmigo: 'По моей ссылке' },
 }
 
-// Primero las que tienen código; después dos enlaces míos muy útiles.
-const EXTRA = ['nomad', 'klook']
-function elegidas(): App[] {
-  const conCodigo = APPS.filter((a) => cuponDe(a))
-  const resto = EXTRA.map((k) => APPS.find((a) => a.clave === k)).filter((a): a is App => !!a && !cuponDe(a))
-  return [...conCodigo, ...resto].slice(0, 5)
+/** Las apps que pueden salir: con código o con enlace por el que me pagan. */
+const CANDIDATAS = APPS.filter((a) => cuponDe(a) || esAfiliado(a))
+
+/** Baraja nueva cada vuelta; las de código, siempre al principio de la primera. */
+function baraja(primera: boolean): App[] {
+  const mezcla = (l: App[]) => l.map((a) => [Math.random(), a] as const).sort((x, y) => x[0] - y[0]).map(([, a]) => a)
+  if (!primera) return mezcla(CANDIDATAS)
+  return [...mezcla(CANDIDATAS.filter((a) => cuponDe(a))), ...mezcla(CANDIDATAS.filter((a) => !cuponDe(a)))]
 }
+
+interface Burbuja { id: number; a: App; x: number; t: number; dur: number; vaiven: number; revienta: boolean }
 
 function Icono({ a }: { a: App }) {
   if (ICONOS_APP.has(a.clave)) return <img src={`/v7/apps/${a.clave}.webp`} alt="" width="64" height="64" loading="lazy" decoding="async" />
@@ -39,21 +48,45 @@ const sello = (a: App) => (a.descuento ? (a.descuento.startsWith('−') ? a.desc
 
 export function BurbujasVentajas({ lang }: { lang: Idioma }) {
   const t = TEXTO[lang]
-  const [ver, setVer] = useState(false)
+  const [activo, setActivo] = useState(false)
   const [oculto, setOculto] = useState(() => { try { return sessionStorage.getItem(CLAVE_OCULTAS) === '1' } catch { return false } })
-  const [estalla, setEstalla] = useState<string | null>(null)
+  const [vivas, setVivas] = useState<Burbuja[]>([])
   const [abierta, setAbierta] = useState<App | null>(null)
   const [copiado, setCopiado] = useState(false)
   const hoja = useRef<HTMLDivElement>(null)
-  const lista = elegidas()
+  const cola = useRef<App[]>(baraja(true))
+  const contador = useRef(0)
+  const quieto = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
 
-  // Salen cuando el cliente ya ha bajado un poco: no tapan la portada al entrar.
+  // Empiezan cuando el cliente ya ha bajado un poco: no tapan la portada al entrar.
   useEffect(() => {
-    const mira = () => setVer(window.scrollY > window.innerHeight * 0.35)
+    const mira = () => { if (window.scrollY > window.innerHeight * 0.35) setActivo(true) }
     mira()
     window.addEventListener('scroll', mira, { passive: true })
     return () => window.removeEventListener('scroll', mira)
   }, [])
+
+  const nace = useCallback(() => {
+    setVivas((v) => {
+      if (v.length >= MAX_VIVAS) return v
+      if (cola.current.length === 0) cola.current = baraja(false)
+      // Que no salga la misma que ya está subiendo.
+      let a = cola.current.shift()!
+      if (v.some((b) => b.a.clave === a.clave) && cola.current.length) { cola.current.push(a); a = cola.current.shift()! }
+      // Lejos de la otra burbuja, para que no se pisen.
+      const otra = v[0]?.x
+      let x = 6 + Math.random() * 80
+      if (otra !== undefined && Math.abs(x - otra) < 25) x = otra > 46 ? 6 + Math.random() * 30 : 56 + Math.random() * 30
+      return [...v, { id: ++contador.current, a, x, t: 50 + Math.round(Math.random() * 20), dur: 13 + Math.random() * 6, vaiven: 2.6 + Math.random() * 1.8, revienta: false }]
+    })
+  }, [])
+
+  useEffect(() => {
+    if (!activo || oculto || quieto || abierta || CANDIDATAS.length === 0) return
+    const primera = setTimeout(nace, 600)
+    const reloj = setInterval(() => { if (!document.hidden) nace() }, CADA)
+    return () => { clearTimeout(primera); clearInterval(reloj) }
+  }, [activo, oculto, quieto, abierta, nace])
 
   useEffect(() => {
     if (!abierta) return
@@ -63,16 +96,18 @@ export function BurbujasVentajas({ lang }: { lang: Idioma }) {
     return () => window.removeEventListener('keydown', tecla)
   }, [abierta])
 
-  if (oculto || lista.length === 0) return null
+  if (oculto || quieto || CANDIDATAS.length === 0) return null
 
-  const quieto = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
-  const toca = (a: App) => {
-    if (estalla) return
+  const revienta = (id: number) => {
+    setVivas((v) => v.map((b) => (b.id === id ? { ...b, revienta: true } : b)))
+    setTimeout(() => setVivas((v) => v.filter((b) => b.id !== id)), 460)
+  }
+  const toca = (b: Burbuja) => {
+    if (b.revienta) return
     setCopiado(false)
-    if (quieto) { setAbierta(a); return }
-    setEstalla(a.clave)
+    revienta(b.id)
     // La hoja se abre cuando la burbuja ya ha reventado.
-    setTimeout(() => { setAbierta(a); setEstalla(null) }, 380)
+    setTimeout(() => setAbierta(b.a), 380)
   }
   const ocultar = () => { setOculto(true); try { sessionStorage.setItem(CLAVE_OCULTAS, '1') } catch { /* sin almacenamiento: solo esta vista */ } }
   const copiar = async (codigo: string) => {
@@ -84,18 +119,21 @@ export function BurbujasVentajas({ lang }: { lang: Idioma }) {
 
   return (
     <>
-      <div className={`v7-burbujas${ver && !abierta ? ' v7-burbujas-ver' : ''}`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-        {lista.map((a, n) => (
-          <button key={a.clave} type="button" className={`v7-burbuja${estalla === a.clave ? ' v7-burbuja-estalla' : ''}`}
-            style={{ ['--n' as string]: n }} onClick={() => toca(a)} aria-label={`${a.nombre}${sello(a) ? ` ${sello(a)}` : ''}`}>
-            <span className="v7-burbuja-cristal"><Icono a={a} /></span>
-            {sello(a) && <span className="v7-burbuja-sello" dir="ltr">{sello(a)}</span>}
-            {/* Gotas del estallido. */}
-            <span className="v7-burbuja-gotas" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i} style={{ ['--g' as string]: i }} />)}</span>
-          </button>
+      <div className="v7-burbujas" aria-label={t.titulo} role="region">
+        {vivas.map((b) => (
+          // Capa que sube (y revienta sola al llegar arriba) → capa que se mece → la pompa.
+          <div key={b.id} className={`v7-burbuja-sube${b.revienta ? ' v7-burbuja-estalla' : ''}`}
+            style={{ left: `${b.x}%`, ['--t' as string]: `${b.t}px`, ['--dur' as string]: `${b.dur}s`, ['--vaiven' as string]: `${b.vaiven}s` }}
+            onAnimationEnd={(e) => { if (e.animationName === 'v7-sube') revienta(b.id) }}>
+            <button type="button" className="v7-burbuja" onClick={() => toca(b)} aria-label={`${b.a.nombre}${sello(b.a) ? ` ${sello(b.a)}` : ''}`}>
+              <span className="v7-burbuja-cristal"><Icono a={b.a} /></span>
+              {sello(b.a) && <span className="v7-burbuja-sello" dir="ltr">{sello(b.a)}</span>}
+              <span className="v7-burbuja-gotas" aria-hidden="true">{Array.from({ length: 8 }, (_, i) => <i key={i} style={{ ['--g' as string]: i }} />)}</span>
+            </button>
+          </div>
         ))}
-        <button type="button" className="v7-burbujas-x" onClick={ocultar} aria-label={t.ocultar} title={t.ocultar}>×</button>
       </div>
+      {activo && !abierta && <button type="button" className="v7-burbujas-x" onClick={ocultar} aria-label={t.ocultar} title={t.ocultar}>×</button>}
 
       {abierta && (
         <div className="v7-hoja-fondo" onClick={() => setAbierta(null)}>
