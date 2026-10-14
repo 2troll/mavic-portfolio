@@ -281,6 +281,16 @@ const LISTA: App[] = [
     },
   },
   {
+    // Afiliado de IATI Seguros (panel myiati.com): ?r=28859190572940.
+    clave: 'iati', cat: 'utiles', nombre: 'IATI Seguros', enlace: 'https://www.iatiseguros.com?r=28859190572940',
+    marca: { fondo: '#F28C00', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#c96f00', palabra: 'iati' },
+    t: {
+      es: { que: 'Seguro de viaje de una aseguradora española: lo contratas online y la póliza te llega por correo.', ventaja: 'Asistencia en español las 24 horas: si te pones malo en Japón, hablas con alguien en tu idioma.' },
+      en: { que: 'Travel insurance from a Spanish insurer: buy it online and get the policy by email.', ventaja: 'Japanese healthcare is excellent but expensive for visitors: travel covered from day one.' },
+      ar: { que: 'تأمين سفر من شركة إسبانية: تشتريه عبر الإنترنت وتصلك الوثيقة بالبريد.', ventaja: 'الرعاية الصحية في اليابان ممتازة لكنها مكلفة للزائر: سافر مؤمَّنًا من اليوم الأول.' },
+    },
+  },
+  {
     clave: 'airhelp', cat: 'utiles', nombre: 'AirHelp', enlace: 'https://airhelp.tpk.ro/xUhwrt3z',
     marca: { fondo: '#0B6CF0', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0B6CF0', palabra: 'AirHelp' },
     t: {
@@ -318,7 +328,7 @@ export function cuponDe(a: App): string | undefined {
 
 /** Enlace por el que me pagan comisión (Travelpayouts, Mobal, Radical) o código de invitación con premio. */
 export function esAfiliado(a: App): boolean {
-  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=|pxf\.io/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
+  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=|pxf\.io|iatiseguros\.com\?r=/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
 }
 
 /** Adónde lleva el botón: el enlace de afiliado si lo hay. */

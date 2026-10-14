@@ -46,7 +46,7 @@ export const AYUDA: Record<Lang, Bloque> = {
         enlaces: [{ texto: 'Guía Osaka → Kioto', guia: '/es/osaka-kioto/' }, { texto: 'Tren Keihan', href: 'https://www.keihan.co.jp/travel/en/' }, { texto: 'Tren Hankyu', href: 'https://www.hankyu.co.jp/global/en/' }] },
       { icono: 'phone', q: '¿Y si tengo una emergencia?',
         a: 'Policía: 110. Ambulancia y bomberos: 119. La Japan Visitor Hotline (050-3816-2787) atiende en inglés, chino y coreano las 24 horas, todos los días. Si estás de tour conmigo, llámame a mí primero.',
-        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }, { texto: 'Seguro de viaje', app: 'ekta' }] },
+        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }, { texto: 'Seguro de viaje', app: 'iati' }] },
     ],
   },
   en: {
