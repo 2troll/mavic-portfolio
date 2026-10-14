@@ -63,7 +63,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
     portada: {
       titulo: 'Kansai, en vertical',
       sub: 'Dieciocho rutas de montaña entre Osaka, Kioto, Nara y Kobe, de la cima sagrada al ultra de 32 km. Desnivel real, senderos que casi ningún extranjero pisa y guía privado en español.',
-      cifras: ['cumbres', 'metros, la cima más alta', 'prefecturas', 'personas por grupo, máx.'],
+      cifras: ['rutas', 'metros, la cima más alta', 'prefecturas', 'personas por grupo, máx.'],
       baja: 'Abrir el atlas',
       foto: 'Monte Atago desde el sur',
     },
@@ -88,7 +88,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
     portada: {
       titulo: 'Kansai, vertical',
       sub: 'Eighteen mountain routes between Osaka, Kyoto, Nara and Kobe, from sacred summits to a 32 km ultra. Real elevation gain, trails almost no foreigner walks, and a private guide.',
-      cifras: ['summits', 'metres, the highest summit', 'prefectures', 'people per group, max.'],
+      cifras: ['routes', 'metres, the highest summit', 'prefectures', 'people per group, max.'],
       baja: 'Open the atlas',
       foto: 'Mount Atago from the south',
     },
@@ -113,7 +113,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
     portada: {
       titulo: 'كانساي عمودياً',
       sub: 'ثمانية عشر مساراً جبلياً بين أوساكا وكيوتو ونارا وكوبي، من القمم المقدسة إلى عبور ٣٢ كم. صعود حقيقي، ودروب لا يكاد يسلكها أجنبي، ومرشد خاص يتحدث العربية.',
-      cifras: ['قمم', 'مترًا أعلى قمة', 'محافظات', 'أشخاص في المجموعة كحد أقصى'],
+      cifras: ['مساراً', 'مترًا أعلى قمة', 'محافظات', 'أشخاص في المجموعة كحد أقصى'],
       baja: 'افتح الأطلس',
       foto: 'جبل أتاغو من الجنوب',
     },
@@ -138,7 +138,7 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
     portada: {
       titulo: 'Кансай по вертикали',
       sub: 'Восемнадцать горных маршрутов между Осакой, Киото, Нарой и Кобе — от священных вершин до ультра на 32 км. Настоящий набор высоты, тропы без иностранцев и частный гид на русском.',
-      cifras: ['вершин', 'метров — самая высокая', 'префектур', 'человек в группе, макс.'],
+      cifras: ['маршрутов', 'метров — самая высокая', 'префектур', 'человек в группе, макс.'],
       baja: 'Открыть атлас',
       foto: 'Гора Атаго с юга',
     },

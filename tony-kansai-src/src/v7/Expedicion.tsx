@@ -9,6 +9,7 @@ import type { MonteId } from './datosMontana'
 import { MAPA, PERFIL, CREDITOS, CIUDADES, MESES, NIVEL, proyecta } from './datosExpedicion'
 import type { TextosExpedicion, Lengua } from './datosExpedicion'
 import { Vuelo3d } from './Vuelo3d'
+import { CUMBRES } from './datosCumbres'
 import { CimaAhora } from './CimaAhora'
 
 const foto = (id: MonteId | 'portada', ancho: 800 | 1600 = 1600) => `/v7/expedicion/${id}${ancho === 800 ? '-800' : ''}.webp`
@@ -42,7 +43,9 @@ export function Portada({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion; la
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] })
   const y = useTransform(scrollYProgress, [0, 1], ['0%', '22%'])
   const opacidad = useTransform(scrollYProgress, [0, 0.8], [1, 0])
-  const cifras = [MONTES.length, Math.max(...MONTES.map((m) => CIMA[m].m)), 5, maxGrupo]
+  // Las 8 del relieve más las 10 de nivel pro; cima y prefecturas de las dos listas.
+  const prefecturas = new Set([...CUMBRES.map((c) => c.prefectura.en), 'Osaka', 'Kyoto', 'Hyōgo', 'Nara'])
+  const cifras = [MONTES.length + CUMBRES.length, Math.max(...MONTES.map((m) => CIMA[m].m), ...CUMBRES.map((c) => c.cima ?? 0)), prefecturas.size, maxGrupo]
   return (
     <LazyMotion features={domMax} strict>
       <section ref={ref} className="ex-portada" aria-labelledby="ex-titulo">
