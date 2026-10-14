@@ -146,6 +146,11 @@ function resenasFijas(): Resena[] {
   return ((resenasTony as { reviews: Resena[] }).reviews ?? []).filter((r) => r?.text && r.stars)
 }
 
+/** Sin foto del cliente, la tarjeta lleva arriba la ciudad en kanji, del mismo
+ *  tamaño que una foto: así todas las tarjetas de una fila encajan igual. */
+const KANJI_CIUDAD: [RegExp, string][] = [[/kio|kyo|كيو|киот/i, '京都'], [/osa|أوس|осак/i, '大阪'], [/nara|نار|нар/i, '奈良'], [/kob|كوب|кобе/i, '神戸'], [/hime|هيم|химе/i, '姫路'], [/hiro|miya|هير|хиро/i, '広島']]
+const kanjiDe = (tour?: string) => KANJI_CIUDAD.find(([re]) => re.test(tour ?? ''))?.[1] ?? '関西'
+
 const LEER_MAS: Record<string, [string, string]> = { es: ['Leer más', 'Leer menos'], en: ['Read more', 'Read less'], ar: ['اقرأ المزيد', 'اقرأ أقل'], ru: ['Читать дальше', 'Свернуть'] }
 
 /** Recorta a la vista las reseñas largas para que todas las tarjetas midan
@@ -742,9 +747,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               )
             })()}
             <div className="v7-resenas">
-              {/* Primero las que traen foto (en su orden, de la más nueva a la más vieja)
-                  y luego las de solo texto: así cada fila mide lo mismo y no quedan huecos. */}
-              {resenasVistas.slice(0, verResenas).map((r, i) => ({ r, i })).sort((a, b) => (Number(!!b.r.photo) - Number(!!a.r.photo)) || a.i - b.i).map(({ r }) => {
+              {resenasVistas.slice(0, verResenas).map((r) => {
                 const m = r.meta?.[p.lang]
                 const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
                 const texto = r.traducciones?.[p.lang] ?? r.text
@@ -752,7 +755,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 <figure key={r.id} className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}${r.photo ? ' v7-resena-con-foto' : ''}`}>
                   {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
                       natural y la rejilla quedaba como un puzle mal encajado. */}
-                  {r.photo && <img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
+                  {r.photo
+                    ? <img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />
+                    : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
                   <div className="v7-resena-cabeza">
                     <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
                     {lugar && <span className="v7-resena-lugar">{lugar}</span>}
