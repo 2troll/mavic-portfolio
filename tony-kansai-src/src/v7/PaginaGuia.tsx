@@ -4,12 +4,13 @@
 
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { APPS, WISE_LINK } from './datosVentajas'
+import { APPS } from './datosVentajas'
+import { FranjaVentajas } from './FranjaVentajas'
 import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, WISE_TONY, PAGAR } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -33,7 +34,6 @@ import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
 import { enlacesHreflang } from '../seo/hreflang'
-import { FranjaVentajas } from './FranjaVentajas'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -251,17 +251,6 @@ const mediaResenas = (l: Resena[], lang: string) =>
 const RESERVAR_PLAN: Record<string, string> = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
 const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con PayPal', en: 'or pay in advance with PayPal', ar: 'أو ادفع مسبقاً عبر PayPal', ru: 'или оплатить заранее через PayPal' }
 
-// Para quien paga el depósito desde fuera de Japón: enlace de afiliado de Wise.
-const WISE_DEPOSITO: Record<string, { texto: string; abrir: string }> = {
-  es: { texto: '¿Pagas el depósito desde fuera? Wise usa el tipo de cambio real con una comisión pequeña y clara, normalmente mucho más barato que el banco.', abrir: 'Abrir Wise →' },
-  en: { texto: 'Paying the deposit from abroad? Wise uses the real exchange rate with a small, upfront fee, usually much cheaper than a bank.', abrir: 'Open Wise →' },
-  ar: { texto: 'هل تدفع العربون من الخارج؟ تستخدم Wise سعر الصرف الحقيقي مع رسوم صغيرة وواضحة، وغالبًا أرخص بكثير من البنك.', abrir: 'افتح Wise ←' },
-  ru: { texto: 'Платите депозит из-за границы? Wise использует реальный курс и небольшую прозрачную комиссию, обычно намного дешевле банка.', abrir: 'Открыть Wise →' },
-}
-
-// Wisetag de Tony: cobra directo, pero solo puede pagar quien ya tiene cuenta de Wise.
-const PAGO_WISE: Record<string, string> = { es: 'o con Wise (si tienes cuenta Wise)', en: 'or with Wise (if you have a Wise account)', ar: 'أو عبر Wise (إن كان لديك حساب Wise)', ru: 'или через Wise (если у вас есть счёт Wise)' }
-
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 function Precios({ p }: { p: Pagina }) {
@@ -305,12 +294,6 @@ function Precios({ p }: { p: Pagina }) {
                 {PAGO_ADELANTADO[p.lang] ?? PAGO_ADELANTADO.en}
               </a>
             )}
-            {pagar && !plan.desde && (
-              <a className="v7-plan-pagar-enlace" href={WISE_TONY} target="_blank" rel="noopener noreferrer"
-                onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'wise' })}>
-                {PAGO_WISE[p.lang] ?? PAGO_WISE.en}
-              </a>
-            )}
             {cambios.length > 0 && (
               <p className="v7-plan-aprox">
                 ≈ {cambios.map((c) => fmt(plan.yenes * c.tasa, c.divisa)).join(' · ')}{plan.desde ? '+' : ''}
@@ -321,9 +304,6 @@ function Precios({ p }: { p: Pagina }) {
       </div>
       <ul className="v7-notas">
         {pagar && <li>{pagar.nota}</li>}
-        {pagar && WISE_DEPOSITO[p.lang] && (
-          <li>{WISE_DEPOSITO[p.lang].texto} <a href={WISE_LINK} target="_blank" rel="sponsored noopener">{WISE_DEPOSITO[p.lang].abrir}</a></li>
-        )}
         {p.precios.notas.map((n) => <li key={n}>{n}</li>)}
       </ul>
       {cambios.length > 0 && (
