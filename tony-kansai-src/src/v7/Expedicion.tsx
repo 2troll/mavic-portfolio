@@ -70,6 +70,10 @@ export function Portada({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion; la
           </dl>
           <button type="button" className="ex-baja" onClick={onBaja}>{t.portada.baja} <span aria-hidden="true">↓</span></button>
         </motion.div>
+        {/* Coordenadas de la cima de la foto (Atago), como pie de foto de expedición. */}
+        <p className="ex-portada-coord" dir="ltr" aria-hidden="true">
+          <span>{KANJI['mt-atago']}</span> {CIMA['mt-atago'].lat.toFixed(4)}° N · {CIMA['mt-atago'].lon.toFixed(4)}° E · {CIMA['mt-atago'].m} m
+        </p>
         <Credito id="portada" t={t} />
       </section>
     </LazyMotion>

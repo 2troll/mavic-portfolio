@@ -22,7 +22,10 @@ import { BarraWa } from './BarraWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { milesLocal, PIE } from './formato'
 import { FranjaVentajas } from './FranjaVentajas'
-import { Cumbres, datosCumbres } from './Cumbres'
+import { Cumbres, Banda, datosCumbres } from './Cumbres'
+import '@fontsource-variable/oswald'
+import '@fontsource-variable/source-serif-4'
+import './montana-pro.css'
 import { TEXTOS_CUMBRES } from './datosCumbres'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -185,6 +188,7 @@ export default function Montana({ id }: { id: MontanaId }) {
           precio={precioDe} wa={(m) => wa(p.guias[0], tc(ruta(m).title))} onVer3d={(i) => irA3d(i + 1)} />
         <MontesScroll tinta="#e8b23a" bruma={[0.93, 0.89, 0.8]} montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
 
+        <Banda lang={p.lang} />
         <Cumbres lang={p.lang} waNumero={GUIAS[p.guias[0]].wa} />
 
         <section id="oficio" className="v7-seccion">

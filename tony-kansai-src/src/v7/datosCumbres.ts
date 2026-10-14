@@ -144,6 +144,7 @@ export const CUMBRES: Cumbre[] = [
 
 export interface TextosCumbres {
   menu: string
+  banda: { titulo: string; cifras: [string, string, string] }
   kicker: string
   titulo: string
   sub: string
@@ -168,6 +169,7 @@ export const letraMes = (lang: Lengua, m: number) => MESES[lang][m - 1]
 export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
   es: {
     menu: 'Rutas pro',
+    banda: { titulo: 'Más alto. Más lejos. Más duro.', cifras: ['metros: el techo de Kansai', 'km: la vuelta a Kioto por la montaña', 'm de desnivel en un solo día'] },
     kicker: 'Nivel pro · Kansai',
     titulo: 'Diez cumbres para quien ya lo ha hecho todo',
     sub: 'Desnivel de verdad, travesías de un día entero y montes que casi ningún extranjero pisa. Datos de cada ruta en AllTrails; nosotros ponemos el guía, la logística y el ritmo.',
@@ -196,6 +198,7 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
   },
   en: {
     menu: 'Pro routes',
+    banda: { titulo: 'Higher. Further. Harder.', cifras: ['metres: the roof of Kansai', 'km: the loop around Kyoto by its peaks', 'm of gain in a single day'] },
     kicker: 'Pro level · Kansai',
     titulo: 'Ten summits for hikers who have done it all',
     sub: 'Real elevation gain, full-day traverses and mountains almost no foreigner sets foot on. Route data from AllTrails; we bring the guide, the logistics and the pace.',
@@ -224,6 +227,7 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
   },
   ar: {
     menu: 'مسارات المحترفين',
+    banda: { titulo: 'أعلى. أبعد. أصعب.', cifras: ['متراً: سقف كانساي', 'كم: الدورة حول كيوتو عبر قممها', 'م صعوداً في يوم واحد'] },
     kicker: 'مستوى المحترفين · كانساي',
     titulo: 'عشر قمم لمن جرّب كل شيء',
     sub: 'ارتفاع حقيقي، وعبور يوم كامل، وجبال لا يكاد يطؤها أجنبي. بيانات كل مسار من AllTrails، ونحن نوفّر المرشد والتنظيم والإيقاع.',
@@ -252,6 +256,7 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
   },
   ru: {
     menu: 'Про-маршруты',
+    banda: { titulo: 'Выше. Дальше. Труднее.', cifras: ['метров: крыша Кансая', 'км: круг вокруг Киото по вершинам', 'м набора за один день'] },
     kicker: 'Уровень про · Кансай',
     titulo: 'Десять вершин для тех, кто уже прошёл всё',
     sub: 'Настоящий набор высоты, траверсы на целый день и горы, где почти не бывает иностранцев. Данные маршрутов — из AllTrails; от нас гид, логистика и темп.',

@@ -41,6 +41,23 @@ export function datosCumbres(lang: Lengua, url: string) {
   ]
 }
 
+/** Franja de golpe antes de las rutas pro: tres cifras enormes sobre foto. */
+export function Banda({ lang }: { lang: Lengua }) {
+  const b = TEXTOS_CUMBRES[lang].banda
+  const n = (v: number) => numero(v, lang)
+  const valores = [n(1915), n(81.8), n(2000)]
+  return (
+    <section className="ex-banda" aria-label={b.titulo}>
+      <div className="ex-banda-dentro">
+        <h2>{b.titulo}</h2>
+        <dl>
+          {b.cifras.map((t, i) => <div key={t}><dt><bdi>{valores[i]}</bdi></dt><dd>{t}</dd></div>)}
+        </dl>
+      </div>
+    </section>
+  )
+}
+
 export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) {
   const t = TEXTOS_CUMBRES[lang]
   const [filtro, setFiltro] = useState<'todas' | Nivel>('todas')

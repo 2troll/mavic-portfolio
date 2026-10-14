@@ -1,0 +1,225 @@
+/* ═══ Página de montaña, estilo expedición profesional ═══
+   Revista de aventura: titulares enormes en Oswald (estrecha, en mayúsculas),
+   texto de lectura en Source Serif 4, datos en Oswald con cifras tabulares.
+   Amarillo de señal sobre negro y secciones en papel blanco que alternan con
+   las negras, para que la página tenga ritmo. Va después de expedicion.css. */
+
+html .v7.v7-pagina.v7-expedicion.v7-montana {
+  --pro-amarillo: #ffcc00;
+  --pro-amarillo-2: #ffd93d;
+  --pro-negro: #0a0a0a;
+  --pro-papel: #f5f2ea;
+  --pro-titulo: 'Oswald Variable', 'Oswald', 'Arial Narrow', Impact, sans-serif;
+  --pro-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
+  --ex-noche: var(--pro-negro);
+  --ex-bosque: #141414;
+  --ex-papel: #ffffff;
+  --ex-tenue: #b9b5ab;
+  --ex-oro: var(--pro-amarillo);
+  --ex-oro-osc: #d9a900;
+  --ex-linea: rgba(255, 255, 255, 0.16);
+  --ex-serif: var(--pro-titulo);
+  --acento: var(--pro-amarillo); --boton: var(--pro-amarillo); --boton-tinta: #000;
+  background: var(--pro-negro);
+}
+
+/* Titulares: Oswald en mayúsculas. Árabe y ruso con su propia letra/caja. */
+html .v7.v7-montana.v7-expedicion :is(h1, h2, h3) { font-family: var(--pro-titulo); font-weight: 700; font-synthesis: weight; line-height: 1.02; letter-spacing: -0.005em; text-transform: uppercase; }
+html .v7.v7-montana.v7-expedicion.lang-ru :is(h1, h2, h3) { letter-spacing: 0; }
+html .v7.v7-montana.v7-expedicion.lang-ar :is(h1, h2, h3) { font-family: inherit; text-transform: none; font-weight: 800; letter-spacing: 0; }
+html .v7.v7-montana .ex-entradilla, html .v7.v7-montana .v7-entradilla, html .v7.v7-montana .v7-monte-nota, html .v7.v7-montana .cu-nota, html .v7.v7-montana .cu-sub, html .v7.v7-montana .cu-faq details p, html .v7.v7-montana .v7-oficio p {
+  font-family: var(--pro-serif); font-weight: 400;
+}
+html .v7.v7-montana.lang-ar :is(.ex-entradilla, .v7-entradilla, .v7-monte-nota, .cu-nota, .cu-sub, .v7-oficio p) { font-family: inherit; }
+
+/* Antetítulo: etiqueta amarilla maciza, como un sello de expedición. */
+html .v7.v7-montana .ex-kicker { font-family: var(--pro-titulo); font-weight: 600; font-size: 14px; letter-spacing: 0.2em; color: var(--pro-amarillo); }
+html .v7.v7-montana.lang-ar .ex-kicker { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .ex-regla { width: 14px; height: 14px; background: var(--pro-amarillo); }
+
+/* ═ Cabecera: barra negra con filo amarillo ═ */
+html .v7.v7-montana .v7-cabecera.cristal { background: rgba(10, 10, 10, 0.92); border: 0; border-bottom: 3px solid var(--pro-amarillo); border-radius: 0; box-shadow: 0 10px 30px -18px #000; }
+html .v7.v7-montana .v7-anclas a { white-space: nowrap; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; font-size: 14px; font-weight: 500; color: #d6d2c8; }
+html .v7.v7-montana.lang-ar .v7-anclas a { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .v7-anclas a:hover { color: var(--pro-amarillo); }
+html .v7.v7-montana .v7-boton { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; background: var(--pro-amarillo); border-color: var(--pro-amarillo); color: #000; }
+html .v7.v7-montana.lang-ar .v7-boton { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .v7-boton:hover { background: var(--pro-amarillo-2); }
+
+/* ═ Portada a sangre ═ */
+html .v7.v7-montana .ex-portada { min-height: max(680px, 100svh); }
+html .v7.v7-montana .ex-portada-velo {
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0) 30%, rgba(0, 0, 0, 0.25) 55%, rgba(0, 0, 0, 0.92) 100%),
+              linear-gradient(90deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0) 60%);
+}
+html .v7.v7-montana .ex-portada-texto { padding-bottom: 88px; gap: 26px; }
+html .v7.v7-montana .ex-portada h1 {
+  font-size: clamp(4rem, 11.5vw, 11.5rem); line-height: 0.94; max-width: 10ch; letter-spacing: -0.01em;
+  text-shadow: 0 6px 40px rgba(0, 0, 0, 0.5);
+}
+html .v7.v7-montana.lang-ru .ex-portada h1 { font-size: clamp(3.4rem, 10.5vw, 10rem); max-width: 12ch; }
+html .v7.v7-montana.lang-ar .ex-portada h1 { font-size: clamp(3rem, 9vw, 7.5rem); line-height: 1.15; }
+/* Filo amarillo bajo el titular: el gesto de marca de toda la página. */
+html .v7.v7-montana .ex-portada h1::after { content: ''; display: block; width: clamp(80px, 12vw, 180px); height: 10px; margin-top: 26px; background: var(--pro-amarillo); }
+html .v7.v7-montana .ex-portada .ex-entradilla { color: #f1eee6; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.5; max-width: 40ch; }
+html .v7.v7-montana .ex-cifras { border-top: 0; max-width: 860px; gap: 0; }
+html .v7.v7-montana .ex-cifras > div { border-inline-end: 0; border-top: 3px solid var(--pro-amarillo); padding: 14px 18px 0 0; margin-inline-end: 14px; }
+html .v7.v7-montana .ex-cifras dt { font-family: var(--pro-titulo); font-weight: 700; font-size: clamp(2.6rem, 5vw, 4.4rem); letter-spacing: -0.02em; }
+html .v7.v7-montana .ex-cifras dd { font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; font-size: 12.5px; color: #e6e2d8; }
+html .v7.v7-montana.lang-ar .ex-cifras dd { font-family: inherit; letter-spacing: 0; text-transform: none; }
+html .v7.v7-montana .ex-baja { border-radius: 0; padding: 16px 28px; font-family: var(--pro-titulo); font-weight: 600; font-size: 17px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--pro-amarillo); color: #000; }
+html .v7.v7-montana.lang-ar .ex-baja { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .ex-baja:hover { background: var(--pro-amarillo-2); }
+.ex-portada-coord {
+  position: absolute; top: 50%; inset-inline-end: 22px; margin: 0; transform: translateY(-50%) rotate(180deg); writing-mode: vertical-rl;
+  font: 500 12px/1 var(--pro-titulo); letter-spacing: 0.24em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75);
+}
+.ex-portada-coord span { color: var(--pro-amarillo); letter-spacing: 0.3em; margin-bottom: 10px; }
+
+/* ═ Secciones en papel (atlas, oficio, preguntas) ═
+   El fondo se extiende a todo el ancho con una sombra recortada, sin tocar el marcado. */
+html .v7.v7-montana .ex-atlas, html .v7.v7-montana #oficio, html .v7.v7-montana .cu-faq {
+  --ex-papel: #111111; --ex-tenue: #5c574c; --ex-linea: rgba(0, 0, 0, 0.14); --ex-bosque: #ffffff;
+  --tinta: #111111; --tenue: #5c574c; --linea: rgba(0, 0, 0, 0.14);
+  color: #111; background: var(--pro-papel);
+  box-shadow: 0 0 0 100vmax var(--pro-papel); clip-path: inset(0 -100vmax);
+}
+html .v7.v7-montana .ex-atlas { padding-top: 110px; padding-bottom: 100px; }
+html .v7.v7-montana .ex-atlas .ex-kicker, html .v7.v7-montana #oficio .ex-kicker { color: #111; }
+html .v7.v7-montana .ex-atlas .ex-regla { background: var(--pro-amarillo); outline: 2px solid #111; outline-offset: -2px; }
+html .v7.v7-montana .ex-atlas-cab h2 { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 0.98; }
+html .v7.v7-montana .ex-atlas .ex-entradilla { color: #3b372f; font-size: 1.2rem; }
+
+/* Mapa como lámina impresa: mar azul gris, tierra papel, trazo negro. */
+html .v7.v7-montana .ex-mapa svg { border: 2px solid #111; box-shadow: 10px 10px 0 var(--pro-amarillo); }
+html .v7.v7-montana[dir='rtl'] .ex-mapa svg { box-shadow: -10px 10px 0 var(--pro-amarillo); }
+html .v7.v7-montana .ex-mapa-mar { fill: #c9dbe3; }
+html .v7.v7-montana .ex-mapa-tierra { fill: #efe9da; stroke: #2b2b2b; stroke-width: 1.4; }
+html .v7.v7-montana .ex-mapa-reticula { stroke: rgba(0, 0, 0, 0.07); }
+html .v7.v7-montana .ex-mapa-ciudad rect { fill: #111; }
+html .v7.v7-montana .ex-mapa-ciudad text { fill: #111; stroke: #efe9da; font-family: var(--pro-titulo); text-transform: uppercase; }
+html .v7.v7-montana .ex-mapa-cima path { fill: #3d3a33; stroke: #efe9da; }
+html .v7.v7-montana .ex-mapa-cima text { fill: #3d3a33; stroke: #efe9da; font-family: var(--pro-titulo); font-weight: 700; }
+html .v7.v7-montana .ex-mapa-cima:hover path, html .v7.v7-montana .ex-mapa-cima:focus-visible path { fill: #000; }
+html .v7.v7-montana .ex-mapa-cima.activo path { fill: #e03a00; }
+html .v7.v7-montana .ex-mapa-cima.activo text { fill: #000; }
+html .v7.v7-montana .ex-mapa-mira line { stroke: #e03a00; opacity: 0.5; }
+html .v7.v7-montana .ex-mapa-mira circle { stroke: #e03a00; stroke-width: 3; }
+html .v7.v7-montana .ex-mapa figcaption { color: #5c574c; }
+
+/* Ficha del monte elegido: blanca, con filo negro y el número enorme. */
+html .v7.v7-montana .ex-panel-ficha { background: #fff; border: 2px solid #111; border-top: 10px solid var(--pro-amarillo); }
+html .v7.v7-montana .ex-panel-num { color: #fff; font-family: var(--pro-titulo); font-size: 5.4rem; }
+html .v7.v7-montana .ex-panel-ficha h3 { font-size: clamp(2rem, 3.2vw, 2.9rem); line-height: 0.95; }
+html .v7.v7-montana .ex-panel-ficha h3 [lang='ja'] { color: #b31d00; }
+html .v7.v7-montana .ex-panel-altura bdi:first-child { font-family: var(--pro-titulo); font-size: 2rem; font-weight: 700; color: #111; }
+html .v7.v7-montana .ex-panel-precio { font-family: var(--pro-titulo); font-weight: 700; font-size: 1.5rem; }
+html .v7.v7-montana .ex-boton, html .v7.v7-montana .ex-boton-linea { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; font-size: 15px; padding: 13px 18px; }
+html .v7.v7-montana.lang-ar :is(.ex-boton, .ex-boton-linea) { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .ex-boton { background: #111; border-color: #111; color: var(--pro-amarillo); }
+html .v7.v7-montana .ex-boton:hover { background: #000; color: #fff; }
+html .v7.v7-montana .ex-boton-linea { border: 2px solid #111; color: #111; }
+html .v7.v7-montana .ex-boton-linea:hover { background: var(--pro-amarillo); border-color: #111; color: #000; }
+html .v7.v7-montana .ex-atlas :is(.ex-corte-area) { fill: rgba(224, 58, 0, 0.14); }
+html .v7.v7-montana .ex-atlas .ex-corte-linea { stroke: #e03a00; stroke-width: 2; }
+html .v7.v7-montana .ex-atlas .ex-corte-cima { stroke: #111; }
+html .v7.v7-montana .ex-atlas .ex-medidor-barras i { background: rgba(0, 0, 0, 0.12); }
+html .v7.v7-montana .ex-atlas .ex-medidor-barras i.si { background: #e03a00; }
+html .v7.v7-montana .ex-atlas .ex-meses-tira i { background: rgba(0, 0, 0, 0.06); color: #5c574c; }
+html .v7.v7-montana .ex-atlas .ex-meses-tira i.si { background: #111; color: var(--pro-amarillo); }
+html .v7.v7-montana :is(.ex-corte figcaption, .ex-medidor-et) { font-family: var(--pro-titulo); font-weight: 600; letter-spacing: 0.14em; }
+html .v7.v7-montana.lang-ar :is(.ex-corte figcaption, .ex-medidor-et) { font-family: inherit; letter-spacing: 0; }
+
+/* Vuelo 3D dentro del papel: ventana negra enmarcada. */
+html .v7.v7-montana .ex-vuelo-bloque { margin-top: 100px; }
+html .v7.v7-montana .ex-vuelo-rejilla { border: 2px solid #111; background: #fff; }
+html .v7.v7-montana .ex-tiempo-ahora > strong { font-family: var(--pro-titulo); font-weight: 700; }
+html .v7.v7-montana .ex-tiempo-consejo { border-inline-start-color: #e03a00; background: rgba(224, 58, 0, 0.07); }
+html .v7.v7-montana .ex-vuelo-giro { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
+html .v7.v7-montana .ex-vuelo-selector button { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.06em; font-size: 14px; border: 2px solid #111; color: #111; }
+html .v7.v7-montana.lang-ar .ex-vuelo-selector button { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .ex-vuelo-selector button:hover { background: rgba(0, 0, 0, 0.06); color: #000; border-color: #111; }
+html .v7.v7-montana .ex-vuelo-selector button.activo { background: #111; color: var(--pro-amarillo); border-color: #111; }
+html .v7.v7-montana .ex-vuelo-pin span { background: var(--pro-amarillo); color: #000; font-family: var(--pro-titulo); }
+
+/* Infografía en papel: siluetas en tinta negra, la elegida en rojo señal. */
+html .v7.v7-montana .ex-graficos { border-top: 2px solid #111; }
+html .v7.v7-montana .ex-silueta { background: linear-gradient(180deg, #fff 0%, #fff 7%, #6b6659 16%, #1d1c19 100%); }
+html .v7.v7-montana .ex-alturas button.activo .ex-silueta { background: linear-gradient(180deg, #fff 0%, #fff 7%, #ff5a1f 18%, #b31d00 100%); }
+html .v7.v7-montana .ex-alturas-m { font-family: var(--pro-titulo); font-size: 15px; color: #111; }
+html .v7.v7-montana .ex-alturas button.activo :is(.ex-alturas-m, .ex-alturas-n) { color: #b31d00; }
+html .v7.v7-montana .ex-calendario td { background: rgba(0, 0, 0, 0.05); }
+html .v7.v7-montana .ex-calendario td.si { background: #8a8475; }
+html .v7.v7-montana .ex-calendario tr.activo th { color: #b31d00; }
+html .v7.v7-montana .ex-calendario tr.activo td.si { background: #e03a00; }
+html .v7.v7-montana .ex-credito { color: #6a655a; }
+html .v7.v7-montana .ex-portada > .ex-credito { color: rgba(255, 255, 255, 0.7); }
+
+/* ═ Relieve 3D: fichas negras, cuadradas, con filo amarillo ═ */
+html .v7.v7-montana .v7-montes-intro h2 { font-size: clamp(2.8rem, 6vw, 5.2rem); line-height: 0.98; }
+html .v7.v7-montana .v7-monte-ficha { background: rgba(8, 8, 8, 0.9); border: 0; border-inline-start: 6px solid var(--pro-amarillo); border-radius: 0; }
+html .v7.v7-montana .v7-monte-ficha h2 { font-size: clamp(2.2rem, 3.6vw, 3.2rem); line-height: 0.95; }
+html .v7.v7-montana .v7-monte-num { font-family: var(--pro-titulo); font-weight: 600; letter-spacing: 0.2em; font-size: 13px; }
+html .v7.v7-montana .v7-monte-datos dd, html .v7.v7-montana .v7-monte-precio { font-family: var(--pro-titulo); font-weight: 700; font-size: 1.4rem; }
+html .v7.v7-montana .v7-monte-datos dt { font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.12em; }
+html .v7.v7-montana.lang-ar .v7-monte-datos dt { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .v7-montes-etiqueta { font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; font-size: 15px; }
+
+/* ═ Franja «Más alto. Más lejos. Más duro.» sobre foto ═ */
+.ex-banda {
+  position: relative; isolation: isolate; margin-top: 0; padding: clamp(90px, 14vw, 180px) 24px;
+  background: url('/v7/expedicion/mt-kongo.webp') center 40% / cover no-repeat;
+}
+.ex-banda::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(0, 0, 0, 0.82), rgba(0, 0, 0, 0.55) 45%, rgba(0, 0, 0, 0.88)); }
+.ex-banda-dentro { width: min(var(--ancho, 1180px), 100%); margin: 0 auto; }
+html .v7.v7-montana .ex-banda h2 { margin: 0 0 48px; font-size: clamp(3rem, 9vw, 8.5rem); line-height: 0.98; max-width: 12ch; color: #fff; }
+.ex-banda dl { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
+.ex-banda dl > div { border-top: 6px solid var(--pro-amarillo); padding-top: 16px; }
+.ex-banda dt { font: 700 clamp(3.4rem, 8vw, 7rem)/0.9 var(--pro-titulo); color: var(--pro-amarillo); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.ex-banda dd { margin: 10px 0 0; font: 500 15px/1.35 var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; color: #f1eee6; max-width: 22ch; }
+.lang-ar .ex-banda dd { font-family: inherit; letter-spacing: 0; text-transform: none; font-size: 16px; }
+
+/* ═ Oficio en papel: columnas numeradas en grande ═ */
+html .v7.v7-montana #oficio { padding-top: 110px; padding-bottom: 110px; }
+html .v7.v7-montana #oficio h2 { font-size: clamp(2.6rem, 6vw, 5rem); line-height: 0.98; color: #111; }
+html .v7.v7-montana #oficio h2 .v7-kanji { color: #b31d00; }
+html .v7.v7-montana .v7-oficio { border-top: 2px solid #111; }
+html .v7.v7-montana .v7-oficio li.tarjeta { border-color: rgba(0, 0, 0, 0.16); }
+html .v7.v7-montana .v7-oficio-num::before { font-family: var(--pro-titulo); font-size: 3.6rem; color: #111; -webkit-text-stroke: 0; }
+html .v7.v7-montana .v7-oficio li.tarjeta:hover .v7-oficio-num::before { color: #e03a00; }
+html .v7.v7-montana .v7-oficio h3 { font-size: 1.5rem; line-height: 1.05; color: #111; }
+html .v7.v7-montana .v7-oficio p { color: #3b372f; font-size: 1.04rem; }
+
+/* ═ Final sobre foto ═ */
+html .v7.v7-montana .v7-montana-final {
+  width: 100%; max-width: none; padding: clamp(100px, 13vw, 170px) max(24px, calc((100% - var(--ancho, 1180px)) / 2 + 24px));
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.55) 50%, rgba(0, 0, 0, 0.9)), url('/v7/expedicion/mt-hiei.webp') center / cover no-repeat;
+}
+html .v7.v7-montana .v7-montana-final h2 { font-size: clamp(3.2rem, 9vw, 8rem); line-height: 0.98; color: #fff; }
+html .v7.v7-montana .v7-montana-final .v7-entradilla { color: #ece8de; font-size: 1.3rem; }
+html .v7.v7-montana .v7-montana-guia.tarjeta { background: rgba(0, 0, 0, 0.6); border: 2px solid rgba(255, 255, 255, 0.25); border-radius: 0; }
+html .v7.v7-montana .v7-montana-guia.tarjeta:hover { border-color: var(--pro-amarillo); }
+html .v7.v7-montana .v7-montana-guia strong { font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.04em; font-size: 1.4rem; }
+
+/* Pie */
+html .v7.v7-montana .v7-pie { border-top: 3px solid var(--pro-amarillo); }
+
+@media (max-width: 900px) {
+  .ex-banda dl { grid-template-columns: minmax(0, 1fr); gap: 22px; }
+  .ex-portada-coord { display: none; }
+}
+@media (max-width: 560px) {
+  html .v7.v7-montana .ex-portada h1 { font-size: clamp(3.6rem, 18vw, 5.4rem); }
+  html .v7.v7-montana.lang-ru .ex-portada h1 { font-size: clamp(2.8rem, 13vw, 4.2rem); }
+  html .v7.v7-montana .ex-cifras > div { margin-inline-end: 10px; }
+  html .v7.v7-montana .ex-mapa svg { box-shadow: 6px 6px 0 var(--pro-amarillo); }
+  .ex-banda { padding-inline: 16px; }
+  html .v7.v7-montana .v7-montana-final { padding-inline: 16px; }
+}
+
+/* Esquinas rectas y botones en una sola línea en toda la página. */
+html .v7.v7-montana :is(.v7-oficio li.tarjeta, .v7-montana-guia.tarjeta, .tarjeta) { border-radius: 0; }
+html .v7.v7-montana .v7-oficio li.tarjeta { background: transparent; box-shadow: none; }
+html .v7.v7-montana :is(.v7-boton, .ex-boton, .ex-boton-linea, .cu-boton) { white-space: nowrap; }
+/* El árabe no admite espaciado entre letras ni la letra latina: se desordenaba en el mapa. */
+html .v7.v7-montana.lang-ar .ex-mapa-ciudad text { font-family: -apple-system, 'SF Arabic', 'Noto Sans Arabic', Tahoma, sans-serif; letter-spacing: 0; text-transform: none; unicode-bidi: plaintext; }

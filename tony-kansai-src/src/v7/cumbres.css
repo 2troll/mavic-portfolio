@@ -1,13 +1,13 @@
 /* Cumbres nivel pro: ficha técnica de deporte de montaña, no de revista.
    Sans pesada en mayúsculas, cifras grandes tabulares y un color por nivel. */
 .cu {
-  --cu-exigente: #f0b33a; --cu-experto: #ff7a1a; --cu-ultra: #ff3b30;
+  --cu-exigente: #ffcc00; --cu-experto: #ff8a00; --cu-ultra: #ff3b1f;
   width: min(var(--ancho, 1180px), 100%); margin: 0 auto; padding: 96px 24px 0;
 }
-.v7-expedicion .cu :is(h2, h3) { font-family: 'Geist Variable', -apple-system, sans-serif; letter-spacing: -0.02em; }
+.v7-expedicion .cu :is(h2, h3) { font-family: var(--pro-titulo, 'Geist Variable'), sans-serif; letter-spacing: -0.005em; }
 .v7-expedicion.lang-ar .cu :is(h2, h3) { font-family: inherit; letter-spacing: 0; }
 .v7-expedicion .cu-cab h2 {
-  font-size: clamp(2.2rem, 5.6vw, 4.4rem); font-weight: 850; line-height: 0.98; text-transform: uppercase;
+  font-size: clamp(2.8rem, 7.5vw, 6.4rem); font-weight: 700; line-height: 0.9; text-transform: uppercase;
   max-width: 20ch; margin: 0 0 18px;
 }
 .lang-ar .cu-cab h2, .lang-ru .cu-cab h2 { text-transform: none; }
@@ -33,10 +33,10 @@
   --cu-c: var(--cu-exigente);
   position: relative; display: flex; flex-direction: column; gap: 14px; padding: 22px 22px 20px;
   background: linear-gradient(160deg, rgba(255, 255, 255, 0.045), rgba(255, 255, 255, 0.01)); border: 1px solid var(--linea);
-  border-radius: 6px; overflow: hidden; scroll-margin-top: 96px;
+  border-radius: 0; overflow: hidden; scroll-margin-top: 96px;
   transition: transform 0.25s ease, border-color 0.25s ease;
 }
-.cu-ficha::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 4px; background: var(--cu-c); }
+.cu-ficha::before { content: ''; position: absolute; inset: 0 auto 0 0; width: 6px; background: var(--cu-c); }
 [dir='rtl'] .cu-ficha::before { inset: 0 0 0 auto; }
 .cu-ficha:hover { transform: translateY(-3px); border-color: var(--cu-c); }
 .cu-n-experto { --cu-c: var(--cu-experto); }
@@ -44,14 +44,14 @@
 .cu-ficha-cab { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
 .cu-nivel { font-size: 12px; font-weight: 800; letter-spacing: 0.14em; text-transform: uppercase; color: var(--cu-c); }
 .cu-pref { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--tenue); }
-.v7-expedicion .cu-ficha h3 { margin: 0; font-size: 1.55rem; font-weight: 800; line-height: 1.1; display: flex; flex-direction: column; gap: 4px; }
+.v7-expedicion .cu-ficha h3 { margin: 0; font-size: 1.9rem; font-weight: 700; line-height: 1; display: flex; flex-direction: column; gap: 4px; }
 .cu-ficha h3 span { font-family: var(--mincho, serif); font-size: 0.9rem; font-weight: 500; color: var(--cu-c); letter-spacing: 0.06em; }
 .cu-ficha-sub { margin: -6px 0 0; color: var(--tenue); font-size: 0.97rem; }
 
 .cu-cifras { display: grid; grid-template-columns: repeat(3, 1fr); margin: 4px 0 0; border-block: 1px solid var(--linea); }
 .cu-cifras > div { display: flex; flex-direction: column-reverse; padding: 12px 0; }
 .cu-cifras > div + div { border-inline-start: 1px solid var(--linea); padding-inline-start: 14px; }
-.cu-cifras dd { margin: 0; white-space: nowrap; font-size: clamp(1.45rem, 2.6vw, 1.9rem); font-weight: 800; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
+.cu-cifras dd { margin: 0; white-space: nowrap; font-family: var(--pro-titulo, inherit); font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 700; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.03em; }
 .cu-cifras dt { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--tenue); margin-top: 6px; }
 
 .cu-barra { height: 5px; background: var(--linea); border-radius: 3px; overflow: hidden; }
@@ -113,3 +113,14 @@
   .cu-datos > div { grid-template-columns: 5.5rem 1fr; }
 }
 @media (prefers-reduced-motion: reduce) { .cu-ficha { transition: none; } .cu-ficha:hover { transform: none; } }
+
+/* Letra de expedición para etiquetas, filtros y botones (no en árabe). */
+:is(.cu-filtro, .cu-kicker, .cu-nivel, .cu-pref, .cu-cifras dt, .cu-datos dt, .cu-boton, .cu-sellos li, .cu-app b) { font-family: var(--pro-titulo, inherit); }
+.lang-ar :is(.cu-filtro, .cu-kicker, .cu-nivel, .cu-pref, .cu-cifras dt, .cu-datos dt, .cu-boton, .cu-sellos li) { font-family: inherit; letter-spacing: 0; }
+.cu-filtro, .cu-boton { border-radius: 0; }
+.cu-boton { font-size: 16px; font-weight: 600; letter-spacing: 0.1em; padding: 14px 16px; }
+.cu-kicker { font-size: 14px; color: var(--cu-exigente); }
+.cu-kicker span { width: 14px; height: 14px; }
+.cu-cab h2 { color: #fff; }
+.cu-apps { border-radius: 0; border: 2px solid var(--linea); }
+.cu-app { border-radius: 0; }
