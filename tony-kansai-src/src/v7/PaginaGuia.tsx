@@ -316,14 +316,14 @@ const GRUPO_MAX: Record<string, Record<string, string>> = {
 function FichaTour({ p }: { p: Pagina }) {
   const f = FICHA[p.lang] ?? FICHA.en
   const filas: [string, string][] = [f.incluido, f.no, f.cancelacion, [f.grupo, (GRUPO_MAX[p.guia] ?? GRUPO_MAX.tony)[p.lang] ?? GRUPO_MAX.tony.en]]
-  // Estilo en línea a propósito: v7.css es de otra pieza y la ficha tiene que
-  // leerse bien aunque allí no exista todavía la clase.
+  // Estilos en v7.css (.v7-ficha): con estilo en línea y sin relleno, el texto
+  // quedaba pegado al borde de la caja y en el móvil la etiqueta se salía.
   return (
-    <dl className="v7-ficha tarjeta" style={{ display: 'grid', gridTemplateColumns: 'max-content 1fr', gap: '.5rem 1.25rem', margin: '1.25rem 0 0' }}>
+    <dl className="v7-ficha tarjeta">
       {filas.map(([k, v]) => (
-        <div key={k} style={{ display: 'contents' }}>
-          <dt style={{ fontWeight: 600 }}>{k}</dt>
-          <dd style={{ margin: 0 }}>{v}</dd>
+        <div key={k} className="v7-ficha-fila">
+          <dt>{k}</dt>
+          <dd>{v}</dd>
         </div>
       ))}
     </dl>

@@ -126,7 +126,7 @@ export function BurbujasVentajas({ lang }: { lang: Idioma }) {
           // Capa que sube (y revienta sola al llegar arriba) → capa que se mece → la pompa.
           <div key={b.id} className={`v7-burbuja-sube${b.revienta ? ' v7-burbuja-estalla' : ''}`}
             style={{ left: `min(${b.x}%, calc(100% - ${b.t + 24}px))`, ['--t' as string]: `${b.t}px`, ['--dur' as string]: `${b.dur}s`, ['--vaiven' as string]: `${b.vaiven}s` }}
-            onAnimationEnd={(e) => { if (e.animationName === 'v7-sube') revienta(b.id) }}>
+            onAnimationEnd={(e) => { if (e.animationName === 'v7-burbuja-arriba') revienta(b.id) }}>
             <button type="button" className="v7-burbuja" onClick={() => toca(b)} aria-label={`${b.a.nombre}${sello(b.a) ? ` ${sello(b.a)}` : ''}`}>
               <span className="v7-burbuja-cristal"><Icono a={b.a} /></span>
               {sello(b.a) && <span className="v7-burbuja-sello" dir="ltr">{sello(b.a)}</span>}
