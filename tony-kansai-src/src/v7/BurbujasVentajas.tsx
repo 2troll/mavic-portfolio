@@ -73,10 +73,12 @@ export function BurbujasVentajas({ lang }: { lang: Idioma }) {
       // Que no salga la misma que ya está subiendo.
       let a = cola.current.shift()!
       if (v.some((b) => b.a.clave === a.clave) && cola.current.length) { cola.current.push(a); a = cola.current.shift()! }
-      // Lejos de la otra burbuja, para que no se pisen.
+      // Solo por los bordes de la pantalla: por el centro tapaban las reseñas y
+      // el texto, y costaba pulsar lo que había debajo. Si ya sube una por un
+      // lado, la nueva sale por el otro, para que no se pisen.
       const otra = v[0]?.x
-      let x = 6 + Math.random() * 80
-      if (otra !== undefined && Math.abs(x - otra) < 25) x = otra > 46 ? 6 + Math.random() * 30 : 56 + Math.random() * 30
+      const izquierda = otra === undefined ? Math.random() < 0.5 : otra > 50
+      const x = izquierda ? 1 + Math.random() * 3 : 90 + Math.random() * 3
       return [...v, { id: ++contador.current, a, x, t: 50 + Math.round(Math.random() * 20), dur: 13 + Math.random() * 6, vaiven: 2.6 + Math.random() * 1.8, revienta: false }]
     })
   }, [])
@@ -123,7 +125,7 @@ export function BurbujasVentajas({ lang }: { lang: Idioma }) {
         {vivas.map((b) => (
           // Capa que sube (y revienta sola al llegar arriba) → capa que se mece → la pompa.
           <div key={b.id} className={`v7-burbuja-sube${b.revienta ? ' v7-burbuja-estalla' : ''}`}
-            style={{ left: `${b.x}%`, ['--t' as string]: `${b.t}px`, ['--dur' as string]: `${b.dur}s`, ['--vaiven' as string]: `${b.vaiven}s` }}
+            style={{ left: `min(${b.x}%, calc(100% - ${b.t + 24}px))`, ['--t' as string]: `${b.t}px`, ['--dur' as string]: `${b.dur}s`, ['--vaiven' as string]: `${b.vaiven}s` }}
             onAnimationEnd={(e) => { if (e.animationName === 'v7-sube') revienta(b.id) }}>
             <button type="button" className="v7-burbuja" onClick={() => toca(b)} aria-label={`${b.a.nombre}${sello(b.a) ? ` ${sello(b.a)}` : ''}`}>
               <span className="v7-burbuja-cristal"><Icono a={b.a} /></span>
