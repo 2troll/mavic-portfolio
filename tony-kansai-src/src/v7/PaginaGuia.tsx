@@ -146,6 +146,23 @@ function resenasFijas(): Resena[] {
   return ((resenasTony as { reviews: Resena[] }).reviews ?? []).filter((r) => r?.text && r.stars)
 }
 
+const LEER_MAS: Record<string, [string, string]> = { es: ['Leer más', 'Leer menos'], en: ['Read more', 'Read less'], ar: ['اقرأ المزيد', 'اقرأ أقل'], ru: ['Читать дальше', 'Свернуть'] }
+
+/** Recorta a la vista las reseñas largas para que todas las tarjetas midan
+ *  parecido. El texto completo sigue en el HTML (buscadores e IAs lo leen
+ *  entero); solo se oculta con CSS hasta pulsar «Leer más». */
+function TextoRecortable({ largo, lang, children }: { largo: boolean; lang: string; children: React.ReactNode }) {
+  const [abierto, setAbierto] = useState(false)
+  if (!largo) return <>{children}</>
+  const [mas, menos] = LEER_MAS[lang] ?? LEER_MAS.en
+  return (
+    <div className={`v7-resena-recorte${abierto ? ' abierto' : ''}`}>
+      {children}
+      <button type="button" className="v7-resena-leer" aria-expanded={abierto} onClick={() => setAbierto((a) => !a)}>{abierto ? menos : mas}</button>
+    </div>
+  )
+}
+
 function useResenas(activas: boolean, fuente?: string) {
   // Larion tiene su propio archivo (`fuente`): ese sigue llegando por petición.
   const [lista, setLista] = useState<Resena[]>(() => (activas && !fuente ? resenasFijas() : []))
@@ -725,22 +742,28 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               )
             })()}
             <div className="v7-resenas">
-              {resenasVistas.slice(0, verResenas).map((r) => {
+              {/* Primero las que traen foto (en su orden, de la más nueva a la más vieja)
+                  y luego las de solo texto: así cada fila mide lo mismo y no quedan huecos. */}
+              {resenasVistas.slice(0, verResenas).map((r, i) => ({ r, i })).sort((a, b) => (Number(!!b.r.photo) - Number(!!a.r.photo)) || a.i - b.i).map(({ r }) => {
                 const m = r.meta?.[p.lang]
                 const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
                 const texto = r.traducciones?.[p.lang] ?? r.text
                 return (
-                <figure key={r.id} className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}`}>
+                <figure key={r.id} className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}${r.photo ? ' v7-resena-con-foto' : ''}`}>
+                  {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
+                      natural y la rejilla quedaba como un puzle mal encajado. */}
+                  {r.photo && <img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
                   <div className="v7-resena-cabeza">
                     <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
                     {lugar && <span className="v7-resena-lugar">{lugar}</span>}
                   </div>
-                  <TextoResena r={r} lang={p.lang} />
+                  <TextoRecortable largo={texto.length > 320} lang={p.lang}>
+                    <TextoResena r={r} lang={p.lang} />
+                  </TextoRecortable>
                   <figcaption>
                     <img className="v7-resena-avatar" src={iconos.get(r.id)} alt="" loading="lazy" width="52" height="52" />
                     <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
                   </figcaption>
-                  {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
                 </figure>
                 )
               })}
