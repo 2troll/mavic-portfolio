@@ -1420,3 +1420,87 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-franja-ventajas li b { color: #b4232a; }
 .v7 .v7-franja-ventajas-boton { flex: none; padding: 12px 20px; font-weight: 800; text-decoration: none; color: var(--px-tarjeta, #fff); background: var(--px-borde, #1b1b1b); border: 2px solid var(--px-borde, #1b1b1b); }
 .v7 .v7-franja-ventajas-boton:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 #b4232a; }
+
+/* ══ Burbujas de ventajas (BurbujasVentajas.tsx): cristal líquido que flota a un lado ══ */
+.v7-burbujas { position: fixed; z-index: 60; inset-inline-end: 14px; top: 50%; transform: translateY(-50%); display: flex; flex-direction: column; align-items: center; gap: 14px; pointer-events: none; }
+.v7-burbuja, .v7-burbujas-x { pointer-events: auto; }
+.v7-burbuja { --t: 58px; position: relative; width: var(--t); height: var(--t); padding: 0; border: 0; background: none; cursor: pointer; -webkit-tap-highlight-color: transparent;
+  transform: scale(0); opacity: 0; transition: transform .55s cubic-bezier(.34, 1.56, .64, 1), opacity .3s ease; transition-delay: calc(var(--n) * 90ms); }
+.v7-burbujas-ver .v7-burbuja { transform: scale(1); opacity: 1; }
+/* El cristal: brillo arriba, borde claro, reflejo irisado y desenfoque de lo que hay detrás. */
+.v7-burbuja-cristal { position: absolute; inset: 0; border-radius: 50%; display: grid; place-items: center;
+  background: radial-gradient(circle at 32% 24%, rgba(255, 255, 255, .85) 0 6%, rgba(255, 255, 255, .28) 22%, rgba(255, 255, 255, .08) 55%, rgba(255, 255, 255, .16) 100%);
+  -webkit-backdrop-filter: blur(10px) saturate(180%); backdrop-filter: blur(10px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, .6);
+  box-shadow: inset 0 1px 1px rgba(255, 255, 255, .9), inset 0 -8px 14px rgba(255, 255, 255, .18), inset 0 0 0 1px rgba(255, 255, 255, .1), 0 10px 26px -6px rgba(10, 20, 40, .35);
+  animation: v7-flota 7s ease-in-out infinite alternate; animation-delay: calc(var(--n) * -1.4s); }
+.v7-burbuja-cristal::after { content: ''; position: absolute; inset: -1px; border-radius: 50%; pointer-events: none; opacity: .55; mix-blend-mode: overlay;
+  background: conic-gradient(from 200deg, rgba(255, 120, 200, .6), rgba(120, 200, 255, .6), rgba(160, 255, 200, .5), rgba(255, 230, 140, .6), rgba(255, 120, 200, .6));
+  -webkit-mask: radial-gradient(circle, transparent 60%, #000 72%); mask: radial-gradient(circle, transparent 60%, #000 72%); }
+.v7-burbuja-cristal img, .v7-burbuja-cristal b { width: 60%; height: 60%; border-radius: 28%; object-fit: cover; box-shadow: 0 2px 6px rgba(0, 0, 0, .2); }
+.v7-burbuja-cristal b { display: grid; place-items: center; font: 800 .95rem/1 system-ui, sans-serif; }
+.v7-burbuja-sello { position: absolute; inset-inline-end: -8px; top: -4px; padding: 2px 6px; border-radius: 999px; background: #e0313a; color: #fff; font: 800 .66rem/1.3 system-ui, sans-serif; white-space: nowrap; box-shadow: 0 2px 6px rgba(0, 0, 0, .25); animation: v7-flota 7s ease-in-out infinite alternate; animation-delay: calc(var(--n) * -1.4s); }
+.v7-burbuja:hover .v7-burbuja-cristal, .v7-burbuja:focus-visible .v7-burbuja-cristal { scale: 1.1; }
+.v7-burbuja:focus-visible { outline: none; }
+.v7-burbuja:focus-visible .v7-burbuja-cristal { box-shadow: 0 0 0 3px #0a84ff, 0 10px 26px -6px rgba(10, 20, 40, .35); }
+@keyframes v7-flota {
+  0% { translate: 0 0; rotate: -4deg; }
+  35% { translate: -6px -7px; rotate: 3deg; }
+  70% { translate: 3px 5px; rotate: -2deg; }
+  100% { translate: -3px -3px; rotate: 4deg; }
+}
+/* Estallido: la burbuja se hincha y desaparece, y salen ocho gotas de cristal. */
+.v7-burbuja-estalla .v7-burbuja-cristal, .v7-burbuja-estalla .v7-burbuja-sello { animation: v7-revienta .38s cubic-bezier(.2, .8, .3, 1) forwards; }
+.v7-burbuja-gotas { position: absolute; inset: 0; pointer-events: none; }
+.v7-burbuja-gotas i { position: absolute; left: 50%; top: 50%; width: 9px; height: 9px; margin: -4.5px; border-radius: 50%; opacity: 0;
+  background: radial-gradient(circle at 35% 30%, #fff, rgba(255, 255, 255, .35) 60%); box-shadow: 0 0 0 1px rgba(255, 255, 255, .5); }
+.v7-burbuja-estalla .v7-burbuja-gotas i { animation: v7-gota .45s ease-out forwards; }
+@keyframes v7-revienta { 0% { scale: 1; opacity: 1; } 55% { scale: 1.4; opacity: .7; } 100% { scale: 1.6; opacity: 0; } }
+@keyframes v7-gota {
+  0% { opacity: 1; transform: rotate(calc(var(--g) * 45deg)) translateX(10px) scale(1); }
+  100% { opacity: 0; transform: rotate(calc(var(--g) * 45deg)) translateX(46px) scale(.3); }
+}
+.v7-burbujas-x { width: 26px; height: 26px; padding: 0; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .6); color: var(--tinta, #1d1d1f); font-size: 16px; line-height: 1; cursor: pointer; opacity: 0; transition: opacity .3s ease .5s;
+  background: rgba(255, 255, 255, .35); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); box-shadow: 0 4px 12px rgba(0, 0, 0, .15); }
+.v7-burbujas-ver .v7-burbujas-x { opacity: .8; }
+
+/* Hoja de cristal que se abre al reventar la burbuja. */
+.v7-hoja-fondo { position: fixed; inset: 0; z-index: 80; display: grid; place-items: center; padding: 16px; background: rgba(10, 12, 20, .28); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px); animation: v7-aparece .25s ease; }
+.v7-hoja { position: relative; width: min(360px, 100%); padding: 22px 22px 18px; border-radius: 30px; color: #1d1d1f; outline: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, .82), rgba(255, 255, 255, .62)); -webkit-backdrop-filter: blur(26px) saturate(180%); backdrop-filter: blur(26px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, .7); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .9), 0 30px 60px -20px rgba(10, 20, 40, .5);
+  animation: v7-hoja-abre .5s cubic-bezier(.34, 1.56, .64, 1); }
+.v7-hoja-x { position: absolute; inset-inline-end: 12px; top: 12px; width: 30px; height: 30px; border: 0; border-radius: 50%; background: rgba(0, 0, 0, .07); color: inherit; font-size: 20px; line-height: 1; cursor: pointer; }
+.v7-hoja-cab { display: flex; align-items: center; gap: 14px; margin-inline-end: 30px; }
+.v7-hoja-ico img, .v7-hoja-ico b { width: 56px; height: 56px; border-radius: 15px; display: grid; place-items: center; font: 800 1.2rem/1 system-ui, sans-serif; box-shadow: 0 6px 14px -6px rgba(0, 0, 0, .4); }
+.v7-hoja-cab small { display: block; font-size: .78rem; opacity: .65; }
+.v7-hoja-cab strong { font-size: 1.15rem; }
+.v7-hoja-cab em { font-style: normal; margin-inline-start: 6px; padding: 1px 7px; border-radius: 999px; background: #e0313a; color: #fff; font-size: .8rem; }
+.v7-hoja p { margin: 14px 0; line-height: 1.45; font-size: .95rem; }
+.v7-hoja-codigo { display: flex; align-items: center; gap: 10px; padding: 10px 10px 10px 14px; border-radius: 16px; border: 1.5px dashed rgba(0, 0, 0, .25); background: rgba(255, 255, 255, .55); }
+.v7-hoja-codigo code { flex: 1; min-width: 0; font: 800 1.2rem/1.2 system-ui, sans-serif; letter-spacing: .04em; overflow-wrap: anywhere; }
+.v7-hoja-codigo button { flex: none; padding: 9px 14px; border: 0; border-radius: 999px; background: #1d1d1f; color: #fff; font-weight: 700; cursor: pointer; }
+.v7 .v7-hoja-ir { display: block; margin-top: 12px; padding: 13px; border-radius: 999px; background: #0a84ff; color: #fff; text-align: center; font-weight: 800; text-decoration: none; }
+.v7 .v7-hoja-todas { display: block; margin-top: 10px; text-align: center; font-size: .88rem; color: inherit; opacity: .75; }
+@keyframes v7-aparece { from { opacity: 0; } }
+@keyframes v7-hoja-abre { from { opacity: 0; transform: scale(.6) translateY(20px); } }
+:root[data-tema='oscuro'] .v7-hoja { color: #f5f5f7; background: linear-gradient(160deg, rgba(44, 44, 48, .85), rgba(28, 28, 30, .7)); border-color: rgba(255, 255, 255, .18); }
+:root[data-tema='oscuro'] .v7-hoja-codigo { background: rgba(255, 255, 255, .08); border-color: rgba(255, 255, 255, .3); }
+:root[data-tema='oscuro'] .v7-hoja-codigo button { background: #f5f5f7; color: #1d1d1f; }
+:root[data-tema='oscuro'] .v7-hoja-x { background: rgba(255, 255, 255, .12); }
+:root[data-tema='oscuro'] .v7-burbujas-x { color: #f5f5f7; background: rgba(40, 40, 44, .5); }
+@media (max-width: 640px) {
+  .v7-burbujas { inset-inline-end: 8px; top: auto; bottom: 96px; transform: none; gap: 10px; }
+  .v7-burbuja { --t: 48px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .v7-burbuja, .v7-burbuja-cristal, .v7-burbuja-sello, .v7-hoja, .v7-hoja-fondo { animation: none !important; transition: none !important; }
+}
+/* El estilo píxel cuadra todas las esquinas (estilo-pixel.css, !important); las burbujas
+   y la hoja son de cristal redondo, así que se lo devuelven con más especificidad. */
+.v7 .v7-burbujas .v7-burbuja-cristal, .v7 .v7-burbujas .v7-burbuja-cristal::after, .v7 .v7-burbujas .v7-burbuja-gotas i, .v7 .v7-burbujas .v7-burbujas-x, .v7 .v7-hoja-fondo .v7-hoja-x { border-radius: 50% !important; }
+.v7 .v7-burbujas .v7-burbuja-cristal img, .v7 .v7-burbujas .v7-burbuja-cristal b { border-radius: 28% !important; }
+.v7 .v7-burbujas .v7-burbuja-sello, .v7 .v7-hoja-fondo .v7-hoja-cab em, .v7 .v7-hoja-fondo .v7-hoja-codigo button, .v7 .v7-hoja-fondo .v7-hoja-ir { border-radius: 999px !important; }
+.v7 .v7-hoja-fondo .v7-hoja { border-radius: 30px !important; }
+.v7 .v7-hoja-fondo .v7-hoja-codigo { border-radius: 16px !important; }
+.v7 .v7-hoja-fondo .v7-hoja-ico img, .v7 .v7-hoja-fondo .v7-hoja-ico b { border-radius: 15px !important; }

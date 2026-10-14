@@ -3,6 +3,7 @@
 // de datosVentajas (cuponDe), así un código caducado o retirado desaparece solo.
 import { Link } from 'react-router-dom'
 import { APPS, cuponDe } from './datosVentajas'
+import { BurbujasVentajas } from './BurbujasVentajas'
 
 type Idioma = 'es' | 'en' | 'ar' | 'ru'
 
@@ -19,6 +20,9 @@ export function FranjaVentajas({ lang }: { lang: Idioma }) {
   const t = TEXTO[lang]
   const conCodigo = APPS.filter((a) => cuponDe(a))
   return (
+    <>
+    {/* Las burbujas flotantes van con la franja: así salen en las mismas páginas. */}
+    <BurbujasVentajas lang={lang} />
     <aside className="v7-franja-ventajas" aria-label={t.titulo}>
       <div className="v7-franja-ventajas-texto">
         <strong>{t.titulo}</strong>
@@ -33,5 +37,6 @@ export function FranjaVentajas({ lang }: { lang: Idioma }) {
       </div>
       <Link className="v7-franja-ventajas-boton" to={`${RUTA[lang]}#codigos`}>{t.boton} <span aria-hidden="true">{lang === 'ar' ? '←' : '→'}</span></Link>
     </aside>
+    </>
   )
 }
