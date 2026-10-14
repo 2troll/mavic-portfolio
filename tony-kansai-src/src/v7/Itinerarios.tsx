@@ -30,6 +30,7 @@ import { IconoWa } from './IconoWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE } from './formato'
+import { FranjaVentajas } from './FranjaVentajas'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -177,6 +178,8 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         </section>
       </main>
       <BarraWa href={wa('')} lang={lang} pagina={`itinerarios-${id}`} />
+
+      <FranjaVentajas lang={lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

@@ -21,6 +21,7 @@ import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { milesLocal, PIE } from './formato'
+import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -210,6 +211,8 @@ export default function Montana({ id }: { id: MontanaId }) {
         </section>
       </main>
       <BarraWa href={wa(p.guias[0], '')} lang={p.lang} pagina={p.id} ocultaEn=".v7-montes" />
+
+      <FranjaVentajas lang={p.lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

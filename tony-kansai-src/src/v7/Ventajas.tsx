@@ -189,6 +189,16 @@ const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; 
   ru: { titulo: 'Ваши коды на скидку', sub: 'Скопируйте код и вставьте при оплате на их сайте или в приложении.', hasta: 'до', ver: 'Как использовать', ir: 'Открыть сайт', enlaces: 'Бронируйте по моим ссылкам', enlacesSub: 'Заходите отсюда — сайт поймёт, что вы от меня.', claro: 'Честно', claroTexto: 'Когда вы бронируете по моим ссылкам или кодам, компания платит мне небольшую комиссию. Для вас это ничего не стоит: цена та же, а с кодом даже ниже. Я советую только то, чем пользуюсь со своими гостями, и так вы помогаете сохранить этот гид бесплатным.' },
 }
 
+/** Botón «mándatela a tu WhatsApp»: el cliente se envía a sí mismo los códigos y el
+ *  enlace, y así los tiene en su chat durante todo el viaje sin buscar la web. */
+const GUARDA: Record<VentajasId, { boton: string; nota: string; msg: string; todo: string }> = {
+  es: { boton: 'Mándatelos a tu WhatsApp', nota: 'Así los tienes a mano durante todo el viaje por Japón.', msg: 'Mis descuentos para Japón (Tony Kansai Guide):', todo: 'Todo aquí:' },
+  en: { boton: 'Send them to your WhatsApp', nota: 'Keep them at hand for your whole trip in Japan.', msg: 'My discounts for Japan (Tony Kansai Guide):', todo: 'Everything here:' },
+  ar: { boton: 'أرسلها إلى واتساب الخاص بك', nota: 'لتبقى في متناولك طوال رحلتك في اليابان.', msg: 'خصوماتي لرحلة اليابان (Tony Kansai Guide):', todo: 'كل شيء هنا:' },
+  ru: { boton: 'Отправить себе в WhatsApp', nota: 'Пусть будут под рукой всю поездку по Японии.', msg: 'Мои скидки для Японии (Tony Kansai Guide):', todo: 'Всё здесь:' },
+}
+const URL_VENTAJAS: Record<VentajasId, string> = { es: 'https://tonykansaiguide.com/es/ventajas/', en: 'https://tonykansaiguide.com/en/perks/', ar: 'https://tonykansaiguide.com/ar/perks/', ru: 'https://tonykansaiguide.com/ru/perks/' }
+
 function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
   const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
   return (
@@ -296,9 +306,15 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         </section>
 
         {conCodigo.length > 0 && (
-          <section className="vt-codigos" aria-labelledby="vt-codigos-t">
+          <section className="vt-codigos" id="codigos" aria-labelledby="vt-codigos-t">
             <h2 id="vt-codigos-t">{CODIGOS[id].titulo}</h2>
             <p className="vt-codigos-sub">{CODIGOS[id].sub}</p>
+            <p className="vt-guarda">
+              <a href={`https://wa.me/?text=${encodeURIComponent([GUARDA[id].msg, ...conCodigo.map((a) => `${a.nombre}: ${cuponDe(a)}${a.descuento ? ` (${a.descuento.startsWith('−') ? '' : '−'}${a.descuento})` : ''}`), `${GUARDA[id].todo} ${URL_VENTAJAS[id]}`].join('\n'))}`} target="_blank" rel="noopener noreferrer">
+                <IconoWa /> {GUARDA[id].boton}
+              </a>
+              <small>{GUARDA[id].nota}</small>
+            </p>
             <ul>
               {conCodigo.map((a) => (
                 <li key={a.clave} style={{ ['--marca-boton' as string]: a.marca.fondo, ['--marca-boton-tinta' as string]: a.marca.tinta }}>

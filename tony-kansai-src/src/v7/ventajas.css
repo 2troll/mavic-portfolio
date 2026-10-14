@@ -478,3 +478,8 @@
 .vt-marca .v7-logo-texto { white-space: nowrap; }
 @media (max-width: 400px) { .vt-marca .v7-logo-texto { display: none; } }
 .vt-codigos .vt-codigos-h3 { margin-top: 40px; }
+/* Mandarse los códigos al WhatsApp. */
+.vt-guarda { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: -6px 0 20px; }
+.vt-guarda a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: #1f9d55; color: #fff; font-weight: 700; text-decoration: none; }
+.vt-guarda a svg { width: 18px; height: 18px; }
+.vt-guarda small { color: var(--vt-suave); font-size: .85rem; }

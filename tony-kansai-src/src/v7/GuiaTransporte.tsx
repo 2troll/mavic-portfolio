@@ -21,6 +21,7 @@ import { GUIAS_TRANSPORTE, PRECIO_GUIA, hermanasGuia } from './datosGuias'
 import type { GuiaId } from './datosGuias'
 import './v7.css'
 import './estilo-pixel.css'
+import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = GUIAS_TRANSPORTE
@@ -156,6 +157,8 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         </section>
       </main>
       <BarraWa href={wa} lang={p.lang} pagina={id} />
+
+      <FranjaVentajas lang={p.lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

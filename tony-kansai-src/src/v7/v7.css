@@ -1408,3 +1408,15 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-icono-regalo { width: 20px; height: 20px; display: inline-block; vertical-align: -4px; }
 .v7-ancla-ventajas { font-weight: 650; display: inline-flex; align-items: center; gap: 5px; }
 .v7-ancla-ventajas .v7-icono-regalo { width: 16px; height: 16px; }
+
+/* Franja de ventajas al pie de cada página (FranjaVentajas.tsx): marco y sombra dura de la web. */
+.v7-franja-ventajas { width: min(var(--ancho), calc(100% - 32px)); margin: 72px auto 0; padding: 22px 24px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px 24px;
+  color: var(--px-borde, #1b1b1b); background: var(--px-tarjeta, #fff); border: 2px solid var(--px-borde, #1b1b1b); box-shadow: 5px 5px 0 var(--px-sombra, #1b1b1b); box-sizing: border-box; }
+.v7-franja-ventajas-texto { flex: 1 1 320px; min-width: 0; }
+.v7-franja-ventajas strong { font-size: clamp(1.15rem, 2.4vw, 1.4rem); }
+.v7-franja-ventajas p { margin: 6px 0 10px; opacity: .8; }
+.v7-franja-ventajas ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.v7-franja-ventajas li { padding: 4px 10px; border: 1.5px dashed currentColor; border-radius: 999px; font-size: .88rem; }
+.v7-franja-ventajas li b { color: #b4232a; }
+.v7 .v7-franja-ventajas-boton { flex: none; padding: 12px 20px; font-weight: 800; text-decoration: none; color: var(--px-tarjeta, #fff); background: var(--px-borde, #1b1b1b); border: 2px solid var(--px-borde, #1b1b1b); }
+.v7 .v7-franja-ventajas-boton:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 #b4232a; }

@@ -20,6 +20,7 @@ import { OTONO, PRECIO_OTONO, hermanas } from './datosOtono'
 import type { OtonoId } from './datosOtono'
 import './v7.css'
 import './estilo-pixel.css'
+import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = OTONO
@@ -162,6 +163,8 @@ export default function Otono({ id }: { id: OtonoId }) {
         </section>
       </main>
       <BarraWa href={wa} lang={p.lang} pagina={id} />
+
+      <FranjaVentajas lang={p.lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

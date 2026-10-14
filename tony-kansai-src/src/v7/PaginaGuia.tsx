@@ -5,6 +5,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { APPS } from './datosVentajas'
+import { FranjaVentajas } from './FranjaVentajas'
 import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
@@ -774,6 +775,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </section>
       </main>
       <BarraMovil p={p} href={enlaceWa(g.wa, msgCorto)} />
+
+      <FranjaVentajas lang={p.lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">

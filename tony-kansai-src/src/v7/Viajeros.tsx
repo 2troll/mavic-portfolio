@@ -19,6 +19,7 @@ import creditosZonas from '../v8/creditosZonas.json'
 import type { MercadoId } from './datosViajeros'
 import './v7.css'
 import './estilo-pixel.css'
+import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
 const YENES = [38000, 58000] as const
@@ -141,6 +142,8 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         </section>
       </main>
       <BarraWa href={wa} lang={m.lang} pagina={`viajeros-${id}`} />
+
+      <FranjaVentajas lang={m.lang} />
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">
