@@ -61,8 +61,8 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
   es: {
     cabecera: 'Expediciones · Kansai',
     portada: {
-      titulo: 'Las montañas que guardan Kioto',
-      sub: 'Ocho cumbres reales entre Osaka, Kioto, Nara y Kobe. Bosques de cedro milenario, santuarios en la cima y senderos que entre semana son solo tuyos. Con guía privado en español.',
+      titulo: 'Kansai, en vertical',
+      sub: 'Dieciocho rutas de montaña entre Osaka, Kioto, Nara y Kobe, de la cima sagrada al ultra de 32 km. Desnivel real, senderos que casi ningún extranjero pisa y guía privado en español.',
       cifras: ['cumbres', 'metros, la cima más alta', 'prefecturas', 'personas por grupo, máx.'],
       baja: 'Abrir el atlas',
       foto: 'Monte Atago desde el sur',
@@ -86,8 +86,8 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
   en: {
     cabecera: 'Expeditions · Kansai',
     portada: {
-      titulo: 'The mountains that guard Kyoto',
-      sub: 'Eight real summits between Osaka, Kyoto, Nara and Kobe. Ancient cedar forests, shrines on the peaks and trails you have to yourself on weekdays. With a private guide.',
+      titulo: 'Kansai, vertical',
+      sub: 'Eighteen mountain routes between Osaka, Kyoto, Nara and Kobe, from sacred summits to a 32 km ultra. Real elevation gain, trails almost no foreigner walks, and a private guide.',
       cifras: ['summits', 'metres, the highest summit', 'prefectures', 'people per group, max.'],
       baja: 'Open the atlas',
       foto: 'Mount Atago from the south',
@@ -111,8 +111,8 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
   ar: {
     cabecera: 'رحلات استكشافية · كانساي',
     portada: {
-      titulo: 'الجبال التي تحرس كيوتو',
-      sub: 'ثماني قمم حقيقية بين أوساكا وكيوتو ونارا وكوبي. غابات أرز عتيقة، ومزارات على القمم، ودروب تكاد تكون لك وحدك في أيام الأسبوع. مع مرشد خاص يتحدث العربية.',
+      titulo: 'كانساي عمودياً',
+      sub: 'ثمانية عشر مساراً جبلياً بين أوساكا وكيوتو ونارا وكوبي، من القمم المقدسة إلى عبور ٣٢ كم. صعود حقيقي، ودروب لا يكاد يسلكها أجنبي، ومرشد خاص يتحدث العربية.',
       cifras: ['قمم', 'مترًا أعلى قمة', 'محافظات', 'أشخاص في المجموعة كحد أقصى'],
       baja: 'افتح الأطلس',
       foto: 'جبل أتاغو من الجنوب',
@@ -136,8 +136,8 @@ export const EXP: Record<Lengua, TextosExpedicion> = {
   ru: {
     cabecera: 'Экспедиции · Кансай',
     portada: {
-      titulo: 'Горы, которые охраняют Киото',
-      sub: 'Восемь настоящих вершин между Осакой, Киото, Нарой и Кобе. Вековые кедровые леса, святилища на вершинах и тропы, где в будни почти никого. С частным гидом на русском.',
+      titulo: 'Кансай по вертикали',
+      sub: 'Восемнадцать горных маршрутов между Осакой, Киото, Нарой и Кобе — от священных вершин до ультра на 32 км. Настоящий набор высоты, тропы без иностранцев и частный гид на русском.',
       cifras: ['вершин', 'метров — самая высокая', 'префектур', 'человек в группе, макс.'],
       baja: 'Открыть атлас',
       foto: 'Гора Атаго с юга',

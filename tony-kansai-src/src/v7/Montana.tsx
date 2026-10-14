@@ -22,6 +22,8 @@ import { BarraWa } from './BarraWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { milesLocal, PIE } from './formato'
 import { FranjaVentajas } from './FranjaVentajas'
+import { Cumbres, datosCumbres } from './Cumbres'
+import { TEXTOS_CUMBRES } from './datosCumbres'
 
 const BASE = 'https://tonykansaiguide.com'
 const NUMEROS = ['一', '二', '三', '四', '五', '六', '七', '八', '九']
@@ -155,6 +157,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <meta property="og:url" content={`${BASE}${p.ruta}`} />
         <meta property="og:image" content={`${BASE}/v7/expedicion/portada.webp`} />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p, tc))}</script>
+        {datosCumbres(p.lang, `${BASE}${p.ruta}`).map((d) => <script key={d['@type']} type="application/ld+json">{JSON.stringify(d)}</script>)}
       </Helmet>
 
       <header className="v7-cabecera cristal">
@@ -162,7 +165,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         </Link>
         <nav className="v7-anclas">
           <Link to={CIUDAD[id]}>{p.et.ciudad}</Link>
-          <a href="#atlas">{t.atlas.kicker}</a>
+          <a href="#cumbres">{TEXTOS_CUMBRES[p.lang].menu}</a>
           <a href="#oficio">{p.oficio.titulo}</a>
         </nav>
         <nav className="v7-idiomas" aria-label="Language">
@@ -181,6 +184,8 @@ export default function Montana({ id }: { id: MontanaId }) {
         <Atlas t={t} lang={p.lang} nombre={(m) => tc(ruta(m).title)} sub={(m) => tc(ruta(m).subtitle)} grado={(m) => tc(ruta(m).grade)}
           precio={precioDe} wa={(m) => wa(p.guias[0], tc(ruta(m).title))} onVer3d={(i) => irA3d(i + 1)} />
         <MontesScroll tinta="#e8b23a" bruma={[0.93, 0.89, 0.8]} montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
+
+        <Cumbres lang={p.lang} waNumero={GUIAS[p.guias[0]].wa} />
 
         <section id="oficio" className="v7-seccion">
           <h2><span className="v7-kanji" lang="ja">山</span>{p.oficio.titulo}</h2>

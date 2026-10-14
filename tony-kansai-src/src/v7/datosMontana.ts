@@ -48,13 +48,13 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-es': {
     id: 'm-es', lang: 'es', dir: 'ltr', ruta: '/es/montana/', guias: ['tony'],
     seo: {
-      titulo: 'Senderismo con guía en Kansai, en español | Tony Kansai Guide',
-      descripcion: 'Ocho rutas de montaña con guía privado en español cerca de Osaka, Kioto, Nara y Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino. Para tu segundo viaje a Japón.',
+      titulo: 'Senderismo exigente en Kansai con guía en español: 18 rutas | Tony Kansai Guide',
+      descripcion: 'Senderismo de nivel en Japón: 18 rutas con guía privado en español cerca de Osaka y Kioto. Hakkyōgadake (1.915 m, techo de Kansai), travesía de Hira, Bunagatake, Kumano Kodō, Kōyasan, Rokkō. Datos de AllTrails.',
     },
     intro: {
-      antetitulo: 'Para quien vuelve a Japón',
+      antetitulo: 'Para quien busca algo nuevo en Japón',
       titulo: 'Ya conoces Kioto. Ahora, sube a sus montañas.',
-      sub: 'Ocho rutas con guía alrededor de Osaka, Kioto, Nara y Kobe. Santuarios en la cima, senderos casi vacíos entre semana y la ciudad entera a tus pies.',
+      sub: 'Ocho cumbres en relieve 3D alrededor de Osaka, Kioto, Nara y Kobe, y diez rutas de nivel pro más abajo. Santuarios en la cima, senderos casi vacíos entre semana y la ciudad entera a tus pies.',
       baja: 'Baja para recorrerlas',
     },
     et: { altitud: 'Altitud', subida: 'Subida', total: 'Día completo', dificultad: 'Dificultad', epoca: 'Mejor época', llevar: 'Qué llevar', pedir: 'Quiero esta ruta', porGrupo: 'por grupo', ciudad: 'Tours por la ciudad', mapa: 'Ver en Google Maps', fuente: 'Relieve y foto aérea: 出典 国土地理院 (Instituto Geográfico de Japón)' },
@@ -75,13 +75,13 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-en': {
     id: 'm-en', lang: 'en', dir: 'ltr', ruta: '/en/hiking/', guias: ['tony', 'larion'],
     seo: {
-      titulo: 'Guided hiking in Kyoto, Osaka & Kansai | Tony Kansai Guide',
-      descripcion: 'Eight guided mountain hikes near Osaka, Kyoto, Nara and Kobe: Kongō, Atago, Hiei, Rokkō, Yoshino. For travellers who already know the cities.',
+      titulo: 'Challenging guided hikes in Kansai, Japan: 18 routes | Tony Kansai Guide',
+      descripcion: 'Serious hiking in Japan: 18 guided routes near Osaka and Kyoto. Hakkyōgadake (1,915 m, roof of Kansai), the Hira traverse, Bunagatake, Kumano Kodō, Kōyasan, Rokkō. Route data from AllTrails.',
     },
     intro: {
-      antetitulo: 'For your second trip to Japan',
+      antetitulo: 'For hikers looking for something new in Japan',
       titulo: 'You know Kyoto. Now climb its mountains.',
-      sub: 'Eight guided routes around Osaka, Kyoto, Nara and Kobe. Shrines on the summits, trails that are nearly empty on weekdays, and the whole city at your feet.',
+      sub: 'Eight summits in 3D relief around Osaka, Kyoto, Nara and Kobe, and ten pro-level routes further down. Shrines on the summits, trails that are nearly empty on weekdays, and the whole city at your feet.',
       baja: 'Scroll to walk them',
     },
     et: { altitud: 'Altitude', subida: 'Ascent', total: 'Full day', dificultad: 'Difficulty', epoca: 'Best season', llevar: 'What to bring', pedir: 'I want this route', porGrupo: 'per group', ciudad: 'City tours', mapa: 'See it on Google Maps', fuente: 'Terrain and aerial photo: 出典 国土地理院 (Geospatial Information Authority of Japan)' },
@@ -102,13 +102,13 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-ar': {
     id: 'm-ar', lang: 'ar', dir: 'rtl', ruta: '/ar/hiking/', guias: ['tony'],
     seo: {
-      titulo: 'رحلات جبلية مع مرشد في كانساي | Tony Kansai Guide',
-      descripcion: 'ثمانية مسارات جبلية مع مرشد خاص يتحدث العربية حول أوساكا وكيوتو ونارا وكوبي: كونغو وأتاغو وهيئي وروكّو ويوشينو. لمن يعرف المدن ويريد شيئاً جديداً.',
+      titulo: 'مسارات جبلية صعبة في كانساي مع مرشد عربي: ١٨ مساراً | Tony Kansai Guide',
+      descripcion: 'مشي جبلي جادّ في اليابان: ١٨ مساراً مع مرشد خاص يتحدث العربية قرب أوساكا وكيوتو. هاكّيوغاداكه (١٩١٥ م، سقف كانساي)، وعبور هيرا، وبوناغاتاكه، وكومانو كودو، وكوياسان، وروكّو.',
     },
     intro: {
       antetitulo: 'لزيارتك الثانية لليابان',
       titulo: 'تعرف كيوتو. الآن اصعد إلى جبالها.',
-      sub: 'ثمانية مسارات مع مرشد حول أوساكا وكيوتو ونارا وكوبي. أضرحة على القمم، ودروب شبه خالية في أيام الأسبوع، والمدينة كلها تحت قدميك.',
+      sub: 'ثماني قمم بتضاريس ثلاثية الأبعاد حول أوساكا وكيوتو ونارا وكوبي، وعشرة مسارات للمحترفين في الأسفل. أضرحة على القمم، ودروب شبه خالية في أيام الأسبوع، والمدينة كلها تحت قدميك.',
       baja: 'مرّر للأسفل لتسلكها',
     },
     et: { altitud: 'الارتفاع', subida: 'الصعود', total: 'يوم كامل', dificultad: 'الصعوبة', epoca: 'أفضل موسم', llevar: 'ماذا تحمل', pedir: 'أريد هذا المسار', porGrupo: 'للمجموعة', ciudad: 'جولات المدينة', mapa: 'عرض على خرائط Google', fuente: 'التضاريس والصورة الجوية: 出典 国土地理院 (هيئة المعلومات الجغرافية اليابانية)' },
@@ -129,13 +129,13 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-ru': {
     id: 'm-ru', lang: 'ru', dir: 'ltr', ruta: '/ru/hiking/', guias: ['larion'],
     seo: {
-      titulo: 'Горные походы с гидом в Кансае | Tony Kansai Guide',
-      descripcion: 'Восемь горных маршрутов с частным гидом на русском вокруг Осаки, Киото, Нары и Кобе: Конго, Атаго, Хиэй, Рокко, Ёсино. Для тех, кто уже видел города и хочет нового.',
+      titulo: 'Сложные горные походы в Кансае с гидом: 18 маршрутов | Tony Kansai Guide',
+      descripcion: 'Серьёзные походы в Японии: 18 маршрутов с частным гидом на русском рядом с Осакой и Киото. Хаккёгатакэ (1915 м, крыша Кансая), траверс Хира, Бунагатакэ, Кумано Кодо, Коя-сан, Рокко.',
     },
     intro: {
       antetitulo: 'Для второй поездки в Японию',
       titulo: 'Киото вы уже видели. Теперь поднимитесь в его горы.',
-      sub: 'Восемь маршрутов с гидом вокруг Осаки, Киото, Нары и Кобе. Святилища на вершинах, почти пустые тропы в будни и весь город у ваших ног.',
+      sub: 'Восемь вершин в 3D-рельефе вокруг Осаки, Киото, Нары и Кобе и десять маршрутов уровня про ниже. Святилища на вершинах, почти пустые тропы в будни и весь город у ваших ног.',
       baja: 'Листайте вниз, чтобы пройти их',
     },
     et: { altitud: 'Высота', subida: 'Подъём', total: 'Целый день', dificultad: 'Сложность', epoca: 'Лучший сезон', llevar: 'Что взять', pedir: 'Хочу этот маршрут', porGrupo: 'за группу', ciudad: 'Экскурсии по городу', mapa: 'Открыть на Google Картах', fuente: 'Рельеф и аэрофото: 出典 国土地理院 (Институт геоинформации Японии)' },
