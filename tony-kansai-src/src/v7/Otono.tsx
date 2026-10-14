@@ -60,7 +60,8 @@ export default function Otono({ id }: { id: OtonoId }) {
       { '@type': 'Offer', name: p.medio, price: PRECIO.medio, priceCurrency: 'JPY', url: `${BASE}${p.ruta}` },
       { '@type': 'Offer', name: p.completo, price: PRECIO.completo, priceCurrency: 'JPY', url: `${BASE}${p.ruta}` },
     ],
-    provider: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${p.guia === 'larion' ? WA_LARION : GUIAS.tony.wa}`, email: CORREO },
+    // El negocio es el #negocio común del index.html; el teléfono va en la persona de cada guía.
+    provider: { '@type': 'Person', name: p.guia === 'larion' ? 'Larion' : GUIAS.tony.nombre, telephone: `+${p.guia === 'larion' ? WA_LARION : GUIAS.tony.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
   }
 
   return (

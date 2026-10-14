@@ -48,7 +48,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
       {
         '@type': 'WebPage', '@id': url, url, name: p.seo.titulo.split(' | ')[0], description: p.seo.descripcion,
         inLanguage: p.lang, image: `${BASE}${p.og}`,
-        publisher: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${GUIAS.tony.wa}`, email: CORREO },
+        publisher: { '@id': `${BASE}/#negocio` },
       },
       {
         '@type': 'FAQPage', '@id': `${url}#faq`, inLanguage: p.lang,

@@ -50,7 +50,8 @@ export default function Viajeros({ id }: { id: MercadoId }) {
     '@context': 'https://schema.org', '@type': 'TouristTrip', name: m.seo.titulo.split(' | ')[0],
     description: m.seo.descripcion, url: `${BASE}${m.ruta}`, inLanguage: m.lang, touristType: m.touristType,
     offers: YENES.map((y, i) => ({ '@type': 'Offer', name: m.planes[i], price: y, priceCurrency: 'JPY', url: `${BASE}${m.ruta}` })),
-    provider: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, telephone: `+${g.wa}`, email: CORREO },
+    // El negocio es el #negocio común del index.html; el teléfono va en la persona del guía.
+    provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
   }
 
   return (

@@ -1,15 +1,15 @@
-// Etiquetas hreflang de una página y de sus hermanas: el idioma y sus países
-// (regiones.json), para que Google muestre en cada país la versión adecuada.
+// Etiquetas hreflang de una página y de sus hermanas. Solo el idioma (es, en,
+// ar, ru), sin países, y x-default a la versión inglesa: así coinciden con el
+// HTML pregenerado (scripts/rutas-estaticas.mjs) y con el sitemap. Antes React
+// ponía también es-MX, en-GB… y x-default a «/», y los buscadores veían dos
+// versiones distintas de la misma página.
 // Devuelve una lista de <link> y no un componente: Helmet sólo acepta
 // etiquetas directas como hijos.
-import regiones from './regiones.json'
-
-const R = regiones as unknown as Record<string, string[]>
 
 export function enlacesHreflang(alternas: { lang: string; href: string }[]) {
+  const porDefecto = alternas.find((a) => a.lang === 'en')?.href ?? alternas[0]?.href
   return [
-    ...alternas.flatMap(({ lang, href }) =>
-      [lang, ...(href.includes('/larion') ? [] : (R[lang] ?? []))].map((x) => <link key={x + href} rel="alternate" hrefLang={x} href={href} />)),
-    <link key="x-default" rel="alternate" hrefLang="x-default" href="https://tonykansaiguide.com/" />,
+    ...alternas.map(({ lang, href }) => <link key={lang + href} rel="alternate" hrefLang={lang} href={href} />),
+    ...(porDefecto ? [<link key="x-default" rel="alternate" hrefLang="x-default" href={porDefecto} />] : []),
   ]
 }

@@ -55,7 +55,7 @@ function datosEstructurados(p: (typeof MONTANA)[MontanaId], tc: (t: string) => s
             '@type': 'Mountain', name: `${tc(r.title)} (${KANJI[m]})`,
             geo: { '@type': 'GeoCoordinates', latitude: CIMA[m].lat, longitude: CIMA[m].lon, elevation: CIMA[m].m },
           },
-          provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE } },
+          provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
           ...(precio > 0 ? { offers: { '@type': 'Offer', price: precio, priceCurrency: 'JPY', availability: 'https://schema.org/InStock', url: `${BASE}${p.ruta}`,
             eligibleQuantity: { '@type': 'QuantitativeValue', maxValue: 6, unitText: 'people per group' } } } : {}),
         },

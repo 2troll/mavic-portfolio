@@ -28,7 +28,7 @@ export function viajeTuristico(id: CiudadId, lang: Lengua, guia: 'tony' | 'lario
       '@type': 'ItemList',
       itemListElement: c.zonas.map((z, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'TouristAttraction', name: z.nombre[lang], description: z.linea[lang] } })),
     },
-    provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE } },
+    provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
     offers: t.map((x) => ({
       '@type': 'Offer',
       price: PRECIO[x],
