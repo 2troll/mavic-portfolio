@@ -124,3 +124,20 @@
 .cu-cab h2 { color: #fff; }
 .cu-apps { border-radius: 0; border: 2px solid var(--linea); }
 .cu-app { border-radius: 0; }
+
+/* Apps: dos casillas macizas, como las fichas; el color de la marca solo en el filo. */
+.cu-apps { background: #111; border: 2px solid #2a2a2a; border-inline-start: 6px solid var(--cu-exigente); }
+.cu-app {
+  position: relative; flex: 1 1 160px; gap: 6px; padding: 16px 44px 16px 18px; background: #0a0a0a; color: #fff;
+  border: 2px solid #3a3a3a; border-top: 4px solid var(--app-c, #fff); transition: border-color 0.2s, background 0.2s;
+}
+[dir='rtl'] .cu-app { padding: 16px 18px 16px 44px; }
+.cu-app::after { content: '↗'; position: absolute; top: 14px; inset-inline-end: 16px; font-size: 1.2rem; color: var(--app-c); }
+[dir='rtl'] .cu-app::after { content: '↖'; }
+.cu-app b { font-size: 1.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.02em; line-height: 1; }
+.cu-app small { font-family: var(--pro-titulo, inherit); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: #a9a59b; opacity: 1; }
+.lang-ar .cu-app small { font-family: inherit; letter-spacing: 0; }
+.cu-app-at, .cu-app-ym { background: #0a0a0a; color: #fff; }
+.cu-app-at { --app-c: #6fbf2a; }
+.cu-app-ym { --app-c: #2fd3a0; }
+.cu-app:hover { filter: none; background: #161616; border-color: var(--app-c); border-top-color: var(--app-c); }
