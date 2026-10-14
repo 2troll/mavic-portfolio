@@ -182,6 +182,13 @@ function EnlaceAyuda({ e, lista }: { e: Enlace; lista: string }) {
 }
 
 // Franja de códigos arriba del todo: el cliente los tiene a mano sin buscar tarjeta por tarjeta.
+const SOCIOS: Record<VentajasId, { titulo: string; texto: string; boton: string; asunto: string }> = {
+  es: { titulo: '¿Tienes un negocio en Kansai?', texto: 'Busco colaboraciones con empresas pequeñas y medianas de Osaka, Kioto, Nara y Kobe: talleres, tiendas, cafés, experiencias. Si tu negocio puede interesar a mis viajeros, escríbeme y lo presento aquí y en mis tours.', boton: 'Proponer una colaboración', asunto: 'Colaboración con Tony Kansai Guide' },
+  en: { titulo: 'Do you run a business in Kansai?', texto: "I'm looking to collaborate with small and medium businesses in Osaka, Kyoto, Nara and Kobe: workshops, shops, cafés, experiences. If your business could interest my travellers, email me and I'll feature it here and on my tours.", boton: 'Propose a collaboration', asunto: 'Collaboration with Tony Kansai Guide' },
+  ar: { titulo: 'هل لديك نشاط تجاري في كانساي؟', texto: 'أبحث عن تعاون مع الشركات الصغيرة والمتوسطة في أوساكا وكيوتو ونارا وكوبي: ورش، متاجر، مقاهٍ، تجارب. إذا كان نشاطك يهمّ ضيوفي، راسلني وسأعرّف به هنا وفي جولاتي.', boton: 'اقترح تعاونًا', asunto: 'تعاون مع Tony Kansai Guide' },
+  ru: { titulo: 'У вас бизнес в Кансае?', texto: 'Ищу сотрудничество с небольшими и средними компаниями Осаки, Киото, Нары и Кобе: мастерские, магазины, кафе, впечатления. Если ваш бизнес может заинтересовать моих гостей, напишите мне — я расскажу о нём здесь и на своих турах.', boton: 'Предложить сотрудничество', asunto: 'Сотрудничество с Tony Kansai Guide' },
+}
+
 const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; ver: string; ir: string; enlaces: string; enlacesSub: string; claro: string; claroTexto: string }> = {
   es: { titulo: 'Tus códigos de descuento', sub: 'Cópialo y pégalo al pagar en la web o la app de cada uno.', hasta: 'hasta el', ver: 'Cómo usarlo', ir: 'Ir a la web', enlaces: 'Reserva con mis enlaces', enlacesSub: 'Entra desde aquí y la web sabe que vienes de mi parte.', claro: 'Te lo digo claro', claroTexto: 'Cuando reservas con mis enlaces o códigos, la empresa me paga una pequeña comisión. A ti no te cuesta nada más: el precio es el mismo y, con código, incluso menor. Solo recomiendo lo que uso yo con mis clientes, y así me ayudas a mantener esta guía gratis.' },
   en: { titulo: 'Your discount codes', sub: 'Copy one and paste it at checkout on their website or app.', hasta: 'until', ver: 'How to use it', ir: 'Go to website', enlaces: 'Book with my links', enlacesSub: 'Come in from here and the site knows I sent you.', claro: 'To be clear', claroTexto: 'When you book with my links or codes, the company pays me a small commission. It costs you nothing extra: the price is the same, and with a code it is even lower. I only recommend what I use with my own guests, and it helps me keep this guide free.' },
@@ -434,6 +441,13 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           </div>
         </section>
 
+
+        <section className="vt-final vt-socios" id="colaborar">
+          <h2>{SOCIOS[id].titulo}</h2>
+          <p>{SOCIOS[id].texto}</p>
+          <a className="vt-wa vt-wa-grande" href={`mailto:${CORREO}?subject=${encodeURIComponent(SOCIOS[id].asunto)}`}>✉️ {SOCIOS[id].boton}</a>
+          <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
+        </section>
 
         <section className="vt-final">
           <h2>{p.finalTitulo}</h2>
