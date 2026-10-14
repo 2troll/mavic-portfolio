@@ -2,7 +2,8 @@
 // lleva una sola línea por idioma; la foto y el movimiento hacen el resto.
 // Fotos de zona: public/v8/zonas/{id}.webp (créditos en creditosZonas.json).
 
-import type { RutaId } from '../v7/datosRutas'
+import { META, PRECIO } from '../v7/datosRutas'
+import type { RutaId, Tramo } from '../v7/datosRutas'
 import type { ItinId } from '../v7/datosItinerarios'
 
 export type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -22,10 +23,10 @@ export const CIUDADES: Record<CiudadId, Ciudad> = {
   osaka: {
     id: 'osaka', kanji: '大阪', diorama: 'osaka', itinerario: 'osaka', guias: ['tony', 'larion'],
     nombre: t('Osaka', 'Osaka', 'أوساكا', 'Осака'),
-    lema: t('La cocina de Japón. Aquí vivo.', 'Japan\'s kitchen. I live here.', 'مطبخ اليابان، وهنا أعيش.', 'Кухня Японии. Здесь я живу.'),
+    lema: t('La cocina de Japón. Aquí vivo.', 'Japan\'s kitchen. I live here.', 'مطبخ اليابان، وهنا أعيش.', 'Кухня Японии: рынки, неон и уличная еда.'),
     montes: ['minoh-falls', 'mt-ikoma', 'mt-kongo', 'hoshi-no-buranko', 'sky-house-daito'],
     zonas: [
-      { id: 'osaka-castillo', kanji: '大阪城', nombre: t('Castillo de Osaka', 'Osaka Castle', 'قلعة أوساكا', 'Замок Осаки'), linea: t('Fosos gigantes y el parque de los cerezos.', 'Giant moats and a park full of cherry trees.', 'خنادق عملاقة وحديقة أشجار الكرز.', 'Гигантские рвы и парк сакуры.') },
+      { id: 'osaka-castillo', kanji: '大阪城', nombre: t('Castillo de Osaka', 'Osaka Castle', 'قلعة أوساكا', 'Осакский замок'), linea: t('Fosos gigantes y el parque de los cerezos.', 'Giant moats and a park full of cherry trees.', 'خنادق عملاقة وحديقة أشجار الكرز.', 'Гигантские рвы и парк сакуры.') },
       { id: 'osaka-dotonbori', kanji: '道頓堀', nombre: t('Dōtonbori', 'Dōtonbori', 'دوتونبوري', 'Дотонбори'), linea: t('Neones, canal y takoyaki recién hechos.', 'Neon, canal and fresh takoyaki.', 'أضواء النيون والقناة وتاكوياكي طازج.', 'Неон, канал и горячие такояки.'), tour: 'osaka-food' },
       { id: 'osaka-kuromon', kanji: '黒門市場', nombre: t('Mercado de Kuromon', 'Kuromon Market', 'سوق كورومون', 'Рынок Куромон'), linea: t('Se come de pie, puesto a puesto.', 'You eat standing up, stall by stall.', 'نأكل واقفين من كشك إلى كشك.', 'Едим стоя, от прилавка к прилавку.'), tour: 'osaka-food' },
       { id: 'osaka-shinsekai', kanji: '新世界', nombre: t('Shinsekai', 'Shinsekai', 'شينسيكاي', 'Синсэкай'), linea: t('La Osaka retro bajo la torre Tsūtenkaku.', 'Retro Osaka under Tsūtenkaku Tower.', 'أوساكا القديمة تحت برج تسوتينكاكو.', 'Ретро-Осака под башней Цутэнкаку.'), tour: 'osaka-food' },
@@ -133,18 +134,201 @@ export const MANGA_APROBADO: string[] = []
 // Vacío hasta tener las figuras nuevas (Gemini, con su foto de referencia).
 export const FIGURAS: string[] = []
 
-/** Título para Google: lo que la gente busca («guía privado en Kioto en
- *  español»), no el lema. «Más lejos» no es una búsqueda: se nombran sus sitios. */
+// ── SEO de las ciudades (A09/A10, análisis de IA de octubre de 2026) ──────
+// La gente (y los asistentes de IA) buscan «guía privado en español en Kioto»,
+// «Private guide in Kyoto», «مرشد سياحي يتكلم عربي في كيوتو» o «русский гид в
+// Киото», y miran el precio. El lema es para la portada, no para Google: aquí
+// va lo que se busca, con el precio sacado de los mismos tramos que las tarjetas.
+
+/** «en Kioto», «в Хиросиме и на Миядзиме»: el ruso declina y no vale el nombre tal cual.
+ *  «Más lejos» no es una búsqueda: se nombran sus sitios. */
+const EN_LUGAR: Record<CiudadId, T> = {
+  osaka: t('en Osaka', 'in Osaka', 'في أوساكا', 'в Осаке'),
+  kyoto: t('en Kioto', 'in Kyoto', 'في كيوتو', 'в Киото'),
+  nara: t('en Nara', 'in Nara', 'في نارا', 'в Наре'),
+  kobe: t('en Kobe', 'in Kobe', 'في كوبي', 'в Кобе'),
+  himeji: t('en Himeji', 'in Himeji', 'في هيميجي', 'в Химэдзи'),
+  hiroshima: t('en Hiroshima y Miyajima', 'in Hiroshima & Miyajima', 'في هيروشيما وميياجيما', 'в Хиросиме и на Миядзиме'),
+  beyond: t('en Kōyasan y Kumano', 'in Kōyasan & Kumano', 'في كوياسان وكومانو', 'на Коясане и в Кумано'),
+}
+
+/** Tramos que se ofrecen en cada ciudad (igual que tramos() de Mosaico, que no
+ *  se importa aquí para no hacer un círculo ciudades ⇄ Mosaico). */
+function tramosCiudad(id: CiudadId): Tramo[] {
+  const ruta = CIUDADES[id].diorama
+  return [...new Set(ruta ? META[ruta].tramos : (['lejos'] as Tramo[]))]
+}
+
+/** Precio más bajo de la ciudad, por grupo. */
+export function precioDesde(id: CiudadId): number {
+  return Math.min(...tramosCiudad(id).map((x) => PRECIO[x]))
+}
+
+/** Mismo formato de yenes que las tarjetas del mosaico. */
+function yenes(n: number, lang: Lengua): string {
+  const f = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'es-ES').format(n)
+  return lang === 'ru' ? `${f} ¥` : lang === 'ar' ? `${f} ين` : lang === 'en' ? `¥${f}` : `${f} ¥`
+}
+
+/** Números con las cifras de cada idioma (el árabe de la web usa ٤، ٦…). */
+const num = (n: number, lang: Lengua) => (lang === 'ar' ? new Intl.NumberFormat('ar-EG').format(n) : String(n))
+
+/** En mitad de una frase, «Castillo de Osaka» se escribe «castillo de Osaka» y
+ *  «Гора Мисэн», «гора Мисэн»: la palabra genérica va en minúscula. */
+const GENERICAS: Partial<Record<Lengua, string[]>> = {
+  es: ['Castillo', 'Mercado', 'Monte', 'Cascada', 'Lago', 'Jardín', 'Parque', 'Mezquita', 'El'],
+  en: ['The'],
+  ru: ['Гора', 'Замок', 'Рынок', 'Парк', 'Сад', 'Водопад', 'Озеро', 'Мечеть'],
+}
+function enFrase(nombre: string, lang: Lengua): string {
+  const [primera] = nombre.split(' ')
+  return GENERICAS[lang]?.includes(primera) ? primera.toLowerCase() + nombre.slice(primera.length) : nombre
+}
+
+/** «a, b y c» en cada idioma. */
+function lista(cosas: string[], lang: Lengua): string {
+  const y = { es: ' y ', en: ' and ', ar: ' و', ru: ' и ' }[lang]
+  return cosas.length < 2 ? cosas.join('') : `${cosas.slice(0, -1).join(lang === 'ar' ? '، ' : ', ')}${y}${cosas[cosas.length - 1]}`
+}
+
+/** Mayúscula al empezar frase (para el árabe no cambia nada). */
+const mayus = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)
+
+const zonasEnFrase = (id: CiudadId, lang: Lengua, n: number) => lista(CIUDADES[id].zonas.slice(0, n).map((z) => enFrase(z.nombre[lang], lang)), lang)
+
+/** Título para Google: la búsqueda exacta y el precio desde. */
 export function tituloSeo(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
-  const c = CIUDADES[id]
-  const lugar = id === 'beyond'
-    ? ({ es: 'Kōyasan y Kumano', en: 'Kōyasan & Kumano', ar: 'كوياسان وكومانو', ru: 'Коя-сан и Кумано' } as Record<Lengua, string>)[lang]
-    : c.nombre[lang]
+  const donde = EN_LUGAR[id][lang]
+  const desde = yenes(precioDesde(id), lang)
   const t: Record<Lengua, string> = {
-    es: `Guía privado en ${lugar} en español`,
-    en: guia === 'larion' ? `Private guide in ${lugar} (Russian, English)` : `Private tour guide in ${lugar}`,
-    ar: `مرشد سياحي خاص في ${lugar} بالعربية`,
-    ru: `${lugar}: частный гид на русском`,
+    es: `Guía privado en español ${donde}, desde ${desde}`,
+    en: guia === 'larion' ? `Private guide ${donde} (Russian, English), from ${desde}` : `Private guide ${donde}, from ${desde}`,
+    ar: `مرشد سياحي يتكلم العربية ${donde}، من ${desde}`,
+    ru: `Русскоязычный гид ${donde} — Ларион, от ${desde}`,
   }
   return `${t[lang]} | Tony Kansai Guide`
+}
+
+/** Encabezado de la página: lo mismo que se busca, sin el precio. */
+export function h1Ciudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
+  const donde = EN_LUGAR[id][lang]
+  return {
+    es: `Guía privado ${donde} en español`,
+    en: guia === 'larion' ? `Private guide ${donde}, in Russian or English` : `Private guide ${donde}`,
+    ar: `مرشد خاص ${donde} بالعربية`,
+    ru: `Гид ${donde} на русском`,
+  }[lang]
+}
+
+/** Descripción (~155 caracteres): quién, idioma, qué se ve, recogida, grupo y precio.
+ *  En «tú»: la página en español la leen a la vez España y Latinoamérica. */
+export function descripcionSeo(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
+  // Tres zonas si cabe; si pasa de lo que enseña Google, dos.
+  const larga = descripcionCon(id, lang, guia, 3)
+  return larga.length <= 158 ? larga : descripcionCon(id, lang, guia, 2)
+}
+
+function descripcionCon(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion', n: number): string {
+  const donde = EN_LUGAR[id][lang]
+  const zonas = zonasEnFrase(id, lang, n)
+  const desde = yenes(precioDesde(id), lang)
+  if (guia === 'larion') {
+    return lang === 'ru'
+      ? `Русскоязычный гид ${donde}: ${zonas}. Ларион встретит вас в лобби отеля. Только ваша группа (до 6 человек), от ${desde} за группу.`
+      : `Private guide ${donde} in Russian or English: ${zonas}. Larion meets you at your hotel. Up to 6 people, from ${desde} per group.`
+  }
+  return {
+    es: `Guía privado en español ${donde}: ${zonas}. Tony te recoge en el hotel, solo tu grupo (hasta 6), desde ${desde} por grupo.`,
+    en: `Private guide ${donde}: ${zonas}. Tony picks you up at your hotel, just your group (up to 6), from ${desde} per group.`,
+    ar: `مرشد سياحي يتكلم العربية ${donde}: ${zonas}. يستقبلكم طوني في الفندق، لمجموعتكم وحدها (حتى ${num(6, 'ar')} أشخاص)، من ${desde} للمجموعة.`,
+    ru: `Гид ${donde}: ${zonas}.`,
+  }[lang]
+}
+
+export interface PreguntaCiudad { q: string; a: string }
+
+/** 6 preguntas frecuentes por ciudad (para la sección visible y el FAQPage).
+ *  Solo datos que ya están en la web: precios y horas de los tramos, grupo de
+ *  hasta 6 al precio estándar (Tony organiza hasta 14), recogida en el hotel,
+ *  pago y cancelación de contenido.ts. Nada de años, licencias ni nº de tours. */
+export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): PreguntaCiudad[] {
+  const donde = EN_LUGAR[id][lang]
+  const tr = tramosCiudad(id)
+  const zonas = zonasEnFrase(id, lang, 5)
+  const y = (x: Tramo) => yenes(PRECIO[x], lang)
+  const n = (k: number) => num(k, lang)
+
+  // Precio: medio día y día completo, o «desde» en los viajes largos.
+  const precio: Record<Lengua, string> = {
+    es: tr.includes('lejos')
+      ? `Desde ${y('lejos')} por grupo, el día entero; te paso un precio cerrado según la ruta. Es por grupo de hasta 6 personas, no por persona. Trenes, entradas y comidas aparte.`
+      : `${mayus([tr.includes('medio') && `Medio día (4 horas): ${y('medio')}`, tr.includes('completo') && `día completo (8 horas): ${y('completo')}`].filter(Boolean).join('; '))}. Es el precio por grupo de hasta 6 personas, no por persona. Trenes, entradas y comidas aparte.`,
+    en: tr.includes('lejos')
+      ? `From ${y('lejos')} per group for the full day; I send you a fixed price for your route. That is per group of up to 6, not per person. Trains, tickets and meals are extra.`
+      : `${mayus([tr.includes('medio') && `Half day (4 hours): ${y('medio')}`, tr.includes('completo') && `full day (8 hours): ${y('completo')}`].filter(Boolean).join('; '))}. That is per group of up to 6, not per person. Trains, tickets and meals are extra.`,
+    ar: tr.includes('lejos')
+      ? `من ${y('lejos')} للمجموعة لليوم كاملاً، وأرسل لك سعراً ثابتاً حسب المسار. السعر للمجموعة حتى ${n(6)} أشخاص لا للفرد، والقطارات والتذاكر والطعام على حسابكم.`
+      : `${[tr.includes('medio') && `نصف يوم (${n(4)} ساعات): ${y('medio')}`, tr.includes('completo') && `يوم كامل (${n(8)} ساعات): ${y('completo')}`].filter(Boolean).join('، ')}. السعر للمجموعة حتى ${n(6)} أشخاص لا للفرد، والقطارات والتذاكر والطعام على حسابكم.`,
+    ru: tr.includes('lejos')
+      ? `От ${y('lejos')} за группу на целый день; точную цену назову под ваш маршрут. Это цена за группу до 6 человек, а не с человека. Поезда, входные билеты и еда оплачиваются отдельно.`
+      : `${mayus([tr.includes('medio') && `Полдня (4 часа): ${y('medio')}`, tr.includes('completo') && `целый день (8 часов): ${y('completo')}`].filter(Boolean).join('; '))}. Это цена за группу до 6 человек, а не с человека. Поезда, входные билеты и еда оплачиваются отдельно.`,
+  }
+
+  if (guia === 'larion') {
+    if (lang === 'ru') return [
+      { q: `Сколько стоит частный гид ${donde}?`, a: precio.ru },
+      { q: 'Вы встречаете в отеле?', a: 'Да. Встречаю вас в лобби отеля, и дальше едем вместе.' },
+      { q: `Что посмотрим ${donde}?`, a: `${mayus(zonas)}. Маршрут подстрою под вас: скажите, что хотите увидеть.` },
+      { q: 'Как оплатить?', a: 'Наличными в иенах в день экскурсии или переводом, если договоримся при бронировании.' },
+      { q: 'А если нас больше шести?', a: 'Цены рассчитаны на группу до 6 человек. Если вас больше, напишите мне, и я расскажу, как это организовать.' },
+      { q: 'А если планы изменятся?', a: 'Напишите мне. Отмена более чем за 72 часа бесплатна, а если задержали рейс — найдём другой день.' },
+    ]
+    return [
+      { q: `How much is a private guide ${donde}?`, a: precio.en },
+      { q: 'Do you meet us at the hotel?', a: 'Yes. Larion meets you in your hotel lobby and you set off together.' },
+      { q: `What will we see ${donde}?`, a: `${mayus(zonas)}. The route is adapted to you: tell Larion what you would like to see.` },
+      { q: 'How do I pay?', a: 'In cash, in yen, on the day, or by bank transfer if you agree it when booking.' },
+      { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you are more, message Larion and he will tell you how to organise it.' },
+      { q: 'What if my plans change?', a: 'Message Larion. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed he finds you another day.' },
+    ]
+  }
+
+  const tony: Record<Lengua, PreguntaCiudad[]> = {
+    es: [
+      { q: `¿Cuánto cuesta un guía privado en español ${donde}?`, a: precio.es },
+      { q: '¿Me recoges en el hotel?', a: 'Sí. Quedamos en el vestíbulo de tu hotel, esté en Osaka, Kioto, Nara o Kobe, y salimos juntos.' },
+      { q: `¿Qué vemos ${donde}?`, a: `${mayus(zonas)}. El recorrido lo ajusto a ti: dime qué quieres ver.` },
+      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, cuando confirmemos la fecha puedes hacerlo con PayPal o Wise. Cancelar con más de 72 horas no cuesta nada.' },
+      { q: '¿Y si somos más de 6?', a: 'Los precios son para grupos de hasta 6 personas. Hasta 14 también se puede: escríbeme y te digo cómo lo organizamos.' },
+      { q: '¿Podemos ir con niños o con personas mayores?', a: 'Claro. Adapto el ritmo y el recorrido; algunos templos tienen muchas escaleras y te propongo alternativas.' },
+    ],
+    en: [
+      { q: `How much is a private guide ${donde}?`, a: precio.en },
+      { q: 'Do you pick us up at the hotel?', a: 'Yes. We meet in your hotel lobby, whether you are staying in Osaka, Kyoto, Nara or Kobe, and set off together.' },
+      { q: `What will we see ${donde}?`, a: `${mayus(zonas)}. I adapt the route to you: tell me what you would like to see.` },
+      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we confirm the date you can use PayPal or Wise. Cancelling more than 72 hours ahead costs nothing.' },
+      { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. Groups of up to 14 are possible too: message me and I will tell you how we organise it.' },
+      { q: 'Can we bring children or older relatives?', a: 'Of course. I adapt the pace and the route; some temples have a lot of steps and I suggest alternatives.' },
+    ],
+    ar: [
+      { q: `كم سعر المرشد الخاص الذي يتكلم العربية ${donde}؟`, a: precio.ar },
+      { q: 'هل تستقبلنا في الفندق؟', a: 'نعم. نلتقي في بهو فندقكم، سواء كان في أوساكا أو كيوتو أو نارا أو كوبي، وننطلق معاً.' },
+      { q: `ماذا نزور ${donde}؟`, a: `${zonas}. وأرتّب المسار على ذوقكم: أخبروني بما تحبون رؤيته.` },
+      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً فبعد تأكيد الموعد يمكنك الدفع عبر PayPal أو Wise. والإلغاء قبل أكثر من ٧٢ ساعة مجاني.' },
+      { q: 'هل يوجد طعام حلال ووقت للصلاة؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة، وأضع وقفات الصلاة في المسار من البداية. أخبرني عند الحجز.' },
+      { q: 'وماذا لو كنا أكثر من ستة؟', a: `الأسعار لمجموعات حتى ${n(6)} أشخاص، ويمكن أن تصل المجموعة إلى ${n(14)} شخصاً: راسلني وأخبرك كيف ننظّم الأمر.` },
+    ],
+    ru: [],
+  }
+  return tony[lang].length ? tony[lang] : tony.en
+}
+
+/** FAQPage para Google y los asistentes: las mismas preguntas que se ven en la página. */
+export function faqLd(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion') {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    inLanguage: lang,
+    mainEntity: faqCiudad(id, lang, guia).map((p) => ({ '@type': 'Question', name: p.q, acceptedAnswer: { '@type': 'Answer', text: p.a } })),
+  }
 }

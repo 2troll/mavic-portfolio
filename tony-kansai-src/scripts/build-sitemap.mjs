@@ -7,12 +7,12 @@
 // despliegue crea una carpeta indexable por cada <loc> del sitemap, así que
 // una ruta que faltara aquí devolvía 404 en Google aunque existiera en la web.
 import { readFileSync, writeFileSync } from 'node:fs'
+import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const REGIONES = JSON.parse(readFileSync(join(root, 'src/seo/regiones.json'), 'utf8'))
 const LANGS = ['en', 'es', 'ar', 'ru']
 
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
@@ -56,6 +56,11 @@ const paginas = [
   { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   { loc: '/es/aeropuerto-kansai', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
   { loc: '/en/kansai-airport', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
+  // Páginas de respuesta (datosRespuestas.ts): precio de un guía en Kioto, mezquitas y halal.
+  { loc: '/es/guia-privado-espanol-kioto', priority: '0.8', changefreq: 'monthly', v7: 'coste' },
+  { loc: '/en/kyoto-private-guide-cost', priority: '0.8', changefreq: 'monthly', v7: 'coste' },
+  { loc: '/ar/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
+  { loc: '/ar/halal-kyoto-osaka', priority: '0.8', changefreq: 'monthly', v7: 'halal' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
@@ -108,6 +113,51 @@ const V7 = {
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
   aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
   ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/'], ['ru', '/ru/perks/']],
+  coste: [['es', '/es/guia-privado-espanol-kioto/'], ['en', '/en/kyoto-private-guide-cost/']],
+  mezquitas: [['ar', '/ar/mosques-kansai/']],
+  halal: [['ar', '/ar/halal-kyoto-osaka/']],
+}
+
+// <lastmod>: la fecha real del último cambio del archivo del que sale cada
+// página (Bing la usa para decidir qué volver a rastrear, y las IAs prefieren
+// lo reciente). Si se pusiera la fecha del build en todas, los buscadores
+// aprenden que no es fiable y la ignoran. Se saca de git; si el archivo tiene
+// cambios sin commit o git no responde, vale la fecha de hoy.
+const HOY = new Date().toISOString().slice(0, 10)
+const FUENTE = {
+  portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
+  montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx'],
+  ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
+  rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],
+  otono: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'], sakura: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'],
+  osakaKioto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'], aeropuerto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'],
+  ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
+  coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
+  ...Object.fromEntries(['mexico', 'uk', 'espana', 'golfo', 'usa', 'argentina', 'rusia'].map((m) => [m, ['src/v7/datosViajeros.ts', 'src/v7/Viajeros.tsx']])),
+}
+const FUENTE_RUTA = {
+  '/booking': ['public/booking.html'], '/resenas.html': ['public/resenas.html', 'public/reviews.json'],
+  ...Object.fromEntries(['terms', 'privacy', 'cookies', 'safety', 'legal', 'accessibility'].map((r) => [`/${r}`, [`src/pages/${r[0].toUpperCase()}${r.slice(1)}.tsx`]])),
+}
+const git = (args) => { try { return execFileSync('git', args, { cwd: root, encoding: 'utf8', stdio: ['ignore', 'pipe', 'ignore'] }).trim() } catch { return '' } }
+const cache = new Map()
+function lastmod({ loc, v7 }) {
+  const ficheros = FUENTE_RUTA[loc] ?? FUENTE[v7 === true ? 'portada' : String(v7 ?? '').split(':')[0]] ?? ['src']
+  const clave = ficheros.join('|')
+  if (!cache.has(clave)) {
+    const sucio = git(['status', '--porcelain', '--', ...ficheros])
+    cache.set(clave, sucio ? HOY : (git(['log', '-1', '--format=%cs', '--', ...ficheros]) || HOY))
+  }
+  return cache.get(clave)
+}
+
+/** hreflang de un grupo de traducciones: solo idiomas (es/en/ar/ru, sin países)
+ *  y x-default a la versión inglesa. Una página sin traducciones no lleva. */
+function hreflangs(grupo) {
+  if (!grupo || grupo.length < 2) return ''
+  const en = grupo.find(([l]) => l === 'en')
+  return grupo.map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
+    + (en ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${en[1]}"/>` : '')
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {
@@ -123,14 +173,12 @@ const url = ({ loc, priority, changefreq, v7 }) => {
       : tipo === 'ciudadLarion' ? [['ru', `/ru/${ciudad}/`], ['en', `/larion/${ciudad}/`]]
       : tipo === 'ventajaApp' ? [['es', `/es/ventajas/${ciudad}/`], ['en', `/en/perks/${ciudad}/`], ['ar', `/ar/perks/${ciudad}/`], ['ru', `/ru/perks/${ciudad}/`]]
       : V7[v7 === true ? 'portada' : v7]
-    const alt = grupo.flatMap(([l, r]) => [l, ...(r.startsWith('/larion') ? [] : (REGIONES[l] ?? []))].map((x) => `\n    <xhtml:link rel="alternate" hreflang="${x}" href="${BASE}${r}"/>`)).join('')
-      + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}/"/>`
-    return `  <url>\n    <loc>${abs}</loc>${alt}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+    return `  <url>\n    <loc>${abs}</loc>${hreflangs(grupo)}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
   }
   const alternates = loc.endsWith('.html') ? '' : LANGS.map((l) =>
     `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${abs}${l === 'en' ? '' : `?lang=${l}`}"/>`
   ).join('') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs}"/>`
-  return `  <url>\n    <loc>${abs}</loc>${alternates}\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+  return `  <url>\n    <loc>${abs}</loc>${alternates}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
 }
 
 const xml = `<?xml version="1.0" encoding="UTF-8"?>

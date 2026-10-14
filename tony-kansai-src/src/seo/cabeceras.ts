@@ -12,7 +12,7 @@ import { MERCADOS } from '../v7/datosViajeros'
 import { APPS, SEO_VENTAJAS, RUTA_VENTAJAS, type Lang } from '../v7/datosVentajas'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo } from '../v8/ciudades'
+import { CIUDADES_LARION, CIUDADES_TONY, descripcionSeo, tituloSeo } from '../v8/ciudades'
 
 export interface Cabecera {
   titulo: string
@@ -87,11 +87,11 @@ export function cabeceras(): Record<string, Cabecera> {
     const lista = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
     const hermanos = prefijos.filter((x) => x.guia === guia)
     for (const id of lista) {
-      const c = CIUDADES[id]
       todas[`${p}/${id}`] = {
         titulo: tituloSeo(id, lang, guia),
-        // Igual que en la página: lema y cuatro zonas (con todas pasaba de 160).
-        descripcion: `${c.lema[lang]} ${c.zonas.slice(0, 4).map((z) => z.nombre[lang]).join(', ')}.`,
+        // Lo que se busca (guía, idioma, ciudad), tres zonas, recogida, grupo y
+        // precio desde: el lema poético no decía nada de eso (análisis IA, A09).
+        descripcion: descripcionSeo(id, lang, guia),
         imagen: `/v8/og/${id}.jpg`, lang, dir: dirDe(lang),
         alternos: hermanos.map((h) => [h.lang, `/${h.p}/${id}/`]),
       }

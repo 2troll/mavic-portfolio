@@ -24,6 +24,9 @@ const vite = await createServer({ server: { middlewareMode: true }, appType: 'cu
 let cabeceras
 try {
   cabeceras = (await vite.ssrLoadModule('/src/seo/cabeceras.ts')).cabeceras()
+  // Páginas de respuesta (precio de guía en Kioto, mezquitas, halal): su cabecera
+  // vive con sus datos, en datosRespuestas.ts.
+  Object.assign(cabeceras, (await vite.ssrLoadModule('/src/v7/datosRespuestas.ts')).cabecerasRespuesta())
 } finally {
   await vite.close()
 }
@@ -38,13 +41,18 @@ const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'n
 import { execSync } from 'node:child_process'
 execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
 const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
-const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|desde-mexico|from-uk|desde-espana|from-gulf|from-usa|desde-argentina|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks))?$/
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|desde-mexico|from-uk|desde-espana|from-gulf|from-usa|desde-argentina|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks|guia-privado-espanol-kioto|kyoto-private-guide-cost|mosques-kansai|halal-kyoto-osaka))?$/
 
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'
 const trozosJs = readdirSync(join(dest, 'assets')).filter((f) => f.endsWith('.js'))
 const CSS_TROZOS = readdirSync(join(dest, 'assets')).filter((f) => f.endsWith('.css') && !f.startsWith('index-'))
 const TROZOS = { guia: trozosJs.find((f) => f.startsWith('PaginaGuia-')), ciudad: trozosJs.find((f) => f.startsWith('CiudadPagina-')) }
+
+// og:locale por idioma: árabe del Golfo (ar_SA), como la página /ar/from-gulf/.
+const OG_LOCALE = { es: 'es_ES', en: 'en_US', ar: 'ar_SA', ru: 'ru_RU' }
+// Las páginas de un país llevan el de ese país (WhatsApp y Facebook lo usan para la vista previa).
+const OG_LOCALE_RUTA = { 'es/desde-mexico': 'es_MX', 'es/desde-argentina': 'es_AR', 'en/from-uk': 'en_GB' }
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 const base = readFileSync(join(dest, 'index.html'), 'utf8')
@@ -55,7 +63,6 @@ const rutas = [...readFileSync(join(dest, 'sitemap.xml'), 'utf8').matchAll(/<loc
 // Web antigua: fuera del sitemap, pero sigue respondiendo (enlaces viejos y lo
 // que Google ya tenía). La app redirige a la página nueva en el idioma del
 // visitante; para Google, noindex y canonical a la equivalente en inglés.
-const REGIONES = JSON.parse(readFileSync(new URL('../src/seo/regiones.json', import.meta.url), 'utf8'))
 const ANTIGUAS = JSON.parse(readFileSync(new URL('./rutas-antiguas.json', import.meta.url), 'utf8'))
 for (const [ruta, nueva] of Object.entries(ANTIGUAS)) {
   const html = base
@@ -92,10 +99,23 @@ for (const ruta of rutas) {
       .replace(/(<meta name="twitter:title" content=")[^"]*(")/, `$1${esc(c.titulo)}$2`)
       .replace(/(<meta name="twitter:description" content=")[^"]*(")/, `$1${esc(c.descripcion)}$2`)
       .replace(/(<meta name="twitter:image" content=")[^"]*(")/, `$1${img}$2`)
-    // Cada idioma, más sus países (regiones.json). La página de Larion en inglés
-    // no lleva países: los de inglés ya son de la de Tony.
-    const alternos = c.alternos.flatMap(([l, r]) => [l, ...(r.startsWith('/larion') ? [] : (REGIONES[l] ?? []))].map((x) => `    <link rel="alternate" hreflang="${x}" href="${BASE}${r}" />`)).join('\n')
-    html = html.replace('</head>', `${alternos}\n    <link rel="alternate" hreflang="x-default" href="${BASE}/" />\n  </head>`)
+    // hreflang: solo los idiomas (es/en/ar/ru; con los países de regiones.json
+    // salían hasta 14 líneas por página que Google no necesita) y x-default a la
+    // versión inglesa, no a la raíz, que solo redirige. Una página sin
+    // traducciones (las de cada país, las árabes de mezquitas y halal) no
+    // declara ninguno: un x-default suelto apuntando a otra página confunde.
+    if (c.alternos.length > 1) {
+      const en = c.alternos.find(([l]) => l === 'en')
+      const alternos = c.alternos.map(([l, r]) => `    <link rel="alternate" hreflang="${l}" href="${BASE}${r}" />`)
+      if (en) alternos.push(`    <link rel="alternate" hreflang="x-default" href="${BASE}${en[1]}" />`)
+      html = html.replace('</head>', `${alternos.join('\n')}\n  </head>`)
+    }
+    // og:locale del idioma de la página (antes todas decían en_US) y, como
+    // alternativos, los de sus traducciones.
+    const locales = [...new Set(c.alternos.map(([l]) => OG_LOCALE[l]).filter((x) => x && x !== OG_LOCALE[c.lang]))]
+    html = html
+      .replace(/^\s*<meta property="og:locale:alternate" [^>]*>\n/gm, '')
+      .replace(/(<meta property="og:locale" content=")[^"]*("[^>]*>)/, `$1${OG_LOCALE_RUTA[ruta] ?? OG_LOCALE[c.lang] ?? 'en_US'}$2${locales.map((x) => `\n    <meta property="og:locale:alternate" content="${x}" />`).join('')}`)
   }
 
   // Precarga del trozo de JS de la página (si no, se pide cuando ya ha
@@ -141,4 +161,40 @@ for (const ruta of rutas) {
   mkdirSync(join(dest, ruta), { recursive: true })
   writeFileSync(join(dest, ruta, 'index.html'), html)
 }
+// Portada (/): es la x-default y la de más prioridad, pero React solo la usa
+// para redirigir al idioma del navegador, así que su HTML era un div vacío y
+// los bots que no ejecutan JavaScript (GPTBot, ClaudeBot, PerplexityBot) leían
+// 8 palabras. Se le pone, FUERA de #root para que React no intente hidratarlo,
+// un resumen en texto con los datos de la web (precios de contenido.ts) y los
+// enlaces a cada idioma. Quien tiene JavaScript no lo ve: el script de debajo
+// lo quita antes de pintar y la app redirige como siempre. 404.html y 200.html
+// ya se copiaron antes del índice limpio, así que no lo heredan.
+const yen = (n) => '¥' + n.toLocaleString('en-US')
+const P = { medio: 38000, completo: 58000, lejos: 70000 } // = YEN de src/v7/contenido.ts
+const WA = (n) => `https://wa.me/${n}`
+const portada = `
+    <main id="portada-texto">
+      <h1>Tony Kansai Guide: private tour guides in Kyoto, Osaka, Nara and Kansai</h1>
+      <p>Private day tours in Kyoto, Osaka, Nara, Kobe, Himeji, Hiroshima and Miyajima. Your guide meets you in your hotel lobby and the day is for your group only.</p>
+      <ul>
+        <li><a href="/en/">Tony Hanma</a>: Spanish, lives in Osaka; guides in Spanish, English and Arabic. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</li>
+        <li><a href="/larion/">Larion</a>: guides in Russian and English. WhatsApp <a href="${WA('818085067586')}">+81 80 8506 7586</a>.</li>
+      </ul>
+      <p>Prices per group of up to 6 people: half day (4 hours) ${yen(P.medio)}, full day (8 hours) ${yen(P.completo)}, long day trips (Kōyasan, Amanohashidate, Kumano) from ${yen(P.lejos)}. Larger groups up to 14 people on request. Trains, entry fees and meals are not included. Pay cash on the day, or in advance with PayPal or Wise. Free cancellation up to 72 hours before.</p>
+      <p>Choose your language:</p>
+      <ul>
+        <li lang="es"><a href="/es/">Español</a>: guía privado en español en Kioto, Osaka y Nara, con Tony.</li>
+        <li lang="en"><a href="/en/">English</a>: private guide in Kyoto, Osaka and Nara, with Tony.</li>
+        <li lang="ar" dir="rtl"><a href="/ar/">العربية</a>: مرشد خاص بالعربية في كيوتو وأوساكا ونارا، مع طوني.</li>
+        <li lang="ru"><a href="/ru/">Русский</a>: частный гид на русском в Киото, Осаке и Хиросиме, с Ларионом.</li>
+      </ul>
+      <p>Guides: <a href="/en/kyoto-private-guide-cost/">How much a private guide in Kyoto costs</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+    </main>
+    <script>document.getElementById('portada-texto').remove()</script>`
+const indice = readFileSync(join(dest, 'index.html'), 'utf8')
+if (!indice.includes('id="portada-texto"')) {
+  if (!indice.includes('<div id="root"></div>')) throw new Error('index.html sin <div id="root"></div>: no se puede poner el texto de la portada')
+  writeFileSync(join(dest, 'index.html'), indice.replace('<div id="root"></div>', `<div id="root"></div>${portada}`))
+}
+
 console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex`)

@@ -1,0 +1,17 @@
+/* Páginas de respuesta (PaginaRespuesta.tsx). Solo lo que no trae v7.css:
+   la tabla comparativa, la línea de «Actualizado» y la lista de fuentes. */
+
+.v7-respuesta-directa { font-size: 1.15rem; max-width: 46rem; }
+.v7-actualizado { color: var(--tenue); font-size: 0.9rem; margin-top: 8px !important; }
+
+/* La tabla se desliza en horizontal en el móvil en vez de aplastar columnas. */
+.v7-tabla-marco { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; }
+.v7-tabla { width: 100%; border-collapse: collapse; min-width: 640px; font-size: 0.95rem; }
+.v7-tabla th, .v7-tabla td { padding: 12px 14px; text-align: start; vertical-align: top; border-bottom: 1px solid color-mix(in srgb, currentColor 14%, transparent); }
+.v7-tabla thead th { font-weight: 700; }
+.v7-tabla tbody tr:first-child { font-weight: 600; }
+.v7-tabla-nota { color: var(--tenue); font-size: 0.9rem; margin-top: 10px !important; }
+
+.v7-lista-respuesta { display: grid; gap: 10px; padding-inline-start: 1.2em; max-width: 46rem; }
+.v7-fuentes { display: grid; gap: 6px; padding-inline-start: 1.2em; font-size: 0.92rem; word-break: break-word; }
+.v7-cambio { color: var(--tenue); font-size: 0.95rem; }

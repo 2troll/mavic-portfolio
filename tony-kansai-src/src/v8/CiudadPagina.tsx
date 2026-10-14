@@ -18,7 +18,7 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo, h1Ciudad, descripcionSeo, faqCiudad, faqLd } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
@@ -112,14 +112,15 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
       <Helmet>
         <html lang={lang} dir={dir} />
         <title>{titulo}</title>
-        {/* Lema y las cuatro zonas más conocidas: con todas pasaba de los ~155 caracteres que enseña Google. */}
-        <meta name="description" content={`${c.lema[lang]} ${c.zonas.slice(0, 4).map((z) => z.nombre[lang]).join(', ')}.`} />
+        {/* La misma descripción que el HTML pregenerado (consulta + precio); si no, React la pisaba al cargar. */}
+        <meta name="description" content={descripcionSeo(c.id, lang, guia)} />
         <link rel="canonical" href={`${BASE}${prefijo}/${c.id}/`} />
         {enlacesHreflang(hermanas.map((h) => ({ lang: langDe(h), href: `${BASE}${h}/${c.id}/` })))}
         <meta property="og:title" content={titulo} />
         <meta property="og:image" content={`${BASE}/v8/zonas/${PORTADA[c.id]}.webp`} />
         <script type="application/ld+json">{JSON.stringify(viajeTuristico(c.id, lang, guia, prefijo))}</script>
         <script type="application/ld+json">{JSON.stringify(migas(lang, prefijo, et.volver, c.id))}</script>
+        <script type="application/ld+json">{JSON.stringify(faqLd(c.id, lang, guia))}</script>
       </Helmet>
 
       <header className="v7-cabecera cristal">
@@ -147,6 +148,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <TiempoCiudad ciudad={c.id} lang={lang} />
           <div className="v8-portada-texto">
             <h1>{c.nombre[lang]}</h1>
+            {/* La frase que la gente escribe en el buscador o en la IA («guía privado en Kioto en español»). */}
+            <p className="v8-portada-guia"><strong>{h1Ciudad(c.id, lang, guia)}</strong></p>
             <p>{c.lema[lang]}</p>
             <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
               onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `ciudad-${c.id}`, canal: 'whatsapp_ciudad' })}>
@@ -232,6 +235,19 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             </div>
           </section>
         )}
+
+        {/* Preguntas frecuentes: el mismo texto que el FAQPage, visible para personas y para las IAs. */}
+        <section className="v7-seccion v7-faq-seccion">
+          <h2>{({ es: 'Preguntas', en: 'Questions', ar: 'أسئلة', ru: 'Вопросы' } as Record<Lengua, string>)[lang]}</h2>
+          <div className="v7-faq">
+            {faqCiudad(c.id, lang, guia).map((f) => (
+              <details key={f.q}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
 
         {/* 6. Otras ciudades: mosaico de fotos */}
         <section className="v7-seccion v8-otras">

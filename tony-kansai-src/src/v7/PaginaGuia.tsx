@@ -139,8 +139,16 @@ function TextoResena({ r, lang }: { r: Resena; lang: string }) {
   )
 }
 
+/** Las reseñas de Tony que ya van dentro del build (reviews.json). Se pintan
+ *  desde el primer render para que el HTML pregenerado las lleve: un bot sin JS
+ *  (o Google comparando con el JSON-LD) las ve, y no «0 reseñas». */
+function resenasFijas(): Resena[] {
+  return ((resenasTony as { reviews: Resena[] }).reviews ?? []).filter((r) => r?.text && r.stars)
+}
+
 function useResenas(activas: boolean, fuente?: string) {
-  const [lista, setLista] = useState<Resena[]>([])
+  // Larion tiene su propio archivo (`fuente`): ese sigue llegando por petición.
+  const [lista, setLista] = useState<Resena[]>(() => (activas && !fuente ? resenasFijas() : []))
   useEffect(() => {
     if (!activas) return
     // Dos fuentes, como resenas.html: las aprobadas desde el móvil (Worker) y las
@@ -153,7 +161,10 @@ function useResenas(activas: boolean, fuente?: string) {
         if (!r?.text || !r.stars || vistos.has(r.id)) continue
         vistos.add(r.id); todas.push(r)
       }
-      setLista(todas)
+      // La petición solo añade (las aprobadas desde el móvil, o un reviews.json
+      // más nuevo); si no contesta nadie, se quedan las del build.
+      if (!fuente) for (const r of resenasFijas()) if (!vistos.has(r.id)) { vistos.add(r.id); todas.push(r) }
+      if (todas.length) setLista(todas)
     })
   }, [activas, fuente])
   return lista
@@ -244,7 +255,7 @@ function useEsOtono() {
 const EJ_FECHAS: Record<string, string> = { es: '18–21 nov.', en: '18–21 Nov', ar: '18–21 نوفمبر', ru: '18–21 нояб.' }
 
 const VER_MAS: Record<string, string> = { es: 'Ver más reseñas', en: 'More reviews', ar: 'المزيد من التقييمات', ru: 'Показать ещё' }
-const RESENAS_TXT: Record<string, string> = { es: 'reseñas de clientes', en: 'guest reviews', ar: 'تقييمات العملاء', ru: 'отзывы гостей' }
+const RESENAS_TXT: Record<string, string> = { es: 'reseñas de clientes', en: 'guest reviews', ar: 'تقييمات من العملاء', ru: 'отзывы гостей' }
 const mediaResenas = (l: Resena[], lang: string) =>
   (l.reduce((a, r) => a + r.stars, 0) / l.length).toLocaleString(lang === 'ar' ? 'ar-u-nu-latn' : lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
@@ -253,7 +264,51 @@ const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con
 
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
-function Precios({ p }: { p: Pagina }) {
+/** Ficha fija bajo las tarifas: lo que comparan las plataformas (Civitatis,
+ *  GoWithGuide) y lo que las IAs copian tal cual. Todo sale de lo que la web ya
+ *  dice en «Qué incluye», «Lo que no incluye», las preguntas (72 h) y los planes
+ *  (hasta 6 por precio). Nada nuevo: si cambia allí, cambia aquí. */
+const FICHA: Record<string, { incluido: [string, string]; no: [string, string]; cancelacion: [string, string]; grupo: string }> = {
+  es: { incluido: ['Incluido', 'Ruta preparada, recogida en el vestíbulo del hotel y ayuda con trenes y tarjeta IC.'],
+    no: ['No incluido', 'Trenes, entradas y comidas: se pagan en el momento.'],
+    cancelacion: ['Cancelación', 'Gratis hasta 72 horas antes.'], grupo: 'Grupo máx.' },
+  en: { incluido: ['Included', 'Planned route, hotel lobby pick-up and help with trains and IC cards.'],
+    no: ['Not included', 'Trains, admissions and meals, paid as you go.'],
+    cancelacion: ['Cancellation', 'Free up to 72 hours before.'], grupo: 'Max. group' },
+  ar: { incluido: ['يشمل السعر', 'مسار مُعدّ مسبقاً، والاستقبال في بهو الفندق، والمساعدة في القطارات وبطاقة IC.'],
+    no: ['لا يشمل', 'القطارات وتذاكر الدخول والوجبات تُدفع في حينها.'],
+    cancelacion: ['الإلغاء', 'مجاني حتى ٧٢ ساعة قبل الجولة.'], grupo: 'حجم المجموعة' },
+  ru: { incluido: ['Входит в цену', 'Продуманный маршрут, встреча в лобби отеля и помощь с поездами и картой IC.'],
+    no: ['Не входит', 'Поезда, входные билеты и еда — оплачиваются на месте.'],
+    cancelacion: ['Отмена', 'Бесплатно не позднее чем за 72 часа.'], grupo: 'Размер группы' },
+}
+// Hasta 14 es el grupo más grande que ha llevado Tony; de Larion no consta, así
+// que en sus páginas solo se dice «más grandes, a consultar».
+const GRUPO_MAX: Record<string, Record<string, string>> = {
+  tony: { es: '6 personas al precio indicado; hasta 14, bajo consulta.', en: '6 people at the listed price; up to 14 on request.',
+    ar: '٦ أشخاص بالسعر المذكور، وحتى ١٤ شخصاً عند الطلب.', ru: '6 человек по указанной цене; до 14 — по запросу.' },
+  larion: { es: '6 personas al precio indicado; grupos mayores, bajo consulta.', en: '6 people at the listed price; larger groups on request.',
+    ar: '٦ أشخاص بالسعر المذكور، والمجموعات الأكبر عند الطلب.', ru: '6 человек по указанной цене; группы больше — по запросу.' },
+}
+
+function FichaTour({ p }: { p: Pagina }) {
+  const f = FICHA[p.lang] ?? FICHA.en
+  const filas: [string, string][] = [f.incluido, f.no, f.cancelacion, [f.grupo, (GRUPO_MAX[p.guia] ?? GRUPO_MAX.tony)[p.lang] ?? GRUPO_MAX.tony.en]]
+  // Estilo en línea a propósito: v7.css es de otra pieza y la ficha tiene que
+  // leerse bien aunque allí no exista todavía la clase.
+  return (
+    <dl className="v7-ficha tarjeta" style={{ display: 'grid', gridTemplateColumns: 'max-content 1fr', gap: '.5rem 1.25rem', margin: '1.25rem 0 0' }}>
+      {filas.map(([k, v]) => (
+        <div key={k} style={{ display: 'contents' }}>
+          <dt style={{ fontWeight: 600 }}>{k}</dt>
+          <dd style={{ margin: 0 }}>{v}</dd>
+        </div>
+      ))}
+    </dl>
+  )
+}
+
+function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
   // Solo en las páginas de Tony: el PayPal es suyo.
   const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const cambios = useCambio(p.mercado.divisas)
@@ -271,6 +326,13 @@ function Precios({ p }: { p: Pagina }) {
           <p>{p.precios.temporada.texto}</p>
           {p.precios.temporada.enlace && p.id !== 'larion' && <p className="v7-temporada-enlace"><Link to={p.precios.temporada.enlace.ruta}>{p.precios.temporada.enlace.texto} →</Link></p>}
         </aside>
+      )}
+      {/* La nota junto al precio, de las reseñas reales (las de Tony vienen ya
+          en el build, así que también sale en el HTML pregenerado). */}
+      {p.guia === 'tony' && resenas.length > 0 && (
+        <p className="v7-hero-nota v7-precios-nota"><a href="#resenas">
+          <span aria-hidden="true">★</span> {mediaResenas(resenas, p.lang)} · {resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}
+        </a></p>
       )}
       <div className="v7-planes">
         {p.precios.planes.map((plan, i) => (
@@ -302,6 +364,7 @@ function Precios({ p }: { p: Pagina }) {
           </article>
         ))}
       </div>
+      <FichaTour p={p} />
       <ul className="v7-notas">
         {pagar && <li>{pagar.nota}</li>}
         {p.precios.notas.map((n) => <li key={n}>{n}</li>)}
@@ -414,12 +477,27 @@ function valoracionTony() {
   }
 }
 
+/** Fecha de la última revisión de contenido de estas páginas (dateModified).
+ *  A mano y no la del build: un build sin cambios no es contenido nuevo. */
+const ACTUALIZADO = '2026-10-14'
+
+/** El negocio es uno (index.html lo declara con este @id, igual en todas las
+ *  rutas); cada página dice qué persona guía y la enlaza a él. Así /ru/ y
+ *  /larion/ presentan a Larion y no a Tony con otro teléfono. */
+const NEGOCIO_ID = `${BASE}/#negocio`
+const PERSONA: Record<string, { id: string; url: string }> = {
+  tony: { id: `${BASE}/#tony`, url: `${BASE}/es/` },
+  larion: { id: `${BASE}/#larion`, url: `${BASE}/ru/` },
+}
+
 function datosEstructurados(p: Pagina) {
   const g = GUIAS[p.guia]
   const idiomas = p.guia === 'larion' ? ['ru', 'en'] : ['es', 'en', 'ar']
+  const persona = PERSONA[p.guia] ?? PERSONA.tony
   return {
     '@context': 'https://schema.org',
     '@type': 'Service',
+    '@id': `${BASE}${p.ruta}#servicio`,
     name: p.seo.titulo.split(' | ')[0],
     description: p.seo.descripcion,
     url: `${BASE}${p.ruta}`,
@@ -427,14 +505,18 @@ function datosEstructurados(p: Pagina) {
     serviceType: 'Private tour guide',
     areaServed: p.zona.lugares.map((l) => ({ '@type': 'Place', name: l.nombre, geo: { '@type': 'GeoCoordinates', latitude: l.lat, longitude: l.lon } })),
     availableLanguage: idiomas,
+    // El servicio lo vende el negocio y lo guía la persona de esta página.
+    brand: { '@id': NEGOCIO_ID },
     provider: {
       '@type': 'Person',
+      '@id': persona.id,
+      url: persona.url,
       name: g.nombre,
       image: `${BASE}${g.foto}`,
       jobTitle: 'Private tour guide',
       knowsLanguage: idiomas,
       telephone: `+${g.wa}`,
-      worksFor: { '@type': 'LocalBusiness', name: 'Tony Kansai Guide', url: BASE, email: CORREO },
+      worksFor: { '@id': NEGOCIO_ID },
     },
     ...(p.guia === 'larion' ? {} : valoracionTony()),
     offers: p.precios.planes.map((pl) => ({
@@ -550,6 +632,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
+        {/* La página en sí: cuándo se revisó, de qué negocio es y qué servicio cuenta. */}
+        <script type="application/ld+json">{JSON.stringify({
+          '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${BASE}${p.ruta}`, url: `${BASE}${p.ruta}`,
+          name: p.seo.titulo, inLanguage: p.lang, dateModified: ACTUALIZADO,
+          publisher: { '@id': NEGOCIO_ID }, about: { '@id': `${BASE}${p.ruta}#servicio` },
+        })}</script>
         {/* Las preguntas de la página, para que Google pueda enseñarlas en el resultado. */}
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: p.lang,
@@ -757,7 +845,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Precios */}
         <section id="precios" className="v7-seccion">
           <h2>{p.precios.titulo}</h2>
-          <Precios p={p} />
+          <Precios p={p} resenas={resenas} />
         </section>
 
         {/* El mercado: husos, divisas y lo que le importa a ese público */}

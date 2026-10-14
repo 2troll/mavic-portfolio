@@ -35,6 +35,9 @@ const CiudadPagina = lazy(() => import('./v8/CiudadPagina'))
 const Otono = lazy(() => import('./v7/Otono'))
 const GuiaTransporte = lazy(() => import('./v7/GuiaTransporte'))
 const Ventajas = lazy(() => import('./v7/Ventajas'))
+// Páginas de respuesta: precio de un guía en Kioto, mezquitas y comida halal (datosRespuestas.ts).
+const PaginaRespuesta = lazy(() => import('./v7/PaginaRespuesta'))
+import { RUTAS_RESPUESTA } from './v7/datosRespuestas'
 const RUTAS_VENTAJAS: Record<string, 'es' | 'en' | 'ar' | 'ru'> = { '/es/ventajas': 'es', '/en/perks': 'en', '/ar/perks': 'ar', '/ru/perks': 'ru' }
 /** /es/ventajas/ o /es/ventajas/airalo/ → idioma y app (la ficha propia de cada app). */
 const rutaVentajas = (ruta: string) => {
@@ -159,6 +162,20 @@ export function Layout() {
         <Ventajas key={`${ventajas.id}-${ventajas.app ?? ''}`} id={ventajas.id} app={ventajas.app} />
         <CookieTardio compacto /><AvisoRuso />
       </Suspense>
+      </>
+    )
+  }
+
+  // Página de respuesta: contesta una pregunta concreta con fuentes y fecha.
+  const respuesta = RUTAS_RESPUESTA[pathname.replace(/\/+$/, '')]
+  if (respuesta) {
+    return (
+      <>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+        <PaginaRespuesta key={respuesta} id={respuesta} />
+        <CookieTardio compacto /><AvisoRuso />
+      </Suspense>
+      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_GUIA), ...Object.keys(RUTAS_RESPUESTA)]} />
       </>
     )
   }

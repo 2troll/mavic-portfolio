@@ -112,16 +112,19 @@ const O = {
 const YEN = { medio: 38000, completo: 58000, lejos: 70000 }
 
 /** Créditos de las fotos (las CC BY / BY-SA obligan a citarlos). */
+/** Créditos del pie. `tr` (y `licTr` cuando la licencia es texto) traduce la
+ *  etiqueta para /en/, /ar/ y /ru/: un pie en español en la página rusa delata
+ *  una traducción a medias. Quien pinta el pie elige `tr[lang] ?? foto`. */
 export const CREDITOS = [
-  { foto: 'Kioto: Fushimi Inari', autor: 'Basile Morin', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg' },
-  { foto: 'Osaka: castillo', autor: 'Dick Thomas Johnson', licencia: 'CC BY 2.0', url: 'https://commons.wikimedia.org/wiki/File:Osaka_Castle_2022-04-23.jpg' },
-  { foto: 'Nara: ciervos', autor: 'Marek Ślusarczyk (Tupungato)', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:003_Nara_deer_in_Japan_-_deer_of_Nara_Park_under_autumn_leaves.jpg' },
-  { foto: 'Kobe: puerto', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Maritime_Museum,_November_2016.jpg' },
-  { foto: 'Himeji: castillo', autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
-  { foto: 'Miyajima: torii', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
-  { foto: 'Hiroshima: Cúpula de la Bomba Atómica', autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
-  { foto: 'Avatares de las reseñas', autor: 'DiceBear, Boring Avatars, Jdenticon, Tabler Icons, Phosphor Icons y Remix Icon (Lisa Wischofsky, Micah Lanier, Draftbit, The Visual Team, Ashley Seo, Natalia Spivak, vijay verma, Webpixels, Pablo Stanley, Zoish)', licencia: 'CC BY 4.0 / CC0 1.0 / MIT / Apache 2.0', url: 'https://www.dicebear.com/licenses/' },
-  { foto: 'Globo y mapa: Blue Marble', autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
+  { foto: 'Kioto: Fushimi Inari', tr: { en: 'Kyoto: Fushimi Inari', ar: 'كيوتو: فوشيمي إيناري', ru: 'Киото: Фусими Инари' }, autor: 'Basile Morin', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg' },
+  { foto: 'Osaka: castillo', tr: { en: 'Osaka: the castle', ar: 'أوساكا: القلعة', ru: 'Осака: замок' }, autor: 'Dick Thomas Johnson', licencia: 'CC BY 2.0', url: 'https://commons.wikimedia.org/wiki/File:Osaka_Castle_2022-04-23.jpg' },
+  { foto: 'Nara: ciervos', tr: { en: 'Nara: deer', ar: 'نارا: الغزلان', ru: 'Нара: олени' }, autor: 'Marek Ślusarczyk (Tupungato)', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:003_Nara_deer_in_Japan_-_deer_of_Nara_Park_under_autumn_leaves.jpg' },
+  { foto: 'Kobe: puerto', tr: { en: 'Kobe: the port', ar: 'كوبي: الميناء', ru: 'Кобе: порт' }, autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Maritime_Museum,_November_2016.jpg' },
+  { foto: 'Himeji: castillo', tr: { en: 'Himeji: the castle', ar: 'هيميجي: القلعة', ru: 'Химэдзи: замок' }, autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
+  { foto: 'Miyajima: torii', tr: { en: 'Miyajima: the torii', ar: 'ميياجيما: بوابة التوري', ru: 'Миядзима: тории' }, autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
+  { foto: 'Hiroshima: Cúpula de la Bomba Atómica', tr: { en: 'Hiroshima: Atomic Bomb Dome', ar: 'هيروشيما: قبة القنبلة الذرية', ru: 'Хиросима: Атомный купол' }, autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
+  { foto: 'Avatares de las reseñas', tr: { en: 'Review avatars', ar: 'الصور الرمزية في المراجعات', ru: 'Аватары в отзывах' }, autor: 'DiceBear, Boring Avatars, Jdenticon, Tabler Icons, Phosphor Icons y Remix Icon (Lisa Wischofsky, Micah Lanier, Draftbit, The Visual Team, Ashley Seo, Natalia Spivak, vijay verma, Webpixels, Pablo Stanley, Zoish)', licencia: 'CC BY 4.0 / CC0 1.0 / MIT / Apache 2.0', url: 'https://www.dicebear.com/licenses/' },
+  { foto: 'Globo y mapa: Blue Marble', tr: { en: 'Globe and map: Blue Marble', ar: 'الكرة الأرضية والخريطة: Blue Marble', ru: 'Глобус и карта: Blue Marble' }, licTr: { en: 'Public domain', ar: 'ملكية عامة', ru: 'Общественное достояние' }, autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
 ]
 
 const fmtYen = (n: number, sep: string) => '¥' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep)
@@ -518,7 +521,12 @@ const ar: Pagina = {
       { q: 'أين نصلي أثناء الجولة؟', a: 'في كانساي مسجد أوساكا ومسجد كوبي وجمعية كيوتو الإسلامية، وفي مطار كانساي مصليات في المبنيين. أضع وقفات الصلاة في المسار من البداية.' },
       { q: 'هل أحتاج تذكرة JR Pass؟', a: 'في الغالب لا إذا كانت إقامتك في كانساي. بطاقة ICOCA أو Suica تكفي لمعظم القطارات والحافلات. اسألني قبل أن تشتري.' },
       { q: 'هل تستقبلنا في كيوتو أو نارا أيضاً؟', a: 'نعم. نلتقي في بهو فندقكم، سواء كان في أوساكا أو كيوتو أو نارا أو كوبي.' },
-      { q: 'وماذا لو كنا أكثر من ستة؟', a: 'الأسعار لمجموعات حتى ستة أشخاص. إن كنتم أكثر فراسلني وأخبرك كيف ننظّم الأمر.' },
+      { q: 'هل الجولة مناسبة للعائلات مع الأطفال وكبار السن؟', a: 'نعم. الجولة خاصة بعائلتكم وحدها، بلا أي شخص من خارجها، وبالإيقاع الذي يناسبكم. أخبرني عند الحجز بأعمار الأطفال وكبار السن، فأختار مساراً أقل مشياً ودرجاً وأضع وقفات للراحة والصلاة.' },
+      { q: 'وماذا لو كنا أكثر من ستة؟', a: 'الأسعار الثابتة لمجموعات حتى ستة أشخاص، وأرافق مجموعات أكبر حتى ١٤ شخصاً. أخبرني بعددكم وأرسل لك السعر.' },
+      { q: 'هل يمكن زيارة كيوتو في يوم واحد من أوساكا؟', a: 'نعم. كيوتو على بُعد أقل من ساعة بالقطار من أوساكا. ألتقيكم في الفندق صباحاً ونبدأ باكراً بفوشيمي إيناري قبل الزحام، وأضع الغداء الحلال ووقت الصلاة في المسار من البداية.' },
+      { q: 'هل يمكن أن نزور مسجد كوبي؟', a: 'نعم، إن أحببتم. مسجد كوبي أقدم مسجد في اليابان، ونجعله جزءاً من يوم في كوبي مع الميناء وحي كيتانو، ونصلي فيه إن وافق وقت الصلاة.' },
+      { q: 'هل ترافقنا إلى نارا؟', a: 'نعم. نارا على بُعد أقل من ساعة من أوساكا وكيوتو، ويكفيها نصف يوم: تمثال بوذا الكبير في توداي-جي والغزلان في الحديقة.' },
+      { q: 'كم السعر بالريال أو الدرهم؟', a: 'الأسعار بالين وللمجموعة كلها لا للشخص. بجانب كل سعر تجد قيمته التقريبية بالريال والدرهم بسعر الصرف اليوم، وهي للتوضيح فقط، أما الدفع فيكون بالين.' },
       { q: 'هل تنظّم جولات لعدة أيام؟', a: 'نعم. أخبرني بعدد الأيام وما تحبون رؤيته، وأرسل لك سعراً ثابتاً للكل.' },
       { q: 'وماذا لو كان أحدنا محدود الحركة؟', a: 'أخبرني عند الحجز. أكيّف المسار والوتيرة والمواصلات؛ بعض المعابد فيها درج كثير وأقترح بدائل.' },
       { q: 'وماذا لو تغيّرت خططي؟', a: 'راسلني. الإلغاء قبل أكثر من ٧٢ ساعة مجاني، وإن تأخرت رحلتك نجد يوماً آخر.' },
@@ -557,8 +565,9 @@ const lugaresLarion = (n: Record<string, string>): Lugar[] => [
 const ru: Pagina = {
   id: 'ru', lang: 'ru', viaje: ['Вы вылетаете из Москвы.', 'Прилетаете в Кансай.', 'Я встречаю вас в лобби отеля.', 'И мы проводим день там, где вам хочется.'], dir: 'ltr', ruta: '/ru/', guia: 'larion',
   seo: {
-    titulo: 'Гид на русском: Киото, Осака, Хиросима | Tony Kansai Guide',
-    descripcion: 'Ларион — частный гид на русском. Встречает в отеле и везёт в Киото, Осаку, Нару, Хиросиму или на Миядзиму. Без агентства, цена за группу.',
+    // Слова, которые реально ищут в Яндексе: «русский гид в Киото», «индивидуальная экскурсия».
+    titulo: 'Русский гид в Киото, Осаке и Хиросиме — Ларион | Tony Kansai Guide',
+    descripcion: 'Индивидуальные экскурсии на русском: Киото, Осака, Нара, Хиросима и Миядзима. Частный гид Ларион встречает вас в отеле. Без агентства, цена за всю группу.',
   },
   nav: { como: 'Как это работает', zona: 'Куда едем', precios: 'Цены', contacto: 'Написать', idioma: 'Язык' },
   hero: {
@@ -648,10 +657,15 @@ const ru: Pagina = {
     divisas: ['RUB'],
     enlaces: [{ texto: 'Практичное для поездки из России', ruta: '/ru/from-russia/' }],
   },
-  resenas: { titulo: 'Что говорят гости', nota: 'Отзывы, которые гости присылали Лариону в WhatsApp, собраны здесь.', opinar: 'Были на экскурсии с Ларионом? Оставьте отзыв', fuente: '/reviews-larion.json' },
+  // Sin sección de reseñas: las 201 de reviews-larion.json no tienen fecha ni
+  // fuente comprobable, y la página pintaría una nota media (4,0) con ellas.
+  // Vuelven cuando Larion diga cuáles puede demostrar (informe IA, A08).
   faq: {
     titulo: 'Вопросы',
     items: [
+      { q: 'Как оплатить?', a: 'Обычно — наличными в иенах в день экскурсии. Российские карты (Visa, Mastercard, «Мир») в Японии не работают, поэтому возьмите наличные с собой. Если хотите заплатить переводом — например, через Wise или картой нероссийского банка, — договоримся об этом при бронировании. Если бронируете больше чем за месяц, могу попросить задаток.' },
+      { q: 'Сколько это в рублях?', a: 'Цены на сайте указаны в иенах и за всю группу, а не с человека. Рядом с ценой показана примерная сумма в рублях по сегодняшнему курсу — это только ориентир: курс меняется каждый день, а платите вы в иенах.' },
+      { q: 'Сколько ехать из Осаки в Хиросиму?', a: 'Около полутора часов на синкансэне: самые быстрые поезда идут от станции Син-Осака примерно 1 час 25 минут. Хиросиму и Миядзиму можно посмотреть за один день.' },
       { q: 'Нужен ли JR Pass?', a: 'Если вы ездите в пределах Кансая, обычно нет: карта ICOCA или Suica подходит почти для всех поездов и автобусов. Для поездки в Хиросиму посчитаем вместе. Спросите меня, прежде чем что-то покупать.' },
       { q: 'А если дождь?', a: 'По городу идём в любую погоду: в дождь Кансай красив, а людей меньше. В горах решаю я, ради безопасности; если отменяем, переносим дату или возвращаю оплату.' },
       { q: 'Можно с детьми?', a: 'Конечно. Подстрою темп и маршрут под возраст.' },
@@ -740,7 +754,9 @@ const larion: Pagina = {
     tuHora: 'Your time',
     divisas: ['GBP', 'USD', 'EUR'],
   },
-  resenas: { titulo: 'What guests say', nota: 'Messages guests sent Larion on WhatsApp, gathered here and translated from Russian. Tap “See original” to read them as written.', opinar: 'Toured with Larion? Leave a review', fuente: '/reviews-larion.json' },
+  // Igual que en /ru/ (A08). Va en undefined a propósito: sin esta línea heredaría
+  // las reseñas de Tony de `...en`.
+  resenas: undefined,
   contacto: {
     ...en.contacto,
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],
