@@ -657,9 +657,8 @@ const ru: Pagina = {
     divisas: ['RUB'],
     enlaces: [{ texto: 'Практичное для поездки из России', ruta: '/ru/from-russia/' }],
   },
-  // Sin sección de reseñas: las 201 de reviews-larion.json no tienen fecha ni
-  // fuente comprobable, y la página pintaría una nota media (4,0) con ellas.
-  // Vuelven cuando Larion diga cuáles puede demostrar (informe IA, A08).
+  // Devueltas el 15-10-2026 a petición de Tony (se habían quitado el 14-10 por SEO).
+  resenas: { titulo: 'Что говорят гости', nota: 'Отзывы, которые гости присылали Лариону в WhatsApp, собраны здесь.', opinar: 'Были на экскурсии с Ларионом? Оставьте отзыв', fuente: '/reviews-larion.json' },
   faq: {
     titulo: 'Вопросы',
     items: [
@@ -754,9 +753,7 @@ const larion: Pagina = {
     tuHora: 'Your time',
     divisas: ['GBP', 'USD', 'EUR'],
   },
-  // Igual que en /ru/ (A08). Va en undefined a propósito: sin esta línea heredaría
-  // las reseñas de Tony de `...en`.
-  resenas: undefined,
+  resenas: { titulo: 'What guests say', nota: 'Messages guests sent Larion on WhatsApp, gathered here and translated from Russian. Tap “See original” to read them as written.', opinar: 'Toured with Larion? Leave a review', fuente: '/reviews-larion.json' },
   contacto: {
     ...en.contacto,
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],

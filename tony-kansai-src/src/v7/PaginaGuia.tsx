@@ -139,6 +139,44 @@ function TextoResena({ r, lang }: { r: Resena; lang: string }) {
   )
 }
 
+/** Columnas de las reseñas de Larion (su diseño de antes, en columnas sueltas).
+ *  Se reparten a mano y no con `columns` de CSS: Safari no pintaba la 2.ª y 3.ª columna. */
+function useColumnas() {
+  const cuantas = () => (typeof window === 'undefined' ? 3 : window.innerWidth >= 1000 ? 3 : window.innerWidth >= 680 ? 2 : 1)
+  const [n, setN] = useState(cuantas)
+  useEffect(() => {
+    const mira = () => setN(cuantas())
+    window.addEventListener('resize', mira)
+    return () => window.removeEventListener('resize', mira)
+  }, [])
+  return n
+}
+/** Reparte en orden de lectura: la 1.ª a la columna 1, la 2.ª a la 2… */
+function repartir<T>(lista: T[], n: number): T[][] {
+  const cols: T[][] = Array.from({ length: n }, () => [])
+  lista.forEach((x, i) => cols[i % n].push(x))
+  return cols
+}
+function TarjetaClasica({ r, lang, icono }: { r: Resena; lang: string; icono?: string }) {
+  const m = r.meta?.[lang]
+  const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
+  const texto = r.traducciones?.[lang] ?? r.text
+  return (
+    <figure className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}`}>
+      <div className="v7-resena-cabeza">
+        <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
+        {lugar && <span className="v7-resena-lugar">{lugar}</span>}
+      </div>
+      <TextoResena r={r} lang={lang} />
+      <figcaption>
+        <img className="v7-resena-avatar" src={icono} alt="" loading="lazy" width="52" height="52" />
+        <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
+      </figcaption>
+      {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
+    </figure>
+  )
+}
+
 /** Las reseñas de Tony que ya van dentro del build (reviews.json). Se pintan
  *  desde el primer render para que el HTML pregenerado las lleve: un bot sin JS
  *  (o Google comparando con el JSON-LD) las ve, y no «0 reseñas». */
@@ -613,6 +651,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const [verResenas, setVerResenas] = useState(12)
   const [filtroEstrellas, setFiltroEstrellas] = useState(0)
   const iconos = useMemo(() => repartoIconos(resenas), [resenas])
+  const columnasLarion = useColumnas()
   const resenasVistas = filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
 
   useEffect(() => {
@@ -747,6 +786,14 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 </div>
               )
             })()}
+            {/* Larion conserva su diseño de antes (columnas sueltas, sin rejilla ni kanji): a Tony le gustaba así. */}
+            {p.guia === 'larion' ? (
+              <div className="v7-resenas v7-resenas-clasico">
+                {repartir(resenasVistas.slice(0, verResenas), columnasLarion).map((col, c) => (
+                  <div key={c} className="v7-resenas-col">{col.map((r) => <TarjetaClasica key={r.id} r={r} lang={p.lang} icono={iconos.get(r.id)} />)}</div>
+                ))}
+              </div>
+            ) : (
             <div className="v7-resenas">
               {resenasVistas.slice(0, verResenas).map((r) => {
                 const m = r.meta?.[p.lang]
@@ -774,6 +821,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 )
               })}
             </div>
+            )}
             {resenasVistas.length > verResenas && (
               <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
                 {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})

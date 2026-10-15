@@ -1522,17 +1522,17 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
    («un puzle mal colocado»). Ahora: rejilla con filas de la misma altura,
    foto arriba con proporción fija, texto largo recortado a 8 líneas con
    «Leer más» y el autor siempre al pie de la tarjeta. */
-.v7 .v7-resenas { display: grid; columns: auto; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px; align-items: stretch; }
-.v7 .v7-resenas figure { margin: 0; display: flex; flex-direction: column; gap: 14px; break-inside: auto; }
-.v7 .v7-resenas figure::before { display: none; }
-.v7 .v7-resenas .v7-resena-foto { order: -1; width: calc(100% + 2px); max-height: none; aspect-ratio: 4 / 3; object-fit: cover; margin: 0; }
-.v7 .v7-resena-corta blockquote { font-size: 1.15rem; line-height: 1.5; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) { display: grid; columns: auto; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: 24px; align-items: stretch; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) figure { margin: 0; display: flex; flex-direction: column; gap: 14px; break-inside: auto; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) figure::before { display: none; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) .v7-resena-foto { order: -1; width: calc(100% + 2px); max-height: none; aspect-ratio: 4 / 3; object-fit: cover; margin: 0; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) .v7-resena-corta blockquote { font-size: 1.15rem; line-height: 1.5; }
 .v7 .v7-resena-recorte blockquote { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 8; line-clamp: 8; overflow: hidden; }
 .v7 .v7-resena-recorte.abierto blockquote { display: block; -webkit-line-clamp: unset; line-clamp: unset; overflow: visible; }
 .v7 .v7-resena-leer { margin-top: 8px; font: inherit; font-size: 14px; font-weight: 600; color: var(--acento); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; text-underline-offset: 3px; }
-.v7 .v7-resenas figcaption { margin-top: auto; }
-.v7 .v7-resenas .v7-resena-sinfoto { order: -1; aspect-ratio: 4 / 3; display: grid; place-items: center; background: color-mix(in srgb, var(--acento) 9%, transparent); border: 2px solid color-mix(in srgb, var(--tinta) 12%, transparent); }
-.v7 .v7-resenas .v7-resena-sinfoto span { font-size: clamp(56px, 7vw, 96px); line-height: 1; color: var(--acento); opacity: .55; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) figcaption { margin-top: auto; }
+.v7 .v7-resenas:not(.v7-resenas-clasico) .v7-resena-sinfoto { order: -1; aspect-ratio: 4 / 3; display: grid; place-items: center; background: color-mix(in srgb, var(--acento) 9%, transparent); border: 2px solid color-mix(in srgb, var(--tinta) 12%, transparent); }
+.v7 .v7-resenas:not(.v7-resenas-clasico) .v7-resena-sinfoto span { font-size: clamp(56px, 7vw, 96px); line-height: 1; color: var(--acento); opacity: .55; }
 
 /* Ficha «Incluido / No incluido / Cancelación / Grupo máx.» bajo los precios.
    Con relleno y una fila por dato; en el móvil la etiqueta va encima del texto
@@ -1553,3 +1553,10 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 @media (max-width: 1000px) {
   .v7 .v7-burbujas, .v7 .v7-burbujas-x { display: none; }
 }
+
+/* Reseñas de Larion en columnas (diseño de antes): sin la entrada ligada al scroll,
+   y sin el desenfoque del cristal: Safari no pinta backdrop-filter ni view() dentro de columnas y dejaba la 2.ª y 3.ª vacías. */
+.v7 .v7-resenas-clasico figure { animation: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.v7 .v7-resenas.v7-resenas-clasico { display: flex; align-items: flex-start; gap: 32px; columns: auto; }
+.v7 .v7-resenas-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
+.v7 .v7-resenas-col figure { margin: 0 0 32px; }
