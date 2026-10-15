@@ -217,12 +217,13 @@ const LISTA: App[] = [
   },
   {
     // Afiliado de Nomad por Impact (contrato 34279 aceptado el 14-10-2026: 15 % cliente nuevo, 10 % existente).
-    clave: 'nomad', cat: 'internet', nombre: 'Nomad eSIM', enlace: 'https://lotusflareinc.pxf.io/c/7953984/2915870/34279',
+    // Código TONYKANSAI creado por Nomad el 15-10-2026: 20 %, un uso por cliente, ligado a la cuenta de Impact.
+    clave: 'nomad', cat: 'internet', nombre: 'Nomad eSIM', enlace: 'https://lotusflareinc.pxf.io/c/7953984/2915870/34279', codigo: 'TONYKANSAI', descuento: '20 %', caduca: '2029-06-01',
     marca: { fondo: '#1a56db', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#1a56db', palabra: 'Nomad' },
     t: {
-      es: { que: 'eSIM de datos para Japón y más de 200 países: eliges los GB y los días, y la instalas antes de salir.', ventaja: 'Planes baratos por días; si vas a varios países en el mismo viaje, una sola eSIM regional.' },
-      en: { que: 'Data eSIM for Japan and 200+ countries: pick the GB and days, and install it before you leave.', ventaja: 'Cheap day plans; one regional eSIM if your trip covers several countries.' },
-      ar: { que: 'شريحة eSIM للإنترنت في اليابان وأكثر من 200 دولة: تختار الجيجابايت والأيام وتثبّتها قبل السفر.', ventaja: 'باقات رخيصة بالأيام، وشريحة إقليمية واحدة إن زرت عدة دول في الرحلة نفسها.' },
+      es: { que: 'eSIM de datos para Japón y más de 200 países: eliges los GB y los días, y la instalas antes de salir.', ventaja: 'Con mi enlace y el código TONYKANSAI, 20 % de descuento (un uso por persona; no vale en planes de menos de 5 $, ilimitados ni en oferta).' },
+      en: { que: 'Data eSIM for Japan and 200+ countries: pick the GB and days, and install it before you leave.', ventaja: 'My link plus the code TONYKANSAI gives you 20% off (one use per person; not on plans under $5, unlimited or sale plans).' },
+      ar: { que: 'شريحة eSIM للإنترنت في اليابان وأكثر من 200 دولة: تختار الجيجابايت والأيام وتثبّتها قبل السفر.', ventaja: 'برابطي والرمز TONYKANSAI خصم 20% (مرة واحدة لكل شخص، ولا يسري على الباقات الأقل من 5 دولارات أو غير المحدودة أو المخفّضة).' },
     },
   },
   {
@@ -315,6 +316,26 @@ const LISTA: App[] = [
       es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Si vienes de tour conmigo, te la reservo yo con mi tarifa de guía y te la traduzco al español o al árabe.' },
       en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Touring with me? I book it for you at my guide rate and translate it into Spanish or Arabic.' },
       ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'إن كنت في جولة معي، أحجزه لك بسعر المرشد وأترجمه لك إلى العربية أو الإسبانية.' },
+    },
+  },
+  {
+    // SnapKyoto (Matt, fotógrafo freelance): 10 % de comisión por PayPal si el cliente dice mi nombre al reservar (acuerdo por correo, 15-10-2026).
+    clave: 'snapkyoto', cat: 'planes', nombre: 'SnapKyoto', enlace: 'https://snapkyoto.com',
+    marca: { fondo: '#0d0d0d', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0d0d0d', palabra: 'Snap' },
+    t: {
+      es: { que: 'Matt, fotógrafo en Kioto, Osaka y Nara: sesión de fotos de la familia o la pareja en Gion, Arashiyama o donde vayamos.', ventaja: 'Al reservar, di que vienes de parte de Tony Hanma (Tony Kansai Guide). Si estamos de tour, encajo la sesión en la ruta.' },
+      en: { que: 'Matt, a photographer in Kyoto, Osaka and Nara: a family or couple photo session in Gion, Arashiyama or wherever we go.', ventaja: 'When you book, say you come from Tony Hanma (Tony Kansai Guide). If we are touring together, I fit the session into the route.' },
+      ar: { que: 'مات، مصوّر في كيوتو وأوساكا ونارا: جلسة تصوير للعائلة أو الزوجين في غيون أو أراشيياما أو حيث نذهب.', ventaja: 'عند الحجز قل إنك من طرف Tony Hanma (Tony Kansai Guide). وإن كنا في جولة معًا، أضع الجلسة في المسار.' },
+    },
+  },
+  {
+    // Yumeyakata: registrado como guía nº 1085 el 15-10-2026; el cliente lo escribe al reservar por adelantado.
+    clave: 'yumeyakata', cat: 'planes', nombre: 'Yumeyakata', enlace: 'https://www.kyoto.yumeyakata.com/', codigo: '1085',
+    marca: { fondo: '#5b2a6e', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#5b2a6e', palabra: '夢' },
+    t: {
+      es: { que: 'Alquiler de kimono en Kioto (tiendas de Gojo y Oike), con peinado, maquillaje, ceremonia del té y fotos. Tienen sala de oración para sus clientes.', ventaja: 'Reserva por adelantado y escribe en las notas «ガイド番号1085 (Tony Hanma)»: así saben que vienes conmigo.' },
+      en: { que: 'Kimono rental in Kyoto (Gojo and Oike shops), with hair set, make-up, tea ceremony and photos. They have a prayer room for their customers.', ventaja: 'Book in advance and write “Guide number 1085 (Tony Hanma)” in the notes, so they know you come with me.' },
+      ar: { que: 'استئجار الكيمونو في كيوتو (فرعا غوجو وأويكي)، مع تصفيف الشعر والمكياج وحفل الشاي والتصوير. لديهم غرفة صلاة لعملائهم.', ventaja: 'احجز مسبقًا واكتب في الملاحظات «Guide number 1085 (Tony Hanma)» ليعرفوا أنك قادم معي.' },
     },
   },
 ]

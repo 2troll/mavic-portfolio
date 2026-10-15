@@ -540,7 +540,6 @@ function datosEstructurados(p: Pagina) {
       telephone: `+${g.wa}`,
       worksFor: { '@id': NEGOCIO_ID },
     },
-    ...(p.guia === 'larion' ? {} : valoracionTony()),
     offers: p.precios.planes.map((pl) => ({
       '@type': 'Offer', name: pl.nombre, description: pl.detalle,
       priceSpecification: { '@type': 'PriceSpecification', price: pl.yenes, priceCurrency: 'JPY', ...(pl.desde ? { minPrice: pl.yenes } : {}) },
@@ -654,6 +653,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
+        {/* Las estrellas van en el negocio (TravelAgency): Google no admite reseñas dentro de un Service. */}
+        {p.guia !== 'larion' && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': ['LocalBusiness', 'TravelAgency'], '@id': NEGOCIO_ID, name: 'Tony Kansai Guide', url: `${BASE}/`, ...valoracionTony() })}</script>}
         {/* La página en sí: cuándo se revisó, de qué negocio es y qué servicio cuenta. */}
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${BASE}${p.ruta}`, url: `${BASE}${p.ruta}`,
