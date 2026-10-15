@@ -7,6 +7,7 @@ import { CUMBRES, TEXTOS_CUMBRES, alltrails, YAMAP, letraMes } from './datosCumb
 import type { Lengua, Nivel } from './datosCumbres'
 import { Contador, SelloCumbre, useBilletes, useSellos } from './Cocina'
 import SplitFlapText from './reactbits/SplitFlapText'
+import { CapaEstacion } from './Estaciones'
 import './cumbres.css'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -60,6 +61,7 @@ export function Banda({ lang }: { lang: Lengua }) {
   const valores = [1915, 81.8, 2000]
   return (
     <section className="ex-banda" aria-label={b.titulo}>
+      <CapaEstacion densidad={0.7} />
       <div className="ex-banda-dentro">
         <h2>{b.titulo}</h2>
         <dl>

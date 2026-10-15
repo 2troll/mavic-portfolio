@@ -11,6 +11,7 @@ import type { TextosExpedicion, Lengua } from './datosExpedicion'
 import { Vuelo3d } from './Vuelo3d'
 import { CUMBRES } from './datosCumbres'
 import { CimaAhora } from './CimaAhora'
+import { CapaEstacion, SelectorEstacion } from './Estaciones'
 
 const foto = (id: MonteId | 'portada', ancho: 800 | 1600 = 1600) => `/v7/expedicion/${id}${ancho === 800 ? '-800' : ''}.webp`
 
@@ -53,6 +54,8 @@ export function Portada({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion; la
           <img src={foto('portada')} srcSet={`${foto('portada', 800)} 800w, ${foto('portada')} 1920w`} sizes="100vw" alt={t.portada.foto} fetchPriority="high" />
         </motion.div>
         <div className="ex-portada-velo" aria-hidden="true" />
+        <CapaEstacion />
+        <SelectorEstacion lang={lang} />
         <motion.div className="ex-portada-texto" style={{ opacity: opacidad }}>
           <motion.p className="ex-kicker" initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.15 }}>
             <span className="ex-regla" aria-hidden="true" />{t.cabecera} <span lang="ja">関西の山</span>

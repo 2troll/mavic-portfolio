@@ -1,0 +1,56 @@
+/* Estaciones de la montaña (Estaciones.tsx). La capa va entre la foto y el texto. */
+.es-capa { position: absolute; inset: 0; z-index: -1; pointer-events: none; overflow: hidden; }
+.es-lienzo { position: absolute; inset: 0; width: 100%; height: 100%; }
+
+/* Tinte de la luz de cada estación: un color que se funde con la foto y cambia despacio. */
+.es-tinte { position: absolute; inset: 0; mix-blend-mode: soft-light; transition: background-color 1.2s ease, opacity 1.2s ease; }
+.es-capa-invierno .es-tinte { background-color: rgb(130 180 240 / 34%); }
+.es-capa-otono .es-tinte { background-color: rgb(255 120 30 / 26%); }
+.es-capa-primavera .es-tinte { background-color: rgb(255 160 200 / 24%); }
+.es-capa-verano .es-tinte { background-color: rgb(20 120 70 / 50%); }
+/* Luz de cada estación: entra por arriba, como el sol sobre la cresta, y se apaga hacia el texto. */
+.es-capa::after { content: ''; position: absolute; inset: 0; transition: opacity 1.2s ease; opacity: 0.9; }
+.es-capa-otono::after { background: radial-gradient(ellipse 70% 55% at 78% 8%, rgb(255 150 60 / 28%), transparent 70%); }
+.es-capa-primavera::after { background: radial-gradient(ellipse 70% 55% at 80% 6%, rgb(255 190 215 / 26%), transparent 70%); }
+.es-capa-invierno::after { background: radial-gradient(ellipse 80% 50% at 50% 0%, rgb(230 242 255 / 22%), transparent 70%); }
+/* En verano cae la tarde para que se vean las luciérnagas. */
+.es-capa-verano::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(5 15 25 / 35%), rgb(5 20 15 / 15%) 50%, rgb(0 0 0 / 30%)); }
+.es-capa-invierno::before { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(235 245 255 / 18%), transparent 45%); }
+
+/* Escarcha de invierno: hielo que crece desde los bordes, con grano de cristal. */
+.es-escarcha {
+  position: absolute; inset: 0; opacity: 0; animation: es-hiela 2.4s ease-out 0.2s forwards;
+  box-shadow: inset 0 0 90px 10px rgb(215 235 255 / 45%), inset 0 0 22px 2px rgb(255 255 255 / 55%);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' seed='7'/%3E%3CfeColorMatrix values='0 0 0 0 0.9 0 0 0 0 0.96 0 0 0 0 1 0 0 0 1.6 -0.75'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  -webkit-mask: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, #000 100%);
+  mask: radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, #000 100%);
+}
+@keyframes es-hiela { to { opacity: 1; } }
+
+/* Selector 春夏秋冬. */
+.es-selector { position: absolute; top: 92px; inset-inline-end: 24px; z-index: 3; display: flex; gap: 6px; }
+.es-boton {
+  --es-c: #fff; display: grid; justify-items: center; gap: 2px; width: 66px; padding: 9px 4px 7px;
+  background: rgb(10 10 10 / 55%); color: #fff; border: 1px solid rgb(255 255 255 / 25%); cursor: pointer;
+  -webkit-backdrop-filter: blur(10px) saturate(1.4); backdrop-filter: blur(10px) saturate(1.4);
+  transition: background 0.25s, border-color 0.25s, transform 0.2s;
+}
+.es-boton b { font-family: var(--mincho, serif); font-size: 1.5rem; line-height: 1; font-weight: 700; }
+.es-boton span { font-family: var(--pro-titulo, inherit); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.85; }
+.lang-ar .es-boton span { letter-spacing: 0; font-family: inherit; font-size: 11px; }
+.es-boton:hover { transform: translateY(-2px); border-color: var(--es-c); }
+.es-boton[aria-pressed='true'] { background: var(--es-c); border-color: var(--es-c); color: #111; }
+.es-boton[aria-pressed='true'] span { opacity: 1; }
+.es-primavera { --es-c: #ff9ec4; }
+.es-verano { --es-c: #b6f25a; }
+.es-otono { --es-c: #ff7a1a; }
+.es-invierno { --es-c: #bfe3ff; }
+.es-boton:focus-visible { outline: 2px solid var(--es-c); outline-offset: 2px; }
+
+@media (max-width: 700px) {
+  .es-selector { top: 76px; inset-inline-end: 12px; flex-direction: column; gap: 4px; }
+  .es-boton { width: 50px; padding: 6px 2px 5px; }
+  .es-boton b { font-size: 1.15rem; }
+  .es-boton span { font-size: 8px; letter-spacing: 0.04em; }
+}
