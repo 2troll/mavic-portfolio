@@ -1,40 +1,8 @@
 {
-  "updated": "2026-10-16",
-  "count": 8,
+  "updated": "2026-10-08",
+  "count": 6,
   "average": 5.0,
   "reviews": [
-    {
-      "id": "r-0011",
-      "stars": 5,
-      "name": "Alba Romero Villa",
-      "country": "Spain",
-      "tour": "Kioto",
-      "text": "Tony es un guía extraordinario. Ha diseñado la ruta a medida. Teniendo en cuenta lo que habíamos visto el día anterior. Nos ha recogido en el hotel (algo muy práctico ya que los monumentos están abarrotados y encontrarse allí puede ser más difícil). Tenía muchísimo conocimiento y ha compartido mucha historia de Kyoto y datos interesantes de un forma amena, pudiendo retener retener la información. El pequeño plus: toma muy buenas fotos y sabe los puntos clave para sacar los mejores planos a monumentos.",
-      "lang": "es",
-      "date": "October 2026",
-      "photo": "",
-      "traducciones": {
-        "en": "Tony is an extraordinary guide. He designed the route around us, taking into account what we had seen the day before. He picked us up at the hotel (very practical, since the monuments are packed and meeting there can be harder). He knew a great deal and shared a lot of Kyoto's history and interesting facts in an enjoyable way, so we could actually remember it. The little extra: he takes really good photos and knows the key spots for the best shots of the monuments.",
-        "ar": "توني مرشد استثنائي. صمّم المسار على مقاسنا، مع مراعاة ما رأيناه في اليوم السابق. أخذنا من الفندق (وهذا عملي جداً لأن المعالم مزدحمة واللقاء هناك قد يكون أصعب). كان واسع المعرفة، وشاركنا الكثير من تاريخ كيوتو ومعلومات مثيرة بأسلوب ممتع جعلنا نتذكرها. والإضافة الصغيرة: يلتقط صوراً جميلة جداً ويعرف أفضل الزوايا لتصوير المعالم.",
-        "ru": "Тони — потрясающий гид. Он составил маршрут специально для нас, учитывая то, что мы видели накануне. Забрал нас из отеля (очень удобно: у достопримечательностей толпы, и встретиться там сложнее). Он очень много знает и интересно рассказал историю Киото и любопытные факты — так, что всё запомнилось. Приятный бонус: он отлично фотографирует и знает лучшие точки для снимков."
-      }
-    },
-    {
-      "id": "r-0012",
-      "stars": 5,
-      "name": "Jhon & Lisa",
-      "country": "Australia, England",
-      "tour": "Kioto",
-      "text": "We had an absolutely incredible day exploring Kyoto with Tony as our guide. We couldn't have asked for a better host or a more complete experience!\n\nWe started our morning in Arashiyama, exploring the entire Tenryu-ji temple complex and the breathtaking bamboo grove. Tony didn't just show us the sights; he shared the deep history behind everything and led us along a beautiful walk by the river.\n\nIn the afternoon, we headed to Kiyomizu-dera (the pure water temple), where Tony once again brought the history of the site to life with great storytelling. But the absolute highlights were the hidden gems he took us to:\n\nHeading up just past the pagoda on the upper street of Kiyomizu-dera, he showed us a hidden temple called Senjaku. It was an amazing surprise—there were hardly any crowds, giving it an untouched, peaceful atmosphere, and it's so hidden it doesn't even show up on Google Maps!\n\nOn the way back down, to escape the heavy crowds, Tony led us through a massive ancient cemetery. It was fascinating to see an authentic, traditional Japanese cemetery up close, pass by another serene temple along the path, and make our way back down much faster.\n\nTony is super fun, attentive.",
-      "lang": "en",
-      "date": "October 2026",
-      "photo": "",
-      "traducciones": {
-        "es": "Pasamos un día absolutamente increíble recorriendo Kioto con Tony como guía. ¡No podríamos haber pedido mejor anfitrión ni una experiencia más completa!\n\nEmpezamos la mañana en Arashiyama, recorriendo todo el complejo del templo Tenryu-ji y el impresionante bosque de bambú. Tony no se limitó a enseñarnos los sitios: nos contó la historia que hay detrás de todo y nos llevó por un precioso paseo junto al río.\n\nPor la tarde fuimos a Kiyomizu-dera (el templo del agua pura), donde Tony volvió a dar vida a la historia del lugar contándola de maravilla. Pero lo mejor fueron las joyas escondidas a las que nos llevó:\n\nSubiendo justo pasada la pagoda, por la calle alta de Kiyomizu-dera, nos enseñó un templo escondido llamado Senjaku. Fue una sorpresa increíble: casi no había gente, con un ambiente tranquilo e intacto, ¡y está tan escondido que ni siquiera aparece en Google Maps!\n\nDe bajada, para evitar las multitudes, Tony nos llevó por un enorme cementerio antiguo. Fue fascinante ver de cerca un cementerio japonés tradicional y auténtico, pasar por otro templo sereno en el camino y bajar mucho más rápido.\n\nTony es muy divertido y atento.",
-        "ar": "قضينا يوماً رائعاً للغاية في استكشاف كيوتو مع توني مرشداً لنا. ما كان بإمكاننا أن نطلب مضيفاً أفضل أو تجربة أكمل!\n\nبدأنا الصباح في أراشيياما، فاستكشفنا مجمع معبد تينريو-جي كاملاً وغابة الخيزران المذهلة. لم يكتفِ توني بإرشادنا إلى المعالم، بل شاركنا التاريخ العميق وراء كل شيء، وأخذنا في نزهة جميلة على ضفة النهر.\n\nبعد الظهر توجهنا إلى كيوميزو-ديرا (معبد الماء النقي)، حيث أحيا توني تاريخ المكان مرة أخرى بأسلوب سرد رائع. لكن أجمل ما في اليوم كانت الجواهر الخفية التي أخذنا إليها:\n\nبعد الباغودا مباشرة في الشارع العلوي لكيوميزو-ديرا، أرانا معبداً مخفياً اسمه سينجاكو. كانت مفاجأة مذهلة: لا زحام تقريباً، وأجواء هادئة لم تمسّها الأيدي، وهو مخفي لدرجة أنه لا يظهر حتى على خرائط غوغل!\n\nوفي طريق العودة، ولتجنّب الزحام الشديد، أخذنا توني عبر مقبرة قديمة ضخمة. كان من المدهش رؤية مقبرة يابانية تقليدية أصيلة عن قرب، والمرور بمعبد هادئ آخر على الطريق، والنزول بسرعة أكبر بكثير.\n\nتوني مرح جداً ومهتم.",
-        "ru": "Мы провели совершенно невероятный день в Киото с Тони в роли гида. Лучшего хозяина и более насыщенной программы нельзя было и желать!\n\nУтро мы начали в Арасияме: обошли весь комплекс храма Тэнрю-дзи и потрясающую бамбуковую рощу. Тони не просто показывал места — он рассказывал глубокую историю всего вокруг и провёл нас красивой прогулкой вдоль реки.\n\nДнём мы отправились в Киёмидзу-дэра (храм чистой воды), где Тони снова оживил историю этого места своим рассказом. Но главным впечатлением стали спрятанные жемчужины, куда он нас привёл:\n\nСразу за пагодой на верхней улице Киёмидзу-дэра он показал нам скрытый храм Сэндзяку. Это был потрясающий сюрприз: почти никого, нетронутая спокойная атмосфера — и он так спрятан, что его нет даже на Google Картах!\n\nНа обратном пути, чтобы уйти от толп, Тони провёл нас через огромное старинное кладбище. Было очень интересно увидеть вблизи настоящее традиционное японское кладбище, пройти мимо ещё одного тихого храма и спуститься гораздо быстрее.\n\nТони очень весёлый и внимательный."
-      }
-    },
     {
       "id": "r-0006",
       "stars": 5,
