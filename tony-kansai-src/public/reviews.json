@@ -1,8 +1,30 @@
 {
-  "updated": "2026-10-08",
-  "count": 6,
+  "updated": "2026-10-16",
+  "count": 8,
   "average": 5.0,
   "reviews": [
+    {
+      "id": "r-0011",
+      "stars": 5,
+      "name": "Alba Romero Villa",
+      "country": "Spain",
+      "tour": "Kioto",
+      "text": "Tony es un guía extraordinario. Ha diseñado la ruta a medida. Teniendo en cuenta lo que habíamos visto el día anterior. Nos ha recogido en el hotel (algo muy práctico ya que los monumentos están abarrotados y encontrarse allí puede ser más difícil). Tenía muchísimo conocimiento y ha compartido mucha historia de Kyoto y datos interesantes de un forma amena, pudiendo retener retener la información. El pequeño plus: toma muy buenas fotos y sabe los puntos clave para sacar los mejores planos a monumentos.",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": ""
+    },
+    {
+      "id": "r-0012",
+      "stars": 5,
+      "name": "Jhon & Lisa",
+      "country": "Australia, England",
+      "tour": "Kioto",
+      "text": "We had an absolutely incredible day exploring Kyoto with Tony as our guide. We couldn't have asked for a better host or a more complete experience!\n\nWe started our morning in Arashiyama, exploring the entire Tenryu-ji temple complex and the breathtaking bamboo grove. Tony didn't just show us the sights; he shared the deep history behind everything and led us along a beautiful walk by the river.\n\nIn the afternoon, we headed to Kiyomizu-dera (the pure water temple), where Tony once again brought the history of the site to life with great storytelling. But the absolute highlights were the hidden gems he took us to:\n\nHeading up just past the pagoda on the upper street of Kiyomizu-dera, he showed us a hidden temple called Senjaku. It was an amazing surprise—there were hardly any crowds, giving it an untouched, peaceful atmosphere, and it's so hidden it doesn't even show up on Google Maps!\n\nOn the way back down, to escape the heavy crowds, Tony led us through a massive ancient cemetery. It was fascinating to see an authentic, traditional Japanese cemetery up close, pass by another serene temple along the path, and make our way back down much faster.\n\nTony is super fun, attentive.",
+      "lang": "en",
+      "date": "October 2026",
+      "photo": ""
+    },
     {
       "id": "r-0006",
       "stars": 5,
@@ -12,12 +34,7 @@
       "text": "Puntual y amable. Nos enseñó de forma detallada por Osaka.",
       "lang": "es",
       "date": "October 2026",
-      "photo": "",
-      "traducciones": {
-        "en": "Punctual and friendly. He showed us around Osaka in great detail.",
-        "ar": "دقيق في مواعيده ولطيف. عرّفنا على أوساكا بالتفصيل.",
-        "ru": "Пунктуальный и доброжелательный. Подробно показал нам Осаку."
-      }
+      "photo": ""
     },
     {
       "id": "r-0007",
@@ -28,12 +45,7 @@
       "text": "Todo de 10.tony un chico que te expliza todo ,mucha paciencia  y muy divertido",
       "lang": "es",
       "date": "October 2026",
-      "photo": "reviews-img/r-0007.jpg",
-      "traducciones": {
-        "en": "Ten out of ten. Tony explains everything, is very patient and great fun.",
-        "ar": "كل شيء ممتاز. توني يشرح كل شيء، صبور جدًا ومرح للغاية.",
-        "ru": "Всё на десять из десяти. Тони всё объясняет, очень терпеливый и весёлый."
-      }
+      "photo": "reviews-img/r-0007.jpg"
     },
     {
       "id": "r-0008",
@@ -44,12 +56,7 @@
       "text": "Mucha gente, pero bien guiado te quitas barullos, merece la pena",
       "lang": "es",
       "date": "October 2026",
-      "photo": "reviews-img/r-0008.jpg",
-      "traducciones": {
-        "en": "Lots of people, but with a good guide you avoid the crowds. Well worth it.",
-        "ar": "الأماكن مزدحمة، لكن مع مرشد جيد تتجنب الزحام. التجربة تستحق.",
-        "ru": "Людей много, но с хорошим гидом обходишь толпы. Оно того стоит."
-      }
+      "photo": "reviews-img/r-0008.jpg"
     },
     {
       "id": "r-0009",
@@ -60,12 +67,7 @@
       "text": "Muy bien. Me sentí tratado con amabilidad y preocupación porque nos sintiéramos bien",
       "lang": "es",
       "date": "October 2026",
-      "photo": "",
-      "traducciones": {
-        "en": "Very good. I felt treated with kindness and real care that we were comfortable.",
-        "ar": "جيد جدًا. شعرت بمعاملة لطيفة واهتمام حقيقي بأن نكون مرتاحين.",
-        "ru": "Очень хорошо. Ко мне относились доброжелательно и заботились, чтобы нам было комфортно."
-      }
+      "photo": ""
     },
     {
       "id": "r-0004",
@@ -76,12 +78,7 @@
       "text": "El tour ha sido fabuloso.\nNo hemos podido tener mejor guía.",
       "lang": "es",
       "date": "August 2026",
-      "photo": "",
-      "traducciones": {
-        "en": "The tour was fabulous.\nWe could not have had a better guide.",
-        "ar": "كانت الجولة رائعة.\nما كان بإمكاننا الحصول على مرشد أفضل.",
-        "ru": "Экскурсия была потрясающей.\nЛучшего гида у нас и быть не могло."
-      }
+      "photo": ""
     },
     {
       "id": "r-0005",
@@ -92,12 +89,7 @@
       "text": "Visitamos el Castillo Nijo,  el templo Kinkaju-ji  (Templo Dorado), el Jardin Nacional Kioto Gyoen, comimos en esa zona, visitamos el Templo Kiyomizu-dera y nos dieron todas las instrucciones para terminar el dia en  Fushimi Inari Taisha (toris rojos).",
       "lang": "es",
       "date": "August 2026",
-      "photo": "reviews-img/r-0005.jpg",
-      "traducciones": {
-        "en": "We visited Nijo Castle, Kinkaku-ji (the Golden Pavilion) and the Kyoto Gyoen National Garden, had lunch in that area, visited Kiyomizu-dera Temple, and we were given all the directions to end the day at Fushimi Inari Taisha (the red torii gates).",
-        "ar": "زرنا قلعة نيجو ومعبد كينكاكو-جي (الجناح الذهبي) وحديقة كيوتو غيوين الوطنية، وتناولنا الطعام في تلك المنطقة، ثم زرنا معبد كيوميزو-ديرا، وحصلنا على كل الإرشادات لنختم اليوم في فوشيمي إيناري تايشا (بوابات التوري الحمراء).",
-        "ru": "Мы посетили замок Нидзё, храм Кинкаку-дзи (Золотой павильон) и национальный сад Киото Гёэн, пообедали в том районе, посетили храм Киёмидзу-дэра, и нам дали все указания, чтобы закончить день в Фусими Инари Тайся (красные ворота тории)."
-      }
+      "photo": "reviews-img/r-0005.jpg"
     }
   ]
 }
