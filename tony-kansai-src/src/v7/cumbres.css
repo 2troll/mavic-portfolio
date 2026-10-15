@@ -141,3 +141,12 @@
 .cu-app-at { --app-c: #6fbf2a; }
 .cu-app-ym { --app-c: #2fd3a0; }
 .cu-app:hover { filter: none; background: #161616; border-color: var(--app-c); border-top-color: var(--app-c); }
+
+/* Seguro y equipo: mismas casillas que las apps, con el color de cada socio en el filo. */
+.cu-equipo { margin-top: 16px; border-inline-start-color: #e0a526; }
+.cu-equipo .cu-equipo-aviso { margin-top: 10px; font-size: 12px; opacity: 0.75; }
+.cu-app-iati { --app-c: #ffcc00; }
+.cu-app-wn { --app-c: #ff6b35; }
+.cu-app-hm { --app-c: #4fb3ff; }
+.cu-app-yr { --app-c: #e0a526; }
+.cu-equipo .cu-app b { font-size: 1.3rem; }

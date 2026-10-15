@@ -153,6 +153,7 @@ export interface TextosCumbres {
   sellos: Record<Cumbre['sellos'][number], string>
   nivelDesc: Record<Nivel, string>
   apps: { titulo: string; sub: string; alltrails: string; yamap: string }
+  equipo: { titulo: string; sub: string; seguro: string; alquiler: string; aviso: string }
   fuente: string
   faq: { titulo: string; items: { q: string; a: string }[] }
   saludo: (ruta: string) => string
@@ -183,6 +184,13 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
       alltrails: 'Abrir AllTrails',
       yamap: 'Abrir YAMAP',
     },
+    equipo: {
+      titulo: 'Seguro y equipo',
+      sub: 'En la montaña japonesa un rescate puede costar miles de euros: ven con un seguro que cubra senderismo. Si no quieres cargar con botas, crampones o mochila, alquílalos en Japón y te los mandan al hotel.',
+      seguro: 'Seguro de viaje',
+      alquiler: 'Alquiler de equipo',
+      aviso: 'Algunos enlaces son de afiliado: si contratas, recibo una pequeña comisión sin coste para ti.',
+    },
     fuente: 'Distancia, desnivel y horas: AllTrails, octubre de 2026.',
     faq: {
       titulo: 'Preguntas de senderistas con experiencia',
@@ -211,6 +219,13 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
       sub: 'Before you come, check the route on AllTrails: profile, photos and reviews from people who have done it. In Japan the guide also navigates with YAMAP, the app Japanese mountaineers use.',
       alltrails: 'Open AllTrails',
       yamap: 'Open YAMAP',
+    },
+    equipo: {
+      titulo: 'Insurance and gear',
+      sub: 'A mountain rescue in Japan can cost thousands: come with travel insurance that covers hiking. If you would rather not carry boots, crampons or a pack, rent them in Japan and have them sent to your hotel.',
+      seguro: 'Travel insurance',
+      alquiler: 'Gear rental',
+      aviso: 'Some links are affiliate links: if you buy, I get a small commission at no cost to you.',
     },
     fuente: 'Distance, gain and time: AllTrails, October 2026.',
     faq: {
@@ -241,6 +256,13 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
       alltrails: 'افتح AllTrails',
       yamap: 'افتح YAMAP',
     },
+    equipo: {
+      titulo: 'التأمين والمعدات',
+      sub: 'قد تكلّف عملية إنقاذ في جبال اليابان آلاف اليوروهات: تعال بتأمين سفر يغطي المشي الجبلي. وإن لم ترغب في حمل الأحذية أو المسامير الثلجية أو الحقيبة، استأجرها في اليابان وتصلك إلى الفندق.',
+      seguro: 'تأمين السفر',
+      alquiler: 'استئجار المعدات',
+      aviso: 'بعض الروابط روابط تسويق: إن اشتريت عبرها أحصل على عمولة صغيرة دون أي كلفة عليك.',
+    },
     fuente: 'المسافة والصعود والوقت: AllTrails، أكتوبر ٢٠٢٦.',
     faq: {
       titulo: 'أسئلة المتنزّهين ذوي الخبرة',
@@ -269,6 +291,13 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
       sub: 'До поездки посмотрите маршрут в AllTrails: профиль, фото и отзывы тех, кто его прошёл. В Японии гид ведёт ещё и по YAMAP — приложению японских альпинистов.',
       alltrails: 'Открыть AllTrails',
       yamap: 'Открыть YAMAP',
+    },
+    equipo: {
+      titulo: 'Страховка и снаряжение',
+      sub: 'Спасательная операция в горах Японии может стоить тысячи евро: приезжайте со страховкой, которая покрывает треккинг. Не хотите везти ботинки, кошки или рюкзак — возьмите их в аренду в Японии с доставкой в отель.',
+      seguro: 'Страховка для поездки',
+      alquiler: 'Аренда снаряжения',
+      aviso: 'Часть ссылок партнёрские: если вы оформите покупку, я получу небольшую комиссию без доплаты с вашей стороны.',
     },
     fuente: 'Расстояние, набор и время: AllTrails, октябрь 2026.',
     faq: {

@@ -9,6 +9,13 @@ import './cumbres.css'
 
 const BASE = 'https://tonykansaiguide.com'
 const MAX_DESNIVEL = Math.max(...CUMBRES.map((c) => c.desnivel))
+/** Socios de seguro y equipo; IATI ya con enlace de afiliado, el resto directo hasta que lleguen los suyos. */
+const EQUIPO = [
+  { id: 'iati', nombre: 'IATI', tipo: 'seguro', url: 'https://www.iatiseguros.com/?r=28859190572940' },
+  { id: 'wn', nombre: 'World Nomads', tipo: 'seguro', url: 'https://www.worldnomads.com/' },
+  { id: 'hm', nombre: 'Heymondo', tipo: 'seguro', url: 'https://heymondo.com/' },
+  { id: 'yr', nombre: 'Yamarent', tipo: 'alquiler', url: 'https://yamarent.com/' },
+] as const
 const NIVELES: ('todas' | Nivel)[] = ['todas', 'exigente', 'experto', 'ultra']
 
 const numero = (n: number, lang: Lengua) => n.toLocaleString(lang === 'ar' ? 'ar-EG' : lang, { maximumFractionDigits: 1 })
@@ -131,6 +138,23 @@ export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) 
             <a className="cu-app cu-app-at" href="https://www.alltrails.com/japan" target="_blank" rel="noopener noreferrer"
               onClick={() => window.gtag?.('event', 'click', { pagina: `cumbres-${lang}`, canal: 'alltrails' })}><b>AllTrails</b><small>{t.apps.alltrails}</small></a>
             <a className="cu-app cu-app-ym" href={YAMAP} target="_blank" rel="noopener noreferrer"><b>YAMAP</b><small>{t.apps.yamap}</small></a>
+          </div>
+        </div>
+
+        {/* Seguro y alquiler de equipo: enlaces de socios, marcados como patrocinados. */}
+        <div className="cu-apps cu-equipo">
+          <div>
+            <h3>{t.equipo.titulo}</h3>
+            <p>{t.equipo.sub}</p>
+            <p className="cu-equipo-aviso">{t.equipo.aviso}</p>
+          </div>
+          <div className="cu-apps-botones">
+            {EQUIPO.map((e) => (
+              <a key={e.id} className={`cu-app cu-app-${e.id}`} href={e.url} target="_blank" rel="noopener noreferrer sponsored"
+                onClick={() => window.gtag?.('event', 'click', { pagina: `cumbres-${lang}`, canal: `socio_${e.id}` })}>
+                <b>{e.nombre}</b><small>{e.tipo === 'seguro' ? t.equipo.seguro : t.equipo.alquiler}</small>
+              </a>
+            ))}
           </div>
         </div>
       </section>
