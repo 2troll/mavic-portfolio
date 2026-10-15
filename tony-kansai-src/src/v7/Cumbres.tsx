@@ -2,9 +2,11 @@
 // con su ficha técnica (km, desnivel, horas), el enlace a la ruta en AllTrails
 // y el botón para pedirla con guía. Debajo, las apps y las preguntas frecuentes
 // (también en JSON-LD, que es lo que leen Google y las IAs).
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import { CUMBRES, TEXTOS_CUMBRES, alltrails, YAMAP, letraMes } from './datosCumbres'
 import type { Lengua, Nivel } from './datosCumbres'
+import { Contador, SelloCumbre, useBilletes, useSellos } from './Cocina'
+import SplitFlapText from './reactbits/SplitFlapText'
 import './cumbres.css'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -16,6 +18,9 @@ const EQUIPO = [
   { id: 'hm', nombre: 'Heymondo', tipo: 'seguro', url: 'https://heymondo.com/' },
   { id: 'yr', nombre: 'Yamarent', tipo: 'alquiler', url: 'https://yamarent.com/' },
 ] as const
+/** Nombre corto en mayúsculas, sin macrones, para el panel de salidas: «kyoto-isshu» → KYOTO. */
+const salida = (c: { id: string }) => c.id.split('-')[0].toUpperCase()
+const ANCHO_SALIDA = Math.max(...CUMBRES.map((c) => salida(c).length))
 const NIVELES: ('todas' | Nivel)[] = ['todas', 'exigente', 'experto', 'ultra']
 
 const numero = (n: number, lang: Lengua) => n.toLocaleString(lang === 'ar' ? 'ar-EG' : lang, { maximumFractionDigits: 1 })
@@ -52,13 +57,13 @@ export function datosCumbres(lang: Lengua, url: string) {
 export function Banda({ lang }: { lang: Lengua }) {
   const b = TEXTOS_CUMBRES[lang].banda
   const n = (v: number) => numero(v, lang)
-  const valores = [n(1915), n(81.8), n(2000)]
+  const valores = [1915, 81.8, 2000]
   return (
     <section className="ex-banda" aria-label={b.titulo}>
       <div className="ex-banda-dentro">
         <h2>{b.titulo}</h2>
         <dl>
-          {b.cifras.map((t, i) => <div key={t}><dt><bdi>{valores[i]}</bdi></dt><dd>{t}</dd></div>)}
+          {b.cifras.map((t, i) => <div key={t}><dt><Contador valor={valores[i]} formato={n} /></dt><dd>{t}</dd></div>)}
         </dl>
       </div>
     </section>
@@ -69,15 +74,24 @@ export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) 
   const t = TEXTOS_CUMBRES[lang]
   const [filtro, setFiltro] = useState<'todas' | Nivel>('todas')
   const lista = CUMBRES.filter((c) => filtro === 'todas' || c.nivel === filtro)
+  const raiz = useRef<HTMLElement>(null)
+  useBilletes(raiz)
+  useSellos(raiz, filtro)
   const wa = (ruta: string) => `https://wa.me/${waNumero}?text=${encodeURIComponent(t.saludo(ruta))}`
 
   return (
     <>
-      <section id="cumbres" className="cu" aria-labelledby="cu-titulo">
+      <section id="cumbres" ref={raiz} className="cu" aria-labelledby="cu-titulo">
         <div className="cu-cab">
           <p className="cu-kicker"><span aria-hidden="true" />{t.kicker}</p>
           <h2 id="cu-titulo">{t.titulo}</h2>
           <p className="cu-sub">{t.sub}</p>
+          {/* Panel de salidas (出発): pasa por las rutas del filtro elegido. Adorno; la lista ya lo dice. */}
+          <div className="ck-salidas" aria-hidden="true" dir="ltr">
+            <span lang="ja">出発</span>
+            <SplitFlapText key={filtro} words={lista.map(salida)} padTo={ANCHO_SALIDA} charset="alpha" fontSize="clamp(18px, 2.6vw, 28px)"
+              tileColor="#151515" textColor="#ffcc00" tileRadius={2} gap={3} cycleDelay={2200} />
+          </div>
           <div className="cu-filtros" role="group" aria-label={t.filtros.todas}>
             {NIVELES.map((n) => (
               <button key={n} type="button" aria-pressed={filtro === n} className={`cu-filtro cu-n-${n}`} onClick={() => setFiltro(n)}>
@@ -92,9 +106,9 @@ export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) 
           {lista.map((c) => {
             const x = c.t[lang]
             return (
-              <li key={c.id} id={c.id} className={`cu-ficha cu-n-${c.nivel}`}>
+              <li key={c.id} id={c.id} className={`cu-ficha ck-billete cu-n-${c.nivel}`}>
                 <div className="cu-ficha-cab">
-                  <span className={`cu-nivel cu-n-${c.nivel}`}>{t.filtros[c.nivel]}</span>
+                  <span className={`cu-nivel cu-n-${c.nivel}${c.nivel === 'ultra' ? ' ck-foil' : ''}`}>{t.filtros[c.nivel]}</span>
                   <span className="cu-pref">{c.prefectura[lang]}</span>
                 </div>
                 <h3><span lang="ja">{c.kanji}</span><bdi>{c.nombre}</bdi></h3>
@@ -117,6 +131,9 @@ export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) 
                     {Array.from({ length: 12 }, (_, i) => <span key={i} className={c.meses.includes(i + 1) ? 'si' : undefined} aria-hidden="true">{letraMes(lang, i + 1)}</span>)}
                   </dd></div>
                 </dl>
+                {/* Talón del billete de ruta y el sello de cumbre que «cae» al verlo. */}
+                <div className="ck-corte" aria-hidden="true"><i /></div>
+                <SelloCumbre arriba="山" abajo={c.cima ? `▲ ${c.cima} m` : `D+ ${c.desnivel} m`} />
                 <div className="cu-botones">
                   <a className="cu-boton" href={wa(c.nombre)} target="_blank" rel="noopener noreferrer"
                     onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `cumbres-${lang}`, ruta: c.id, canal: 'whatsapp_cumbres' })}>{t.et.pedir}</a>

@@ -32,3 +32,30 @@
     linear-gradient(115deg, #ffb3c7, #ffe29a, #a6f0c6, #9ad7ff, #c8a6ff, #ffb3c7) var(--ck-desliza, 0%) 0 / 300% 100% !important;
   box-shadow: inset 0 0 0 1px rgb(255 255 255 / 55%), 0 2px 0 rgb(0 0 0 / 35%);
 }
+
+/* Sello de cumbre (fichas de montaña). */
+.ck-sello {
+  position: absolute; bottom: 16px; inset-inline-end: 18px; width: 62px; height: 74px;
+  transform: rotate(-7deg); filter: drop-shadow(0 6px 10px rgb(0 0 0 / 45%)); pointer-events: none;
+}
+.ck-sello-papel { display: block; width: 100%; height: 100%; padding: 5px; background: #f4ecd8; }
+.ck-sello-tinta {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px; width: 100%; height: 100%;
+  border: 2px solid #c8281c; color: #c8281c; background: radial-gradient(circle at 30% 20%, rgb(200 40 28 / 10%), transparent 60%);
+}
+.ck-sello-tinta b { font-family: var(--mincho, serif); font-size: 26px; line-height: 1; font-weight: 700; }
+.ck-sello-tinta small { font-family: var(--pro-titulo, system-ui), system-ui, sans-serif; font-size: 9px; font-weight: 700; letter-spacing: 0; white-space: nowrap; }
+.ck-sellos-anima .ck-sello { opacity: 0; transform: scale(1.9) rotate(-22deg); transition: opacity 0.18s ease-in, transform 0.38s cubic-bezier(0.2, 1.6, 0.4, 1); }
+.ck-sellos-anima .ck-sello.ck-visto { opacity: 1; transform: rotate(-7deg); }
+
+/* Fichas de montaña como billete de ruta: troquel con muescas, inclinación y holograma en ULTRA. */
+.cu-ficha .ck-corte { --ck-borde: 1px; --ck-tinta-borde: var(--linea); --fondo: #0a0a0a; margin: 4px -23px 0; color: #fff; }
+.cu-ficha .ck-corte::before { inset: 0 18px; opacity: 0.22; }
+.cu-ficha.ck-billete:hover { transform: perspective(900px) translateY(-3px) rotateX(var(--ck-rx, 0deg)) rotateY(var(--ck-ry, 0deg)); }
+.cu-ficha .ck-corte { margin-top: auto; }
+.cu-ficha .ck-corte + .ck-sello + .cu-botones { margin-top: 0; padding-inline-end: 72px; }
+.cu-nivel.ck-foil { padding: 3px 8px; letter-spacing: 0.12em; }
+
+/* Panel de salidas de las rutas pro. */
+.ck-salidas { display: inline-flex; align-items: center; gap: 12px; margin: 18px 0 4px; padding: 10px 14px; max-width: 100%; overflow: hidden; background: #050505; border: 1px solid #2a2a2a; border-inline-start: 6px solid var(--cu-exigente); }
+.ck-salidas > span { color: var(--cu-exigente); font-weight: 700; font-size: 0.95rem; letter-spacing: 0.1em; writing-mode: vertical-rl; }
