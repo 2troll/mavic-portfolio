@@ -10,6 +10,7 @@ import type { Tramo } from '../v7/datosRutas'
 import { IconoWa } from '../v7/IconoWa'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
+import SplitFlapText from '../v7/reactbits/SplitFlapText'
 import './v8.css'
 
 const TITULO: Record<Lengua, string> = { es: 'Elige tu tour', en: 'Choose your tour', ar: 'اختر جولتك', ru: 'Выберите тур' }
@@ -58,10 +59,18 @@ function yen(n: number, lang: Lengua) {
 export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 'larion'; prefijo: string }) {
   const lista = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
   const et = ET[lang]
+  const salidas = lista.filter((id) => id !== 'beyond').map((id) => id.toUpperCase())
   return (
     <section id="ciudades" className="v7-seccion v9-tours">
       <h2>{TITULO[lang]}</h2>
       <p className="v7-entradilla">{SUB[lang]}</p>
+      {/* Panel de salidas de estación japonesa (出発 = salidas): las ciudades pasan
+          letra a letra. Es adorno; la lista de abajo ya dice lo mismo en texto. */}
+      <div className="v9-salidas" aria-hidden="true" dir="ltr">
+        <span lang="ja">出発</span>
+        <SplitFlapText words={salidas} padTo={Math.max(...salidas.map((w) => w.length))}
+          charset="alpha" fontSize="clamp(20px, 3.4vw, 34px)" tileColor="#1a1a1a" textColor="#f6f0e4" tileRadius={2} gap={4} cycleDelay={2600} />
+      </div>
       {/* Índice de revista: una fila por ciudad, con su foto, lo que dura, desde
           cuánto y las dos salidas. Se lee de un vistazo, de arriba abajo. */}
       <ul className="v9-indice">
