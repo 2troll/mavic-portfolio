@@ -182,7 +182,7 @@ function TarjetaClasica({ r, lang, icono }: { r: Resena; lang: string; icono?: s
  *  desde el primer render para que el HTML pregenerado las lleve: un bot sin JS
  *  (o Google comparando con el JSON-LD) las ve, y no «0 reseñas». */
 function resenasFijas(): Resena[] {
-  return ((resenasTony as { reviews: Resena[] }).reviews ?? []).filter((r) => r?.text && r.stars)
+  return ((resenasTony as unknown as { reviews: Resena[] }).reviews ?? []).filter((r) => r?.text && r.stars)
 }
 
 /** Sin foto del cliente, la tarjeta lleva arriba la ciudad en kanji, del mismo
@@ -530,7 +530,7 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
  *  buscadores de IA (ChatGPT tira de Bing) leen el JSON-LD del HTML pregenerado,
  *  no el que pinta React después; por eso va aquí y no en una petición. */
 function valoracionTony() {
-  const lista = (resenasTony as { reviews: Resena[] }).reviews
+  const lista = (resenasTony as unknown as { reviews: Resena[] }).reviews
   if (!lista.length) return {}
   const media = lista.reduce((t, r) => t + r.stars, 0) / lista.length
   return {
