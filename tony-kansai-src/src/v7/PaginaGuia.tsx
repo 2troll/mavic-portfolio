@@ -33,6 +33,7 @@ import resenasTony from '../../public/reviews.json'
 import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
+import { useBilletes } from './Cocina'
 import { enlacesHreflang } from '../seo/hreflang'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
@@ -373,6 +374,8 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
   const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const cambios = useCambio(p.mercado.divisas)
   const otono = useEsOtono()
+  const planes = useRef<HTMLDivElement>(null)
+  useBilletes(planes)
   const fmt = (n: number, divisa: string) => {
     try {
       return new Intl.NumberFormat(p.lang === 'ar' ? 'ar-u-nu-latn' : p.lang, { style: 'currency', currency: divisa, maximumFractionDigits: 0, useGrouping: 'always' } as unknown as Intl.NumberFormatOptions).format(n)
@@ -394,16 +397,18 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
           <span aria-hidden="true">★</span> {mediaResenas(resenas, p.lang)} · {resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}
         </a></p>
       )}
-      <div className="v7-planes">
+      <div className="v7-planes" ref={planes}>
         {p.precios.planes.map((plan, i) => (
           // El día completo es lo que más rinde al cliente: se destaca con tinta, no con altura.
-          <article key={plan.nombre} className={`v7-plan tarjeta ${i === 1 ? 'v7-plan-destacado' : ''}`}>
-            {i === 1 && <p className="v7-plan-sello">{RECOMENDADO[p.lang] ?? RECOMENDADO.en}</p>}
+          <article key={plan.nombre} className={`v7-plan tarjeta ck-billete ${i === 1 ? 'v7-plan-destacado' : ''}`}>
+            {i === 1 && <p className="v7-plan-sello ck-foil">{RECOMENDADO[p.lang] ?? RECOMENDADO.en}</p>}
             <h3>{plan.nombre}</h3>
             <p className="v7-plan-detalle">{plan.detalle}</p>
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
             {p.precios.porPersona && !plan.desde && <p className="v7-plan-persona">{p.precios.porPersona(plan.yenes)}</p>}
+            {/* Talón de billete: separa lo que cuesta de cómo se reserva. */}
+            <div className="ck-corte" aria-hidden="true"><i /></div>
             {/* Primero se habla (WhatsApp con el plan ya escrito) y luego se paga:
                 el botón grande de pagar antes de escribir echaba para atrás. */}
             <a className="v7-plan-pagar" href={enlaceWa(GUIAS[p.guia].wa, p.contacto.plantilla({ ...VACIO, intereses: [plan.nombre] }))} target="_blank" rel="noopener noreferrer"

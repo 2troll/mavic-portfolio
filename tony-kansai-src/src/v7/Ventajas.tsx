@@ -16,6 +16,7 @@ import { PIE } from './formato'
 import { APPS, CATEGORIAS, SEO_VENTAJAS, cuponDe, esAfiliado, enlaceDe, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import MovilMueve from './MovilMueve'
+import { CodigoCifrado } from './Cocina'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
@@ -329,7 +330,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
                   <div className="vt-codigos-txt">
                     <strong dir="ltr">{a.nombre}</strong>
                     {a.descuento && <span className="vt-codigos-dto" dir="ltr">{a.descuento}</span>}
-                    <code dir="ltr">{cuponDe(a)}</code>
+                    <CodigoCifrado>{cuponDe(a)!}</CodigoCifrado>
                     {a.caduca && <small>{CODIGOS[id].hasta} <bdi dir="ltr">{new Date(`${a.caduca}T12:00:00`).toLocaleDateString(id === 'ar' ? 'ar-EG' : id, { day: 'numeric', month: 'short', year: 'numeric' })}</bdi></small>}
                   </div>
                   <BotonCopiar texto={cuponDe(a)!} copiar={p.copiar} copiado={p.copiado} />

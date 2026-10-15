@@ -1,0 +1,34 @@
+/* Detalles de «Cocina.tsx»: billete con talón troquelado, sello holográfico y
+   código cifrado. Solo se suman a lo que ya hay; quitar este archivo deja la web
+   como estaba. */
+
+.ck-solo-lector { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Billete: se inclina hacia el puntero (variables desde useBilletes). */
+.ck-billete { transform: perspective(900px) rotateX(var(--ck-rx, 0deg)) rotateY(var(--ck-ry, 0deg)); transition: transform 0.25s ease-out; }
+@media (prefers-reduced-motion: reduce) { .ck-billete { transform: none; } }
+
+/* Troquel entre el precio y el botón: línea de puntos y dos muescas en V que
+   muerden el borde, como el talón de una entrada. */
+.ck-corte { position: relative; height: 2px; margin: 18px calc(-26px - var(--ck-borde, 3px)) 16px; }
+.ck-corte::before {
+  content: ''; position: absolute; inset: 0 22px; top: 0;
+  background: repeating-linear-gradient(90deg, currentColor 0 8px, transparent 8px 14px); opacity: 0.35;
+}
+.ck-corte::after, .ck-corte > i {
+  content: ''; position: absolute; top: 50%; width: 22px; height: 22px; background: var(--fondo, #f6f0e4);
+  border: var(--ck-borde, 3px) solid var(--ck-tinta-borde, #1a1a1a); transform: translateY(-50%) rotate(45deg);
+}
+.ck-corte::after { inset-inline-start: -12px; border-inline-start-color: transparent; border-bottom-color: transparent; }
+.ck-corte > i { inset-inline-end: -12px; border-inline-end-color: transparent; border-top-color: transparent; }
+[dir='rtl'] .ck-corte::after { border-bottom-color: var(--ck-tinta-borde, #1a1a1a); border-top-color: transparent; }
+[dir='rtl'] .ck-corte > i { border-top-color: var(--ck-tinta-borde, #1a1a1a); border-bottom-color: transparent; }
+
+/* Sello holográfico: capas de degradado que se deslizan con el scroll y el ratón. */
+.ck-foil {
+  color: #1a1a1a !important; text-shadow: 0 1px 0 rgb(255 255 255 / 45%);
+  background:
+    linear-gradient(var(--ck-angulo, 125deg), transparent 30%, rgb(255 255 255 / 70%) 46%, transparent 60%) var(--ck-desliza, 0%) 0 / 260% 100%,
+    linear-gradient(115deg, #ffb3c7, #ffe29a, #a6f0c6, #9ad7ff, #c8a6ff, #ffb3c7) var(--ck-desliza, 0%) 0 / 300% 100% !important;
+  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 55%), 0 2px 0 rgb(0 0 0 / 35%);
+}

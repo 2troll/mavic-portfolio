@@ -3,6 +3,7 @@
 // Los textos largos están en datosVentajasDetalle.ts; aquí solo el armazón.
 
 import { Link } from 'react-router-dom'
+import { CodigoCifrado } from './Cocina'
 import { APPS, CATEGORIAS, type App, cuponDe, esAfiliado } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
@@ -109,7 +110,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
             {cupon && (
               <div className="vt-cupon">
                 <span>{l.cupon}</span>
-                <bdi dir="ltr"><code>{cupon}</code></bdi>
+                <bdi dir="ltr"><CodigoCifrado>{cupon}</CodigoCifrado></bdi>
                 <Copiar texto={cupon} l={l} />
               </div>
             )}
