@@ -1,6 +1,9 @@
 /* Página de montaña «viva» (MontanaViva.tsx). */
+/* Reglas de Lenis escritas a mano en vez de lenis.css: aquel CSS miraba las clases que Lenis
+   cambia en <html> al empezar y parar cada scroll, y eso recalculaba los estilos de toda la página. */
 html.lenis, html.lenis body { height: auto; }
 html.lenis { scroll-behavior: auto !important; }
+[data-lenis-prevent] { overscroll-behavior: contain; }
 
 /* ── Portada ── */
 .mv-portada { min-height: max(720px, 108svh); }
@@ -43,12 +46,12 @@ html.lenis { scroll-behavior: auto !important; }
 [dir='rtl'] .mv-flecha { animation-name: mv-empuja-rtl; }
 @keyframes mv-empuja-rtl { 50% { transform: translateX(-14px); } }
 
-.mv-parada { position: relative; flex: none; width: clamp(560px, 62vw, 980px); height: min(72vh, 640px); display: grid; grid-template-columns: 1.15fr 1fr; border: 1px solid rgb(241 236 225 / 22%); background: rgb(11 13 10 / 55%); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); box-shadow: 0 40px 90px -40px rgb(0 0 0 / 85%); }
+.mv-parada { position: relative; flex: none; width: clamp(560px, 62vw, 980px); height: min(72vh, 640px); display: grid; grid-template-columns: 1.15fr 1fr; border: 1px solid rgb(241 236 225 / 22%); background: rgb(6 9 16 / 86%); box-shadow: 0 30px 60px -30px rgb(0 0 0 / 85%); contain: layout paint; }
 .mv-parada-foto { overflow: hidden; position: relative; }
 .mv-parada-foto img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
 .mv-parada-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, rgb(11 13 10 / 70%)); }
 [dir='rtl'] .mv-parada-foto::after { background: linear-gradient(270deg, transparent 55%, rgb(11 13 10 / 70%)); }
-.mv-parada-kanji { position: absolute; top: -0.32em; inset-inline-start: 18px; z-index: 2; font-family: var(--mincho); font-size: clamp(4.5rem, 8vw, 8rem); font-weight: 700; line-height: 1; color: var(--ex-papel); writing-mode: vertical-rl; text-shadow: 0 6px 40px rgb(0 0 0 / 70%); pointer-events: none; }
+.mv-parada-kanji { position: absolute; top: -0.32em; inset-inline-start: 18px; z-index: 2; font-family: var(--mincho); font-size: clamp(4.5rem, 8vw, 8rem); font-weight: 700; line-height: 1; color: var(--ex-papel); writing-mode: vertical-rl; text-shadow: 0 4px 18px rgb(0 0 0 / 70%); pointer-events: none; }
 .mv-parada-texto { display: flex; flex-direction: column; gap: 10px; padding: 34px 32px 28px; min-width: 0; }
 .mv-parada-num { margin: 0; color: var(--ex-oro); font-size: 12.5px; font-weight: 700; letter-spacing: 0.22em; }
 .mv-parada-num span { font-family: var(--mincho); margin-inline-end: 8px; }
@@ -101,11 +104,11 @@ html.lenis { scroll-behavior: auto !important; }
 .mv-alt-et, .mv-alt-cima { font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ex-oro); white-space: nowrap; text-shadow: 0 1px 6px rgb(0 0 0 / 60%); }
 .lang-ar .mv-alt-et { letter-spacing: 0; font-size: 11px; }
 .mv-alt-cima { order: -1; font-family: var(--mincho); letter-spacing: 0.05em; }
-.mv-alt-carril { position: relative; flex: 1; width: 2px; background: rgb(200 255 46 / 25%); display: flex; flex-direction: column; justify-content: space-between; }
-.mv-alt-carril::before { content: ''; position: absolute; inset-inline: 0; bottom: 0; height: calc(var(--mv-alt) * 100%); background: var(--ex-oro); box-shadow: 0 0 12px var(--ex-oro); }
+.mv-alt-carril { position: relative; flex: none; height: 30vh; width: 2px; background: rgb(200 255 46 / 25%); display: flex; flex-direction: column; justify-content: space-between; }
+.mv-alt-carril::before { content: ''; position: absolute; inset-inline: 0; bottom: 0; height: 100%; transform-origin: 50% 100%; transform: scaleY(var(--mv-alt)); background: var(--ex-oro); box-shadow: 0 0 12px var(--ex-oro); }
 .mv-alt-carril i { display: block; width: 10px; height: 1px; margin-inline-start: -4px; background: rgb(200 255 46 / 55%); }
 .mv-alt-carril i:nth-child(3n + 1) { width: 16px; margin-inline-start: -7px; }
-.mv-alt-marca { position: absolute; inset-inline-end: 10px; bottom: calc(var(--mv-alt) * 100%); transform: translateY(50%); padding: 3px 7px; background: var(--ex-oro); color: #17120a; font-size: 11px; font-weight: 800; white-space: nowrap; font-variant-numeric: tabular-nums; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%); }
+.mv-alt-marca { position: absolute; inset-inline-end: 10px; bottom: 0; transform: translateY(calc(50% - var(--mv-alt) * 30vh)); padding: 3px 7px; background: var(--ex-oro); color: #17120a; font-size: 11px; font-weight: 800; white-space: nowrap; font-variant-numeric: tabular-nums; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%); }
 [dir='rtl'] .mv-alt-marca { clip-path: polygon(6px 0, 100% 0, 100% 100%, 6px 100%, 0 50%); }
 @media (max-width: 1099px) { .mv-altimetro { display: none; } }
 

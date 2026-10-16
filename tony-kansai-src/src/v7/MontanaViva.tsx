@@ -15,7 +15,6 @@ import type { ReactNode } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Lenis from 'lenis'
-import 'lenis/dist/lenis.css'
 import { GodRays, MeshGradient, LiquidMetal } from '@paper-design/shaders-react'
 import { MONTES, KANJI, CIMA } from './datosMontana'
 import type { MonteId } from './datosMontana'
@@ -50,8 +49,10 @@ export function suaveA(destino: number | HTMLElement | null) {
 export function useSuave() {
   useEffect(() => {
     if (quieto()) return
+    ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true })
     lenis = new Lenis({
-      lerp: 0.09,
+      lerp: 0.1,
+      wheelMultiplier: 0.9,
       anchors: { offset: -70 },
       stopInertiaOnNavigate: true,
       // El mapa 3D y los paneles con scroll propio se quedan la rueda.
@@ -108,7 +109,7 @@ function Rayos() {
     <Perezoso className="mv-rayos" margen="0px">
       <GodRays style={{ width: '100%', height: '100%' }} colorBack="#000000" colors={r.colors} colorBloom={r.bloom}
         offsetX={0.42} offsetY={-0.62} density={0.32} spotty={0.45} midIntensity={0.45} midSize={0.22}
-        intensity={0.7} bloom={0.45} speed={0.35} />
+        intensity={0.7} bloom={0.45} speed={0.35} minPixelRatio={1} maxPixelCount={1280 * 720} />
     </Perezoso>
   )
 }
@@ -130,7 +131,8 @@ export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion
         .from('.mv-cresta', { yPercent: 100, duration: 1.8, stagger: 0.15 }, 0.2)
 
       // Al bajar: la foto se aleja, el texto se va y las crestas suben a tapar la foto.
-      const st = { trigger: raiz, start: 'top top', end: 'bottom top', scrub: true }
+      // scrub con retardo: el efecto sigue al scroll con medio segundo de suavizado y no da tirones.
+      const st = { trigger: raiz, start: 'top top', end: 'bottom top', scrub: 0.6 }
       gsap.to('.ex-portada-foto', { scale: 1.18, yPercent: 14, ease: 'none', scrollTrigger: st })
       gsap.to('.ex-portada-texto', { yPercent: -28, opacity: 0, ease: 'none', scrollTrigger: { ...st, end: '75% top' } })
       gsap.to('.mv-yama', { yPercent: -40, ease: 'none', scrollTrigger: st })
@@ -139,6 +141,16 @@ export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion
     }, raiz)
     return () => ctx.revert()
   }, [])
+
+  // Al cambiar de estación, las letras se rehacen con la textura nueva (hielo, flores, calor, hojas).
+  const estacion = useEstacion()
+  const previa = useRef(estacion)
+  useEffect(() => {
+    if (previa.current === estacion || quieto()) return
+    previa.current = estacion
+    const palabras = ref.current?.querySelectorAll('.mv-palabra > span')
+    if (palabras?.length) gsap.fromTo(palabras, { yPercent: 60, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.9, ease: 'expo.out', stagger: 0.06, overwrite: true })
+  }, [estacion])
 
   return (
     <section ref={ref} className="ex-portada mv-portada" aria-labelledby="ex-titulo">
@@ -231,14 +243,14 @@ export function Travesia({ lang, paradas, onVer3d }: { lang: Lengua; paradas: Pa
       const mov = gsap.to(carril, {
         x: () => (rtl ? 1 : -1) * distancia(), ease: 'none',
         scrollTrigger: {
-          trigger: zona, pin: true, scrub: 0.8, end: () => `+=${distancia()}`, invalidateOnRefresh: true,
+          trigger: zona, pin: true, scrub: 1, anticipatePin: 1, end: () => `+=${distancia()}`, invalidateOnRefresh: true,
           onUpdate: (s) => setActiva(Math.min(paradas.length - 1, Math.floor(s.progress * paradas.length))),
         },
       })
       // Cada foto se acerca y su corte se dibuja al cruzar la pantalla.
       gsap.utils.toArray<HTMLElement>('.mv-parada', carril).forEach((p) => {
         const anim = { containerAnimation: mov, trigger: p, start: rtl ? 'right right' : 'left right', end: rtl ? 'left left' : 'right left', scrub: true }
-        gsap.fromTo(p.querySelector('.mv-parada-foto img'), { scale: 1.35, xPercent: rtl ? 8 : -8 }, { scale: 1, xPercent: rtl ? -8 : 8, ease: 'none', scrollTrigger: anim })
+        gsap.fromTo(p.querySelector('.mv-parada-foto img'), { scale: 1.2, xPercent: rtl ? 6 : -6 }, { scale: 1, xPercent: rtl ? -6 : 6, ease: 'none', scrollTrigger: anim })
         gsap.fromTo(p.querySelector('.mv-linea-trazo'), { strokeDashoffset: 1 }, { strokeDashoffset: 0, ease: 'none', scrollTrigger: { ...anim, end: rtl ? 'center center' : 'center center' } })
         gsap.from(p.querySelector('.mv-parada-kanji'), { yPercent: 40, opacity: 0, ease: 'none', scrollTrigger: { ...anim, end: 'center center' } })
       })
@@ -250,7 +262,7 @@ export function Travesia({ lang, paradas, onVer3d }: { lang: Lengua; paradas: Pa
   return (
     <section ref={raiz} className="mv-travesia" aria-labelledby="mv-travesia-titulo">
       <Perezoso className="mv-cielo" margen="400px">
-        <MeshGradient style={{ width: '100%', height: '100%' }} colors={CIELOS[paradas[activa].id]} distortion={0.85} swirl={0.55} speed={0.35} grainOverlay={0.25} />
+        <MeshGradient style={{ width: '100%', height: '100%' }} colors={CIELOS[paradas[activa].id]} distortion={0.85} swirl={0.55} speed={0.25} minPixelRatio={1} maxPixelCount={960 * 540} />
       </Perezoso>
       <div className="mv-pista" ref={pista}>
         <header className="mv-travesia-intro">
@@ -294,7 +306,7 @@ export function SelloMetal() {
   return (
     <Perezoso className="mv-metal">
       {src && <LiquidMetal style={{ width: '100%', height: '100%' }} image={src} colorBack="#00000000" colorTint="#ffd98a"
-        repetition={3} softness={0.3} shiftRed={0.25} shiftBlue={0.2} distortion={0.1} contour={0.6} angle={70} speed={0.8} fit="contain" scale={0.8} />}
+        repetition={3} softness={0.3} shiftRed={0.25} shiftBlue={0.2} distortion={0.1} contour={0.6} angle={70} speed={0.8} fit="contain" scale={0.8} minPixelRatio={1} maxPixelCount={500 * 500} />}
     </Perezoso>
   )
 }
@@ -343,7 +355,10 @@ export function Altimetro({ lang }: { lang: Lengua }) {
       trigger: document.documentElement, start: 'top top', end: 'bottom bottom',
       onUpdate: (s) => {
         marca(s.progress.toFixed(4))
-        if (cifra.current) cifra.current.textContent = fmt.format(Math.round(s.progress * cima))
+        // nodeValue y no textContent: cambiar el nodo de texto obligaba a recalcular los estilos de toda la página
+        // (index.css usa html:has(#root .v7) y cada nodo nuevo lo vuelve a evaluar).
+        const txt = cifra.current?.firstChild
+        if (txt) txt.nodeValue = fmt.format(Math.round(s.progress * cima))
         el.classList.toggle('mv-alt-visible', s.scroll() > window.innerHeight * 0.6)
       },
     })

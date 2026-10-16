@@ -133,7 +133,7 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria, tinta = 
     const info = renderer.getContext().getExtension('WEBGL_debug_renderer_info')
     const gpu = info ? String(renderer.getContext().getParameter(info.UNMASKED_RENDERER_WEBGL)) : ''
     if (/swiftshader|llvmpipe|software|basic render/i.test(gpu)) { renderer.dispose(); setSinGpu(true); return }
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2))
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.5))
     renderer.domElement.setAttribute('aria-hidden', 'true')
     caja.prepend(renderer.domElement)
     const escena = new THREE.Scene()

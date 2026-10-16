@@ -10,6 +10,7 @@ import { MONTANA, MONTES, KANJI, CIUDAD, CIMA } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
 import { EfectoEstacion, estacionDeHoy } from './Estacion'
+import { useEstacion } from './Estaciones'
 import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
@@ -77,6 +78,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   const raiz = useRef<HTMLDivElement>(null)
   useSuave()
   useRevelados(raiz)
+  const temporada = useEstacion()
   usePila(raiz)
   const { setLang, tc } = useLanguage()
   const nombreGuia = (g: 'tony' | 'larion') => (p.lang === 'ar' && g === 'tony' ? 'طوني' : p.lang === 'ru' ? 'Ларион' : g === 'tony' ? 'Tony' : 'Larion')
@@ -154,7 +156,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   }
 
   return (
-    <div ref={raiz} className={`v7 v7-pagina v7-montana v7-expedicion lang-${p.lang}`} lang={p.lang} dir={p.dir}>
+    <div ref={raiz} className={`v7 v7-pagina v7-montana v7-expedicion lang-${p.lang} tp-${temporada}`} lang={p.lang} dir={p.dir}>
       <Helmet>
         <html lang={p.lang} dir={p.dir} />
         <title>{p.seo.titulo}</title>

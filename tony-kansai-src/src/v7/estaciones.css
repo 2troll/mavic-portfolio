@@ -32,8 +32,8 @@
 .es-selector { position: absolute; top: 92px; inset-inline-end: 24px; z-index: 3; display: flex; gap: 6px; }
 .es-boton {
   --es-c: #fff; display: grid; justify-items: center; gap: 2px; width: 66px; padding: 9px 4px 7px;
-  background: rgb(10 10 10 / 55%); color: #fff; border: 1px solid rgb(255 255 255 / 25%); cursor: pointer;
-  -webkit-backdrop-filter: blur(10px) saturate(1.4); backdrop-filter: blur(10px) saturate(1.4);
+  background: rgb(5 7 12 / 78%); color: #fff; border: 1px solid rgb(255 255 255 / 22%); cursor: pointer;
+  /* Sin desenfoque de fondo: encima de los rayos y las partículas se recalculaba en cada cuadro. */
   transition: background 0.25s, border-color 0.25s, transform 0.2s;
 }
 .es-boton b { font-family: var(--mincho, serif); font-size: 1.5rem; line-height: 1; font-weight: 700; }
@@ -43,7 +43,7 @@
 .es-boton[aria-pressed='true'] { background: var(--es-c); border-color: var(--es-c); color: #111; }
 .es-boton[aria-pressed='true'] span { opacity: 1; }
 .es-primavera { --es-c: #ff9ec4; }
-.es-verano { --es-c: #b6f25a; }
+.es-verano { --es-c: #ffd23f; }
 .es-otono { --es-c: #ff7a1a; }
 .es-invierno { --es-c: #bfe3ff; }
 .es-boton:focus-visible { outline: 2px solid var(--es-c); outline-offset: 2px; }
