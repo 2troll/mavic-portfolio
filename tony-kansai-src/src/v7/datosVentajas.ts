@@ -403,6 +403,26 @@ const LISTA: App[] = [
     },
   },
   {
+    // Yokoyama Chikuzaiten (TAKENOKO): sin descuento, completo por reserva, 1 grupo cada vez, máx. 15 con guía; cestas desde 8 años; cerrado domingos y festivos (correo 16-10-2026).
+    clave: 'yokotake', cat: 'experiencias', ciudad: 'kioto', nombre: 'Yokoyama Bamboo (TAKENOKO)', enlace: 'https://takenoko.co/pages/kyoushitsu240308-03.htm',
+    marca: { fondo: '#5d7a2e', tinta: '#f3f0dc', boton: '#f3f0dc', botonTinta: '#5d7a2e', palabra: '竹' },
+    t: {
+      es: { que: 'Taller de bambú en una tienda de artesanos de Kioto: haces tu propia cesta, tus palillos o una cucharilla de té. De 1,5 a 2 horas.', ventaja: 'Solo un grupo cada vez (hasta 15 personas): perfecto para familias grandes. La cesta, a partir de 8 años. Yo te hago la reserva en japonés.' },
+      en: { que: 'Bamboo workshop at a Kyoto craftsmen’s shop: make your own basket, chopsticks or tea scoop. 1.5 to 2 hours.', ventaja: 'Only one group at a time (up to 15 people): perfect for big families. Baskets from age 8. I make the booking for you in Japanese.' },
+      ar: { que: 'ورشة خيزران في متجر حِرفيين في كيوتو: تصنع سلتك أو عيدانك أو ملعقة الشاي بنفسك. من ساعة ونصف إلى ساعتين.', ventaja: 'مجموعة واحدة فقط في كل مرة (حتى 15 شخصًا): مثالية للعائلات الكبيرة. السلة من عمر 8 سنوات. أحجز لك باليابانية.' },
+    },
+  },
+  {
+    // DOMYO: sin tarifa de guía ni descuento, precios normales de su web (correo 16-10-2026).
+    clave: 'domyo', cat: 'experiencias', ciudad: 'kioto', nombre: 'DOMYO Kumihimo', enlace: 'https://kdomyo.com/en',
+    marca: { fondo: '#a3324a', tinta: '#fbeef0', boton: '#fbeef0', botonTinta: '#a3324a', palabra: '組紐' },
+    t: {
+      es: { que: 'Trenza tu propio kumihimo, el cordón de seda tradicional, con la casa DOMYO, que lo hace desde 1652. Taller en inglés.', ventaja: 'Te llevas una pulsera hecha por ti. Va muy bien con niños y no necesita experiencia.' },
+      en: { que: 'Braid your own kumihimo, the traditional silk cord, with DOMYO, makers since 1652. Workshop in English.', ventaja: 'You take home a bracelet you made yourself. Great with children, no experience needed.' },
+      ar: { que: 'اضفر حبل الكوميهيمو الحريري التقليدي بنفسك مع دار DOMYO التي تصنعه منذ عام 1652. الورشة بالإنجليزية.', ventaja: 'تعود بسوار صنعته بيدك. مناسبة جدًا للأطفال ولا تحتاج إلى خبرة.' },
+    },
+  },
+  {
     // Japan Wireless: 10 % de afiliado (Rewardful, alta pendiente de Tony) y código propio pedido (TONYKANSAI) el 16-10-2026.
     // Cuando llegue: enlace de Rewardful en `codigo` (https://…) o el cupón en `codigo` + `descuento`.
     clave: 'japanwireless', cat: 'internet', nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/',
