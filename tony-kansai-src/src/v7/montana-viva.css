@@ -93,3 +93,40 @@ html.lenis { scroll-behavior: auto !important; }
 }
 .mv-solo-movil { display: none; }
 @media (max-width: 859px) { .mv-solo-ancho { display: none; } .mv-solo-movil { display: inline; } }
+
+/* ── Altímetro fijo ── */
+.mv-altimetro { --mv-alt: 0; position: fixed; z-index: 40; inset-inline-end: 18px; top: 17vh; height: 38vh; width: 54px; display: flex; flex-direction: column; align-items: center; gap: 8px; pointer-events: none; opacity: 0; transform: translateX(20px); transition: opacity 0.5s, transform 0.5s; }
+[dir='rtl'] .mv-altimetro { transform: translateX(-20px); }
+.mv-altimetro.mv-alt-visible { opacity: 1; transform: none; }
+.mv-alt-et, .mv-alt-cima { font-size: 9.5px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ex-oro); white-space: nowrap; text-shadow: 0 1px 6px rgb(0 0 0 / 60%); }
+.lang-ar .mv-alt-et { letter-spacing: 0; font-size: 11px; }
+.mv-alt-cima { order: -1; font-family: var(--mincho); letter-spacing: 0.05em; }
+.mv-alt-carril { position: relative; flex: 1; width: 2px; background: rgb(240 179 58 / 25%); display: flex; flex-direction: column; justify-content: space-between; }
+.mv-alt-carril::before { content: ''; position: absolute; inset-inline: 0; bottom: 0; height: calc(var(--mv-alt) * 100%); background: var(--ex-oro); box-shadow: 0 0 12px var(--ex-oro); }
+.mv-alt-carril i { display: block; width: 10px; height: 1px; margin-inline-start: -4px; background: rgb(240 179 58 / 55%); }
+.mv-alt-carril i:nth-child(3n + 1) { width: 16px; margin-inline-start: -7px; }
+.mv-alt-marca { position: absolute; inset-inline-end: 10px; bottom: calc(var(--mv-alt) * 100%); transform: translateY(50%); padding: 3px 7px; background: var(--ex-oro); color: #17120a; font-size: 11px; font-weight: 800; white-space: nowrap; font-variant-numeric: tabular-nums; clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 50%, calc(100% - 6px) 100%, 0 100%); }
+[dir='rtl'] .mv-alt-marca { clip-path: polygon(6px 0, 100% 0, 100% 100%, 6px 100%, 0 50%); }
+@media (max-width: 1099px) { .mv-altimetro { display: none; } }
+
+/* ── Cinta de montañas ── */
+.mv-cinta { overflow: hidden; padding: 34px 0; background: var(--ex-noche); border-block: 1px solid var(--ex-linea); display: grid; gap: 6px; }
+.mv-cinta-fila { display: flex; width: max-content; white-space: nowrap; will-change: transform; }
+.mv-cinta-fila span { font-family: 'Oswald Variable', 'Oswald', sans-serif; font-weight: 700; text-transform: uppercase; font-size: clamp(2.6rem, 6.5vw, 6rem); line-height: 1.05; color: var(--ex-papel); padding-inline-end: 0.35em; }
+.mv-cinta-fila em { font-style: normal; color: var(--ex-oro); font-size: 0.5em; vertical-align: middle; padding-inline-start: 0.35em; }
+.mv-cinta-hueca span { color: transparent; -webkit-text-stroke: 1.5px rgb(240 179 58 / 75%); }
+
+/* ── Pila de tarjetas en «Cómo trabajamos» ── */
+@media (min-width: 860px) {
+  html .v7.v7-montana .v7-oficio { display: block; max-width: 980px; margin-inline: auto; border-top: 0; padding-bottom: 8vh; }
+  html .v7.v7-montana .v7-oficio li.tarjeta {
+    position: sticky; top: calc(96px + var(--i, 0) * 22px); margin: 0 0 7vh; min-height: 280px;
+    display: grid; grid-template-columns: 220px 1fr; grid-template-rows: auto 1fr; column-gap: 40px; align-content: center;
+    padding: 44px 48px; background: #f4ecd8; border: 2px solid #111 !important; box-shadow: 0 -18px 50px -30px rgb(0 0 0 / 55%), 8px 8px 0 #111; will-change: transform;
+  }
+  html .v7.v7-montana .v7-oficio li.tarjeta:nth-child(even) { background: #efe4cb; }
+  html .v7.v7-montana .v7-oficio li.tarjeta .v7-oficio-num { grid-row: 1 / span 2; align-self: center; }
+  html .v7.v7-montana .v7-oficio li.tarjeta .v7-oficio-num::before { font-size: 8.5rem; line-height: 0.8; color: #111; -webkit-text-stroke: 0; }
+  html .v7.v7-montana .v7-oficio li.tarjeta h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin: 0 0 10px; align-self: end; }
+  html .v7.v7-montana .v7-oficio li.tarjeta p { font-size: 1.15rem; margin: 0; max-width: 46ch; }
+}

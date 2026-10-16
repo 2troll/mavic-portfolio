@@ -293,8 +293,8 @@ export function SelloMetal() {
   useEffect(() => setSrc(new URL('/v7/yama.svg', location.href).href), [])
   return (
     <Perezoso className="mv-metal">
-      {src && <LiquidMetal style={{ width: '100%', height: '100%' }} image={src} colorBack="#00000000" colorTint="#f0b33a"
-        repetition={2.2} softness={0.15} shiftRed={0.3} shiftBlue={0.3} distortion={0.08} contour={0.45} angle={70} speed={0.9} fit="contain" scale={0.8} />}
+      {src && <LiquidMetal style={{ width: '100%', height: '100%' }} image={src} colorBack="#00000000" colorTint="#ffd98a"
+        repetition={3} softness={0.3} shiftRed={0.25} shiftBlue={0.2} distortion={0.1} contour={0.6} angle={70} speed={0.8} fit="contain" scale={0.8} />}
     </Perezoso>
   )
 }
@@ -303,7 +303,7 @@ export function SelloMetal() {
 
 const REVELA = [
   '.v7-montana main > section:not(.ex-portada):not(.mv-travesia):not(.v7-montes) :is(h2, .ex-kicker, .v7-entradilla)',
-  '.v7-oficio > li', '.cu-ficha', '.v7-montana-guia', '.ex-atlas-rejilla', '.ex-vuelo', '.ex-banda > *',
+  '.cu-ficha', '.v7-montana-guia', '.ex-atlas-rejilla', '.ex-vuelo', '.ex-banda > *',
 ].join(', ')
 
 /** Títulos y tarjetas suben y se destapan al entrar en pantalla, de una en una. */
@@ -322,5 +322,95 @@ export function useRevelados(raiz: React.RefObject<HTMLElement | null>) {
       window.addEventListener('load', () => ScrollTrigger.refresh(), { once: true })
     }, zona)
     return () => ctx.revert()
+  }, [raiz])
+}
+
+/* ───────────── Altímetro ───────────── */
+
+const ALT_TXT: Record<Lengua, string> = { es: 'Altitud', en: 'Altitude', ar: 'الارتفاع', ru: 'Высота' }
+
+/** Barra fija al lado: según bajas por la página, «subes» de 0 m a la cima más alta. */
+export function Altimetro({ lang }: { lang: Lengua }) {
+  const caja = useRef<HTMLDivElement>(null)
+  const cifra = useRef<HTMLSpanElement>(null)
+  const cima = Math.max(...MONTES.map((m) => CIMA[m].m))
+  useEffect(() => {
+    const el = caja.current
+    if (!el || quieto()) return
+    const fmt = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : lang)
+    const marca = gsap.quickSetter(el, '--mv-alt')
+    const st = ScrollTrigger.create({
+      trigger: document.documentElement, start: 'top top', end: 'bottom bottom',
+      onUpdate: (s) => {
+        marca(s.progress.toFixed(4))
+        if (cifra.current) cifra.current.textContent = fmt.format(Math.round(s.progress * cima))
+        el.classList.toggle('mv-alt-visible', s.scroll() > window.innerHeight * 0.6)
+      },
+    })
+    return () => st.kill()
+  }, [lang, cima])
+  return (
+    <div ref={caja} className="mv-altimetro" aria-hidden="true">
+      <span className="mv-alt-et">{ALT_TXT[lang]}</span>
+      <div className="mv-alt-carril">
+        {Array.from({ length: 12 }, (_, i) => <i key={i} />)}
+        <b className="mv-alt-marca"><span ref={cifra}>0</span> m</b>
+      </div>
+      <span className="mv-alt-cima" lang="ja">頂 <bdi>{cima}</bdi></span>
+    </div>
+  )
+}
+
+/* ───────────── Cinta de montañas ───────────── */
+
+/** Dos filas de nombres que corren en sentidos opuestos y aceleran con la velocidad del scroll. */
+export function CintaMontes({ nombres }: { nombres: string[] }) {
+  const raiz = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const zona = raiz.current
+    if (!zona || quieto()) return
+    const filas = gsap.utils.toArray<HTMLElement>('.mv-cinta-fila', zona)
+    const bucles = filas.map((f, i) => gsap.fromTo(f, { xPercent: i ? -50 : 0 }, { xPercent: i ? 0 : -50, duration: 38, ease: 'none', repeat: -1 }))
+    // Un golpe de rueda acelera la cinta y luego vuelve sola a su ritmo, en el sentido del scroll.
+    let empuje = 1, sentido = 1
+    const st = ScrollTrigger.create({
+      trigger: zona, start: 'top bottom', end: 'bottom top',
+      onUpdate: (s) => {
+        sentido = s.direction
+        const v = gsap.utils.clamp(-7, 7, s.getVelocity() / 220)
+        if (Math.abs(v) > Math.abs(empuje)) empuje = v
+      },
+    })
+    const tic = () => { empuje += (sentido - empuje) * 0.05; bucles.forEach((b) => b.timeScale(empuje)) }
+    gsap.ticker.add(tic)
+    return () => { st.kill(); gsap.ticker.remove(tic); bucles.forEach((b) => b.kill()) }
+  }, [])
+  const tira = (k: number) => nombres.map((n, i) => <span key={`${k}-${i}`}>{n}<em aria-hidden="true">✦</em></span>)
+  return (
+    <div ref={raiz} className="mv-cinta" dir="ltr" aria-hidden="true">
+      <div className="mv-cinta-fila">{tira(0)}{tira(1)}</div>
+      <div className="mv-cinta-fila mv-cinta-hueca">{tira(2)}{tira(3)}</div>
+    </div>
+  )
+}
+
+/* ───────────── Pila de tarjetas ───────────── */
+
+/** Las tarjetas de `.v7-oficio` se quedan pegadas arriba y la anterior se hunde al llegar la siguiente. */
+export function usePila(raiz: React.RefObject<HTMLElement | null>) {
+  useEffect(() => {
+    const zona = raiz.current
+    if (!zona || quieto()) return
+    const mm = gsap.matchMedia()
+    mm.add('(min-width: 860px)', () => {
+      const tarjetas = gsap.utils.toArray<HTMLElement>('.v7-oficio > li', zona)
+      tarjetas.slice(0, -1).forEach((t, i) => {
+        gsap.to(t, {
+          scale: 0.9, transformOrigin: '50% 0%', ease: 'none',
+          scrollTrigger: { trigger: tarjetas[i + 1], start: 'top bottom', end: 'top 25%', scrub: true },
+        })
+      })
+    })
+    return () => mm.revert()
   }, [raiz])
 }
