@@ -1,7 +1,37 @@
-User-agent: *
-Allow: /
+# Tony Kansai Guide: guía privado en Kansai y todo Japón (ES / EN / AR / RU).
+# Todo el contenido público está abierto a buscadores y asistentes de IA, para
+# que puedan citarlo y recomendarlo. Resumen para IA: /llms.txt · completo: /llms-full.txt
+# Cada página tiene su versión en texto plano: añadir index.md a la ruta (p. ej. /es/index.md).
 
+# Señales de contenido (contentsignals.org), dentro del grupo como pide la
+# norma: se puede usar para buscar, para responder con IA y para entrenar.
+User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
 # El panel de reseñas es la herramienta interna de Tony, no una página pública.
+Disallow: /panel-resenas.html
+
+# Asistentes y buscadores de IA, bienvenidos por su nombre.
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: GPTBot
+User-agent: Claude-SearchBot
+User-agent: Claude-User
+User-agent: ClaudeBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Googlebot
+User-agent: Bingbot
+User-agent: Applebot
+User-agent: Applebot-Extended
+User-agent: DuckAssistBot
+User-agent: meta-externalagent
+User-agent: MistralAI-User
+User-agent: YandexBot
+User-agent: CCBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
+Allow: /
 Disallow: /panel-resenas.html
 
 Sitemap: https://tonykansaiguide.com/sitemap.xml
