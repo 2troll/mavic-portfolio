@@ -20,6 +20,7 @@ import { CodigoCifrado } from './Cocina'
 import { motion, AnimatePresence } from 'framer-motion'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
+import Escaparate from './Escaparate'
 import './v7.css'
 import './ventajas.css'
 
@@ -48,8 +49,8 @@ const T: Record<VentajasId, Textos> = {
     titulo: SEO_VENTAJAS.es.titulo,
     descripcion: SEO_VENTAJAS.es.descripcion,
     antetitulo: '🎁 Ventajas para mis viajeros',
-    h1: 'Las apps para viajar por Kansai como un local',
-    sub: 'Las apps que uso y recomiendo en Osaka y Kioto: internet, entradas, hotel, taxi, bici y pagos. Cada una en su ficha, para ir directo a lo que necesitas.',
+    h1: 'Experiencias y apps para vivir Kansai como un local',
+    sub: 'Primero, las experiencias de mis socios: kimono, samuráis, cuchillos, cocina y talleres, varias con ventaja por venir de mi parte. Después, las apps que uso en Osaka y Kioto: internet, entradas, hotel, taxi, bici y pagos.',
     copiar: 'Copiar código', copiado: '¡Copiado!', codigo: 'Mi código',
     consejosTitulo: 'Mis consejos',
     consejos: [
@@ -65,8 +66,8 @@ const T: Record<VentajasId, Textos> = {
     titulo: SEO_VENTAJAS.en.titulo,
     descripcion: SEO_VENTAJAS.en.descripcion,
     antetitulo: '🎁 Perks for my travellers',
-    h1: 'The apps to travel Kansai like a local',
-    sub: 'The apps I use and recommend in Osaka and Kyoto: data, tickets, hotels, taxis, bikes and payments. Each one on its own card, so you go straight to what you need.',
+    h1: 'Experiences and apps to live Kansai like a local',
+    sub: 'First, my partners’ experiences: kimono, samurai, knives, cooking and workshops, several with a perk for coming through me. Then the apps I use in Osaka and Kyoto: data, tickets, hotels, taxis, bikes and payments.',
     copiar: 'Copy code', copiado: 'Copied!', codigo: 'My code',
     consejosTitulo: 'My tips',
     consejos: [
@@ -82,8 +83,8 @@ const T: Record<VentajasId, Textos> = {
     titulo: SEO_VENTAJAS.ar.titulo,
     descripcion: SEO_VENTAJAS.ar.descripcion,
     antetitulo: '🎁 مزايا لضيوفي',
-    h1: 'تطبيقات السفر في كانساي مثل أهل البلد',
-    sub: 'التطبيقات التي أستخدمها وأنصح بها في أوساكا وكيوتو: الإنترنت والتذاكر والفنادق والتاكسي والدراجات والدفع، كلٌّ في بطاقته.',
+    h1: 'تجارب وتطبيقات لتعيش كانساي مثل أهل البلد',
+    sub: 'أولًا تجارب شركائي: الكيمونو والساموراي والسكاكين والطبخ والورش، وبعضها بميزة لأنك قادم من طرفي. ثم التطبيقات التي أستخدمها في أوساكا وكيوتو: الإنترنت والتذاكر والفنادق والتاكسي والدراجات والدفع.',
     copiar: 'نسخ الرمز', copiado: 'تم النسخ!', codigo: 'رمزي',
     consejosTitulo: 'نصائحي',
     consejos: [
@@ -99,8 +100,8 @@ const T: Record<VentajasId, Textos> = {
     titulo: SEO_VENTAJAS.ru.titulo,
     descripcion: SEO_VENTAJAS.ru.descripcion,
     antetitulo: 'Полезное для наших гостей',
-    h1: 'Приложения, чтобы путешествовать по Кансаю как местный',
-    sub: 'Интернет, билеты, отели, такси, велосипеды и оплата в Осаке и Киото. Каждое приложение — на своей карточке, с подробной инструкцией.',
+    h1: 'Впечатления и приложения, чтобы прожить Кансай как местный',
+    sub: 'Сначала — впечатления наших партнёров: кимоно, самураи, ножи, кулинария и мастерские. Затем — приложения для Осаки и Киото: интернет, билеты, отели, такси, велосипеды и оплата.',
     copiar: 'Скопировать код', copiado: 'Скопировано!', codigo: 'Код',
     consejosTitulo: 'Советы',
     consejos: [
@@ -245,7 +246,9 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
     return () => io.disconnect()
   }, [id])
 
-  const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS.some((a) => a.cat === c))
+  // Las experiencias van en su escaparate; la rejilla de abajo es solo de apps.
+  const APPS_REJILLA = APPS.filter((a) => a.cat !== 'experiencias')
+  const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS_REJILLA.some((a) => a.cat === c))
   const [filtro, setFiltro] = useState<Categoria | ''>('')
   // Los enlaces #app del kit deben encontrar su tarjeta: al saltar a una, se quitan los filtros.
   useEffect(() => {
@@ -313,6 +316,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           </div>
         </section>
 
+        <Escaparate id={id} ruta={RUTA[id]} />
+
         {conCodigo.length > 0 && (
           <section className="vt-codigos" id="codigos" aria-labelledby="vt-codigos-t">
             <h2 id="vt-codigos-t">{CODIGOS[id].titulo}</h2>
@@ -376,10 +381,10 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         </section>
 
         <nav className="vt-chips" aria-label={p.antetitulo}>
-          <button type="button" aria-pressed={filtro === ''} onClick={() => setFiltro('')}>{TODAS[id]} <small>{APPS.length}</small></button>
+          <button type="button" aria-pressed={filtro === ''} onClick={() => setFiltro('')}>{TODAS[id]} <small>{APPS_REJILLA.length}</small></button>
           {categorias.map((c) => (
             <button key={c} type="button" aria-pressed={filtro === c} onClick={() => setFiltro(c)}>
-              {CATEGORIAS[c][id]} <small>{APPS.filter((a) => a.cat === c).length}</small>
+              {CATEGORIAS[c][id]} <small>{APPS_REJILLA.filter((a) => a.cat === c).length}</small>
             </button>
           ))}
         </nav>
@@ -388,7 +393,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             Las tarjetas se recolocan con muelle (framer-motion, layout). */}
         <div className="vt-rejilla">
           <AnimatePresence initial={false} mode="popLayout">
-            {APPS.filter((a) => !filtro || a.cat === filtro).map((a) => {
+            {APPS_REJILLA.filter((a) => !filtro || a.cat === filtro).map((a) => {
               const cupon = cuponDe(a)
               const href = a.codigo?.startsWith('http') ? a.codigo : a.enlace
               const t = textoApp(a, id)

@@ -486,3 +486,67 @@
 .vt-guarda a { display: inline-flex; align-items: center; gap: 8px; padding: 10px 16px; border-radius: 999px; background: #1f9d55; color: #fff; font-weight: 700; text-decoration: none; }
 .vt-guarda a svg { width: 18px; height: 18px; }
 .vt-guarda small { color: var(--vt-suave); font-size: .85rem; }
+
+/* 16-10: escaparate de experiencias de los socios. Banda oscura a sangre para que
+   se distinga de la rejilla de apps: es lo que no encuentran en otra web. */
+.vt-exp {
+  --exp-fondo: #14110e; --exp-tinta: #f4ede1; --exp-suave: #b9ae9c; --exp-oro: #e0b25a; --exp-verde: #4fc58a;
+  position: relative; z-index: 50; background: radial-gradient(120% 80% at 10% 0%, #2a1f14 0%, var(--exp-fondo) 60%); color: var(--exp-tinta);
+  padding: clamp(56px, 8vw, 104px) 16px; scroll-margin-top: var(--vt-barra-alto);
+}
+.vt-exp-dentro { max-width: 1200px; margin: 0 auto; }
+.vt-exp-ante { margin: 0 0 10px; font-size: .8rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--exp-oro); }
+.vt-exp h2 { margin: 0; font-size: clamp(2rem, 5vw, 3.6rem); line-height: 1.05; letter-spacing: -.02em; max-width: 18ch; }
+.vt-exp-sub { max-width: 62ch; margin: 18px 0 28px; font-size: clamp(1rem, 1.5vw, 1.15rem); color: var(--exp-suave); line-height: 1.6; }
+
+.vt-exp-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 28px; }
+.vt-exp-chips button {
+  display: inline-flex; align-items: center; gap: 6px; padding: 9px 16px; border-radius: 999px; cursor: pointer;
+  font: inherit; font-size: .9rem; font-weight: 650; color: var(--exp-tinta); background: rgba(255, 255, 255, .06); border: 1px solid rgba(255, 255, 255, .16);
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+.vt-exp-chips button:hover { transform: translateY(-1px); border-color: rgba(255, 255, 255, .4); }
+.vt-exp-chips button small { opacity: .7; font-weight: 600; }
+.vt-exp-chips button[aria-pressed='true'] { background: var(--exp-tinta); color: var(--exp-fondo); border-color: var(--exp-tinta); }
+.vt-exp-chips button.es-musulman[aria-pressed='true'] { background: var(--exp-verde); border-color: var(--exp-verde); color: #08180f; }
+.vt-exp-chips button.es-tony[aria-pressed='true'] { background: var(--exp-oro); border-color: var(--exp-oro); color: #1d1405; }
+
+.vt-exp-rejilla { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 330px), 1fr)); gap: 20px; }
+.vt-exp-tarjeta {
+  display: flex; flex-direction: column; min-width: 0; border-radius: 24px; overflow: hidden; scroll-margin-top: calc(var(--vt-barra-alto) + 16px);
+  background: #1e1a15; border: 1px solid rgba(255, 255, 255, .09); box-shadow: 0 18px 40px rgba(0, 0, 0, .35);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+.vt-exp-tarjeta:hover { transform: translateY(-4px); box-shadow: 0 26px 56px rgba(0, 0, 0, .5); }
+.vt-exp-cara {
+  position: relative; display: grid; place-items: center; height: 150px; overflow: hidden;
+  background: radial-gradient(90% 120% at 30% 20%, color-mix(in srgb, var(--marca) 70%, #fff 30%) 0%, var(--marca) 55%, color-mix(in srgb, var(--marca) 70%, #000 30%) 100%);
+  color: var(--marca-tinta);
+}
+.vt-exp-kanji { font-size: 4.2rem; font-weight: 800; line-height: 1; letter-spacing: .02em; text-shadow: 0 4px 18px rgba(0, 0, 0, .25); transition: transform .4s ease; }
+.vt-exp-kanji.es-largo { font-size: 2.4rem; letter-spacing: .08em; }
+.vt-exp-logo { width: 88px; height: 88px; border-radius: 22px; object-fit: cover; box-shadow: 0 10px 24px rgba(0, 0, 0, .3); transition: transform .4s ease; }
+.vt-exp-tarjeta:hover .vt-exp-kanji, .vt-exp-tarjeta:hover .vt-exp-logo { transform: scale(1.08) rotate(-2deg); }
+.vt-exp-ciudad {
+  position: absolute; inset-block-start: 12px; inset-inline-start: 12px; padding: 4px 10px; border-radius: 999px;
+  font-size: .75rem; font-weight: 750; background: rgba(0, 0, 0, .45); color: #fff; backdrop-filter: blur(6px);
+}
+.vt-exp-cuerpo { display: flex; flex-direction: column; gap: 10px; flex: 1; padding: 20px 22px 22px; min-width: 0; }
+.vt-exp-sellos { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; }
+.vt-exp-sellos span { padding: 3px 10px; border-radius: 999px; font-size: .74rem; font-weight: 800; }
+.vt-exp-sellos .es-musulman { background: color-mix(in srgb, var(--exp-verde) 18%, transparent); color: var(--exp-verde); border: 1px solid color-mix(in srgb, var(--exp-verde) 45%, transparent); }
+.vt-exp-sellos .es-tony { background: color-mix(in srgb, var(--exp-oro) 18%, transparent); color: var(--exp-oro); border: 1px solid color-mix(in srgb, var(--exp-oro) 45%, transparent); }
+.vt-exp-cuerpo h3 { margin: 0; font-size: 1.3rem; letter-spacing: -.01em; }
+.vt-exp-que { margin: 0; color: var(--exp-suave); line-height: 1.55; }
+.vt-exp-ventaja { margin: 0; padding: 12px 14px; border-radius: 14px; background: rgba(255, 255, 255, .06); border-inline-start: 3px solid var(--exp-oro); line-height: 1.5; font-weight: 600; font-size: .95rem; }
+.vt-exp-cupon { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 0; padding: 10px 14px; border-radius: 14px; border: 2px dashed rgba(255, 255, 255, .25); }
+.vt-exp-cupon code { font-family: inherit; font-weight: 800; font-size: 1.1rem; letter-spacing: .04em; overflow-wrap: anywhere; }
+.vt-exp-copiar { padding: 6px 12px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-size: .85rem; font-weight: 700; background: var(--exp-tinta); color: var(--exp-fondo); }
+.vt-exp-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-top: auto; padding-top: 6px; }
+.vt-exp-reservar { padding: 11px 18px; font-size: .95rem; border-radius: 999px; background: var(--vt-wa); color: #fff; font-weight: 750; text-decoration: none; }
+.vt-exp-reservar:hover { filter: brightness(1.08); }
+.vt-exp-web { padding: 10px 16px; font-size: .95rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .3); color: var(--exp-tinta); font-weight: 650; text-decoration: none; }
+.vt-exp-web:hover { border-color: var(--exp-tinta); }
+.vt-exp-mas { font-size: .85rem; color: var(--exp-suave); }
+@media (max-width: 420px) { .vt-exp-cara { height: 120px; } .vt-exp-acciones > a { flex: 1 1 auto; text-align: center; } }
+@media (prefers-reduced-motion: reduce) { .vt-exp-tarjeta, .vt-exp-kanji, .vt-exp-logo { transition: none; } }

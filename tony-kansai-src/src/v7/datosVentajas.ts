@@ -3,7 +3,7 @@
 // `codigo`: código de invitación (se copia) o enlace de afiliado (https://…, se usa como enlace).
 
 export type Lang = 'es' | 'en' | 'ar' | 'ru'
-export type Categoria = 'internet' | 'planes' | 'dormir' | 'moverse' | 'dinero' | 'utiles'
+export type Categoria = 'experiencias' | 'internet' | 'planes' | 'dormir' | 'moverse' | 'dinero' | 'utiles'
 
 export interface App {
   clave: string
@@ -17,6 +17,12 @@ export interface App {
   descuento?: string
   /** Último día del código (AAAA-MM-DD): pasado ese día, la web deja de enseñarlo. */
   caduca?: string
+  /** Experiencias: ciudad (se escribe igual en todos los idiomas salvo ar/ru, ver CIUDADES). */
+  ciudad?: Ciudad
+  /** Apto para familias musulmanas (hiyab, sin alcohol, sala de oración…): sale con sello y filtro propio. */
+  musulman?: boolean
+  /** Ventaja que solo tienes viniendo conmigo o diciendo mi nombre (no la ve cualquiera en su web). */
+  conTony?: boolean
   /** El ruso de las fichas cortas vive en datosVentajasDetalle.ts (T_RU). */
   t: Record<'es' | 'en' | 'ar', { que: string; ventaja: string }> & { ru?: { que: string; ventaja: string } }
 }
@@ -32,7 +38,15 @@ export const SEO_VENTAJAS: Record<Lang, { titulo: string; descripcion: string }>
 
 export const RUTA_VENTAJAS: Record<Lang, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
+export type Ciudad = 'osaka' | 'kioto' | 'kumano'
+export const CIUDADES: Record<Ciudad, Record<Lang, string>> = {
+  osaka: { es: 'Osaka', en: 'Osaka', ar: 'أوساكا', ru: 'Осака' },
+  kioto: { es: 'Kioto', en: 'Kyoto', ar: 'كيوتو', ru: 'Киото' },
+  kumano: { es: 'Kumano (Wakayama)', en: 'Kumano (Wakayama)', ar: 'كومانو (واكاياما)', ru: 'Кумано (Вакаяма)' },
+}
+
 export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
+  experiencias: { es: 'Experiencias', en: 'Experiences', ar: 'تجارب', ru: 'Впечатления' },
   internet: { es: 'Internet', en: 'Mobile data', ar: 'الإنترنت', ru: 'Интернет' },
   planes: { es: 'Entradas y planes', en: 'Tickets & activities', ar: 'تذاكر وأنشطة', ru: 'Билеты и экскурсии' },
   dormir: { es: 'Alojamiento', en: 'Where to stay', ar: 'الإقامة', ru: 'Жильё' },
@@ -79,7 +93,7 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'samurai', cat: 'planes', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/',
+    clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/',
     marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
     t: {
       es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Una hora divertida y a cubierto en pleno Kioto. Ideal con niños.' },
@@ -228,7 +242,7 @@ const LISTA: App[] = [
   },
   {
     // Programa Travel Advisor (10 % para el cliente o comisión) pendiente de alta: de momento, web oficial.
-    clave: 'flytographer', cat: 'planes', nombre: 'Flytographer', enlace: 'https://www.flytographer.com/',
+    clave: 'flytographer', cat: 'experiencias', nombre: 'Flytographer', enlace: 'https://www.flytographer.com/',
     marca: { fondo: '#111111', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#111111', palabra: 'Flytographer' },
     t: {
       es: { que: 'Fotógrafos locales en Kioto y Osaka: una sesión de fotos de toda la familia junta durante el viaje.', ventaja: 'Por fin salís todos en las fotos; las recibís en una galería online.' },
@@ -301,7 +315,7 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'wargo', cat: 'planes', nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
+    clave: 'wargo', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
     marca: { fondo: '#b5274a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#b5274a', palabra: '着物' },
     t: {
       es: { que: 'Alquiler de kimono y yukata en Kioto: te lo ponen en la tienda y sales a pasear por Higashiyama o Gion.', ventaja: 'Con el código 261013_wgtn, 10 % de descuento al reservar en su web (hasta el 31-12-2026).' },
@@ -310,7 +324,7 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'camellia', cat: 'planes', nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/',
+    clave: 'camellia', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/',
     marca: { fondo: '#2f4a32', tinta: '#f3ead7', boton: '#f3ead7', botonTinta: '#2f4a32', palabra: '茶' },
     t: {
       es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Si vienes de tour conmigo, te la reservo yo con mi tarifa de guía y te la traduzco al español o al árabe.' },
@@ -320,7 +334,7 @@ const LISTA: App[] = [
   },
   {
     // SnapKyoto (Matt, fotógrafo freelance): 10 % de comisión por PayPal si el cliente dice mi nombre al reservar (acuerdo por correo, 15-10-2026).
-    clave: 'snapkyoto', cat: 'planes', nombre: 'SnapKyoto', enlace: 'https://snapkyoto.com',
+    clave: 'snapkyoto', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'SnapKyoto', enlace: 'https://snapkyoto.com',
     marca: { fondo: '#0d0d0d', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0d0d0d', palabra: 'Snap' },
     t: {
       es: { que: 'Matt, fotógrafo en Kioto, Osaka y Nara: sesión de fotos de la familia o la pareja en Gion, Arashiyama o donde vayamos.', ventaja: 'Al reservar, di que vienes de parte de Tony Hanma (Tony Kansai Guide). Si estamos de tour, encajo la sesión en la ruta.' },
@@ -330,12 +344,73 @@ const LISTA: App[] = [
   },
   {
     // Yumeyakata: registrado como guía nº 1085 el 15-10-2026; el cliente lo escribe al reservar por adelantado.
-    clave: 'yumeyakata', cat: 'planes', nombre: 'Yumeyakata', enlace: 'https://www.kyoto.yumeyakata.com/', codigo: '1085',
+    clave: 'yumeyakata', cat: 'experiencias', ciudad: 'kioto', conTony: true, musulman: true, nombre: 'Yumeyakata', enlace: 'https://www.kyoto.yumeyakata.com/', codigo: '1085',
     marca: { fondo: '#5b2a6e', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#5b2a6e', palabra: '夢' },
     t: {
       es: { que: 'Alquiler de kimono en Kioto (tiendas de Gojo y Oike), con peinado, maquillaje, ceremonia del té y fotos. Tienen sala de oración para sus clientes.', ventaja: 'Reserva por adelantado y escribe en las notas «ガイド番号1085 (Tony Hanma)»: así saben que vienes conmigo.' },
       en: { que: 'Kimono rental in Kyoto (Gojo and Oike shops), with hair set, make-up, tea ceremony and photos. They have a prayer room for their customers.', ventaja: 'Book in advance and write “Guide number 1085 (Tony Hanma)” in the notes, so they know you come with me.' },
       ar: { que: 'استئجار الكيمونو في كيوتو (فرعا غوجو وأويكي)، مع تصفيف الشعر والمكياج وحفل الشاي والتصوير. لديهم غرفة صلاة لعملائهم.', ventaja: 'احجز مسبقًا واكتب في الملاحظات «Guide number 1085 (Tony Hanma)» ليعرفوا أنك قادم معي.' },
+    },
+  },
+  {
+    // Shogun Studio (Yoshi, dueño): 5 % de comisión por reserva pagada de un cliente mío (correo 16-10-2026); falta saber cómo identifica al cliente.
+    clave: 'shogun', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Shogun Studio Japan', enlace: 'https://shogunstudiojapan.com/',
+    marca: { fondo: '#111111', tinta: '#d4a646', boton: '#d4a646', botonTinta: '#111111', palabra: '侍' },
+    t: {
+      es: { que: 'Ponte una armadura samurái de verdad en su estudio de Arashiyama (Kioto), con fotos para llevarte. También tienen kimono y ninja.', ventaja: 'Si vienes de tour conmigo por Arashiyama, lo encajo en la ruta y lo reservo yo con ellos.' },
+      en: { que: 'Wear real samurai armour at their Arashiyama studio in Kyoto, with photos to take home. They also do kimono and ninja.', ventaja: 'Touring Arashiyama with me? I fit it into the route and book it with them for you.' },
+      ar: { que: 'ارتدِ درع ساموراي حقيقيًا في استوديوهم في أراشيياما بكيوتو، مع صور تأخذها معك. لديهم أيضًا الكيمونو والنينجا.', ventaja: 'إن كانت جولتك معي في أراشيياما، أضعه في المسار وأحجزه لك معهم.' },
+    },
+  },
+  {
+    // Miyabi-yuki: hiyab bajo el junihitoe y solo personal femenino (correo 16-10-2026). Sin tarifa de guía.
+    clave: 'miyabi', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Emondo Miyabi-yuki', enlace: 'https://www.miyabi-yuki.jp/',
+    marca: { fondo: '#7a1f3d', tinta: '#f6e3b4', boton: '#f6e3b4', botonTinta: '#7a1f3d', palabra: '雅' },
+    t: {
+      es: { que: 'Vístete con el junihitoe, el kimono de doce capas de la corte imperial Heian, en el centro de Kioto. Algo que no verás en ningún otro sitio.', ventaja: 'Puedes llevar el hiyab debajo y todo el personal es femenino: ya han vestido a clientas con hiyab.' },
+      en: { que: 'Dress in the junihitoe, the twelve-layer kimono of the Heian imperial court, in central Kyoto. Something you will not see anywhere else.', ventaja: 'You can keep your hijab on underneath and all the staff are women; they have dressed guests in hijab before.' },
+      ar: { que: 'ارتدي الجونيهيتوي، كيمونو البلاط الإمبراطوري ذا الطبقات الاثنتي عشرة من عصر هييان، في وسط كيوتو. تجربة لن تجديها في أي مكان آخر.', ventaja: 'يمكنكِ إبقاء الحجاب تحته، وجميع العاملات نساء، وقد ألبسن ضيفات محجبات من قبل.' },
+    },
+  },
+  {
+    // Tower Knives: presentación de 15-20 min con cita previa si traigo clientes; sin comisión ni descuento (correo 16-10-2026).
+    clave: 'towerknives', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Tower Knives Osaka', enlace: 'https://www.towerknives.com/',
+    marca: { fondo: '#23282d', tinta: '#e9edf0', boton: '#e9edf0', botonTinta: '#23282d', palabra: '包丁' },
+    t: {
+      es: { que: 'Tienda de cuchillos japoneses junto a la torre Tsutenkaku (Shinsekai). El regalo que más se llevan mis viajeros de Osaka.', ventaja: 'Si vienes conmigo, pido cita y te hacen una presentación de 15-20 min: historia de los cuchillos de Sakai y demostración de corte.' },
+      en: { que: 'Japanese knife shop by Tsutenkaku tower in Shinsekai. The gift my guests most often take home from Osaka.', ventaja: 'Come with me and I book a 15–20 min presentation: the history of Sakai knives and a cutting demonstration.' },
+      ar: { que: 'متجر سكاكين يابانية بجانب برج تسوتينكاكو في شينسيكاي. الهدية التي يأخذها ضيوفي من أوساكا أكثر من غيرها.', ventaja: 'إن جئت معي أحجز موعدًا ويقدّمون لك عرضًا لمدة 15-20 دقيقة: تاريخ سكاكين ساكاي وعرض للتقطيع.' },
+    },
+  },
+  {
+    // Cooking Sun: menú vegetariano sin alcohol a petición, NO halal certificado; sin comisión (correo 16-10-2026).
+    clave: 'cookingsun', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Cooking Sun', enlace: 'https://cookingsun.co.jp/',
+    marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
+    t: {
+      es: { que: 'Clase de cocina casera japonesa en Kioto y en Osaka: cocinas tú y luego coméis juntos.', ventaja: 'Al reservar pide el menú vegetariano sin alcohol (sin sake ni mirin). No es halal certificado, pero no lleva carne ni alcohol.' },
+      en: { que: 'Japanese home-cooking class in Kyoto and Osaka: you cook, then you eat together.', ventaja: 'When booking, ask for the vegetarian menu without alcohol (no sake or mirin). Not halal-certified, but no meat and no alcohol.' },
+      ar: { que: 'درس طبخ ياباني منزلي في كيوتو وأوساكا: تطبخ بنفسك ثم تأكلون معًا.', ventaja: 'عند الحجز اطلب القائمة النباتية بلا كحول (بلا ساكي ولا ميرين). ليست حلالًا موثقة، لكنها بلا لحم ولا كحول.' },
+    },
+  },
+  {
+    // Hamanasu (Sugimoto): 4.000 ¥/persona en efectivo, guía gratis, +15 min de regalo si vienen por mí; reserva por mí ≥3 días antes (≥5 si son 6+). Correo 16-10-2026.
+    clave: 'hamanasu', cat: 'experiencias', ciudad: 'kumano', conTony: true, nombre: 'Kibori Hamanasu', enlace: 'https://hamanasu-kibori.raku-uru.jp/',
+    marca: { fondo: '#6b4a2b', tinta: '#f4e7d3', boton: '#f4e7d3', botonTinta: '#6b4a2b', palabra: '木彫' },
+    t: {
+      es: { que: 'Taller de talla en madera con una artesana de Kumano, en Kushimoto (Wakayama). Ideal si vas a hacer el Kumano Kodo. 4.000 ¥ por persona, en efectivo.', ventaja: 'Si lo reservas a través de mí, te regalan 15 minutos más para hacer un diseño más elaborado. Avísame con 3 días de antelación.' },
+      en: { que: 'Wood-carving workshop with a Kumano craftswoman in Kushimoto (Wakayama). Perfect if you are walking the Kumano Kodo. ¥4,000 per person, cash.', ventaja: 'Book it through me and you get 15 extra minutes free to carve a more detailed design. Tell me 3 days ahead.' },
+      ar: { que: 'ورشة نحت على الخشب مع حِرفية من كومانو في كوشيموتو (واكاياما). مثالية إن كنت ستمشي طريق كومانو كودو. 4,000 ين للشخص نقدًا.', ventaja: 'إن حجزتها عن طريقي تحصل على 15 دقيقة إضافية مجانًا لتصميم أكثر تفصيلًا. أخبرني قبلها بثلاثة أيام.' },
+    },
+  },
+  {
+    // Japan Wireless: 10 % de afiliado (Rewardful, alta pendiente de Tony) y código propio pedido (TONYKANSAI) el 16-10-2026.
+    // Cuando llegue: enlace de Rewardful en `codigo` (https://…) o el cupón en `codigo` + `descuento`.
+    clave: 'japanwireless', cat: 'internet', nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/',
+    marca: { fondo: '#0a4ea2', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0a4ea2', palabra: 'Wi-Fi' },
+    t: {
+      es: { que: 'Wifi de bolsillo para Japón: un aparatito da internet a varios móviles a la vez. Te lo mandan al hotel o lo recoges en el aeropuerto.', ventaja: 'Lo mejor para familias grandes: un solo aparato para todos, sin instalar nada en cada móvil.' },
+      en: { que: 'Pocket wifi for Japan: one small device gives data to several phones at once. Delivered to your hotel or picked up at the airport.', ventaja: 'Best for big families: one device for everyone, nothing to install on each phone.' },
+      ar: { que: 'واي فاي متنقل لليابان: جهاز صغير يعطي الإنترنت لعدة هواتف في الوقت نفسه. يصلك إلى الفندق أو تستلمه في المطار.', ventaja: 'الأفضل للعائلات الكبيرة: جهاز واحد للجميع دون تثبيت أي شيء على كل هاتف.' },
     },
   },
 ]
