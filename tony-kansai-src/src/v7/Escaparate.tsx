@@ -7,6 +7,7 @@ import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { APPS, CIUDADES, cuponDe, enlaceDe, type Ciudad } from './datosVentajas'
 import { ICONOS_APP } from './logosMarcas'
+import { ICONO_EXP } from './iconosExperiencia'
 import { textoApp, MAS } from './FichaVentaja'
 import { GUIAS } from './contenido'
 
@@ -67,6 +68,7 @@ export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
           <AnimatePresence initial={false} mode="popLayout">
             {ORDENADAS.filter(pasa).map((a) => {
               const tx = textoApp(a, id)
+              const Ico = ICONO_EXP[a.clave]
               const cupon = cuponDe(a)
               const wa = `https://wa.me/${numero}?text=${encodeURIComponent(t.msg.replace('{n}', a.nombre))}`
               return (
@@ -75,9 +77,11 @@ export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
                   transition={{ type: 'spring', stiffness: 300, damping: 30 }}
                   style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
                   <div className="vt-exp-cara">
-                    {ICONOS_APP.has(a.clave)
-                      ? <img className="vt-exp-logo" src={`/v7/apps/${a.clave}.webp`} alt="" width="96" height="96" loading="lazy" decoding="async" />
-                      : <span className={`vt-exp-kanji${(a.marca.palabra ?? '').length > 3 ? ' es-largo' : ''}`} aria-hidden="true">{a.marca.palabra ?? a.nombre.slice(0, 2)}</span>}
+                    {/* Kanji de la marca, grande y tenue detrás; delante, el icono de lo que se hace. */}
+                    {a.marca.palabra && <span className={`vt-exp-kanji${a.marca.palabra.length > 3 ? ' es-largo' : ''}`} aria-hidden="true">{a.marca.palabra}</span>}
+                    {Ico
+                      ? <span className="vt-exp-icono" aria-hidden="true"><Ico size={46} strokeWidth={1.5} /></span>
+                      : ICONOS_APP.has(a.clave) && <img className="vt-exp-logo" src={`/v7/apps/${a.clave}.webp`} alt="" width="96" height="96" loading="lazy" decoding="async" />}
                     {a.ciudad && <span className="vt-exp-ciudad">{CIUDADES[a.ciudad][id]}</span>}
                   </div>
                   <div className="vt-exp-cuerpo">

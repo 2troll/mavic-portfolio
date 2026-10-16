@@ -25,10 +25,11 @@ const Cuerpo = () => (
   </span>
 )
 
-export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; etiqueta: string; children: ReactNode }) {
+// `lado`: -1 inclina el móvil hacia el otro lado (la portada de ventajas lleva dos, enfrentados).
+export default function MovilMueve({ rtl, etiqueta, children, lado = 1, retraso = 0 }: { rtl: boolean; etiqueta: string; children: ReactNode; lado?: 1 | -1; retraso?: number }) {
   const quieto = useReducedMotion()
   const zona = useRef<HTMLDivElement>(null)
-  const signo = rtl ? -1 : 1
+  const signo = (rtl ? -1 : 1) * lado
 
   // Posición del cursor sobre el móvil, de -0.5 a 0.5 (0 = centro).
   const px = useMotionValue(0)
@@ -79,7 +80,7 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
       <motion.div
         className="vt-movil-flota"
         animate={{ y: [0, -14, 0, -6, 0], rotateZ: [signo * -3, signo * -1.2, signo * -3, signo * -2, signo * -3], rotateY: [0, 7, 0, -7, 0] }}
-        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1.2 }}
+        transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut', delay: 1.2 + retraso * 3 }}
       >
         <motion.div
           className="vt-movil"
@@ -87,7 +88,7 @@ export default function MovilMueve({ rtl, etiqueta, children }: { rtl: boolean; 
           aria-label={etiqueta}
           initial={{ opacity: 0, y: 140, rotateZ: signo * -14, scale: 0.9 }}
           animate={{ opacity: 1, y: 0, rotateZ: 0, scale: 1 }}
-          transition={{ type: 'spring', stiffness: 70, damping: 14, mass: 0.9, delay: 0.15 }}
+          transition={{ type: 'spring', stiffness: 70, damping: 14, mass: 0.9, delay: 0.15 + retraso }}
           whileTap={{ scale: 0.97 }}
           onTap={daVuelta}
           style={{ rotateY: rotYTotal, rotateX: rotXTotal }}

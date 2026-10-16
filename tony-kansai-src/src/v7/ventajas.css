@@ -550,3 +550,107 @@
 .vt-exp-mas { font-size: .85rem; color: var(--exp-suave); }
 @media (max-width: 420px) { .vt-exp-cara { height: 120px; } .vt-exp-acciones > a { flex: 1 1 auto; text-align: center; } }
 @media (prefers-reduced-motion: reduce) { .vt-exp-tarjeta, .vt-exp-kanji, .vt-exp-logo { transition: none; } }
+
+/* 16-10 (2): índice fijo de secciones bajo la barra. Sustituye a los filtros de apps
+   como barra pegajosa: esos se quedaban flotando sobre las preguntas y el final. */
+.vt { --vt-indice-alto: 50px; }
+.vt-indice-fijo {
+  position: sticky; top: var(--vt-barra-alto); z-index: 99; height: var(--vt-indice-alto);
+  display: flex; align-items: center; justify-content: center; gap: 4px; padding: 0 16px; overflow-x: auto; scrollbar-width: none;
+  background: color-mix(in srgb, var(--vt-fondo) 92%, transparent); backdrop-filter: saturate(1.4) blur(10px); -webkit-backdrop-filter: saturate(1.4) blur(10px);
+  border-bottom: 1px solid var(--vt-linea);
+}
+.vt-indice-fijo::-webkit-scrollbar { display: none; }
+.vt-indice-fijo a {
+  flex: none; position: relative; padding: 8px 14px; border-radius: 999px; font-size: .88rem; font-weight: 650; color: var(--vt-suave); text-decoration: none;
+  transition: color .2s ease, background .2s ease;
+}
+.vt-indice-fijo a:hover { color: var(--vt-tinta); }
+.vt-indice-fijo a[aria-current='true'] { color: var(--vt-tinta); background: var(--vt-blanco); box-shadow: 0 1px 3px rgba(0, 0, 0, .1); }
+@media (max-width: 700px) { .vt-indice-fijo { justify-content: flex-start; } }
+#experiencias, #codigos, #kit, #apps, #preguntas { scroll-margin-top: calc(var(--vt-barra-alto) + var(--vt-indice-alto)); }
+
+/* Los filtros de apps ya no se pegan: viven dentro de su sección. */
+.vt-apps .vt-chips { position: static; height: auto; padding-top: 4px; padding-bottom: 4px; }
+.vt-apps { padding-top: clamp(40px, 6vw, 72px); }
+.vt-apps-cab { max-width: 1200px; margin: 0 auto 8px; padding: 0 24px; }
+.vt-apps-cab h2 { margin: 0; font-size: clamp(1.8rem, 3.6vw, 2.8rem); letter-spacing: -.02em; line-height: 1.1; }
+.vt-apps-cab p { margin: 10px 0 0; max-width: 62ch; color: var(--vt-suave); line-height: 1.6; }
+
+/* Portada: menos aire arriba, dos botones y cifras de lo que hay. */
+.vt-portada { padding-top: clamp(28px, 4vw, 56px); }
+.vt-portada-cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.vt-cta-principal, .vt-cta-secundario { display: inline-flex; align-items: center; gap: 8px; padding: 14px 22px; border-radius: 999px; font-weight: 750; text-decoration: none; transition: transform .15s ease, box-shadow .15s ease; }
+.vt-cta-principal { background: var(--vt-tinta); color: #fff !important; }
+.vt-cta-principal:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -10px rgba(21, 22, 26, .6); }
+.vt-cta-secundario { border: 1px solid var(--vt-linea); background: var(--vt-blanco); color: var(--vt-tinta) !important; }
+.vt-cta-secundario:hover { border-color: var(--vt-tinta); }
+.vt-cifras { display: flex; flex-wrap: wrap; gap: 12px 36px; margin: 32px 0 0; padding-top: 24px; border-top: 1px solid var(--vt-linea); }
+.vt-cifras div { display: flex; flex-direction: column; }
+.vt-cifras dt { font-size: clamp(1.8rem, 3vw, 2.4rem); font-weight: 800; line-height: 1; letter-spacing: -.02em; }
+.vt-cifras dd { margin: 6px 0 0; font-size: .85rem; color: var(--vt-suave); }
+.vt-tarjeta, .vt-exp-tarjeta { scroll-margin-top: calc(var(--vt-barra-alto) + var(--vt-indice-alto) + 16px); }
+
+/* 16-10 (3): portada con DOS móviles enfrentados (experiencias | apps) sobre un
+   degradado vivo de Paper Shaders. Antes era uno solo con las 38 fichas apretadas. */
+@media (min-width: 1000px) { .vt-portada { grid-template-columns: 1fr 1.08fr; } }
+.vt-moviles { position: relative; display: flex; justify-content: center; align-items: flex-start; padding: 28px 12px 84px; perspective: 1600px; isolation: isolate; }
+.vt-moviles-fondo {
+  position: absolute; inset: 0 2% 40px; z-index: -1; border-radius: 44px; overflow: hidden;
+  background: radial-gradient(80% 70% at 20% 20%, #5b2a6e, transparent 60%), radial-gradient(70% 70% at 85% 80%, #b4232a, transparent 60%), linear-gradient(160deg, #1b2547, #3a2150);
+  box-shadow: 0 40px 80px -40px rgba(27, 37, 71, .55);
+}
+.vt-moviles-fondo canvas { display: block; }
+.vt-moviles .vt-movil-zona { padding: 0; z-index: 1; justify-self: auto; }
+.vt-movil-zona-exp { margin-inline-end: -28px; z-index: 2 !important; }
+.vt-movil-zona-apps { margin-top: 72px; }
+.vt-moviles .vt-movil { width: min(262px, 43vw); border-radius: 46px; }
+.vt-movil-pantalla { position: relative; transform: translateZ(26px); transform-style: preserve-3d; padding: 6px 6px 14px; }
+.vt-movil-titulo { margin: 10px 10px 12px; color: #fff; font-weight: 800; font-size: 1.2rem; letter-spacing: -.01em; text-shadow: 0 1px 3px rgba(0, 0, 0, .35); }
+.vt-movil-lista { list-style: none; margin: 0; padding: 0; display: grid; gap: 7px; }
+.vt-movil-lista a {
+  display: flex; align-items: center; gap: 10px; padding: 7px 9px; border-radius: 16px; text-decoration: none; color: #fff !important;
+  background: rgba(255, 255, 255, .13); border: 1px solid rgba(255, 255, 255, .16); transform: translateZ(8px); transition: background .2s ease, transform .2s ease;
+}
+.vt-movil-lista a:hover { background: rgba(255, 255, 255, .24); transform: translateZ(16px); }
+.vt-movil-lista-ico { flex: none; display: grid; place-items: center; width: 36px; height: 36px; border-radius: 11px; background: var(--marca); color: var(--marca-tinta); box-shadow: 0 4px 10px rgba(0, 0, 0, .25); }
+.vt-movil-lista-txt { display: flex; flex-direction: column; min-width: 0; }
+.vt-movil-lista-txt b { font-size: .78rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.vt-movil-lista-txt small { font-size: .66rem; opacity: .75; }
+.vt-moviles .vt-movil-apps { transform: none; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 13px 6px; padding: 2px 6px 6px; }
+.vt-movil-mas .vt-ico { display: grid; place-items: center; background: rgba(255, 255, 255, .2); border: 1px solid rgba(255, 255, 255, .3); color: #fff; font-size: 1rem; }
+.vt-moviles .vt-flotante-1 { bottom: 24px; }
+@media (max-width: 520px) {
+  .vt-moviles { padding: 20px 4px 76px; }
+  .vt-moviles .vt-movil { width: 47vw; border-radius: 34px; padding: 7px 8px; }
+  .vt-movil-zona-exp { margin-inline-end: -14px; }
+  .vt-movil-zona-apps { margin-top: 48px; }
+  .vt-movil-titulo { font-size: .95rem; margin: 6px 6px 8px; }
+  .vt-movil-lista a { padding: 5px 6px; gap: 6px; border-radius: 12px; }
+  .vt-movil-lista-ico { width: 28px; height: 28px; border-radius: 9px; }
+  .vt-movil-lista-ico svg { width: 16px; height: 16px; }
+  .vt-movil-lista-txt b { font-size: .64rem; } .vt-movil-lista-txt small { font-size: .56rem; }
+  .vt-moviles .vt-movil-app { font-size: .54rem; }
+}
+
+/* Iconos Lucide para socios sin logo (en el kit, los códigos y los móviles). */
+.vt-ico-lucide { display: grid !important; place-items: center; background: var(--marca); color: var(--marca-tinta); }
+.vt-ico-lucide svg { width: 56%; height: 56%; }
+
+/* Escaparate: icono de cristal delante, kanji grande y tenue detrás. */
+.vt-exp-cara .vt-exp-kanji { position: absolute; inset-inline-end: -6px; bottom: -26px; font-size: 8.5rem; opacity: .16; letter-spacing: 0; text-shadow: none; pointer-events: none; }
+.vt-exp-cara .vt-exp-kanji.es-largo { font-size: 4.6rem; bottom: -8px; }
+.vt-exp-icono {
+  position: relative; display: grid; place-items: center; width: 88px; height: 88px; border-radius: 28px; color: var(--marca-tinta);
+  background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .32); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+  box-shadow: 0 14px 30px -10px rgba(0, 0, 0, .45), inset 0 1px 0 rgba(255, 255, 255, .35); transition: transform .4s ease;
+}
+.vt-exp-tarjeta:hover .vt-exp-icono { transform: translateY(-4px) rotate(-4deg) scale(1.06); }
+.vt-movil-lista li, .vt-movil-lista a { min-width: 0; }
+.vt-movil-lista-txt { flex: 1; overflow: hidden; }
+.vt-movil-pantalla { overflow: hidden; border-radius: 36px; }
+@media (max-width: 520px) {
+  .vt-moviles .vt-movil { width: 45vw; }
+  .vt-movil-zona-exp { margin-inline-end: -6px; }
+  .vt-movil-pantalla { border-radius: 26px; }
+}
