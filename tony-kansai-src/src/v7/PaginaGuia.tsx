@@ -526,7 +526,8 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
 }
 
 /** Para Google: el guía (con sus idiomas), la zona y las tres tarifas. */
-/** Nota media y tres reseñas reales de Tony para los datos estructurados. Los
+/** Nota media y TODAS las reseñas reales de Tony (las del Worker entran en el
+ *  build con scripts/resenas-worker.mjs) para los datos estructurados. Los
  *  buscadores de IA (ChatGPT tira de Bing) leen el JSON-LD del HTML pregenerado,
  *  no el que pinta React después; por eso va aquí y no en una petición. */
 function valoracionTony() {
@@ -535,7 +536,7 @@ function valoracionTony() {
   const media = lista.reduce((t, r) => t + r.stars, 0) / lista.length
   return {
     aggregateRating: { '@type': 'AggregateRating', ratingValue: media.toFixed(1), reviewCount: lista.length, bestRating: 5, worstRating: 1 },
-    review: lista.slice(0, 3).map((r) => ({
+    review: lista.map((r) => ({
       '@type': 'Review', author: { '@type': 'Person', name: r.name },
       reviewRating: { '@type': 'Rating', ratingValue: r.stars, bestRating: 5 }, reviewBody: r.text,
     })),

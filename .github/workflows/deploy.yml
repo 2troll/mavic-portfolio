@@ -51,6 +51,12 @@ jobs:
       # Build normal por trozos (antes era un solo HTML de 1,6 MB con todo
       # dentro: la foto de portada tardaba ~20 s en móvil lento, y el modo
       # single-file reescribía las rutas a relativas y rompía el manifest).
+      # Las reseñas aprobadas desde el móvil (Worker) entran en el HTML y el
+      # JSON-LD: si no, ni Google ni las IAs las ven.
+      - name: Reseñas del Worker dentro del build
+        run: node scripts/resenas-worker.mjs
+        working-directory: tony-kansai-src
+
       - name: Build tony-kansai guide
         run: npm run build
         working-directory: tony-kansai-src
@@ -71,6 +77,11 @@ jobs:
       - name: Rutas reales con su propia cabecera (Google y WhatsApp)
         working-directory: tony-kansai-src
         run: node scripts/rutas-estaticas.mjs ../deploy
+
+      # Texto limpio para asistentes de IA: <ruta>/index.md y /llms-full.txt.
+      - name: Textos para IA (index.md y llms-full.txt)
+        working-directory: tony-kansai-src
+        run: node scripts/textos-ia.mjs ../deploy
 
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact

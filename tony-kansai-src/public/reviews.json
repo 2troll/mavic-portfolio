@@ -1,8 +1,30 @@
 {
   "updated": "2026-10-08",
-  "count": 6,
-  "average": 5.0,
+  "count": 8,
+  "average": 5,
   "reviews": [
+    {
+      "id": "mv1y6p6v-a632bbab",
+      "stars": 5,
+      "name": "Jhon & Lisa",
+      "country": "Australia , England",
+      "tour": "Kioto",
+      "text": "We had an absolutely incredible day exploring Kyoto with Tony as our guide. We couldn't have asked for a better host or a more complete experience!\n\nWe started our morning in Arashiyama, exploring the entire Tenryu-ji temple complex and the breathtaking bamboo grove. Tony didn't just show us the sights; he shared the deep history behind everything and led us along a beautiful walk by the river.\n\nIn the afternoon, we headed to Kiyomizu-dera (the pure water temple), where Tony once again brought the history of the site to life with great storytelling. But the absolute highlights were the hidden gems he took us to:\n\nHeading up just past the pagoda on the upper street of Kiyomizu-dera, he showed us a hidden temple called Senjaku. It was an amazing surprise—there were hardly any crowds, giving it an untouched, peaceful atmosphere, and it's so hidden it doesn't even show up on Google Maps!\n\nOn the way back down, to escape the heavy crowds, Tony led us through a massive ancient cemetery. It was fascinating to see an authentic, traditional Japanese cemetery up close, pass by another serene temple along the path, and make our way back down much faster.\n\nTony is super fun, attentive.",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": "/api/resenas/fotopub?id=mv1y6p6v-a632bbab"
+    },
+    {
+      "id": "mv84cyow-69126aac",
+      "stars": 5,
+      "name": "Alba Romero Villa",
+      "country": "Spain",
+      "tour": "Kioto",
+      "text": "Tony es un guía extraordinario. Ha diseñado la ruta a medida. Teniendo en cuenta lo que habíamos visto el día anterior. Nos ha recogido en el hotel (algo muy práctico ya que los monumentos están abarrotados y encontrarse allí puede ser más difícil).  Tenía muchísimo conocimiento y ha compartido mucha historia de Kyoto y datos interesantes de un forma amena, pudiendo retener  retener la información. El pequeño plus: toma muy buenas fotos y sabe los puntos clave para sacar los mejores planos a monumentos.",
+      "lang": "es",
+      "date": "October 2026",
+      "photo": "/api/resenas/fotopub?id=mv84cyow-69126aac"
+    },
     {
       "id": "r-0006",
       "stars": 5,
