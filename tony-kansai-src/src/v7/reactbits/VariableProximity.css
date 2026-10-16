@@ -1,0 +1,16 @@
+/* VariableProximity de React Bits — MIT + Commons Clause, (c) 2026 David Haz. */
+/* Cambio: sin la Roboto Flex de Google Fonts; la web usa su propia letra variable (Tektur). */
+
+.variable-proximity { font-family: inherit; }
+
+.variable-proximity .sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

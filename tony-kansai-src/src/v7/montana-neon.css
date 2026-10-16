@@ -15,7 +15,9 @@ html .v7.v7-pagina.v7-expedicion.v7-montana {
 html .v7.v7-montana.v7-expedicion :is(h1, h2, h3) { font-stretch: 78%; font-weight: 800; letter-spacing: 0.005em; }
 html .v7.v7-montana.v7-expedicion.lang-ar :is(h1, h2, h3) { font-stretch: normal; }
 html .v7.v7-montana .mv-titulo { font-stretch: 72%; font-weight: 900; }
-html .v7.v7-montana .mv-palabra > span { background: linear-gradient(180deg, #fff 35%, #e8ffd0 72%, #c8ff2e); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+html .v7.v7-montana .mv-titulo { text-shadow: none; }
+html .v7.v7-montana .mv-titulo .gradient-text { display: inline; }
+html .v7.v7-montana .mv-titulo .gradient-text__inner, html .v7.v7-montana .mv-titulo .gradient-text__content { display: inline; }
 
 /* Rótulos, cifras y coordenadas: tipografía de instrumento, con brillo. */
 html .v7.v7-montana :is(.ex-kicker, .mv-parada-num, .mv-alt-et, .ex-portada-coord, .ex-medidor-et, .cu-kicker) { font-family: var(--mono); font-weight: 600; letter-spacing: 0.16em; text-shadow: 0 0 14px rgb(200 255 46 / 45%); }
@@ -51,7 +53,6 @@ html .v7.v7-montana .v7-oficio p { color: #b7c6d8; }
 html .v7.v7-montana .mv-cinta-hueca span { -webkit-text-stroke-color: rgb(46 242 255 / 80%); }
 html .v7.v7-montana .mv-cinta-fila span { font-family: var(--pro-titulo); font-stretch: 75%; }
 html .v7.v7-montana .mv-cinta-fila em { color: var(--pro-amarillo); }
-html .v7.v7-montana .mv-yama { -webkit-text-stroke: 1px rgb(46 242 255 / 45%); }
 html .v7.v7-montana .mv-parada { border-color: rgb(46 242 255 / 32%); box-shadow: 0 30px 60px -30px rgb(0 0 0 / 90%); }
 html .v7.v7-montana .mv-parada-kanji { text-shadow: 0 0 16px rgb(46 242 255 / 50%); }
 html .v7.v7-montana .mv-progreso li.activa { text-shadow: 0 0 12px var(--pro-amarillo); }
@@ -104,66 +105,10 @@ html .v7.v7-montana .mv-portada :is(.ex-kicker, .ex-portada-coord span) { color:
 html .v7.v7-montana .mv-portada .ex-regla { background: var(--tp); box-shadow: 0 0 12px var(--tp); }
 html .v7.v7-montana .mv-portada .ex-cifras > div { border-top-color: var(--tp); }
 html .v7.v7-montana .mv-portada .ex-baja { background: var(--tp); border-color: var(--tp); box-shadow: 0 0 0 1px var(--tp), 0 0 26px var(--tp-suave); }
-html .v7.v7-montana .mv-portada .mv-yama { background: linear-gradient(180deg, var(--tp-suave), transparent 85%); -webkit-background-clip: text; background-clip: text; -webkit-text-stroke-color: var(--tp-suave); }
 html .v7.v7-montana .mv-portada h1::after { background: var(--tp) !important; box-shadow: 0 0 16px var(--tp-suave); }
 html .v7.v7-montana :is(.mv-portada, .es-selector) .es-boton[aria-pressed='true'] { box-shadow: 0 0 22px var(--tp-suave); }
-
-/* Cada palabra lleva su material; los carámbanos y gotas cuelgan por debajo. */
-html .v7.v7-montana :is(.tp-invierno, .tp-verano, .tp-primavera, .tp-otono) .mv-palabra { padding-bottom: 0.32em; margin-bottom: -0.32em; }
-html .v7.v7-montana .mv-palabra > span { position: relative; background-size: 100% 100%; }
-html .v7.v7-montana .mv-palabra > span::after { content: ''; position: absolute; inset-inline: 3%; top: 88%; height: 0.26em; background-repeat: repeat-x; background-size: 0.62em 100%; pointer-events: none; }
-
-/* 冬 Invierno: hielo azulado con escarcha dentro y carámbanos colgando. */
-html .v7.v7-montana.tp-invierno .mv-palabra > span {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.1' numOctaves='2' seed='4'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1.7 -0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"),
-    linear-gradient(170deg, #ffffff 0%, #e6f7ff 30%, #9fd6ff 62%, #5aa9e6 82%, #dff3ff 100%);
-  background-size: 160px 160px, 100% 100%;
-}
-html .v7.v7-montana.tp-invierno .mv-palabra > span::after {
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 26' preserveAspectRatio='none'%3E%3Cpath d='M0 0h40v2h-3l-2.5 15L32 2h-6l-1.5 8L23 2h-7l-3 23L10 2H6L4.5 9 3 2H0z' fill='%23e3f5ff' fill-opacity='.92'/%3E%3Cpath d='M12 2h1.6L13 18z' fill='%23fff'/%3E%3C/svg%3E");
-}
-
-/* 夏 Verano: metal al rojo que se derrite y gotea despacio. */
-html .v7.v7-montana.tp-verano .mv-palabra > span { background-image: linear-gradient(180deg, #fff8c4 0%, #ffd23f 28%, #ff9a1f 58%, #ff4d2e 86%, #d91a3c 100%); }
-html .v7.v7-montana.tp-verano .mv-palabra > span::after {
-  top: 76%; height: 0.3em; transform-origin: 50% 0; background-size: 1.1em 100%;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 30' preserveAspectRatio='none'%3E%3Cg fill='%23d91a3c'%3E%3Cpath d='M6 0h6v14a3 3 0 0 1-6 0z'/%3E%3Cpath d='M22 0h5v24a2.5 2.5 0 0 1-5 0z'/%3E%3Cpath d='M38 0h4v9a2 2 0 0 1-4 0z'/%3E%3Cpath d='M49 0h6v18a3 3 0 0 1-6 0z'/%3E%3C/g%3E%3C/svg%3E");
-  animation: mv-gotea 3.6s ease-in-out infinite alternate;
-}
-@keyframes mv-gotea { from { transform: scaleY(0.55); } to { transform: scaleY(1.12); } }
-
-/* 春 Primavera: rosa de sakura con florecillas dentro y una flor sobre cada palabra. */
-html .v7.v7-montana.tp-primavera .mv-palabra > span {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='70' viewBox='0 0 70 70'%3E%3Cg fill='%23ffffff' fill-opacity='.55'%3E%3Cg transform='translate(18 20)'%3E%3Ccircle r='2.2' fill='%23ff6fa3'/%3E%3Cellipse cy='-5' rx='3' ry='4.4'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(72)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(144)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(216)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(288)'/%3E%3C/g%3E%3Cg transform='translate(52 52) scale(.7)'%3E%3Cellipse cy='-5' rx='3' ry='4.4'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(72)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(144)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(216)'/%3E%3Cellipse cy='-5' rx='3' ry='4.4' transform='rotate(288)'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(180deg, #ffffff 0%, #ffe3ef 35%, #ffb3d1 70%, #ff7fb0 100%);
-  background-size: 70px 70px, 100% 100%;
-}
-html .v7.v7-montana.tp-primavera .mv-titulo > span:not(:first-child) .mv-palabra > span::after { content: none; }
-html .v7.v7-montana.tp-primavera .mv-palabra > span::after {
-  inset-inline: auto -0.14em; top: -0.1em; width: 0.34em; height: 0.34em; background-size: contain; background-repeat: no-repeat;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-12 -12 24 24'%3E%3Cg fill='%23ffd1e3' stroke='%23ff6fa3' stroke-width='.6'%3E%3Cpath d='M0-1C-3-4-3-9 0-11c3 2 3 7 0 10z'/%3E%3Cpath d='M0-1C-3-4-3-9 0-11c3 2 3 7 0 10z' transform='rotate(72)'/%3E%3Cpath d='M0-1C-3-4-3-9 0-11c3 2 3 7 0 10z' transform='rotate(144)'/%3E%3Cpath d='M0-1C-3-4-3-9 0-11c3 2 3 7 0 10z' transform='rotate(216)'/%3E%3Cpath d='M0-1C-3-4-3-9 0-11c3 2 3 7 0 10z' transform='rotate(288)'/%3E%3C/g%3E%3Ccircle r='2' fill='%23ff3d86'/%3E%3C/svg%3E");
-  animation: mv-flor 6s ease-in-out infinite;
-}
-@keyframes mv-flor { 50% { transform: rotate(40deg) scale(1.08); } }
-
-/* 秋 Otoño: oro, naranja y rojo de arce, con hojas grabadas dentro. */
-html .v7.v7-montana.tp-otono .mv-palabra > span {
-  background-image:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='90' height='90' viewBox='0 0 90 90'%3E%3Cg fill='%23fff3c4' fill-opacity='.28'%3E%3Cpath transform='translate(24 26) rotate(-20) scale(.9)' d='M0-12l2 6 5-3-1 6 6 1-4 4 3 3-6 0 0 7-1 0 0-7-6 0 3-3-4-4 6-1-1-6 5 3z'/%3E%3Cpath transform='translate(66 64) rotate(25) scale(.7)' d='M0-12l2 6 5-3-1 6 6 1-4 4 3 3-6 0 0 7-1 0 0-7-6 0 3-3-4-4 6-1-1-6 5 3z'/%3E%3C/g%3E%3C/svg%3E"),
-    linear-gradient(180deg, #ffe9a3 0%, #ffbf3b 30%, #ff7a1f 60%, #e2341c 85%, #a8121c 100%);
-  background-size: 90px 90px, 100% 100%;
-}
-html .v7.v7-montana.tp-otono .mv-titulo > span:first-child .mv-palabra > span::after {
-  inset-inline: auto -0.12em; top: -0.12em; width: 0.4em; height: 0.4em; background-size: contain; background-repeat: no-repeat;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='-13 -13 26 26'%3E%3Cpath d='M0-12l2 6 5-3-1 6 6 1-4 4 3 3-6 0 0 7-1 0 0-7-6 0 3-3-4-4 6-1-1-6 5 3z' fill='%23ff5a1f' stroke='%23ffd27a' stroke-width='.5'/%3E%3C/svg%3E");
-  animation: mv-hoja 5s ease-in-out infinite;
-}
-@keyframes mv-hoja { 50% { transform: rotate(-24deg) translateY(0.04em); } }
 
 /* El resto de titulares grandes de la página toma solo el color de la estación. */
 html .v7.v7-montana:is(.tp-invierno, .tp-verano, .tp-primavera, .tp-otono) :is(.mv-travesia-intro h2, .v7-montana-final h2) {
   background: linear-gradient(180deg, #fff 40%, var(--tp)); -webkit-background-clip: text; background-clip: text; color: transparent;
 }
-@media (prefers-reduced-motion: reduce) { html .v7.v7-montana .mv-palabra > span::after { animation: none; } }

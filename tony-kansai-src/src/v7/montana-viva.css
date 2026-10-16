@@ -16,13 +16,6 @@ html.lenis { scroll-behavior: auto !important; }
 .mv-palabra > span { display: inline-block; transform-origin: 0 100%; }
 [dir='rtl'] .mv-palabra > span { transform-origin: 100% 100%; }
 
-/* Kanji gigante en contorno, al lado del titular. */
-.mv-yama {
-  position: absolute; z-index: 0; inset-inline-end: 3vw; bottom: 14vh; pointer-events: none; user-select: none;
-  font-family: var(--mincho); font-weight: 700; font-size: min(58vh, 42vw); line-height: 1;
-  color: transparent; background: linear-gradient(180deg, rgb(228 255 150 / 55%), rgb(200 255 46 / 8%) 85%); -webkit-background-clip: text; background-clip: text;
-  mix-blend-mode: overlay;
-}
 .mv-portada .ex-portada-texto { position: relative; z-index: 1; padding-bottom: 19vh; }
 
 /* Crestas con el perfil real: suben al bajar y tapan la foto. */

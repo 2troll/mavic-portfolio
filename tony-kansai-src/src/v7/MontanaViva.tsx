@@ -25,6 +25,9 @@ import { CapaEstacion, SelectorEstacion, useEstacion } from './Estaciones'
 import type { Estacion } from './Estaciones'
 import { Cuenta, Credito } from './Expedicion'
 import { Contador } from './Cocina'
+import GradientText from './reactbits/GradientText'
+import VariableProximity from './reactbits/VariableProximity'
+import ShinyText from './reactbits/ShinyText'
 import './montana-viva.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -114,6 +117,14 @@ function Rayos() {
   )
 }
 
+// Paleta del titular por estación (GradientText de React Bits en modo «flow»).
+const TINTAS: Record<Estacion, string[]> = {
+  invierno: ['#ffffff', '#d6f1ff', '#8fd0ff', '#f2fbff'],
+  primavera: ['#ffffff', '#ffe0ec', '#ff9cc6', '#fff4f8'],
+  verano: ['#fff6cc', '#ffd23f', '#ff8a1f', '#fff1b3'],
+  otono: ['#ffe6a6', '#ffa135', '#e9472a', '#ffd27a'],
+}
+
 export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion; lang: Lengua; maxGrupo: number; onBaja: () => void }) {
   const ref = useRef<HTMLElement>(null)
   const prefecturas = new Set([...CUMBRES.map((c) => c.prefectura.en), 'Osaka', 'Kyoto', 'Hyōgo', 'Nara'])
@@ -127,7 +138,6 @@ export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion
       const tl = gsap.timeline({ defaults: { ease: 'expo.out' } })
       tl.from('.mv-palabra > span', { yPercent: 118, rotate: 5, duration: 1.3, stagger: 0.09 }, 0.15)
         .from('.ex-kicker, .ex-entradilla, .ex-cifras > div, .ex-baja', { y: 34, opacity: 0, duration: 1, stagger: 0.07 }, 0.55)
-        .from('.mv-yama', { opacity: 0, scale: 1.12, duration: 2.4, ease: 'power2.out' }, 0)
         .from('.mv-cresta', { yPercent: 100, duration: 1.8, stagger: 0.15 }, 0.2)
 
       // Al bajar: la foto se aleja, el texto se va y las crestas suben a tapar la foto.
@@ -135,7 +145,6 @@ export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion
       const st = { trigger: raiz, start: 'top top', end: 'bottom top', scrub: 0.6 }
       gsap.to('.ex-portada-foto', { scale: 1.18, yPercent: 14, ease: 'none', scrollTrigger: st })
       gsap.to('.ex-portada-texto', { yPercent: -28, opacity: 0, ease: 'none', scrollTrigger: { ...st, end: '75% top' } })
-      gsap.to('.mv-yama', { yPercent: -40, ease: 'none', scrollTrigger: st })
       gsap.to('.mv-cresta-atras', { yPercent: -38, ease: 'none', scrollTrigger: st })
       gsap.to('.mv-cresta-delante', { yPercent: -78, ease: 'none', scrollTrigger: st })
     }, raiz)
@@ -160,13 +169,19 @@ export function PortadaViva({ t, lang, maxGrupo, onBaja }: { t: TextosExpedicion
       <div className="ex-portada-velo" aria-hidden="true" />
       <Rayos />
       <CapaEstacion />
-      <span className="mv-yama" lang="ja" aria-hidden="true">山</span>
       <SelectorEstacion lang={lang} />
       <div className="ex-portada-texto">
-        <p className="ex-kicker"><span className="ex-regla" aria-hidden="true" />{t.cabecera} <span lang="ja">関西の山</span></p>
+        <p className="ex-kicker"><span className="ex-regla" aria-hidden="true" />
+          <ShinyText text={t.cabecera} color={TINTAS[estacion][2]} shineColor="#ffffff" speed={3.2} delay={1.2} /> <span lang="ja">関西の山</span></p>
         <h1 id="ex-titulo" className="mv-titulo">
           {t.portada.titulo.split(' ').map((w, i) => (
-            <span key={i}><span className="mv-palabra"><span>{w}</span></span>{' '}</span>
+            <span key={i}><span className="mv-palabra"><span>
+              <GradientText colors={TINTAS[estacion]} variant="flow" animationSpeed={9} scale={2.4}>
+                {/* El árabe va entero: partirlo en letras rompe las ligaduras. */}
+                {lang === 'ar' ? w : <VariableProximity label={w} containerRef={ref} radius={190} falloff="gaussian"
+                  fromFontVariationSettings="'wght' 900, 'wdth' 72" toFontVariationSettings="'wght' 420, 'wdth' 100" />}
+              </GradientText>
+            </span></span>{' '}</span>
           ))}
         </h1>
         <p className="ex-entradilla">{t.portada.sub}</p>
