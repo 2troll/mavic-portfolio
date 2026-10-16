@@ -16,7 +16,7 @@ import { CapaEstacion, SelectorEstacion } from './Estaciones'
 const foto = (id: MonteId | 'portada', ancho: 800 | 1600 = 1600) => `/v7/expedicion/${id}${ancho === 800 ? '-800' : ''}.webp`
 
 /** Número que cuenta hasta su valor cuando entra en pantalla. */
-function Cuenta({ valor, lang }: { valor: number; lang: Lengua }) {
+export function Cuenta({ valor, lang }: { valor: number; lang: Lengua }) {
   const ref = useRef<HTMLSpanElement>(null)
   const visto = useInView(ref, { once: true })
   const quieto = useReducedMotion()
@@ -30,7 +30,7 @@ function Cuenta({ valor, lang }: { valor: number; lang: Lengua }) {
   return <span ref={ref}>{fmt(quieto ? valor : 0)}</span>
 }
 
-function Credito({ id, t }: { id: MonteId | 'portada'; t: TextosExpedicion }) {
+export function Credito({ id, t }: { id: MonteId | 'portada'; t: TextosExpedicion }) {
   const c = CREDITOS[id]
   return (
     <a className="ex-credito" href={c.pagina} target="_blank" rel="noopener noreferrer" lang="en" dir="ltr">

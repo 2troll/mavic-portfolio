@@ -1,6 +1,6 @@
 // Página de montaña (una por idioma): /es/montana/, /en/hiking/, /ar/hiking/, /ru/hiking/.
 
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
@@ -15,7 +15,8 @@ import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import './v7.css'
 import './expedicion.css'
-import { Portada, Atlas, Corte, Medidor, Meses } from './Expedicion'
+import { Atlas, Corte, Medidor, Meses } from './Expedicion'
+import { PortadaViva, Travesia, SelloMetal, useSuave, useRevelados, suaveA } from './MontanaViva'
 import { EXP, CREDITOS as CREDITOS_FOTO } from './datosExpedicion'
 import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
@@ -72,6 +73,9 @@ const ruta = (id: MonteId) => HIKING_ROUTES.find((r) => r.id === id) as Ruta
 
 export default function Montana({ id }: { id: MontanaId }) {
   const p = MONTANA[id]
+  const raiz = useRef<HTMLDivElement>(null)
+  useSuave()
+  useRevelados(raiz)
   const { setLang, tc } = useLanguage()
   const nombreGuia = (g: 'tony' | 'larion') => (p.lang === 'ar' && g === 'tony' ? 'طوني' : p.lang === 'ru' ? 'Ларион' : g === 'tony' ? 'Tony' : 'Larion')
 
@@ -93,7 +97,7 @@ export default function Montana({ id }: { id: MontanaId }) {
     if (!el) return
     const recorrido = el.offsetHeight - window.innerHeight
     const top = el.getBoundingClientRect().top + window.scrollY + (recorrido * i) / MONTES.length
-    window.scrollTo({ top, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' })
+    suaveA(top)
   }
   const precioDe = (m: MonteId) => `${milesLocal(ruta(m).price, p.lang)} ${p.et.porGrupo}`
 
@@ -148,7 +152,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   }
 
   return (
-    <div className={`v7 v7-pagina v7-montana v7-expedicion lang-${p.lang}`} lang={p.lang} dir={p.dir}>
+    <div ref={raiz} className={`v7 v7-pagina v7-montana v7-expedicion lang-${p.lang}`} lang={p.lang} dir={p.dir}>
       <Helmet>
         <html lang={p.lang} dir={p.dir} />
         <title>{p.seo.titulo}</title>
@@ -183,7 +187,11 @@ export default function Montana({ id }: { id: MontanaId }) {
       </header>
 
       <main>
-        <Portada t={t} lang={p.lang} maxGrupo={MAX_GRUPO} onBaja={() => document.getElementById('atlas')?.scrollIntoView({ behavior: 'smooth' })} />
+        <PortadaViva t={t} lang={p.lang} maxGrupo={MAX_GRUPO} onBaja={() => suaveA(document.getElementById('atlas'))} />
+        <Travesia lang={p.lang} onVer3d={(i) => irA3d(i + 1)} paradas={MONTES.map((m) => {
+          const r = ruta(m)
+          return { id: m, nombre: tc(r.title), sub: tc(r.subtitle), altura: CIMA[m].m, duracion: tc(r.duration), precio: precioDe(m), pedir: p.et.pedir, wa: wa(p.guias[0], tc(r.title)) }
+        })} />
         <Atlas t={t} lang={p.lang} nombre={(m) => tc(ruta(m).title)} sub={(m) => tc(ruta(m).subtitle)} grado={(m) => tc(ruta(m).grade)}
           precio={precioDe} wa={(m) => wa(p.guias[0], tc(ruta(m).title))} onVer3d={(i) => irA3d(i + 1)} />
         <MontesScroll tinta="#e8b23a" bruma={[0.93, 0.89, 0.8]} montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
@@ -206,6 +214,7 @@ export default function Montana({ id }: { id: MontanaId }) {
 
         <section className="v7-seccion v7-montana-final">
           <EfectoEstacion estacion={estacionDeHoy()} cantidad={10} />
+          <SelloMetal />
           <h2>{p.final.titulo}</h2>
           <p className="v7-entradilla">{p.final.sub}</p>
           <div className="v7-montana-guias">

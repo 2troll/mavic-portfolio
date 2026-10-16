@@ -1,0 +1,95 @@
+/* Página de montaña «viva» (MontanaViva.tsx). */
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto !important; }
+
+/* ── Portada ── */
+.mv-portada { min-height: max(720px, 108svh); }
+.mv-portada .ex-portada-foto { transform-origin: 50% 30%; will-change: transform; }
+.mv-rayos { position: absolute; inset: 0; z-index: -1; mix-blend-mode: screen; opacity: 0.75; pointer-events: none; }
+.mv-titulo { font-size: clamp(4rem, 12.5vw, 13.5rem) !important; line-height: 0.86 !important; max-width: none !important; letter-spacing: -0.02em; text-shadow: none !important; filter: drop-shadow(0 4px 30px rgb(0 0 0 / 45%)); }
+.lang-ar .mv-titulo { font-size: clamp(3.2rem, 9vw, 8.5rem) !important; line-height: 1.2 !important; }
+.lang-ru .mv-titulo { font-size: clamp(3.2rem, 9.5vw, 10rem) !important; }
+.mv-palabra { display: inline-block; overflow: hidden; vertical-align: top; padding-block: 0.04em 0.08em; margin-block: -0.04em -0.08em; }
+.mv-palabra > span { display: inline-block; transform-origin: 0 100%; }
+[dir='rtl'] .mv-palabra > span { transform-origin: 100% 100%; }
+
+/* Kanji gigante en contorno, al lado del titular. */
+.mv-yama {
+  position: absolute; z-index: 0; inset-inline-end: 3vw; bottom: 14vh; pointer-events: none; user-select: none;
+  font-family: var(--mincho); font-weight: 700; font-size: min(58vh, 42vw); line-height: 1;
+  color: transparent; background: linear-gradient(180deg, rgb(255 214 130 / 55%), rgb(240 179 58 / 8%) 85%); -webkit-background-clip: text; background-clip: text;
+  mix-blend-mode: overlay;
+}
+.mv-portada .ex-portada-texto { position: relative; z-index: 1; padding-bottom: 19vh; }
+
+/* Crestas con el perfil real: suben al bajar y tapan la foto. */
+.mv-cresta { position: absolute; inset-inline: 0; bottom: -2px; width: 100%; height: 50vh; z-index: 2; pointer-events: none; will-change: transform; }
+.mv-cresta path { fill: var(--ex-noche); }
+.mv-cresta-atras { height: 62vh; bottom: -34vh; }
+.mv-cresta-atras path { fill: #1a2117; opacity: 0.92; }
+.mv-cresta-delante { bottom: -32vh; height: 56vh; }
+.mv-portada .ex-portada-coord, .mv-portada .ex-credito { z-index: 3; }
+
+/* ── Travesía horizontal ── */
+.mv-travesia { position: relative; overflow: hidden; isolation: isolate; background: var(--ex-noche); }
+.mv-cielo { position: absolute; inset: 0; z-index: -1; opacity: 0.85; }
+.mv-cielo::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, var(--ex-noche), transparent 18%, transparent 80%, var(--ex-noche)); }
+.mv-pista { display: flex; align-items: center; gap: clamp(28px, 4vw, 64px); height: 100svh; min-height: 640px; padding: 90px max(24px, calc((100vw - var(--ancho, 1200px)) / 2)) 80px; width: max-content; will-change: transform; }
+.mv-travesia-intro { width: min(520px, 80vw); flex: none; display: grid; gap: 18px; }
+.mv-travesia-intro h2 { font-size: clamp(2.8rem, 6vw, 6rem); line-height: 0.92; margin: 0; }
+.lang-ar .mv-travesia-intro h2 { line-height: 1.25; }
+.mv-flecha { font-size: 3rem; color: var(--ex-oro); animation: mv-empuja 1.6s ease-in-out infinite; }
+@keyframes mv-empuja { 50% { transform: translateX(14px); } }
+[dir='rtl'] .mv-flecha { animation-name: mv-empuja-rtl; }
+@keyframes mv-empuja-rtl { 50% { transform: translateX(-14px); } }
+
+.mv-parada { position: relative; flex: none; width: clamp(560px, 62vw, 980px); height: min(72vh, 640px); display: grid; grid-template-columns: 1.15fr 1fr; border: 1px solid rgb(241 236 225 / 22%); background: rgb(11 13 10 / 55%); -webkit-backdrop-filter: blur(14px) saturate(1.3); backdrop-filter: blur(14px) saturate(1.3); box-shadow: 0 40px 90px -40px rgb(0 0 0 / 85%); }
+.mv-parada-foto { overflow: hidden; position: relative; }
+.mv-parada-foto img { width: 100%; height: 100%; object-fit: cover; will-change: transform; }
+.mv-parada-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 55%, rgb(11 13 10 / 70%)); }
+[dir='rtl'] .mv-parada-foto::after { background: linear-gradient(270deg, transparent 55%, rgb(11 13 10 / 70%)); }
+.mv-parada-kanji { position: absolute; top: -0.32em; inset-inline-start: 18px; z-index: 2; font-family: var(--mincho); font-size: clamp(4.5rem, 8vw, 8rem); font-weight: 700; line-height: 1; color: var(--ex-papel); writing-mode: vertical-rl; text-shadow: 0 6px 40px rgb(0 0 0 / 70%); pointer-events: none; }
+.mv-parada-texto { display: flex; flex-direction: column; gap: 10px; padding: 34px 32px 28px; min-width: 0; }
+.mv-parada-num { margin: 0; color: var(--ex-oro); font-size: 12.5px; font-weight: 700; letter-spacing: 0.22em; }
+.mv-parada-num span { font-family: var(--mincho); margin-inline-end: 8px; }
+.mv-parada h3 { margin: 0; font-size: clamp(1.8rem, 2.8vw, 2.7rem); line-height: 1; }
+.mv-parada-sub { margin: 0; color: var(--ex-tenue); font-size: 0.98rem; line-height: 1.5; }
+.mv-parada .mv-parada-altura { margin: auto 0 0; }
+.mv-parada-altura { font-family: var(--ex-serif); font-size: clamp(3.6rem, 6vw, 6rem); font-weight: 600; line-height: 0.9; font-variant-numeric: tabular-nums lining-nums; color: var(--ex-papel); }
+.mv-parada-altura small { font-size: 0.32em; color: var(--ex-oro); letter-spacing: 0.1em; }
+.mv-linea { width: 100%; height: 64px; display: block; }
+.mv-linea-area { fill: rgb(240 179 58 / 14%); }
+.mv-linea-trazo { fill: none; stroke: var(--ex-oro); stroke-width: 2; vector-effect: non-scaling-stroke; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.mv-parada-datos { display: flex; justify-content: space-between; gap: 12px; margin: 0; padding-top: 10px; border-top: 1px solid var(--ex-linea); color: var(--ex-tenue); font-size: 0.92rem; }
+.mv-parada-datos span:last-child { color: var(--ex-papel); font-weight: 600; }
+.mv-parada-botones { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.mv-3d { background: none; border: 1px solid var(--ex-linea); color: var(--ex-papel); padding: 9px 14px; font: inherit; font-size: 0.85rem; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
+.mv-3d:hover { border-color: var(--ex-oro); color: var(--ex-oro); }
+
+.mv-progreso { position: absolute; bottom: 26px; inset-inline: 0; margin: 0 auto; padding: 0; list-style: none; display: flex; justify-content: center; gap: 6px; z-index: 2; }
+.mv-progreso li { min-width: 46px; padding: 0 8px; white-space: nowrap; height: 34px; display: grid; place-items: center; border-bottom: 2px solid var(--ex-linea); color: var(--ex-tenue); font-family: var(--mincho); font-size: 13px; transition: color 0.3s, border-color 0.3s; }
+.mv-progreso li.hecha { border-color: rgb(240 179 58 / 55%); }
+.mv-progreso li.activa { border-color: var(--ex-oro); color: var(--ex-oro); transform: translateY(-3px); }
+
+@media (max-width: 859px) {
+  .mv-pista { height: auto; min-height: 0; width: auto; overflow-x: auto; scroll-snap-type: x mandatory; padding: 72px 20px 90px; align-items: stretch; overscroll-behavior-x: contain; scrollbar-width: none; }
+  .mv-travesia-intro, .mv-parada { scroll-snap-align: center; }
+  .mv-parada { width: 86vw; height: auto; grid-template-columns: 1fr; grid-template-rows: 46vw auto; }
+  .mv-parada-texto { padding: 22px 20px; }
+  .mv-parada-kanji { font-size: 4rem; }
+  .mv-parada-foto::after { background: linear-gradient(180deg, transparent 50%, rgb(11 13 10 / 75%)); }
+  .mv-progreso { display: none; }
+  .mv-titulo { font-size: clamp(3.3rem, 15vw, 6rem) !important; }
+  .mv-yama { font-size: 70vw; bottom: 22vh; opacity: 0.7; }
+}
+
+/* ── Sello de metal en la llamada final ── */
+.v7-montana-final { position: relative; }
+.mv-metal { width: min(320px, 60vw); aspect-ratio: 1; margin: 0 auto -10px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .mv-flecha { animation: none; }
+  .mv-metal { display: none; }
+}
+.mv-solo-movil { display: none; }
+@media (max-width: 859px) { .mv-solo-ancho { display: none; } .mv-solo-movil { display: inline; } }
