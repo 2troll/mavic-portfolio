@@ -59,10 +59,10 @@ export function Vuelo3d({ monte, etiqueta, textos }: Props) {
               { id: 'sendas-halo', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['in', ['get', 'class'], ['literal', ['path', 'track']]],
                 paint: { 'line-color': '#0b0d0a', 'line-width': 4, 'line-opacity': 0.5 } },
               { id: 'sendas', type: 'line', source: 'osm', 'source-layer': 'transportation', filter: ['in', ['get', 'class'], ['literal', ['path', 'track']]],
-                paint: { 'line-color': '#f0b33a', 'line-width': 1.8, 'line-dasharray': [2, 1.2] } },
+                paint: { 'line-color': '#c8ff2e', 'line-width': 1.8, 'line-dasharray': [2, 1.2] } },
             ],
             terrain: { source: 'relieve', exaggeration: 1.35 },
-            sky: { 'sky-color': '#1a2230', 'horizon-color': '#c9b48a', 'fog-color': '#0b0d0a', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.4 },
+            sky: { 'sky-color': '#1a2230', 'horizon-color': '#0d3b4f', 'fog-color': '#03060c', 'sky-horizon-blend': 0.6, 'horizon-fog-blend': 0.6, 'fog-ground-blend': 0.4 },
           },
         })
       } catch {

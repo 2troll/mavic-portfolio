@@ -1,0 +1,93 @@
+/* ═══ Montaña neón: senderismo de noche con frontal, en clave futurista ═══
+   Lima de frontal (#c8ff2e) y cian de glaciar (#2ef2ff) sobre azul noche.
+   Titulares en Tektur estrecha, texto en Geist, datos en Geist Mono.
+   Va la última: solo retoca lo que montana-pro.css deja en otro tono. */
+@import '@fontsource-variable/tektur/standard.css';
+@import '@fontsource-variable/geist-mono';
+
+html .v7.v7-pagina.v7-expedicion.v7-montana {
+  --mono: 'Geist Mono Variable', ui-monospace, monospace;
+  background:
+    radial-gradient(1200px 600px at 80% -10%, rgb(46 242 255 / 7%), transparent 60%),
+    radial-gradient(900px 500px at 0% 40%, rgb(200 255 46 / 5%), transparent 60%),
+    #05070c;
+}
+html .v7.v7-montana.v7-expedicion :is(h1, h2, h3) { font-stretch: 78%; font-weight: 800; letter-spacing: 0.005em; }
+html .v7.v7-montana.v7-expedicion.lang-ar :is(h1, h2, h3) { font-stretch: normal; }
+html .v7.v7-montana .mv-titulo { font-stretch: 72%; font-weight: 900; }
+html .v7.v7-montana .mv-palabra > span { background: linear-gradient(180deg, #fff 35%, #e8ffd0 72%, #c8ff2e); -webkit-background-clip: text; background-clip: text; color: transparent; text-shadow: none; }
+html .v7.v7-montana .mv-titulo { filter: drop-shadow(0 0 26px rgb(200 255 46 / 25%)) drop-shadow(0 4px 24px rgb(0 0 0 / 50%)); }
+
+/* Rótulos, cifras y coordenadas: tipografía de instrumento, con brillo. */
+html .v7.v7-montana :is(.ex-kicker, .mv-parada-num, .mv-alt-et, .ex-portada-coord, .ex-medidor-et, .cu-kicker) { font-family: var(--mono); font-weight: 600; letter-spacing: 0.16em; text-shadow: 0 0 14px rgb(200 255 46 / 45%); }
+html .v7.v7-montana.lang-ar :is(.ex-kicker, .mv-parada-num, .mv-alt-et, .ex-medidor-et, .cu-kicker) { font-family: inherit; letter-spacing: 0; }
+html .v7.v7-montana .ex-regla { box-shadow: 0 0 12px var(--pro-amarillo); }
+html .v7.v7-montana :is(.ex-cifras dt, .mv-parada-altura, .ex-banda dt) { font-family: var(--pro-titulo); font-stretch: 75%; text-shadow: 0 0 28px rgb(46 242 255 / 35%); }
+
+/* Botones de señal: lima con halo. */
+html .v7.v7-montana :is(.v7-boton, .ex-baja) { box-shadow: 0 0 0 1px rgb(200 255 46 / 60%), 0 0 26px rgb(200 255 46 / 35%); color: #05070c; transition: box-shadow 0.25s, transform 0.25s; }
+html .v7.v7-montana :is(.v7-boton, .ex-baja):hover { box-shadow: 0 0 0 1px #fff, 0 0 40px rgb(200 255 46 / 65%); transform: translateY(-2px); }
+html .v7.v7-montana .v7-cabecera { background: rgb(5 7 12 / 78%); border-bottom: 1px solid rgb(46 242 255 / 22%); box-shadow: 0 1px 24px rgb(46 242 255 / 10%); }
+
+/* Secciones que antes eran papel: ahora rejilla de plano técnico sobre azul noche. */
+html .v7.v7-montana :is(.ex-atlas, #oficio, .cu-faq) {
+  background-color: #070c14;
+  background-image:
+    linear-gradient(rgb(46 242 255 / 6%) 1px, transparent 1px),
+    linear-gradient(90deg, rgb(46 242 255 / 6%) 1px, transparent 1px);
+  background-size: 56px 56px;
+  box-shadow: 0 0 0 100vmax #070c14;
+}
+html .v7.v7-montana :is(.ex-atlas, #oficio, .cu-faq) h2 { color: #fff; text-shadow: 0 0 40px rgb(46 242 255 / 25%); }
+html .v7.v7-montana :is(.ex-atlas, #oficio) .ex-kicker { color: var(--pro-amarillo); }
+html .v7.v7-montana .ex-panel-ficha { background: rgb(11 18 32 / 80%); border: 1px solid var(--neon-linea); border-top: 3px solid var(--pro-amarillo); box-shadow: 0 0 60px -20px rgb(46 242 255 / 40%); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); }
+html .v7.v7-montana .ex-panel-ficha h3 [lang='ja'] { color: var(--neon-cian); text-shadow: 0 0 18px rgb(46 242 255 / 60%); }
+html .v7.v7-montana .ex-vuelo-rejilla { background: #0b1220; border: 1px solid var(--neon-linea); box-shadow: 0 0 60px -20px rgb(46 242 255 / 35%); }
+html .v7.v7-montana .ex-calendario td.si { background: rgb(46 242 255 / 45%); }
+html .v7.v7-montana .ex-calendario tr.activo td.si { background: var(--pro-amarillo); box-shadow: 0 0 10px rgb(200 255 46 / 60%); }
+html .v7.v7-montana .ex-corte-linea { stroke: var(--neon-cian) !important; filter: drop-shadow(0 0 4px rgb(46 242 255 / 80%)); }
+html .v7.v7-montana .ex-corte-area { fill: rgb(46 242 255 / 10%) !important; }
+html .v7.v7-montana .v7-oficio li.tarjeta h3 { color: #fff; }
+html .v7.v7-montana .v7-oficio p { color: #b7c6d8; }
+html .v7.v7-montana .mv-linea-trazo { filter: drop-shadow(0 0 5px rgb(200 255 46 / 90%)); }
+html .v7.v7-montana .mv-cinta-hueca span { -webkit-text-stroke-color: rgb(46 242 255 / 80%); text-shadow: 0 0 30px rgb(46 242 255 / 25%); }
+html .v7.v7-montana .mv-cinta-fila span { font-family: var(--pro-titulo); font-stretch: 75%; }
+html .v7.v7-montana .mv-cinta-fila em { color: var(--pro-amarillo); text-shadow: 0 0 14px var(--pro-amarillo); }
+html .v7.v7-montana .mv-yama { -webkit-text-stroke: 1px rgb(46 242 255 / 45%); }
+html .v7.v7-montana .mv-parada { border-color: rgb(46 242 255 / 28%); box-shadow: 0 0 0 1px rgb(46 242 255 / 6%), 0 40px 90px -40px rgb(0 0 0 / 90%), 0 0 60px -30px rgb(46 242 255 / 45%); }
+html .v7.v7-montana .mv-parada-kanji { text-shadow: 0 0 30px rgb(46 242 255 / 55%), 0 6px 40px rgb(0 0 0 / 70%); }
+html .v7.v7-montana .mv-progreso li.activa { text-shadow: 0 0 12px var(--pro-amarillo); }
+html .v7.v7-montana .mv-alt-carril::before { background: linear-gradient(0deg, var(--neon-cian), var(--pro-amarillo)); }
+
+/* ── Mapa neón (MapaNeon en MontanaViva.tsx) ── */
+.mv-mapa { position: relative; margin: 0; }
+.mv-mapa-lienzo { height: min(72vh, 680px); min-height: 460px; background: #020409; border: 1px solid var(--neon-linea); box-shadow: 0 0 80px -20px rgb(46 242 255 / 40%), inset 0 0 120px rgb(0 0 0 / 80%); overflow: hidden; }
+.mv-mapa-lienzo .maplibregl-ctrl-attrib { background: rgb(2 4 9 / 70%); color: #6f8296; font-size: 10px; }
+.mv-mapa-lienzo .maplibregl-ctrl-attrib a { color: #9fb2c8; }
+.mv-mapa-lienzo .maplibregl-ctrl-group { background: rgb(5 7 12 / 85%); border: 1px solid var(--neon-linea); border-radius: 0; }
+.mv-mapa-lienzo .maplibregl-ctrl-group button .maplibregl-ctrl-icon { filter: invert(1) hue-rotate(180deg); }
+.mv-mapa-hud { position: absolute; inset: 0; pointer-events: none; }
+.mv-mapa-hud::before, .mv-mapa-hud::after { content: ''; position: absolute; width: 26px; height: 26px; border: 2px solid var(--pro-amarillo); filter: drop-shadow(0 0 6px var(--pro-amarillo)); }
+.mv-mapa-hud::before { top: 10px; inset-inline-start: 10px; border-inline-end: 0; border-bottom: 0; }
+.mv-mapa-hud::after { bottom: 10px; inset-inline-end: 10px; border-inline-start: 0; border-top: 0; }
+.mv-mapa-rotulo { position: absolute; top: 18px; inset-inline-start: 46px; margin: 0; font: 600 11px/1.5 var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--pro-amarillo); text-shadow: 0 0 10px rgb(200 255 46 / 60%); }
+.mv-mapa-rotulo span { display: block; color: #9fb2c8; text-shadow: none; }
+.mv-mapa-todo { position: absolute; top: 64px; inset-inline-start: 18px; pointer-events: auto; background: rgb(5 7 12 / 85%); border: 1px solid var(--neon-linea); color: #eaf6ff; font: 600 11px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 14px; cursor: pointer; }
+.mv-mapa-todo:hover { border-color: var(--neon-cian); color: var(--neon-cian); }
+.mv-mapa figcaption { margin-top: 10px; font: 500 11px/1.4 var(--mono); color: #6f8296; }
+
+/* Cada cima: un haz de luz que sube del suelo con su altura y su nombre. */
+.mv-pin { position: relative; display: flex; flex-direction: column; align-items: center; cursor: pointer; background: none; border: 0; padding: 0; color: inherit; }
+.mv-pin-et { padding: 4px 8px; background: rgb(5 7 12 / 85%); border: 1px solid rgb(46 242 255 / 55%); color: #eaf6ff; font: 600 11px/1.2 var(--mono); white-space: nowrap; letter-spacing: 0.06em; box-shadow: 0 0 16px rgb(46 242 255 / 35%); transition: all 0.25s; }
+.mv-pin-et b { color: var(--neon-cian); font-weight: 700; margin-inline-start: 6px; }
+.mv-pin-haz { width: 2px; height: var(--alto, 60px); background: linear-gradient(180deg, var(--neon-cian), rgb(46 242 255 / 0%)); box-shadow: 0 0 10px var(--neon-cian); transition: all 0.25s; }
+.mv-pin-base { width: 12px; height: 12px; margin-top: -6px; border-radius: 50%; background: var(--neon-cian); box-shadow: 0 0 0 4px rgb(46 242 255 / 25%), 0 0 22px var(--neon-cian); animation: mv-latido 2.2s ease-out infinite; }
+@keyframes mv-latido { 0% { box-shadow: 0 0 0 0 rgb(46 242 255 / 55%), 0 0 22px var(--neon-cian); } 100% { box-shadow: 0 0 0 18px rgb(46 242 255 / 0%), 0 0 22px var(--neon-cian); } }
+.mv-pin.activo .mv-pin-et { background: var(--pro-amarillo); color: #05070c; border-color: var(--pro-amarillo); box-shadow: 0 0 26px rgb(200 255 46 / 70%); }
+.mv-pin.activo .mv-pin-et b { color: #05070c; }
+.mv-pin.activo .mv-pin-haz { background: linear-gradient(180deg, var(--pro-amarillo), rgb(200 255 46 / 0%)); box-shadow: 0 0 14px var(--pro-amarillo); }
+.mv-pin.activo .mv-pin-base { background: var(--pro-amarillo); animation-name: mv-latido-lima; }
+@keyframes mv-latido-lima { 0% { box-shadow: 0 0 0 0 rgb(200 255 46 / 65%), 0 0 22px #c8ff2e; } 100% { box-shadow: 0 0 0 22px rgb(200 255 46 / 0%), 0 0 22px #c8ff2e; } }
+.mv-ciudad { font: 700 10px/1 var(--mono); letter-spacing: 0.3em; text-transform: uppercase; color: rgb(234 246 255 / 70%); text-shadow: 0 0 8px #000, 0 0 2px #000; pointer-events: none; }
+.mv-ciudad::before { content: ''; display: inline-block; width: 6px; height: 6px; margin-inline-end: 6px; background: #eaf6ff; vertical-align: middle; }
+@media (prefers-reduced-motion: reduce) { .mv-pin-base { animation: none; } }

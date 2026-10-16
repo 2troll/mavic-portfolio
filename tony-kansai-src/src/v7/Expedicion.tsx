@@ -12,6 +12,7 @@ import { Vuelo3d } from './Vuelo3d'
 import { CUMBRES } from './datosCumbres'
 import { CimaAhora } from './CimaAhora'
 import { CapaEstacion, SelectorEstacion } from './Estaciones'
+import { MapaNeon } from './MapaNeon'
 
 const foto = (id: MonteId | 'portada', ancho: 800 | 1600 = 1600) => `/v7/expedicion/${id}${ancho === 800 ? '-800' : ''}.webp`
 
@@ -161,49 +162,51 @@ export function Atlas({ t, lang, nombre, sub, grado, precio, wa, onVer3d }: Prop
         </header>
 
         <div className="ex-atlas-rejilla">
-          {/* Mapa: costa real y las ocho cimas en sus coordenadas. */}
-          <figure className="ex-mapa">
-            <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} role="group" aria-label={t.atlas.titulo}>
-              <defs>
-                <pattern id="ex-reticula" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" className="ex-mapa-reticula" /></pattern>
-                <clipPath id="ex-caja"><rect width={MAPA.ancho} height={MAPA.alto} /></clipPath>
-              </defs>
-              <rect width={MAPA.ancho} height={MAPA.alto} className="ex-mapa-mar" />
-              <g clipPath="url(#ex-caja)">
-                <path d={MAPA.tierra} className="ex-mapa-tierra" />
-                <path d={MAPA.lago} className="ex-mapa-mar" />
-                <rect width={MAPA.ancho} height={MAPA.alto} fill="url(#ex-reticula)" />
-              </g>
-              {CIUDADES.map((c) => {
-                const [x, y] = proyecta(c.lon, c.lat)
-                return (
-                  <g key={c.id} className="ex-mapa-ciudad" transform={`translate(${x} ${y})`}>
-                    <rect x="-6" y="-6" width="12" height="12" />
-                    <text x={c.id === 'kobe' ? -14 : 14} y={c.id === 'kobe' ? 26 : 6} textAnchor={c.id === 'kobe' ? 'end' : 'start'}>{t.ciudades[c.id]}</text>
-                  </g>
-                )
-              })}
-              {/* Hilo de la cima elegida a los bordes: el «punto de mira» del atlas. */}
-              <g className="ex-mapa-mira" style={{ transform: `translate(${sx}px, ${sy}px)` }} aria-hidden="true">
-                <line x1={-2000} x2={2000} y1={0} y2={0} /><line x1={0} x2={0} y1={-2000} y2={2000} />
-                <circle r="34" />
-              </g>
-              {MONTES.map((m) => {
-                const [x, y] = proyecta(CIMA[m].lon, CIMA[m].lat)
-                const activo = m === sel
-                return (
-                  <g key={m} className={`ex-mapa-cima${activo ? ' activo' : ''}`} transform={`translate(${x} ${y})`}
-                    role="button" tabIndex={0} aria-pressed={activo} aria-label={`${nombre(m)} ${CIMA[m].m} m`}
-                    onClick={() => setSel(m)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSel(m) } }}>
-                    <circle r="26" className="ex-mapa-toque" />
-                    <path d="M0 -18L15 9H-15Z" />
-                    <text y="34" textAnchor="middle">{CIMA[m].m}</text>
-                  </g>
-                )
-              })}
-            </svg>
-            <figcaption>{t.atlas.mapaNota}</figcaption>
-          </figure>
+          {/* Mapa 3D con curvas de neón; si no hay WebGL, la lámina SVG de siempre. */}
+          <MapaNeon sel={sel} onSel={setSel} nombre={nombre} ciudades={t.ciudades} lang={lang} etiqueta={t.atlas.titulo} reserva={(
+            <figure className="ex-mapa">
+              <svg viewBox={`0 0 ${MAPA.ancho} ${MAPA.alto}`} role="group" aria-label={t.atlas.titulo}>
+                <defs>
+                  <pattern id="ex-reticula" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M100 0H0V100" className="ex-mapa-reticula" /></pattern>
+                  <clipPath id="ex-caja"><rect width={MAPA.ancho} height={MAPA.alto} /></clipPath>
+                </defs>
+                <rect width={MAPA.ancho} height={MAPA.alto} className="ex-mapa-mar" />
+                <g clipPath="url(#ex-caja)">
+                  <path d={MAPA.tierra} className="ex-mapa-tierra" />
+                  <path d={MAPA.lago} className="ex-mapa-mar" />
+                  <rect width={MAPA.ancho} height={MAPA.alto} fill="url(#ex-reticula)" />
+                </g>
+                {CIUDADES.map((c) => {
+                  const [x, y] = proyecta(c.lon, c.lat)
+                  return (
+                    <g key={c.id} className="ex-mapa-ciudad" transform={`translate(${x} ${y})`}>
+                      <rect x="-6" y="-6" width="12" height="12" />
+                      <text x={c.id === 'kobe' ? -14 : 14} y={c.id === 'kobe' ? 26 : 6} textAnchor={c.id === 'kobe' ? 'end' : 'start'}>{t.ciudades[c.id]}</text>
+                    </g>
+                  )
+                })}
+                {/* Hilo de la cima elegida a los bordes: el «punto de mira» del atlas. */}
+                <g className="ex-mapa-mira" style={{ transform: `translate(${sx}px, ${sy}px)` }} aria-hidden="true">
+                  <line x1={-2000} x2={2000} y1={0} y2={0} /><line x1={0} x2={0} y1={-2000} y2={2000} />
+                  <circle r="34" />
+                </g>
+                {MONTES.map((m) => {
+                  const [x, y] = proyecta(CIMA[m].lon, CIMA[m].lat)
+                  const activo = m === sel
+                  return (
+                    <g key={m} className={`ex-mapa-cima${activo ? ' activo' : ''}`} transform={`translate(${x} ${y})`}
+                      role="button" tabIndex={0} aria-pressed={activo} aria-label={`${nombre(m)} ${CIMA[m].m} m`}
+                      onClick={() => setSel(m)} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setSel(m) } }}>
+                      <circle r="26" className="ex-mapa-toque" />
+                      <path d="M0 -18L15 9H-15Z" />
+                      <text y="34" textAnchor="middle">{CIMA[m].m}</text>
+                    </g>
+                  )
+                })}
+              </svg>
+              <figcaption>{t.atlas.mapaNota}</figcaption>
+            </figure>
+          )} />
 
           {/* Panel de la cima elegida. */}
           <div className="ex-panel" aria-live="polite">

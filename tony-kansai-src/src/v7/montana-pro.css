@@ -5,19 +5,20 @@
    las negras, para que la página tenga ritmo. Va después de expedicion.css. */
 
 html .v7.v7-pagina.v7-expedicion.v7-montana {
-  --pro-amarillo: #ffcc00;
-  --pro-amarillo-2: #ffd93d;
-  --pro-negro: #0a0a0a;
-  --pro-papel: #f5f2ea;
-  --pro-titulo: 'Oswald Variable', 'Oswald', 'Arial Narrow', Impact, sans-serif;
-  --pro-serif: 'Source Serif 4 Variable', 'Source Serif 4', Georgia, serif;
+  --pro-amarillo: #c8ff2e;
+  --pro-amarillo-2: #e4ff8a;
+  --pro-negro: #05070c;
+  --pro-papel: #070c14;
+  --pro-titulo: 'Tektur Variable', 'Oswald Variable', 'Oswald', 'Arial Narrow', Impact, sans-serif;
+  --pro-serif: 'Geist Variable', system-ui, sans-serif;
+  --neon-cian: #2ef2ff; --neon-linea: rgba(46, 242, 255, 0.28);
   --ex-noche: var(--pro-negro);
-  --ex-bosque: #141414;
+  --ex-bosque: #0b1220;
   --ex-papel: #ffffff;
-  --ex-tenue: #b9b5ab;
+  --ex-tenue: #9fb2c8;
   --ex-oro: var(--pro-amarillo);
-  --ex-oro-osc: #d9a900;
-  --ex-linea: rgba(255, 255, 255, 0.16);
+  --ex-oro-osc: #9fd400;
+  --ex-linea: rgba(46, 242, 255, 0.16);
   --ex-serif: var(--pro-titulo);
   --acento: var(--pro-amarillo); --boton: var(--pro-amarillo); --boton-tinta: #000;
   background: var(--pro-negro);
@@ -49,23 +50,23 @@ html .v7.v7-montana .v7-logo-texto { font-family: var(--pro-titulo); font-weight
 html .v7.v7-montana .v7-anclas { gap: 0; align-self: stretch; }
 html .v7.v7-montana .v7-anclas a {
   display: flex; align-items: center; padding: 0 16px; white-space: nowrap; border-bottom: 3px solid transparent; margin-bottom: -3px;
-  font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; font-size: 14px; font-weight: 500; color: #d6d2c8;
+  font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; font-size: 14px; font-weight: 500; color: #cfe3f5;
 }
 html .v7.v7-montana .v7-anclas a:hover { color: #fff; border-bottom-color: #fff; }
 /* El enlace a los tours de ciudad sobra: el logo ya lleva a la portada. */
 html .v7.v7-montana .v7-anclas a:not([href^='#']) { display: none; }
 /* Idiomas: cuatro casillas rectas, la activa en amarillo. */
-html .v7.v7-montana .v7-idiomas { gap: 0; padding: 0; border-radius: 0; background: transparent; border: 1px solid #3a3a3a; }
+html .v7.v7-montana .v7-idiomas { gap: 0; padding: 0; border-radius: 0; background: transparent; border: 1px solid rgba(46, 242, 255, 0.28); }
 html .v7.v7-montana .v7-idiomas a {
-  border-radius: 0; padding: 7px 11px; font-family: var(--pro-titulo); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #a9a59b;
+  border-radius: 0; padding: 7px 11px; font-family: var(--pro-titulo); font-size: 13px; font-weight: 500; letter-spacing: 0.08em; text-transform: uppercase; color: #9fb2c8;
 }
-html .v7.v7-montana .v7-idiomas a + a { border-inline-start: 1px solid #3a3a3a; }
+html .v7.v7-montana .v7-idiomas a + a { border-inline-start: 1px solid rgba(46, 242, 255, 0.28); }
 /* Código de dos letras (ES, EN, AR, RU): el nombre completo sigue siendo el texto del enlace para lectores de pantalla. */
 html .v7.v7-montana .v7-idiomas a { font-size: 0; }
 html .v7.v7-montana .v7-idiomas a::before { content: attr(lang); font-size: 13px; }
 html .v7.v7-montana .v7-idiomas a:hover { color: #fff; }
 html .v7.v7-montana .v7-idiomas a[aria-current='page'] { background: var(--pro-amarillo); color: #000; font-weight: 600; box-shadow: none; }
-html .v7.v7-montana .v7-sonido { border-radius: 0; background: transparent; border-color: #3a3a3a; color: #a9a59b; }
+html .v7.v7-montana .v7-sonido { border-radius: 0; background: transparent; border-color: rgba(46, 242, 255, 0.28); color: #9fb2c8; }
 html .v7.v7-montana .v7-sonido:hover, html .v7.v7-montana .v7-sonido.on { color: var(--pro-amarillo); border-color: var(--pro-amarillo); }
 html .v7.v7-montana.lang-ar .v7-anclas a { font-family: inherit; letter-spacing: 0; }
 html .v7.v7-montana .v7-boton { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; background: var(--pro-amarillo); border-color: var(--pro-amarillo); color: #000; }
@@ -94,7 +95,7 @@ html .v7.v7-montana.lang-ru .ex-portada h1 { font-size: clamp(3.4rem, 10.5vw, 10
 html .v7.v7-montana.lang-ar .ex-portada h1 { font-size: clamp(3rem, 9vw, 7.5rem); line-height: 1.15; }
 /* Filo amarillo bajo el titular: el gesto de marca de toda la página. */
 html .v7.v7-montana .ex-portada h1::after { content: ''; display: block; width: clamp(80px, 12vw, 180px); height: 10px; margin-top: 26px; background: var(--pro-amarillo); }
-html .v7.v7-montana .ex-portada .ex-entradilla { color: #f1eee6; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.5; max-width: 40ch; }
+html .v7.v7-montana .ex-portada .ex-entradilla { color: #e6f4ff; font-size: clamp(1.15rem, 1.7vw, 1.45rem); line-height: 1.5; max-width: 40ch; }
 html .v7.v7-montana .ex-cifras { border-top: 0; max-width: 860px; gap: 0; }
 html .v7.v7-montana .ex-cifras > div { border-inline-end: 0; border-top: 3px solid var(--pro-amarillo); padding: 14px 18px 0 0; margin-inline-end: 14px; }
 html .v7.v7-montana .ex-cifras dt { font-family: var(--pro-titulo); font-weight: 700; font-size: clamp(2.6rem, 5vw, 4.4rem); letter-spacing: -0.02em; }
@@ -112,79 +113,79 @@ html .v7.v7-montana .ex-baja:hover { background: var(--pro-amarillo-2); }
 /* ═ Secciones en papel (atlas, oficio, preguntas) ═
    El fondo se extiende a todo el ancho con una sombra recortada, sin tocar el marcado. */
 html .v7.v7-montana .ex-atlas, html .v7.v7-montana #oficio, html .v7.v7-montana .cu-faq {
-  --ex-papel: #111111; --ex-tenue: #5c574c; --ex-linea: rgba(0, 0, 0, 0.14); --ex-bosque: #ffffff;
-  --tinta: #111111; --tenue: #5c574c; --linea: rgba(0, 0, 0, 0.14);
-  color: #111; background: var(--pro-papel);
+  --ex-papel: #eaf6ff; --ex-tenue: #9fb2c8; --ex-linea: rgba(46, 242, 255, 0.16); --ex-bosque: #0b1220;
+  --tinta: #eaf6ff; --tenue: #9fb2c8; --linea: rgba(46, 242, 255, 0.16);
+  color: #eaf6ff; background: var(--pro-papel);
   box-shadow: 0 0 0 100vmax var(--pro-papel); clip-path: inset(0 -100vmax);
 }
 html .v7.v7-montana .ex-atlas { padding-top: 110px; padding-bottom: 100px; }
-html .v7.v7-montana .ex-atlas .ex-kicker, html .v7.v7-montana #oficio .ex-kicker { color: #111; }
-html .v7.v7-montana .ex-atlas .ex-regla { background: var(--pro-amarillo); outline: 2px solid #111; outline-offset: -2px; }
+html .v7.v7-montana .ex-atlas .ex-kicker, html .v7.v7-montana #oficio .ex-kicker { color: #eaf6ff; }
+html .v7.v7-montana .ex-atlas .ex-regla { background: var(--pro-amarillo); outline: 1px solid var(--neon-linea); outline-offset: -2px; }
 html .v7.v7-montana .ex-atlas-cab h2 { font-size: clamp(2.8rem, 7vw, 6rem); line-height: 0.98; }
-html .v7.v7-montana .ex-atlas .ex-entradilla { color: #3b372f; font-size: 1.2rem; }
+html .v7.v7-montana .ex-atlas .ex-entradilla { color: #b7c6d8; font-size: 1.2rem; }
 
 /* Mapa como lámina impresa: mar azul gris, tierra papel, trazo negro. */
-html .v7.v7-montana .ex-mapa svg { border: 2px solid #111; box-shadow: 10px 10px 0 var(--pro-amarillo); }
-html .v7.v7-montana[dir='rtl'] .ex-mapa svg { box-shadow: -10px 10px 0 var(--pro-amarillo); }
+html .v7.v7-montana .ex-mapa svg { border: 1px solid var(--neon-linea); box-shadow: 0 0 40px rgba(46, 242, 255, 0.18); }
+html .v7.v7-montana[dir='rtl'] .ex-mapa svg { box-shadow: 0 0 40px rgba(46, 242, 255, 0.18); }
 html .v7.v7-montana .ex-mapa-mar { fill: #c9dbe3; }
 html .v7.v7-montana .ex-mapa-tierra { fill: #efe9da; stroke: #2b2b2b; stroke-width: 1.4; }
 html .v7.v7-montana .ex-mapa-reticula { stroke: rgba(0, 0, 0, 0.07); }
-html .v7.v7-montana .ex-mapa-ciudad rect { fill: #111; }
-html .v7.v7-montana .ex-mapa-ciudad text { fill: #111; stroke: #efe9da; font-family: var(--pro-titulo); text-transform: uppercase; }
+html .v7.v7-montana .ex-mapa-ciudad rect { fill: #eaf6ff; }
+html .v7.v7-montana .ex-mapa-ciudad text { fill: #eaf6ff; stroke: #efe9da; font-family: var(--pro-titulo); text-transform: uppercase; }
 html .v7.v7-montana .ex-mapa-cima path { fill: #3d3a33; stroke: #efe9da; }
 html .v7.v7-montana .ex-mapa-cima text { fill: #3d3a33; stroke: #efe9da; font-family: var(--pro-titulo); font-weight: 700; }
 html .v7.v7-montana .ex-mapa-cima:hover path, html .v7.v7-montana .ex-mapa-cima:focus-visible path { fill: #000; }
-html .v7.v7-montana .ex-mapa-cima.activo path { fill: #e03a00; }
+html .v7.v7-montana .ex-mapa-cima.activo path { fill: #2ef2ff; }
 html .v7.v7-montana .ex-mapa-cima.activo text { fill: #000; }
-html .v7.v7-montana .ex-mapa-mira line { stroke: #e03a00; opacity: 0.5; }
-html .v7.v7-montana .ex-mapa-mira circle { stroke: #e03a00; stroke-width: 3; }
-html .v7.v7-montana .ex-mapa figcaption { color: #5c574c; }
+html .v7.v7-montana .ex-mapa-mira line { stroke: #2ef2ff; opacity: 0.5; }
+html .v7.v7-montana .ex-mapa-mira circle { stroke: #2ef2ff; stroke-width: 3; }
+html .v7.v7-montana .ex-mapa figcaption { color: #9fb2c8; }
 
 /* Ficha del monte elegido: blanca, con filo negro y el número enorme. */
-html .v7.v7-montana .ex-panel-ficha { background: #fff; border: 2px solid #111; border-top: 10px solid var(--pro-amarillo); }
+html .v7.v7-montana .ex-panel-ficha { background: #0b1220; border: 1px solid var(--neon-linea); border-top: 10px solid var(--pro-amarillo); }
 html .v7.v7-montana .ex-panel-num { color: #fff; font-family: var(--pro-titulo); font-size: 5.4rem; }
 html .v7.v7-montana .ex-panel-ficha h3 { font-size: clamp(2rem, 3.2vw, 2.9rem); line-height: 0.95; }
-html .v7.v7-montana .ex-panel-ficha h3 [lang='ja'] { color: #b31d00; }
-html .v7.v7-montana .ex-panel-altura bdi:first-child { font-family: var(--pro-titulo); font-size: 2rem; font-weight: 700; color: #111; }
+html .v7.v7-montana .ex-panel-ficha h3 [lang='ja'] { color: #2ef2ff; }
+html .v7.v7-montana .ex-panel-altura bdi:first-child { font-family: var(--pro-titulo); font-size: 2rem; font-weight: 700; color: #eaf6ff; }
 html .v7.v7-montana .ex-panel-precio { font-family: var(--pro-titulo); font-weight: 700; font-size: 1.5rem; }
 html .v7.v7-montana .ex-boton, html .v7.v7-montana .ex-boton-linea { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; font-weight: 600; font-size: 15px; padding: 13px 18px; }
 html .v7.v7-montana.lang-ar :is(.ex-boton, .ex-boton-linea) { font-family: inherit; letter-spacing: 0; }
-html .v7.v7-montana .ex-boton { background: #111; border-color: #111; color: var(--pro-amarillo); }
-html .v7.v7-montana .ex-boton:hover { background: #000; color: #fff; }
-html .v7.v7-montana .ex-boton-linea { border: 2px solid #111; color: #111; }
-html .v7.v7-montana .ex-boton-linea:hover { background: var(--pro-amarillo); border-color: #111; color: #000; }
+html .v7.v7-montana .ex-boton { background: var(--pro-amarillo); border-color: var(--pro-amarillo); color: #05070c; box-shadow: 0 0 24px rgba(200, 255, 46, 0.35); }
+html .v7.v7-montana .ex-boton:hover { background: #0b1220; color: #05070c; }
+html .v7.v7-montana .ex-boton-linea { border: 1px solid var(--neon-linea); color: #eaf6ff; }
+html .v7.v7-montana .ex-boton-linea:hover { background: transparent; border-color: var(--neon-cian); color: var(--neon-cian); }
 html .v7.v7-montana .ex-atlas :is(.ex-corte-area) { fill: rgba(224, 58, 0, 0.14); }
-html .v7.v7-montana .ex-atlas .ex-corte-linea { stroke: #e03a00; stroke-width: 2; }
-html .v7.v7-montana .ex-atlas .ex-corte-cima { stroke: #111; }
+html .v7.v7-montana .ex-atlas .ex-corte-linea { stroke: #2ef2ff; stroke-width: 2; }
+html .v7.v7-montana .ex-atlas .ex-corte-cima { stroke: #eaf6ff; }
 html .v7.v7-montana .ex-atlas .ex-medidor-barras i { background: rgba(0, 0, 0, 0.12); }
-html .v7.v7-montana .ex-atlas .ex-medidor-barras i.si { background: #e03a00; }
-html .v7.v7-montana .ex-atlas .ex-meses-tira i { background: rgba(0, 0, 0, 0.06); color: #5c574c; }
-html .v7.v7-montana .ex-atlas .ex-meses-tira i.si { background: #111; color: var(--pro-amarillo); }
+html .v7.v7-montana .ex-atlas .ex-medidor-barras i.si { background: #2ef2ff; }
+html .v7.v7-montana .ex-atlas .ex-meses-tira i { background: rgba(46, 242, 255, 0.08); color: #9fb2c8; }
+html .v7.v7-montana .ex-atlas .ex-meses-tira i.si { background: var(--pro-amarillo); color: #05070c; }
 html .v7.v7-montana :is(.ex-corte figcaption, .ex-medidor-et) { font-family: var(--pro-titulo); font-weight: 600; letter-spacing: 0.14em; }
 html .v7.v7-montana.lang-ar :is(.ex-corte figcaption, .ex-medidor-et) { font-family: inherit; letter-spacing: 0; }
 
 /* Vuelo 3D dentro del papel: ventana negra enmarcada. */
 html .v7.v7-montana .ex-vuelo-bloque { margin-top: 100px; }
-html .v7.v7-montana .ex-vuelo-rejilla { border: 2px solid #111; background: #fff; }
+html .v7.v7-montana .ex-vuelo-rejilla { border: 1px solid var(--neon-linea); background: #0b1220; }
 html .v7.v7-montana .ex-tiempo-ahora > strong { font-family: var(--pro-titulo); font-weight: 700; }
-html .v7.v7-montana .ex-tiempo-consejo { border-inline-start-color: #e03a00; background: rgba(224, 58, 0, 0.07); }
+html .v7.v7-montana .ex-tiempo-consejo { border-inline-start-color: #2ef2ff; background: rgba(46, 242, 255, 0.07); }
 html .v7.v7-montana .ex-vuelo-giro { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.08em; color: #fff; }
-html .v7.v7-montana .ex-vuelo-selector button { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.06em; font-size: 14px; border: 2px solid #111; color: #111; }
+html .v7.v7-montana .ex-vuelo-selector button { border-radius: 0; font-family: var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.06em; font-size: 14px; border: 1px solid var(--neon-linea); color: #eaf6ff; }
 html .v7.v7-montana.lang-ar .ex-vuelo-selector button { font-family: inherit; letter-spacing: 0; }
-html .v7.v7-montana .ex-vuelo-selector button:hover { background: rgba(0, 0, 0, 0.06); color: #000; border-color: #111; }
-html .v7.v7-montana .ex-vuelo-selector button.activo { background: #111; color: var(--pro-amarillo); border-color: #111; }
-html .v7.v7-montana .ex-vuelo-pin span { background: var(--pro-amarillo); color: #000; font-family: var(--pro-titulo); }
+html .v7.v7-montana .ex-vuelo-selector button:hover { background: rgba(46, 242, 255, 0.08); color: #fff; border-color: var(--neon-cian); }
+html .v7.v7-montana .ex-vuelo-selector button.activo { background: var(--pro-amarillo); color: #05070c; border-color: var(--pro-amarillo); box-shadow: 0 0 18px rgba(200, 255, 46, 0.4); }
+html .v7.v7-montana .ex-vuelo-pin span { background: var(--pro-amarillo); color: #05070c; font-family: var(--pro-titulo); }
 
 /* Infografía en papel: siluetas en tinta negra, la elegida en rojo señal. */
-html .v7.v7-montana .ex-graficos { border-top: 2px solid #111; }
-html .v7.v7-montana .ex-silueta { background: linear-gradient(180deg, #fff 0%, #fff 7%, #6b6659 16%, #1d1c19 100%); }
-html .v7.v7-montana .ex-alturas button.activo .ex-silueta { background: linear-gradient(180deg, #fff 0%, #fff 7%, #ff5a1f 18%, #b31d00 100%); }
-html .v7.v7-montana .ex-alturas-m { font-family: var(--pro-titulo); font-size: 15px; color: #111; }
-html .v7.v7-montana .ex-alturas button.activo :is(.ex-alturas-m, .ex-alturas-n) { color: #b31d00; }
+html .v7.v7-montana .ex-graficos { border-top: 1px solid var(--neon-linea); }
+html .v7.v7-montana .ex-silueta { background: linear-gradient(180deg, #eaf6ff 0%, rgba(46, 242, 255, 0.6) 12%, rgba(46, 242, 255, 0.06) 100%); }
+html .v7.v7-montana .ex-alturas button.activo .ex-silueta { background: linear-gradient(180deg, #fff 0%, #c8ff2e 10%, #2ef2ff 55%, rgba(46, 242, 255, 0.15) 100%); }
+html .v7.v7-montana .ex-alturas-m { font-family: var(--pro-titulo); font-size: 15px; color: #eaf6ff; }
+html .v7.v7-montana .ex-alturas button.activo :is(.ex-alturas-m, .ex-alturas-n) { color: #2ef2ff; }
 html .v7.v7-montana .ex-calendario td { background: rgba(0, 0, 0, 0.05); }
 html .v7.v7-montana .ex-calendario td.si { background: #8a8475; }
-html .v7.v7-montana .ex-calendario tr.activo th { color: #b31d00; }
-html .v7.v7-montana .ex-calendario tr.activo td.si { background: #e03a00; }
+html .v7.v7-montana .ex-calendario tr.activo th { color: #2ef2ff; }
+html .v7.v7-montana .ex-calendario tr.activo td.si { background: #2ef2ff; }
 html .v7.v7-montana .ex-credito { color: #6a655a; }
 html .v7.v7-montana .ex-portada > .ex-credito { color: rgba(255, 255, 255, 0.7); }
 
@@ -209,19 +210,19 @@ html .v7.v7-montana .ex-banda h2 { margin: 0 0 48px; font-size: clamp(3rem, 9vw,
 .ex-banda dl { margin: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px; }
 .ex-banda dl > div { border-top: 6px solid var(--pro-amarillo); padding-top: 16px; }
 .ex-banda dt { font: 700 clamp(3.4rem, 8vw, 7rem)/0.9 var(--pro-titulo); color: var(--pro-amarillo); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-.ex-banda dd { margin: 10px 0 0; font: 500 15px/1.35 var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; color: #f1eee6; max-width: 22ch; }
+.ex-banda dd { margin: 10px 0 0; font: 500 15px/1.35 var(--pro-titulo); text-transform: uppercase; letter-spacing: 0.1em; color: #e6f4ff; max-width: 22ch; }
 .lang-ar .ex-banda dd { font-family: inherit; letter-spacing: 0; text-transform: none; font-size: 16px; }
 
 /* ═ Oficio en papel: columnas numeradas en grande ═ */
 html .v7.v7-montana #oficio { padding-top: 110px; padding-bottom: 110px; }
-html .v7.v7-montana #oficio h2 { font-size: clamp(2.6rem, 6vw, 5rem); line-height: 0.98; color: #111; }
-html .v7.v7-montana #oficio h2 .v7-kanji { color: #b31d00; }
-html .v7.v7-montana .v7-oficio { border-top: 2px solid #111; }
+html .v7.v7-montana #oficio h2 { font-size: clamp(2.6rem, 6vw, 5rem); line-height: 0.98; color: #eaf6ff; }
+html .v7.v7-montana #oficio h2 .v7-kanji { color: #2ef2ff; }
+html .v7.v7-montana .v7-oficio { border-top: 1px solid var(--neon-linea); }
 html .v7.v7-montana .v7-oficio li.tarjeta { border-color: rgba(0, 0, 0, 0.16); }
-html .v7.v7-montana .v7-oficio-num::before { font-family: var(--pro-titulo); font-size: 3.6rem; color: #111; -webkit-text-stroke: 0; }
-html .v7.v7-montana .v7-oficio li.tarjeta:hover .v7-oficio-num::before { color: #e03a00; }
-html .v7.v7-montana .v7-oficio h3 { font-size: 1.5rem; line-height: 1.05; color: #111; }
-html .v7.v7-montana .v7-oficio p { color: #3b372f; font-size: 1.04rem; }
+html .v7.v7-montana .v7-oficio-num::before { font-family: var(--pro-titulo); font-size: 3.6rem; color: #eaf6ff; -webkit-text-stroke: 0; }
+html .v7.v7-montana .v7-oficio li.tarjeta:hover .v7-oficio-num::before { color: #2ef2ff; }
+html .v7.v7-montana .v7-oficio h3 { font-size: 1.5rem; line-height: 1.05; color: #eaf6ff; }
+html .v7.v7-montana .v7-oficio p { color: #b7c6d8; font-size: 1.04rem; }
 
 /* ═ Final sobre foto ═ */
 html .v7.v7-montana .v7-montana-final {
