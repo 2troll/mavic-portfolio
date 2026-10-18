@@ -528,7 +528,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     ],
     fuentesTitulo: 'Más información',
     fuentes: [
-      { texto: 'Cuánto cuesta un guía privado en Kioto (comparativa con plataformas)', url: 'https://tonykansaiguide.com/es/guia-privado-espanol-kioto/' },
+      { texto: 'Guía privado en español en Kioto: precio y comparativa con plataformas', url: 'https://tonykansaiguide.com/es/kyoto/' },
       { texto: 'Guía en español en Kansai: servicios y precios', url: 'https://tonykansaiguide.com/es/guia-espanol-kansai/' },
     ],
     final: { titulo: '¿Lo hablamos?', texto: 'Dime fechas y cuántos sois, y te digo cuánto saldría por persona.', boton: 'Escribir a Tony' },
@@ -662,7 +662,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       { texto: 'Tony’s page in English', url: 'https://tonykansaiguide.com/en/' },
       { texto: 'Tony’s page in Spanish', url: 'https://tonykansaiguide.com/es/' },
       { texto: 'The day, hour by hour', url: 'https://tonykansaiguide.com/en/routes/' },
-      { texto: 'How much a private guide in Kyoto costs', url: 'https://tonykansaiguide.com/en/kyoto-private-guide-cost/' },
+      { texto: 'Private guide in Kyoto: price and comparison with platforms', url: 'https://tonykansaiguide.com/en/kyoto/' },
     ],
     final: { titulo: 'Shall we plan your days?', texto: 'Send me your dates, group size and what you would like to see, and I will reply with a plan and a fixed group price.', boton: 'Message Tony' },
     altFoto: 'The red torii gates of Fushimi Inari in Kyoto', saludo: 'Hi Tony, I saw your Spanish-speaking guide page and would like to ask about a tour.',
@@ -729,25 +729,38 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
   },
 }
 
-/** Respuestas que competían con la página de su ciudad por la misma búsqueda
- *  (19-10-2026): se unen a ella. */
+/** Respuestas que viven dentro de la página de su ciudad (19-10-2026): competían
+ *  con ella por la misma búsqueda. Su texto se pinta allí (CuerpoRespuesta) y la
+ *  ruta vieja lleva noindex + canonical a la ciudad (rutas-antiguas.json). */
+export const EN_CIUDAD: Partial<Record<RespuestaId, string>> = {
+  'coste-es': '/es/kyoto/',
+  'coste-en': '/en/kyoto/',
+}
+export const respuestaDeCiudad = (ruta: string) =>
+  (Object.entries(EN_CIUDAD) as [RespuestaId, string][]).find(([, r]) => r === ruta)?.[0]
+
+/** Páginas de respuesta con ruta propia. */
+export const RESPUESTAS_PROPIAS = (Object.entries(PAGINAS_RESPUESTA) as [RespuestaId, PaginaRespuesta][])
+  .filter(([id]) => !(id in EN_CIUDAD))
+
 export const MOVIDAS_RESPUESTA: Record<string, string> = {
   '/es/guia-privado-espanol-osaka': '/es/osaka/',
   '/es/nara-medio-dia-guia-espanol': '/es/nara/',
+  ...Object.fromEntries((Object.entries(EN_CIUDAD) as [RespuestaId, string][]).map(([id, r]) => [PAGINAS_RESPUESTA[id].ruta.replace(/\/+$/, ''), r])),
 }
 
 export const RUTAS_RESPUESTA: Record<string, RespuestaId> = Object.fromEntries(
-  (Object.entries(PAGINAS_RESPUESTA) as [RespuestaId, PaginaRespuesta][]).map(([id, p]) => [p.ruta.replace(/\/+$/, ''), id]),
+  RESPUESTAS_PROPIAS.map(([id, p]) => [p.ruta.replace(/\/+$/, ''), id]),
 )
 // Traducciones de una página (ella incluida): para hreflang y el selector de idioma.
 export const hermanasRespuesta = (grupo: GrupoRespuesta) =>
-  (Object.entries(PAGINAS_RESPUESTA) as [RespuestaId, PaginaRespuesta][]).filter(([, p]) => p.grupo === grupo)
+  RESPUESTAS_PROPIAS.filter(([, p]) => p.grupo === grupo)
 
 /** Cabeceras estáticas (mismo formato que src/seo/cabeceras.ts): las lee
  *  scripts/rutas-estaticas.mjs. Van aquí y no en cabeceras.ts para no tocar
  *  ese archivo; si un día se unifican, basta con llamar a esta función allí. */
 export function cabecerasRespuesta() {
-  return Object.fromEntries(Object.values(PAGINAS_RESPUESTA).map((p) => [p.ruta.replace(/^\/+|\/+$/g, ''), {
+  return Object.fromEntries(RESPUESTAS_PROPIAS.map(([, p]) => [p.ruta.replace(/^\/+|\/+$/g, ''), {
     titulo: p.seo.titulo, descripcion: p.seo.descripcion, imagen: p.og, lang: p.lang, dir: p.lang === 'ar' ? 'rtl' : 'ltr',
     alternos: hermanasRespuesta(p.grupo).map(([, x]) => [x.lang, x.ruta]),
   }]))

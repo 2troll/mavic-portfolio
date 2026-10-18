@@ -323,6 +323,62 @@ export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): 
   return tony[lang].length ? tony[lang] : tony.en
 }
 
+/** Ficha rápida de la ciudad, justo debajo de la portada: quien busca (y la IA
+ *  que le contesta) tiene aquí, sin bajar, qué es, cuánto cuesta y cómo se
+ *  reserva. Antes el precio salía después de la galería y la maqueta 3D. */
+export function introCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
+  const donde = EN_LUGAR[id][lang]
+  if (guia === 'larion') return lang === 'ru'
+    ? `Ларион проводит частные экскурсии ${donde} на русском или английском: только ваша группа, встреча в лобби отеля.`
+    : `Larion runs private tours ${donde} in Russian or English: just your group, with hotel lobby pick-up.`
+  return {
+    es: `Tony es un guía español que vive en Osaka y hace tours privados ${donde} solo para tu grupo, con recogida en tu hotel. Reservas hablando con él, sin agencia.`,
+    en: `Tony is a Spanish guide who lives in Osaka and runs private tours ${donde} for your group only, with hotel pick-up, in English, Spanish or Arabic. You book directly with him, no agency.`,
+    ar: `توني مرشد إسباني يعيش في أوساكا، ينظّم جولات خاصة ${donde} لمجموعتك فقط، مع الاستقبال من الفندق، بالعربية أو الإسبانية أو الإنجليزية. تحجز معه مباشرة، بدون وكالة.`,
+    ru: `Tony runs private tours ${donde} in English, Spanish or Arabic.`,
+  }[lang]
+}
+
+export function fichaCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): PreguntaCiudad[] {
+  const precio = faqCiudad(id, lang, guia)[0].a
+  const zonas = zonasEnFrase(id, lang, 4)
+  if (guia === 'larion') return lang === 'ru' ? [
+    { q: 'Цена', a: precio },
+    { q: 'Что увидим', a: `${mayus(zonas)}.` },
+    { q: 'Языки', a: 'Русский и английский.' },
+    { q: 'Оплата', a: 'Наличными в иенах в день экскурсии. Отмена более чем за 72 часа бесплатна.' },
+  ] : [
+    { q: 'Price', a: precio },
+    { q: 'What you see', a: `${mayus(zonas)}.` },
+    { q: 'Languages', a: 'Russian and English.' },
+    { q: 'Payment', a: 'Cash in yen on the day. Free cancellation up to 72 hours before.' },
+  ]
+  const tony: Record<'es' | 'en' | 'ar', PreguntaCiudad[]> = {
+    es: [
+      { q: 'Precio', a: precio },
+      { q: 'Incluye', a: 'Recogida en el vestíbulo de tu hotel, ruta a tu medida, ayuda con trenes y tarjeta IC, y dónde comer (también halal y vegetariano).' },
+      { q: 'Qué se ve', a: `${mayus(zonas)}.` },
+      { q: 'Idiomas', a: 'Español (nativo), inglés y árabe.' },
+      { q: 'Pago', a: 'En efectivo, en yenes, el día del tour, o por adelantado con PayPal o Wise. Cancelación gratis hasta 72 horas antes.' },
+    ],
+    en: [
+      { q: 'Price', a: precio },
+      { q: 'Included', a: 'Hotel lobby pick-up, a route planned around you, help with trains and IC cards, and where to eat (halal and vegetarian too).' },
+      { q: 'What you see', a: `${mayus(zonas)}.` },
+      { q: 'Languages', a: 'English, Spanish (native) and Arabic.' },
+      { q: 'Payment', a: 'Cash in yen on the day, or in advance by PayPal or Wise. Free cancellation up to 72 hours before.' },
+    ],
+    ar: [
+      { q: 'السعر', a: precio },
+      { q: 'يشمل', a: 'الاستقبال من بهو الفندق، ومساراً على ذوقكم، والمساعدة في القطارات وبطاقة IC، وأماكن الطعام الحلال.' },
+      { q: 'ماذا نزور', a: `${zonas}.` },
+      { q: 'اللغات', a: 'العربية والإسبانية والإنجليزية.' },
+      { q: 'الدفع', a: 'نقداً بالين في يوم الجولة، أو مسبقاً عبر PayPal أو Wise. الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.' },
+    ],
+  }
+  return lang === 'ru' ? tony.en : tony[lang]
+}
+
 /** FAQPage para Google y los asistentes: las mismas preguntas que se ven en la página. */
 export function faqLd(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion') {
   return {

@@ -80,7 +80,11 @@ const FICHA_AFILIADO = /^(es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^/]+$/
 // Tony en inglés (19-10-2026). Siguen abiertas para quien las visite, pero no
 // se indexan; su versión en ruso (/ru/…) sí. Igual en src/seo/noindex.ts.
 const LARION_EN = /^larion(\/|$)/
-const NOINDEX = new RegExp(`${FICHA_AFILIADO.source}|${LARION_EN.source}`)
+// Páginas que no traen clientes desde un buscador (avisos legales y la lista de
+// apps con enlaces de afiliado): fuera del índice para que Bing y las IAs vean
+// solo lo que responde a quien busca guía (19-10-2026).
+const SIN_BUSQUEDA = /^(terms|privacy|cookies|safety|legal|accessibility|es\/ventajas|en\/perks|ar\/perks|ru\/perks)$/
+const NOINDEX = new RegExp(`${FICHA_AFILIADO.source}|${LARION_EN.source}|${SIN_BUSQUEDA.source}`)
 let pintadas = 0
 for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.
@@ -214,7 +218,7 @@ const portada = `
         <li lang="ar" dir="rtl"><a href="/ar/">العربية</a>: مرشد خاص بالعربية في كيوتو وأوساكا ونارا، مع طوني.</li>
         <li lang="ru"><a href="/ru/">Русский</a>: частный гид на русском в Киото, Осаке и Хиросиме, с Ларионом.</li>
       </ul>
-      <p>Guides: <a href="/en/kyoto-private-guide-cost/">How much a private guide in Kyoto costs</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+      <p>Guides: <a href="/en/kyoto/">Private guide in Kyoto: prices</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
     </main>
     <script>document.getElementById('portada-texto').remove()</script>`
 const indice = readFileSync(join(dest, 'index.html'), 'utf8')

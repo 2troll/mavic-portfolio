@@ -53,9 +53,8 @@ const paginas = [
   { loc: '/en/osaka-to-kyoto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
   { loc: '/es/aeropuerto-kansai', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
   { loc: '/en/kansai-airport', priority: '0.8', changefreq: 'monthly', v7: 'aeropuerto' },
-  // Páginas de respuesta (datosRespuestas.ts): precio de un guía en Kioto, mezquitas y halal.
-  { loc: '/es/guia-privado-espanol-kioto', priority: '0.8', changefreq: 'monthly', v7: 'coste' },
-  { loc: '/en/kyoto-private-guide-cost', priority: '0.8', changefreq: 'monthly', v7: 'coste' },
+  // Páginas de respuesta (datosRespuestas.ts): mezquitas, halal, Kansai… (el precio
+  // de Kioto vive desde el 19-10-2026 dentro de /es/kyoto/ y /en/kyoto/).
   { loc: '/ar/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
   { loc: '/ar/halal-kyoto-osaka', priority: '0.8', changefreq: 'monthly', v7: 'halal' },
   { loc: '/es/guia-espanol-kansai', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
@@ -115,7 +114,6 @@ const V7 = {
   osakaKioto: [['es', '/es/osaka-kioto/'], ['en', '/en/osaka-to-kyoto/']],
   aeropuerto: [['es', '/es/aeropuerto-kansai/'], ['en', '/en/kansai-airport/']],
   ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/'], ['ru', '/ru/perks/']],
-  coste: [['es', '/es/guia-privado-espanol-kioto/'], ['en', '/en/kyoto-private-guide-cost/']],
   mezquitas: [['ar', '/ar/mosques-kansai/']],
   halal: [['ar', '/ar/halal-kyoto-osaka/']],
 }

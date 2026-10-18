@@ -18,7 +18,7 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo, h1Ciudad, descripcionSeo, faqCiudad, faqLd } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo, h1Ciudad, descripcionSeo, faqCiudad, faqLd, introCiudad, fichaCiudad } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
@@ -37,6 +37,8 @@ import { SelloCiudad, LibroSellos } from '../v9/Sellos'
 import { BotonTema } from '../v7/Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE, nombreMonte } from '../v7/formato'
+import { respuestaDeCiudad } from '../v7/datosRespuestas'
+import { SeccionesRespuesta } from '../v7/PaginaRespuesta'
 
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
@@ -55,6 +57,7 @@ const PAGINA_DIA: Record<string, string> = { '/es': '/es/rutas/', '/en': '/en/ro
 const PAGINA_MONTE: Record<string, string> = { '/es': '/es/montana/', '/en': '/en/hiking/', '/ar': '/ar/hiking/', '/ru': '/ru/hiking/', '/larion': '/en/hiking/' }
 
 const nombreGuia = (g: 'tony' | 'larion', lang: Lengua) => (lang === 'ar' && g === 'tony' ? 'طوني' : lang === 'ru' ? 'Ларион' : g === 'tony' ? 'Tony' : 'Larion')
+const RESUMEN: Record<Lengua, string> = { es: 'En resumen', en: 'In short', ar: 'باختصار', ru: 'Коротко' }
 const fotoZona = (id: string) => `/v8/zonas/${id}.jpg`
 const CREDITOS = creditos as Record<string, { url: string; autor: string; licencia: string }>
 
@@ -98,6 +101,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
     return () => { io.disconnect(); cancelAnimationFrame(raf) }
   }, [c.zonas.length, dir])
 
+  const respuesta = guia === 'tony' ? respuestaDeCiudad(`${prefijo}/${c.id}/`) : undefined
   const itin = c.itinerario ? ITINERARIOS[lang][c.itinerario] : undefined
   const tramo = c.itinerario ? META_ITIN[c.itinerario].tramo : 'lejos'
   const otras = (guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY).filter((x) => x !== c.id)
@@ -156,6 +160,20 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
               {et.escribe(g)}
             </a>
           </div>
+        </section>
+
+        {/* Ficha rápida (ciudades.ts): qué es, cuánto cuesta y cómo se reserva, antes
+            de la galería. Es lo primero que lee una IA y lo que busca el cliente. */}
+        <section className="v7-seccion v8-ficha">
+          <h2>{RESUMEN[lang]}</h2>
+          <p className="v7-entradilla">{introCiudad(c.id, lang, guia)}</p>
+          <dl className="v9-ficha">
+            {fichaCiudad(c.id, lang, guia).map((f) => <div key={f.q}><dt>{f.q}</dt><dd>{f.a}</dd></div>)}
+          </dl>
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
+            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `ciudad-${c.id}`, canal: 'whatsapp_ficha' })}>
+            <IconoWa /> {et.escribe(g)}
+          </a>
         </section>
 
         {/* 2. Zonas: pista horizontal que avanza con el scroll vertical */}
@@ -235,6 +253,9 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             </div>
           </section>
         )}
+
+        {/* Precio comparado con las plataformas: antes era otra página que competía con esta. */}
+        {respuesta && <SeccionesRespuesta id={respuesta} fuentes />}
 
         {/* Preguntas frecuentes: el mismo texto que el FAQPage, visible para personas y para las IAs. */}
         <section className="v7-seccion v7-faq-seccion">

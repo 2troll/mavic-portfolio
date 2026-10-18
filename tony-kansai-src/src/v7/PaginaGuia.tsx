@@ -35,7 +35,7 @@ import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
 import { useBilletes } from './Cocina'
 import { enlacesHreflang } from '../seo/hreflang'
-import { PAGINAS_RESPUESTA } from './datosRespuestas'
+import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -1046,10 +1046,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </nav>
           {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
               sitemap): Google y las IAs dan menos peso a una página huérfana. */}
-          {p.guia === 'tony' && Object.values(PAGINAS_RESPUESTA).some((r) => r.lang === p.lang) && (
+          {p.guia === 'tony' && RESPUESTAS_PROPIAS.some(([, r]) => r.lang === p.lang) && (
             <nav aria-label={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
               <span className="v7-pie-titulo">{RESPUESTAS_TITULO[p.lang] ?? 'Guides'}</span>
-              {Object.values(PAGINAS_RESPUESTA).filter((r) => r.lang === p.lang).map((r) => (
+              {RESPUESTAS_PROPIAS.filter(([, r]) => r.lang === p.lang).map(([, r]) => (
                 <Link key={r.ruta} to={r.ruta}>{r.titulo}</Link>
               ))}
             </nav>

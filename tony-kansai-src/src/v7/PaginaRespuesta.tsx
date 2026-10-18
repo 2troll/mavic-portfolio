@@ -121,28 +121,7 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
           </div>
         </section>
 
-        {p.secciones.map((s) => (
-          <section key={s.titulo} className="v7-seccion">
-            <h2>{s.titulo}</h2>
-            {s.parrafos?.map((t) => <p key={t} className="v7-entradilla">{t}</p>)}
-            {s.lista && <ul className="v7-lista-respuesta">{s.lista.map((t) => <li key={t}>{t}</li>)}</ul>}
-            {s.tabla && (
-              <>
-                <div className="v7-tabla-marco tarjeta">
-                  <table className="v7-tabla">
-                    <thead><tr>{s.tabla.cabecera.map((c) => <th key={c} scope="col">{c}</th>)}</tr></thead>
-                    <tbody>
-                      {s.tabla.filas.map((f) => (
-                        <tr key={f[0]}>{f.map((c, i) => (i === 0 ? <th key={i} scope="row">{c}</th> : <td key={i}>{c}</td>))}</tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-                <p className="v7-tabla-nota">{s.tabla.nota}</p>
-              </>
-            )}
-          </section>
-        ))}
+        <SeccionesRespuesta id={id} />
 
         <section className="v7-seccion" id="precios">
           <h2>{p.precios.titulo}</h2>
@@ -214,5 +193,45 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
         )}
       </footer>
     </div>
+  )
+}
+
+/** Las secciones de una respuesta (tabla, listas, párrafos) y sus fuentes. Las
+ *  usa también la página de su ciudad cuando la respuesta vive dentro de ella. */
+export function SeccionesRespuesta({ id, fuentes = false }: { id: RespuestaId; fuentes?: boolean }) {
+  const p = PAGINAS_RESPUESTA[id]
+  return (
+    <>
+      {p.secciones.map((s) => (
+        <section key={s.titulo} className="v7-seccion">
+          <h2>{s.titulo}</h2>
+          {s.parrafos?.map((t) => <p key={t} className="v7-entradilla">{t}</p>)}
+          {s.lista && <ul className="v7-lista-respuesta">{s.lista.map((t) => <li key={t}>{t}</li>)}</ul>}
+          {s.tabla && (
+            <>
+              <div className="v7-tabla-marco tarjeta">
+                <table className="v7-tabla">
+                  <thead><tr>{s.tabla.cabecera.map((c) => <th key={c} scope="col">{c}</th>)}</tr></thead>
+                  <tbody>
+                    {s.tabla.filas.map((f) => (
+                      <tr key={f[0]}>{f.map((c, i) => (i === 0 ? <th key={i} scope="row">{c}</th> : <td key={i}>{c}</td>))}</tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+              <p className="v7-tabla-nota">{s.tabla.nota}</p>
+            </>
+          )}
+        </section>
+      ))}
+      {fuentes && (
+        <section className="v7-seccion">
+          <h2>{p.fuentesTitulo}</h2>
+          <ul className="v7-fuentes">
+            {p.fuentes.map((f) => <li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer"><bdi>{f.texto}</bdi></a></li>)}
+          </ul>
+        </section>
+      )}
+    </>
   )
 }
