@@ -279,7 +279,6 @@ export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): 
       { q: `Сколько стоит частный гид ${donde}?`, a: precio.ru },
       { q: 'Вы встречаете в отеле?', a: 'Да. Встречаю вас в лобби отеля, и дальше едем вместе.' },
       { q: `Что посмотрим ${donde}?`, a: `${mayus(zonas)}. Маршрут подстрою под вас: скажите, что хотите увидеть.` },
-      { q: 'Как оплатить?', a: 'Наличными в иенах в день экскурсии или переводом, если договоримся при бронировании.' },
       { q: 'А если нас больше шести?', a: 'Цены рассчитаны на группу до 6 человек. Если вас больше, напишите мне, и я расскажу, как это организовать.' },
       { q: 'А если планы изменятся?', a: 'Напишите мне. Отмена более чем за 72 часа бесплатна, а если задержали рейс — найдём другой день.' },
     ]
@@ -287,34 +286,29 @@ export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): 
       { q: `How much is a private guide ${donde}?`, a: precio.en },
       { q: 'Do you meet us at the hotel?', a: 'Yes. Larion meets you in your hotel lobby and you set off together.' },
       { q: `What will we see ${donde}?`, a: `${mayus(zonas)}. The route is adapted to you: tell Larion what you would like to see.` },
-      { q: 'How do I pay?', a: 'In cash, in yen, on the day, or by bank transfer if you agree it when booking.' },
       { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you are more, message Larion and he will tell you how to organise it.' },
       { q: 'What if my plans change?', a: 'Message Larion. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed he finds you another day.' },
     ]
   }
 
+  // Recogida y pago ya van en la ficha de arriba (fichaCiudad): repetirlos aquí
+  // hacía que las ciudades se parecieran entre sí más de la mitad del texto.
   const tony: Record<Lengua, PreguntaCiudad[]> = {
     es: [
       { q: `¿Cuánto cuesta un guía privado en español ${donde}?`, a: precio.es },
-      { q: '¿Me recoges en el hotel?', a: 'Sí. Quedamos en el vestíbulo de tu hotel, esté en Osaka, Kioto, Nara o Kobe, y salimos juntos.' },
       { q: `¿Qué vemos ${donde}?`, a: `${mayus(zonas)}. El recorrido lo ajusto a ti: dime qué quieres ver.` },
-      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, cuando confirmemos la fecha puedes hacerlo con PayPal o Wise. Cancelar con más de 72 horas no cuesta nada.' },
       { q: '¿Y si somos más de 6?', a: 'Los precios son para grupos de hasta 6 personas. Hasta 14 también se puede: escríbeme y te digo cómo lo organizamos.' },
       { q: '¿Podemos ir con niños o con personas mayores?', a: 'Claro. Adapto el ritmo y el recorrido; algunos templos tienen muchas escaleras y te propongo alternativas.' },
     ],
     en: [
       { q: `How much is a private guide ${donde}?`, a: precio.en },
-      { q: 'Do you pick us up at the hotel?', a: 'Yes. We meet in your hotel lobby, whether you are staying in Osaka, Kyoto, Nara or Kobe, and set off together.' },
       { q: `What will we see ${donde}?`, a: `${mayus(zonas)}. I adapt the route to you: tell me what you would like to see.` },
-      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we confirm the date you can use PayPal or Wise. Cancelling more than 72 hours ahead costs nothing.' },
       { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. Groups of up to 14 are possible too: message me and I will tell you how we organise it.' },
       { q: 'Can we bring children or older relatives?', a: 'Of course. I adapt the pace and the route; some temples have a lot of steps and I suggest alternatives.' },
     ],
     ar: [
       { q: `كم سعر المرشد الخاص الذي يتكلم العربية ${donde}؟`, a: precio.ar },
-      { q: 'هل تستقبلنا في الفندق؟', a: 'نعم. نلتقي في بهو فندقكم، سواء كان في أوساكا أو كيوتو أو نارا أو كوبي، وننطلق معاً.' },
       { q: `ماذا نزور ${donde}؟`, a: `${zonas}. وأرتّب المسار على ذوقكم: أخبروني بما تحبون رؤيته.` },
-      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً فبعد تأكيد الموعد يمكنك الدفع عبر PayPal أو Wise. والإلغاء قبل أكثر من ٧٢ ساعة مجاني.' },
       { q: 'هل يوجد طعام حلال ووقت للصلاة؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة، وأضع وقفات الصلاة في المسار من البداية. أخبرني عند الحجز.' },
       { q: 'وماذا لو كنا أكثر من ستة؟', a: `الأسعار لمجموعات حتى ${n(6)} أشخاص، ويمكن أن تصل المجموعة إلى ${n(14)} شخصاً: راسلني وأخبرك كيف ننظّم الأمر.` },
     ],
@@ -340,7 +334,12 @@ export function introCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion')
 }
 
 export function fichaCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): PreguntaCiudad[] {
-  const precio = faqCiudad(id, lang, guia)[0].a
+  // Sólo la primera frase del precio (la cifra); la explicación entera está en
+  // la pregunta frecuente, y repetirla en cada ciudad era texto duplicado.
+  const entera = faqCiudad(id, lang, guia)[0].a
+  const POR_GRUPO: Record<Lengua, string> = { es: 'por grupo de hasta 6', en: 'per group of up to 6', ar: 'للمجموعة حتى ٦ أشخاص', ru: 'за группу до 6 человек' }
+  const corta = entera.split('. ')[0]
+  const precio = /grupo|group|المجموعة|групп/.test(corta) ? `${corta}.` : `${corta}${lang === 'ar' ? '،' : ','} ${POR_GRUPO[lang]}.`
   const zonas = zonasEnFrase(id, lang, 4)
   if (guia === 'larion') return lang === 'ru' ? [
     { q: 'Цена', a: precio },
