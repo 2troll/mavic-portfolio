@@ -176,7 +176,7 @@ const es: Pagina = {
     titulo: 'Tu guía',
     idiomas: 'Español · Inglés · Árabe',
     bio: [
-      'Soy Tony, español, y vivo en Osaka.',
+      'Soy Tony, español, y vivo en Osaka desde abril de 2026. Llevo ya más de 25 tours guiados.',
       'Te enseño Kansai a tu ritmo: Kioto, Osaka, Nara, Kobe y Himeji. Y si tu viaje sigue, te acompaño por el resto de Japón.',
     ],
   },
@@ -318,7 +318,7 @@ const en: Pagina = {
     titulo: 'Your guide',
     idiomas: 'English · Spanish · Arabic',
     bio: [
-      'I\'m Tony. I\'m Spanish and I live in Osaka.',
+      'I\'m Tony. I\'m Spanish and I have lived in Osaka since April 2026. I have guided more than 25 tours so far.',
       'I show you Kansai at your own pace: Kyoto, Osaka, Nara, Kobe and Himeji. If your trip goes further, I can come along to the rest of Japan too.',
     ],
     otro: { texto: 'Heading to Hiroshima? Larion also guides in English and covers the west.', enlace: 'Meet Larion', ruta: '/larion/' },
@@ -457,7 +457,7 @@ const ar: Pagina = {
     titulo: 'مرشدك',
     idiomas: 'العربية · الإسبانية · الإنجليزية',
     bio: [
-      'أنا طوني، إسباني مسلم وأعيش في أوساكا.',
+      'أنا طوني، إسباني مسلم وأعيش في أوساكا منذ أبريل ٢٠٢٦. رافقت حتى الآن أكثر من ٢٥ جولة.',
       'أريك كانساي على راحتك: كيوتو وأوساكا ونارا وكوبي وهيميجي. وإن امتدت رحلتك أرافقك إلى بقية اليابان.',
     ],
   },
