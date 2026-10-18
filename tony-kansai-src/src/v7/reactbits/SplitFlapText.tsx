@@ -468,7 +468,8 @@ const SplitFlapText = ({
 
   return (
     <>
-      <style>{styles}</style>
+      {/* Como HTML y no como texto: el render del build escapa las comillas del CSS (&#x27;) y la hidratación no casaba (error #418). */}
+      <style dangerouslySetInnerHTML={{ __html: styles }} />
       <div className={rootClass} style={componentStyle} {...props}>
         <span className="sr-only">{label}</span>
         {tiles.map((tile, index) => (
