@@ -77,6 +77,34 @@ function tipoDeClic(el: Element): string | null {
   return null
 }
 
+// Se calcula al cargar el módulo (antes de que la raíz redirija a /es/ y se
+// pierda el ?utm_source) y se guarda para toda la visita.
+const ORIGEN = (() => {
+  try {
+    const guardado = sessionStorage.getItem('tkg-origen')
+    if (guardado) return guardado
+    const o = calcularOrigen()
+    sessionStorage.setItem('tkg-origen', o)
+    return o
+  } catch { return calcularOrigen() }
+})()
+function origenVisita(): string { return ORIGEN }
+
+function calcularOrigen(): string {
+  const utm = new URLSearchParams(location.search).get('utm_source') || ''
+  let ref = ''
+  try { ref = document.referrer ? new URL(document.referrer).hostname : '' } catch { /* referer raro */ }
+  const fuente = `${utm} ${ref}`.toLowerCase()
+  const fuentes: [RegExp, string][] = [
+    [/chatgpt|openai/, 'chatgpt'], [/perplexity/, 'perplexity'], [/copilot/, 'copilot'],
+    [/gemini|bard/, 'gemini'], [/claude\.ai/, 'claude'], [/google\./, 'google'], [/bing\./, 'bing'],
+    [/whatsapp|wa\.me/, 'whatsapp'], [/instagram|facebook|t\.co|telegram/, 'redes'],
+  ]
+  for (const [re, nombre] of fuentes) if (re.test(fuente)) return nombre
+  if (ref && !ref.endsWith('tonykansaiguide.com')) return 'otra_web'
+  return 'directo'
+}
+
 // Etiquetas para filtrar en Clarity: de qué zona horaria e idioma viene cada
 // visita y a qué sección entró. Nada que identifique a la persona.
 function etiquetar(c: Clarity) {
@@ -86,6 +114,13 @@ function etiquetar(c: Clarity) {
   c('set', 'idioma_navegador', navigator.language || '?')
   c('set', 'seccion', location.pathname.split('/')[1] || 'raiz')
   c('set', 'hora_visitante', String(new Date().getHours()))
+  // De dónde llega: ChatGPT añade ?utm_source=chatgpt.com a sus enlaces y a
+  // veces no manda referer, así que se miran las dos cosas. Sin esto no se
+  // puede saber si los contactos vienen de verdad de las IAs.
+  const origen = origenVisita()
+  c('set', 'origen', origen)
+  const deIa = ['chatgpt', 'perplexity', 'copilot', 'gemini', 'claude'].includes(origen)
+  if (deIa) c('event', 'llega_desde_ia')
 
   // Lo que de verdad importa: quién llega a escribir o a pagar. Cada contacto
   // se marca como evento y su grabación se guarda siempre («upgrade»), aunque
@@ -101,6 +136,7 @@ function etiquetar(c: Clarity) {
     if (tipo !== 'mira_precios_o_reserva') {
       cl('set', 'contacto', tipo)
       cl('upgrade', tipo)
+      if (deIa) cl('event', 'contacto_desde_ia')
     }
   }, { capture: true, passive: true })
 }
