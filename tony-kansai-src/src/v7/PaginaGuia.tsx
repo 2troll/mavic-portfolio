@@ -806,7 +806,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             </ul>
           </div>
           <div className="v9-portada-foto">
-            <img {...foto(p.hero.foto, '(max-width: 900px) 100vw, 50vw')} alt="" width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+            <img {...foto(p.hero.foto, '(max-width: 900px) 100vw, 50vw')} alt={p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
             <HeroTinta fotos={FOTOS_HERO[p.id]} />
           </div>
         </section>
