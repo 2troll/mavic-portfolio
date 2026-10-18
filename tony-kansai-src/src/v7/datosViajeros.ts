@@ -4,7 +4,7 @@
 // Regla de contenido: nada que no sea verdad. Lo que cambia con el tiempo
 // (visado, vuelos) va dicho en general y con la fuente oficial para comprobarlo.
 
-export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo' | 'us' | 'arg' | 'rusia'
+export type MercadoId = 'mx' | 'uk' | 'es' | 'golfo' | 'us' | 'arg' | 'rusia' | 'hispano' | 'anglo'
 
 export interface Mercado {
   lang: 'es' | 'en' | 'ar' | 'ru'; ruta: string;
@@ -19,9 +19,11 @@ export interface Mercado {
   ideasTitulo: string; ideas: { t: string; d: string; a: string }[]
   final: { titulo: string; texto: string; boton: string; principal: string }
   saludo: string; escribe: string; foto: string; fotoAlt: string; touristType: string
+  /** Página que junta varios países: lo que cambia de un país a otro, por país. */
+  paises?: { bandera: string; nombre: string; practico: { icono: string; t: string; d: string }[] }[]
 }
 
-export const MERCADOS: Record<MercadoId, Mercado> = {
+export const MERCADOS: Record<Exclude<MercadoId, 'hispano' | 'anglo'>, Mercado> = {
   // México: en «ustedes» (el «vosotros» suena a España y aleja al público
   // latino) y con lo que les da confianza según el análisis de octubre de 2026:
   // pagar en efectivo el mismo día, la palabra «reembolso» y el precio por
@@ -382,6 +384,58 @@ export const MERCADOS_PROPUESTOS: Record<'co' | 'cl', Mercado> = {
   },
 }
 
+// Una página por idioma en vez de una por país (19-10-2026): las de México,
+// Argentina y España repetían entre el 33 % y el 54 % de las frases, y Bing
+// bloqueaba la web por páginas casi iguales. Lo común (pago, cancelación,
+// dinero) va una vez; lo que cambia de verdad (horario, visado, vuelos,
+// enchufes) va en un apartado por país.
+const PROPIO = /^(Horario|Visa|Visado|Cómo llegar|Enchufes|Time difference|Entry|Getting to Kansai|Plugs)/
+const NOMBRE: Record<string, string> = { es: 'Desde España', mx: 'Desde México', arg: 'Desde Argentina', co: 'Desde Colombia', cl: 'Desde Chile', uk: 'From the UK', us: 'From the US' }
+function unir(base: Mercado, ids: string[], extra: Partial<Mercado>): Mercado {
+  const todos: Record<string, Mercado> = { ...MERCADOS, ...MERCADOS_PROPUESTOS }
+  return {
+    ...base, ...extra,
+    practico: base.practico.filter((x) => !PROPIO.test(x.t)),
+    paises: ids.map((id) => ({ bandera: todos[id].bandera, nombre: NOMBRE[id], practico: todos[id].practico.filter((x) => PROPIO.test(x.t)) })),
+  }
+}
+
+export const MERCADOS_TODOS: Record<MercadoId, Mercado> = {
+  ...MERCADOS,
+  hispano: unir(MERCADOS.es, ['es', 'mx', 'arg', 'co', 'cl'], {
+    ruta: '/es/viajar-a-japon-desde-espana-y-latinoamerica/', divisas: ['EUR', 'MXN', 'USD'],
+    seo: {
+      titulo: 'Viajar a Japón desde España y Latinoamérica con guía en español | Tony Kansai Guide',
+      descripcion: 'Horario, visado, vuelos y enchufes desde España, México, Argentina, Colombia y Chile, y el precio de un guía privado en español en Kioto, Osaka y Nara en tu moneda.',
+    },
+    bandera: '🇪🇸 🇲🇽 🇦🇷 🇨🇴 🇨🇱', antetitulo: 'Para viajeros de España y Latinoamérica',
+    titulo: 'Japón desde España y Latinoamérica, con guía en español.',
+    sub: 'Soy Tony, español, y vivo en Osaka. Te recojo en el hotel y pasamos el día en Kioto, Osaka o Nara, solo con tu grupo. Sin agencia: hablas directamente conmigo, por WhatsApp, en español.',
+    practicoTitulo: 'Lo práctico, vengas de donde vengas', touristType: 'Viajeros de España y Latinoamérica',
+  }),
+  anglo: unir(MERCADOS.uk, ['uk', 'us'], {
+    ruta: '/en/travel-to-japan-from-uk-and-usa/', divisas: ['GBP', 'USD', 'EUR'],
+    seo: {
+      titulo: 'Japan from the UK and the US: Private Guide in Kyoto, Osaka & Nara | Tony Kansai Guide',
+      descripcion: 'Time difference, entry, getting to Kansai and plugs from the UK and the US, plus private guide prices in Kyoto, Osaka and Nara in pounds and dollars.',
+    },
+    bandera: '🇬🇧 🇺🇸', antetitulo: 'For travellers from the UK and the US',
+    titulo: 'Japan from the UK and the US, with your own guide.',
+    practicoTitulo: 'The practical bits, wherever you fly from', touristType: 'Travellers from the UK and the United States',
+  }),
+}
+
+/** Páginas por país que ahora viven dentro de la de su idioma: la app lleva
+ *  allí a quien llegue por un enlace viejo, y rutas-antiguas.json les pone
+ *  noindex con canonical a la nueva. */
+export const MOVIDAS_VIAJEROS: Record<string, string> = {
+  '/es/desde-espana': MERCADOS_TODOS.hispano.ruta, '/es/desde-mexico': MERCADOS_TODOS.hispano.ruta,
+  '/es/desde-argentina': MERCADOS_TODOS.hispano.ruta,
+  '/en/from-uk': MERCADOS_TODOS.anglo.ruta, '/en/from-usa': MERCADOS_TODOS.anglo.ruta,
+}
+
 export const RUTAS_VIAJEROS: Record<string, MercadoId> = Object.fromEntries(
-  Object.entries(MERCADOS).map(([id, m]) => [m.ruta.replace(/\/+$/, ''), id as MercadoId]),
+  (Object.entries(MERCADOS_TODOS) as [MercadoId, Mercado][])
+    .filter(([, m]) => !(m.ruta.replace(/\/+$/, '') in MOVIDAS_VIAJEROS))
+    .map(([id, m]) => [m.ruta.replace(/\/+$/, ''), id]),
 )

@@ -1177,6 +1177,12 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 }
 .v9-guia-bio { font-size: var(--t-1); line-height: 1.5; color: var(--tenue); max-width: 34rem; }
 .v9-guia-bio:first-of-type { color: var(--tinta); }
+/* Ficha rápida del guía: pares dato/valor en dos columnas, una en móvil. */
+.v9-ficha { display: grid; gap: 6px 18px; margin: 14px 0 18px; padding: 14px 16px; border: 2px solid var(--tinta); background: var(--papel, transparent); max-width: 40rem; }
+.v9-ficha div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 10px; }
+.v9-ficha dt { font-weight: 700; }
+.v9-ficha dd { margin: 0; color: var(--tinta); }
+@media (max-width: 560px) { .v9-ficha div { grid-template-columns: 1fr; gap: 0; } }
 .v9-guia .v7-boton { margin-top: var(--e-2); }
 @media (max-width: 820px) { .v9-guia { grid-template-columns: 1fr; } .v9-guia-foto { max-height: 70svh; } }
 

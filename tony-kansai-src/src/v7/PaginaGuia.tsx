@@ -531,7 +531,14 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
  *  build con scripts/resenas-worker.mjs) para los datos estructurados. Los
  *  buscadores de IA (ChatGPT tira de Bing) leen el JSON-LD del HTML pregenerado,
  *  no el que pinta React después; por eso va aquí y no en una petición. */
-function valoracionTony() {
+// 19-10-2026: SIN estrellas en el JSON-LD. Son reseñas recogidas por el propio
+// negocio en su web, y Google y Bing tratan ese marcado como autoatribuido
+// (no da estrellas y puede contar como marcado engañoso). Las reseñas siguen
+// visibles en la página; la función queda por si un día hay una fuente externa.
+function valoracionTony(): Record<string, unknown> {
+  return {}
+}
+export function valoracionTonyAntigua() {
   const lista = (resenasTony as unknown as { reviews: Resena[] }).reviews
   if (!lista.length) return {}
   const media = lista.reduce((t, r) => t + r.stars, 0) / lista.length
@@ -649,6 +656,46 @@ function desdeHero(lang: string): string {
   return ({ es: `Desde ¥${n} por grupo`, en: `From ¥${n} per group`, ar: `ابتداءً من ${n} ين للمجموعة`, ru: `От ${n} ¥ за группу` } as Record<string, string>)[lang] ?? `From ¥${n} per group`
 }
 
+
+/** Ficha rápida de Tony (sección «Tu guía»). Solo datos que ya dice la web. */
+const FICHA_RAPIDA: Record<string, [string, string][]> = {
+  es: [
+    ['Guía', 'Tony Hanma, español, vive en Osaka'],
+    ['Idiomas', 'Español (nativo), inglés y árabe'],
+    ['Dónde', 'Kioto, Osaka, Nara, Kobe y Himeji; también el resto de Japón'],
+    ['Precio', 'Medio día (4 h) ¥38.000 · día completo (8 h) ¥58.000, por grupo de hasta 6'],
+    ['Grupos', 'Solo tu grupo; hasta 14 personas, precio a consultar'],
+    ['Recogida', 'En el vestíbulo de tu hotel'],
+    ['Pago', 'Efectivo el día del tour, o PayPal o Wise por adelantado'],
+    ['Cancelación', 'Gratis hasta 72 horas antes'],
+    ['Experiencia', 'Más de 25 tours guiados'],
+    ['Contacto', 'WhatsApp +34 634 193 106 · tony@tonykansaiguide.com'],
+  ],
+  en: [
+    ['Guide', 'Tony Hanma, from Spain, lives in Osaka'],
+    ['Languages', 'Spanish (native), English and Arabic'],
+    ['Where', 'Kyoto, Osaka, Nara, Kobe and Himeji; the rest of Japan too'],
+    ['Price', 'Half day (4 h) ¥38,000 · full day (8 h) ¥58,000, per group of up to 6'],
+    ['Groups', 'Your group only; up to 14 people, price on request'],
+    ['Pick-up', 'In your hotel lobby'],
+    ['Payment', 'Cash on the day, or PayPal or Wise in advance'],
+    ['Cancellation', 'Free up to 72 hours before'],
+    ['Experience', 'More than 25 tours guided'],
+    ['Contact', 'WhatsApp +34 634 193 106 · tony@tonykansaiguide.com'],
+  ],
+  ar: [
+    ['المرشد', 'طوني هانما، إسباني مسلم يعيش في أوساكا'],
+    ['اللغات', 'العربية والإسبانية والإنجليزية'],
+    ['الأماكن', 'كيوتو وأوساكا ونارا وكوبي وهيميجي، وبقية اليابان أيضاً'],
+    ['السعر', 'نصف يوم (٤ ساعات) ٣٨٬٠٠٠ ين · يوم كامل (٨ ساعات) ٥٨٬٠٠٠ ين، للمجموعة حتى ٦ أشخاص'],
+    ['المجموعات', 'مجموعتك وحدها؛ حتى ١٤ شخصاً بسعر حسب الطلب'],
+    ['الاستقبال', 'في بهو فندقك'],
+    ['الدفع', 'نقداً يوم الجولة، أو مسبقاً عبر PayPal أو Wise'],
+    ['الإلغاء', 'مجاني حتى ٧٢ ساعة قبل الجولة'],
+    ['الخبرة', 'أكثر من ٢٥ جولة'],
+    ['التواصل', 'واتساب ‎+34 634 193 106 · tony@tonykansaiguide.com'],
+  ],
+}
 
 const RESPUESTAS_TITULO: Record<string, string> = { es: 'Guías y precios', en: 'Guides and prices', ar: 'أدلة وأسعار' }
 export default function PaginaGuia({ id }: { id: PaginaId }) {
@@ -869,6 +916,14 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               {p.guiaTxt.idiomas.split(' · ').map((l) => <li key={l}>{l}</li>)}
             </ul>
             {p.guiaTxt.bio.map((b) => <p key={b} className="v9-guia-bio">{b}</p>)}
+            {/* Ficha rápida: los datos que un viajero (y ChatGPT) busca para
+                decidir, juntos y en texto. Cuando ChatGPT encontró estos datos
+                en la web, puso a Tony el primero (18-10-2026). */}
+            {p.guia === 'tony' && FICHA_RAPIDA[p.lang] && (
+              <dl className="v9-ficha">
+                {FICHA_RAPIDA[p.lang].map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
+              </dl>
+            )}
             <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.hero.cta}</a>
             {p.guiaTxt.otro && (
               <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>

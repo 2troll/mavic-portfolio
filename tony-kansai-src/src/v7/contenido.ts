@@ -233,9 +233,7 @@ const es: Pagina = {
     tuHora: 'Tu hora',
     divisas: ['EUR', 'MXN', 'USD'],
     enlaces: [
-      { texto: 'Guía práctica desde España', ruta: '/es/desde-espana/' },
-      { texto: 'Guía práctica desde México', ruta: '/es/desde-mexico/' },
-      { texto: 'Guía práctica desde Argentina', ruta: '/es/desde-argentina/' },
+      { texto: 'Guía práctica desde España y Latinoamérica', ruta: '/es/viajar-a-japon-desde-espana-y-latinoamerica/' },
     ],
   },
   resenas: { titulo: 'Lo que dicen', opinar: '¿Hiciste un tour con nosotros? Deja tu opinión' },
@@ -373,8 +371,7 @@ const en: Pagina = {
     tuHora: 'Your time',
     divisas: ['GBP'],
     enlaces: [
-      { texto: 'Practical guide for travellers from the UK', ruta: '/en/from-uk/' },
-      { texto: 'Practical guide for travellers from the USA', ruta: '/en/from-usa/' },
+      { texto: 'Practical guide for travellers from the UK and the US', ruta: '/en/travel-to-japan-from-uk-and-usa/' },
     ],
   },
   resenas: { titulo: 'What guests say', nota: 'Real reviews, translated from Spanish. Tap “See original” to read them as written.', opinar: 'Toured with us? Leave a review' },

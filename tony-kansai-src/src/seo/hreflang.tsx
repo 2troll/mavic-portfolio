@@ -6,7 +6,11 @@
 // Devuelve una lista de <link> y no un componente: Helmet sólo acepta
 // etiquetas directas como hijos.
 
-export function enlacesHreflang(alternas: { lang: string; href: string }[]) {
+import { indexable } from './noindex'
+
+export function enlacesHreflang(todas: { lang: string; href: string }[]) {
+  const alternas = todas.filter((a) => indexable(a.href))
+  if (alternas.length < 2) return []
   const porDefecto = alternas.find((a) => a.lang === 'en')?.href ?? alternas[0]?.href
   return [
     ...alternas.map(({ lang, href }) => <link key={lang + href} rel="alternate" hrefLang={lang} href={href} />),

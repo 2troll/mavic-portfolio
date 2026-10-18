@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation, Navigate } from 'react-router-dom'
 import { Component, useEffect, useState, lazy, Suspense } from 'react'
 import { trasCarga } from './lib/trasCarga'
 import type { ReactNode } from 'react'
@@ -37,7 +37,7 @@ const GuiaTransporte = lazy(() => import('./v7/GuiaTransporte'))
 const Ventajas = lazy(() => import('./v7/Ventajas'))
 // Páginas de respuesta: precio de un guía en Kioto, mezquitas y comida halal (datosRespuestas.ts).
 const PaginaRespuesta = lazy(() => import('./v7/PaginaRespuesta'))
-import { RUTAS_RESPUESTA } from './v7/datosRespuestas'
+import { RUTAS_RESPUESTA, MOVIDAS_RESPUESTA } from './v7/datosRespuestas'
 const RUTAS_VENTAJAS: Record<string, 'es' | 'en' | 'ar' | 'ru'> = { '/es/ventajas': 'es', '/en/perks': 'en', '/ar/perks': 'ar', '/ru/perks': 'ru' }
 /** /es/ventajas/ o /es/ventajas/airalo/ → idioma y app (la ficha propia de cada app). */
 const rutaVentajas = (ruta: string) => {
@@ -46,7 +46,7 @@ const rutaVentajas = (ruta: string) => {
 }
 import { RUTAS_GUIA } from './v7/datosGuias'
 const Viajeros = lazy(() => import('./v7/Viajeros'))
-import { RUTAS_VIAJEROS } from './v7/datosViajeros'
+import { RUTAS_VIAJEROS, MOVIDAS_VIAJEROS } from './v7/datosViajeros'
 import { RUTAS_OTONO } from './v7/datosOtono'
 import { CIUDADES_LARION, CIUDADES_TONY } from './v8/ciudades'
 import type { PaginaCiudad } from './v8/CiudadPagina'
@@ -138,6 +138,11 @@ export function Layout() {
       </>
     )
   }
+
+  // Páginas unidas a otra (por país → una por idioma; Osaka y Nara → su ciudad):
+  // quien llega por un enlace viejo va a la nueva.
+  const movida = { ...MOVIDAS_VIAJEROS, ...MOVIDAS_RESPUESTA }[pathname.replace(/\/+$/, '')]
+  if (movida) return <Navigate to={movida} replace />
 
   // Páginas por país de origen (datosViajeros.ts: México, Reino Unido, España, Golfo).
   const mercado = RUTAS_VIAJEROS[pathname.replace(/\/+$/, '')]

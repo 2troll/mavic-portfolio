@@ -8,7 +8,7 @@
 // Las rutas antiguas sin cabecera propia conservan el arreglo de antes
 // (canonical propio y fuera los hreflang de la portada).
 
-import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
+import { existsSync, mkdirSync, readFileSync, writeFileSync, statSync } from 'node:fs'
 import { join } from 'node:path'
 import { createServer } from 'vite'
 
@@ -41,7 +41,7 @@ const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'n
 import { execSync } from 'node:child_process'
 execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
 const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
-const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|desde-mexico|from-uk|desde-espana|from-gulf|from-usa|desde-argentina|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks|guia-privado-espanol-kioto|guia-privado-espanol-osaka|nara-medio-dia-guia-espanol|guia-espanol-kansai|tour-privado-o-en-grupo-japon|guia-espanol-arabe-japon|spanish-speaking-guide-japan|arabic-speaking-guide-japan|kyoto-private-guide-cost|mosques-kansai|halal-kyoto-osaka))?$/
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|viajar-a-japon-desde-espana-y-latinoamerica|travel-to-japan-from-uk-and-usa|from-gulf|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks|guia-privado-espanol-kioto|guia-espanol-kansai|tour-privado-o-en-grupo-japon|guia-espanol-arabe-japon|spanish-speaking-guide-japan|arabic-speaking-guide-japan|kyoto-private-guide-cost|mosques-kansai|halal-kyoto-osaka))?$/
 
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'
@@ -76,10 +76,16 @@ for (const [ruta, nueva] of Object.entries(ANTIGUAS)) {
 let propias = 0
 let fichasAfiliado = 0
 const FICHA_AFILIADO = /^(es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^/]+$/
+// Las páginas de Larion en inglés repetían del 55 al 96 % del texto de las de
+// Tony en inglés (19-10-2026). Siguen abiertas para quien las visite, pero no
+// se indexan; su versión en ruso (/ru/…) sí. Igual en src/seo/noindex.ts.
+const LARION_EN = /^larion(\/|$)/
+const NOINDEX = new RegExp(`${FICHA_AFILIADO.source}|${LARION_EN.source}`)
 let pintadas = 0
 for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.
-  if (existsSync(join(dest, ruta))) continue
+  // (Solo ficheros: una carpeta ya creada, p. ej. es/ por una ruta antigua es/desde-…, no cuenta.)
+  if (existsSync(join(dest, ruta)) && statSync(join(dest, ruta)).isFile()) continue
   const url = `${BASE}/${ruta}/`
   let html = base
     .replace(/^\s*<link rel="alternate" hreflang=.*\n/gm, '')
@@ -106,10 +112,14 @@ for (const ruta of rutas) {
     // versión inglesa, no a la raíz, que solo redirige. Una página sin
     // traducciones (las de cada país, las árabes de mezquitas y halal) no
     // declara ninguno: un x-default suelto apuntando a otra página confunde.
-    if (c.alternos.length > 1) {
-      const en = c.alternos.find(([l]) => l === 'en')
-      const alternos = c.alternos.map(([l, r]) => `    <link rel="alternate" hreflang="${l}" href="${BASE}${r}" />`)
-      if (en) alternos.push(`    <link rel="alternate" hreflang="x-default" href="${BASE}${en[1]}" />`)
+    // Sin las páginas noindex (un hreflang no puede apuntar a una página que no
+    // se indexa). data-rh: así Helmet las reemplaza al cargar en vez de
+    // añadir una segunda copia de cada una.
+    const alt = c.alternos.filter(([, r]) => !NOINDEX.test(r.replace(/^\/+|\/+$/g, '')))
+    if (alt.length > 1) {
+      const en = alt.find(([l]) => l === 'en')
+      const alternos = alt.map(([l, r]) => `    <link data-rh="true" rel="alternate" hreflang="${l}" href="${BASE}${r}" />`)
+      if (en) alternos.push(`    <link data-rh="true" rel="alternate" hreflang="x-default" href="${BASE}${en[1]}" />`)
       html = html.replace('</head>', `${alternos.join('\n')}\n  </head>`)
     }
     // og:locale del idioma de la página (antes todas decían en_US) y, como
@@ -165,7 +175,7 @@ for (const ruta of rutas) {
   // («URL cannot appear on Bing», 18-10-2026) y lo más parecido a sus normas
   // contra «thin affiliate» eran ellas: siguen funcionando, pero noindex y
   // fuera del sitemap. La página general de ventajas sí se indexa.
-  if (FICHA_AFILIADO.test(ruta)) {
+  if (NOINDEX.test(ruta)) {
     html = html.replace(/<meta name="robots" content="[^"]*"\s*\/?>/, '<meta name="robots" content="noindex, follow" />')
     fichasAfiliado++
   }
@@ -174,7 +184,9 @@ for (const ruta of rutas) {
 }
 // El sitemap publicado no las lista: a un buscador no se le piden páginas noindex.
 const mapa = join(dest, 'sitemap.xml')
-writeFileSync(mapa, readFileSync(mapa, 'utf8').replace(/\s*<url>\s*<loc>[^<]*\/(?:es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^<\/]+\/?<\/loc>[\s\S]*?<\/url>/g, ''))
+writeFileSync(mapa, readFileSync(mapa, 'utf8')
+  .replace(/\s*<url>\s*<loc>([^<]*)<\/loc>[\s\S]*?<\/url>/g, (u, loc) => NOINDEX.test(loc.replace(BASE, '').replace(/^\/+|\/+$/g, '')) ? '' : u)
+  .replace(/\s*<xhtml:link[^>]*href="https:\/\/tonykansaiguide\.com\/larion\/[^"]*"[^>]*\/>/g, ''))
 // Portada (/): es la x-default y la de más prioridad, pero React solo la usa
 // para redirigir al idioma del navegador, así que su HTML era un div vacío y
 // los bots que no ejecutan JavaScript (GPTBot, ClaudeBot, PerplexityBot) leían
@@ -211,4 +223,4 @@ if (!indice.includes('id="portada-texto"')) {
   writeFileSync(join(dest, 'index.html'), indice.replace('<div id="root"></div>', `<div id="root"></div>${portada}`))
 }
 
-console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex; ${fichasAfiliado} fichas de afiliado con noindex`)
+console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex; ${fichasAfiliado} con noindex (afiliado y Larion en inglés)`)

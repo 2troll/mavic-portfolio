@@ -55,9 +55,9 @@ import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
 
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
-  | 'osaka-es' | 'nara-es' | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en'
+  | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
-export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'osaka' | 'nara' | 'kansai' | 'privado' | 'arabe'
+export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe'
 export type LangRespuesta = 'es' | 'en' | 'ar'
 
 /** Fecha de la última revisión: la ven el visitante, el JSON-LD y el sitemap. */
@@ -390,139 +390,6 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
   // distinta y enlaza a la página de ciudad o de rutas que ya existe. Solo datos
   // que ya publica la web: precios por grupo, idiomas, recogida, pago,
   // cancelación e itinerarios de datosItinerarios.ts. Sin precios ajenos nuevos.
-  'osaka-es': {
-    lang: 'es', ruta: '/es/guia-privado-espanol-osaka/', inicio: '/es/', grupo: 'osaka',
-    foto: { clave: 'osaka-dotonbori', lugar: 'Dōtonbori' }, og: '/v8/og/osaka.jpg',
-    seo: {
-      titulo: 'Guía privado en español en Osaka: precio y qué ver en un día | Tony Kansai Guide',
-      descripcion: `Cuánto cuesta un guía privado en español en Osaka (${yenEs(M.medio)} medio día, ${yenEs(M.completo)} día completo, por grupo) y una ruta real de un día: castillo, Kuromon, Shinsekai y Dōtonbori.`,
-    },
-    antetitulo: 'Osaka · Precios y ruta, oct. 2026',
-    titulo: '¿Cuánto cuesta un guía privado en español en Osaka?',
-    respuesta: `Con Tony, guía en español que vive en Osaka, un tour privado cuesta ${yenEs(M.medio)} el medio día (4 horas) y ${yenEs(M.completo)} el día completo (8 horas), por grupo de hasta 6 personas: con el grupo lleno, el día sale a unos ${yenEs(porPersona(M.completo))} por persona. Te recoge en el hotel y el día se pasa a pie y en metro, comiendo por el camino.`,
-    actualizado: 'Actualizado: oct. 2026',
-    cta: 'Pregúntame por WhatsApp',
-    secciones: [
-      {
-        titulo: 'Qué ver en Osaka en un día (ruta real)',
-        lista: [
-          'Mañana: castillo de Osaka. Los fosos, las murallas de piedra y, si os apetece, el museo de la torre con vistas.',
-          'Mediodía: mercado de Kuromon, «la cocina de Osaka». Brochetas de marisco, fruta y tortilla dulce, de pie, puesto a puesto.',
-          'Primera hora de la tarde: Shinsekai, el barrio retro bajo la torre Tsūtenkaku, con kushikatsu.',
-          'Tarde: Hōzen-ji, un templo escondido en un callejón de piedra con una estatua cubierta de musgo.',
-          'Al caer la luz: Dōtonbori, el canal y los carteles luminosos. Takoyaki recién hechos.',
-        ],
-      },
-      {
-        titulo: 'Medio día o día completo',
-        parrafos: [
-          'Con medio día (4 horas) da tiempo a dos zonas: el castillo y Kuromon por la mañana, o Shinsekai y Dōtonbori por la tarde. Es buena opción el día que llegáis o el último día.',
-          'Con el día completo (8 horas) se hace la ruta entera sin prisas, o se combina Osaka con media jornada en Nara (≈ 40 min en tren).',
-          'Domingos y festivos Dōtonbori se llena; entre semana se disfruta más.',
-        ],
-      },
-      {
-        titulo: 'Comer en Osaka con guía',
-        parrafos: ['Osaka es la ciudad de la comida: takoyaki, okonomiyaki y marisco. Si necesitáis halal, vegetariano o sin cerdo, elijo los sitios con eso en mente; en Namba hay restaurantes con certificado halal.'],
-      },
-    ],
-    precios: {
-      titulo: 'Precio de Tony, por grupo',
-      texto: 'Te recojo en el vestíbulo de tu hotel en Osaka. Solo tu grupo, a tu ritmo.',
-      medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
-      notas: [
-        'Metro, entradas y comidas no están incluidos: se pagan en el momento y yo te digo cuánto llevar.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
-        'Cancelación sin coste hasta 72 horas antes.',
-      ],
-    },
-    faqTitulo: 'Preguntas frecuentes',
-    faq: [
-      { p: '¿Cuánto cuesta un guía privado en español en Osaka?', r: `${yenEs(M.medio)} medio día (4 h) y ${yenEs(M.completo)} día completo (8 h), por grupo de hasta 6 personas.` },
-      { p: '¿El precio es por persona o por grupo?', r: 'Por grupo. El mismo precio para 1 que para 6 personas.' },
-      { p: '¿Qué ver en Osaka en un día?', r: 'El castillo de Osaka, el mercado de Kuromon, Shinsekai, el templo Hōzen-ji y Dōtonbori al anochecer.' },
-      { p: '¿Me recoges en el hotel?', r: 'Sí, en el vestíbulo de tu hotel en Osaka. También en Kioto o Nara.' },
-      { p: '¿Y si somos más de 6?', r: 'Acompaño grupos de hasta 14 personas. Dime cuántos sois y te digo el precio.' },
-      { p: '¿Cómo se paga y hasta cuándo puedo cancelar?', r: 'En efectivo el día del tour, o por adelantado con PayPal o Wise una vez confirmada la fecha. Cancelación gratis hasta 72 horas antes.' },
-    ],
-    fuentesTitulo: 'Más información',
-    fuentes: [
-      { texto: 'Osaka con Tony: zonas, fotos y tiempo en directo', url: 'https://tonykansaiguide.com/es/osaka/' },
-      { texto: 'El día hora a hora en Osaka, Kioto y Nara', url: 'https://tonykansaiguide.com/es/rutas/' },
-      { texto: 'Cuánto cuesta un guía privado en Kioto (comparativa con plataformas)', url: 'https://tonykansaiguide.com/es/guia-privado-espanol-kioto/' },
-    ],
-    final: { titulo: '¿Os enseño Osaka?', texto: 'Dime fechas, número de personas y qué os apetece, y te contesto con un plan y el precio cerrado.', boton: 'Escribir a Tony' },
-    altFoto: 'El canal de Dōtonbori, en Osaka', saludo: 'Hola Tony, he visto la página de guía privado en Osaka y quería preguntarte por un tour.',
-    volver: '← Volver a la página de Tony',
-  },
-
-  'nara-es': {
-    lang: 'es', ruta: '/es/nara-medio-dia-guia-espanol/', inicio: '/es/', grupo: 'nara',
-    foto: { clave: 'nara-todaiji', lugar: 'Tōdai-ji' }, og: '/v8/og/nara.jpg',
-    seo: {
-      titulo: 'Nara en medio día con guía privado en español: ruta y precio | Tony Kansai Guide',
-      descripcion: `Ruta de medio día por Nara desde Osaka o Kioto: Kōfuku-ji, ciervos, Tōdai-ji y Kasuga Taisha. Guía privado en español, ${yenEs(M.medio)} por grupo de hasta 6.`,
-    },
-    antetitulo: 'Nara · Ruta de 4 horas',
-    titulo: 'Ruta de medio día por Nara con guía en español',
-    respuesta: `Medio día basta para lo esencial de Nara: la pagoda de Kōfuku-ji, los ciervos del parque, el Gran Buda de Tōdai-ji y el camino de faroles de Kasuga Taisha. Desde Osaka se llega en unos 40 minutos en tren Kintetsu. Con Tony, guía privado en español, el medio día cuesta ${yenEs(M.medio)} por grupo de hasta 6 personas, con recogida en el hotel.`,
-    actualizado: 'Actualizado: oct. 2026',
-    cta: 'Pregúntame por WhatsApp',
-    secciones: [
-      {
-        titulo: 'La ruta, paso a paso',
-        lista: [
-          'Recogida en tu hotel de Osaka y tren Kintetsu hasta Nara, que deja a cinco minutos del parque.',
-          'Kōfuku-ji: la pagoda de cinco pisos y la entrada al parque, donde aparecen los primeros ciervos.',
-          'Parque de Nara: más de mil ciervos sueltos. Te explico cómo darles las galletas para que no te persigan.',
-          'Tōdai-ji: el Gran Buda de 15 metros dentro de uno de los mayores edificios de madera del mundo.',
-          'Kasuga Taisha: el camino de faroles de piedra con musgo entre cedros, y los faroles de bronce del santuario.',
-        ],
-      },
-      {
-        titulo: 'Si tienes el día completo',
-        parrafos: [
-          'Añadimos la comida en Naramachi, el barrio de casas de comerciantes (fideos o kakinoha-zushi, sushi envuelto en hoja de caqui), y el jardín Isui-en con el monte Wakakusa de fondo (cierra los martes).',
-          'Otra opción es medio día en Nara y la tarde en Osaka o en Fushimi Inari, que queda de camino a Kioto.',
-        ],
-      },
-      {
-        titulo: 'Consejos para Nara',
-        lista: [
-          'Los ciervos muerden la ropa si escondes galletas: se dan todas o se enseñan las manos vacías.',
-          'Es una visita muy buena con niños: todo está cerca y se camina por parque.',
-          'Se camina bastante sobre grava: calzado cómodo.',
-        ],
-      },
-    ],
-    precios: {
-      titulo: 'Precio de Tony, por grupo',
-      texto: 'Te recojo en el vestíbulo de tu hotel en Osaka, Kioto o Nara. Solo tu grupo, a tu ritmo.',
-      medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
-      notas: [
-        'Tren, entradas y comidas no están incluidos: se pagan en el momento y yo te digo cuánto llevar.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
-        'Cancelación sin coste hasta 72 horas antes.',
-      ],
-    },
-    faqTitulo: 'Preguntas frecuentes',
-    faq: [
-      { p: '¿Se puede ver Nara en medio día?', r: 'Sí. En 4 horas da tiempo a Kōfuku-ji, el parque de los ciervos, Tōdai-ji y Kasuga Taisha.' },
-      { p: '¿Cuánto se tarda de Osaka a Nara?', r: 'Unos 40 minutos en tren Kintetsu, que deja a cinco minutos del parque.' },
-      { p: '¿Cuánto cuesta el guía en Nara?', r: `${yenEs(M.medio)} medio día y ${yenEs(M.completo)} día completo, por grupo de hasta 6 personas.` },
-      { p: '¿Es buena visita con niños?', r: 'Sí. Los ciervos les encantan, todo está cerca y se camina por parque.' },
-      { p: '¿Me recoges en Kioto?', r: 'Sí, en el vestíbulo de tu hotel en Osaka, Kioto o Nara.' },
-    ],
-    fuentesTitulo: 'Más información',
-    fuentes: [
-      { texto: 'Nara con Tony: zonas, fotos y tiempo en directo', url: 'https://tonykansaiguide.com/es/nara/' },
-      { texto: 'El día hora a hora en Nara, Osaka y Kioto', url: 'https://tonykansaiguide.com/es/rutas/' },
-    ],
-    final: { titulo: '¿Vamos a Nara?', texto: 'Dime la fecha, cuántos sois y desde qué hotel salís, y te contesto con el plan y el precio cerrado.', boton: 'Escribir a Tony' },
-    altFoto: 'El templo Tōdai-ji, en Nara', saludo: 'Hola Tony, he visto la ruta de medio día por Nara y quería preguntarte por un tour.',
-    volver: '← Volver a la página de Tony',
-  },
-
   'kansai-es': {
     lang: 'es', ruta: '/es/guia-espanol-kansai/', inicio: '/es/', grupo: 'kansai',
     foto: { clave: 'kioto-fushimi', lugar: 'Fushimi Inari' }, og: '/v8/og/es.jpg',
@@ -860,6 +727,13 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     altFoto: 'Kobe Mosque', saludo: 'Hi Tony, I saw your Arabic-speaking guide page and would like to ask about a tour.',
     volver: '← Back to Tony’s page',
   },
+}
+
+/** Respuestas que competían con la página de su ciudad por la misma búsqueda
+ *  (19-10-2026): se unen a ella. */
+export const MOVIDAS_RESPUESTA: Record<string, string> = {
+  '/es/guia-privado-espanol-osaka': '/es/osaka/',
+  '/es/nara-medio-dia-guia-espanol': '/es/nara/',
 }
 
 export const RUTAS_RESPUESTA: Record<string, RespuestaId> = Object.fromEntries(

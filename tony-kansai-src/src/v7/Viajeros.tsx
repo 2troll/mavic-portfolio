@@ -1,4 +1,4 @@
-// Página por país de origen (/es/desde-mexico/, /en/from-uk/, /ar/from-gulf/): lo práctico del
+// Página de viajeros por idioma (/es/viajar-a-japon-desde-espana-y-latinoamerica/, /en/travel-to-japan-from-uk-and-usa/, /ar/from-gulf/): lo práctico del
 // viaje y el tour con precio en su moneda al cambio del día. Los textos están en
 // datosViajeros.ts; aquí solo la maqueta, igual para todos los mercados.
 
@@ -14,7 +14,7 @@ import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { useCambio } from './cambio'
 import { yenLocal, PIE } from './formato'
-import { MERCADOS } from './datosViajeros'
+import { MERCADOS_TODOS as MERCADOS } from './datosViajeros'
 import creditosZonas from '../v8/creditosZonas.json'
 import type { MercadoId } from './datosViajeros'
 import './v7.css'
@@ -101,6 +101,21 @@ export default function Viajeros({ id }: { id: MercadoId }) {
             ))}
           </ul>
         </section>
+
+        {m.paises?.map((p) => (
+          <section key={p.nombre} className="v7-seccion">
+            <h2>{p.bandera} {p.nombre}</h2>
+            <ul className="v7-otono-sitios">
+              {p.practico.map((x) => (
+                <li key={x.t} className="tarjeta">
+                  <span className="v7-otono-kanji" aria-hidden="true">{x.icono}</span>
+                  <h3>{x.t}</h3>
+                  <p>{x.d}</p>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
 
         <section className="v7-seccion" id="precios">
           <h2>{m.preciosTitulo}</h2>

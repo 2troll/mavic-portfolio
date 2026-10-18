@@ -44,12 +44,9 @@ const paginas = [
   // Páginas de ciudad (v8).
   ...['osaka', 'kyoto', 'nara', 'kobe', 'himeji', 'hiroshima', 'beyond'].flatMap((c) => ['es', 'en', 'ar'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.9', changefreq: 'monthly', v7: `ciudadTony:${c}` }))),
   ...['hiroshima', 'kyoto', 'nara', 'osaka', 'himeji'].flatMap((c) => ['ru', 'larion'].map((l) => ({ loc: `/${l}/${c}`, priority: '0.85', changefreq: 'monthly', v7: `ciudadLarion:${c}` }))),
-  { loc: '/es/desde-mexico', priority: '0.8', changefreq: 'monthly', v7: 'mexico' },
-  { loc: '/en/from-uk', priority: '0.8', changefreq: 'monthly', v7: 'uk' },
-  { loc: '/es/desde-espana', priority: '0.8', changefreq: 'monthly', v7: 'espana' },
+  { loc: '/es/viajar-a-japon-desde-espana-y-latinoamerica', priority: '0.8', changefreq: 'monthly', v7: 'hispano' },
+  { loc: '/en/travel-to-japan-from-uk-and-usa', priority: '0.8', changefreq: 'monthly', v7: 'anglo' },
   { loc: '/ar/from-gulf', priority: '0.8', changefreq: 'monthly', v7: 'golfo' },
-  { loc: '/en/from-usa', priority: '0.8', changefreq: 'monthly', v7: 'usa' },
-  { loc: '/es/desde-argentina', priority: '0.8', changefreq: 'monthly', v7: 'argentina' },
   { loc: '/ru/from-russia', priority: '0.8', changefreq: 'monthly', v7: 'rusia' },
   // Guías prácticas.
   { loc: '/es/osaka-kioto', priority: '0.8', changefreq: 'monthly', v7: 'osakaKioto' },
@@ -62,8 +59,6 @@ const paginas = [
   { loc: '/ar/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
   { loc: '/ar/halal-kyoto-osaka', priority: '0.8', changefreq: 'monthly', v7: 'halal' },
   { loc: '/es/guia-espanol-kansai', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
-  { loc: '/es/guia-privado-espanol-osaka', priority: '0.8', changefreq: 'monthly', v7: 'osaka' },
-  { loc: '/es/nara-medio-dia-guia-espanol', priority: '0.8', changefreq: 'monthly', v7: 'nara' },
   { loc: '/es/tour-privado-o-en-grupo-japon', priority: '0.8', changefreq: 'monthly', v7: 'privado' },
   { loc: '/es/guia-espanol-arabe-japon', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
   { loc: '/en/spanish-speaking-guide-japan', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
@@ -140,8 +135,8 @@ const FUENTE = {
   osakaKioto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'], aeropuerto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'],
   ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
   coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
-  ...Object.fromEntries(['osaka', 'nara', 'kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
-  ...Object.fromEntries(['mexico', 'uk', 'espana', 'golfo', 'usa', 'argentina', 'rusia'].map((m) => [m, ['src/v7/datosViajeros.ts', 'src/v7/Viajeros.tsx']])),
+  ...Object.fromEntries(['kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
+  ...Object.fromEntries(['mexico', 'uk', 'espana', 'golfo', 'usa', 'argentina', 'rusia', 'hispano', 'anglo'].map((m) => [m, ['src/v7/datosViajeros.ts', 'src/v7/Viajeros.tsx']])),
 }
 const FUENTE_RUTA = {
   '/booking': ['public/booking.html'], '/resenas.html': ['public/resenas.html', 'public/reviews.json'],
