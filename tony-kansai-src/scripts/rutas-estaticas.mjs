@@ -74,6 +74,8 @@ for (const [ruta, nueva] of Object.entries(ANTIGUAS)) {
 }
 
 let propias = 0
+let fichasAfiliado = 0
+const FICHA_AFILIADO = /^(es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^/]+$/
 let pintadas = 0
 for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.
@@ -158,9 +160,21 @@ for (const ruta of rutas) {
     pintadas++
   }
 
+  // Fichas de cada app de descuentos: útiles para el cliente, pero son 160
+  // páginas de afiliado con muy poco texto. Bing bloqueaba la web entera
+  // («URL cannot appear on Bing», 18-10-2026) y lo más parecido a sus normas
+  // contra «thin affiliate» eran ellas: siguen funcionando, pero noindex y
+  // fuera del sitemap. La página general de ventajas sí se indexa.
+  if (FICHA_AFILIADO.test(ruta)) {
+    html = html.replace(/<meta name="robots" content="[^"]*"\s*\/?>/, '<meta name="robots" content="noindex, follow" />')
+    fichasAfiliado++
+  }
   mkdirSync(join(dest, ruta), { recursive: true })
   writeFileSync(join(dest, ruta, 'index.html'), html)
 }
+// El sitemap publicado no las lista: a un buscador no se le piden páginas noindex.
+const mapa = join(dest, 'sitemap.xml')
+writeFileSync(mapa, readFileSync(mapa, 'utf8').replace(/\s*<url>\s*<loc>[^<]*\/(?:es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^<\/]+\/?<\/loc>[\s\S]*?<\/url>/g, ''))
 // Portada (/): es la x-default y la de más prioridad, pero React solo la usa
 // para redirigir al idioma del navegador, así que su HTML era un div vacío y
 // los bots que no ejecutan JavaScript (GPTBot, ClaudeBot, PerplexityBot) leían
@@ -197,4 +211,4 @@ if (!indice.includes('id="portada-texto"')) {
   writeFileSync(join(dest, 'index.html'), indice.replace('<div id="root"></div>', `<div id="root"></div>${portada}`))
 }
 
-console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex`)
+console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex; ${fichasAfiliado} fichas de afiliado con noindex`)
