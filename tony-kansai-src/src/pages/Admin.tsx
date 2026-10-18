@@ -1001,7 +1001,7 @@ const CHANGELOG = [
     changes: [
       'Favicon SVG (torii gate rojo)',
       'Open Graph y Twitter Card meta tags',
-      'JSON-LD: un solo negocio #negocio (LocalBusiness + TravelAgency) y AggregateRating de reviews.json en las páginas de Tony',
+      'JSON-LD: un solo negocio #negocio (LocalBusiness) y AggregateRating de reviews.json en las páginas de Tony',
       'Canonical URL configurado',
       'Descripción y título optimizados para Google Ads',
     ],

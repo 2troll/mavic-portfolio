@@ -18,7 +18,7 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": ["LocalBusiness", "TravelAgency"],
+  "@type": "LocalBusiness",
   "@id": "https://tonykansaiguide.com/#negocio",
   "name": "Tony Kansai Guide",
   "url": "https://tonykansaiguide.com",
@@ -543,7 +543,7 @@ Promise.all([traer("/api/resenas/publicas"), traer("/reviews.json")])
       const marca = document.createElement("script");
       marca.type = "application/ld+json";
       marca.textContent = JSON.stringify({
-        "@context":"https://schema.org", "@type":["LocalBusiness", "TravelAgency"],
+        "@context":"https://schema.org", "@type":"LocalBusiness",
         "@id":"https://tonykansaiguide.com/#negocio",
         name:"Tony Kansai Guide", url:"https://tonykansaiguide.com/",
         areaServed:"Kansai, Japan",
