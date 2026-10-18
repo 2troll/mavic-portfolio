@@ -8,7 +8,7 @@
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -18,7 +18,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -28,7 +28,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -38,7 +38,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -47,7 +47,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/larion/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -56,7 +56,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/larion/"/>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -487,7 +487,7 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/guia-privado-espanol-kioto/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kyoto-private-guide-cost/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/kyoto-private-guide-cost/"/>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -496,19 +496,49 @@
     <xhtml:link rel="alternate" hreflang="es" href="https://tonykansaiguide.com/es/guia-privado-espanol-kioto/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/kyoto-private-guide-cost/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/kyoto-private-guide-cost/"/>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tonykansaiguide.com/ar/mosques-kansai/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://tonykansaiguide.com/ar/halal-kyoto-osaka/</loc>
-    <lastmod>2026-10-14</lastmod>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/guia-espanol-kansai/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/guia-privado-espanol-osaka/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/nara-medio-dia-guia-espanol/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/tour-privado-o-en-grupo-japon/</loc>
+    <lastmod>2026-10-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/guia-espanol-arabe-japon/</loc>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -2465,7 +2495,7 @@
   </url>
   <url>
     <loc>https://tonykansaiguide.com/resenas.html</loc>
-    <lastmod>2026-10-16</lastmod>
+    <lastmod>2026-10-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>

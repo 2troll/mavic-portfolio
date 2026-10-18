@@ -306,6 +306,8 @@
 /* Pie */
 .v7-pie { width: min(var(--ancho), 100%); margin: 96px auto 0; padding: 32px 24px 48px; border-top: 1px solid var(--linea); color: var(--tenue); font-size: 14px; }
 .v7-pie-fila { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 24px; }
+/* Pie con la columna «Guías y precios» (páginas de Tony): cuatro columnas. */
+.v7-pie-fila:has(> nav:nth-of-type(3)) { grid-template-columns: 1.3fr 0.8fr 1.5fr 0.9fr; }
 .v7-pie strong { color: var(--tinta); }
 .v7-pie nav { display: grid; gap: 6px; align-content: start; }
 .v7-pie a { text-decoration: none; }

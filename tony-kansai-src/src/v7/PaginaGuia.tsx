@@ -35,6 +35,7 @@ import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
 import { useBilletes } from './Cocina'
 import { enlacesHreflang } from '../seo/hreflang'
+import { PAGINAS_RESPUESTA } from './datosRespuestas'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -648,6 +649,8 @@ function desdeHero(lang: string): string {
   return ({ es: `Desde ¥${n} por grupo`, en: `From ¥${n} per group`, ar: `ابتداءً من ${n} ين للمجموعة`, ru: `От ${n} ¥ за группу` } as Record<string, string>)[lang] ?? `From ¥${n} per group`
 }
 
+
+const RESPUESTAS_TITULO: Record<string, string> = { es: 'Guías y precios', en: 'Guides and prices', ar: 'أدلة وأسعار' }
 export default function PaginaGuia({ id }: { id: PaginaId }) {
   const p = PAGINAS[id]
   const g = GUIAS[p.guia]
@@ -698,8 +701,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="theme-color" content="#f5f5f7" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
-        {/* Las estrellas van en el negocio (TravelAgency): Google no admite reseñas dentro de un Service. */}
-        {p.guia !== 'larion' && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': ['LocalBusiness', 'TravelAgency'], '@id': NEGOCIO_ID, name: 'Tony Kansai Guide', url: `${BASE}/`, ...valoracionTony() })}</script>}
+        {/* Las estrellas van en el negocio (LocalBusiness; no TravelAgency: la web dice que no es agencia): Google no admite reseñas dentro de un Service. */}
+        {p.guia !== 'larion' && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': NEGOCIO_ID, name: 'Tony Kansai Guide', url: `${BASE}/`, ...valoracionTony() })}</script>}
         {/* La página en sí: cuándo se revisó, de qué negocio es y qué servicio cuenta. */}
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'WebPage', '@id': `${BASE}${p.ruta}`, url: `${BASE}${p.ruta}`,
@@ -986,6 +989,16 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.id === 'en' && <a href="https://2troll.github.io/yubisashi/panduan/" lang="id">Panduan Halal Kansai</a>}
             {p.id === 'ar' && <a href="https://2troll.github.io/yubisashi/">تطبيق المحادثة للمطاعم</a>}
           </nav>
+          {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
+              sitemap): Google y las IAs dan menos peso a una página huérfana. */}
+          {p.guia === 'tony' && Object.values(PAGINAS_RESPUESTA).some((r) => r.lang === p.lang) && (
+            <nav aria-label={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
+              <span className="v7-pie-titulo">{RESPUESTAS_TITULO[p.lang] ?? 'Guides'}</span>
+              {Object.values(PAGINAS_RESPUESTA).filter((r) => r.lang === p.lang).map((r) => (
+                <Link key={r.ruta} to={r.ruta}>{r.titulo}</Link>
+              ))}
+            </nav>
+          )}
           <nav aria-label={p.pie.otrosIdiomas}>
             <span className="v7-pie-titulo">{p.pie.otrosIdiomas}</span>
             {(Object.keys(PAGINAS) as PaginaId[]).filter((k) => k !== p.id).map((k) => (

@@ -61,6 +61,11 @@ const paginas = [
   { loc: '/en/kyoto-private-guide-cost', priority: '0.8', changefreq: 'monthly', v7: 'coste' },
   { loc: '/ar/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
   { loc: '/ar/halal-kyoto-osaka', priority: '0.8', changefreq: 'monthly', v7: 'halal' },
+  { loc: '/es/guia-espanol-kansai', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
+  { loc: '/es/guia-privado-espanol-osaka', priority: '0.8', changefreq: 'monthly', v7: 'osaka' },
+  { loc: '/es/nara-medio-dia-guia-espanol', priority: '0.8', changefreq: 'monthly', v7: 'nara' },
+  { loc: '/es/tour-privado-o-en-grupo-japon', priority: '0.8', changefreq: 'monthly', v7: 'privado' },
+  { loc: '/es/guia-espanol-arabe-japon', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
@@ -133,6 +138,7 @@ const FUENTE = {
   osakaKioto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'], aeropuerto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'],
   ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
   coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
+  ...Object.fromEntries(['osaka', 'nara', 'kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
   ...Object.fromEntries(['mexico', 'uk', 'espana', 'golfo', 'usa', 'argentina', 'rusia'].map((m) => [m, ['src/v7/datosViajeros.ts', 'src/v7/Viajeros.tsx']])),
 }
 const FUENTE_RUTA = {
