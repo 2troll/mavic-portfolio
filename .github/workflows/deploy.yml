@@ -100,3 +100,12 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      # Avisa a Bing (y a ChatGPT, que busca con Bing) de las páginas cambiadas.
+      # Si IndexNow falla, la web ya está publicada: no se marca el despliegue como roto.
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: tony-kansai-src/scripts/indexnow.mjs
+      - name: IndexNow (páginas cambiadas)
+        continue-on-error: true
+        run: sleep 60 && node tony-kansai-src/scripts/indexnow.mjs --recientes

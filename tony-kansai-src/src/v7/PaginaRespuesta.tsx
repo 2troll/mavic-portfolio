@@ -61,6 +61,17 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
         inLanguage: p.lang, image: `${BASE}${p.og}`, dateModified: REVISADO,
         // El negocio lo declara index.html con este @id (A04): uno solo en todo el sitio.
         publisher: { '@id': `${BASE}/#negocio` },
+        // Autor con nombre y fecha: las IAs de búsqueda prefieren citar texto
+        // firmado y fechado. Tony está declarado en index.html con este @id.
+        author: { '@id': `${BASE}/#tony` },
+        breadcrumb: { '@id': `${url}#migas` },
+      },
+      {
+        '@type': 'BreadcrumbList', '@id': `${url}#migas`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Tony Kansai Guide', item: `${BASE}${p.inicio}` },
+          { '@type': 'ListItem', position: 2, name: p.titulo, item: url },
+        ],
       },
       {
         '@type': 'FAQPage', '@id': `${url}#faq`, inLanguage: p.lang,

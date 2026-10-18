@@ -55,7 +55,7 @@ import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
 
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
-  | 'osaka-es' | 'nara-es' | 'kansai-es' | 'privado-es' | 'arabe-es'
+  | 'osaka-es' | 'nara-es' | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
 export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'osaka' | 'nara' | 'kansai' | 'privado' | 'arabe'
 export type LangRespuesta = 'es' | 'en' | 'ar'
@@ -726,6 +726,139 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     final: { titulo: '¿Planificamos vuestro día?', texto: 'Dime fechas, cuántos sois y en qué idioma preferís el tour, y te contesto con un plan y el precio cerrado.', boton: 'Escribir a Tony' },
     altFoto: 'La mezquita de Kobe', saludo: 'Hola Tony, he visto la página de guía en español y árabe y quería preguntarte por un tour.',
     volver: '← Volver a la página de Tony',
+  },
+  // Versiones en inglés: ChatGPT y Copilot suelen reformular en inglés la
+  // pregunta antes de buscar en Bing («Spanish speaking guide Kyoto»).
+  'kansai-en': {
+    lang: 'en', ruta: '/en/spanish-speaking-guide-japan/', inicio: '/en/', grupo: 'kansai',
+    foto: { clave: 'kioto-fushimi', lugar: 'Fushimi Inari' }, og: '/v8/og/en.jpg',
+    seo: {
+      titulo: 'Spanish-Speaking Private Guide in Kyoto, Osaka & Nara | Tony Kansai Guide',
+      descripcion: `Tony is a native Spanish-speaking private guide based in Osaka: Kyoto, Osaka, Nara, Kobe and Himeji, hotel pick-up, ${yenEn(M.medio)} half day or ${yenEn(M.completo)} full day per group.`,
+    },
+    antetitulo: 'Kansai · Tours in Spanish',
+    titulo: 'Spanish-speaking private guide in Kyoto, Osaka and Nara',
+    respuesta: `Tony Hanma is a native Spanish speaker from Spain who lives in Osaka and guides private tours in Spanish (also English and Arabic) across Kyoto, Osaka, Nara, Kobe and Himeji. He has guided more than 25 tours. Prices are per group of up to 6: ${yenEn(M.medio)} for a half day (4 hours) and ${yenEn(M.completo)} for a full day (8 hours), with pick-up at your hotel.`,
+    actualizado: 'Updated: Oct 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'Who it is for',
+        lista: [
+          'Families and groups from Spain, Mexico, Argentina or the US who are more comfortable in Spanish.',
+          'Mixed groups: Tony switches between Spanish and English through the day.',
+          'First-time visitors to Japan who want someone to handle trains, queues and restaurants.',
+        ],
+      },
+      {
+        titulo: 'Where we go (time from Osaka)',
+        tabla: {
+          cabecera: ['Place', 'From Osaka', 'Highlights'],
+          filas: [
+            ['Osaka', 'From your hotel', 'Osaka Castle, Kuromon Market, Shinsekai, Dōtonbori'],
+            ['Kyoto', '≈ 45 min by train', 'Fushimi Inari, Kiyomizu-dera, Gion, Kinkaku-ji'],
+            ['Nara', '≈ 40 min by train', 'Deer park, Tōdai-ji, Kasuga Taisha'],
+            ['Kobe', '≈ 25 min by train', 'Kobe Mosque (1935), Kitano, Meriken Park'],
+            ['Himeji', '≈ 1 h by rapid train', 'Original 1609 castle, Kōko-en garden'],
+          ],
+          nota: 'Approximate train times.',
+        },
+      },
+      {
+        titulo: 'Included and not included',
+        lista: [
+          'Included: a private guide for your group only, hotel pick-up and drop-off, and a plan agreed beforehand on WhatsApp.',
+          'Not included: trains, entry fees and meals, paid on the day. Tony is a guide, not an agency: no tickets or hotels.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'Tony’s price, per group',
+      texto: 'I meet you in your hotel lobby in Osaka, Kyoto or Nara. Your group only, at your pace.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: [
+        'Groups of 7 to 14: ask for a price.',
+        'Pay in cash on the day, or in advance with PayPal or Wise.',
+        'Free cancellation up to 72 hours before.',
+      ],
+    },
+    faqTitulo: 'FAQ',
+    faq: [
+      { p: 'Is there a Spanish-speaking private guide in Kyoto and Osaka?', r: 'Yes. Tony is a native Spanish speaker based in Osaka who guides private tours in Kyoto, Osaka, Nara, Kobe and Himeji.' },
+      { p: 'How much does it cost?', r: `${yenEn(M.medio)} half day and ${yenEn(M.completo)} full day, per group of up to 6 people.` },
+      { p: 'What languages does Tony speak?', r: 'Spanish (native), English and Arabic.' },
+      { p: 'Do you pick us up at the hotel?', r: 'Yes, in your hotel lobby in Osaka, Kyoto or Nara.' },
+      { p: 'Are you an agency?', r: 'No. You deal directly with the guide. No tickets, hotels or packages are sold.' },
+    ],
+    fuentesTitulo: 'More',
+    fuentes: [
+      { texto: 'Tony’s page in English', url: 'https://tonykansaiguide.com/en/' },
+      { texto: 'Tony’s page in Spanish', url: 'https://tonykansaiguide.com/es/' },
+      { texto: 'The day, hour by hour', url: 'https://tonykansaiguide.com/en/routes/' },
+      { texto: 'How much a private guide in Kyoto costs', url: 'https://tonykansaiguide.com/en/kyoto-private-guide-cost/' },
+    ],
+    final: { titulo: 'Shall we plan your days?', texto: 'Send me your dates, group size and what you would like to see, and I will reply with a plan and a fixed group price.', boton: 'Message Tony' },
+    altFoto: 'The red torii gates of Fushimi Inari in Kyoto', saludo: 'Hi Tony, I saw your Spanish-speaking guide page and would like to ask about a tour.',
+    volver: '← Back to Tony’s page',
+  },
+
+  'arabe-en': {
+    lang: 'en', ruta: '/en/arabic-speaking-guide-japan/', inicio: '/en/', grupo: 'arabe',
+    foto: { clave: 'kobe-mezquita', lugar: 'Kobe Mosque' }, og: '/v8/og/kobe.jpg',
+    seo: {
+      titulo: 'Arabic-Speaking Muslim Private Guide in Kyoto & Osaka | Tony Kansai Guide',
+      descripcion: `Tony guides private tours in Arabic, English and Spanish in Osaka, Kyoto, Nara and Kobe, with halal meals and prayer times built into the day. ${yenEn(M.completo)} full day per group.`,
+    },
+    antetitulo: 'Kansai · Arabic and halal',
+    titulo: 'Arabic-speaking Muslim private guide in Kyoto and Osaka',
+    respuesta: `Tony is a Muslim guide who speaks Arabic, English and Spanish and leads private tours in Osaka, Kyoto, Nara and Kobe. Halal meals and prayer times are planned into the day from the start. Prices are per group of up to 6: ${yenEn(M.medio)} for a half day and ${yenEn(M.completo)} for a full day, with hotel pick-up.`,
+    actualizado: 'Updated: Oct 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'Halal food and prayer on the route',
+        parrafos: [
+          'I choose halal-certified restaurants along the way (in Namba in Osaka, and near Gion in Kyoto) and leave time for prayer.',
+          'In Kobe we can visit Japan’s oldest mosque, opened in 1935, outside prayer times. Kyoto’s official tourism site lists free prayer spaces, including at Nijō Castle.',
+        ],
+      },
+      {
+        titulo: 'Who it is for',
+        lista: [
+          'Families from the Gulf travelling with children or parents.',
+          'Muslim travellers who want to eat halal without losing half the day searching.',
+          'Groups that mix Arabic, English and Spanish speakers.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'Tony’s price, per group',
+      texto: 'I meet you in your hotel lobby in Osaka, Kyoto, Nara or Kobe. Your family only, at your pace.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: [
+        'Trains, entry fees and meals are not included.',
+        'Pay in cash on the day, or in advance with PayPal or Wise.',
+        'Free cancellation up to 72 hours before.',
+      ],
+    },
+    faqTitulo: 'FAQ',
+    faq: [
+      { p: 'Is there an Arabic-speaking guide in Kyoto or Osaka?', r: 'Yes. Tony guides private tours in Arabic, English and Spanish in Osaka, Kyoto, Nara and Kobe.' },
+      { p: 'Is the guide Muslim?', r: 'Yes. Tony is Muslim and plans halal meals and prayer times into the day.' },
+      { p: 'Can we eat halal during the tour?', r: 'Yes. I pick halal-certified restaurants on the route; tell me when you book.' },
+      { p: 'How much does it cost?', r: `${yenEn(M.medio)} half day and ${yenEn(M.completo)} full day, per group of up to 6. Groups up to 14 on request.` },
+    ],
+    fuentesTitulo: 'Sources and more',
+    fuentes: [
+      { texto: 'Tony’s page in Arabic', url: 'https://tonykansaiguide.com/ar/' },
+      { texto: 'Mosques in Kansai (Arabic)', url: 'https://tonykansaiguide.com/ar/mosques-kansai/' },
+      { texto: 'Halal food in Kyoto and Osaka (Arabic)', url: 'https://tonykansaiguide.com/ar/halal-kyoto-osaka/' },
+      { texto: 'Muslim Friendly Kyoto — kyoto.travel', url: 'https://kyoto.travel/en/muslim/' },
+      { texto: 'Kobe Muslim Mosque', url: 'https://www.kobemosque.com' },
+    ],
+    final: { titulo: 'Shall we plan your day?', texto: 'Send me your dates, group size and preferred language, and I will reply with a plan and a fixed group price.', boton: 'Message Tony' },
+    altFoto: 'Kobe Mosque', saludo: 'Hi Tony, I saw your Arabic-speaking guide page and would like to ask about a tour.',
+    volver: '← Back to Tony’s page',
   },
 }
 

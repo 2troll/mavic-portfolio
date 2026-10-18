@@ -1,12 +1,23 @@
 // Avisa a los buscadores de IndexNow (Bing, Yandex, Seznam, Naver…) de que
 // las páginas del sitemap han cambiado, para que no esperen a pasar solos.
 // Gratis y sin cuenta: la prueba de que el sitio es nuestro es el fichero
-// public/<clave>.txt. Uso, DESPUÉS de publicar:  node scripts/indexnow.mjs
+// public/<clave>.txt. Uso, DESPUÉS de publicar:  node scripts/indexnow.mjs [--recientes]
 import { readFileSync } from 'node:fs'
 
 const CLAVE = '54a09739dfe30b33990862d145390628'
 const HOST = 'tonykansaiguide.com'
-const urls = [...readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8').matchAll(/<loc>([^<]*)<\/loc>/g)].map((m) => m[1])
+// --recientes: lee el sitemap YA publicado y avisa solo de lo cambiado en los
+// dos últimos días (lo usa el despliegue automático tras cada publicación).
+const recientes = process.argv.includes('--recientes')
+const sitemap = recientes
+  ? await (await fetch(`https://${HOST}/sitemap.xml?v=${Date.now()}`)).text()
+  : readFileSync(new URL('../public/sitemap.xml', import.meta.url), 'utf8')
+const desde = new Date(Date.now() - 2 * 864e5).toISOString().slice(0, 10)
+const urls = [...sitemap.matchAll(/<url>([\s\S]*?)<\/url>/g)]
+  .map((m) => ({ loc: m[1].match(/<loc>([^<]*)/)?.[1], mod: m[1].match(/<lastmod>([^<]*)/)?.[1] ?? '' }))
+  .filter((u) => u.loc && (!recientes || u.mod.slice(0, 10) >= desde))
+  .map((u) => u.loc)
+if (!urls.length) { console.log('IndexNow: nada cambiado'); process.exit(0) }
 
 const r = await fetch('https://api.indexnow.org/indexnow', {
   method: 'POST',

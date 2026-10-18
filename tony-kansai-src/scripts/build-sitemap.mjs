@@ -66,6 +66,8 @@ const paginas = [
   { loc: '/es/nara-medio-dia-guia-espanol', priority: '0.8', changefreq: 'monthly', v7: 'nara' },
   { loc: '/es/tour-privado-o-en-grupo-japon', priority: '0.8', changefreq: 'monthly', v7: 'privado' },
   { loc: '/es/guia-espanol-arabe-japon', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
+  { loc: '/en/spanish-speaking-guide-japan', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
+  { loc: '/en/arabic-speaking-guide-japan', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
