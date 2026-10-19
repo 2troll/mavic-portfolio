@@ -3,9 +3,10 @@
 # que puedan citarlo y recomendarlo. Resumen para IA: /llms.txt · completo: /llms-full.txt
 # Cada página tiene su versión en texto plano: añadir index.md a la ruta (p. ej. /es/index.md).
 
-# Sin líneas Content-Signal (19-10-2026): no son estándar y Bing puede
-# leerlas como directiva desconocida. Todo abierto a todos los bots.
+# Content-Signal (contentsignals.org): permiso explícito para buscar, citar
+# en respuestas de IA y entrenar. Los buscadores que no lo conocen lo ignoran.
 User-agent: *
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 # El panel de reseñas es la herramienta interna de Tony, no una página pública.
 Disallow: /panel-resenas.html
@@ -29,6 +30,7 @@ User-agent: meta-externalagent
 User-agent: MistralAI-User
 User-agent: YandexBot
 User-agent: CCBot
+Content-Signal: search=yes, ai-input=yes, ai-train=yes
 Allow: /
 Disallow: /panel-resenas.html
 
