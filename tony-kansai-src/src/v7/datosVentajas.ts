@@ -423,14 +423,43 @@ const LISTA: App[] = [
     },
   },
   {
-    // Japan Wireless: 10 % de afiliado (Rewardful, alta pendiente de Tony) y código propio pedido (TONYKANSAI) el 16-10-2026.
-    // Cuando llegue: enlace de Rewardful en `codigo` (https://…) o el cupón en `codigo` + `descuento`.
-    clave: 'japanwireless', cat: 'internet', nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/',
+    // Japan Wireless: cupón TONYKANSAI activado el 19-10-2026 (10 % en pocket wifi y eSIM). El afiliado (Rewardful) sigue pendiente de alta de Tony.
+    clave: 'japanwireless', cat: 'internet', conTony: true, nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/', codigo: 'TONYKANSAI', descuento: '10 %',
     marca: { fondo: '#0a4ea2', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0a4ea2', palabra: 'Wi-Fi' },
     t: {
-      es: { que: 'Wifi de bolsillo para Japón: un aparatito da internet a varios móviles a la vez. Te lo mandan al hotel o lo recoges en el aeropuerto.', ventaja: 'Lo mejor para familias grandes: un solo aparato para todos, sin instalar nada en cada móvil.' },
-      en: { que: 'Pocket wifi for Japan: one small device gives data to several phones at once. Delivered to your hotel or picked up at the airport.', ventaja: 'Best for big families: one device for everyone, nothing to install on each phone.' },
-      ar: { que: 'واي فاي متنقل لليابان: جهاز صغير يعطي الإنترنت لعدة هواتف في الوقت نفسه. يصلك إلى الفندق أو تستلمه في المطار.', ventaja: 'الأفضل للعائلات الكبيرة: جهاز واحد للجميع دون تثبيت أي شيء على كل هاتف.' },
+      es: { que: 'Wifi de bolsillo para Japón: un aparatito da internet a varios móviles a la vez. Te lo mandan al hotel o lo recoges en el aeropuerto.', ventaja: 'Con el código TONYKANSAI, 10 % de descuento en el wifi de bolsillo y en la eSIM. Lo mejor para familias grandes: un solo aparato para todos.' },
+      en: { que: 'Pocket wifi for Japan: one small device gives data to several phones at once. Delivered to your hotel or picked up at the airport.', ventaja: 'Code TONYKANSAI gives 10% off pocket wifi and eSIM. Best for big families: one device for everyone.' },
+      ar: { que: 'واي فاي متنقل لليابان: جهاز صغير يعطي الإنترنت لعدة هواتف في الوقت نفسه. يصلك إلى الفندق أو تستلمه في المطار.', ventaja: 'بالرمز TONYKANSAI خصم 10% على الواي فاي المتنقل وشريحة eSIM. الأفضل للعائلات الكبيرة: جهاز واحد للجميع.' },
+    },
+  },
+  {
+    // Rental Kimono Okamoto (Hiro Hayashi): tarifa de agencia por escrito el 19-10-2026; comisión solo en los planes, no en los extras. 7 tiendas.
+    clave: 'okamoto', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Kimono Okamoto', enlace: 'https://www.okamoto-kimono.com/',
+    marca: { fondo: '#7a1f2b', tinta: '#fbeee6', boton: '#fbeee6', botonTinta: '#7a1f2b', palabra: '岡本' },
+    t: {
+      es: { que: 'Alquiler de kimono con 7 tiendas en Kioto (Kiyomizu, Gion, Fushimi Inari, Arashiyama…): te vistes junto al templo que vas a visitar.', ventaja: 'Si vienes de tour conmigo, te lo reservo yo. Puedes devolver el kimono en otra de sus tiendas, al día siguiente o en el hotel.' },
+      en: { que: 'Kimono rental with 7 shops in Kyoto (Kiyomizu, Gion, Fushimi Inari, Arashiyama…): you get dressed right next to the temple you are visiting.', ventaja: 'Touring with me? I book it for you. You can return the kimono at another of their shops, the next day or at your hotel.' },
+      ar: { que: 'استئجار الكيمونو في 7 متاجر في كيوتو (كيوميزو، غيون، فوشيمي إيناري، أراشيياما…): تلبسه بجوار المعبد الذي ستزوره.', ventaja: 'إن كنت في جولة معي، أحجزه لك بنفسي. يمكنك إعادة الكيمونو في متجر آخر من متاجرهم، أو في اليوم التالي، أو في الفندق.' },
+    },
+  },
+  {
+    // Nakamura Rosoku (Fushimi, desde la era Meiji): sin descuento ni tarifa de guía; muchos extranjeros, lo explican con Pocketalk; reserva directa por correo (17-10-2026).
+    clave: 'nakamura', cat: 'experiencias', ciudad: 'kioto', nombre: 'Nakamura Rosoku', enlace: 'https://www.kyorousoku.jp/',
+    marca: { fondo: '#b8452f', tinta: '#fdf1e4', boton: '#fdf1e4', botonTinta: '#b8452f', palabra: '蝋燭' },
+    t: {
+      es: { que: 'Taller de velas japonesas (warousoku) en un taller de Fushimi que las hace desde la era Meiji: fabricas tu vela, la pintas o las dos cosas.', ventaja: 'Está a pocos minutos de Fushimi Inari: encaja justo después de los torii. Muy bueno con niños. Yo hago la reserva en japonés.' },
+      en: { que: 'Japanese candle (warousoku) workshop at a Fushimi maker working since the Meiji era: make your candle, paint it, or both.', ventaja: 'A few minutes from Fushimi Inari, so it fits right after the torii gates. Great with kids. I make the booking in Japanese.' },
+      ar: { que: 'ورشة الشموع اليابانية (واروسوكو) لدى صانع في فوشيمي يعمل منذ عصر ميجي: تصنع شمعتك أو ترسم عليها أو الاثنين معًا.', ventaja: 'على بُعد دقائق من فوشيمي إيناري، فتأتي مباشرة بعد بوابات توري. ممتازة مع الأطفال. أحجز لك باليابانية.' },
+    },
+  },
+  {
+    // JAPANeid (J-LINE, Minamihorie): aceptan salir en la web y mandaron fotos el 19-10-2026; sin acuerdo para guías individuales todavía. Muslim-friendly, NO certificado halal.
+    clave: 'japaneid', cat: 'experiencias', ciudad: 'osaka', musulman: true, nombre: 'JAPANeid', enlace: 'https://www.japaneid.com/',
+    marca: { fondo: '#1f5a4c', tinta: '#f2ead3', boton: '#f2ead3', botonTinta: '#1f5a4c', palabra: 'Eid' },
+    t: {
+      es: { que: 'Tienda en Minamihorie (Osaka) pensada para musulmanes: dulces japoneses sin ingredientes animales ni alcohol, hiyab de estilo kimono y alfombras de oración.', ventaja: 'El regalo de Japón que puedes llevar a casa sin dudas. Si no te da tiempo de ir, piden por su web y te lo pueden mandar al hotel.' },
+      en: { que: 'A shop in Minamihorie (Osaka) made for Muslims: Japanese treats with no animal ingredients or alcohol, kimono-style hijabs and prayer mats.', ventaja: 'Japanese gifts you can take home without doubts. No time to visit? Order on their website and they can send it to your hotel.' },
+      ar: { que: 'متجر في مينامي هوريه (أوساكا) مخصص للمسلمين: حلويات يابانية بلا مكونات حيوانية ولا كحول، وحجاب بطراز الكيمونو وسجادات صلاة.', ventaja: 'هدايا من اليابان تحملها إلى بيتك بلا شك. ليس لديك وقت للزيارة؟ اطلب من موقعهم ويمكنهم إرساله إلى فندقك.' },
     },
   },
 ]
