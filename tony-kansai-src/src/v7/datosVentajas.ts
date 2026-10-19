@@ -462,6 +462,16 @@ const LISTA: App[] = [
       ar: { que: 'متجر في مينامي هوريه (أوساكا) مخصص للمسلمين: حلويات يابانية بلا مكونات حيوانية ولا كحول، وحجاب بطراز الكيمونو وسجادات صلاة.', ventaja: 'هدايا من اليابان تحملها إلى بيتك بلا شك. ليس لديك وقت للزيارة؟ اطلب من موقعهم ويمكنهم إرساله إلى فندقك.' },
     },
   },
+  {
+    // Japan Wireless eSIM: alta propia en Rewardful (19-10-2026), 10 % de comisión; el cupón TONYKANSAI también vale para la eSIM.
+    clave: 'japanwirelessesim', cat: 'internet', conTony: true, nombre: 'Japan Wireless eSIM', enlace: 'https://www.japan-wireless.com/esim?via=tony', codigo: 'TONYKANSAI', descuento: '10 %',
+    marca: { fondo: '#0a4ea2', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0a4ea2', palabra: 'eSIM' },
+    t: {
+      es: { que: 'eSIM con datos para Japón: la instalas en el móvil antes de salir y tienes internet nada más aterrizar, sin aparato que cargar.', ventaja: 'Con el código TONYKANSAI, 10 % de descuento. Si viajáis varios con móviles compatibles, cada uno con la suya.' },
+      en: { que: 'Data eSIM for Japan: install it on your phone before you leave and you are online the moment you land, with no device to charge.', ventaja: 'Code TONYKANSAI gives 10% off. If several of you have compatible phones, one each.' },
+      ar: { que: 'شريحة eSIM للإنترنت في اليابان: تثبّتها على هاتفك قبل السفر فيكون لديك إنترنت فور الوصول، دون جهاز تشحنه.', ventaja: 'بالرمز TONYKANSAI خصم 10%. إن كنتم عدة أشخاص بهواتف متوافقة، لكل واحد شريحته.' },
+    },
+  },
 ]
 
 /** El código que se copia (no los enlaces https://), mientras no haya caducado. */
