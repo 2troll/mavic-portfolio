@@ -423,8 +423,8 @@ const LISTA: App[] = [
     },
   },
   {
-    // Japan Wireless: cupón TONYKANSAI activado el 19-10-2026 (10 % en pocket wifi y eSIM). El afiliado (Rewardful) sigue pendiente de alta de Tony.
-    clave: 'japanwireless', cat: 'internet', conTony: true, nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/', codigo: 'TONYKANSAI', descuento: '10 %',
+    // Japan Wireless: cupón TONYKANSAI (10 % en pocket wifi y eSIM) y enlace de afiliado de Rewardful (?via=tony-hanma, 10 % de comisión), ambos del 19-10-2026.
+    clave: 'japanwireless', cat: 'internet', conTony: true, nombre: 'Japan Wireless', enlace: 'https://www.japan-wireless.com/?via=tony-hanma', codigo: 'TONYKANSAI', descuento: '10 %',
     marca: { fondo: '#0a4ea2', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0a4ea2', palabra: 'Wi-Fi' },
     t: {
       es: { que: 'Wifi de bolsillo para Japón: un aparatito da internet a varios móviles a la vez. Te lo mandan al hotel o lo recoges en el aeropuerto.', ventaja: 'Con el código TONYKANSAI, 10 % de descuento en el wifi de bolsillo y en la eSIM. Lo mejor para familias grandes: un solo aparato para todos.' },
@@ -473,7 +473,7 @@ export function cuponDe(a: App): string | undefined {
 
 /** Enlace por el que me pagan comisión (Travelpayouts, Mobal, Radical) o código de invitación con premio. */
 export function esAfiliado(a: App): boolean {
-  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=|pxf\.io|iatiseguros\.com\?r=/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
+  return a.clave === 'airalo' || /tpk\.ro|a_aid=|[?&]acc=|[?&]via=|pxf\.io|iatiseguros\.com\?r=/.test(a.codigo?.startsWith('http') ? a.codigo : a.enlace)
 }
 
 /** Adónde lleva el botón: el enlace de afiliado si lo hay. */
