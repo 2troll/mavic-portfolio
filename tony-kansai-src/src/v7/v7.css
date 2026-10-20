@@ -559,7 +559,7 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-montes-lienzo.listo { opacity: 1; }
 .v7-montes-lienzo canvas { display: block; width: 100% !important; height: 100% !important; }
 .v7-montes-etiqueta {
-  position: absolute; left: 0; top: 0; margin: -34px 0 0 -60px; width: 120px; text-align: center; white-space: nowrap;
+  position: absolute; left: 0; top: 0; margin: -34px 0 0 0; width: max-content; text-align: center; white-space: nowrap;
   font-family: var(--mincho); font-size: 14px; color: var(--tinta); text-shadow: 0 1px 8px var(--fondo); pointer-events: none;
 }
 .v7-montes-texto { position: absolute; inset: 0; pointer-events: none; }
@@ -1203,7 +1203,7 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-monte-mapa bdi { font-variant-numeric: tabular-nums; }
 .v7-monte-mapa span { color: var(--acento); text-decoration: underline; text-underline-offset: 3px; }
 .v7-monte-mapa:hover span, .v7-monte-mapa:focus-visible span { text-decoration-thickness: 2px; }
-.v7-montes-etiqueta { width: 220px; margin-left: -110px; font-size: 15px; white-space: pre; }
+.v7-montes-etiqueta { width: max-content; max-width: calc(100vw - 16px); margin-left: 0; font-size: 15px; white-space: pre-line; }
 
 /* Sin GPU: la foto aérea del monte, en un círculo de bruma como el relieve. */
 .v7-montes-plano {

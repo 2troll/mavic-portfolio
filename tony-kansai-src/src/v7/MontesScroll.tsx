@@ -282,7 +282,10 @@ export function MontesScroll({ montes, nombres, capitulo, etiquetaAria, tinta = 
         if (etiqueta.current) {
           const v = new THREE.Vector3(x, y + 1.45, z).project(camara)
           // Nunca bajo la cabecera: con el monte muy alto, la etiqueta se queda abajo de ella.
-          etiqueta.current.style.transform = `translate(${((v.x + 1) / 2) * caja.clientWidth}px, ${Math.max(118, ((1 - v.y) / 2) * caja.clientHeight)}px)`
+          // Centrada en la cima pero siempre dentro de la pantalla: en el móvil los nombres largos se salían.
+          const ancho = etiqueta.current.offsetWidth, cx = ((v.x + 1) / 2) * caja.clientWidth
+          const izq = Math.min(Math.max(8, cx - ancho / 2), Math.max(8, caja.clientWidth - ancho - 8))
+          etiqueta.current.style.transform = `translate(${izq}px, ${Math.max(118, ((1 - v.y) / 2) * caja.clientHeight)}px)`
           etiqueta.current.style.opacity = String(1 - dis)
           const nombre = nombres[montes[f < 0.5 ? a : b]]
           if (etiqueta.current.textContent !== nombre) etiqueta.current.textContent = nombre

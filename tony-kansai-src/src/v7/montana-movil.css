@@ -1,0 +1,27 @@
+/* Montaña en el móvil: va la última para corregir lo que las capas pro/neón dejan mal en pantallas estrechas. */
+@media (max-width: 640px) {
+  /* Estaciones en fila arriba a la derecha, solo el kanji: en columna tapaban el rótulo y la entradilla. */
+  html .v7.v7-montana .mv-portada .es-selector { top: 66px; inset-inline-end: 12px; flex-direction: row; gap: 4px; }
+  html .v7.v7-montana .mv-portada .es-boton { width: 40px; padding: 6px 0; }
+  html .v7.v7-montana .mv-portada .es-boton span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+  html .v7.v7-montana .mv-portada .ex-kicker { margin-top: 44px; }
+
+  /* El rótulo naranja desaparecía sobre la foto de otoño: le damos una franja oscura detrás. */
+  html .v7.v7-montana .mv-portada .ex-kicker {
+    display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 6px 10px;
+    background: rgb(5 7 12 / 72%); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  }
+  html .v7.v7-montana .mv-portada .mv-titulo { text-shadow: 0 2px 18px rgb(0 0 0 / 55%); }
+  html .v7.v7-montana .mv-portada .ex-entradilla { text-shadow: 0 1px 12px rgb(0 0 0 / 70%); }
+
+  /* Datos de cada cima: «~2 h de subida» se partía en dos líneas enormes. */
+  html .v7.v7-montana .v7-monte-datos dd { font-size: 1.1rem; line-height: 1.25; }
+  html .v7.v7-montana .v7-monte-ficha h2 { font-size: 1.85rem; }
+
+  /* Etiquetas del mapa: el nombre largo pisaba el pin vecino; solo la cima elegida enseña la etiqueta entera. */
+  html .v7.v7-montana .mv-pin:not(.activo) .mv-pin-et { font-size: 10px; padding: 3px 6px; }
+  html .v7.v7-montana .mv-pin:not(.activo) .mv-pin-et b { display: none; }
+
+  /* Que la barra fija de WhatsApp no tape el final de la página. */
+  html .v7.v7-montana main { padding-bottom: 84px; }
+}

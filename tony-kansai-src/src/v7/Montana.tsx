@@ -29,6 +29,7 @@ import '@fontsource-variable/oswald'
 import '@fontsource-variable/source-serif-4'
 import './montana-pro.css'
 import './montana-neon.css'
+import './montana-movil.css'
 import { TEXTOS_CUMBRES } from './datosCumbres'
 
 const BASE = 'https://tonykansaiguide.com'
