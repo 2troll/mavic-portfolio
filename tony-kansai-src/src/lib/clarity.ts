@@ -36,6 +36,8 @@ function enviaConsentimiento(estado: Estado) {
 /** Se llama una vez al arrancar la app, sin esperar al banner. */
 export function cargarClarity() {
   if (cargado || !CLARITY_ID || !hayNavegador()) return
+  // Las pruebas en el Mac (localhost) se colaban en los datos como visitas reales.
+  if (/^(localhost|127\.0\.0\.1|\[::1\])$/.test(window.location.hostname)) return
   cargado = true
   const w = window as unknown as { clarity?: Clarity }
   // Cola provisional: lo que se llame antes de que llegue el script se guarda
