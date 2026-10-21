@@ -20,7 +20,8 @@ import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { CodigoCifrado } from './Cocina'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
-import { GUIA } from './datosVentajasGuia'
+import { GUIA, FOTO_EXP } from './datosVentajasGuia'
+import { FotoZona } from './FotoZona'
 import { ICONO_EXP } from './iconosExperiencia'
 import './v7.css'
 import './ventajas.css'
@@ -343,8 +344,8 @@ function Indice({ id }: { id: VentajasId }) {
 function IconoExp({ a, grande }: { a: App; grande?: boolean }) {
   const Ico = ICONO_EXP[a.clave]
   return (
-    <span className={`vn-ico-exp${grande ? ' es-grande' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
-      {Ico ? <Ico size={grande ? 44 : 20} strokeWidth={1.6} /> : ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="64" height="64" loading="lazy" decoding="async" /> : <b>{(a.marca.palabra ?? a.nombre).charAt(0)}</b>}
+    <span className={`vn-ico-exp${grande ? ' es-grande' : ''}${ICONOS_APP.has(a.clave) ? ' es-real' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
+      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="64" height="64" loading="lazy" decoding="async" /> : Ico ? <Ico size={grande ? 44 : 20} strokeWidth={1.6} /> : <b>{(a.marca.palabra ?? a.nombre).charAt(0)}</b>}
     </span>
   )
 }
@@ -357,7 +358,8 @@ function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
   const wa = `https://wa.me/${numero}?text=${encodeURIComponent(t.msg.replace('{n}', a.nombre))}`
   return (
     <div className="vn-det" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
-      <div className="vn-det-cara">
+      <div className={`vn-det-cara${FOTO_EXP[a.clave] ? ' con-foto' : ''}`}>
+        {FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />}
         {a.marca.palabra && <span className="vn-det-kanji" aria-hidden="true">{a.marca.palabra}</span>}
         <IconoExp a={a} grande />
       </div>

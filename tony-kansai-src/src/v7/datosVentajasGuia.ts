@@ -200,3 +200,11 @@ export const GUIA: Record<string, Guia> = {
     frases: [f('ホテルに届けてもらえますか？', 'Hoteru ni todokete moraemasu ka?', '¿Me lo podéis enviar al hotel?', 'Could you deliver it to my hotel?', 'هل يمكنكم توصيله إلى الفندق؟', 'Можете доставить в отель?')],
   },
 }
+
+/** Foto de la zona de cada experiencia (public/v8/zonas, créditos en creditosZonas.json). */
+export const FOTO_EXP: Record<string, string> = {
+  samurai: 'kioto-nishiki', wargo: 'kioto-gion', camellia: 'kioto-kiyomizu', snapkyoto: 'kioto-fushimi',
+  yumeyakata: 'kioto-sakura', shogun: 'kioto-arashiyama', miyabi: 'kioto-gion', towerknives: 'osaka-shinsekai',
+  cookingsun: 'kioto-nishiki', hamanasu: 'lejos-kumano', yokotake: 'kioto-arashiyama', domyo: 'kioto-kinkakuji',
+  okamoto: 'kioto-kiyomizu', nakamura: 'kioto-fushimi', japaneid: 'osaka-dotonbori', flytographer: 'kioto-gion',
+}

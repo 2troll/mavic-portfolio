@@ -654,3 +654,44 @@
   .vt-movil-zona-exp { margin-inline-end: -6px; }
   .vt-movil-pantalla { border-radius: 26px; }
 }
+
+/* Escaparate de la portada de ficha (22-10-2026): el logo de verdad, grande, en
+   una placa de cristal; en experiencias, sobre la foto de su zona. */
+.vt-escaparate {
+  position: relative; justify-self: center; width: min(100%, 420px); aspect-ratio: 1; display: grid; place-items: center;
+  border-radius: 40px; overflow: hidden; isolation: isolate;
+  background:
+    radial-gradient(60% 60% at 30% 20%, color-mix(in srgb, var(--marca-tinta) 22%, transparent), transparent 70%),
+    color-mix(in srgb, var(--marca-tinta) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--marca-tinta) 20%, transparent);
+  box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .55);
+}
+.vt-escaparate.con-foto { aspect-ratio: 4 / 5; background: #111; }
+.vt-escaparate-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.vt-escaparate.con-foto::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, transparent 35%, color-mix(in srgb, var(--marca) 75%, #000) 100%);
+}
+.vt-ico.vt-ico-escaparate {
+  position: relative; width: 46%; height: auto; aspect-ratio: 1; border-radius: 24%;
+  box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .6), 0 0 0 8px color-mix(in srgb, #fff 18%, transparent);
+}
+.vt-escaparate.con-foto .vt-ico-escaparate { width: 34%; align-self: end; margin-bottom: 14%; }
+.vt-ico.vt-ico-escaparate b { font-size: clamp(2rem, 6vw, 3.4rem); }
+/* Reflejo de cristal que cruza el logo al pasar el ratón. */
+.vt-ico-escaparate::before {
+  content: ''; position: absolute; inset: -40%; z-index: 2; pointer-events: none;
+  background: linear-gradient(115deg, transparent 40%, rgba(255, 255, 255, .55) 50%, transparent 60%);
+  transform: translateX(-60%); transition: transform .9s cubic-bezier(.2, .7, .2, 1);
+}
+.vt-escaparate:hover .vt-ico-escaparate::before { transform: translateX(60%); }
+@media (prefers-reduced-motion: no-preference) { .vt-escaparate:not(.con-foto) .vt-ico-escaparate { animation: vt-flota 6s ease-in-out infinite; } }
+.vt-escaparate .vz-credito {
+  position: absolute; inset-inline-start: 12px; bottom: 10px; font-size: .64rem; color: rgba(255, 255, 255, .75); text-decoration: none;
+  background: rgba(0, 0, 0, .35); padding: 2px 8px; border-radius: 999px; max-width: 80%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+@media (max-width: 800px) {
+  .vt-escaparate { order: -1; width: min(100%, 360px); border-radius: 28px; }
+  .vt-escaparate:not(.con-foto) { width: 180px; }
+  .vt-escaparate.con-foto { aspect-ratio: 16 / 10; width: 100%; }
+}

@@ -272,3 +272,22 @@
 }
 .vn-h2 { text-wrap: balance; }
 .lang-ar .vn-h2 { max-width: 22ch; }
+
+/* Logos reales y foto de la zona (22-10-2026): menos degradado plano, más sitio de verdad. */
+.vn-ico-exp.es-real { background: #fff; box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .7), inset 0 0 0 .5px rgba(0, 0, 0, .1); }
+.vn-ico-exp.es-grande.es-real { width: 104px; height: 104px; border-radius: 26px; background: #fff; border: 0; box-shadow: 0 18px 40px -14px rgba(0, 0, 0, .75), 0 0 0 6px rgba(255, 255, 255, .14); position: relative; z-index: 2; }
+.vn-det-cara.con-foto { height: 260px; background: #0b0d12; }
+.vn-det-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.2s cubic-bezier(.2, .7, .2, 1); }
+.vn-det:hover .vn-det-foto { transform: scale(1.08); }
+.vn-det-cara.con-foto::after {
+  content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+  background: linear-gradient(180deg, color-mix(in srgb, var(--marca) 35%, transparent) 0%, transparent 45%, rgba(11, 13, 18, .85) 100%);
+}
+.vn-det-cara.con-foto .vn-det-kanji { z-index: 1; color: #fff; opacity: .22; text-shadow: 0 4px 30px rgba(0, 0, 0, .4); }
+.vz-credito {
+  position: absolute; inset-inline-start: 10px; bottom: 8px; z-index: 3; max-width: 70%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  font-size: .64rem; color: rgba(255, 255, 255, .7) !important; text-decoration: none; background: rgba(0, 0, 0, .35); padding: 2px 8px; border-radius: 999px;
+}
+.vz-credito:hover { color: #fff !important; }
+@media (prefers-reduced-motion: reduce) { .vn-det-foto, .vn-det:hover .vn-det-foto { transition: none; transform: none; } }
+@media (max-width: 760px) { .vn-det-cara.con-foto { height: 200px; } .vn-ico-exp.es-grande.es-real { width: 84px; height: 84px; border-radius: 22px; } }

@@ -9,6 +9,8 @@ import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoWa } from './IconoWa'
 import { GuiaTienda } from './GuiaTienda'
+import { FOTO_EXP } from './datosVentajasGuia'
+import { FotoZona } from './FotoZona'
 import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
@@ -64,7 +66,7 @@ const Dibujo = ({ n, className }: { n: string; className?: string }) => (
 function Logo({ a, className }: { a: App; className?: string }) {
   return (
     <span className={`${className ?? ''}${ICONOS_APP.has(a.clave) ? ' vt-ico-real' : ''}`} style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }} aria-hidden="true">
-      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="128" height="128" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
+      {ICONOS_APP.has(a.clave) ? <img src={`/v7/apps/${a.clave}.webp`} alt="" width="512" height="512" decoding="async" /> : a.marca.logo ? <svg viewBox="0 0 24 24"><path d={LOGOS[a.marca.logo]} fill="currentColor" /></svg>
         : <b dir="ltr">{(a.marca.palabra ?? a.nombre).length <= 4 ? a.marca.palabra : (a.marca.palabra ?? a.nombre).charAt(0)}</b>}
     </span>
   )
@@ -118,9 +120,20 @@ export function FichaApp({ a, id, lista, wa, final }: {
             )}
             <div className="vt-acciones"><Boton />{colabora && <small className="vt-nota-colab">{l.nota}</small>}</div>
           </div>
-          <div className="vt-ficha-dibujo" aria-hidden="true">
-            <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} />
-          </div>
+          {FOTO_EXP[a.clave] ? (
+            <div className="vt-escaparate con-foto">
+              <FotoZona zona={FOTO_EXP[a.clave]} className="vt-escaparate-foto" sizes="(max-width: 800px) 100vw, 480px" />
+              <Logo a={a} className="vt-ico vt-ico-escaparate" />
+            </div>
+          ) : ICONOS_APP.has(a.clave) ? (
+            <div className="vt-escaparate" aria-hidden="true">
+              <Logo a={a} className="vt-ico vt-ico-escaparate" />
+            </div>
+          ) : (
+            <div className="vt-ficha-dibujo" aria-hidden="true">
+              <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} />
+            </div>
+          )}
         </div>
       </section>
 

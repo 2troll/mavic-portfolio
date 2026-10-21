@@ -11,4 +11,4 @@ export const LOGOS: Record<string, string> = {
 
 // Iconos oficiales de cada app (App Store de Apple o apple-touch-icon de su web), 128 px en public/v7/apps/.
 // Si una app no está aquí, se pinta con su color y su logo o inicial.
-export const ICONOS_APP = new Set(["agoda", "airalo", "airhelp", "booking", "flytographer", "go", "gyg", "hello", "iati", "icoca", "kiwitaxi", "kkday", "klook", "luup", "maps", "mobal", "nomad", "radical", "samurai", "tiqets", "traductor", "trip", "uber", "welcome", "wise", "yesim"])
+export const ICONOS_APP = new Set(["agoda", "airalo", "airhelp", "booking", "camellia", "cookingsun", "domyo", "ekta", "flytographer", "go", "gyg", "hamanasu", "hello", "iati", "icoca", "intui", "japaneid", "japanwireless", "japanwirelessesim", "kiwitaxi", "kkday", "klook", "luup", "maps", "miyabi", "mobal", "nakamura", "nomad", "okamoto", "radical", "samurai", "shogun", "snapkyoto", "tiqets", "towerknives", "traductor", "trip", "uber", "wargo", "welcome", "wise", "yesim", "yokotake", "yumeyakata"])
