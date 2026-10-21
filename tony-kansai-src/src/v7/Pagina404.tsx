@@ -94,10 +94,10 @@ const NOMBRES: Record<string, Record<L, string>> = {
   hiking: { es: 'Rutas de montaña', en: 'Mountain routes', ar: 'مسارات الجبال', ru: 'Горные маршруты' },
 }
 
-function titulo(ruta: string, l: L) {
+function titulo(ruta: string, l: L, nombres: Record<string, string>) {
   const partes = ruta.split('/').filter(Boolean)
   const ultimo = partes[partes.length - 1] ?? ''
-  const bonito = NOMBRES[ultimo]?.[l] ?? ultimo.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase())
+  const bonito = NOMBRES[ultimo]?.[l] ?? nombres[ultimo] ?? ultimo.replace(/-/g, ' ').replace(/^./, (c) => c.toUpperCase())
   const sec = partes.length > 2 ? SECCION[partes[1]]?.[l] : undefined
   return sec ? `${sec} · ${bonito}` : bonito
 }
@@ -112,12 +112,22 @@ export default function Pagina404() {
   const t = T[l]
   const [rutas, setRutas] = useState<string[] | null>(null)
 
+  const [nombres, setNombres] = useState<Record<string, string>>({})
   useEffect(() => {
     let vivo = true
-    fetch('/sitemap.xml').then((r) => (r.ok ? r.text() : '')).then((xml) => {
+    // El sitemap publicado no lleva las fichas de ventajas (noindex desde el
+    // 18-10-2026, por Bing): se añaden desde sus propios datos, con su nombre.
+    Promise.all([
+      fetch('/sitemap.xml').then((r) => (r.ok ? r.text() : '')).catch(() => ''),
+      import('./datosVentajas').then((m) => m.APPS).catch(() => []),
+    ]).then(([xml, apps]) => {
       if (!vivo) return
-      setRutas([...xml.matchAll(/<loc>https?:\/\/[^/]+(\/[^<]*)<\/loc>/g)].map((m) => m[1]))
-    }).catch(() => vivo && setRutas([]))
+      const delMapa = [...xml.matchAll(/<loc>https?:\/\/[^/]+(\/[^<]*)<\/loc>/g)].map((m) => m[1])
+      const base = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
+      const fichas = Object.values(base).flatMap((b) => apps.map((a) => `${b}${a.clave}/`))
+      setNombres(Object.fromEntries(apps.map((a) => [a.clave, a.nombre])))
+      setRutas([...new Set([...delMapa, ...fichas])])
+    })
     return () => { vivo = false }
   }, [])
 
@@ -166,7 +176,7 @@ export default function Pagina404() {
             : (
               <ul>
                 {sugeridas.map(({ r }) => (
-                  <li key={r}><Link to={r}><b>{titulo(r, l)}</b><span dir="ltr">tonykansaiguide.com{r}</span></Link></li>
+                  <li key={r}><Link to={r}><b>{titulo(r, l, nombres)}</b><span dir="ltr">tonykansaiguide.com{r}</span></Link></li>
                 ))}
               </ul>
             )}
