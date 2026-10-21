@@ -16,7 +16,8 @@ const VUELTA: Record<string, { ruta: string; texto: string }> = {
   ar: { ruta: '/ar/', texto: 'رجوع' }, ru: { ruta: '/ru/', texto: 'Назад' },
 }
 
-export function MarcoLegal({ children }: { children: ReactNode }) {
+/** `sinPixel`: la página va con su propia letra y esquinas (p. ej. la 404), sin el tema píxel. */
+export function MarcoLegal({ children, sinPixel }: { children: ReactNode; sinPixel?: boolean }) {
   const { lang, dir } = useLanguage()
   // Quien vino de la página de Larion en inglés vuelve a ella, no a la de Tony.
   let ultima: string | null = null
@@ -24,7 +25,7 @@ export function MarcoLegal({ children }: { children: ReactNode }) {
   const v = VUELTA[lang] ?? VUELTA.en
   const ruta = ultima === 'larion' && lang === 'en' ? '/larion/' : v.ruta
   return (
-    <div className={`v7 v7-legal lang-${lang}`} lang={lang} dir={dir}>
+    <div className={`v7 v7-legal lang-${lang}${sinPixel ? ' v7-sin-pixel' : ''}`} lang={lang} dir={dir}>
       <header className="v7-cabecera cristal">
         <Link to={ruta} className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
         </Link>

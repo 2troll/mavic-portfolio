@@ -1,0 +1,98 @@
+/* 404 (Pagina404.tsx): portada con la foto de los torii de Fushimi, Tony
+   «perdido» sobre el número y debajo sugerencias y atajos en bandeja. */
+
+.p404 {
+  --p4-tinta: #15161a; --p4-suave: #5d606b; --p4-bermellon: #c8372d; --p4-papel: #f7f3ea;
+  font-family: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  color: var(--p4-tinta); background: var(--p4-papel); letter-spacing: 0;
+}
+.p404[dir='rtl'] { font-family: 'Noto Sans Arabic', 'Geeza Pro', 'Segoe UI', Tahoma, sans-serif; }
+.p404 *, .p404 *::before, .p404 *::after { box-sizing: border-box; }
+.p404 h1, .p404 h2 { font-family: inherit; margin: 0; letter-spacing: -0.03em; line-height: 1.08; }
+
+/* ── Portada ─────────────────────────────────────────────────────── */
+.p404-portada { position: relative; isolation: isolate; overflow: hidden; color: #fff; min-height: min(78vh, 720px); display: grid; }
+.p404-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; animation: p404-acerca 18s ease-out both; }
+.p404-portada::before {
+  content: ''; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(100deg, rgba(10, 8, 8, .86) 0%, rgba(10, 8, 8, .6) 45%, rgba(10, 8, 8, .15) 100%);
+}
+.p404[dir='rtl'] .p404-portada::before { background: linear-gradient(260deg, rgba(10, 8, 8, .86) 0%, rgba(10, 8, 8, .6) 45%, rgba(10, 8, 8, .15) 100%); }
+.p404-dentro {
+  width: min(100%, 1200px); margin: 0 auto; padding: clamp(40px, 7vw, 88px) 16px; display: grid;
+  grid-template-columns: 1.2fr .8fr; gap: 32px; align-items: center;
+}
+.p404-antes {
+  display: inline-block; margin: 0 0 18px; padding: 6px 14px; border-radius: 999px; font-size: .82rem; font-weight: 700;
+  letter-spacing: .08em; text-transform: uppercase; background: var(--p4-bermellon);
+}
+.p404-texto h1 { font-size: clamp(2.3rem, 6vw, 4.4rem); max-width: 14ch; text-wrap: balance; }
+.p404-lema { margin: 18px 0 0; max-width: 46ch; font-size: 1.1rem; line-height: 1.6; color: rgba(255, 255, 255, .86); }
+.p404-botones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 30px; }
+.p404-boton {
+  display: inline-flex; align-items: center; min-height: 50px; padding: 0 24px; border-radius: 999px;
+  font-weight: 650; text-decoration: none; transition: transform .15s ease, background-color .15s ease;
+}
+.p404-boton:hover { transform: translateY(-2px); }
+.p404-boton-claro { background: #fff; color: var(--p4-tinta) !important; }
+.p404-boton-wa { background: #1fa855; color: #fff !important; }
+.p404-boton-wa:hover { background: #18914a; }
+
+.p404-figura { position: relative; justify-self: center; display: grid; place-items: end center; min-height: 340px; }
+.p404-num {
+  position: absolute; inset: 0; display: grid; place-items: center; font-size: clamp(7rem, 17vw, 13rem); font-weight: 800;
+  letter-spacing: -0.06em; line-height: 1; color: transparent; -webkit-text-stroke: 2px rgba(255, 255, 255, .55);
+}
+.p404-figura img {
+  position: relative; height: min(42vh, 360px); width: auto;
+  filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .5)); animation: p404-busca 4.5s ease-in-out infinite;
+}
+.p404[dir='rtl'] .p404-figura img { transform: scaleX(-1); }
+.p404 .vz-credito {
+  position: absolute; inset-inline-end: 12px; bottom: 10px; font-size: .64rem; color: rgba(255, 255, 255, .7) !important;
+  text-decoration: none; background: rgba(0, 0, 0, .35); padding: 2px 8px; border-radius: 999px;
+}
+
+/* ── Sugerencias y atajos ────────────────────────────────────────── */
+.p404-cuerpo { width: min(100%, 1000px); margin: 0 auto; padding: clamp(36px, 6vw, 64px) 16px clamp(56px, 8vw, 96px); }
+.p404-quizas {
+  margin-top: calc(-1 * clamp(70px, 9vw, 110px)); position: relative; padding: 26px; border-radius: 22px; background: #fff;
+  border: 1px solid #e6e1d6; box-shadow: 0 30px 60px -30px rgba(40, 25, 10, .35);
+}
+.p404-quizas h2, .p404-sub { font-size: 1.35rem; display: flex; align-items: center; gap: 10px; }
+.p404-quizas h2::before, .p404-sub::before { content: ''; width: 18px; height: 3px; border-radius: 2px; background: var(--p4-bermellon); }
+.p404-quizas ul { list-style: none; margin: 16px 0 0; padding: 6px; display: grid; gap: 6px; background: #f0ece4; border-radius: 16px; }
+.p404-quizas a {
+  display: grid; gap: 2px; padding: 14px 16px; border-radius: 12px; background: #fff; text-decoration: none; color: inherit;
+  border: 1px solid #e6e1d6; border-bottom-width: 2px; transition: border-color .15s, background-color .15s;
+}
+.p404-quizas a:hover { border-color: var(--p4-bermellon); background: #fffaf6; }
+.p404-quizas a b { font-size: 1.05rem; }
+.p404-quizas a span { font-size: .84rem; color: var(--p4-suave); overflow-wrap: anywhere; }
+.p404-nota { margin: 12px 0 0; color: var(--p4-suave); }
+
+.p404-sub { margin: 44px 0 16px !important; }
+.p404-atajos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 200px), 1fr)); gap: 12px; }
+.p404-atajos a {
+  position: relative; overflow: hidden; display: grid; align-content: end; min-height: 112px; padding: 18px; border-radius: 18px;
+  background: var(--p4-tinta); color: #fff !important; text-decoration: none; transition: transform .2s ease, background-color .2s ease;
+}
+.p404-atajos a:hover { transform: translateY(-3px); background: var(--p4-bermellon); }
+.p404-atajos span {
+  position: absolute; inset-inline-end: 10px; top: 4px; font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: 54px; font-weight: 700; opacity: .16; line-height: 1;
+}
+.p404-atajos b { position: relative; font-size: 1.05rem; }
+
+@keyframes p404-acerca { from { transform: scale(1.12); } to { transform: scale(1); } }
+@keyframes p404-busca { 0%, 100% { translate: 0 0; rotate: 0deg; } 30% { rotate: -3deg; } 60% { translate: 0 -6px; rotate: 2deg; } }
+@media (prefers-reduced-motion: reduce) { .p404-foto, .p404-figura img { animation: none; } }
+
+@media (max-width: 800px) {
+  .p404-dentro { grid-template-columns: 1fr; padding-top: 28px; gap: 8px; }
+  .p404-figura { order: -1; min-height: 200px; }
+  .p404-figura img { height: 190px; }
+  .p404-num { font-size: 6rem; }
+  .p404-portada::before { background: linear-gradient(180deg, rgba(10, 8, 8, .55), rgba(10, 8, 8, .85)); }
+  .p404-quizas { margin-top: -40px; padding: 20px 16px; }
+}

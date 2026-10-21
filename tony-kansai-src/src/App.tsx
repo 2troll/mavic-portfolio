@@ -253,7 +253,7 @@ export function Layout() {
 
   if (!isAdmin && !RUTA_ANTIGUA.test(pathname)) {
     return (
-      <MarcoLegal>
+      <MarcoLegal sinPixel>
         <Suspense fallback={<div className="min-h-screen" />}><Pagina404 /></Suspense>
       </MarcoLegal>
     )

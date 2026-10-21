@@ -5,7 +5,7 @@
 // Movimiento: Lenis + GSAP (SplitText, ScrollTrigger) cargados en el cliente;
 // con «reducir movimiento» la página queda quieta y entera.
 // Las fichas de cada app (/es/ventajas/airalo/) siguen en FichaVentaja.tsx con ventajas.css.
-import { useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -22,6 +22,7 @@ import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import { GUIA, FOTO_EXP } from './datosVentajasGuia'
 import { FotoZona } from './FotoZona'
+const Pagina404 = lazy(() => import('./Pagina404'))
 import { ICONO_EXP } from './iconosExperiencia'
 import './v7.css'
 import './ventajas.css'
@@ -460,7 +461,7 @@ function Experiencias({ id, ruta }: { id: VentajasId; ruta: string }) {
 
 export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) {
   const p = T[id]
-  // Ficha propia de una app (/es/ventajas/airalo/); si la clave no existe, se ve la lista.
+  // Ficha propia de una app (/es/ventajas/airalo/); si la clave no existe, 404.
   const appSel = app ? APPS.find((a) => a.clave === app) : undefined
   const dir = id === 'ar' ? 'rtl' : 'ltr'
   const { setLang } = useLanguage()
@@ -524,6 +525,9 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
     })()
     return () => { cancelado = true; limpiar() }
   }, [id, appSel])
+
+  // Una clave que no existe (/es/ventajas/loquesea/) es un 404, no la lista sin avisar.
+  if (app && !appSel) return <Suspense fallback={null}><Pagina404 /></Suspense>
 
   return (
     <div ref={raiz} className={`vt lang-${id}${appSel ? '' : ' vn'}`} lang={id} dir={dir}>
