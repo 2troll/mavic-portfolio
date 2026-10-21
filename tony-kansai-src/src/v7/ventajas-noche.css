@@ -44,6 +44,9 @@
 .vn-boton-wa:hover { transform: translateY(-1px); }
 .vn-enlace { color: var(--vn-suave) !important; font-size: .95rem; text-underline-offset: 4px; }
 .vn-enlace:hover { color: var(--vn-tinta) !important; }
+.vn-enlace-solo { color: var(--vn-tinta) !important; font-weight: 600; text-decoration: none; padding: 6px 14px; border-radius: 999px; border: 1px dashed color-mix(in srgb, var(--vn-acento) 70%, transparent); }
+.vn-enlace-solo::before { content: "一人旅 "; color: var(--vn-acento); font-weight: 700; }
+.vn-enlace-solo:hover { border-style: solid; }
 
 /* Índice bajo la barra */
 .vn-indice {

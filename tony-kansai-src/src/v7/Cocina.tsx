@@ -133,7 +133,7 @@ export function Contador({ valor, formato, ms = 1600 }: { valor: number; formato
 }
 
 /** Borde troquelado de sello de correos, como clip-path (idea del Stamp de dqnamo). */
-function troquel(nx: number, ny: number, hondo: number) {
+export function troquel(nx: number, ny: number, hondo: number) {
   const p: string[] = []
   const pt = (x: number, y: number) => p.push(`${x.toFixed(2)}% ${y.toFixed(2)}%`)
   const sx = 100 / nx, sy = 100 / ny

@@ -20,6 +20,7 @@ import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { CodigoCifrado } from './Cocina'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
+import { GUIA } from './datosVentajasGuia'
 import { ICONO_EXP } from './iconosExperiencia'
 import './v7.css'
 import './ventajas.css'
@@ -270,11 +271,11 @@ const HERO: Record<VentajasId, { h1: string; sub: string; exp: string; cod: stri
   ru: { h1: 'Лучшее в Кансае от нас', sub: 'Впечатления от партнёров, которых мы знаем лично, с бонусом от нас, и приложения на каждый день.', exp: 'Смотреть впечатления', cod: 'Коды', foto: 'Красные ворота тории в Фусими Инари, Киото' },
 }
 
-const EXP_T: Record<VentajasId, { titulo: string; sub: string; todas: string; musulman: string; conTony: string; abrir: string; reservar: string; msg: string }> = {
-  es: { titulo: 'Experiencias que no encuentras en una app', sub: 'Talleres, kimonos, samuráis y cocina que conozco en persona. Si estamos de tour, lo encajo en la ruta.', todas: 'Todas', musulman: 'Apto para musulmanes', conTony: 'Ventaja con Tony', abrir: 'Ver su web', reservar: 'Resérvalo conmigo', msg: 'Hola Tony, me interesa {n}. ¿Me ayudas a reservarlo?' },
-  en: { titulo: 'Experiences you won’t find in an app', sub: 'Workshops, kimono, samurai and cooking I know in person. If we tour together, I fit it into the route.', todas: 'All', musulman: 'Muslim-friendly', conTony: 'Perk with Tony', abrir: 'Their website', reservar: 'Book it with me', msg: 'Hi Tony, I’m interested in {n}. Can you help me book it?' },
-  ar: { titulo: 'تجارب لن تجدها في أي تطبيق', sub: 'ورش وكيمونو وساموراي وطبخ أعرفها شخصيًا. إن كنا في جولة معًا أضعها في المسار.', todas: 'الكل', musulman: 'مناسب للمسلمين', conTony: 'ميزة مع طوني', abrir: 'موقعهم', reservar: 'احجزه معي', msg: 'مرحبًا طوني، أنا مهتم بـ {n}. هل تساعدني في الحجز؟' },
-  ru: { titulo: 'Впечатления, которых нет в приложениях', sub: 'Мастерские, кимоно, самураи и кулинария, которые мы знаем лично. На экскурсии впишем это в маршрут.', todas: 'Все', musulman: 'Подходит мусульманам', conTony: 'Бонус от нас', abrir: 'Их сайт', reservar: 'Забронировать с нами', msg: 'Здравствуйте! Меня интересует {n}. Поможете забронировать?' },
+const EXP_T: Record<VentajasId, { titulo: string; sub: string; todas: string; musulman: string; conTony: string; abrir: string; reservar: string; msg: string; solo: string }> = {
+  es: { titulo: 'Experiencias que no encuentras en una app', sub: 'Talleres, kimonos, samuráis y cocina que conozco en persona. Si estamos de tour, lo encajo en la ruta.', todas: 'Todas', musulman: 'Apto para musulmanes', conTony: 'Ventaja con Tony', abrir: 'Ver su web', reservar: 'Resérvalo conmigo', msg: 'Hola Tony, me interesa {n}. ¿Me ayudas a reservarlo?', solo: 'Ve solo: cómo llegar y qué decir' },
+  en: { titulo: 'Experiences you won’t find in an app', sub: 'Workshops, kimono, samurai and cooking I know in person. If we tour together, I fit it into the route.', todas: 'All', musulman: 'Muslim-friendly', conTony: 'Perk with Tony', abrir: 'Their website', reservar: 'Book it with me', msg: 'Hi Tony, I’m interested in {n}. Can you help me book it?', solo: 'Go on your own: getting there and what to say' },
+  ar: { titulo: 'تجارب لن تجدها في أي تطبيق', sub: 'ورش وكيمونو وساموراي وطبخ أعرفها شخصيًا. إن كنا في جولة معًا أضعها في المسار.', todas: 'الكل', musulman: 'مناسب للمسلمين', conTony: 'ميزة مع طوني', abrir: 'موقعهم', reservar: 'احجزه معي', msg: 'مرحبًا طوني، أنا مهتم بـ {n}. هل تساعدني في الحجز؟', solo: 'اذهب وحدك: كيف تصل وماذا تقول' },
+  ru: { titulo: 'Впечатления, которых нет в приложениях', sub: 'Мастерские, кимоно, самураи и кулинария, которые мы знаем лично. На экскурсии впишем это в маршрут.', todas: 'Все', musulman: 'Подходит мусульманам', conTony: 'Бонус от нас', abrir: 'Их сайт', reservar: 'Забронировать с нами', msg: 'Здравствуйте! Меня интересует {n}. Поможете забронировать?', solo: 'Самостоятельно: как добраться и что сказать' },
 }
 
 // Foto de cada momento del kit (la grande y la tercera llevan foto; la del medio, el color de acento).
@@ -375,7 +376,7 @@ function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
         <div className="vn-det-acciones">
           <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {t.reservar}</a>
           <a className="vn-boton vn-boton-linea" href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">{t.abrir}</a>
-          <Link className="vn-enlace" to={`${ruta}${a.clave}/`}>{MAS[id]}</Link>
+          <Link className={`vn-enlace${GUIA[a.clave] ? ' vn-enlace-solo' : ''}`} to={`${ruta}${a.clave}/`}>{GUIA[a.clave] ? t.solo : MAS[id]}</Link>
         </div>
       </div>
     </div>

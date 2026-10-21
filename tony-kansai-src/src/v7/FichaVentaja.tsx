@@ -8,6 +8,8 @@ import { APPS, CATEGORIAS, type App, cuponDe, esAfiliado } from './datosVentajas
 import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoWa } from './IconoWa'
+import { GuiaTienda } from './GuiaTienda'
+import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
 
@@ -151,6 +153,8 @@ export function FichaApp({ a, id, lista, wa, final }: {
           </section>
         </>
       )}
+
+      <GuiaTienda clave={a.clave} nombre={a.nombre} id={id} wa={wa} />
 
       {colabora && (
         <section className="vt-ficha-bloque">

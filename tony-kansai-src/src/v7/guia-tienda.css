@@ -1,0 +1,148 @@
+/* «Ve tú solo» (GuiaTienda.tsx): billete de ruta, sello troquelado y bandeja de
+   frases. Ideas de dqnamo/kitchen: bandeja gris con tarjetas de borde inferior
+   de 2px, papel troquelado con la sombra en el padre, billete con talón. */
+
+.gt { --gt-papel: #f6f0e4; --gt-tinta: #15161a; --gt-suave: #5d606b; --gt-bermellon: #c8372d; --gt-linea: #e3ddd0; }
+.gt-cabeza { position: relative; padding: 28px 0 8px; margin-bottom: 8px; }
+.gt-kanji {
+  position: absolute; inset-inline-end: 0; top: -6px; font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif;
+  font-size: clamp(64px, 12vw, 132px); line-height: 1; color: var(--gt-bermellon); opacity: 0.1; pointer-events: none;
+}
+.gt-cabeza p { color: var(--gt-suave); max-width: 52ch; margin: 0; }
+.gt-sub { font-size: 1.15rem; margin: 40px 0 14px !important; display: flex; align-items: center; gap: 10px; }
+.gt-sub::before { content: ''; width: 18px; height: 3px; border-radius: 2px; background: var(--gt-bermellon); }
+.gt-nota { color: var(--gt-suave); font-size: 0.95rem; margin: 10px 0; }
+.gt-aviso {
+  margin: 18px 0 0; padding: 14px 18px; border-radius: 14px; background: #fff4e5; border: 1px solid #f1d6ad;
+  font-size: 0.97rem;
+}
+.gt-aviso a { font-weight: 600; color: #1a7f45; }
+
+/* Botones de píldora: claro y en tinta. */
+.gt-boton {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px;
+  border-radius: 999px; border: 1px solid var(--gt-linea); border-bottom-width: 2px; background: #fff; color: var(--gt-tinta);
+  font: inherit; font-size: 0.93rem; font-weight: 600; text-decoration: none; cursor: pointer;
+  transition: background-color 0.15s, border-color 0.15s;
+}
+.gt-boton:hover { background: #faf8f4; border-color: #d3ccbd; }
+.gt-boton-tinta { background: var(--gt-tinta); border-color: #000; color: #fff !important; }
+.gt-boton-tinta:hover { background: #2a2c33; border-color: #000; }
+
+/* ── Billete: estación → tienda, con talón troquelado ─────────────────── */
+.gt-billetes { display: grid; gap: 22px; }
+.gt-billete {
+  position: relative; background: var(--gt-papel); border-radius: 18px; border: 1px solid var(--gt-linea);
+  box-shadow: 0 1px 0 rgb(0 0 0 / 4%), 0 14px 30px -18px rgb(60 40 10 / 35%); overflow: hidden;
+}
+.gt-billete::before {
+  content: ''; position: absolute; inset: 0 auto 0 0; width: 8px; background: var(--gt-bermellon);
+}
+[dir='rtl'] .gt-billete::before { inset: 0 0 0 auto; }
+.gt-billete-ruta { display: grid; grid-template-columns: 1fr auto 1.3fr; gap: 18px; align-items: center; padding: 24px 26px 20px 32px; }
+.gt-parada { display: grid; gap: 2px; min-width: 0; }
+.gt-parada small { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gt-suave); font-weight: 600; }
+.gt-parada b { font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-size: clamp(1.5rem, 3.4vw, 2.1rem); line-height: 1.15; font-weight: 700; overflow-wrap: anywhere; }
+.gt-destino b { font-size: clamp(1.02rem, 2.2vw, 1.25rem); line-height: 1.4; }
+.gt-parada span { font-weight: 600; font-size: 0.95rem; }
+.gt-parada em { font-style: normal; font-size: 0.82rem; color: var(--gt-suave); }
+.gt-camino { display: grid; justify-items: center; gap: 6px; color: var(--gt-bermellon); font-size: 0.8rem; font-weight: 700; white-space: nowrap; }
+.gt-camino i {
+  display: block; width: 110px; height: 14px;
+  background: radial-gradient(circle, currentColor 2.5px, transparent 3px) 0 50% / 12px 14px repeat-x;
+  -webkit-mask: linear-gradient(90deg, #000 85%, transparent); mask: linear-gradient(90deg, #000 85%, transparent);
+  position: relative;
+}
+.gt-camino i::after { content: '→'; position: absolute; inset-inline-end: -8px; top: 50%; transform: translateY(-52%); font-style: normal; font-size: 16px; }
+[dir='rtl'] .gt-camino i::after { content: '←'; }
+.gt-camino span { color: var(--gt-tinta); background: #fff; border: 1px solid var(--gt-linea); border-radius: 999px; padding: 2px 10px; }
+
+.gt-talon {
+  position: relative; display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px;
+  padding: 18px 26px 20px 32px; border-top: 2px dashed #d8cfbd; background: #fbf7ef;
+}
+/* Las dos muescas del troquel, mordiendo el borde a la altura del corte. */
+.gt-talon::before, .gt-talon::after {
+  content: ''; position: absolute; top: -12px; width: 22px; height: 22px; border-radius: 50%;
+  background: var(--vt-fondo, #f7f6f3); border: 1px solid var(--gt-linea);
+}
+.gt-talon::before { left: -12px; }
+.gt-talon::after { right: -12px; }
+.gt-talon dl { display: flex; flex-wrap: wrap; gap: 8px 22px; margin: 0; margin-inline-end: auto; }
+.gt-talon dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--gt-suave); font-weight: 600; }
+.gt-talon dd { margin: 0; font-weight: 600; }
+.gt-talon-botones { display: flex; flex-wrap: wrap; gap: 8px; }
+.gt-fuente { position: absolute; inset-inline-end: 14px; bottom: 4px; font-size: 0.68rem; color: var(--gt-suave); }
+
+/* ── Sello: tarjeta troquelada para enseñar en la tienda ─────────────── */
+.gt-sello { filter: drop-shadow(0 2px 1px rgb(0 0 0 / 12%)) drop-shadow(0 18px 24px rgb(60 40 10 / 22%)); max-width: 640px; margin-bottom: 6px; }
+.gt-sello-papel {
+  position: relative; display: grid; gap: 18px; padding: 66px 34px 30px;
+  background:
+    linear-gradient(145deg, rgb(255 255 255 / 55%) 34%, transparent 42%),
+    radial-gradient(circle at 20% 10%, #fffaf0, var(--gt-papel) 70%);
+}
+.gt-sello-papel p, .gt-pantalla-papel p { margin: 0; display: grid; gap: 4px; }
+.gt-sello-papel b { font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif; font-size: clamp(1.15rem, 2.6vw, 1.45rem); line-height: 1.55; font-weight: 700; }
+.gt-sello-papel small { color: var(--gt-suave); font-size: 0.9rem; }
+.gt-matasellos {
+  position: absolute; inset-inline-end: 22px; top: 18px; padding: 6px 12px; border: 2px solid var(--gt-bermellon);
+  border-radius: 999px; color: var(--gt-bermellon); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.1em;
+  text-transform: uppercase; transform: rotate(-8deg); opacity: 0.75;
+}
+
+/* ── Bandeja de frases (dqnamo: bandeja gris + tarjetas blancas) ────── */
+.gt-bandeja {
+  list-style: none; margin: 0; padding: 6px; display: grid; gap: 6px;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+  background: #efece6; border: 1px solid #e2ded5; border-radius: 16px;
+}
+.gt-frase {
+  display: flex; align-items: flex-start; gap: 12px; padding: 14px 14px 14px 16px; background: #fff;
+  border: 1px solid #e6e2da; border-bottom-width: 2px; border-radius: 13px; transition: border-color 0.15s, background-color 0.15s;
+}
+.gt-frase:hover { border-color: #d3ccbd; background: #fffdf9; }
+.gt-frase > div { display: grid; gap: 3px; flex: 1; min-width: 0; }
+.gt-frase b { font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif; font-size: 1.08rem; line-height: 1.45; }
+.gt-frase span { font-size: 0.86rem; color: var(--gt-bermellon); font-weight: 600; }
+.gt-frase small { font-size: 0.9rem; color: var(--gt-suave); }
+.gt-oir {
+  flex: none; display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%;
+  border: 1px solid #e6e2da; border-bottom-width: 2px; background: #faf8f4; color: var(--gt-tinta); cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+.gt-oir:hover { background: var(--gt-bermellon); color: #fff; border-color: var(--gt-bermellon); }
+
+.gt-contacto ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+.gt-contacto a {
+  display: inline-flex; min-height: 40px; align-items: center; padding: 0 16px; border-radius: 999px; background: #fff;
+  border: 1px solid var(--gt-linea); border-bottom-width: 2px; text-decoration: none; font-weight: 600; font-size: 0.93rem;
+}
+
+/* ── Pantalla completa para enseñar ─────────────────────────────────── */
+.gt-pantalla {
+  position: fixed; inset: 0; z-index: 1000; display: grid; place-items: center; padding: 16px;
+  background: rgb(10 10 12 / 72%); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  animation: gt-entra 0.2s ease-out;
+}
+.gt-pantalla-papel {
+  width: min(100%, 760px); max-height: calc(100dvh - 32px); overflow: auto; display: grid; gap: 28px;
+  padding: clamp(24px, 5vw, 48px); border-radius: 22px; background: #fffdf8; color: #111;
+  border-top: 10px solid var(--gt-bermellon, #c8372d);
+}
+.gt-pantalla-papel b { font-family: 'Hiragino Sans', 'Yu Gothic', sans-serif; font-size: clamp(1.7rem, 6.5vw, 2.9rem); line-height: 1.45; font-weight: 800; }
+.gt-pantalla-papel small { font-size: 1rem; color: #555; }
+.gt-pantalla-cerrar {
+  justify-self: start; min-height: 46px; padding: 0 22px; border-radius: 999px; border: 0; background: #15161a; color: #fff;
+  font: inherit; font-weight: 600; cursor: pointer;
+}
+@keyframes gt-entra { from { opacity: 0; } to { opacity: 1; } }
+
+@media (max-width: 640px) {
+  .gt-billete-ruta { grid-template-columns: 1fr; gap: 12px; padding: 20px 18px 16px 24px; }
+  .gt-camino { justify-items: start; grid-auto-flow: column; justify-content: start; }
+  .gt-camino i { width: 60px; }
+  .gt-talon { padding: 16px 18px 22px 24px; }
+  .gt-sello-papel { padding: 62px 22px 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .gt-pantalla { animation: none; } }
