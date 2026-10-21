@@ -85,7 +85,7 @@ const paginas = [
   { loc: '/larion/routes', priority: '0.8', changefreq: 'monthly', v7: 'rutasLarion' },
   // La web antigua (/tours, /hiking, /pricing…) ya no va aquí: redirige a la
   // nueva y sus páginas llevan noindex + canonical (rutas-estaticas.mjs).
-  { loc: '/booking', priority: '0.9', changefreq: 'weekly' },
+  // /booking no va: es solo el salto a WhatsApp, sin texto que buscar (noindex).
   { loc: '/resenas.html', priority: '0.7', changefreq: 'weekly' },
   { loc: '/terms', priority: '0.4', changefreq: 'yearly' },
   { loc: '/privacy', priority: '0.4', changefreq: 'yearly' },

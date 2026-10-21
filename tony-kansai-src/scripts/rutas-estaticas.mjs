@@ -178,7 +178,7 @@ for (const ruta of rutas) {
   // páginas de afiliado con muy poco texto. Bing bloqueaba la web entera
   // («URL cannot appear on Bing», 18-10-2026) y lo más parecido a sus normas
   // contra «thin affiliate» eran ellas: siguen funcionando, pero noindex y
-  // fuera del sitemap. La página general de ventajas sí se indexa.
+  // fuera del sitemap. La lista general de ventajas, tampoco (SIN_BUSQUEDA).
   if (NOINDEX.test(ruta)) {
     html = html.replace(/<meta name="robots" content="[^"]*"\s*\/?>/, '<meta name="robots" content="noindex, follow" />')
     fichasAfiliado++
@@ -186,6 +186,10 @@ for (const ruta of rutas) {
   mkdirSync(join(dest, ruta), { recursive: true })
   writeFileSync(join(dest, ruta, 'index.html'), html)
 }
+// 404.html es una copia del índice con «index, follow»: Google no indexa un 404,
+// pero Bing y los bots sin JavaScript leían esa etiqueta sin el noindex que pone React.
+const p404 = join(dest, '404.html')
+if (existsSync(p404)) writeFileSync(p404, readFileSync(p404, 'utf8').replace(/<meta name="robots" content="[^"]*"\s*\/?>/, '<meta name="robots" content="noindex, follow" />'))
 // El sitemap publicado no las lista: a un buscador no se le piden páginas noindex.
 const mapa = join(dest, 'sitemap.xml')
 writeFileSync(mapa, readFileSync(mapa, 'utf8')
