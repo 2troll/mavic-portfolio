@@ -453,13 +453,13 @@ const LISTA: App[] = [
     },
   },
   {
-    // JAPANeid (J-LINE, Minamihorie): aceptan salir en la web y mandaron fotos el 19-10-2026; sin acuerdo para guías individuales todavía. Muslim-friendly, NO certificado halal.
+    // JAPANeid (J-LINE, Minamihorie): aceptan salir en la web y mandaron fotos el 19-10-2026; sin acuerdo para guías individuales todavía. Corrección suya del 21-10: venden productos con certificado halal Y dulces muslim-friendly sin certificado, en estantes rotulados.
     clave: 'japaneid', cat: 'experiencias', ciudad: 'osaka', musulman: true, nombre: 'JAPANeid', enlace: 'https://www.japaneid.com/',
     marca: { fondo: '#1f5a4c', tinta: '#f2ead3', boton: '#f2ead3', botonTinta: '#1f5a4c', palabra: 'Eid' },
     t: {
-      es: { que: 'Tienda en Minamihorie (Osaka) pensada para musulmanes: dulces japoneses sin ingredientes animales ni alcohol, hiyab de estilo kimono y alfombras de oración.', ventaja: 'El regalo de Japón que puedes llevar a casa sin dudas. Si no te da tiempo de ir, piden por su web y te lo pueden mandar al hotel.' },
-      en: { que: 'A shop in Minamihorie (Osaka) made for Muslims: Japanese treats with no animal ingredients or alcohol, kimono-style hijabs and prayer mats.', ventaja: 'Japanese gifts you can take home without doubts. No time to visit? Order on their website and they can send it to your hotel.' },
-      ar: { que: 'متجر في مينامي هوريه (أوساكا) مخصص للمسلمين: حلويات يابانية بلا مكونات حيوانية ولا كحول، وحجاب بطراز الكيمونو وسجادات صلاة.', ventaja: 'هدايا من اليابان تحملها إلى بيتك بلا شك. ليس لديك وقت للزيارة؟ اطلب من موقعهم ويمكنهم إرساله إلى فندقك.' },
+      es: { que: 'Tienda en Minamihorie (Osaka) pensada para musulmanes: dulces japoneses sin ingredientes animales ni alcohol, hiyab de estilo kimono y alfombras de oración.', ventaja: 'Tienen productos con certificado halal y dulces muslim-friendly, cada uno en su estante rotulado. Si no te da tiempo de ir, piden por su web y te lo pueden mandar al hotel.' },
+      en: { que: 'A shop in Minamihorie (Osaka) made for Muslims: Japanese treats with no animal ingredients or alcohol, kimono-style hijabs and prayer mats.', ventaja: 'Halal-certified products and Muslim-friendly sweets, each on its own labelled shelf. No time to visit? Order on their website and they can send it to your hotel.' },
+      ar: { que: 'متجر في مينامي هوريه (أوساكا) مخصص للمسلمين: حلويات يابانية بلا مكونات حيوانية ولا كحول، وحجاب بطراز الكيمونو وسجادات صلاة.', ventaja: 'منتجات حاصلة على شهادة حلال وحلويات مناسبة للمسلمين، كلٌّ على رف خاص بلافتة واضحة. ليس لديك وقت للزيارة؟ اطلب من موقعهم ويمكنهم إرساله إلى فندقك.' },
     },
   },
   {
