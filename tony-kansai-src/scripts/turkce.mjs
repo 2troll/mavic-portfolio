@@ -20,10 +20,10 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
 const HOY = '2026-10-23'
 
-// Las reservas llegan al WhatsApp de Tony, que se las pasa a Ferhat. Si Ferhat
-// da su propio número, se cambia solo aquí.
-const WA_NUMERO = '34634193106'
-const WA_VISIBLE = '+34 634 193 106'
+// WhatsApp de Ferhat (lo dio Tony el 23-10-2026). Las reservas le llegan
+// directamente a él.
+const WA_NUMERO = '818024786402'
+const WA_VISIBLE = '+81 80 2478 6402'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
 const WA_GENEL = wa('Merhaba Ferhat, Japonya için Türkçe rehber arıyorum. Tarihler: ')
 
