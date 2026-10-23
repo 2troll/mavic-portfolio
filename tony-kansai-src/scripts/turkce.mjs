@@ -98,6 +98,113 @@ const SEHIRLER = [
   },
 ]
 
+// Páginas de respuesta: lo que un turco pregunta a una IA antes de viajar a
+// Kansai. La IA cita el primer párrafo (.cevap), así que va la respuesta
+// directa arriba y Ferhat al final. Datos tomados de fuentes ya comprobadas en
+// datosGuias.ts y datosRespuestas.ts (08-10-2026) y del MOFA para el visado.
+const CEVAPLAR = [
+  {
+    yol: 'japonya-vize', foto: '/v7/fotos/kioto',
+    baslik: 'Japonya Vizesi Türk Vatandaşları İçin: Vize Gerekli mi? | Türkçe Rehber',
+    aciklama: "Türk vatandaşları turistik amaçla Japonya'ya 90 güne kadar vizesiz girebilir. Giriş için gerekenler, Visit Japan Web ve Kansai'de Türkçe rehber.",
+    h1: 'Türk vatandaşları Japonya\'ya vizesiz gidebilir mi?',
+    kisa: 'Turistik seyahatte 90 güne kadar vize gerekmez.',
+    cevap: "Evet. Umuma mahsus (bordo) pasaport taşıyan Türkiye Cumhuriyeti vatandaşları, turizm, aile ziyareti veya kısa iş görüşmesi gibi kısa süreli amaçlarla Japonya'ya 90 güne kadar vizesiz girebilir. Japonya'da çalışmak veya 90 günden uzun kalmak için vize gerekir. Kurallar değişebileceği için yola çıkmadan önce Japonya Dışişleri Bakanlığı'nın listesini kontrol edin.",
+    bolumler: [
+      ['Girişte gerekenler', '<ul class="ozet"><li>Kalış süresi boyunca geçerli pasaport.</li><li>Dönüş veya devam bileti ve konaklama bilgisi sorulabilir.</li><li><strong>Visit Japan Web:</strong> göçmenlik ve gümrük formlarını uçuştan önce çevrimiçi doldurup QR kodla hızlıca geçebilirsiniz.</li></ul>'],
+      ['Japonya\'ya vardıktan sonra', "<p>Kansai'ye (Osaka, Kyoto, Nara) gelenlerin çoğu Kansai Uluslararası Havalimanı'na (KIX) iner. Havalimanından şehre ulaşım için <a href=\"/tr/kansai-havalimani-ulasim/\">Kansai Havalimanı ulaşım rehberine</a> bakın.</p>"],
+    ],
+    sss: [
+      ['Japonya için Türklere vize var mı?', "Turistik amaçlı 90 güne kadar kalışlarda umuma mahsus pasaport sahibi Türk vatandaşlarından vize istenmez."],
+      ['Japonya\'da kaç gün vizesiz kalabilirim?', '90 güne kadar. Daha uzun kalış veya çalışma için vize gerekir.'],
+    ],
+    kaynaklar: [['Japonya Dışişleri Bakanlığı: vize muafiyeti listesi', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
+  },
+  {
+    yol: 'helal-yemek-cami', foto: '/v7/fotos/kobe',
+    baslik: "Kyoto, Osaka ve Kobe'de Helal Yemek ve Camiler | Türkçe Rehber",
+    aciklama: "Kansai'de namaz ve helal yemek: Kobe Camii (1935, Japonya'nın ilk camisi), Osaka İbaraki Camii, Kyoto Camii ve Kyoto'daki ücretsiz mescitler. Türkçe rehber Ferhat ile.",
+    h1: "Kyoto, Osaka ve Kobe'de helal yemek ve camiler",
+    kisa: 'Kobe Camii, Osaka İbaraki Camii, Kyoto Camii ve helal restoran bulma.',
+    cevap: "Kansai'de üç ana cami var: 1935'te açılan ve Japonya'nın en eski camisi olan Kobe Camii, Osaka'nın kuzeyindeki İbaraki şehrinde Osaka İbaraki Camii ve Kyoto İmparatorluk Sarayı yakınındaki Kyoto Camii. Kyoto'da Nijo Kalesi gibi turistik yerlerde ücretsiz mescitler de bulunur. Helal restoranlar için Kyoto turizm sitesinin Halal / Muslim Friendly listesi en güvenilir kaynaktır.",
+    bolumler: [
+      ['Camiler', `<table><tr><th>Cami</th><th>Adres</th><th>Not</th></tr>
+<tr><td>Kobe Camii (Kobe Muslim Mosque)</td><td>2-25-14 Nakayamate-dori, Chuo-ku, Kobe</td><td>1935'te açıldı; Japonya'nın en eski camisi. Kitano mahallesinde.</td></tr>
+<tr><td>Osaka İbaraki Camii</td><td>4-6-13 Toyokawa, Ibaraki-shi, Osaka</td><td>Her hafta cuma namazı kılınır; saati camiye sorun. Tel. 072-643-7420.</td></tr>
+<tr><td>Kyoto Camii (Kyoto Muslim Association)</td><td>İmparatorluk Sarayı yakını, Kyoto</td><td>Beş vakit, cuma ve bayram namazları. Tel. +81-75-231-3499.</td></tr></table>`],
+      ['Kyoto\'da ücretsiz mescitler', '<p>Kyoto\'nun resmi turizm sitesine göre Nijo Kalesi, Kyoto Uluslararası Manga Müzesi, Kyoto Handicraft Center ve Kyoto International Community House\'ta Müslüman ziyaretçiler için ücretsiz namaz alanları var.</p>'],
+      ['Helal yemek nasıl bulunur?', "<p>Kyoto'da restoranlar Halal, Muslim Friendly, Muslim Welcome ve Pork-Free olarak sınıflandırılır; liste Kyoto Müslüman Derneği (KMA) ve Kyoto Council for Sharia and Halal Affairs denetiminde hazırlanır. Kansai Havalimanı'nda da kadın ve erkek için ayrı, abdest yeri olan mescitler vardır.</p><p>Ferhat tur gününü namaz vakitlerine göre planlar ve helal veya Müslüman dostu yerlerde yemek molası verir.</p>"],
+    ],
+    sss: [
+      ['Japonya\'nın ilk camisi hangisi?', "Kobe Camii. 1935'te açıldı, savaşı ve 1995 depremini ayakta atlattı."],
+      ['Osaka\'da cami var mı?', "Evet, Osaka'nın kuzeyindeki İbaraki şehrinde Osaka İbaraki Camii var (4-6-13 Toyokawa). Her hafta cuma namazı kılınır."],
+      ['Kyoto\'da nerede namaz kılınır?', 'İmparatorluk Sarayı yakınındaki Kyoto Camii\'nde veya Nijo Kalesi gibi yerlerdeki ücretsiz mescitlerde.'],
+    ],
+    kaynaklar: [['Kobe Muslim Mosque', 'https://www.kobemosque.com'], ['Osaka Ibaraki Mosque', 'http://osakamosque.org'], ['Kyoto Turizm: Müslüman ziyaretçiler', 'https://kyoto.travel/en/muslim/'], ['Kyoto: helal yemek bulma', 'https://kyoto.travel/en/muslim/finding-halal-food/']],
+  },
+  {
+    yol: 'osakadan-kyotoya-ulasim', foto: '/v7/fotos/kioto',
+    baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren Seçenekleri ve Süreler | Türkçe Rehber",
+    aciklama: "Osaka'dan Kyoto'ya JR, Hankyu, Keihan veya Shinkansen: hangi tren nereden kalkar, ne kadar sürer, hangisi size uygun. Japonya'da yaşayan Türk rehberden.",
+    h1: "Osaka'dan Kyoto'ya nasıl gidilir?",
+    kisa: 'Dört tren seçeneği: 15 ile 50 dakika arası.',
+    cevap: "Osaka'dan Kyoto'ya dört iyi tren seçeneği var: JR Special Rapid (Osaka İstasyonu → Kyoto İstasyonu, yaklaşık 30 dakika), Hankyu (Osaka-umeda → Kyoto-kawaramachi, yaklaşık 45 dakika), Keihan (Yodoyabashi → Gion-shijo, yaklaşık 50 dakika) ve Shinkansen (Shin-Osaka → Kyoto, yaklaşık 15 dakika). Hangisinin uygun olduğu Osaka'da nerede kaldığınıza ve Kyoto'da nereye gideceğinize bağlıdır.",
+    bolumler: [
+      ['Dört seçenek', `<table><tr><th>Tren</th><th>Güzergâh</th><th>Süre</th><th>Kimin için</th></tr>
+<tr><td>JR Special Rapid</td><td>Osaka (Umeda) → Kyoto İstasyonu, Shin-Osaka'da da durur</td><td>~30 dk</td><td>Kyoto İstasyonu ve Fushimi Inari. JR Pass geçerli.</td></tr>
+<tr><td>Hankyu</td><td>Osaka-umeda → Kyoto-kawaramachi</td><td>~45 dk</td><td>Kyoto merkezi, Nishiki Pazarı, Gion'a yürüme mesafesi. JR Pass geçmez.</td></tr>
+<tr><td>Keihan</td><td>Yodoyabashi → Gion-shijo</td><td>~50 dk</td><td>Doğrudan Gion ve Higashiyama. Yerel trenler Fushimi-Inari'de durur. JR Pass geçmez.</td></tr>
+<tr><td>Shinkansen</td><td>Shin-Osaka → Kyoto</td><td>~15 dk</td><td>Shin-Osaka'da kalanlar veya JR Pass sahipleri (Nozomi için ayrı bilet gerekir).</td></tr></table>`],
+      ['İpuçları', '<ul class="ozet"><li>ICOCA gibi IC kartlar JR, Hankyu ve Keihan\'da geçer.</li><li>Ücretler değişir; güncel fiyatı istasyonda veya şirketin sitesinde kontrol edin.</li><li>Ferhat\'la yapılan Kyoto turunda hangi treni alacağınızı o planlar ve sizinle birlikte gelir.</li></ul>'],
+    ],
+    sss: [
+      ['Osaka Kyoto arası kaç dakika?', 'Trene göre 15 (Shinkansen) ile 50 dakika (Keihan) arası; en yaygını JR Special Rapid ile yaklaşık 30 dakika.'],
+      ['Osaka\'dan Kyoto\'ya JR Pass geçer mi?', 'JR Special Rapid ve Shinkansen\'de (Hikari, Kodama) geçer; Hankyu ve Keihan\'da geçmez.'],
+    ],
+    kaynaklar: [['JR West saat tablosu', 'https://timetable.jr-odekake.net/line-timetable/2834'], ['Hankyu', 'https://www.hankyu.co.jp/en/'], ['Keihan', 'https://www.keihan.co.jp/travel/en/']],
+  },
+  {
+    yol: 'kansai-havalimani-ulasim', foto: '/v7/fotos/osaka',
+    baslik: "Kansai Havalimanı'ndan (KIX) Osaka ve Kyoto'ya Ulaşım | Türkçe Rehber",
+    aciklama: "Kansai Havalimanı'ndan Osaka ve Kyoto'ya: Haruka, Nankai Rapi:t, JR Kansai Airport Rapid ve limuzin otobüs. Süreler ve hangisi size uygun.",
+    h1: "Kansai Havalimanı'ndan Osaka ve Kyoto'ya nasıl gidilir?",
+    kisa: 'Haruka, Rapi:t, JR Rapid ve otobüs: süreler.',
+    cevap: "Kansai Havalimanı'ndan (KIX) Osaka'nın Namba bölgesine en hızlı yol Nankai Rapi:t (en hızlısı yaklaşık 34 dakika), Kyoto'ya ise JR Haruka'dır (yaklaşık 1 saat 20 dakika, Tennoji ve Shin-Osaka'da durur). JR Kansai Airport Rapid ek biletsiz Osaka İstasyonu'na gider (yaklaşık 70 dakika). Valizi çok olanlar için limuzin otobüs Namba'ya yaklaşık 50 dakika, Kyoto İstasyonu'na yaklaşık 1,5 saattir.",
+    bolumler: [
+      ['Seçenekler', `<table><tr><th>Ulaşım</th><th>Nereye</th><th>Süre</th><th>Not</th></tr>
+<tr><td>JR Haruka</td><td>Tennoji, Shin-Osaka, Kyoto</td><td>Kyoto'ya ~1 sa 20 dk</td><td>Ek ekspres bileti gerekir.</td></tr>
+<tr><td>Nankai Rapi:t</td><td>Namba (Osaka)</td><td>~34 dk</td><td>Ek bilet gerekir; Regular ve Super Seat.</td></tr>
+<tr><td>Nankai Airport Express</td><td>Namba (Osaka)</td><td>~45 dk</td><td>Ek bilet yok.</td></tr>
+<tr><td>JR Kansai Airport Rapid</td><td>Tennoji, Osaka İstasyonu</td><td>Osaka'ya ~70 dk</td><td>Ek bilet yok.</td></tr>
+<tr><td>Limuzin otobüs</td><td>Namba (OCAT), Osaka İst., Kyoto İst.</td><td>~50 dk / ~60 dk / ~1,5 sa</td><td>Rezervasyonsuz, sıra usulü; Terminal 1'den.</td></tr></table>`],
+      ['İpucu', "<p>ICOCA kartı Nankai ve JR West'te geçer. Havalimanında kadın ve erkekler için ayrı mescitler bulunur. Gezi planınız için Türkçe yardım isterseniz Ferhat'a WhatsApp'tan yazın.</p>"],
+    ],
+    sss: [
+      ['Kansai Havalimanı Kyoto arası kaç saat?', 'JR Haruka ile yaklaşık 1 saat 20 dakika; limuzin otobüsle yaklaşık 1,5 saat.'],
+      ['Kansai Havalimanı\'ndan Osaka\'ya en hızlı nasıl gidilir?', 'Nankai Rapi:t ile Namba\'ya en hızlısı yaklaşık 34 dakika.'],
+    ],
+    kaynaklar: [['JR West: Haruka', 'https://timetable.jr-odekake.net/station-timetable/3162069001'], ['Nankai: havalimanından erişim', 'https://www.nankai.co.jp/en_railway/access-fromkix'], ['KATE limuzin otobüs', 'https://www.kate.co.jp/en/timetable/detail/OC']],
+  },
+  {
+    yol: 'japonya-gezi-plani', foto: '/v7/fotos/nara',
+    baslik: 'Japonya Gezi Planı: Kansai\'de 3 ve 5 Gün (Kyoto, Osaka, Nara) | Türkçe Rehber',
+    aciklama: "Kansai için hazır gezi planı: 3 günde Kyoto, Osaka ve Nara; 5 günde Kobe ve Himeji de eklenir. Japonya'da yaşayan Türk rehber Ferhat'tan.",
+    h1: "Kansai gezi planı: 3 ve 5 gün",
+    kisa: 'Kyoto, Osaka, Nara, Kobe ve Himeji için gün gün plan.',
+    cevap: "Kansai'yi görmek için en az 3 gün ayırın: bir gün Kyoto (Fushimi Inari, Kiyomizu-dera, Gion), bir gün Nara ve Kyoto'nun Arashiyama bölgesi, bir gün Osaka (Osaka Kalesi, Dotonbori). 5 gününüz varsa Kobe (Kobe Camii, liman) ve Himeji Kalesi'ni ekleyin. Osaka'da kalmak ulaşım için en pratik seçenektir.",
+    bolumler: [
+      ['3 günlük plan', '<ol><li><strong>1. gün, Kyoto:</strong> sabah erken Fushimi Inari, öğlen Kiyomizu-dera ve Ninenzaka, akşam Gion.</li><li><strong>2. gün, Nara + Arashiyama:</strong> sabah Nara Parkı ve Todai-ji, öğleden sonra Kyoto\'da bambu ormanı.</li><li><strong>3. gün, Osaka:</strong> Osaka Kalesi, Kuromon Pazarı, akşam Dotonbori.</li></ol>'],
+      ['5 günlük plan', '<p>İlk üç güne ek olarak:</p><ol start="4"><li><strong>4. gün, Kobe:</strong> Kobe Camii (cuma ise namaz), Kitano, liman ve Rokko Dağı.</li><li><strong>5. gün, Himeji:</strong> Himeji Kalesi ve Kokoen bahçesi (Shin-Osaka\'dan Shinkansen ile yaklaşık 30 dakika).</li></ol>'],
+      ['Ne zaman gidilir?', '<p>İlkbahar (kiraz çiçekleri, mart sonu-nisan başı) ve sonbahar (kasım) en güzel ama en kalabalık dönemlerdir; erken plan yapın. Yaz sıcak ve nemlidir.</p>'],
+    ],
+    sss: [
+      ['Kyoto için kaç gün yeterli?', 'En az bir tam gün; Arashiyama ve Nara ile birlikte iki gün idealdir.'],
+      ['Kansai\'de nerede kalınır?', 'Osaka; Kyoto, Nara, Kobe ve havalimanına trenle kolay ulaşılır.'],
+    ],
+    kaynaklar: [],
+  },
+]
+
 const SSS = [
   ['Ferhat kimdir?', "Ferhat, Türk bir tur rehberidir ve 4 yıldır Japonya'da yaşıyor. Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel turlar yapıyor. Tony Kansai Guide ekibinin Türkçe rehberidir."],
   ['Tur hangi dilde?', 'Tur tamamen Türkçe. Ferhat yalnızca Türkçe rehberlik yapar; bu yüzden Japonya\'da kendi dilinizde soru sorup cevap alabilirsiniz.'],
@@ -128,7 +235,11 @@ ul.ozet{padding-left:20px}ul.ozet li{margin:4px 0}
 .izgara a{color:var(--fg);text-decoration:none}.izgara p{margin:0;color:var(--soluk);font-size:15px}
 details{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:12px 16px;margin:8px 0}summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0}
 footer{border-top:1px solid var(--cizgi);margin-top:48px;padding:20px 0 40px;color:var(--soluk);font-size:14px}footer a{color:var(--soluk)}
-a{color:var(--kirmizi)}`
+a{color:var(--kirmizi)}
+body{padding-bottom:76px}.wa-sabit{position:fixed;right:16px;bottom:16px;z-index:9;background:var(--yesil);color:#fff;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
+.cevap{background:var(--kart);border-left:4px solid var(--kirmizi);padding:14px 16px;border-radius:8px;font-size:18px}
+table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px solid var(--cizgi);padding:8px 6px;text-align:left;vertical-align:top}
+.kaynak{font-size:14px;color:var(--soluk)}`
 
 function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde }) {
   const url = `${BASE}/tr/${yol ? `${yol}/` : ''}`
@@ -162,8 +273,10 @@ ${govde}
 </main>
 <footer><div class="kap">
 <p>Ferhat, <a href="/en/">Tony Kansai Guide</a> ekibinin Türkçe rehberidir (Kansai, Japonya). WhatsApp: <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+<p>Türkçe bilgiler: ${CEVAPLAR.map((c) => `<a href="/tr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
 <p>Diğer diller: <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/ru/" hreflang="ru">Русский</a> · Son güncelleme: ${HOY}</p>
 </div></footer>
+<a class="wa-sabit" href="${WA_GENEL}">WhatsApp: Ferhat</a>
 </body>
 </html>
 `
@@ -217,6 +330,10 @@ ${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/"><h3>${s.ad}</h3><p>${esc(s.ye
 <li>Ferhat size Türkçe bir program ve fiyat önerir.</li>
 <li>Tur günü buluşur, gün boyunca Türkçe anlatımla gezersiniz.</li>
 </ol>
+<h2>Japonya gezisi için Türkçe bilgiler</h2>
+<ul class="izgara">
+${CEVAPLAR.map((c) => `<li><a href="/tr/${c.yol}/"><h3>${esc(c.h1)}</h3><p>${esc(c.kisa)}</p></a></li>`).join('\n')}
+</ul>
 <h2>Sık sorulan sorular</h2>
 ${SSS.map(([s, c]) => `<details><summary>${esc(s)}</summary><p>${esc(c)}</p></details>`).join('\n')}
 <h2>Rezervasyon</h2>
@@ -278,9 +395,41 @@ ${s.yerler.map(([ad, metin]) => `<li><h3>${esc(ad)}</h3><p>${esc(metin)}</p></li
   yaz(s.yol, sayfa({ yol: s.yol, baslik: s.baslik, aciklama: s.aciklama, gorsel: s.foto, jsonld, govde }))
 }
 
+// Páginas de respuesta
+for (const c of CEVAPLAR) {
+  const yazi = wa(`Merhaba Ferhat, "${c.h1}" sayfasını okudum. Japonya için Türkçe rehber arıyorum. Tarihler: `)
+  const govde = `
+<figure class="kahraman"><img src="${c.foto}.webp" alt="" width="1600" height="800"></figure>
+<div class="kap">
+<span class="etiket"><a href="/tr/">Türkçe rehber</a> · Bilgi</span>
+<h1>${esc(c.h1)}</h1>
+<p class="cevap">${esc(c.cevap)}</p>
+${c.bolumler.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
+<h2>Sık sorulan sorular</h2>
+${c.sss.map(([s, y]) => `<h3>${esc(s)}</h3>\n<p>${esc(y)}</p>`).join('\n')}
+<h2>Japonya'da Türkçe rehber</h2>
+<p>Ferhat, 4 yıldır Japonya'da yaşayan Türk tur rehberi. Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar yapıyor; fiyatı gruba göre WhatsApp'tan bildiriyor.</p>
+<p><a class="btn" href="${yazi}">WhatsApp'tan Ferhat'a yaz</a></p>
+${c.kaynaklar.length ? `<p class="kaynak">Kaynaklar: ${c.kaynaklar.map(([t, u]) => `<a href="${u}" rel="nofollow">${esc(t)}</a>`).join(' · ')}. Bilgiler ${HOY} tarihinde kontrol edildi; süreler yaklaşıktır.</p>` : ''}
+</div>`
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'Article', headline: c.h1, inLanguage: 'tr', dateModified: HOY, author: { '@id': `${BASE}/tr/#ferhat` }, mainEntityOfPage: `${BASE}/tr/${c.yol}/`, description: c.aciklama },
+      rehber,
+      { '@type': 'FAQPage', inLanguage: 'tr', mainEntity: [[c.h1, c.cevap], ...c.sss].map(([s, y]) => ({ '@type': 'Question', name: s, acceptedAnswer: { '@type': 'Answer', text: y } })) },
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Türkçe rehber', item: `${BASE}/tr/` },
+        { '@type': 'ListItem', position: 2, name: c.h1, item: `${BASE}/tr/${c.yol}/` },
+      ] },
+    ],
+  }
+  yaz(c.yol, sayfa({ yol: c.yol, baslik: c.baslik, aciklama: c.aciklama, gorsel: c.foto, jsonld, govde }))
+}
+
 function yaz(yol, html) {
   const dir = join(root, 'public/tr', yol)
   mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, 'index.html'), html)
 }
-console.log(`tr: ${SEHIRLER.length + 1} sayfa en public/tr/`)
+console.log(`tr: ${SEHIRLER.length + CEVAPLAR.length + 1} sayfa en public/tr/`)
