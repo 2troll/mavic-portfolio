@@ -83,7 +83,7 @@ if (paginas.length === 0) {
 }
 
 // Primero las páginas de Tony y Larion y las de respuesta; el resto, por ruta.
-const peso = (r) => (/^\/(es|en|ar|ru|larion)\/$/.test(r) ? 0 : 1)
+const peso = (r) => (/^\/(es|en|ar|ru|larion|tr)\/$/.test(r) ? 0 : 1)
 paginas.sort((a, b) => peso(a.ruta) - peso(b.ruta) || a.ruta.localeCompare(b.ruta))
 
 const llms = existsSync(join(dest, 'llms.txt')) ? readFileSync(join(dest, 'llms.txt'), 'utf8').trim() : '# Tony Kansai Guide'

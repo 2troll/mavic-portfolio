@@ -90,6 +90,8 @@ for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.
   // (Solo ficheros: una carpeta ya creada, p. ej. es/ por una ruta antigua es/desde-…, no cuenta.)
   if (existsSync(join(dest, ruta)) && statSync(join(dest, ruta)).isFile()) continue
+  // Las páginas en turco (scripts/turkce.mjs) ya son HTML completo sin React: no se pisan.
+  if (existsSync(join(dest, ruta, 'index.html')) && readFileSync(join(dest, ruta, 'index.html'), 'utf8').includes('data-estatica=')) continue
   const url = `${BASE}/${ruta}/`
   let html = base
     .replace(/^\s*<link rel="alternate" hreflang=.*\n/gm, '')
@@ -213,6 +215,7 @@ const portada = `
       <ul>
         <li><a href="/en/">Tony Hanma</a>: Spanish, lives in Osaka; guides in Spanish, English and Arabic. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</li>
         <li><a href="/larion/">Larion</a>: guides in Russian and English. WhatsApp <a href="${WA('818085067586')}">+81 80 8506 7586</a>.</li>
+        <li><a href="/tr/">Ferhat</a>: Turkish guide, 4 years in Japan; guides in Turkish only.</li>
       </ul>
       <p>Prices per group of up to 6 people: half day (4 hours) ${yen(P.medio)}, full day (8 hours) ${yen(P.completo)}, long day trips (Kōyasan, Amanohashidate, Kumano) from ${yen(P.lejos)}. Larger groups up to 14 people on request. Trains, entry fees and meals are not included. Pay cash on the day, or in advance with PayPal or Wise. Free cancellation up to 72 hours before.</p>
       <p>Choose your language:</p>
@@ -221,6 +224,7 @@ const portada = `
         <li lang="en"><a href="/en/">English</a>: private guide in Kyoto, Osaka and Nara, with Tony.</li>
         <li lang="ar" dir="rtl"><a href="/ar/">العربية</a>: مرشد خاص بالعربية في كيوتو وأوساكا ونارا، مع طوني.</li>
         <li lang="ru"><a href="/ru/">Русский</a>: частный гид на русском в Киото, Осаке и Хиросиме, с Ларионом.</li>
+        <li lang="tr"><a href="/tr/">Türkçe</a>: Kyoto, Osaka ve Nara'da Türkçe özel rehber, Ferhat ile.</li>
       </ul>
       <p>Guides: <a href="/en/kyoto/">Private guide in Kyoto: prices</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
     </main>

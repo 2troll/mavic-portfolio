@@ -37,6 +37,9 @@ const paginas = [
   { loc: '/ar', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
   { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
+  // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
+  { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
+  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
   { loc: '/es/montana', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/en/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ar/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
@@ -126,6 +129,7 @@ const V7 = {
 const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
+  turkce: ['scripts/turkce.mjs'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
   ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],
