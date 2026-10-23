@@ -1568,3 +1568,57 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7 .v7-resenas.v7-resenas-clasico { display: flex; align-items: flex-start; gap: 32px; columns: auto; }
 .v7 .v7-resenas-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; }
 .v7 .v7-resenas-col figure { margin: 0 0 32px; }
+
+/* ══ Móvil claro (23-10-2026) ══════════════════════════════════════════════
+   En el iPhone la página medía 21.700 px: la portada ocupaba más de una
+   pantalla, los precios quedaban a 14.000 px y las reseñas eran un muro de
+   7.000 px. Ahora: portada en una pantalla, reseñas en carrusel y una barra
+   abajo con tours, precios, reseñas y WhatsApp. El escritorio no cambia. */
+#ciudades, #precios, #resenas, #contacto { scroll-margin-top: 72px; }
+
+.v7-barra-movil.v7-barra-fila { border-radius: 20px; padding: 6px; }
+.v7-barra-fila .v7-boton { width: auto; flex: none; min-height: 44px; padding-inline: 16px; }
+.v7-barra-atajos { display: flex; gap: 4px; flex: 1; min-width: 0; }
+.v7-barra-atajos a {
+  flex: 1; text-align: center; padding: 11px 2px; border-radius: 12px; min-height: 44px; box-sizing: border-box;
+  font-size: 14px; font-weight: 600; color: var(--tinta); text-decoration: none;
+  background: color-mix(in srgb, var(--tinta) 6%, transparent);
+  transition: background 0.25s, color 0.25s;
+}
+.v7-barra-atajos a[aria-current='true'] { background: var(--tinta); color: var(--fondo); }
+@media (max-width: 860px) { .v7-barra-movil.v7-barra-fila { display: flex; gap: 6px; align-items: center; } }
+
+@media (max-width: 720px) {
+  .v9-portada h1 { font-size: clamp(28px, 8vw, 36px); max-width: none; }
+  /* Titular, botón de reservar y nota de las reseñas en la primera pantalla; el texto, debajo. */
+  .v9-portada-texto > h1 { order: 1; }
+  .v9-portada-texto > .v7-acciones { order: 2; }
+  .v9-portada-texto > .v7-hero-nota { order: 3; }
+  .v9-portada-texto > * { order: 4; }
+  /* Portada: la foto apaisada y baja, y el titular con el botón a la vista. */
+  .v9-portada-foto { aspect-ratio: 16 / 10; max-height: 34svh; }
+  .v9-portada-texto { padding: 20px 20px var(--e-6); gap: var(--e-2); }
+  .v9-sello { display: none; }
+  .v9-portada .v7-acciones { width: 100%; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 16px; }
+  .v9-portada .v7-acciones .v7-boton { flex: 1 1 100%; justify-content: center; white-space: nowrap; }
+
+  /* Reseñas: carrusel que se desliza con el dedo, una tarjeta y un trozo de la siguiente. */
+  .v7 .v7-resenas:not(.v7-resenas-clasico) {
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin-inline: -20px; padding: 4px 20px 12px; scroll-padding-inline: 20px;
+    overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  .v7 .v7-resenas:not(.v7-resenas-clasico)::-webkit-scrollbar { display: none; }
+  .v7 .v7-resenas:not(.v7-resenas-clasico) figure { flex: 0 0 84%; scroll-snap-align: start; padding: 18px 18px 16px; }
+  .v7 .v7-resenas:not(.v7-resenas-clasico) :is(.v7-resena-foto, .v7-resena-sinfoto) { height: 150px; max-height: 150px; aspect-ratio: auto; }
+  .v7 .v7-resenas:not(.v7-resenas-clasico) .v7-resena-sinfoto { min-height: 0; }
+  /* Un empujoncito al aparecer, para que se note que se puede deslizar. */
+  @supports (animation-timeline: view()) {
+    @media (prefers-reduced-motion: no-preference) {
+      .v7 .v7-resenas:not(.v7-resenas-clasico) figure:first-child {
+        animation: v7-empuje linear both; animation-timeline: view(); animation-range: entry 60% cover 45%;
+      }
+    }
+  }
+}
+@keyframes v7-empuje { 0%, 100% { translate: 0; } 50% { translate: -28px; } }

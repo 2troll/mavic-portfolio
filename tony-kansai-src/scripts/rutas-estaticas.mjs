@@ -157,7 +157,10 @@ for (const ruta of rutas) {
     // El CSS de los trozos perezosos (ciudades, manga, figuras) se enlaza ya en
     // la cabecera: si no, el HTML pintado se ve un instante sin esos estilos y
     // luego todo salta (CLS de 0,4 a 1,1 en Lighthouse).
-    html = html.replace('</head>', CSS_TROZOS.map((f) => `  <link rel="stylesheet" href="/assets/${f}" />`).join('\n') + '\n  </head>')
+    // Menos el de la 404 (nunca se pinta aquí) y el del mapa (70 KB, solo en
+    // las de montaña): en el móvil cada hoja bloquea el primer pintado.
+    const cssPagina = CSS_TROZOS.filter((f) => !f.startsWith('Pagina404-') && (!f.startsWith('maplibre-gl-') || /\/(montana|hiking)$/.test(ruta)))
+    html = html.replace('</head>', cssPagina.map((f) => `  <link rel="stylesheet" href="/assets/${f}" />`).join('\n') + '\n  </head>')
     const idioma = ruta.split('/')[0] === 'larion' ? 'en' : ruta.split('/')[0]
     const ficheroDic = new URL(`../public/i18n/${idioma}.json`, import.meta.url)
     const frases = idioma !== 'en' && existsSync(ficheroDic) ? JSON.parse(readFileSync(ficheroDic, 'utf8')) : undefined

@@ -109,13 +109,15 @@
 
     <!-- Travelpayouts Drive (afiliados de la página de ventajas): código tal cual lo da su panel, cuenta 584045 -->
     <script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1" data-cmp-ab="2">
-      (function () {
+      // Solo en las páginas de ventajas (las únicas con enlaces de afiliado) y
+      // con la página ya cargada: en las demás costaba >1 s de CPU en el móvil.
+      if (/\/(ventajas|perks)(\/|$)/.test(location.pathname)) window.addEventListener('load', function () {
         var script = document.createElement("script");
         script.async = 1;
         script.setAttribute("data-cmp-ab", "2");
         script.src = 'https://emrldtp.com/NTg0MDQ1.js?t=584045';
         document.head.appendChild(script);
-      })();
+      });
     </script>
 
     <!-- Google Consent Mode v2: default denied until user accepts cookie banner -->

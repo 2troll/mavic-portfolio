@@ -384,13 +384,6 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
   }
   return (
     <>
-      {otono && p.precios.temporada && (
-        <aside className="v7-temporada tarjeta">
-          <h3>🍁 {p.precios.temporada.titulo}</h3>
-          <p>{p.precios.temporada.texto}</p>
-          {p.precios.temporada.enlace && p.id !== 'larion' && <p className="v7-temporada-enlace"><Link to={p.precios.temporada.enlace.ruta}>{p.precios.temporada.enlace.texto} →</Link></p>}
-        </aside>
-      )}
       {/* La nota junto al precio, de las reseñas reales (las de Tony vienen ya
           en el build, así que también sale en el HTML pregenerado). */}
       {p.guia === 'tony' && resenas.length > 0 && (
@@ -430,6 +423,14 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
           </article>
         ))}
       </div>
+      {/* El aviso de otoño, después de los precios: antes los tapaba en el móvil. */}
+      {otono && p.precios.temporada && (
+        <aside className="v7-temporada tarjeta">
+          <h3>🍁 {p.precios.temporada.titulo}</h3>
+          <p>{p.precios.temporada.texto}</p>
+          {p.precios.temporada.enlace && p.id !== 'larion' && <p className="v7-temporada-enlace"><Link to={p.precios.temporada.enlace.ruta}>{p.precios.temporada.enlace.texto} →</Link></p>}
+        </aside>
+      )}
       <FichaTour p={p} />
       <ul className="v7-notas">
         {pagar && <li>{pagar.nota}</li>}
@@ -499,11 +500,20 @@ function Contacto({ p }: { p: Pagina }) {
   )
 }
 
-/** En móvil, el botón de WhatsApp se queda abajo en cuanto se deja atrás la portada. */
-function BarraMovil({ p, href }: { p: Pagina; href: string }) {
+const ATAJOS: Record<string, [string, string, string]> = {
+  es: ['Tours', 'Precios', 'Reseñas'], en: ['Tours', 'Prices', 'Reviews'],
+  ar: ['الجولات', 'الأسعار', 'التقييمات'], ru: ['Туры', 'Цены', 'Отзывы'],
+}
+
+/** En móvil, en cuanto se deja atrás la portada, queda abajo una barra con lo
+ *  que busca el cliente (tours, precios, reseñas) y el botón de WhatsApp. */
+function BarraMovil({ p, href, conResenas }: { p: Pagina; href: string; conResenas: boolean }) {
   const [ver, setVer] = useState(false)
+  // Con las reseñas (llegan después) cambia la lista y se vuelve a observar.
+  const activa = useSeccionActiva(conResenas ? ['ciudades', 'precios', 'resenas'] : ['ciudades', 'precios'])
   useEffect(() => {
-    const hero = document.querySelector('.v7-hero')
+    // La portada actual es .v9-portada (con .v7-hero, la de antes, la barra no salía nunca).
+    const hero = document.querySelector('.v9-portada, .v7-hero')
     const contacto = document.getElementById('contacto')
     if (!hero) return
     let pasada = false, enContacto = false
@@ -519,9 +529,14 @@ function BarraMovil({ p, href }: { p: Pagina; href: string }) {
     if (contacto) io.observe(contacto)
     return () => io.disconnect()
   }, [])
+  const [tours, precios, opiniones] = ATAJOS[p.lang] ?? ATAJOS.en
+  const atajos: [string, string][] = [['ciudades', tours], ['precios', precios], ...(conResenas ? [['resenas', opiniones] as [string, string]] : [])]
   return (
-    <div className={`v7-barra-movil cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
-      <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}><IconoWa /> {p.hero.cta}</a>
+    <div className={`v7-barra-movil v7-barra-fila cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
+      <nav className="v7-barra-atajos" aria-label={atajos.map(([, t]) => t).join(' · ')}>
+        {atajos.map(([id, t]) => <a key={id} href={`#${id}`} tabIndex={ver ? 0 : -1} aria-current={activa === id ? 'true' : undefined}>{t}</a>)}
+      </nav>
+      <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1} aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /></a>
     </div>
   )
 }
@@ -815,6 +830,13 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Las ciudades, cada una con su página (v8) */}
         <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
 
+        {/* Precios justo después de los tours: es lo primero que busca quien
+            llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas. */}
+        <section id="precios" className="v7-seccion">
+          <h2>{p.precios.titulo}</h2>
+          <Precios p={p} resenas={resenas} />
+        </section>
+
         {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos. */}
         {p.resenas && resenas.length > 0 && (
           <section className="v7-seccion" id="resenas">
@@ -983,12 +1005,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </Link>
         </section>
 
-        {/* Precios */}
-        <section id="precios" className="v7-seccion">
-          <h2>{p.precios.titulo}</h2>
-          <Precios p={p} resenas={resenas} />
-        </section>
-
         {/* El mercado: husos, divisas y lo que le importa a ese público */}
         <section className="v7-seccion v7-mercado tarjeta">
           <div>
@@ -1021,7 +1037,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Contacto p={p} />
         </section>
       </main>
-      <BarraMovil p={p} href={enlaceWa(g.wa, msgCorto)} />
+      <BarraMovil p={p} href={enlaceWa(g.wa, msgCorto)} conResenas={!!p.resenas && resenas.length > 0} />
 
       <FranjaVentajas lang={p.lang} />
 
