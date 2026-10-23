@@ -192,13 +192,19 @@ export function HeroTinta({ fotos }: { fotos: string[] }) {
         } catch (err) { console.error('[HeroTinta] no carga', f, err) }
       }
     }
+    // Y además después del «load»: con solo el idle (tope 2,5 s) las fotos de
+    // la tinta (≈ 250 KB) se bajaban a la vez que la de portada y en el móvil
+    // la retrasaban casi un segundo (Lighthouse, 23-10-2026).
     const ric = (window as unknown as { requestIdleCallback?: (f: () => void, o?: { timeout: number }) => number }).requestIdleCallback
-    const id = ric ? ric(empieza, { timeout: 2500 }) : window.setTimeout(empieza, 1200)
+    let id = 0
+    const programa = () => { id = ric ? ric(empieza, { timeout: 2500 }) : window.setTimeout(empieza, 1200) }
+    if (document.readyState === 'complete') programa(); else window.addEventListener('load', programa, { once: true })
     const cancela = (window as unknown as { cancelIdleCallback?: (id: number) => void }).cancelIdleCallback
 
     return () => {
       vivo = false
       cancelAnimationFrame(raf); io.disconnect(); ro.disconnect()
+      window.removeEventListener('load', programa)
       if (ric) cancela?.(id); else clearTimeout(id)
       window.removeEventListener('pointermove', alMover)
       document.removeEventListener('visibilitychange', sigue)

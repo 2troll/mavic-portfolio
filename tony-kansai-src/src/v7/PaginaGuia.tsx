@@ -40,6 +40,11 @@ import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 // El 3D (three.js) llega después de pintar la foto de portada.
 
 const BASE = 'https://tonykansaiguide.com'
+// sizes de la foto de portada (igual en scripts/rutas-estaticas.mjs, que la
+// precarga). En el móvil declara menos ancho del que ocupa: con pantallas x3
+// el navegador bajaba la de 1800 px (≈250 KB) para un panel de 390 px; con 70vw
+// elige la de 900 (x3) o la de 600 (x2), y se sigue viendo nítida.
+export const SIZES_PORTADA = '(max-width: 900px) 70vw, 50vw'
 
 declare global {
   interface Window { gtag?: (...args: unknown[]) => void }
@@ -822,7 +827,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             </ul>
           </div>
           <div className="v9-portada-foto">
-            <img {...foto(p.hero.foto, '(max-width: 900px) 100vw, 50vw')} alt={p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+            <img {...foto(p.hero.foto, SIZES_PORTADA)} alt={p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
             <HeroTinta fotos={FOTOS_HERO[p.id]} />
           </div>
         </section>

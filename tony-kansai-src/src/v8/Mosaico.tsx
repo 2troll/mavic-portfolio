@@ -82,7 +82,7 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
           return (
             <li key={id} className="v9-fila">
               <Link to={`${prefijo}/${id}/`} className="v9-fila-foto" tabIndex={-1} aria-hidden="true">
-                <img loading="lazy" {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 100vw, 240px')} alt={`${c.zonas.find((z) => z.id === PORTADA[id])?.nombre[lang] ?? c.nombre[lang]}, ${c.nombre[lang]}`} decoding="async" />
+                <img loading="lazy" {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 60vw, 240px')} alt={`${c.zonas.find((z) => z.id === PORTADA[id])?.nombre[lang] ?? c.nombre[lang]}, ${c.nombre[lang]}`} decoding="async" />
               </Link>
               <div className="v9-fila-nombre">
                 <span className="v9-fila-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>
