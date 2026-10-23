@@ -1,0 +1,322 @@
+{
+ "kiyomizu-sonbahar": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-02.jpg",
+  "w": 5659,
+  "h": 3738,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "kiyomizu-gece": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-06.jpg",
+  "w": 5756,
+  "h": 3362,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "fushimi-tunel": {
+  "autor": "Marco Almbauer",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Torii,_Fushimi_Inari-Taisha.jpg",
+  "w": 5238,
+  "h": 3702,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "fushimi-orman": {
+  "autor": "Balon Greyjoy",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:20181110_Fushimi_Inari_Torii_12.jpg",
+  "w": 5151,
+  "h": 3339,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "arashiyama": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Bamboo_Forest,_Arashiyama,_Kyoto,_Japan.jpg",
+  "w": 6558,
+  "h": 4372,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "gion": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Wooden_and_bamboo_facades_of_dwellings_with_sudare_in_a_cobbled_street_of_Gion,_perspective_effect_with_vanishing_point,_Kyoto,_Japan.jpg",
+  "w": 5722,
+  "h": 3815,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "kinkakuji": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Water_reflection_of_Kinkaku-ji_Temple_with_a_tree_on_a_rock_in_the_pond,_Kyoto,_Japan.jpg",
+  "w": 6030,
+  "h": 4020,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "nishiki": {
+  "autor": "collinox",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tsukemono_shop_by_collinox_in_Nishiki_Ichiba,_Kyoto.jpg",
+  "w": 3872,
+  "h": 2592,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "osaka-kale-gece": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_at_Night,_November_2016.jpg",
+  "w": 3176,
+  "h": 3176,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "osaka-kale-hendek": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_Outer_Moat_and_Osaka_Business_Park,_November_2016.jpg",
+  "w": 5131,
+  "h": 3420,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "dotonbori": {
+  "autor": "Oilstreet",
+  "lisans": "CC BY 2.5",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Dotonbori_Osaka_Japan01-r.jpg",
+  "w": 4000,
+  "h": 2672,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "shinsekai": {
+  "autor": "Sakai Yayoi",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Shinsekai_and_Tsutenkaku_Tower.jpg",
+  "w": 5624,
+  "h": 4218,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kuromon": {
+  "autor": "Choi2451",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Seafood_in_Kuromon_Market,_Osaka_on_June_7th,_2017.jpg",
+  "w": 5312,
+  "h": 2988,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "umeda": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Umeda_Sky_Building,_Osaka,_November_2016_-01.jpg",
+  "w": 5558,
+  "h": 3568,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "nara-geyik": {
+  "autor": "Zairon",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nara_Kasuga-taisha_Lanterns_&_Deer_02.jpg",
+  "w": 5144,
+  "h": 3834,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "nara-fener-geyik": {
+  "autor": "Zairon",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nara_Kasuga-taisha_Lanterns_&_Deer_06.jpg",
+  "w": 5180,
+  "h": 3882,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "todaiji": {
+  "autor": "Marie-Sophie Mejan",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nara,_Tōdai-ji_temple,_東大寺,_school_kids.jpg",
+  "w": 4911,
+  "h": 3378,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kasuga": {
+  "autor": "Gzzz",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Lanterns_Kasuga-taisha_Nara.jpg",
+  "w": 5568,
+  "h": 3331,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "naramachi": {
+  "autor": "Degueulasse",
+  "lisans": "CC BY 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Naramachi_Karakuri_Omocha_Kan_20141001.jpg",
+  "w": 4800,
+  "h": 2700,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kobe-camii": {
+  "autor": "Zairon",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kobe_Kobe-Moschee_Innen_Gebetsraum_2.jpg",
+  "w": 4390,
+  "h": 3133,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "kobe-camii-mihrap": {
+  "autor": "Zairon",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kobe_Kobe-Moschee_Innen_Gebetsraum_1.jpg",
+  "w": 4034,
+  "h": 3324,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kitano": {
+  "autor": "Manish Prabhune",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Weathercock_House_Kobe_Kitano_Ijinkan_風見鶏の館（旧トーマス住宅）.jpg",
+  "w": 4592,
+  "h": 3056,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kobe-liman": {
+  "autor": "KishujiRapid",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kobe_Port_Tower_and_Hotel_Okura_Kobe.jpg",
+  "w": 5180,
+  "h": 3453,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "rokko-gece": {
+  "autor": "Laitr Keiows",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Night_view_of_Rokkō_Island_and_Higashinada-ku,_Kobe,_Japan.jpg",
+  "w": 5616,
+  "h": 3744,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "himeji": {
+  "autor": "Nikos Kitsakis",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Himeji_castle_in_may_2015.jpg",
+  "w": 5632,
+  "h": 3754,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "himeji-yakin": {
+  "autor": "Yasuo Hamashima",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Himeji_castle_20241025-_YAS2703.jpg",
+  "w": 5184,
+  "h": 3888,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kokoen": {
+  "autor": "ScribblingGeek",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Koko-en,_Himeji.jpg",
+  "w": 5568,
+  "h": 3712,
+  "anchos": [
+   1600,
+   800
+  ]
+ },
+ "kix": {
+  "autor": "Ankou1192",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:関西国際空港全体写真20220811.jpg",
+  "w": 6000,
+  "h": 4000,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ }
+}

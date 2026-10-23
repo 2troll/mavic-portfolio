@@ -12,7 +12,7 @@
 // por Tony): turco, guía, solo habla turco, 4 años en Japón, las mismas zonas
 // que Tony, y el precio lo da por WhatsApp según el grupo. Sin reseñas todavía:
 // no inventar ninguna, ni apellido, ni licencias.
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -40,72 +40,85 @@ try {
   console.warn(`⚠ turkce: sin reseñas del Worker (${e.message}); la sección sale vacía`)
 }
 
+// Fotos de Wikimedia Commons (licencias libres, con autor y licencia en la página):
+// scripts/turkce-fotolar.json, archivos en public/tr/foto/<clave>-<ancho>.webp.
+const FOTOLAR = JSON.parse(readFileSync(join(root, 'scripts/turkce-fotolar.json'), 'utf8'))
+const foto = (k) => { if (!FOTOLAR[k]) throw new Error(`turkce: falta la foto ${k}`); return FOTOLAR[k] }
+const srcset = (k) => foto(k).anchos.map((w) => `/tr/foto/${k}-${w}.webp ${Math.min(w, foto(k).w)}w`).join(', ')
+const kredi = (k) => `Fotoğraf: <a href="${foto(k).kaynak}" rel="nofollow">${esc(foto(k).autor)}</a> · ${esc(foto(k).lisans)}`
+const kahraman = (k, alt, icerik) => `<section class="kahraman">
+<img src="/tr/foto/${k}-1920.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high">
+<div class="ortu"><div class="kap">${icerik}</div></div>
+<small class="kredi">${kredi(k)}</small>
+</section>`
+const kartFoto = (k, alt) => `<figure class="kf"><img src="/tr/foto/${k}-${foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${foto(k).w}" height="${foto(k).h}"><figcaption>${kredi(k)}</figcaption></figure>`
+
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 const SEHIRLER = [
   {
-    yol: 'kyoto', ad: 'Kyoto', foto: '/v7/fotos/kioto',
+    yol: 'kyoto', ad: 'Kyoto', kapak: 'fushimi-tunel',
     baslik: "Kyoto'da Türkçe Rehber Ferhat | Özel Kyoto Turu",
     aciklama: "Kyoto'da Türkçe konuşan özel rehber: Fushimi Inari, Kiyomizu-dera, Gion ve Arashiyama. Sadece sizin grubunuz için, otel lobisinde buluşma. Fiyat WhatsApp'tan.",
     giris: "Kyoto, Japonya'nın bin yılı aşkın süre başkenti olmuş şehri. Tapınakları, geyşa sokakları ve bambu ormanıyla çoğu gezginin Japonya'daki en önemli günü. Ferhat bu günü sizin hızınıza göre, Türkçe anlatarak planlar.",
     yerler: [
-      ['Fushimi Inari Taisha', 'Binlerce turuncu torii kapısıyla dağa tırmanan yol. Kalabalıktan kaçmak için sabah erken gitmek en iyisi.'],
-      ['Kiyomizu-dera', 'Ahşap terasıyla şehre bakan tapınak ve önündeki eski taş sokaklar: Ninenzaka ve Sannenzaka.'],
-      ['Gion', 'Ahşap çay evleri ve dar sokaklarıyla Kyoto\'nun geyşa mahallesi.'],
-      ['Arashiyama', 'Bambu ormanı, Togetsukyo Köprüsü ve nehir kenarı.'],
-      ['Kinkaku-ji', 'Altın Köşk: göl kenarında altın yaprak kaplı tapınak.'],
-      ['Nishiki Pazarı', 'Kyoto\'nun mutfağı: yerel atıştırmalıklar ve pazar tezgâhları.'],
+      ['Fushimi Inari Taisha', 'Binlerce turuncu torii kapısıyla dağa tırmanan yol. Kalabalıktan kaçmak için sabah erken gitmek en iyisi.', 'fushimi-orman'],
+      ['Kiyomizu-dera', 'Ahşap terasıyla şehre bakan tapınak ve önündeki eski taş sokaklar: Ninenzaka ve Sannenzaka.', 'kiyomizu-gece'],
+      ['Gion', 'Ahşap çay evleri ve dar sokaklarıyla Kyoto\'nun geyşa mahallesi.', 'gion'],
+      ['Arashiyama', 'Bambu ormanı, Togetsukyo Köprüsü ve nehir kenarı.', 'arashiyama'],
+      ['Kinkaku-ji', 'Altın Köşk: göl kenarında altın yaprak kaplı tapınak.', 'kinkakuji'],
+      ['Nishiki Pazarı', 'Kyoto\'nun mutfağı: yerel atıştırmalıklar ve pazar tezgâhları.', 'nishiki'],
     ],
     ipucu: "Osaka'da kalıyorsanız Kyoto'ya trenle yaklaşık 30-45 dakikada gidilir. Sonbahar (kasım) ve kiraz çiçeği mevsimi (mart sonu-nisan başı) en kalabalık dönemlerdir; erken rezervasyon önerilir.",
   },
   {
-    yol: 'osaka', ad: 'Osaka', foto: '/v7/fotos/osaka',
+    yol: 'osaka', ad: 'Osaka', kapak: 'osaka-kale-hendek',
     baslik: "Osaka'da Türkçe Rehber Ferhat | Özel Osaka Turu",
     aciklama: "Osaka'da Türkçe konuşan özel rehber: Osaka Kalesi, Dotonbori, Shinsekai ve Kuromon Pazarı. Helal yemek ve cami bilgisi. Fiyat WhatsApp'tan.",
     giris: "Osaka, Japonya'nın mutfağı olarak bilinir: sokak yemekleri, neon ışıklar ve samimi insanlar. Kansai havalimanına (KIX) en yakın büyük şehir olduğu için çoğu Türk gezgin yolculuğuna burada başlar.",
     yerler: [
-      ['Osaka Kalesi', 'Şehrin simgesi; parkı ve surlarıyla sabah yürüyüşü için ideal.'],
-      ['Dotonbori', 'Kanal kenarındaki ışıklı tabelalar ve sokak yemekleri.'],
-      ['Shinsekai', 'Tsutenkaku Kulesi\'nin çevresindeki eski Osaka mahallesi.'],
-      ['Kuromon Pazarı', 'Taze deniz ürünleri ve meyve tezgâhlarıyla "Osaka\'nın mutfağı".'],
-      ['Umeda', 'Gökdelenler, alışveriş ve şehrin manzarası.'],
+      ['Osaka Kalesi', 'Şehrin simgesi; parkı ve surlarıyla sabah yürüyüşü için ideal.', 'osaka-kale-gece'],
+      ['Dotonbori', 'Kanal kenarındaki ışıklı tabelalar ve sokak yemekleri.', 'dotonbori'],
+      ['Shinsekai', 'Tsutenkaku Kulesi\'nin çevresindeki eski Osaka mahallesi.', 'shinsekai'],
+      ['Kuromon Pazarı', 'Taze deniz ürünleri ve meyve tezgâhlarıyla "Osaka\'nın mutfağı".', 'kuromon'],
+      ['Umeda', 'Gökdelenler, alışveriş ve şehrin manzarası.', 'umeda'],
     ],
     ipucu: "Osaka'da birçok helal sertifikalı veya Müslüman dostu restoran var; Ferhat gün içinde yemek ve namaz molalarını programa ekleyebilir.",
   },
   {
-    yol: 'nara', ad: 'Nara', foto: '/v7/fotos/nara',
+    yol: 'nara', ad: 'Nara', kapak: 'nara-fener-geyik',
     baslik: "Nara'da Türkçe Rehber Ferhat | Nara Geyikleri ve Todai-ji",
     aciklama: "Nara'da Türkçe konuşan özel rehber: Nara Parkı'nın geyikleri, Todai-ji'deki dev Buda ve Kasuga Taisha. Osaka veya Kyoto'dan günübirlik. Fiyat WhatsApp'tan.",
     giris: "Nara, Japonya'nın ilk kalıcı başkenti. Parkta serbestçe dolaşan geyikler ve dünyanın en büyük ahşap yapılarından biri olan Todai-ji ile Osaka veya Kyoto'dan yarım günde rahatça gezilir.",
     yerler: [
-      ['Nara Parkı', 'Selamlaşmak için başını eğen geyikleriyle ünlü park.'],
-      ['Todai-ji', 'İçinde dev bronz Buda heykeli bulunan ahşap tapınak.'],
-      ['Kasuga Taisha', 'Yüzlerce taş ve bronz fenerle çevrili Şinto tapınağı.'],
-      ['Naramachi', 'Eski tüccar evlerinin bulunduğu sakin mahalle.'],
+      ['Nara Parkı', 'Selamlaşmak için başını eğen geyikleriyle ünlü park.', 'nara-geyik'],
+      ['Todai-ji', 'İçinde dev bronz Buda heykeli bulunan ahşap tapınak.', 'todaiji'],
+      ['Kasuga Taisha', 'Yüzlerce taş ve bronz fenerle çevrili Şinto tapınağı.', 'kasuga'],
+      ['Naramachi', 'Eski tüccar evlerinin bulunduğu sakin mahalle.', 'naramachi'],
     ],
     ipucu: "Nara, Kyoto ile aynı gün birleştirilebilir (sabah Fushimi Inari, öğleden sonra Nara) ya da Osaka'dan yarım günlük tur olarak yapılabilir.",
   },
   {
-    yol: 'kobe', ad: 'Kobe', foto: '/v7/fotos/kobe',
+    yol: 'kobe', ad: 'Kobe', kapak: 'kobe-camii',
     baslik: "Kobe'de Türkçe Rehber Ferhat | Kobe Camii ve Liman",
     aciklama: "Kobe'de Türkçe konuşan özel rehber: 1935'te açılan Kobe Camii (Japonya'nın ilk camisi), Kitano, liman ve Rokko Dağı. Fiyat WhatsApp'tan.",
     giris: "Kobe, dağ ile deniz arasında kurulmuş liman şehri. Müslüman gezginler için özel bir yeri var: 1935'te açılan Kobe Camii, Japonya'da inşa edilen ilk camidir ve bugün de cuma namazı kılınır.",
     yerler: [
-      ['Kobe Camii', '1935\'te açılan, Japonya\'nın ilk camisi. Kitano mahallesinde.'],
-      ['Kitano İjinkan', 'Yabancı tüccarların 19. yüzyılda yaptırdığı Batı tarzı evler.'],
-      ['Harborland ve Meriken Parkı', 'Liman kenarında yürüyüş ve Kobe Port Tower.'],
-      ['Rokko Dağı', 'Teleferikle çıkılan ve şehri tepeden gören dağ.'],
+      ['Kobe Camii', '1935\'te açılan, Japonya\'nın ilk camisi. Kitano mahallesinde.', 'kobe-camii-mihrap'],
+      ['Kitano İjinkan', 'Yabancı tüccarların 19. yüzyılda yaptırdığı Batı tarzı evler.', 'kitano'],
+      ['Harborland ve Meriken Parkı', 'Liman kenarında yürüyüş ve Kobe Port Tower.', 'kobe-liman'],
+      ['Rokko Dağı', 'Teleferikle çıkılan ve şehri tepeden gören dağ.', 'rokko-gece'],
     ],
     ipucu: "Kobe, Osaka'dan trenle yaklaşık 20-30 dakika. Cuma günü Kobe Camii'de namaz kılmak isteyenler için program buna göre ayarlanabilir.",
   },
   {
-    yol: 'himeji', ad: 'Himeji', foto: '/v7/fotos/himeji',
+    yol: 'himeji', ad: 'Himeji', kapak: 'himeji',
     baslik: "Himeji Kalesi Türkçe Rehber Ferhat | Himeji Turu",
     aciklama: "Himeji'de Türkçe konuşan özel rehber: UNESCO Dünya Mirası Himeji Kalesi ve Kokoen bahçesi. Osaka veya Kobe'den günübirlik. Fiyat WhatsApp'tan.",
     giris: "Himeji Kalesi, beyaz duvarları yüzünden \"Beyaz Balıkçıl Kalesi\" diye anılır ve 1993'te UNESCO Dünya Mirası listesine giren Japonya'nın ilk yerlerinden biridir. Savaşlardan ve depremlerden sağlam çıkmış özgün kalelerin en büyüğüdür.",
     yerler: [
-      ['Himeji Kalesi', 'Özgün ahşap iç yapısıyla ana kuleye tırmanış.'],
-      ['Kokoen', 'Kalenin hemen yanındaki Japon bahçeleri.'],
+      ['Himeji Kalesi', 'Özgün ahşap iç yapısıyla ana kuleye tırmanış.', 'himeji-yakin'],
+      ['Kokoen', 'Kalenin hemen yanındaki Japon bahçeleri.', 'kokoen'],
     ],
     ipucu: "Himeji, Shinkansen ile Shin-Osaka'dan yaklaşık 30 dakika. Kobe ile aynı gün birleştirmek mümkündür.",
   },
@@ -117,7 +130,7 @@ const SEHIRLER = [
 // datosGuias.ts y datosRespuestas.ts (08-10-2026) y del MOFA para el visado.
 const CEVAPLAR = [
   {
-    yol: 'japonya-vize', foto: '/v7/fotos/kioto',
+    yol: 'japonya-vize', kapak: 'kinkakuji',
     baslik: 'Japonya Vizesi Türk Vatandaşları İçin: Vize Gerekli mi? | Türkçe Rehber',
     aciklama: "Türk vatandaşları turistik amaçla Japonya'ya 90 güne kadar vizesiz girebilir. Giriş için gerekenler, Visit Japan Web ve Kansai'de Türkçe rehber.",
     h1: 'Türk vatandaşları Japonya\'ya vizesiz gidebilir mi?',
@@ -134,7 +147,7 @@ const CEVAPLAR = [
     kaynaklar: [['Japonya Dışişleri Bakanlığı: vize muafiyeti listesi', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
   },
   {
-    yol: 'helal-yemek-cami', foto: '/v7/fotos/kobe',
+    yol: 'helal-yemek-cami', kapak: 'kobe-camii',
     baslik: "Kyoto, Osaka ve Kobe'de Helal Yemek ve Camiler | Türkçe Rehber",
     aciklama: "Kansai'de namaz ve helal yemek: Kobe Camii (1935, Japonya'nın ilk camisi), Osaka İbaraki Camii, Kyoto Camii ve Kyoto'daki ücretsiz mescitler. Türkçe rehber Ferhat ile.",
     h1: "Kyoto, Osaka ve Kobe'de helal yemek ve camiler",
@@ -156,7 +169,7 @@ const CEVAPLAR = [
     kaynaklar: [['Kobe Muslim Mosque', 'https://www.kobemosque.com'], ['Osaka Ibaraki Mosque', 'http://osakamosque.org'], ['Kyoto Turizm: Müslüman ziyaretçiler', 'https://kyoto.travel/en/muslim/'], ['Kyoto: helal yemek bulma', 'https://kyoto.travel/en/muslim/finding-halal-food/']],
   },
   {
-    yol: 'osakadan-kyotoya-ulasim', foto: '/v7/fotos/kioto',
+    yol: 'osakadan-kyotoya-ulasim', kapak: 'gion',
     baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren Seçenekleri ve Süreler | Türkçe Rehber",
     aciklama: "Osaka'dan Kyoto'ya JR, Hankyu, Keihan veya Shinkansen: hangi tren nereden kalkar, ne kadar sürer, hangisi size uygun. Japonya'da yaşayan Türk rehberden.",
     h1: "Osaka'dan Kyoto'ya nasıl gidilir?",
@@ -177,7 +190,7 @@ const CEVAPLAR = [
     kaynaklar: [['JR West saat tablosu', 'https://timetable.jr-odekake.net/line-timetable/2834'], ['Hankyu', 'https://www.hankyu.co.jp/en/'], ['Keihan', 'https://www.keihan.co.jp/travel/en/']],
   },
   {
-    yol: 'kansai-havalimani-ulasim', foto: '/v7/fotos/osaka',
+    yol: 'kansai-havalimani-ulasim', kapak: 'kix',
     baslik: "Kansai Havalimanı'ndan (KIX) Osaka ve Kyoto'ya Ulaşım | Türkçe Rehber",
     aciklama: "Kansai Havalimanı'ndan Osaka ve Kyoto'ya: Haruka, Nankai Rapi:t, JR Kansai Airport Rapid ve limuzin otobüs. Süreler ve hangisi size uygun.",
     h1: "Kansai Havalimanı'ndan Osaka ve Kyoto'ya nasıl gidilir?",
@@ -199,7 +212,7 @@ const CEVAPLAR = [
     kaynaklar: [['JR West: Haruka', 'https://timetable.jr-odekake.net/station-timetable/3162069001'], ['Nankai: havalimanından erişim', 'https://www.nankai.co.jp/en_railway/access-fromkix'], ['KATE limuzin otobüs', 'https://www.kate.co.jp/en/timetable/detail/OC']],
   },
   {
-    yol: 'japonya-gezi-plani', foto: '/v7/fotos/nara',
+    yol: 'japonya-gezi-plani', kapak: 'kiyomizu-gece',
     baslik: 'Japonya Gezi Planı: Kansai\'de 3 ve 5 Gün (Kyoto, Osaka, Nara) | Türkçe Rehber',
     aciklama: "Kansai için hazır gezi planı: 3 günde Kyoto, Osaka ve Nara; 5 günde Kobe ve Himeji de eklenir. Japonya'da yaşayan Türk rehber Ferhat'tan.",
     h1: "Kansai gezi planı: 3 ve 5 gün",
@@ -234,17 +247,29 @@ const CSS = `
 @media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#ededed;--soluk:#a8a8a8;--kart:#1c1c1c;--cizgi:#2e2e2e;--kirmizi:#ff4d5e;--yesil:#2fbf71}}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-.kap{max-width:760px;margin:0 auto;padding:0 16px}
+.kap{max-width:1080px;margin:0 auto;padding:0 16px}main>.kap>p,main>.kap>ul.ozet,main>.kap>ol,main>.kap>details,main>.kap>.cevap,main>.kap>table,main>.kap>h3{max-width:760px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em}h2{font-size:clamp(26px,3.4vw,34px)!important;margin-top:56px!important}
 header{border-bottom:1px solid var(--cizgi)}header .kap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px;flex-wrap:wrap}
 header a{color:var(--fg);text-decoration:none;font-weight:600}header nav{display:flex;gap:14px;flex-wrap:wrap;font-size:15px}header nav a{font-weight:500;color:var(--soluk)}
-.kahraman{position:relative;margin:0;aspect-ratio:16/8;overflow:hidden;background:#333}.kahraman img{width:100%;height:100%;object-fit:cover;display:block}
+.kahraman{position:relative;min-height:min(86vh,940px);display:flex;align-items:flex-end;overflow:hidden;background:#111;color:#fff}
+.kahraman>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:yakin 18s ease-out both}
+@keyframes yakin{from{transform:scale(1.08)}to{transform:scale(1)}}@media (prefers-reduced-motion:reduce){.kahraman>img{animation:none}}
+.kahraman .ortu{position:relative;width:100%;padding:120px 0 64px;background:linear-gradient(180deg,transparent 0,rgba(0,0,0,.35) 35%,rgba(0,0,0,.78) 100%)}
+.kahraman h1{color:#fff;font-size:clamp(36px,7vw,72px);line-height:1.05;margin:10px 0 14px;text-shadow:0 2px 24px rgba(0,0,0,.4)}
+.kahraman .alt{color:rgba(255,255,255,.9);font-size:clamp(18px,2.4vw,22px);max-width:34em}
+.kahraman .etiket{color:#ffd166;margin:0}.kahraman .etiket a{color:#ffd166}
+.kredi{position:absolute;right:10px;top:8px;font-size:11px;color:rgba(255,255,255,.7)}.kredi a{color:inherit}
+.kf{margin:0;position:relative;aspect-ratio:4/3;overflow:hidden;background:#222}.kf img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.kf figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 4px;font-size:10px;color:rgba(255,255,255,.75);background:linear-gradient(transparent,rgba(0,0,0,.55))}.kf figcaption a{color:inherit}
+.ki{padding:14px 16px 18px}
 h1{font-size:clamp(28px,5vw,40px);line-height:1.2;margin:28px 0 8px}h2{font-size:24px;margin:40px 0 10px}h3{font-size:18px;margin:0 0 4px}
 .alt{font-size:19px;color:var(--soluk);margin:0 0 20px}
 .btn{display:inline-block;background:var(--yesil);color:#fff;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:999px;margin:8px 0}
 .etiket{display:block;margin-top:20px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--kirmizi)}
 ul.ozet{padding-left:20px}ul.ozet li{margin:4px 0}
-.izgara{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;padding:0;list-style:none}
-.izgara li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}
+.izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:0;list-style:none}
+.izgara li{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -18px rgba(0,0,0,.35)}
+.izgara li:hover .kf img{transform:scale(1.05)}
 .izgara a{color:var(--fg);text-decoration:none}.izgara p{margin:0;color:var(--soluk);font-size:15px}
 details{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:12px 16px;margin:8px 0}summary{font-weight:600;cursor:pointer}details p{margin:8px 0 0}
 footer{border-top:1px solid var(--cizgi);margin-top:48px;padding:20px 0 40px;color:var(--soluk);font-size:14px}footer a{color:var(--soluk)}
@@ -273,10 +298,12 @@ function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde }) {
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(baslik)}">
 <meta property="og:description" content="${esc(aciklama)}">
-<meta property="og:image" content="${BASE}${gorsel}.webp">
+<meta property="og:image" content="${BASE}/tr/foto/${gorsel}-1920.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 <style>${CSS}</style>
 </head>
 <body>
@@ -337,12 +364,11 @@ const yorumLd = YORUMLAR.map((y) => ({ '@type': 'Review', reviewRating: { '@type
 // Ana sayfa
 {
   const govde = `
-<figure class="kahraman"><img src="/v7/fotos/kioto.webp" alt="Kyoto, Fushimi Inari" width="1600" height="800"></figure>
-<div class="kap">
-<span class="etiket">Japonya · Kansai · Türkçe</span>
+${kahraman('kiyomizu-sonbahar', 'Sonbaharda Kyoto, Kiyomizu-dera', `<span class="etiket">Japonya · Kansai · Türkçe</span>
 <h1>Japonya'da Türkçe Rehber: Ferhat</h1>
 <p class="alt">Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar. Rehber sadece sizin grubunuz için.</p>
-${iletisim}
+${iletisim}`)}
+<div class="kap">
 <h2>Kısaca</h2>
 <ul class="ozet">
 <li><strong>Kim:</strong> Ferhat, Türk tur rehberi; 4 yıldır Japonya'da yaşıyor.</li>
@@ -358,7 +384,7 @@ ${iletisim}
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
 <h2>Turlar ve şehirler</h2>
 <ul class="izgara">
-${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/"><h3>${s.ad}</h3><p>${esc(s.yerler.slice(0, 3).map((y) => y[0]).join(', '))}</p></a></li>`).join('\n')}
+${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/">${kartFoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.yerler.slice(0, 3).map((y) => y[0]).join(', '))}</p></div></a></li>`).join('\n')}
 </ul>
 <h2>Nasıl çalışır?</h2>
 <ol>
@@ -369,7 +395,7 @@ ${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/"><h3>${s.ad}</h3><p>${esc(s.ye
 ${yorumlarBolumu}
 <h2>Japonya gezisi için Türkçe bilgiler</h2>
 <ul class="izgara">
-${CEVAPLAR.map((c) => `<li><a href="/tr/${c.yol}/"><h3>${esc(c.h1)}</h3><p>${esc(c.kisa)}</p></a></li>`).join('\n')}
+${CEVAPLAR.map((c) => `<li><a href="/tr/${c.yol}/">${kartFoto(c.kapak, c.h1)}<div class="ki"><h3>${esc(c.h1)}</h3><p>${esc(c.kisa)}</p></div></a></li>`).join('\n')}
 </ul>
 <h2>Sık sorulan sorular</h2>
 ${SSS.map(([s, c]) => `<details><summary>${esc(s)}</summary><p>${esc(c)}</p></details>`).join('\n')}
@@ -386,7 +412,7 @@ ${iletisim}
     ],
   }
   yaz('', sayfa({
-    yol: '', gorsel: '/v7/fotos/kioto', jsonld, govde,
+    yol: '', gorsel: 'kiyomizu-sonbahar', jsonld, govde,
     baslik: "Japonya'da Türkçe Rehber Ferhat | Kyoto, Osaka, Nara Özel Tur",
     aciklama: "Ferhat, 4 yıldır Japonya'da yaşayan Türk rehber. Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar; helal yemek ve cami bilgisi. Fiyat WhatsApp'tan.",
   }))
@@ -396,15 +422,14 @@ ${iletisim}
 for (const s of SEHIRLER) {
   const yazi = wa(`Merhaba Ferhat, ${s.ad} için Türkçe rehber arıyorum. Tarihler: `)
   const govde = `
-<figure class="kahraman"><img src="${s.foto}.webp" alt="${esc(s.ad)}" width="1600" height="800"></figure>
-<div class="kap">
-<span class="etiket"><a href="/tr/">Türkçe rehber</a> · ${s.ad}</span>
+${kahraman(s.kapak, s.ad, `<span class="etiket"><a href="/tr/">Türkçe rehber</a> · ${s.ad}</span>
 <h1>${s.ad}'${s.ad === 'Kobe' || s.ad === 'Himeji' ? 'de' : 'da'} Türkçe Rehber: Ferhat</h1>
 <p class="alt">${esc(s.giris)}</p>
-<p><a class="btn" href="${yazi}">WhatsApp'tan ${s.ad} turu sor</a></p>
+<p><a class="btn" href="${yazi}">WhatsApp'tan ${s.ad} turu sor</a></p>`)}
+<div class="kap">
 <h2>${s.ad}'${s.ad === 'Kobe' || s.ad === 'Himeji' ? 'de' : 'da'} neler görülür?</h2>
 <ul class="izgara">
-${s.yerler.map(([ad, metin]) => `<li><h3>${esc(ad)}</h3><p>${esc(metin)}</p></li>`).join('\n')}
+${s.yerler.map(([ad, metin, k]) => `<li>${kartFoto(k, ad)}<div class="ki"><h3>${esc(ad)}</h3><p>${esc(metin)}</p></div></li>`).join('\n')}
 </ul>
 <h2>İpucu</h2>
 <p>${esc(s.ipucu)}</p>
@@ -430,17 +455,16 @@ ${yorumlarBolumu}
       ] },
     ],
   }
-  yaz(s.yol, sayfa({ yol: s.yol, baslik: s.baslik, aciklama: s.aciklama, gorsel: s.foto, jsonld, govde }))
+  yaz(s.yol, sayfa({ yol: s.yol, baslik: s.baslik, aciklama: s.aciklama, gorsel: s.kapak, jsonld, govde }))
 }
 
 // Páginas de respuesta
 for (const c of CEVAPLAR) {
   const yazi = wa(`Merhaba Ferhat, "${c.h1}" sayfasını okudum. Japonya için Türkçe rehber arıyorum. Tarihler: `)
   const govde = `
-<figure class="kahraman"><img src="${c.foto}.webp" alt="" width="1600" height="800"></figure>
+${kahraman(c.kapak, '', `<span class="etiket"><a href="/tr/">Türkçe rehber</a> · Bilgi</span>
+<h1>${esc(c.h1)}</h1>`)}
 <div class="kap">
-<span class="etiket"><a href="/tr/">Türkçe rehber</a> · Bilgi</span>
-<h1>${esc(c.h1)}</h1>
 <p class="cevap">${esc(c.cevap)}</p>
 ${c.bolumler.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
 <h2>Sık sorulan sorular</h2>
@@ -462,7 +486,7 @@ ${c.kaynaklar.length ? `<p class="kaynak">Kaynaklar: ${c.kaynaklar.map(([t, u]) 
       ] },
     ],
   }
-  yaz(c.yol, sayfa({ yol: c.yol, baslik: c.baslik, aciklama: c.aciklama, gorsel: c.foto, jsonld, govde }))
+  yaz(c.yol, sayfa({ yol: c.yol, baslik: c.baslik, aciklama: c.aciklama, gorsel: c.kapak, jsonld, govde }))
 }
 
 function yaz(yol, html) {
