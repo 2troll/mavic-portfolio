@@ -41,7 +41,8 @@ a{color:var(--kirmizi)}
 body{padding-bottom:76px}.wa-sabit{position:fixed;right:16px;bottom:16px;z-index:9;background:var(--yesil);color:#fff;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .cevap{background:var(--kart);border-left:4px solid var(--kirmizi);padding:14px 16px;border-radius:8px;font-size:18px}
 table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px solid var(--cizgi);padding:8px 6px;text-align:left;vertical-align:top}
-.kaynak{font-size:14px;color:var(--soluk)}</style>
+.kaynak{font-size:14px;color:var(--soluk)}
+ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/tr/">Ferhat · Japonya Türkçe Rehber</a>
@@ -73,6 +74,20 @@ table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px
 <li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan; makul fiyatlar.</li>
 <li><strong>İletişim:</strong> WhatsApp <a href="https://wa.me/818024786402?text=Merhaba%20Ferhat%2C%20Kyoto%20i%C3%A7in%20T%C3%BCrk%C3%A7e%20rehber%20ar%C4%B1yorum.%20Tarihler%3A%20">+81 80 2478 6402</a></li>
 </ul>
+
+<h2 id="yorumlar">Misafir yorumları</h2>
+<ul class="yorumlar" id="yorumListe"></ul>
+<p id="yorumBos" >Henüz yorum yok. Ferhat'la tur yaptıysanız ilk yorumu siz yazın.</p>
+<p><a href="/tr/yorum/">Ferhat ile tur yaptınız mı? Yorum yazın →</a></p>
+<script>
+fetch('/api/resenas/publicas?guia=ferhat',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{
+  const ul=document.getElementById('yorumListe'); if(!d||!ul) return
+  const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])
+  for(const y of d.reviews||[]){ if(!y.text||!y.stars||ul.querySelector('[data-id="'+CSS.escape(y.id)+'"]')) continue
+    ul.insertAdjacentHTML('afterbegin','<li data-id="'+e(y.id)+'"><p class="yildizlar">'+'★'.repeat(y.stars)+'☆'.repeat(5-y.stars)+'</p><p>'+e(y.text)+'</p><p class="kaynak">'+e(y.name)+(y.country?' · '+e(y.country):'')+(y.tour?' · '+e(y.tour):'')+'</p></li>')
+    document.getElementById('yorumBos').hidden=true }
+}).catch(()=>{})
+</script>
 <p>Diğer şehirler: <a href="/tr/osaka/">Osaka</a> · <a href="/tr/nara/">Nara</a> · <a href="/tr/kobe/">Kobe</a> · <a href="/tr/himeji/">Himeji</a> · <a href="/tr/">Ana sayfa</a></p>
 </div>
 </main>

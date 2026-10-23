@@ -27,6 +27,19 @@ const WA_VISIBLE = '+81 80 2478 6402'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
 const WA_GENEL = wa('Merhaba Ferhat, Japonya için Türkçe rehber arıyorum. Tarihler: ')
 
+// Reseñas de Ferhat: las manda el cliente desde /tr/yorum/ y el Worker las
+// publica solas. Se meten en el HTML al construir (las IAs no ejecutan JS) y,
+// para quien visita, un script pide las que hayan llegado después del build.
+const API_YORUM = 'https://tonykansaiguide.com/api/resenas/publicas?guia=ferhat'
+let YORUMLAR = []
+try {
+  const r = await fetch(API_YORUM, { signal: AbortSignal.timeout(15000) })
+  if (!r.ok) throw new Error(`HTTP ${r.status}`)
+  YORUMLAR = ((await r.json()).reviews ?? []).filter((y) => y?.id && y.text && y.stars)
+} catch (e) {
+  console.warn(`⚠ turkce: sin reseñas del Worker (${e.message}); la sección sale vacía`)
+}
+
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 const SEHIRLER = [
@@ -239,7 +252,8 @@ a{color:var(--kirmizi)}
 body{padding-bottom:76px}.wa-sabit{position:fixed;right:16px;bottom:16px;z-index:9;background:var(--yesil);color:#fff;text-decoration:none;font-weight:600;padding:13px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25)}
 .cevap{background:var(--kart);border-left:4px solid var(--kirmizi);padding:14px 16px;border-radius:8px;font-size:18px}
 table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px solid var(--cizgi);padding:8px 6px;text-align:left;vertical-align:top}
-.kaynak{font-size:14px;color:var(--soluk)}`
+.kaynak{font-size:14px;color:var(--soluk)}
+ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}`
 
 function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde }) {
   const url = `${BASE}/tr/${yol ? `${yol}/` : ''}`
@@ -299,6 +313,27 @@ const hizmet = (sehir) => ({
 })
 const iletisim = `<p><a class="btn" href="${WA_GENEL}">WhatsApp'tan Ferhat'a yaz</a></p>`
 
+const yorumKarti = (y) => `<li data-id="${esc(y.id)}"><p class="yildizlar" aria-label="${y.stars}/5">${'★'.repeat(y.stars)}${'☆'.repeat(5 - y.stars)}</p><p>${esc(y.text)}</p><p class="kaynak">${esc(y.name)}${y.country ? ` · ${esc(y.country)}` : ''}${y.tour ? ` · ${esc(y.tour)}` : ''}${y.date ? ` · ${esc(y.date)}` : ''}</p></li>`
+// Sección de reseñas: las del build y, debajo, el script que añade las nuevas.
+const yorumlarBolumu = `
+<h2 id="yorumlar">Misafir yorumları</h2>
+<ul class="yorumlar" id="yorumListe">${YORUMLAR.map(yorumKarti).join('')}</ul>
+<p id="yorumBos" ${YORUMLAR.length ? 'hidden' : ''}>Henüz yorum yok. Ferhat'la tur yaptıysanız ilk yorumu siz yazın.</p>
+<p><a href="/tr/yorum/">Ferhat ile tur yaptınız mı? Yorum yazın →</a></p>
+<script>
+fetch('/api/resenas/publicas?guia=ferhat',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{
+  const ul=document.getElementById('yorumListe'); if(!d||!ul) return
+  const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])
+  for(const y of d.reviews||[]){ if(!y.text||!y.stars||ul.querySelector('[data-id="'+CSS.escape(y.id)+'"]')) continue
+    ul.insertAdjacentHTML('afterbegin','<li data-id="'+e(y.id)+'"><p class="yildizlar">'+'★'.repeat(y.stars)+'☆'.repeat(5-y.stars)+'</p><p>'+e(y.text)+'</p><p class="kaynak">'+e(y.name)+(y.country?' · '+e(y.country):'')+(y.tour?' · '+e(y.tour):'')+'</p></li>')
+    document.getElementById('yorumBos').hidden=true }
+}).catch(()=>{})
+</script>`
+// JSON-LD: cada reseña como Review del guía, sin aggregateRating (ver el commit
+// «sin aggregateRating ni Review…»: Google no da estrellas a reseñas propias, pero
+// las IAs sí leen el texto).
+const yorumLd = YORUMLAR.map((y) => ({ '@type': 'Review', reviewRating: { '@type': 'Rating', ratingValue: y.stars, bestRating: 5 }, author: { '@type': 'Person', name: y.name }, reviewBody: y.text, inLanguage: y.lang || 'tr', itemReviewed: { '@id': `${BASE}/tr/#ferhat` } }))
+
 // Ana sayfa
 {
   const govde = `
@@ -317,6 +352,7 @@ ${iletisim}
 <li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan bildirilir; makul fiyatlar. Ulaşım, giriş ücretleri ve yemekler genellikle dahil değildir.</li>
 <li><strong>Müslüman gezginler için:</strong> Helal ve Müslüman dostu restoranlar, camiler ve namaz molaları programa eklenebilir.</li>
 <li><strong>İletişim:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
+<li><strong>Yorumlar:</strong> ${YORUMLAR.length ? `${YORUMLAR.length} misafir yorumu, <a href="#yorumlar">okuyun</a>` : '<a href="/tr/yorum/">ilk yorumu yazın</a>'}</li>
 </ul>
 <h2>Neden Türkçe rehber?</h2>
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
@@ -330,6 +366,7 @@ ${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/"><h3>${s.ad}</h3><p>${esc(s.ye
 <li>Ferhat size Türkçe bir program ve fiyat önerir.</li>
 <li>Tur günü buluşur, gün boyunca Türkçe anlatımla gezersiniz.</li>
 </ol>
+${yorumlarBolumu}
 <h2>Japonya gezisi için Türkçe bilgiler</h2>
 <ul class="izgara">
 ${CEVAPLAR.map((c) => `<li><a href="/tr/${c.yol}/"><h3>${esc(c.h1)}</h3><p>${esc(c.kisa)}</p></a></li>`).join('\n')}
@@ -343,7 +380,7 @@ ${iletisim}
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      rehber, hizmet(null),
+      rehber, hizmet(null), ...yorumLd,
       { '@type': 'FAQPage', inLanguage: 'tr', mainEntity: SSS.map(([s, c]) => ({ '@type': 'Question', name: s, acceptedAnswer: { '@type': 'Answer', text: c } })) },
       { '@type': 'WebPage', url: `${BASE}/tr/`, inLanguage: 'tr', name: "Japonya'da Türkçe Rehber: Ferhat", dateModified: HOY, about: { '@id': `${BASE}/tr/#ferhat` } },
     ],
@@ -379,6 +416,7 @@ ${s.yerler.map(([ad, metin]) => `<li><h3>${esc(ad)}</h3><p>${esc(metin)}</p></li
 <li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan; makul fiyatlar.</li>
 <li><strong>İletişim:</strong> WhatsApp <a href="${yazi}">${WA_VISIBLE}</a></li>
 </ul>
+${yorumlarBolumu}
 <p>Diğer şehirler: ${SEHIRLER.filter((x) => x !== s).map((x) => `<a href="/tr/${x.yol}/">${x.ad}</a>`).join(' · ')} · <a href="/tr/">Ana sayfa</a></p>
 </div>`
   const jsonld = {

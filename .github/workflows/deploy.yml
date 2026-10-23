@@ -6,6 +6,10 @@ on:
       - main
       - claude/premium-3d-portfolio-rebuild-Qom7g
   workflow_dispatch:
+  # Cada día a las 06:00 JST: las reseñas que los clientes mandan (Tony, Larion,
+  # Ferhat) se publican al instante con JS, pero las IAs solo leen el HTML del build.
+  schedule:
+    - cron: '0 21 * * *'
 
 permissions:
   contents: read

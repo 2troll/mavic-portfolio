@@ -216,7 +216,8 @@ function useResenas(activas: boolean, fuente?: string) {
     // Dos fuentes, como resenas.html: las aprobadas desde el móvil (Worker) y las
     // de reviews.json (Mac). Se unen quitando repetidas por id.
     const traer = (u: string) => fetch(u, { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null)
-    Promise.all(fuente ? [traer(fuente)] : [traer('/api/resenas/publicas'), traer('/reviews.json')]).then((fuentes) => {
+    // Larion: su archivo y las que sus clientes mandan desde /ru/otzyv/ (Worker).
+    Promise.all(fuente ? [traer('/api/resenas/publicas?guia=larion'), traer(fuente)] : [traer('/api/resenas/publicas'), traer('/reviews.json')]).then((fuentes) => {
       const vistos = new Set<string>()
       const todas: Resena[] = []
       for (const d of fuentes) for (const r of (d?.reviews ?? []) as Resena[]) {
@@ -842,7 +843,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <section className="v7-seccion" id="resenas">
             <h2>{p.resenas.titulo}</h2>
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
-            <p className="v7-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
+            <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
             {resenas.length >= 20 && (() => {
               // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
               const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)

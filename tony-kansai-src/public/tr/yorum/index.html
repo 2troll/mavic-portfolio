@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tr" data-estatica="formulario">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Ferhat için yorum yazın | Japonya Türkçe Rehber</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--fondo:#f7f4ee;--tinta:#14213d;--acento:#1f4fa3;--acento2:#0e9aa7;--resalte:#c8102e;--kart:#fffdf8;--suave:#5b6478}
+@media (prefers-color-scheme:dark){:root{--fondo:#0f1424;--tinta:#e9edf7;--kart:#18203a;--suave:#a5afc7}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--tinta);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--fondo) url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke-width='2'><path d='M40 8c10 14 10 26 0 32-10-6-10-18 0-32z' stroke='%231f4fa3'/><path d='M40 72c10-14 10-26 0-32-10 6-10 18 0 32z' stroke='%231f4fa3'/><path d='M8 40c14-10 26-10 32 0-6 10-18 10-32 0z' stroke='%230e9aa7'/><path d='M72 40c-14-10-26-10-32 0 6 10 18 10 32 0z' stroke='%230e9aa7'/><circle cx='40' cy='40' r='4' fill='%23c8102e' stroke='none'/></g></svg>") repeat;background-size:80px}
+.kap{max-width:560px;margin:0 auto;padding:20px 16px 48px}
+.serit{background:var(--acento);color:#fff;text-align:center;font-weight:700;letter-spacing:.06em;font-size:15px;padding:16px;border-bottom:6px double var(--acento2)}
+.serit::before,.serit::after{content:"";display:block;height:34px;margin:-16px -16px 12px;background:var(--fondo) url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'><g fill='none' stroke-width='2'><path d='M40 8c10 14 10 26 0 32-10-6-10-18 0-32z' stroke='%231f4fa3'/><path d='M40 72c10-14 10-26 0-32-10 6-10 18 0 32z' stroke='%231f4fa3'/><path d='M8 40c14-10 26-10 32 0-6 10-18 10-32 0z' stroke='%230e9aa7'/><path d='M72 40c-14-10-26-10-32 0 6 10 18 10 32 0z' stroke='%230e9aa7'/><circle cx='40' cy='40' r='4' fill='%23c8102e' stroke='none'/></g></svg>") repeat-x center/48px}
+.serit::after{margin:12px -16px -16px}
+.kart{background:var(--kart);border:2px solid var(--acento);border-radius:18px;padding:24px 20px;box-shadow:0 0 0 6px var(--kart),0 0 0 8px var(--acento2),0 18px 40px rgba(0,0,0,.18);margin-top:12px}
+h1{margin:0 0 8px;font-size:clamp(24px,6vw,30px);line-height:1.2;color:var(--acento)}
+@media (prefers-color-scheme:dark){h1{color:var(--tinta)}}
+p.giris{margin:0 0 18px;color:var(--suave)}
+label{display:block;font-weight:600;margin:16px 0 6px}
+input[type=text],textarea,select{width:100%;font:inherit;color:inherit;background:transparent;border:1.5px solid color-mix(in srgb,var(--acento) 45%,transparent);border-radius:10px;padding:11px 12px}
+textarea{min-height:140px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline-offset:1px}
+.yildiz{display:flex;gap:6px}
+.yildiz button{font-size:36px;line-height:1;background:none;border:0;padding:2px;cursor:pointer;color:color-mix(in srgb,var(--tinta) 25%,transparent)}
+.yildiz button.on{color:#e3a400}
+.izin{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px}
+.izin input{margin-top:4px;width:20px;height:20px;flex:none}
+.btn{display:block;width:100%;margin-top:20px;background:var(--acento);color:#fff;border:0;border-radius:999px;padding:15px;font:600 18px system-ui,sans-serif;cursor:pointer}
+.btn:disabled{opacity:.6}
+.uyari{display:none;margin-top:14px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--resalte) 12%,transparent);color:var(--resalte);font-size:15px}
+.uyari.on{display:block}
+.tamam{display:none;text-align:center}.tamam.on{display:block}
+.tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
+.gizli{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="serit">Ferhat · Japonya Türkçe Rehber</div>
+<main class="kap">
+<div class="kart">
+<form id="form" novalidate>
+<h1>Ferhat ile turunuz nasıldı?</h1>
+<p class="giris">Birkaç cümle yeterli. Yorumunuz Ferhat'ın sayfasında yayınlanır ve Japonya'ya gelecek diğer Türk gezginlere yardımcı olur.</p>
+<label id="puanEt">Puanınız</label>
+<div class="yildiz" role="radiogroup" aria-labelledby="puanEt">
+<button type="button" role="radio" aria-checked="false" aria-label="1/5" data-n="1">★</button><button type="button" role="radio" aria-checked="false" aria-label="2/5" data-n="2">★</button><button type="button" role="radio" aria-checked="false" aria-label="3/5" data-n="3">★</button><button type="button" role="radio" aria-checked="false" aria-label="4/5" data-n="4">★</button><button type="button" role="radio" aria-checked="false" aria-label="5/5" data-n="5">★</button>
+</div>
+<label for="ad">Adınız</label>
+<input type="text" id="ad" maxlength="60" autocomplete="name" placeholder="Örn. Ayşe ve Mehmet">
+<label for="ulke">Şehir / ülke</label>
+<input type="text" id="ulke" maxlength="40" placeholder="Örn. İstanbul, Türkiye">
+<label for="tur">Hangi tur?</label>
+<select id="tur"><option value="">Seçin (isteğe bağlı)</option><option>Kyoto</option><option>Osaka</option><option>Nara</option><option>Kobe</option><option>Himeji</option><option>Hiroshima</option><option value="">Diğer</option></select>
+<label for="yorum">Yorumunuz</label>
+<textarea id="yorum" maxlength="1200" placeholder="Gün nasıl geçti? Ferhat'ın en çok neyini beğendiniz?"></textarea>
+<input class="gizli" type="text" id="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label class="izin"><input type="checkbox" id="izin"> <span>Yorumumun adım ve şehrimle birlikte web sitesinde yayınlanmasına izin veriyorum.</span></label>
+<button class="btn" id="gonder" type="submit">Yorumu gönder</button>
+<div class="uyari" id="uyari" role="alert"></div>
+</form>
+<div class="tamam" id="tamam" role="status">
+<h1 id="tamamMetin"></h1>
+<a href="/tr/">Ferhat'ın sayfasında görün →</a>
+</div>
+</div>
+</main>
+<script>
+const T = {"eksik":"Lütfen puan verin, adınızı yazın, en az 20 karakterlik bir yorum yazın ve izin kutusunu işaretleyin.","hata":"Gönderilemedi. İnternet bağlantınızı kontrol edip tekrar deneyin.","tamam":"Teşekkürler! Yorumunuz yayınlandı.","bekle":"Teşekkürler! Yorumunuz alındı ve kısa süre içinde yayınlanacak.","gonder":"Yorumu gönder","gonderiliyor":"Gönderiliyor…"};
+const $ = (id) => document.getElementById(id);
+let puan = 0;
+document.querySelectorAll('.yildiz button').forEach((b) => b.addEventListener('click', () => {
+  puan = +b.dataset.n;
+  document.querySelectorAll('.yildiz button').forEach((x) => {
+    x.classList.toggle('on', +x.dataset.n <= puan);
+    x.setAttribute('aria-checked', String(+x.dataset.n === puan));
+  });
+}));
+$('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const uyari = (m) => { $('uyari').textContent = m; $('uyari').classList.add('on'); };
+  $('uyari').classList.remove('on');
+  const ad = $('ad').value.trim(), yorum = $('yorum').value.trim();
+  if (!puan || ad.length < 2 || yorum.length < 20 || !$('izin').checked) return uyari(T.eksik);
+  const b = $('gonder'); b.disabled = true; b.textContent = T.gonderiliyor;
+  try {
+    const r = await fetch('/api/resenas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+      stars: puan, name: ad, country: $('ulke').value.trim(), tour: $('tur').value, text: yorum,
+      lang: 'tr', guide: 'ferhat', consent: true, website: $('web').value, page: location.href,
+    }) });
+    if (!r.ok) throw new Error(r.status);
+    const res = await r.json().catch(() => ({}));
+    $('tamamMetin').textContent = res.publicada ? T.tamam : T.bekle;
+    $('form').style.display = 'none'; $('tamam').classList.add('on');
+  } catch { uyari(T.hata); b.disabled = false; b.textContent = T.gonder; }
+});
+</script>
+</body>
+</html>
