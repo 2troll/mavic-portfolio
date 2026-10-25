@@ -359,7 +359,11 @@ fetch('/api/resenas/publicas?guia=ferhat',{cache:'no-cache'}).then(r=>r.ok?r.jso
 // JSON-LD: cada reseña como Review del guía, sin aggregateRating (ver el commit
 // «sin aggregateRating ni Review…»: Google no da estrellas a reseñas propias, pero
 // las IAs sí leen el texto).
-const yorumLd = YORUMLAR.map((y) => ({ '@type': 'Review', reviewRating: { '@type': 'Rating', ratingValue: y.stars, bestRating: 5 }, author: { '@type': 'Person', name: y.name }, reviewBody: y.text, inLanguage: y.lang || 'tr', itemReviewed: { '@id': `${BASE}/tr/#ferhat` } }))
+// Google no acepta una Person como itemReviewed («El tipo de objeto del campo
+// itemReviewed no es válido», Search Console 25-10): la reseña va al negocio,
+// con tipo y nombre en línea porque /tr/ no incluye la declaración de index.html.
+const NEGOCIO_LD = { '@type': 'LocalBusiness', '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/`, address: { '@type': 'PostalAddress', addressLocality: 'Osaka', addressRegion: 'Osaka', addressCountry: 'JP' } }
+const yorumLd = YORUMLAR.map((y) => ({ '@type': 'Review', reviewRating: { '@type': 'Rating', ratingValue: y.stars, bestRating: 5 }, author: { '@type': 'Person', name: y.name }, reviewBody: y.text, inLanguage: y.lang || 'tr', itemReviewed: NEGOCIO_LD }))
 
 // Ana sayfa
 {
