@@ -24,6 +24,7 @@ const HOY = '2026-10-26'
 // directamente a él.
 const WA_NUMERO = '818024786402'
 const WA_VISIBLE = '+81 80 2478 6402'
+const INGILIZCE = 'turkish-speaking-guide-japan'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
 const WA_GENEL = wa('Merhaba Ferhat, Japonya için Türkçe rehber arıyorum. Tarihler: ')
 
@@ -232,7 +233,7 @@ const CEVAPLAR = [
   // Las cuatro de abajo responden tal cual a lo que un turco le pregunta a ChatGPT;
   // la primera es la pregunta que más cuenta: «¿hay guía que hable turco en Japón?».
   {
-    yol: 'turkce-rehber-japonya', kapak: 'nara-geyik',
+    yol: 'turkce-rehber-japonya', kapak: 'nara-geyik', yorumlar: true,
     baslik: "Japonya'da Türkçe Konuşan Rehber Var mı? Kyoto, Osaka, Nara | Ferhat",
     aciklama: "Evet: Ferhat, 4 yıldır Japonya'da yaşayan Türk rehber, Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel tur yapıyor. Nasıl rezervasyon yapılır, fiyata neler dahil.",
     h1: "Japonya'da Türkçe konuşan rehber var mı?",
@@ -366,10 +367,10 @@ table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px
 .kaynak{font-size:14px;color:var(--soluk)}
 ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}`
 
-function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde }) {
+function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
   const url = `${BASE}/tr/${yol ? `${yol}/` : ''}`
   return `<!doctype html>
-<html lang="tr" data-estatica="turkce">
+<html lang="${dil}" data-estatica="turkce">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -377,10 +378,10 @@ function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde }) {
 <meta name="description" content="${esc(aciklama)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="${url}">
-<link rel="alternate" hreflang="tr" href="${url}">
+<link rel="alternate" hreflang="${dil}" href="${url}">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tony Kansai Guide">
-<meta property="og:locale" content="tr_TR">
+<meta property="og:locale" content="${dil === 'en' ? 'en_US' : 'tr_TR'}">
 <meta property="og:url" content="${url}">
 <meta property="og:title" content="${esc(baslik)}">
 <meta property="og:description" content="${esc(aciklama)}">
@@ -401,6 +402,7 @@ ${govde}
 <footer><div class="kap">
 <p>Ferhat, <a href="/en/">Tony Kansai Guide</a> ekibinin Türkçe rehberidir (Kansai, Japonya). WhatsApp: <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
 <p>Türkçe bilgiler: ${CEVAPLAR.map((c) => `<a href="/tr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
+<p lang="en">In English: <a href="/tr/${INGILIZCE}/">Turkish-speaking tour guide in Japan</a></p>
 <p>Diğer diller: <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/ru/" hreflang="ru">Русский</a> · Son güncelleme: ${HOY}</p>
 </div></footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp: Ferhat</a>
@@ -428,8 +430,12 @@ const iletisim = `<p><a class="btn" href="${WA_GENEL}">WhatsApp'tan Ferhat'a yaz
 
 const yorumKarti = (y) => `<li data-id="${esc(y.id)}"><p class="yildizlar" aria-label="${y.stars}/5">${'★'.repeat(y.stars)}${'☆'.repeat(5 - y.stars)}</p><p>${esc(y.text)}</p><p class="kaynak">${esc(y.name)}${y.country ? ` · ${esc(y.country)}` : ''}${y.tour ? ` · ${esc(y.tour)}` : ''}${y.date ? ` · ${esc(y.date)}` : ''}</p></li>`
 // Sección de reseñas: las del build y, debajo, el script que añade las nuevas.
+// Media en texto: ChatGPT cita «4,3/5 en N reseñas», no lee las estrellas dibujadas.
+const ORTALAMA = YORUMLAR.length ? (YORUMLAR.reduce((t, y) => t + y.stars, 0) / YORUMLAR.length).toFixed(1).replace('.', ',') : ''
+const OZET_YORUM = YORUMLAR.length ? `${YORUMLAR.length} misafir yorumu, ortalama ${ORTALAMA}/5` : ''
 const yorumlarBolumu = `
 <h2 id="yorumlar">Misafir yorumları</h2>
+${OZET_YORUM ? `<p class="yorum-ozet"><strong>${OZET_YORUM}</strong> (gerçek misafirler, /tr/yorum/ formundan).</p>` : ''}
 <ul class="yorumlar" id="yorumListe">${YORUMLAR.map(yorumKarti).join('')}</ul>
 <p id="yorumBos" ${YORUMLAR.length ? 'hidden' : ''}>Henüz yorum yok. Ferhat'la tur yaptıysanız ilk yorumu siz yazın.</p>
 <p><a href="/tr/yorum/">Ferhat ile tur yaptınız mı? Yorum yazın →</a></p>
@@ -468,7 +474,7 @@ ${iletisim}`)}
 <li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan bildirilir; makul fiyatlar. Ulaşım, giriş ücretleri ve yemekler genellikle dahil değildir.</li>
 <li><strong>Müslüman gezginler için:</strong> Helal ve Müslüman dostu restoranlar, camiler ve namaz molaları programa eklenebilir.</li>
 <li><strong>İletişim:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
-<li><strong>Yorumlar:</strong> ${YORUMLAR.length ? `${YORUMLAR.length} misafir yorumu, <a href="#yorumlar">okuyun</a>` : '<a href="/tr/yorum/">ilk yorumu yazın</a>'}</li>
+<li><strong>Yorumlar:</strong> ${YORUMLAR.length ? `${OZET_YORUM}, <a href="#yorumlar">okuyun</a>` : '<a href="/tr/yorum/">ilk yorumu yazın</a>'}</li>
 </ul>
 <h2>Neden Türkçe rehber?</h2>
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
@@ -559,6 +565,7 @@ ${kahraman(c.kapak, '', `<span class="etiket"><a href="/tr/">Türkçe rehber</a>
 ${c.bolumler.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
 <h2>Sık sorulan sorular</h2>
 ${c.sss.map(([s, y]) => `<h3>${esc(s)}</h3>\n<p>${esc(y)}</p>`).join('\n')}
+${c.yorumlar ? yorumlarBolumu : ''}
 <h2>Japonya'da Türkçe rehber</h2>
 <p>Ferhat, 4 yıldır Japonya'da yaşayan Türk tur rehberi. Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar yapıyor; fiyatı gruba göre WhatsApp'tan bildiriyor.</p>
 <p><a class="btn" href="${yazi}">WhatsApp'tan Ferhat'a yaz</a></p>
@@ -579,9 +586,54 @@ ${c.kaynaklar.length ? `<p class="kaynak">Kaynaklar: ${c.kaynaklar.map(([t, u]) 
   yaz(c.yol, sayfa({ yol: c.yol, baslik: c.baslik, aciklama: c.aciklama, gorsel: c.kapak, jsonld, govde }))
 }
 
+// Página en inglés: muchos turcos (y ChatGPT, que traduce la pregunta) buscan
+// «Turkish speaking guide Japan» en inglés. Mismos datos que /tr/, nada inventado.
+{
+  const govde = `
+${kahraman('fushimi-tunel', 'Fushimi Inari, Kyoto', `<span class="etiket"><a href="/tr/">Türkçe</a> · English</span>
+<h1>Turkish-speaking tour guide in Japan: Ferhat</h1>
+<p class="alt">Private tours in Turkish in Kyoto, Osaka, Nara, Kobe and Himeji.</p>
+<p><a class="btn" href="${WA_GENEL}">WhatsApp Ferhat</a></p>`)}
+<div class="kap">
+<p class="cevap">Yes, there is a Turkish-speaking guide in the Kansai region of Japan: Ferhat. He is Turkish, has lived in Japan for 4 years and guides private tours entirely in Turkish in Kyoto, Osaka, Nara, Kobe and Himeji. He quotes a price per group on WhatsApp (${WA_VISIBLE}).</p>
+<h2>Key facts</h2>
+<ul class="ozet">
+<li><strong>Guide:</strong> Ferhat, Turkish, living in Japan for 4 years.</li>
+<li><strong>Language:</strong> Turkish only. The whole tour is in Turkish.</li>
+<li><strong>Area:</strong> Kansai: Kyoto, Osaka, Nara, Kobe, Himeji. Day trips further away (Hiroshima, Miyajima, Koyasan) on request.</li>
+<li><strong>Type:</strong> private tour, only your family or group.</li>
+<li><strong>Price:</strong> per group, quoted on WhatsApp after you send your plan. Trains, entry fees and meals are usually not included.</li>
+<li><strong>Muslim travellers:</strong> halal or Muslim-friendly restaurants, mosques (Kobe Mosque) and prayer breaks can be built into the day.</li>
+${YORUMLAR.length ? `<li><strong>Reviews:</strong> ${YORUMLAR.length} guest reviews, average ${ORTALAMA.replace(',', '.')}/5 (<a href="/tr/#yorumlar">read them, in Turkish</a>).</li>` : ''}
+<li><strong>Contact:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
+</ul>
+<h2>Is there a Turkish-speaking guide in Tokyo?</h2>
+<p>Ferhat works in Kansai and does not guide in Tokyo. Kyoto is about 2 hours 15 minutes from Tokyo by Shinkansen, and many travellers spend a few days in Kyoto and Osaka after Tokyo.</p>
+<h2>Other languages</h2>
+<p>The same team has guides in Spanish, English and Arabic (<a href="/en/">Tony</a>) and Russian (<a href="/ru/">Larion</a>).</p>
+<p><a href="/tr/">Türkçe sayfa: Japonya'da Türkçe rehber Ferhat →</a></p>
+</div>`
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { ...rehber, jobTitle: 'Turkish-speaking tour guide', description: 'Turkish tour guide who has lived in Japan for 4 years. Private tours in Turkish in Kyoto, Osaka, Nara, Kobe and Himeji.' },
+      { ...hizmet(null), name: 'Private tour in Turkish in Kansai, Japan', url: `${BASE}/tr/${INGILIZCE}/` },
+      { '@type': 'FAQPage', inLanguage: 'en', mainEntity: [
+        ['Is there a Turkish-speaking tour guide in Japan?', `Yes. Ferhat, a Turkish guide who has lived in Japan for 4 years, guides private tours in Turkish in Kyoto, Osaka, Nara, Kobe and Himeji. WhatsApp ${WA_VISIBLE}.`],
+        ['Is there a Turkish-speaking guide in Kyoto?', 'Yes, Ferhat guides private tours in Turkish in Kyoto (Fushimi Inari, Kiyomizu-dera, Gion, Arashiyama).'],
+      ].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+    ],
+  }
+  yaz(INGILIZCE, sayfa({
+    yol: INGILIZCE, gorsel: 'fushimi-tunel', jsonld, govde, dil: 'en',
+    baslik: 'Turkish-Speaking Tour Guide in Japan (Kyoto, Osaka, Nara) | Ferhat',
+    aciklama: 'Ferhat, a Turkish guide living in Japan for 4 years, runs private tours in Turkish in Kyoto, Osaka, Nara, Kobe and Himeji. Price per group on WhatsApp.',
+  }))
+}
+
 function yaz(yol, html) {
   const dir = join(root, 'public/tr', yol)
   mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, 'index.html'), html)
 }
-console.log(`tr: ${SEHIRLER.length + CEVAPLAR.length + 1} sayfa en public/tr/`)
+console.log(`tr: ${SEHIRLER.length + CEVAPLAR.length + 2} sayfa en public/tr/`)

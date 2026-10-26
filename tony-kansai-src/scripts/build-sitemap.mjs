@@ -39,7 +39,7 @@ const paginas = [
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
-  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
+  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
   { loc: '/es/montana', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/en/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ar/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
