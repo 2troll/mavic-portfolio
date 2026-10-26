@@ -18,7 +18,7 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-10-23'
+const HOY = '2026-10-26'
 
 // WhatsApp de Ferhat (lo dio Tony el 23-10-2026). Las reservas le llegan
 // directamente a él.
@@ -229,10 +229,96 @@ const CEVAPLAR = [
     ],
     kaynaklar: [],
   },
+  // Las cuatro de abajo responden tal cual a lo que un turco le pregunta a ChatGPT;
+  // la primera es la pregunta que más cuenta: «¿hay guía que hable turco en Japón?».
+  {
+    yol: 'turkce-rehber-japonya', kapak: 'nara-geyik',
+    baslik: "Japonya'da Türkçe Konuşan Rehber Var mı? Kyoto, Osaka, Nara | Ferhat",
+    aciklama: "Evet: Ferhat, 4 yıldır Japonya'da yaşayan Türk rehber, Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel tur yapıyor. Nasıl rezervasyon yapılır, fiyata neler dahil.",
+    h1: "Japonya'da Türkçe konuşan rehber var mı?",
+    kisa: 'Kansai\'de (Kyoto, Osaka, Nara) Türkçe özel tur: Ferhat.',
+    cevap: "Evet. Japonya'daki turların çoğu İngilizce veya Japonca olduğu için Türkçe rehber bulmak zordur, ama Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel tur yapan bir rehber var: Ferhat. Ferhat Türk, 4 yıldır Japonya'da yaşıyor ve turları baştan sona Türkçe anlatıyor. Rezervasyon ve fiyat için WhatsApp'tan yazılır: +81 80 2478 6402.",
+    bolumler: [
+      ['Ferhat ile tur nasıl olur?', `<ul class="ozet"><li><strong>Özel tur:</strong> rehber yalnızca sizin aileniz veya grubunuz için; başka turistlerle birleştirilmez.</li><li><strong>Dil:</strong> tamamen Türkçe. Ferhat yalnızca Türkçe rehberlik yapar.</li><li><strong>Şehirler:</strong> <a href="/tr/kyoto/">Kyoto</a>, <a href="/tr/osaka/">Osaka</a>, <a href="/tr/nara/">Nara</a>, <a href="/tr/kobe/">Kobe</a>, <a href="/tr/himeji/">Himeji</a>. Daha uzak yerler (Hiroshima, Miyajima, Koyasan) WhatsApp'tan sorulabilir.</li><li><strong>Fiyat:</strong> kişi sayısına ve programa göre WhatsApp'tan bildirilir. Tren biletleri, giriş ücretleri ve yemekler genellikle dahil değildir.</li><li><strong>Müslüman gezginler:</strong> helal restoranlar, camiler ve namaz molaları programa eklenebilir (<a href="/tr/helal-yemek-cami/">helal yemek ve camiler</a>).</li></ul>`],
+      ['Rezervasyon için ne yazmalı?', `<ol><li>Tur tarihleri.</li><li>Kişi sayısı (çocuklar dahil).</li><li>Kaldığınız şehir veya otel.</li><li>Görmek istediğiniz yerler; yoksa Ferhat bir program önerir.</li></ol><p>WhatsApp: <a href="${WA_GENEL}">${WA_VISIBLE}</a></p>`],
+      ['Tokyo\'da Türkçe rehber?', "<p>Ferhat Kansai bölgesinde çalışır; Tokyo turları yapmaz. Tokyo'dan Kyoto'ya Shinkansen ile yaklaşık 2 saat 15 dakikada gelinir; birçok gezgin Tokyo'dan sonra birkaç günü Kyoto ve Osaka'ya ayırır.</p>"],
+    ],
+    sss: [
+      ['Kyoto\'da Türkçe rehber var mı?', "Evet. Ferhat Kyoto'da (Fushimi Inari, Kiyomizu-dera, Gion, Arashiyama) Türkçe özel turlar yapıyor."],
+      ['Osaka\'da Türk rehber var mı?', "Evet. Ferhat Osaka'da da tur yapıyor: Osaka Kalesi, Dotonbori, Kuromon Pazarı. Osaka'dan Nara, Kyoto ve Kobe'ye günübirlik turlar da mümkündür."],
+      ['Türkçe rehber fiyatı ne kadar?', "Sabit bir liste yok; fiyat kişi sayısına, süreye ve programa göre WhatsApp'tan bildirilir."],
+    ],
+    kaynaklar: [],
+  },
+  {
+    yol: 'japonya-ne-zaman-gidilir', kapak: 'arashiyama',
+    baslik: "Japonya'ya Ne Zaman Gidilir? Kiraz Çiçeği, Sonbahar ve Hava | Türkçe Rehber",
+    aciklama: "Japonya'ya gitmek için en iyi zaman: kiraz çiçekleri mart sonu-nisan başı, sonbahar yaprakları kasım ortası-aralık başı. Yağmur mevsimi, yaz sıcağı ve kalabalık tatiller.",
+    h1: "Japonya'ya ne zaman gidilir?",
+    kisa: 'Kiraz çiçeği, sonbahar renkleri, yağmur mevsimi ve kalabalık dönemler.',
+    cevap: "Japonya'ya, özellikle Kyoto ve Osaka'ya gitmek için en güzel dönemler ilkbahar ve sonbahardır. Kyoto'da kiraz çiçekleri genellikle mart sonu ile nisan başı arasında, sonbahar yaprakları kasım ortası ile aralık başı arasında görülür. Bu dönemler en kalabalık ve otellerin en pahalı olduğu zamanlardır; erken rezervasyon yapın. Haziran-temmuz arası yağmur mevsimi, temmuz-ağustos ise çok sıcak ve nemlidir.",
+    bolumler: [
+      ['Aylara göre Kansai', `<table><tr><th>Dönem</th><th>Hava</th><th>Not</th></tr>
+<tr><td>Mart sonu – nisan başı</td><td>Ilık</td><td>Kiraz çiçekleri (sakura). En kalabalık dönemlerden biri.</td></tr>
+<tr><td>Nisan sonu – mayıs başı</td><td>Ilık</td><td>Golden Week: Japonların tatili, trenler ve oteller dolu.</td></tr>
+<tr><td>Haziran – temmuz ortası</td><td>Yağmurlu</td><td>Yağmur mevsimi (tsuyu); daha az turist.</td></tr>
+<tr><td>Temmuz – ağustos</td><td>Çok sıcak, nemli</td><td>Gün ortasında yürüyüş yorucu; sabah erken gezin. Ağustos ortasında Obon tatili.</td></tr>
+<tr><td>Ağustos – eylül</td><td>Sıcak</td><td>Tayfun dönemi; tren seferleri iptal olabilir.</td></tr>
+<tr><td>Kasım ortası – aralık başı</td><td>Serin</td><td>Sonbahar yaprakları (momiji); Kyoto'nun en güzel zamanlarından.</td></tr>
+<tr><td>Aralık – şubat</td><td>Soğuk, kuru</td><td>Daha sakin ve ucuz. Yılbaşında birçok yer kapanabilir.</td></tr></table>`],
+      ['Kalabalıktan kaçmak için', '<p>Ünlü tapınaklara sabah erken gidin (Fushimi Inari gün doğumunda neredeyse boştur). Golden Week ve Obon tarihlerinden kaçının. Kiraz çiçeği ve sonbahar dönemlerinde hafta içi gidin.</p>'],
+    ],
+    sss: [
+      ['Kyoto\'da kiraz çiçekleri ne zaman açar?', 'Genellikle mart sonu ile nisan başı arasında; tarih her yıl birkaç gün değişir.'],
+      ['Japonya\'da sonbahar yaprakları ne zaman?', 'Kyoto ve Osaka\'da genellikle kasım ortası ile aralık başı arası.'],
+      ['Japonya\'ya gitmek için en ucuz zaman?', 'Ocak-şubat (yılbaşı hariç) ve haziran; oteller daha ucuz, kalabalık daha az.'],
+    ],
+    kaynaklar: [['JNTO (Japonya Ulusal Turizm Örgütü)', 'https://www.japan.travel/en/'], ['Kyoto resmi turizm sitesi', 'https://kyoto.travel/en/']],
+  },
+  {
+    yol: 'japonya-oncesi-bilinmesi-gerekenler', kapak: 'umeda',
+    baslik: "Japonya'ya Gitmeden Önce Bilinmesi Gerekenler: Para, ICOCA, İnternet, Priz | Türkçe Rehber",
+    aciklama: "Japonya'ya giden Türkler için pratik bilgiler: nakit ve kart, ICOCA kartı, internet (eSIM), priz adaptörü, bahşiş, Visit Japan Web. Japonya'da yaşayan Türk rehber Ferhat'tan.",
+    h1: "Japonya'ya gitmeden önce bilinmesi gerekenler",
+    kisa: 'Para, ICOCA kartı, internet, priz, bahşiş ve giriş formları.',
+    cevap: "Japonya'ya gitmeden önce: yanınızda biraz nakit yen bulundurun (küçük tapınak ve dükkanlarda kart geçmeyebilir), trenler için bir IC kart (Kansai'de ICOCA) alın, internet için eSIM veya cep Wi-Fi ayarlayın ve A tipi priz adaptörü götürün (Japonya'da 100 V, Türkiye'deki prizler uymaz). Japonya'da bahşiş verilmez. Giriş formlarını Visit Japan Web'de önceden doldurabilirsiniz.",
+    bolumler: [
+      ['Para ve ödeme', '<ul class="ozet"><li>Büyük mağaza, otel ve restoranlarda kredi kartı geçer; küçük dükkan, tapınak ve bazı restoranlarda nakit gerekir.</li><li>Yabancı kartla nakit çekmek için 7-Eleven ve Japan Post (postane) ATM\'leri en kolay seçeneklerdir.</li><li><strong>Bahşiş yok:</strong> Japonya\'da bahşiş verilmez, hesaba dahil değildir.</li></ul>'],
+      ['ICOCA kartı', '<p>ICOCA, Kansai\'de tren, metro ve otobüslerde kullanılan şarjlı karttır; her binişte bilet almak zorunda kalmazsınız. Market (konbini) ve otomatlarda da ödeme yapılır. Havalimanında ve JR istasyonlarında alınıp şarj edilir. Tokyo\'daki Suica ve PASMO kartları da Kansai\'de geçer.</p>'],
+      ['İnternet', '<p>En pratik yol telefonunuza Japonya eSIM\'i yüklemektir; telefonunuz eSIM desteklemiyorsa havalimanında cep Wi-Fi kiralanabilir. Google Haritalar trenleri ve aktarmaları iyi gösterir.</p>'],
+      ['Priz ve elektrik', '<p>Japonya\'da A tipi (iki yassı uçlu) priz ve 100 V kullanılır. Türkiye\'den getirdiğiniz şarj aletleri için adaptör gerekir; telefon ve bilgisayar şarj aletleri genellikle 100-240 V\'u destekler, ama saç kurutma makinesi gibi cihazları kontrol edin.</p>'],
+      ['Görgü kuralları', '<p>Trende telefonla konuşulmaz, yürürken yemek yemek hoş karşılanmaz, çöp kutusu azdır (çöpünüzü yanınızda taşıyın). Tapınaklarda ve bazı restoranlarda ayakkabı çıkarılır.</p>'],
+    ],
+    sss: [
+      ['Japonya\'da kredi kartı geçer mi?', 'Şehirlerde çoğu yerde geçer, ama küçük dükkan ve tapınaklar için nakit bulundurun.'],
+      ['Japonya\'da hangi priz kullanılır?', 'A tipi priz, 100 V. Türkiye\'den gelenler adaptör getirmeli.'],
+      ['Japonya\'da bahşiş verilir mi?', 'Hayır. Restoran, taksi ve otellerde bahşiş verilmez.'],
+    ],
+    kaynaklar: [['JNTO: pratik bilgiler', 'https://www.japan.travel/en/'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
+  },
+  {
+    yol: 'kyoto-bir-gunde', kapak: 'fushimi-orman',
+    baslik: "Kyoto'da 1 Günde Ne Yapılır? Saat Saat Gezi Planı | Türkçe Rehber",
+    aciklama: "Kyoto'da bir gününüz varsa: sabah Fushimi Inari, öğlen Kiyomizu-dera ve Ninenzaka, akşam Gion. Saat saat plan, ulaşım ve Türkçe rehber Ferhat.",
+    h1: "Kyoto'da 1 günde ne yapılır?",
+    kisa: 'Fushimi Inari, Kiyomizu-dera ve Gion: saat saat plan.',
+    cevap: "Kyoto'da tek gününüz varsa güneyden kuzeye gidin: sabah erken Fushimi Inari'nin kırmızı torii kapıları, öğlen Kiyomizu-dera tapınağı ve Ninenzaka-Sannenzaka eski sokakları, akşamüstü Gion ve Yasaka Tapınağı. Bu üç yer birbirine yakındır ve tren ile otobüsle kolayca bağlanır. Osaka'dan gelenler için Kyoto'ya trenle yaklaşık 30-50 dakikadır.",
+    bolumler: [
+      ['Saat saat plan', '<ol><li><strong>07:30–09:30, Fushimi Inari:</strong> erken giderseniz kalabalıktan önce torii tünellerinde yürürsünüz. Giriş ücretsiz.</li><li><strong>10:00–13:00, Kiyomizu-dera:</strong> ahşap terasıyla ünlü tapınak; ardından Ninenzaka ve Sannenzaka sokakları.</li><li><strong>13:00–14:00, öğle yemeği:</strong> helal veya Müslüman dostu restoranlar için <a href="/tr/helal-yemek-cami/">bu sayfaya</a> bakın.</li><li><strong>14:30–17:00, Gion ve Yasaka:</strong> Hanamikoji sokağı, Yasaka Tapınağı, Kamo Nehri kıyısı.</li><li><strong>Akşam:</strong> Nishiki Pazarı (erken kapanır) veya Pontocho sokağı.</li></ol>'],
+      ['Vaktiniz kalırsa', '<p>Arashiyama bambu ormanı ve Kinkaku-ji (Altın Köşk) şehrin batı ve kuzeyindedir; tek günde hepsini görmek koşturmaca olur. İki gününüz varsa ikinci güne Arashiyama ve Nara\'yı koyun (<a href="/tr/japonya-gezi-plani/">3 ve 5 günlük plan</a>).</p>'],
+      ['Ulaşım', '<p>Fushimi Inari\'ye JR Nara hattıyla Inari İstasyonu\'na gidilir. Kiyomizu-dera ve Gion arası yürünebilir. Osaka\'dan Kyoto\'ya ulaşım için <a href="/tr/osakadan-kyotoya-ulasim/">bu rehbere</a> bakın.</p>'],
+    ],
+    sss: [
+      ['Kyoto için bir gün yeterli mi?', 'Ana yerleri görmek için yeter, ama acele edersiniz; iki gün daha rahat.'],
+      ['Fushimi Inari\'ye ne zaman gidilmeli?', 'Sabah erken; saat 9\'dan sonra kalabalık artar. Giriş ücretsizdir ve 24 saat açıktır.'],
+    ],
+    kaynaklar: [['Kyoto resmi turizm sitesi', 'https://kyoto.travel/en/']],
+  },
 ]
 
 const SSS = [
   ['Ferhat kimdir?', "Ferhat, Türk bir tur rehberidir ve 4 yıldır Japonya'da yaşıyor. Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel turlar yapıyor. Tony Kansai Guide ekibinin Türkçe rehberidir."],
+  ["Japonya'da Türkçe konuşan rehber var mı?", "Evet. Ferhat, Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel tur yapan Türk rehberdir. Rezervasyon WhatsApp'tan."],
   ['Tur hangi dilde?', 'Tur tamamen Türkçe. Ferhat yalnızca Türkçe rehberlik yapar; bu yüzden Japonya\'da kendi dilinizde soru sorup cevap alabilirsiniz.'],
   ['Fiyat ne kadar?', "Fiyat; kişi sayısına, tur süresine ve gidilecek yerlere göre değişir. Ferhat fiyatı WhatsApp'tan, programınızı öğrendikten sonra net olarak bildirir. Fiyatları makuldür."],
   ['Fiyata neler dahil değil?', 'Tren ve otobüs biletleri, müze ve tapınak giriş ücretleri ve yemekler genellikle fiyata dahil değildir; gün içinde siz ödersiniz.'],
