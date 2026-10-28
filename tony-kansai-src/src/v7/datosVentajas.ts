@@ -94,7 +94,7 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/',
+    clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', codigo: 'ag-special', descuento: '10 %',
     marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
     t: {
       es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Una hora divertida y a cubierto en pleno Kioto. Ideal con niños.' },
@@ -325,12 +325,12 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'camellia', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/',
+    clave: 'camellia', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/', codigo: 'CAMAGENT67', descuento: '10 %',
     marca: { fondo: '#2f4a32', tinta: '#f3ead7', boton: '#f3ead7', botonTinta: '#2f4a32', palabra: '茶' },
     t: {
-      es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Si vienes de tour conmigo, te la reservo yo con mi tarifa de guía y te la traduzco al español o al árabe.' },
-      en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Touring with me? I book it for you at my guide rate and translate it into Spanish or Arabic.' },
-      ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'إن كنت في جولة معي، أحجزه لك بسعر المرشد وأترجمه لك إلى العربية أو الإسبانية.' },
+      es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Reserva en su web con el código CAMAGENT67 y di que vienes de parte de Tony Hanma. Si vienes de tour conmigo, te la traduzco al español o al árabe.' },
+      en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Book on their website with code CAMAGENT67 and say Tony Hanma sent you. Touring with me? I translate it into Spanish or Arabic.' },
+      ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'احجز في موقعهم بالرمز CAMAGENT67 وقل إنك من طرف Tony Hanma. وإن كنت في جولة معي أترجمه لك إلى العربية أو الإسبانية.' },
     },
   },
   {
@@ -485,22 +485,22 @@ const LISTA: App[] = [
   },
   {
     // MAIKOYA (Keigo/Shoko): 10 % de agencia con código que NO se publica; en plan privado el guía entra gratis, sin té (correo 28-10-2026).
-    clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/',
+    clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/what-to-do-in-japan/for-agencies-kyoto/', codigo: 'ag-special', descuento: '10 %',
     marca: { fondo: '#7a1f2b', tinta: '#f6e9dc', boton: '#f6e9dc', botonTinta: '#7a1f2b', palabra: '舞' },
     t: {
-      es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Si vienes conmigo, te la reservo con tarifa de agencia (10 % menos) y, en la privada, entro contigo a traducirla al español o al árabe.' },
-      en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Touring with me? I book it at the agency rate (10% off) and, for a private one, I come in to translate it into Spanish or Arabic.' },
-      ar: { que: 'حفل الشاي في كيوتو، جماعي أو خاص، مع شرح بالإنجليزية.', ventaja: 'إن كنت معي، أحجزه لك بسعر الوكالة (خصم 10%) وفي الحفل الخاص أدخل معك لأترجمه إلى العربية أو الإسبانية.' },
+      es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Reserva en su web en inglés con el código ag-special (10 % menos). Nombre: «AG», apellido: «Tony Kansai Guide», y en notas tu nombre, correo y teléfono. En la privada entro contigo a traducir.' },
+      en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Book on their English website with code ag-special (10% off). First name “AG”, last name “Tony Kansai Guide”, and your name, email and phone in the remarks. For a private one I come in to translate.' },
+      ar: { que: 'حفل الشاي في كيوتو، جماعي أو خاص، مع شرح بالإنجليزية.', ventaja: 'احجز في موقعهم الإنجليزي بالرمز ag-special (خصم 10%). الاسم الأول «AG» واسم العائلة «Tony Kansai Guide»، واكتب في الملاحظات اسمك وبريدك وهاتفك. في الحفل الخاص أدخل معك لأترجم.' },
     },
   },
   {
     // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código.
-    clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/',
+    clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/', codigo: 'HANMA', descuento: '15 %',
     marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
     t: {
-      es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Te lo reservo yo y pregunto por ti las opciones sin cerdo ni alcohol antes de confirmar.' },
-      en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'I book it for you and check the no-pork, no-alcohol options before confirming.' },
-      ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'أحجزها لك وأسأل عن خيارات بلا لحم خنزير ولا كحول قبل التأكيد.' },
+      es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Reserva en su web con el código HANMA: 15 % menos. Si quieres, te lo reservo yo y pregunto antes por opciones sin cerdo ni alcohol.' },
+      en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'Book on their website with code HANMA: 15% off. Or I book it for you and check no-pork, no-alcohol options first.' },
+      ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'احجز في موقعهم بالرمز HANMA: خصم 15%. أو أحجزها لك وأسأل أولًا عن خيارات بلا لحم خنزير ولا كحول.' },
     },
   },
 ]

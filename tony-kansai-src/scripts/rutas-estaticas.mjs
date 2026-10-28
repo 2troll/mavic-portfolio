@@ -83,8 +83,8 @@ const LARION_EN = /^larion(\/|$)/
 // Páginas que no traen clientes desde un buscador (avisos legales y la lista de
 // apps con enlaces de afiliado): fuera del índice para que Bing y las IAs vean
 // solo lo que responde a quien busca guía (19-10-2026).
-const SIN_BUSQUEDA = /^(terms|privacy|cookies|safety|legal|accessibility|es\/ventajas|en\/perks|ar\/perks|ru\/perks)$/
-const NOINDEX = new RegExp(`${FICHA_AFILIADO.source}|${LARION_EN.source}|${SIN_BUSQUEDA.source}`)
+const SIN_BUSQUEDA = /^(terms|privacy|cookies|safety|legal|accessibility)$/
+const NOINDEX = new RegExp(`${LARION_EN.source}|${SIN_BUSQUEDA.source}`)
 let pintadas = 0
 for (const ruta of rutas) {
   // Las que ya son un fichero real (resenas.html, booking.html…) responden 200 solas.

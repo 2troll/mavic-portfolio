@@ -3,7 +3,7 @@
 // las de Larion en inglés, casi iguales a las de Tony. Un hreflang no puede
 // apuntar a ellas. Avisos legales y lista de ventajas, tampoco. Mantener igual
 // que NOINDEX de rutas-estaticas.mjs.
-export const NOINDEX = /^(es\/ventajas|en\/perks|ar\/perks|ru\/perks)\/[^/]+$|^larion(\/|$)|^(terms|privacy|cookies|safety|legal|accessibility|es\/ventajas|en\/perks|ar\/perks|ru\/perks)$/
+export const NOINDEX = /^larion(\/|$)|^(terms|privacy|cookies|safety|legal|accessibility)$/
 
 export const indexable = (href: string) =>
   !NOINDEX.test(href.replace(/^https?:\/\/[^/]+/, '').replace(/^\/+|\/+$/g, ''))
