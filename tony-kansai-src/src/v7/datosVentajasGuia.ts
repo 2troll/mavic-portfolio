@@ -199,6 +199,27 @@ export const GUIA: Record<string, Guia> = {
     tarjeta: [DE_TONY],
     frases: [f('ホテルに届けてもらえますか？', 'Hoteru ni todokete moraemasu ka?', '¿Me lo podéis enviar al hotel?', 'Could you deliver it to my hotel?', 'هل يمكنكم توصيله إلى الفندق؟', 'Можете доставить в отель?')],
   },
+  kobaien: {
+    lugares: [],
+    contacto: { web: 'https://www.kobaien.jp/' },
+    soloConTony: true,
+    tarjeta: [DE_TONY, RESERVA],
+    frases: [NINOS],
+  },
+  maikoyate: {
+    lugares: [],
+    contacto: { web: 'https://mai-ko.com/' },
+    soloConTony: true,
+    tarjeta: [DE_TONY, RESERVA],
+    frases: [NINOS],
+  },
+  inkansai: {
+    lugares: [],
+    contacto: { web: 'https://www.cycleosaka.com/' },
+    soloConTony: true,
+    tarjeta: [DE_TONY, RESERVA],
+    frases: [f('豚肉とお酒は食べられません。', 'Butaniku to osake wa taberaremasen.', 'No puedo tomar cerdo ni alcohol.', 'I cannot eat pork or alcohol.', 'لا أستطيع تناول لحم الخنزير أو الكحول.', 'Мне нельзя свинину и алкоголь.')],
+  },
 }
 
 /** Foto de la zona de cada experiencia (public/v8/zonas, créditos en creditosZonas.json). */
@@ -207,4 +228,5 @@ export const FOTO_EXP: Record<string, string> = {
   yumeyakata: 'kioto-sakura', shogun: 'kioto-arashiyama', miyabi: 'kioto-gion', towerknives: 'osaka-shinsekai',
   cookingsun: 'kioto-nishiki', hamanasu: 'lejos-kumano', yokotake: 'kioto-arashiyama', domyo: 'kioto-kinkakuji',
   okamoto: 'kioto-kiyomizu', nakamura: 'kioto-fushimi', japaneid: 'osaka-dotonbori', flytographer: 'kioto-gion',
+  kobaien: 'nara-naramachi', maikoyate: 'kioto-gion', inkansai: 'osaka-castillo',
 }

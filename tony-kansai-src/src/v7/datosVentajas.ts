@@ -38,10 +38,11 @@ export const SEO_VENTAJAS: Record<Lang, { titulo: string; descripcion: string }>
 
 export const RUTA_VENTAJAS: Record<Lang, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
-export type Ciudad = 'osaka' | 'kioto' | 'kumano'
+export type Ciudad = 'osaka' | 'kioto' | 'nara' | 'kumano'
 export const CIUDADES: Record<Ciudad, Record<Lang, string>> = {
   osaka: { es: 'Osaka', en: 'Osaka', ar: 'أوساكا', ru: 'Осака' },
   kioto: { es: 'Kioto', en: 'Kyoto', ar: 'كيوتو', ru: 'Киото' },
+  nara: { es: 'Nara', en: 'Nara', ar: 'نارا', ru: 'Нара' },
   kumano: { es: 'Kumano (Wakayama)', en: 'Kumano (Wakayama)', ar: 'كومانو (واكاياما)', ru: 'Кумано (Вакаяма)' },
 }
 
@@ -397,9 +398,9 @@ const LISTA: App[] = [
     clave: 'hamanasu', cat: 'experiencias', ciudad: 'kumano', conTony: true, nombre: 'Kibori Hamanasu', enlace: 'https://hamanasu-kibori.raku-uru.jp/',
     marca: { fondo: '#6b4a2b', tinta: '#f4e7d3', boton: '#f4e7d3', botonTinta: '#6b4a2b', palabra: '木彫' },
     t: {
-      es: { que: 'Taller de talla en madera con una artesana de Kumano, en Kushimoto (Wakayama). Ideal si vas a hacer el Kumano Kodo. 4.000 ¥ por persona, en efectivo.', ventaja: 'Si lo reservas a través de mí, te regalan 15 minutos más para hacer un diseño más elaborado. Avísame con 3 días de antelación.' },
-      en: { que: 'Wood-carving workshop with a Kumano craftswoman in Kushimoto (Wakayama). Perfect if you are walking the Kumano Kodo. ¥4,000 per person, cash.', ventaja: 'Book it through me and you get 15 extra minutes free to carve a more detailed design. Tell me 3 days ahead.' },
-      ar: { que: 'ورشة نحت على الخشب مع حِرفية من كومانو في كوشيموتو (واكاياما). مثالية إن كنت ستمشي طريق كومانو كودو. 4,000 ين للشخص نقدًا.', ventaja: 'إن حجزتها عن طريقي تحصل على 15 دقيقة إضافية مجانًا لتصميم أكثر تفصيلًا. أخبرني قبلها بثلاثة أيام.' },
+      es: { que: 'Taller de talla en madera con una artesana de Kumano, en Kushimoto (Wakayama). Ideal si vas a hacer el Kumano Kodo. Nuevo: diseño asanoha (patrón geométrico japonés) y portaobjetos con tu nombre. 4.000 ¥ por persona, en efectivo.', ventaja: 'Si lo reservas a través de mí, te regalan 15 minutos más para hacer un diseño más elaborado. Avísame con 3 días de antelación.' },
+      en: { que: 'Wood-carving workshop with a Kumano craftswoman in Kushimoto (Wakayama). Perfect if you are walking the Kumano Kodo. New: the asanoha design (a Japanese geometric pattern) and a small tray carved with your name. ¥4,000 per person, cash.', ventaja: 'Book it through me and you get 15 extra minutes free to carve a more detailed design. Tell me 3 days ahead.' },
+      ar: { que: 'ورشة نحت على الخشب مع حِرفية من كومانو في كوشيموتو (واكاياما). مثالية إن كنت ستمشي طريق كومانو كودو. جديد: نقش أسانوها (زخرفة هندسية يابانية) وحامل صغير منقوش عليه اسمك. 4,000 ين للشخص نقدًا.', ventaja: 'إن حجزتها عن طريقي تحصل على 15 دقيقة إضافية مجانًا لتصميم أكثر تفصيلًا. أخبرني قبلها بثلاثة أيام.' },
     },
   },
   {
@@ -470,6 +471,36 @@ const LISTA: App[] = [
       es: { que: 'eSIM con datos para Japón: la instalas en el móvil antes de salir y tienes internet nada más aterrizar, sin aparato que cargar.', ventaja: 'Con el código TONYKANSAI, 10 % de descuento. Si viajáis varios con móviles compatibles, cada uno con la suya.' },
       en: { que: 'Data eSIM for Japan: install it on your phone before you leave and you are online the moment you land, with no device to charge.', ventaja: 'Code TONYKANSAI gives 10% off. If several of you have compatible phones, one each.' },
       ar: { que: 'شريحة eSIM للإنترنت في اليابان: تثبّتها على هاتفك قبل السفر فيكون لديك إنترنت فور الوصول، دون جهاز تشحنه.', ventaja: 'بالرمز TONYKANSAI خصم 10%. إن كنتم عدة أشخاص بهواتف متوافقة، لكل واحد شريحته.' },
+    },
+  },
+  {
+    // Kobaien (Fukuro-san): taller de nigiri-zumi de octubre a mediados de abril; 1 guía/intérprete gratis; folleto en inglés (correo 21-10-2026). Sin comisión.
+    clave: 'kobaien', cat: 'experiencias', ciudad: 'nara', conTony: true, nombre: 'Kobaien (tinta sumi)', enlace: 'https://www.kobaien.jp/',
+    marca: { fondo: '#1c1c1c', tinta: '#efe6d2', boton: '#efe6d2', botonTinta: '#1c1c1c', palabra: '墨' },
+    t: {
+      es: { que: 'La casa de tinta sumi más antigua de Nara (desde 1577): moldeas con tus manos tu propia barra de tinta. Solo de octubre a mediados de abril, que es cuando se fabrica.', ventaja: 'Te lo reservo yo en japonés y entro contigo a traducirte el taller sin coste extra.' },
+      en: { que: 'Nara’s oldest sumi ink maker (since 1577): you shape your own ink stick by hand. Only from October to mid-April, the ink-making season.', ventaja: 'I book it for you in Japanese and come in to translate the workshop at no extra cost.' },
+      ar: { que: 'أقدم صانع لحبر السومي في نارا (منذ 1577): تشكّل بيديك قطعة الحبر الخاصة بك. فقط من أكتوبر إلى منتصف أبريل، موسم صناعة الحبر.', ventaja: 'أحجزه لك باليابانية وأدخل معك لأترجم الورشة دون تكلفة إضافية.' },
+    },
+  },
+  {
+    // MAIKOYA (Keigo/Shoko): 10 % de agencia con código que NO se publica; en plan privado el guía entra gratis, sin té (correo 28-10-2026).
+    clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/',
+    marca: { fondo: '#7a1f2b', tinta: '#f6e9dc', boton: '#f6e9dc', botonTinta: '#7a1f2b', palabra: '舞' },
+    t: {
+      es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Si vienes conmigo, te la reservo con tarifa de agencia (10 % menos) y, en la privada, entro contigo a traducirla al español o al árabe.' },
+      en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Touring with me? I book it at the agency rate (10% off) and, for a private one, I come in to translate it into Spanish or Arabic.' },
+      ar: { que: 'حفل الشاي في كيوتو، جماعي أو خاص، مع شرح بالإنجليزية.', ventaja: 'إن كنت معي، أحجزه لك بسعر الوكالة (خصم 10%) وفي الحفل الخاص أدخل معك لأترجمه إلى العربية أو الإسبانية.' },
+    },
+  },
+  {
+    // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código.
+    clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/',
+    marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
+    t: {
+      es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Te lo reservo yo y pregunto por ti las opciones sin cerdo ni alcohol antes de confirmar.' },
+      en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'I book it for you and check the no-pork, no-alcohol options before confirming.' },
+      ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'أحجزها لك وأسأل عن خيارات بلا لحم خنزير ولا كحول قبل التأكيد.' },
     },
   },
 ]
