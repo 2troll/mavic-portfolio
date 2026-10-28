@@ -59,6 +59,7 @@ const paginas = [
   // Páginas de respuesta (datosRespuestas.ts): mezquitas, halal, Kansai… (el precio
   // de Kioto vive desde el 19-10-2026 dentro de /es/kyoto/ y /en/kyoto/).
   { loc: '/ar/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
+  { loc: '/en/mosques-kansai', priority: '0.8', changefreq: 'monthly', v7: 'mezquitas' },
   { loc: '/ar/halal-kyoto-osaka', priority: '0.8', changefreq: 'monthly', v7: 'halal' },
   { loc: '/es/guia-espanol-kansai', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
   { loc: '/es/tour-privado-o-en-grupo-japon', priority: '0.8', changefreq: 'monthly', v7: 'privado' },

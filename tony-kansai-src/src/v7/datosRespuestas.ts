@@ -55,7 +55,7 @@ import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
 
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
-  | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en'
+  | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en' | 'mezquitas-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
 export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe'
 export type LangRespuesta = 'es' | 'en' | 'ar'
@@ -321,6 +321,75 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     volver: '← العودة إلى صفحة طوني',
   },
 
+  'mezquitas-en': {
+    lang: 'en', ruta: '/en/mosques-kansai/', inicio: '/en/', grupo: 'mezquitas',
+    foto: { clave: 'kobe-mezquita', lugar: 'Kobe Mosque' }, og: '/v8/og/kobe.jpg',
+    seo: {
+      titulo: 'Mosques and Prayer Rooms in Kansai: Kobe, Osaka and Kyoto | Tony Kansai Guide',
+      descripcion: 'Where to pray in Kyoto, Osaka and Kobe: Kobe Mosque (Japan\'s oldest), Osaka Ibaraki Mosque, Kyoto Mosque and free prayer spaces at Kyoto sights. With a Muslim private guide.',
+    },
+    antetitulo: 'Kansai · checked October 2026',
+    titulo: 'Where to pray in Kansai: mosques and prayer rooms',
+    respuesta: 'Kansai has three main mosques: Kobe Mosque, the oldest in Japan (opened in 1935); Osaka Ibaraki Mosque, in Ibaraki city north of Osaka; and Kyoto Mosque, near the Imperial Palace. Kyoto also has free prayer spaces at sights such as Nijō Castle. I\'m Tony, a Muslim private guide, and I plan prayer stops into the route from the start.',
+    actualizado: 'Last checked: October 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'The mosques',
+        lista: [
+          'Kobe Muslim Mosque: the oldest mosque in Japan, opened in 1935; it survived the war and the 1995 earthquake. Address: 2-25-14 Nakayamate-dori, Chuo-ku, Kobe. It fits well into a day in Kobe with the harbour and the Kitano district.',
+          'Osaka Ibaraki Mosque: in Ibaraki city, north of Osaka. Address: 4-6-13 Toyokawa, Ibaraki-shi, Osaka. Phone: 072-643-7420. Friday prayer is held every week; ask the mosque for the time.',
+          'Kyoto Mosque and Islamic Cultural Center: run by the Kyoto Muslim Association (KMA), near the Imperial Palace. The five daily prayers, Friday prayer and both Eids are held there, and visitors are welcome. The office is open Tuesday to Saturday, 12:00 to 18:00, closed on Sunday. Phone: +81-75-231-3499.',
+        ],
+      },
+      {
+        titulo: 'Prayer spaces in Kyoto',
+        parrafos: ['According to Kyoto\'s official tourism site, there are free spaces to pray at several sights, including:'],
+        lista: [
+          'Nijō Castle (Nijo-jo)',
+          'Kyoto International Manga Museum',
+          'Kyoto Handicraft Center',
+          'Kyoto International Community House',
+        ],
+      },
+      {
+        titulo: 'At Kansai Airport',
+        parrafos: ['Kansai International Airport has separate prayer rooms for men and women, with a place for ablutions. Check where they are on the airport signs when you arrive.'],
+      },
+      {
+        titulo: 'Tips before you go',
+        lista: [
+          'At the mosque: modest clothing for men and women, and a headscarf for women.',
+          'Kyoto Mosque is not next to Kyoto Station but in the north of the city centre; on a Kyoto tour I plan the route so we pass it, or one of the prayer spaces, at prayer time.',
+          'Friday: tell me when you book and I will build the day around Friday prayer.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'Private tour, price per group',
+      texto: 'I meet you in your hotel lobby in Osaka, Kyoto, Nara or Kobe. Just your group, at your pace. I speak English, Arabic and Spanish.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: [
+        'Trains, admissions and meals aren\'t included: you pay as we go.',
+        'Pay in yen in cash on the day, or in advance with PayPal or Wise.',
+        'Free cancellation up to 72 hours before.',
+      ],
+    },
+    faqTitulo: 'Frequently asked questions',
+    faq: [
+      { p: 'Where can I pray in Kyoto?', r: 'At Kyoto Mosque near the Imperial Palace, or at the free prayer spaces in sights such as Nijō Castle and the Kyoto International Manga Museum.' },
+      { p: 'What is the closest mosque to Kyoto Station?', r: 'Kyoto Mosque is in the north of the city centre near the Imperial Palace, not next to the station. On a tour I plan the route to pass it, or a prayer space, at prayer time.' },
+      { p: 'Can I visit Kobe Mosque?', r: 'Yes. Kobe Mosque is the oldest mosque in Japan (1935), at 2-25-14 Nakayamate-dori. We can visit it with the harbour and Kitano, and pray there if it is prayer time.' },
+      { p: 'Where is the mosque in Osaka?', r: 'Osaka Ibaraki Mosque is at 4-6-13 Toyokawa, Ibaraki city, north of Osaka. Friday prayer is held every week.' },
+      { p: 'Is there a prayer room at Kansai Airport?', r: 'Yes, separate prayer rooms for men and women with a place for ablutions.' },
+      { p: 'Is the guide Muslim?', r: 'Yes. I\'m Tony, a Muslim guide; I speak English, Arabic and Spanish and plan prayer times into the route from the start.' },
+    ],
+    fuentesTitulo: 'Sources',
+    fuentes: FUENTES_MEZQUITAS.map((f) => ({ ...f, texto: f.texto.replace('(الموقع الرسمي)', '(official site)').replace('مصليات مطار كانساي', 'Prayer rooms at Kansai Airport').replace('أماكن الصلاة المجانية في كيوتو', 'Free prayer spaces in Kyoto') })),
+    final: { titulo: 'Shall I plan your day around prayer times?', texto: 'Tell me your dates, how many you are and what you\'d like to see, and I\'ll send you a route and a fixed price for the group.', boton: 'Message Tony' },
+    altFoto: 'Kobe Mosque, the oldest mosque in Japan', saludo: 'Hi Tony, I read your page about mosques in Kansai and I\'d like to ask about a tour.',
+    volver: '← Back to Tony\'s page',
+  },
   'halal-ar': {
     lang: 'ar', ruta: '/ar/halal-kyoto-osaka/', inicio: '/ar/', grupo: 'halal',
     foto: { clave: 'osaka-dotonbori', lugar: 'دوتونبوري، أوساكا' }, og: '/v8/og/osaka.jpg',
