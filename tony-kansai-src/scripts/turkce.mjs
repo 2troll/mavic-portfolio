@@ -171,7 +171,7 @@ const CEVAPLAR = [
   },
   {
     yol: 'osakadan-kyotoya-ulasim', kapak: 'gion',
-    baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren Seçenekleri ve Süreler | Türkçe Rehber",
+    baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren, Süre ve Fiyatlar | Türkçe Rehber",
     aciklama: "Osaka'dan Kyoto'ya JR, Hankyu, Keihan veya Shinkansen: hangi tren nereden kalkar, ne kadar sürer, hangisi size uygun. Japonya'da yaşayan Türk rehberden.",
     h1: "Osaka'dan Kyoto'ya nasıl gidilir?",
     kisa: 'Dört tren seçeneği: 15 ile 50 dakika arası.',
@@ -187,6 +187,8 @@ const CEVAPLAR = [
     sss: [
       ['Osaka Kyoto arası kaç dakika?', 'Trene göre 15 (Shinkansen) ile 50 dakika (Keihan) arası; en yaygını JR Special Rapid ile yaklaşık 30 dakika.'],
       ['Osaka\'dan Kyoto\'ya JR Pass geçer mi?', 'JR Special Rapid ve Shinkansen\'de (Hikari, Kodama) geçer; Hankyu ve Keihan\'da geçmez.'],
+      ['Osaka Kyoto tren bileti ne kadar? En ucuzu hangisi?', 'Ekim 2026 itibarıyla yaklaşık yetişkin ücretleri: Hankyu (Osaka-umeda → Kyoto-kawaramachi) yaklaşık 410 ¥, Keihan (Yodoyabashi → Gion-shijo) yaklaşık 430 ¥, JR (Osaka → Kyoto) yaklaşık 580 ¥. Shinkansen çok daha pahalıdır. Ücretler değişebilir; istasyonda kontrol edin.'],
+      ['Osaka ile Kyoto arası kaç km?', 'JR hattı üzerinden Osaka İstasyonu ile Kyoto İstasyonu arası yaklaşık 43 km. Günübirlik gidip gelmek kolaydır.'],
     ],
     kaynaklar: [['JR West saat tablosu', 'https://timetable.jr-odekake.net/line-timetable/2834'], ['Hankyu', 'https://www.hankyu.co.jp/en/'], ['Keihan', 'https://www.keihan.co.jp/travel/en/']],
   },

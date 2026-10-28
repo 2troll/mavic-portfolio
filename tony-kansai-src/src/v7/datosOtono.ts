@@ -32,7 +32,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
   'o-es': {
     lang: 'es', ruta: '/es/otono-kioto/', inicio: '/es/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
-      titulo: 'Otoño en Kioto 2026 con guía privado en español | Tony Kansai Guide',
+      titulo: 'Otoño en Kioto 2026: cuándo ver los arces y guía privado en español | Tony Kansai Guide',
       descripcion: 'Los arces rojos de Kioto con un guía privado en español: te recojo en el hotel y salimos temprano para llegar antes que las multitudes. Día completo ¥58.000 por grupo.',
     },
     antetitulo: 'Temporada de momiji · noviembre y principios de diciembre',
@@ -43,6 +43,8 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
       titulo: '¿Cuándo es el otoño en Kioto?',
       texto: [
         'Normalmente, de mediados de noviembre a principios de diciembre. Cada año cambia unos días según el tiempo: los jardines de montaña se adelantan y los del centro llegan un poco después.',
+        'En 2026 viene tarde. La previsión de la Japan Meteorological Corporation (1 de octubre de 2026) da los ginkgos amarillos de Kioto hacia el 27 de noviembre y los arces rojos del centro hacia el 11 de diciembre. Arashiyama y los templos de las colinas cambian antes, desde mediados de noviembre.',
+        '¿Vienes en diciembre? Este año la primera mitad de diciembre todavía tiene color en Kioto, con menos gente que en noviembre.',
         'Es la época más bonita del año y también la de más gente. Por eso conviene reservar la fecha con antelación: llevo un solo grupo al día.',
       ],
     },
@@ -86,7 +88,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
   'o-en': {
     lang: 'en', ruta: '/en/kyoto-autumn/', inicio: '/en/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
-      titulo: 'Kyoto Autumn Leaves 2026 with a Private Guide | Tony Kansai Guide',
+      titulo: 'Kyoto Autumn Leaves 2026: Forecast, Best Spots & Private Guide | Tony Kansai Guide',
       descripcion: 'See Kyoto\'s red maples with a private guide: hotel pick-up and an early start to beat the crowds. Full day ¥58,000 per group of up to 6.',
     },
     antetitulo: 'Momiji season · November to early December',
@@ -97,6 +99,8 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
       titulo: 'When is autumn in Kyoto?',
       texto: [
         'Usually from mid-November to early December. It shifts by a few days each year with the weather: gardens in the hills turn first and the city centre a little later.',
+        'In 2026 the colours are late. The Japan Meteorological Corporation forecast (1 October 2026) puts Kyoto\'s yellow ginkgo around 27 November and the red maples in the city centre around 11 December. Arashiyama and the hillside temples turn earlier, from mid-November.',
+        'Coming in December? This year the first half of December should still have colour in Kyoto, with fewer people than in November.',
         'It\'s the most beautiful time of year and also the busiest, so it\'s worth booking your date early: I take one group a day.',
       ],
     },
