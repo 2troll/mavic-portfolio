@@ -53,7 +53,9 @@ function aMarkdown(html) {
 }
 
 const sitemap = readFileSync(join(dest, 'sitemap.xml'), 'utf8')
-const rutas = [...new Set([...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname))]
+// La portada ya no está en el sitemap (redirige por idioma), pero su resumen
+// para IA sigue en /index.md.
+const rutas = [...new Set(['/', ...[...sitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map((m) => new URL(m[1]).pathname)])]
 
 const paginas = []
 for (const ruta of rutas) {

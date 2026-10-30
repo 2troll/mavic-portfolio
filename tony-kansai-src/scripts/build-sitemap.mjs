@@ -29,7 +29,9 @@ const tours = ids('TOURS')
 const rutas = ids('HIKING_ROUTES')
 
 const paginas = [
-  { loc: '/', priority: '1.0', changefreq: 'weekly', v7: true },
+  // La portada (/) no va: con JavaScript redirige al idioma del navegador
+  // (Googlebot acaba en /en/ y lee dos canonical, / y /en/). Search Console la
+  // marcaba como URL del sitemap que no se puede indexar. Se indexan /es/, /en/…
   // Web v7: una página por idioma y guía. Se declaran entre sí con hreflang
   // (Tony: es/en/ar; Larion: ru/en), no con ?lang=.
   { loc: '/es', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
