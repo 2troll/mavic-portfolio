@@ -20,6 +20,10 @@
 // precios ni recogidas en hotel o aeropuerto. Sí se puede decir que habla árabe y
 // que puede meter comida halal, mezquitas y pausas para rezar en el día. Nada de
 // alcohol (ni sake, ni bares, ni izakaya): la web es halal.
+// Añadido el 30-10-2026 (dato de Tony): Iheb es profesional del anime, la cultura
+// pop japonesa y el intercambio de cartas Pokémon (coleccionar/comprar cartas).
+// Las cartas se presentan SIEMPRE como colección, nunca como inversión ni apuesta.
+// Las páginas dedicadas a anime/Pokémon quedan para después (falta investigación).
 //
 // Fotos: Wikimedia Commons con licencia libre (CC BY / CC BY-SA / CC0 / PD);
 // autor, licencia y página de origen en scripts/francais-photos.json, archivos en
@@ -521,6 +525,7 @@ const FAQ = [
   ['Visite privée ou en groupe ?', 'Visite privée : le guide est uniquement pour votre famille ou votre groupe d’amis. Vous n’êtes pas mélangés à d’autres touristes.'],
   ['Repas halal et prière : est-ce possible ?', 'Oui. Des restaurants halal et Muslim friendly ainsi que des mosquées (par exemple la Tokyo Camii) peuvent être intégrés au programme, avec des pauses aux heures de prière.'],
   ['Comment réserver ?', `Écrivez sur WhatsApp (${WA_VISIBLE}) en indiquant vos dates, le nombre de personnes et votre hôtel ou votre quartier. Iheb vous répond en français.`],
+  ['Iheb peut-il guider des fans d’anime ou de cartes Pokémon ?', 'Oui. Iheb est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner : il peut construire la journée autour de cette passion, en français.'],
   ['Où guide Iheb ?', 'À Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji (lacs du Fuji et Shizuoka) et dans la préfecture de Nagano. Pour une autre destination, posez la question sur WhatsApp.'],
 ]
 
@@ -625,12 +630,13 @@ const guideLd = {
     { '@type': 'Language', name: 'Arabe', alternateName: 'ar' },
     { '@type': 'Language', name: 'Anglais', alternateName: 'en' },
   ],
+  knowsAbout: ['Anime', 'Manga', 'Japanese pop culture', 'Pokémon Trading Card Game', 'Tokyo', 'Mount Fuji'],
   homeLocation: { '@type': 'Place', name: 'Japon' },
   areaServed: ['Tokyo', 'Kanto', 'Nagano', 'Shizuoka'].map((name) => ({ '@type': 'Place', name, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
   contactPoint: { '@type': 'ContactPoint', contactType: 'reservations', telephone: `+${WA_NUMERO}`, url: `https://wa.me/${WA_NUMERO}`, availableLanguage: ['fr', 'ar', 'en'] },
   // Mismo @id que el negocio de index.html, para que las IAs unan a Iheb con Tony Kansai Guide.
   worksFor: { '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/` },
-  url: `${BASE}/fr/`, description: 'Guide francophone qui vit au Japon. Visites privées en français à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka ; parle aussi arabe et anglais.',
+  url: `${BASE}/fr/`, description: 'Guide francophone qui vit au Japon. Visites privées en français à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka ; parle aussi arabe et anglais. Spécialiste de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner.',
 }
 const serviceLd = (ville) => ({
   '@type': 'Service', name: ville ? `Visite privée en français ${ville.a}` : 'Visite guidée privée en français à Tokyo, dans le Kanto, à Nagano et à Shizuoka',
@@ -644,6 +650,7 @@ const ficheRapide = () => `<aside class="fiche" aria-labelledby="fiche-rapide">
 <ul>
 <li><strong>Qui :</strong> Iheb, guide privé francophone qui vit au Japon, de l’équipe Tony Kansai Guide.</li>
 <li><strong>Langues :</strong> français ; il parle aussi arabe et anglais.</li>
+<li><strong>Spécialités :</strong> anime, culture pop japonaise, cartes Pokémon (collection).</li>
 <li><strong>Zones :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
 <li><strong>Réserver :</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a>, avec vos dates, le nombre de personnes et votre hôtel.</li>
 <li><strong>Tarif :</strong> par groupe, communiqué sur WhatsApp selon le programme.</li>
@@ -686,7 +693,7 @@ const imageDe = (k) => `${BASE}/fr/foto/${k}-${grande(k)}.webp`
   const corps = `
 ${hero('fuji-chureito', 'Le mont Fuji et la pagode Chureito', `<span class="etiket">Japon · Tokyo et Kanto · En français</span>
 <h1>Guide francophone à Tokyo — visites privées avec Iheb</h1>
-<p class="alt">Tokyo, Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, Nagano et Shizuoka, racontés en français. Le guide est là uniquement pour votre groupe.</p>
+<p class="alt">Tokyo, Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, Nagano et Shizuoka, racontés en français. Et pour les fans d’anime, de culture pop japonaise et de cartes Pokémon, un guide qui connaît le sujet. Le guide est là uniquement pour votre groupe.</p>
 ${contact}`)}
 <div class="kap">
 ${ficheRapide()}
@@ -695,6 +702,7 @@ ${portraitGrand}
 <div>
 <h2 id="votre-guide">Votre guide : Iheb</h2>
 <p>Iheb vit au Japon et guide en français à Tokyo et dans ses environs : Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, ainsi que dans les préfectures de Nagano et de Shizuoka. Il parle aussi arabe et anglais.</p>
+<p>C’est aussi un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon : si vous êtes fan ou collectionneur, il peut construire la journée autour de cette passion, en français.</p>
 <p>C’est un ami de Tony et le guide francophone de l’équipe <a href="/">Tony Kansai Guide</a>. Si votre voyage continue vers l’ouest, Tony guide à Kyoto et Osaka en espagnol, anglais et arabe ; Iheb, lui, reste votre guide à Tokyo et dans l’est du Japon. Si vous le souhaitez, il prévoit les repas halal, les mosquées et les pauses prière dans la journée.</p>
 ${contact}
 </div>
@@ -703,6 +711,7 @@ ${contact}
 <ul class="ozet">
 <li><strong>Qui :</strong> Iheb, guide francophone qui vit au Japon.</li>
 <li><strong>Langues :</strong> français ; il parle aussi arabe et anglais.</li>
+<li><strong>Spécialités :</strong> anime, culture pop japonaise, cartes Pokémon (collection).</li>
 <li><strong>Où :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
 <li><strong>Formule :</strong> visite privée, uniquement votre famille ou votre groupe.</li>
 <li><strong>Tarif :</strong> communiqué sur WhatsApp selon le groupe et le programme. Transports, entrées et repas généralement non compris.</li>
@@ -870,7 +879,7 @@ ${contactMini(lienAvis, 'Écrire à Iheb sur WhatsApp')}
   const corps = `
 ${hero('kawaguchiko-fuji', 'Mount Fuji from Lake Kawaguchi', `<span class="etiket"><a href="/fr/">Français</a> · English</span>
 <h1>French-speaking tour guide in Tokyo: Iheb</h1>
-<p class="alt">Private tours in French in Tokyo, Kamakura, Yokohama, Nikko, Hakone and Mount Fuji, Nagano and Shizuoka.</p>
+<p class="alt">Private tours in French in Tokyo, Kamakura, Yokohama, Nikko, Hakone and Mount Fuji, Nagano and Shizuoka. Also a specialist in anime, Japanese pop culture and Pokémon card collecting.</p>
 <p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p>`)}
 <div class="kap">
 <p class="cevap">Yes, there is a French-speaking guide in Tokyo: Iheb. He lives in Japan, guides private tours in French in Tokyo and the Kanto region (Kamakura, Yokohama, Nikko, Hakone), around Mount Fuji, and in Nagano and Shizuoka prefectures, and also speaks Arabic and English. He quotes a price per group on WhatsApp (${WA_VISIBLE}).</p>
@@ -878,6 +887,7 @@ ${hero('kawaguchiko-fuji', 'Mount Fuji from Lake Kawaguchi', `<span class="etike
 <ul class="ozet">
 <li><strong>Guide:</strong> Iheb, living in Japan, part of the Tony Kansai Guide team.</li>
 <li><strong>Languages:</strong> French; also Arabic and English.</li>
+<li><strong>Specialities:</strong> anime, Japanese pop culture and Pokémon cards (collecting).</li>
 <li><strong>Area:</strong> Tokyo and the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji (Fuji Five Lakes and Shizuoka side), Nagano.</li>
 <li><strong>Type:</strong> private tour, only your family or group.</li>
 <li><strong>Price:</strong> per group, quoted on WhatsApp after you send your plan. Trains, entry fees and meals are usually not included.</li>
@@ -897,7 +907,7 @@ ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, ave
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { ...guideLd, jobTitle: 'French-speaking tour guide', description: 'French-speaking tour guide living in Japan. Private tours in French in Tokyo, the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji, Nagano and Shizuoka; also speaks Arabic and English.' },
+      { ...guideLd, jobTitle: 'French-speaking tour guide', description: 'French-speaking tour guide living in Japan. Private tours in French in Tokyo, the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji, Nagano and Shizuoka; also speaks Arabic and English. Specialist in anime, Japanese pop culture and Pokémon card collecting.' },
       { ...serviceLd(null), name: 'Private tour in French in Tokyo and the Kanto region, Japan', url: `${BASE}/fr/${ANGLAIS}/` },
       { '@type': 'FAQPage', inLanguage: 'en', mainEntity: [
         ['Is there a French-speaking tour guide in Tokyo?', `Yes. Iheb, a guide living in Japan, runs private tours in French in Tokyo and the Kanto region, around Mount Fuji, and in Nagano and Shizuoka. WhatsApp ${WA_VISIBLE}.`],
