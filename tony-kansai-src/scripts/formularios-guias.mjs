@@ -57,7 +57,7 @@ const FORMULARIOS = [
     },
   },
   {
-    ruta: 'fr/avis', lang: 'fr', guia: 'iheb', pagina: '/fr/', serit: 'Iheb · Guide francophone à Tokyo',
+    ruta: 'fr/avis', lang: 'fr', guia: 'iheb', pagina: '/fr/avis-clients/', serit: 'Iheb · Guide francophone à Tokyo',
     ciudades: ['Tokyo', 'Kamakura', 'Nikko', 'Hakone', 'Mont Fuji', 'Nagano', 'Shizuoka'],
     // Toile de Jouy: bleu de Prusse et rouge garance sur écru.
     tema: { fondo: '#f6f3ec', tinta: '#1b2440', acento: '#24407a', acento2: '#5b7bb5', resalte: '#a6243a', kart: '#fffdf7' },
@@ -74,7 +74,7 @@ const FORMULARIOS = [
       eksik: 'Merci de donner une note, d’indiquer votre prénom, d’écrire un avis d’au moins 20 caractères et de cocher la case d’accord.',
       hata: 'Envoi impossible. Vérifiez votre connexion et réessayez.',
       tamam: 'Merci ! Votre avis est publié.', bekle: 'Merci ! Votre avis a bien été reçu et sera publié sous peu.',
-      gor: 'Voir sur la page d’Iheb →',
+      gor: 'Voir tous les avis sur Iheb →',
     },
   },
 ]

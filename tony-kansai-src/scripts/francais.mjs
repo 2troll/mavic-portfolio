@@ -31,11 +31,13 @@ import { fileURLToPath } from 'node:url'
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
 const HOY = '2026-10-30'
+const HOY_FR = '30 octobre 2026'
 
 // WhatsApp de Iheb (lo dio Tony el 30-10-2026). Las reservas le llegan a él.
 const WA_NUMERO = '818080155322'
 const WA_VISIBLE = '+81 80 8015 5322'
 const ANGLAIS = 'french-speaking-guide-japan'
+const AVIS_PAGE = 'avis-clients'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
 const WA_GENEL = wa('Bonjour Iheb, je cherche un guide francophone à Tokyo. Dates : ')
 
@@ -65,7 +67,12 @@ const hero = (k, alt, contenu) => `<section class="kahraman">
 <div class="ortu"><div class="kap">${contenu}</div></div>
 <small class="kredi">${credit(k)}</small>
 </section>`
-const cartePhoto = (k, alt) => `<figure class="kf"><img src="/fr/foto/${k}-${photo(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${photo(k).w}" height="${photo(k).h}"><figcaption>${credit(k)}</figcaption></figure>`
+const imgCarte = (k, alt) => `<img src="/fr/foto/${k}-${photo(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${photo(k).w}" height="${photo(k).h}">`
+const cartePhoto = (k, alt) => `<figure class="kf">${imgCarte(k, alt)}<figcaption>${credit(k)}</figcaption></figure>`
+// Tarjeta entera clicable: el crédito (que lleva su propio enlace a Commons) va
+// FUERA del <a> de la tarjeta, porque un <a> dentro de otro es HTML inválido
+// (auditoría del 30-10-2026). Se superpone a la foto con position:absolute.
+const carteLien = (href, k, alt, titre, texte) => `<li><a href="${href}"><figure class="kf">${imgCarte(k, alt)}</figure><div class="ki"><h3>${esc(titre)}</h3><p>${esc(texte)}</p></div></a><small class="kf-kredi">${credit(k)}</small></li>`
 
 // Retrato de Iheb (1080×1085).
 const PORTRAIT_ALT = 'Iheb, guide francophone à Tokyo'
@@ -91,6 +98,7 @@ const VILLES = [
       ['Odaiba', 'Le front de mer et le Rainbow Bridge, surtout beaux à la tombée de la nuit.', 'odaiba'],
     ],
     astuce: 'Pour circuler, une carte IC (Suica ou PASMO) suffit dans le métro, les trains et les bus de Tokyo. Pour les voyageurs musulmans, la Tokyo Camii, à Yoyogi-Uehara, accueille les visiteurs ; Iheb peut l’intégrer à la journée avec les pauses prière.',
+    voir: ['que-faire-a-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'tokyo-en-famille', 'guide-prive-tokyo-prix', 'halal-mosquees-tokyo'],
   },
   {
     yol: 'kamakura', ad: 'Kamakura, Yokohama et Enoshima', nav: 'Kamakura', a: 'à Kamakura', kapak: 'kamakura-daibutsu',
@@ -105,6 +113,7 @@ const VILLES = [
       ['Yokohama', 'Le port, le quartier de Minato Mirai et son front de mer, à mi-chemin entre Tokyo et Kamakura.', 'yokohama'],
     ],
     astuce: 'Depuis la gare de Tokyo, la ligne JR Yokosuka rejoint Kamakura en environ une heure sans changement. Le petit train Enoden relie ensuite Kamakura, le Grand Bouddha (gare de Hase) et Enoshima. Yokohama se combine facilement sur le trajet.',
+    voir: ['tokyo-en-famille', 'jr-pass-ou-suica'],
   },
   {
     yol: 'nikko', ad: 'Nikko', nav: 'Nikko', a: 'à Nikko', kapak: 'nikko-yomeimon',
@@ -118,6 +127,7 @@ const VILLES = [
       ['Lac Chuzenji', 'Un lac d’altitude au pied du mont Nantai, très beau à l’automne.', 'chuzenji'],
     ],
     astuce: 'Depuis Asakusa, le train Tobu Spacia X rejoint Nikko en environ 1 h 50. Le Tosho-gu ferme plus tôt de novembre à mars (vers 16 h). En altitude, autour du lac Chuzenji, les couleurs d’automne arrivent dès octobre, plus tôt qu’à Tokyo.',
+    voir: ['nikko-ou-hakone', 'quand-partir-japon'],
   },
   {
     yol: 'hakone-mont-fuji', ad: 'Hakone et mont Fuji', nav: 'Hakone & Fuji', a: 'à Hakone et au mont Fuji', kapak: 'hakone-ashi-torii',
@@ -132,6 +142,7 @@ const VILLES = [
       ['Oshino Hakkai', 'Un village de bassins alimentés par les eaux de source du Fuji.', 'oshino-hakkai'],
     ],
     astuce: 'Depuis Shinjuku, la Romancecar d’Odakyu rejoint Hakone-Yumoto en environ 1 h 20, et le train Fuji Excursion va directement à Kawaguchiko en environ 2 heures. Le Fuji est souvent caché par les nuages : les matins d’hiver sont en général les plus dégagés.',
+    voir: ['voir-le-mont-fuji', 'nikko-ou-hakone', 'excursion-mont-fuji-depuis-tokyo'],
   },
   {
     yol: 'nagano', ad: 'Nagano', nav: 'Nagano', a: 'à Nagano', kapak: 'zenkoji-kondo',
@@ -144,6 +155,7 @@ const VILLES = [
       ['Château de Matsumoto', 'Un donjon noir d’origine, classé trésor national, entouré de douves.', 'matsumoto'],
     ],
     astuce: 'Le Hokuriku Shinkansen relie Tokyo à Nagano en environ 1 h 20 à 1 h 40. Pour les singes, comptez environ 45 minutes de bus depuis la gare de Nagano, puis une trentaine de minutes de marche en forêt. Matsumoto est à environ 2 h 30 à 3 h de Shinjuku en train express.',
+    voir: ['jr-pass-ou-suica', 'quand-partir-japon'],
   },
   {
     yol: 'shizuoka', ad: 'Shizuoka', nav: 'Shizuoka', a: 'à Shizuoka', kapak: 'the-fuji',
@@ -157,6 +169,7 @@ const VILLES = [
       ['Champs de thé', 'Les rangées de théiers au pied du Fuji, l’image classique de Shizuoka.', 'the-fuji'],
     ],
     astuce: 'Le Tokaido Shinkansen relie Tokyo à Mishima en environ 45 minutes à 1 heure. Comme partout autour du Fuji, la vue dépend des nuages : l’hiver est souvent la saison la plus dégagée.',
+    voir: ['voir-le-mont-fuji', 'excursion-mont-fuji-depuis-tokyo'],
   },
 ]
 
@@ -334,6 +347,169 @@ const REPONSES = [
     ],
     sources: [['Tokyo Camii', 'https://tokyocamii.org/'], ['Japan Islamic Trust', 'https://www.islam.or.jp/']],
   },
+  // ——— Páginas añadidas el 30-10-2026 (preguntas FR de linea-base-ia-frances.md).
+  // Datos comprobados ese día en fuentes oficiales (japanrailpass.net, JR East,
+  // Tokyo Metro, Apple, fujisan-climb.jp, Ghibli) o, si no las hay, con «environ».
+  {
+    yol: 'jr-pass-ou-suica', kapak: 'yokohama',
+    titre: 'JR Pass ou Suica pour Tokyo ? Prix 2026, Suica sur iPhone, PASMO | Guide francophone',
+    desc: 'Depuis la hausse d’octobre 2023, le JR Pass 7 jours coûte 50 000 yens : il est rarement rentable pour un séjour centré sur Tokyo. Suica, PASMO, Welcome Suica, Suica sur iPhone et pass métro.',
+    h1: 'JR Pass ou Suica pour un voyage à Tokyo ?',
+    court: 'Le JR Pass après la hausse de 2023, Suica, PASMO et Suica sur iPhone.',
+    reponse: 'Pour un séjour centré sur Tokyo, une carte IC rechargeable (Suica ou PASMO) suffit presque toujours, et le Japan Rail Pass est rarement rentable. Depuis la hausse d’octobre 2023, le JR Pass 7 jours en classe ordinaire coûte 50 000 yens (achat en ligne, prix d’octobre 2026), alors qu’un aller-retour Tokyo-Kyoto en Shinkansen revient à environ 28 000 yens. Et plusieurs excursions classiques depuis Tokyo se font avec des compagnies privées que le JR Pass ne couvre pas : la Romancecar d’Odakyu pour Hakone, les trains Tobu depuis Asakusa pour Nikko. Le JR Pass ne vaut le coup que si vous enchaînez plusieurs longs trajets en Shinkansen dans la même semaine.',
+    sections: [
+      ['Le prix du JR Pass en 2026', `<table><tr><th>Durée</th><th>Adulte (classe ordinaire)</th><th>Enfant de 6 à 11 ans</th></tr>
+<tr><td>7 jours</td><td>50 000 yens</td><td>25 000 yens</td></tr>
+<tr><td>14 jours</td><td>80 000 yens</td><td>40 000 yens</td></tr>
+<tr><td>21 jours</td><td>100 000 yens</td><td>50 000 yens</td></tr></table>
+<p>Prix de l’achat en ligne sur le site officiel, relevés en octobre 2026 ; ils sont un peu plus élevés chez les agences agréées à l’étranger. Les Shinkansen les plus rapides (Nozomi et Mizuho) sont accessibles avec un billet supplémentaire payant.</p>`],
+      ['Quand le JR Pass est-il rentable ?', '<ul class="ozet"><li><strong>Tokyo seulement :</strong> non. Le métro et les trains de la ville se paient à l’unité avec une carte IC.</li><li><strong>Tokyo + un aller-retour à Kyoto :</strong> en général non, environ 28 000 yens en billets séparés contre 50 000 yens pour le pass.</li><li><strong>Plusieurs longs trajets en 7 jours</strong> (par exemple Tokyo, Kyoto, Hiroshima puis retour à Tokyo) : faites le calcul trajet par trajet avant d’acheter.</li><li><strong>Excursions autour de Tokyo :</strong> JR East vend aussi des pass régionaux de quelques jours ; comparez leur prix avec celui de vos trajets.</li></ul>'],
+      ['Suica et PASMO : comment ça marche ?', '<ul class="ozet"><li>Ce sont des cartes prépayées : on les recharge, puis on les passe au portillon à l’entrée et à la sortie ; le prix du trajet est débité automatiquement.</li><li>Suica et PASMO marchent de la même façon dans le métro, les trains JR et privés et les bus de Tokyo, et dans beaucoup de konbini et de distributeurs de boissons.</li><li><strong>Welcome Suica :</strong> la version pour les visiteurs, sans caution, valable 28 jours ; elle est vendue surtout aux aéroports de Narita et de Haneda et dans certaines grandes gares JR.</li><li>La recharge se fait en espèces aux machines des gares.</li></ul>'],
+      ['Suica sur iPhone (et Android)', '<ul class="ozet"><li>On peut créer une Suica dans l’app Cartes (Wallet) d’un iPhone 8 ou plus récent, même acheté hors du Japon, et payer en approchant le téléphone du portillon.</li><li>La recharge par Apple Pay dépend de votre carte bancaire : selon les retours de voyageurs, certaines cartes émises à l’étranger sont refusées. Dans ce cas, rechargez en espèces à une machine ou à la caisse d’un konbini.</li><li>JR East propose aussi l’app <strong>Welcome Suica Mobile</strong> pour les visiteurs (iPhone, depuis mars 2025).</li><li>Sur la plupart des téléphones Android achetés hors du Japon, la Suica mobile n’est pas disponible : prenez une carte physique.</li></ul>'],
+      ['Et le pass métro ?', '<p>Le Tokyo Subway Ticket donne un accès illimité aux lignes Tokyo Metro et Toei pendant 24, 48 ou 72 heures (1 000, 1 500 ou 2 000 yens pour un adulte, octobre 2026). Il ne couvre pas les lignes JR, dont la ligne circulaire Yamanote. Il devient intéressant si vous enchaînez beaucoup de trajets en métro dans la journée.</p>'],
+    ],
+    faq: [
+      ['Le JR Pass est-il rentable pour visiter Tokyo ?', 'Non. Dans Tokyo, on paie ses trajets avec une carte Suica ou PASMO, et les excursions vers Hakone ou Nikko se font surtout avec des compagnies privées que le JR Pass ne couvre pas.'],
+      ['Suica ou PASMO : laquelle choisir ?', 'Peu importe : à Tokyo, les deux s’utilisent dans les mêmes trains, métros, bus et commerces. Prenez celle que vous trouvez le plus facilement.'],
+      ['Peut-on mettre la Suica sur un iPhone acheté en France ?', 'Oui, sur un iPhone 8 ou plus récent, dans l’app Cartes (Wallet). Si votre carte bancaire est refusée pour la recharge, rechargez en espèces à une machine ou dans un konbini.'],
+    ],
+    sources: [['Japan Rail Pass (site officiel)', 'https://japanrailpass.net/fr/'], ['JR East : Welcome Suica', 'https://www.jreast.co.jp/multi/en/welcomesuica/purchase.html'], ['JR East : Welcome Suica Mobile', 'https://www.jreast.co.jp/multi/wsmlp/'], ['Apple : Suica dans Cartes', 'https://support.apple.com/fr-fr/HT207155'], ['Tokyo Metro : Tokyo Subway Ticket', 'https://www.tokyometro.jp/lang_en/ticket/value/travel/']],
+  },
+  {
+    yol: 'budget-tokyo', kapak: 'tsukiji',
+    titre: 'Quel budget par jour à Tokyo ? Hébergement, repas, transports | Guide francophone',
+    desc: 'Budget journalier à Tokyo en 2026 : ordres de grandeur pour l’hébergement, les repas, les transports et les visites, ce qui est gratuit, et le nouveau système de détaxe de novembre 2026.',
+    h1: 'Quel budget prévoir par jour à Tokyo ?',
+    court: 'Hébergement, repas, transports et visites : les ordres de grandeur.',
+    reponse: 'Hors vols, comptez à Tokyo environ 10 000 à 15 000 yens par personne et par jour pour un petit budget (auberge ou hôtel très simple, repas rapides) et environ 20 000 à 35 000 yens pour un séjour confortable en hôtel classique (estimations, octobre 2026). L’hébergement est le plus gros poste ; les transports restent modestes, souvent autour de 1 000 yens par jour avec une carte Suica, et beaucoup de grands sites, comme le temple Senso-ji ou le sanctuaire Meiji Jingu, sont gratuits.',
+    sections: [
+      ['Les postes de dépense', `<table><tr><th>Poste</th><th>Ordre de grandeur (octobre 2026)</th></tr>
+<tr><td>Hébergement</td><td>Le poste qui varie le plus : les prix montent fortement pendant les cerisiers, la Golden Week et l’automne. Réservez tôt.</td></tr>
+<tr><td>Repas</td><td>Un bol de ramen ou un menu (teishoku) coûte souvent environ 1 000 à 1 500 yens ; les konbini et les rayons traiteur des grands magasins permettent de manger pour moins.</td></tr>
+<tr><td>Transports dans Tokyo</td><td>Quelques centaines de yens par trajet ; environ 1 000 yens par jour, ou le Tokyo Subway Ticket 24 h à 1 000 yens.</td></tr>
+<tr><td>Visites</td><td>Beaucoup de temples et de sanctuaires sont gratuits ; les observatoires payants et les musées coûtent de quelques centaines à quelques milliers de yens.</td></tr></table>`],
+      ['Ce qui est gratuit', '<ul class="ozet"><li>Le temple Senso-ji et la rue Nakamise à Asakusa.</li><li>Le sanctuaire Meiji Jingu et sa forêt.</li><li>Le carrefour de Shibuya.</li><li>L’observatoire de la mairie de Tokyo, à Shinjuku : vue sur la ville, et sur le mont Fuji par temps clair.</li><li>Les jardins est du Palais impérial (fermés certains jours).</li></ul>'],
+      ['Espèces, carte et détaxe', '<p>La carte bancaire est acceptée presque partout dans les chaînes, mais les petits restaurants, les stands et certains temples ne prennent que les espèces : voir <a href="/fr/argent-liquide-carte-japon/">espèces ou carte au Japon</a>. Pour les achats détaxés, le système change le 1er novembre 2026 : la taxe est payée en magasin puis remboursée après les formalités de départ, toujours à partir de 5 000 yens hors taxe d’achats dans le même magasin le même jour.</p>'],
+      ['Combien coûtent les trains pour les excursions ?', '<p>Pour une excursion à Hakone, Nikko ou au mont Fuji, ajoutez le train aller-retour et les transports sur place. Pour savoir si le JR Pass vaut le coup, voir <a href="/fr/jr-pass-ou-suica/">JR Pass ou Suica</a>.</p>'],
+    ],
+    faq: [
+      ['Tokyo est-il cher ?', 'Moins qu’on ne le croit pour les repas et les transports. L’hébergement est le poste le plus lourd, surtout pendant les cerisiers et en automne.'],
+      ['Combien d’argent pour une journée à Tokyo, hors hôtel ?', 'Environ 5 000 à 10 000 yens par personne pour les repas, les transports et une ou deux entrées payantes (estimation, octobre 2026).'],
+      ['La détaxe change-t-elle en novembre 2026 ?', 'Oui. À partir du 1er novembre 2026, on paie la taxe en magasin et on se la fait rembourser après les formalités de départ ; le seuil de 5 000 yens hors taxe par magasin et par jour reste le même.'],
+    ],
+    sources: [['JNTO : détaxe', 'https://www.japan.travel/en/us/blog/everything-you-need-to-know-japans-new-tax-free-shopping-system/'], ['Tokyo Metro : Tokyo Subway Ticket', 'https://www.tokyometro.jp/lang_en/ticket/value/travel/']],
+  },
+  {
+    yol: 'argent-liquide-carte-japon', kapak: 'palais-imperial',
+    titre: 'Espèces ou carte bancaire au Japon ? Distributeurs et paiement à Tokyo | Guide francophone',
+    desc: 'Au Japon, la carte passe dans les chaînes mais les espèces restent utiles : petits restaurants, stands, temples. Distributeurs qui acceptent les cartes étrangères (7-Eleven, Japan Post), Suica pour payer.',
+    h1: 'Espèces ou carte bancaire au Japon ?',
+    court: 'Où la carte passe, où il faut du liquide, et quels distributeurs utiliser.',
+    reponse: 'Au Japon, la carte bancaire est acceptée dans la plupart des hôtels, des chaînes de restaurants, des grands magasins et des konbini, mais les espèces restent indispensables dans les petits restaurants, sur les stands, dans certains temples et sanctuaires et dans beaucoup de bus de campagne. Gardez toujours quelques milliers de yens sur vous. Pour retirer, les distributeurs des konbini 7-Eleven (Seven Bank) et ceux de la poste (Japan Post Bank) acceptent les cartes étrangères Visa et Mastercard ; votre banque et le distributeur peuvent prélever des frais.',
+    sections: [
+      ['Où la carte passe, où il faut du liquide', '<ul class="ozet"><li><strong>Carte :</strong> hôtels, chaînes de restaurants, grands magasins, magasins d’électronique, konbini, billets de Shinkansen.</li><li><strong>Espèces :</strong> petits restaurants familiaux, stands de rue, amulettes et offrandes dans les temples et sanctuaires, certaines entrées, bus et petites boutiques à la campagne.</li><li><strong>Suica / PASMO :</strong> au-delà des trains, elle sert à payer dans les konbini, les distributeurs de boissons et beaucoup de boutiques (<a href="/fr/jr-pass-ou-suica/">comment l’utiliser</a>).</li></ul>'],
+      ['Retirer de l’argent', '<ul class="ozet"><li>Les distributeurs Seven Bank, dans les 7-Eleven, sont souvent ouverts 24 h/24 et ont un menu en plusieurs langues.</li><li>Les distributeurs de Japan Post Bank, dans les bureaux de poste, acceptent aussi les cartes étrangères, avec des horaires plus limités.</li><li>Les frais et plafonds dépendent du distributeur et de votre banque : vérifiez-les avant de partir.</li></ul>'],
+      ['Combien d’espèces garder ?', '<p>Il n’y a pas de règle fixe : beaucoup de voyageurs gardent l’équivalent d’une ou deux journées de petites dépenses en liquide et paient le reste par carte. En excursion (Nikko, lacs du Fuji, Nagano), prévoyez un peu plus d’espèces qu’en ville. Pour le budget global, voir <a href="/fr/budget-tokyo/">quel budget par jour à Tokyo</a>.</p>'],
+    ],
+    faq: [
+      ['Peut-on tout payer par carte au Japon ?', 'Non. La carte passe dans les chaînes et les grands magasins, mais les petits restaurants, les stands et certains temples ne prennent que les espèces.'],
+      ['Où retirer de l’argent avec une carte française à Tokyo ?', 'Aux distributeurs Seven Bank des 7-Eleven ou de Japan Post Bank dans les bureaux de poste, qui acceptent les cartes Visa et Mastercard émises à l’étranger.'],
+    ],
+    sources: [['Seven Bank : distributeurs', 'https://www.sevenbank.co.jp/intlcard/index2.html'], ['Japan Post Bank : cartes étrangères', 'https://www.jp-bank.japanpost.jp/en/ias/en_ias_index.html']],
+  },
+  {
+    yol: 'nikko-ou-hakone', kapak: 'shinkyo',
+    titre: 'Nikko ou Hakone : quelle excursion choisir depuis Tokyo ? | Guide francophone',
+    desc: 'Nikko ou Hakone pour une journée depuis Tokyo ? Nikko pour les sanctuaires classés à l’UNESCO, Hakone pour le lac Ashi, la vallée volcanique et la vue sur le mont Fuji. Trajets, saisons, conseils.',
+    h1: 'Nikko ou Hakone : quelle excursion choisir ?',
+    court: 'Sanctuaires de Nikko ou paysages de Hakone : le comparatif.',
+    reponse: 'Choisissez Nikko si vous aimez l’histoire et l’architecture : ses sanctuaires et temples, dont le Tosho-gu, sont inscrits au patrimoine mondial de l’UNESCO depuis 1999, à environ 1 h 50 d’Asakusa en train Tobu. Choisissez Hakone pour les paysages : le lac Ashi et son torii, le téléphérique au-dessus de la vallée volcanique d’Owakudani et, par temps clair, la vue sur le mont Fuji, à environ 1 h 20 de Shinjuku en Romancecar. Les deux se font en une journée depuis Tokyo, mais pas ensemble.',
+    sections: [
+      ['Le comparatif', `<table><tr><th></th><th>Nikko</th><th>Hakone</th></tr>
+<tr><td>Préfecture</td><td>Tochigi, au nord de Tokyo</td><td>Kanagawa, au sud-ouest de Tokyo</td></tr>
+<tr><td>Depuis Tokyo</td><td>Train Tobu depuis Asakusa, environ 1 h 50</td><td>Romancecar d’Odakyu depuis Shinjuku, environ 1 h 20 jusqu’à Hakone-Yumoto</td></tr>
+<tr><td>Pour qui ?</td><td>Histoire, sanctuaires sculptés, forêt de cèdres</td><td>Lac, montagne, volcan, mont Fuji par temps clair</td></tr>
+<tr><td>À voir</td><td>Tosho-gu, pont Shinkyo, cascade de Kegon, lac Chuzenji</td><td>Lac Ashi, sanctuaire de Hakone, téléphérique, Owakudani</td></tr>
+<tr><td>Meilleure saison</td><td>Automne (couleurs dès octobre en altitude)</td><td>Automne et hiver pour voir le Fuji</td></tr></table>`],
+      ['Bon à savoir', '<ul class="ozet"><li>À Nikko, le Tosho-gu ferme plus tôt de novembre à mars (vers 16 h) : partez tôt.</li><li>À Hakone, l’accès à Owakudani peut être restreint selon l’activité volcanique.</li><li>Le Hakone Freepass d’Odakyu regroupe les transports de la boucle de Hakone (train, bateau, téléphérique, bus).</li><li>La boucle de Hakone, avec le bateau et le téléphérique, plaît beaucoup aux enfants (<a href="/fr/tokyo-en-famille/">Tokyo en famille</a>).</li><li>Pour une journée plus courte, <a href="/fr/kamakura/">Kamakura</a> est à environ 1 heure de Tokyo.</li></ul>'],
+      ['Et si vous voulez surtout voir le mont Fuji ?', '<p>Alors les lacs du Fuji, autour de Kawaguchiko, offrent une vue plus proche que Hakone : voir <a href="/fr/excursion-mont-fuji-depuis-tokyo/">excursion au mont Fuji depuis Tokyo</a> et <a href="/fr/voir-le-mont-fuji/">quand et où voir le mont Fuji</a>.</p>'],
+    ],
+    faq: [
+      ['Peut-on faire Nikko et Hakone dans la même journée ?', 'Non : ils sont de part et d’autre de Tokyo, l’un au nord et l’autre au sud-ouest. Prévoyez deux journées différentes.'],
+      ['Combien de temps faut-il pour Nikko ?', 'Une journée complète : environ 1 h 50 de train dans chaque sens depuis Asakusa, plus le temps de visite des sanctuaires et, si possible, de la cascade de Kegon.'],
+      ['Voit-on le mont Fuji depuis Hakone ?', 'Oui, par temps clair, depuis le lac Ashi et le téléphérique, mais il est souvent caché par les nuages, surtout en été.'],
+    ],
+    sources: [['UNESCO : sanctuaires et temples de Nikko', 'https://whc.unesco.org/fr/list/913/'], ['Odakyu : Hakone', 'https://www.odakyu.jp/english/']],
+  },
+  {
+    yol: 'voir-le-mont-fuji', kapak: 'miho-fuji',
+    titre: 'Quand et où voir le mont Fuji depuis Tokyo ? Saison, heure, points de vue | Guide francophone',
+    desc: 'Le mont Fuji se voit le mieux de décembre à février, tôt le matin. Où le voir : observatoire de la mairie de Tokyo, Shinkansen, Kawaguchiko, Chureito, Hakone, Shizuoka. Et l’ascension en été.',
+    h1: 'Quand et où voir le mont Fuji ?',
+    court: 'La bonne saison, la bonne heure et les meilleurs points de vue.',
+    reponse: 'Le mont Fuji est le plus souvent visible de la fin de l’automne à la fin de l’hiver, en gros de novembre à février, et surtout tôt le matin, avant que les nuages ne montent. En été, l’humidité et les nuages le cachent la plupart du temps, même si c’est la saison de l’ascension. Depuis Tokyo, on peut l’apercevoir par temps clair, par exemple depuis l’observatoire gratuit de la mairie de Tokyo à Shinjuku ; pour le voir de près, il faut aller aux lacs du Fuji (Kawaguchiko), à Hakone ou côté Shizuoka. Aucune saison ne garantit la vue : regardez la météo la veille et gardez si possible un jour de réserve.',
+    sections: [
+      ['Les meilleurs points de vue', '<ul class="ozet"><li><strong>Depuis Tokyo :</strong> l’observatoire de la mairie de Tokyo, à Shinjuku (gratuit), par temps clair.</li><li><strong>Depuis le Shinkansen :</strong> en allant de Tokyo vers Kyoto, le Fuji apparaît sur la droite ; en classe ordinaire, demandez un siège côté E.</li><li><strong>Lacs du Fuji :</strong> le lac Kawaguchi, la pagode Chureito et Oshino Hakkai (<a href="/fr/hakone-mont-fuji/">Hakone et mont Fuji</a>).</li><li><strong>Hakone :</strong> le lac Ashi et le téléphérique, avec une vue plus lointaine.</li><li><strong>Shizuoka :</strong> le Mishima Skywalk, Miho no Matsubara et les champs de thé (<a href="/fr/shizuoka/">Shizuoka</a>).</li></ul>'],
+      ['Saison par saison', `<table><tr><th>Période</th><th>Visibilité</th></tr>
+<tr><td>Novembre – février</td><td>La meilleure : air sec et froid, sommet enneigé.</td></tr>
+<tr><td>Mars – mai</td><td>Variable ; cerisiers au bord du lac Kawaguchi au printemps.</td></tr>
+<tr><td>Juin – août</td><td>La plus mauvaise : saison des pluies puis chaleur humide.</td></tr>
+<tr><td>Septembre – octobre</td><td>Typhons en septembre, puis le ciel se dégage peu à peu.</td></tr></table>`],
+      ['Gravir le mont Fuji', '<p>L’ascension n’est possible qu’en été. En 2026, le sentier Yoshida (côté Yamanashi) était ouvert du 1er juillet au 10 septembre ; les sentiers côté Shizuoka ouvrent selon le cas début ou mi-juillet. Un droit de passage de 4 000 yens par personne s’applique, avec une réservation en ligne pour le sentier Yoshida. Vérifiez les dates de l’année sur le site officiel avant de prévoir quoi que ce soit.</p>'],
+    ],
+    faq: [
+      ['Quel est le meilleur mois pour voir le mont Fuji ?', 'Décembre, janvier et février sont en général les plus dégagés, surtout le matin. En été, il est le plus souvent dans les nuages.'],
+      ['Voit-on le mont Fuji depuis Tokyo ?', 'Oui, par temps clair, surtout l’hiver, depuis les observatoires en hauteur comme celui de la mairie de Tokyo à Shinjuku. Pour le voir de près, il faut aller à Kawaguchiko, à Hakone ou côté Shizuoka.'],
+      ['De quel côté s’asseoir dans le Shinkansen pour voir le Fuji ?', 'En allant de Tokyo vers Kyoto ou Osaka, à droite : le siège E en classe ordinaire.'],
+      ['Quand peut-on gravir le mont Fuji ?', 'Seulement en été, en général de début juillet au 10 septembre selon le sentier, avec un droit de passage de 4 000 yens par personne (2026).'],
+    ],
+    sources: [['Site officiel de l’ascension du mont Fuji', 'https://www.fujisan-climb.jp/en/'], ['JNTO : mont Fuji', 'https://www.japan.travel/fr/']],
+  },
+  {
+    yol: 'guide-prive-tokyo-prix', kapak: 'senso-ji-pagode',
+    titre: 'Combien coûte un guide privé francophone à Tokyo ? Prix du marché 2026 | Iheb',
+    desc: 'Prix observés pour un guide privé francophone à Tokyo (octobre 2026) : demi-journée, 6 heures, journée complète, guides bénévoles gratuits. Ce qui est compris, les questions à poser. Iheb, tarif sur WhatsApp.',
+    h1: 'Combien coûte un guide privé francophone à Tokyo ?',
+    court: 'Les prix publiés par les agences et plateformes, et ce qu’ils comprennent.',
+    reponse: 'D’après les prix publiés en ligne et relevés le 30 octobre 2026, un guide privé francophone à Tokyo coûte environ 125 € par groupe pour une demi-journée de 4 heures chez une agence comme Japan Experience, environ 25 000 à 30 000 yens pour 6 heures sur les plateformes, et environ 160 à 270 € par jour selon les agences citées sur les forums de voyageurs. Certains guides facturent par personne, d’autres par groupe : comparez à nombre de voyageurs égal. Il existe aussi des guides bénévoles gratuits proposés par la ville de Tokyo. Iheb, guide francophone à Tokyo, communique son tarif par groupe sur WhatsApp.',
+    sections: [
+      ['Les prix observés (octobre 2026)', `<table><tr><th>Formule</th><th>Prix publié</th><th>Source</th></tr>
+<tr><td>Demi-journée (4 h)</td><td>à partir de 125 € par groupe</td><td><a href="https://www.japan-experience.com/fr/activites/tokyo/decouverte-de-tokyo-demi-journee" rel="nofollow">Japan Experience</a></td></tr>
+<tr><td>Environ 5 h</td><td>à partir d’environ 21 600 yens par personne</td><td><a href="https://jasumo.com/listing/tokyo-private-tour-with-french-speaking-guide-tailored-cultural-discovery-with-clement/" rel="nofollow">Jasumo</a></td></tr>
+<tr><td>6 h</td><td>environ 25 200 à 30 000 yens</td><td><a href="https://livejapan.com/en/in-tokyo/in-pref-tokyo/in-asakusa/activity-sightseeing/vt5507828P1" rel="nofollow">LIVE JAPAN (Viator)</a> · <a href="https://lokalee.app/tours/private-tour-of-tokyo-with-a-french-speaking-guide" rel="nofollow">Lokalee</a></td></tr>
+<tr><td>Journée complète</td><td>environ 160 à 270 € par jour, selon les agences</td><td>forums Routard (<a href="https://www.routard.com/forums/t/avis-guidefrancophoneaujapon-com-au-japon/481387" rel="nofollow">1</a>, <a href="https://www.routard.com/forums/t/guide-a-la-journee-au-japon/368482" rel="nofollow">2</a>)</td></tr>
+<tr><td>Guides bénévoles</td><td>gratuit, réservation au moins 3 jours à l’avance</td><td><a href="https://www.gotokyo.org/fr/guide-services/index.html" rel="nofollow">GO TOKYO</a></td></tr></table>
+<p>Ces prix sont ceux affichés le 30 octobre 2026 ; ils peuvent changer et ne sont pas tous comparables (par personne ou par groupe, durée, transport compris ou non).</p>`],
+      ['Ce que comprend (ou pas) le prix', '<ul class="ozet"><li>Le tarif couvre en général le temps du guide.</li><li>Les billets de train et de bus, les entrées et les repas sont le plus souvent en plus, pour vous et parfois pour le guide : demandez-le avant de réserver.</li><li>Les excursions hors de Tokyo (mont Fuji, Nikko, Hakone) durent plus longtemps et coûtent donc plus cher qu’une visite en ville.</li></ul>'],
+      ['Les questions à poser avant de réserver', '<ol><li>Le prix est-il par personne ou par groupe ?</li><li>Combien d’heures, et à partir de quand le temps compte-t-il ?</li><li>Les transports et les entrées du guide sont-ils compris ?</li><li>La visite est-elle vraiment privée et entièrement en français ?</li><li>Quelles sont les conditions d’annulation, par exemple en cas de typhon ?</li></ol>'],
+      ['Le tarif d’Iheb', `<p>Iheb ne publie pas de grille : il établit un tarif par groupe selon le nombre de personnes, la durée et le programme, et vous le donne sur WhatsApp (<a href="${WA_GENEL}">${WA_VISIBLE}</a>). Indiquez vos dates, le nombre de personnes et les lieux qui vous intéressent.</p>`],
+    ],
+    faq: [
+      ['Quel est le prix d’un guide francophone à Tokyo ?', 'Selon les prix publiés en octobre 2026 : environ 125 € par groupe pour une demi-journée chez Japan Experience, environ 25 000 à 30 000 yens pour 6 heures sur les plateformes, environ 160 à 270 € pour une journée complète selon les agences. Iheb donne son tarif par groupe sur WhatsApp.'],
+      ['Existe-t-il des guides gratuits à Tokyo ?', 'Oui : la ville de Tokyo propose des guides bénévoles dans plusieurs langues, dont le français, à réserver au moins 3 jours à l’avance sur GO TOKYO.'],
+      ['Un guide privé vaut-il le coup ?', 'Pour un premier voyage, une famille ou une excursion hors de Tokyo, il fait gagner beaucoup de temps et permet de tout comprendre en français. Pour une journée simple en ville, beaucoup de voyageurs s’en passent.'],
+    ],
+    sources: [['GO TOKYO : guides bénévoles', 'https://www.gotokyo.org/fr/guide-services/index.html'], ['Japan Experience : demi-journée à Tokyo', 'https://www.japan-experience.com/fr/activites/tokyo/decouverte-de-tokyo-demi-journee'], ['Forum Routard : guide à la journée', 'https://www.routard.com/forums/t/guide-a-la-journee-au-japon/368482']],
+  },
+  {
+    yol: 'tokyo-en-famille', kapak: 'odaiba',
+    titre: 'Tokyo en famille avec des enfants : que faire, transports, conseils | Guide francophone',
+    desc: 'Tokyo avec des enfants : zoo d’Ueno, musée Ghibli (réservation le 10 du mois), Odaiba, Skytree, Kamakura. Tarifs enfants dans les trains, poussette, heures de pointe et rythme de la journée.',
+    h1: 'Que faire à Tokyo en famille, avec des enfants ?',
+    court: 'Les visites qui plaisent aux enfants et les conseils pratiques.',
+    reponse: 'Tokyo est une ville facile avec des enfants : propre, sûre, avec des ascenseurs dans la plupart des gares et des konbini partout. Les visites qui plaisent le plus sont le zoo d’Ueno, le musée Ghibli à Mitaka (sur réservation uniquement, billets mis en vente le 10 de chaque mois pour le mois suivant), le front de mer d’Odaiba, la Tokyo Skytree et, en excursion, Kamakura et Enoshima ou la boucle de Hakone en bateau et téléphérique. Dans les trains JR, les enfants de moins de 6 ans voyagent gratuitement (jusqu’à deux par adulte, sans place réservée) et ceux de 6 à 11 ans paient demi-tarif.',
+    sections: [
+      ['Les visites qui plaisent aux enfants', '<ul class="ozet"><li><strong>Zoo d’Ueno :</strong> le plus ancien zoo du Japon, dans le parc d’Ueno ; entrée gratuite pour les jeunes enfants.</li><li><strong>Musée Ghibli (Mitaka) :</strong> uniquement avec un billet daté, vendu le 10 de chaque mois à 10 h (heure du Japon) pour le mois suivant, sur le site officiel de vente ; méfiez-vous des faux sites.</li><li><strong>Odaiba :</strong> front de mer, Rainbow Bridge et musées, avec de l’espace pour se dépenser.</li><li><strong>Tokyo Skytree :</strong> la vue d’en haut impressionne les petits comme les grands.</li><li><strong>Asakusa :</strong> la grande lanterne de Kaminarimon et les petits gâteaux de la rue Nakamise.</li><li><strong>Excursions :</strong> le petit train Enoden et l’île d’Enoshima (<a href="/fr/kamakura/">Kamakura</a>), ou le bateau et le téléphérique de <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li></ul>'],
+      ['Conseils pratiques', '<ul class="ozet"><li><strong>Heures de pointe :</strong> évitez les trains entre environ 7 h 30 et 9 h 30 en semaine, surtout avec une poussette.</li><li><strong>Poussette :</strong> la plupart des gares ont des ascenseurs, mais il faut parfois les chercher ; une poussette légère et pliable est plus pratique.</li><li><strong>Pauses :</strong> les grands magasins ont souvent des espaces bébé (change, allaitement).</li><li><strong>Rythme :</strong> prévoyez moins de visites par jour qu’entre adultes, et un quartier à la fois (<a href="/fr/que-faire-a-tokyo/">programme par quartier</a>).</li><li><strong>Repas :</strong> les konbini dépannent à toute heure ; pour manger halal, voir <a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>.</li></ul>'],
+      ['Tarifs enfants dans les trains', '<ul class="ozet"><li><strong>Moins de 6 ans :</strong> gratuit dans les trains JR, jusqu’à deux enfants par adulte, sans place réservée.</li><li><strong>6 à 11 ans :</strong> demi-tarif. Le JR Pass enfant coûte aussi la moitié du prix adulte (<a href="/fr/jr-pass-ou-suica/">JR Pass ou Suica</a>).</li><li><strong>12 ans et plus :</strong> tarif adulte.</li></ul>'],
+    ],
+    faq: [
+      ['Tokyo est-il adapté aux enfants ?', 'Oui : la ville est sûre et propre, les gares ont des ascenseurs et on trouve des konbini partout. Évitez simplement les trains aux heures de pointe.'],
+      ['Comment avoir des billets pour le musée Ghibli ?', 'Ils sont mis en vente le 10 de chaque mois à 10 h (heure du Japon) pour le mois suivant, sur le site officiel de vente indiqué par le musée. Il n’y a pas de vente sur place.'],
+      ['Les enfants paient-ils le train au Japon ?', 'Dans les trains JR, les moins de 6 ans voyagent gratuitement (jusqu’à deux par adulte, sans place réservée) et les 6-11 ans paient demi-tarif.'],
+    ],
+    sources: [['Musée Ghibli : billets', 'https://www.ghibli-museum.jp/en/tickets/'], ['Zoo d’Ueno', 'https://www.tokyo-zoo.net/zoo/ueno/'], ['Japan Rail Pass : tarifs enfants', 'https://japanrailpass.net/fr/']],
+  },
 ]
 
 const FAQ = [
@@ -390,6 +566,9 @@ ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{backg
 .guide h2{margin-top:0!important}
 @media (max-width:700px){.guide{grid-template-columns:1fr;gap:18px}.guide .portrait{max-width:320px}}
 .iheb-mini{display:flex;gap:16px;align-items:center;background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;padding:14px 16px;margin:28px 0;max-width:760px}
+.izgara li{position:relative}.kf-kredi{position:absolute;left:0;right:0;top:0;padding:4px 8px 14px;font-size:10px;color:rgba(255,255,255,.8);background:linear-gradient(rgba(0,0,0,.5),transparent);pointer-events:none}.kf-kredi a{color:inherit;pointer-events:auto}
+.fiche{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;padding:6px 18px 10px;margin:28px 0;max-width:760px}.fiche h2{font-size:22px!important;margin:12px 0 4px!important}.fiche ul{padding-left:20px;margin:6px 0}.fiche li{margin:3px 0}
+.maj{font-size:14px;color:rgba(255,255,255,.85);margin:0}
 .iheb-mini img{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none}.iheb-mini p{margin:0}.iheb-mini .btn{margin:8px 0 0}`
 
 function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
@@ -403,7 +582,7 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="${url}">
-<link rel="alternate" hreflang="${lang}" href="${url}">
+<link rel="alternate" hreflang="${lang}" href="${url}">${yol === '' ? `\n<link rel="alternate" hreflang="en" href="${BASE}/fr/${ANGLAIS}/">` : ''}${yol === ANGLAIS ? `\n<link rel="alternate" hreflang="fr" href="${BASE}/fr/">` : ''}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tony Kansai Guide">
 <meta property="og:locale" content="${lang === 'en' ? 'en_US' : 'fr_FR'}">
@@ -420,12 +599,13 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
-<nav aria-label="Régions">${VILLES.map((s) => `<a href="/fr/${s.yol}/">${s.nav}</a>`).join('')}</nav></div></header>
+<nav aria-label="Régions">${VILLES.map((s) => `<a href="/fr/${s.yol}/">${s.nav}</a>`).join('')}<a href="/fr/${AVIS_PAGE}/">Avis</a></nav></div></header>
 <main>
 ${corps}
 </main>
 <footer><div class="kap">
 <p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe. WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+<p><a href="/fr/${AVIS_PAGE}/">Avis des voyageurs sur Iheb</a>${RESUME_AVIS ? ` (${RESUME_AVIS})` : ''} · <a href="/fr/avis/">Laisser un avis</a></p>
 <p>Infos pratiques en français : ${REPONSES.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
 <p lang="en">In English: <a href="/fr/${ANGLAIS}/">French-speaking tour guide in Tokyo</a></p>
 <p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/ru/" hreflang="ru">Русский</a> · Dernière mise à jour : ${HOY}</p>
@@ -439,14 +619,17 @@ ${corps}
 const PORTRAIT_URL = `${BASE}/fr/foto/iheb-1080.webp`
 const guideLd = {
   '@type': 'Person', '@id': `${BASE}/fr/#iheb`, name: 'Iheb',
-  jobTitle: 'Guide touristique francophone', image: PORTRAIT_URL,
+  jobTitle: 'Guide privé francophone', image: PORTRAIT_URL,
   knowsLanguage: [
     { '@type': 'Language', name: 'Français', alternateName: 'fr' },
     { '@type': 'Language', name: 'Arabe', alternateName: 'ar' },
     { '@type': 'Language', name: 'Anglais', alternateName: 'en' },
   ],
   homeLocation: { '@type': 'Place', name: 'Japon' },
-  worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
+  areaServed: ['Tokyo', 'Kanto', 'Nagano', 'Shizuoka'].map((name) => ({ '@type': 'Place', name, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
+  contactPoint: { '@type': 'ContactPoint', contactType: 'reservations', telephone: `+${WA_NUMERO}`, url: `https://wa.me/${WA_NUMERO}`, availableLanguage: ['fr', 'ar', 'en'] },
+  // Mismo @id que el negocio de index.html, para que las IAs unan a Iheb con Tony Kansai Guide.
+  worksFor: { '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/` },
   url: `${BASE}/fr/`, description: 'Guide francophone qui vit au Japon. Visites privées en français à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka ; parle aussi arabe et anglais.',
 }
 const serviceLd = (ville) => ({
@@ -456,6 +639,17 @@ const serviceLd = (ville) => ({
   audience: { '@type': 'Audience', audienceType: 'Voyageurs francophones' },
   url: `${BASE}/fr/${ville ? `${ville.yol}/` : ''}`,
 })
+const ficheRapide = () => `<aside class="fiche" aria-labelledby="fiche-rapide">
+<h2 id="fiche-rapide">Fiche rapide : Iheb, guide francophone</h2>
+<ul>
+<li><strong>Qui :</strong> Iheb, guide privé francophone qui vit au Japon, de l’équipe Tony Kansai Guide.</li>
+<li><strong>Langues :</strong> français ; il parle aussi arabe et anglais.</li>
+<li><strong>Zones :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
+<li><strong>Réserver :</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a>, avec vos dates, le nombre de personnes et votre hôtel.</li>
+<li><strong>Tarif :</strong> par groupe, communiqué sur WhatsApp selon le programme.</li>
+<li><strong>Avis :</strong> <a href="/fr/${AVIS_PAGE}/">${RESUME_AVIS || 'avis des voyageurs'}</a></li>
+</ul>
+</aside>`
 const contact = `<p><a class="btn" href="${WA_GENEL}">Écrire à Iheb sur WhatsApp</a></p>`
 
 const carteAvis = (y) => `<li data-id="${esc(y.id)}"><p class="yildizlar" aria-label="${y.stars}/5">${'★'.repeat(y.stars)}${'☆'.repeat(5 - y.stars)}</p><p>${esc(y.text)}</p><p class="kaynak">${esc(y.name)}${y.country ? ` · ${esc(y.country)}` : ''}${y.tour ? ` · ${esc(y.tour)}` : ''}${y.date ? ` · ${esc(y.date)}` : ''}</p></li>`
@@ -464,13 +658,7 @@ const MOYENNE = AVIS.length ? (AVIS.reduce((t, y) => t + y.stars, 0) / AVIS.leng
 const RESUME_AVIS = AVIS.length ? `${AVIS.length} avis de voyageurs, moyenne ${MOYENNE}/5` : ''
 // Con cero reseñas se ve una línea honesta en vez de una lista vacía; el script
 // del cliente sigue pudiendo insertar las que lleguen y oculta esa línea.
-const sectionAvis = `
-<h2 id="avis">Avis des voyageurs</h2>
-${RESUME_AVIS ? `<p class="yorum-ozet"><strong>${RESUME_AVIS}</strong> (voyageurs réels, via le formulaire /fr/avis/).</p>` : ''}
-<ul class="yorumlar" id="avisListe">${AVIS.map(carteAvis).join('')}</ul>
-<p id="avisVide" ${AVIS.length ? 'hidden' : ''}>Pas encore d’avis publiés — vous avez fait une visite avec Iheb ? Laissez le vôtre.</p>
-<p><a href="/fr/avis/">Laisser un avis à Iheb →</a></p>
-<script>
+const AVIS_SCRIPT = `<script>
 fetch('/api/resenas/publicas?guia=iheb',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{
   const ul=document.getElementById('avisListe'); if(!d||!ul) return
   const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])
@@ -479,6 +667,13 @@ fetch('/api/resenas/publicas?guia=iheb',{cache:'no-cache'}).then(r=>r.ok?r.json(
     document.getElementById('avisVide').hidden=true }
 }).catch(()=>{})
 </script>`
+const sectionAvis = `
+<h2 id="avis">Avis des voyageurs</h2>
+${RESUME_AVIS ? `<p class="yorum-ozet"><strong>${RESUME_AVIS}</strong> (voyageurs réels, via le formulaire /fr/avis/).</p>` : ''}
+<ul class="yorumlar" id="avisListe">${AVIS.map(carteAvis).join('')}</ul>
+<p id="avisVide" ${AVIS.length ? 'hidden' : ''}>Pas encore d’avis publiés — vous avez fait une visite avec Iheb ? Laissez le vôtre.</p>
+<p><a href="/fr/${AVIS_PAGE}/">Voir tous les avis →</a> · <a href="/fr/avis/">Laisser un avis à Iheb →</a></p>
+${AVIS_SCRIPT}`
 // JSON-LD: cada reseña como Review del negocio (Google no acepta Person como
 // itemReviewed), sin aggregateRating; mismo criterio que turkce.mjs.
 const NEGOCIO_LD = { '@type': 'LocalBusiness', '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/`, address: { '@type': 'PostalAddress', addressLocality: 'Osaka', addressRegion: 'Osaka', addressCountry: 'JP' } }
@@ -494,6 +689,7 @@ ${hero('fuji-chureito', 'Le mont Fuji et la pagode Chureito', `<span class="etik
 <p class="alt">Tokyo, Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, Nagano et Shizuoka, racontés en français. Le guide est là uniquement pour votre groupe.</p>
 ${contact}`)}
 <div class="kap">
+${ficheRapide()}
 <section class="guide" aria-labelledby="votre-guide">
 ${portraitGrand}
 <div>
@@ -518,7 +714,7 @@ ${contact}
 <p>Au Japon, l’anglais n’est pas parlé partout, et entre les panneaux, les dizaines de lignes de train de Tokyo et les menus, on s’y perd vite la première fois. Avec un guide qui parle votre langue, vous écoutez l’histoire et la culture en français et vous posez toutes vos questions sans effort. Comme Iheb vit au Japon, il connaît les trains, les heures d’affluence et les bonnes adresses où manger.</p>
 <h2>Tokyo et ses environs</h2>
 <ul class="izgara">
-${VILLES.map((s) => `<li><a href="/fr/${s.yol}/">${cartePhoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.lieux.slice(0, 3).map((y, i) => (i && /^(Pont|Cascades?|Lac|Singes|Château) /.test(y[0]) ? y[0][0].toLowerCase() + y[0].slice(1) : y[0])).join(', '))}</p></div></a></li>`).join('\n')}
+${VILLES.map((s) => carteLien(`/fr/${s.yol}/`, s.kapak, s.ad, s.ad, s.lieux.slice(0, 3).map((y, i) => (i && /^(Pont|Cascades?|Lac|Singes|Château) /.test(y[0]) ? y[0][0].toLowerCase() + y[0].slice(1) : y[0])).join(', '))).join('\n')}
 </ul>
 <h2>Comment ça marche ?</h2>
 <ol>
@@ -529,7 +725,7 @@ ${VILLES.map((s) => `<li><a href="/fr/${s.yol}/">${cartePhoto(s.kapak, s.ad)}<di
 ${sectionAvis}
 <h2>Préparer son voyage au Japon</h2>
 <ul class="izgara">
-${REPONSES.map((c) => `<li><a href="/fr/${c.yol}/">${cartePhoto(c.kapak, c.h1)}<div class="ki"><h3>${esc(c.h1)}</h3><p>${esc(c.court)}</p></div></a></li>`).join('\n')}
+${REPONSES.map((c) => carteLien(`/fr/${c.yol}/`, c.kapak, c.h1, c.h1, c.court)).join('\n')}
 </ul>
 <h2>Questions fréquentes</h2>
 ${FAQ.map(([q, r]) => `<details><summary>${esc(q)}</summary><p>${esc(r)}</p></details>`).join('\n')}
@@ -567,6 +763,7 @@ ${s.lieux.map(([nom, texte, k]) => `<li>${cartePhoto(k, nom)}<div class="ki"><h3
 </ul>
 <h2>Bon à savoir</h2>
 <p>${esc(s.astuce)}</p>
+${s.voir ? `<p>À lire aussi : ${s.voir.map((y) => { const c = REPONSES.find((r) => r.yol === y); if (!c) throw new Error(`francais: ${s.yol} enlaza a ${y}, que no existe`); return `<a href="/fr/${y}/">${esc(c.h1)}</a>` }).join(' · ')}</p>` : ''}
 <h2>La visite en pratique</h2>
 <ul class="ozet">
 <li><strong>Guide :</strong> Iheb, qui vit au Japon et guide à Tokyo et dans ses environs.</li>
@@ -598,9 +795,11 @@ for (const c of REPONSES) {
   const lien = wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide francophone à Tokyo. Dates : `)
   const corps = `
 ${hero(c.kapak, '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Infos pratiques</span>
-<h1>${esc(c.h1)}</h1>`)}
+<h1>${esc(c.h1)}</h1>
+<p class="maj">Mis à jour le <time datetime="${HOY}">${HOY_FR}</time> · par Iheb, guide francophone à Tokyo</p>`)}
 <div class="kap">
 <p class="cevap">${esc(c.reponse)}</p>
+${ficheRapide()}
 ${c.sections.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
 <h2>Questions fréquentes</h2>
 ${c.faq.map(([q, r]) => `<h3>${esc(q)}</h3>\n<p>${esc(r)}</p>`).join('\n')}
@@ -613,7 +812,7 @@ ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Article', headline: c.h1, inLanguage: 'fr', dateModified: HOY, author: { '@id': `${BASE}/fr/#iheb` }, mainEntityOfPage: `${BASE}/fr/${c.yol}/`, description: c.desc },
+      { '@type': 'Article', headline: c.h1, inLanguage: 'fr', datePublished: c.publie ?? HOY, dateModified: HOY, author: { '@id': `${BASE}/fr/#iheb` }, publisher: { '@id': `${BASE}/#negocio` }, mainEntityOfPage: `${BASE}/fr/${c.yol}/`, description: c.desc, image: imageDe(c.kapak) },
       guideLd,
       { '@type': 'FAQPage', inLanguage: 'fr', mainEntity: [[c.h1, c.reponse], ...c.faq].map(([q, r]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: r } })) },
       { '@type': 'BreadcrumbList', itemListElement: [
@@ -623,6 +822,46 @@ ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<
     ],
   }
   ecrire(c.yol, page({ yol: c.yol, titre: c.titre, desc: c.desc, image: imageDe(c.kapak), jsonld, corps }))
+}
+
+// Página pública de reseñas: indexable, con cada reseña en el HTML (las IAs no
+// ejecutan JS) y el mismo script del cliente para las que lleguen tras el build.
+// El cron diario de deploy.yml (06:00 JST) reconstruye y las mete en el HTML.
+{
+  const lienAvis = wa('Bonjour Iheb, j’ai lu les avis sur votre page. Je cherche un guide francophone à Tokyo. Dates : ')
+  const corps = `
+${hero('senso-ji-pagode', '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Avis</span>
+<h1>Avis des voyageurs sur Iheb, guide francophone à Tokyo</h1>
+<p class="alt">${RESUME_AVIS ? `${RESUME_AVIS}.` : 'Les avis laissés par les voyageurs qui ont visité Tokyo et ses environs avec Iheb.'}</p>
+<p><a class="btn" href="/fr/avis/">Laisser un avis</a></p>`)}
+<div class="kap">
+<p class="cevap">${RESUME_AVIS ? `Iheb, guide privé francophone à Tokyo et dans ses environs, a reçu ${RESUME_AVIS.replace('avis de voyageurs, moyenne', 'avis de voyageurs, avec une moyenne de')}. Chaque avis ci-dessous a été laissé par un voyageur via le formulaire de la page /fr/avis/ et publié tel quel, sans retouche.` : 'Aucun avis n’est encore publié sur cette page. Les avis sont laissés par les voyageurs eux-mêmes via le formulaire de la page /fr/avis/ et publiés tels quels ; ils apparaîtront ici.'}</p>
+<h2 id="avis">Tous les avis</h2>
+<ul class="yorumlar" id="avisListe">${AVIS.map(carteAvis).join('')}</ul>
+<p id="avisVide" ${AVIS.length ? 'hidden' : ''}>Pas encore d’avis publiés. Vous avez fait une visite avec Iheb ? Soyez le premier à laisser le vôtre.</p>
+<p><a class="btn" href="/fr/avis/">Laisser un avis à Iheb</a></p>
+${AVIS_SCRIPT}
+<h2>Réserver une visite avec Iheb</h2>
+<p>Iheb vit au Japon et propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi qu’à Nagano et à Shizuoka ; il parle aussi arabe et anglais. Il communique le tarif sur WhatsApp, selon votre groupe.</p>
+${contactMini(lienAvis, 'Écrire à Iheb sur WhatsApp')}
+<p><a href="/fr/">← Accueil : guide francophone à Tokyo</a></p>
+</div>`
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      guideLd, ...avisLd,
+      { '@type': 'WebPage', url: `${BASE}/fr/${AVIS_PAGE}/`, inLanguage: 'fr', name: 'Avis des voyageurs sur Iheb, guide francophone à Tokyo', dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` } },
+      { '@type': 'BreadcrumbList', itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Guide francophone', item: `${BASE}/fr/` },
+        { '@type': 'ListItem', position: 2, name: 'Avis des voyageurs', item: `${BASE}/fr/${AVIS_PAGE}/` },
+      ] },
+    ],
+  }
+  ecrire(AVIS_PAGE, page({
+    yol: AVIS_PAGE, image: imageDe('senso-ji-pagode'), jsonld, corps,
+    titre: 'Avis des voyageurs sur Iheb, guide francophone à Tokyo | Tony Kansai Guide',
+    desc: RESUME_AVIS ? `Iheb, guide privé francophone à Tokyo : ${RESUME_AVIS}. Lire les avis, laisser le vôtre, réserver sur WhatsApp.` : 'Les avis des voyageurs sur Iheb, guide privé francophone à Tokyo, Kamakura, Nikko, Hakone et au mont Fuji. Laisser un avis, réserver sur WhatsApp.',
+  }))
 }
 
 // Página en inglés: muchos francófonos (y ChatGPT, que traduce la pregunta)
@@ -678,4 +917,4 @@ function ecrire(yol, html) {
   mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, 'index.html'), html)
 }
-console.log(`fr: ${VILLES.length + REPONSES.length + 2} pages en public/fr/`)
+console.log(`fr: ${VILLES.length + REPONSES.length + 3} pages en public/fr/`)

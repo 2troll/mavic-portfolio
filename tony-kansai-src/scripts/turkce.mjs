@@ -48,11 +48,15 @@ const foto = (k) => { if (!FOTOLAR[k]) throw new Error(`turkce: falta la foto ${
 const srcset = (k) => foto(k).anchos.map((w) => `/tr/foto/${k}-${w}.webp ${Math.min(w, foto(k).w)}w`).join(', ')
 const kredi = (k) => `Fotoğraf: <a href="${foto(k).kaynak}" rel="nofollow">${esc(foto(k).autor)}</a> · ${esc(foto(k).lisans)}`
 const kahraman = (k, alt, icerik) => `<section class="kahraman">
-<img src="/tr/foto/${k}-1920.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high">
+<img src="/tr/foto/${k}-${foto(k).anchos.find((w) => w <= 1920) ?? foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high">
 <div class="ortu"><div class="kap">${icerik}</div></div>
 <small class="kredi">${kredi(k)}</small>
 </section>`
-const kartFoto = (k, alt) => `<figure class="kf"><img src="/tr/foto/${k}-${foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${foto(k).w}" height="${foto(k).h}"><figcaption>${kredi(k)}</figcaption></figure>`
+const kartImg = (k, alt) => `<img src="/tr/foto/${k}-${foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${foto(k).w}" height="${foto(k).h}">`
+const kartFoto = (k, alt) => `<figure class="kf">${kartImg(k, alt)}<figcaption>${kredi(k)}</figcaption></figure>`
+// Tarjeta entera clicable: el crédito (con su enlace a Commons) va FUERA del <a>
+// de la tarjeta; un <a> dentro de otro es HTML inválido (auditoría 30-10-2026).
+const kartLink = (href, k, alt, baslik, metin) => `<li><a href="${href}"><figure class="kf">${kartImg(k, alt)}</figure><div class="ki"><h3>${esc(baslik)}</h3><p>${esc(metin)}</p></div></a><small class="kf-kredi">${kredi(k)}</small></li>`
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -357,6 +361,7 @@ h1{font-size:clamp(28px,5vw,40px);line-height:1.2;margin:28px 0 8px}h2{font-size
 .etiket{display:block;margin-top:20px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--kirmizi)}
 ul.ozet{padding-left:20px}ul.ozet li{margin:4px 0}
 .izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:0;list-style:none}
+.izgara li{position:relative}.kf-kredi{position:absolute;left:0;right:0;top:0;padding:4px 8px 14px;font-size:10px;color:rgba(255,255,255,.8);background:linear-gradient(rgba(0,0,0,.5),transparent);pointer-events:none}.kf-kredi a{color:inherit;pointer-events:auto}
 .izgara li{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -18px rgba(0,0,0,.35)}
 .izgara li:hover .kf img{transform:scale(1.05)}
 .izgara a{color:var(--fg);text-decoration:none}.izgara p{margin:0;color:var(--soluk);font-size:15px}
@@ -482,7 +487,7 @@ ${iletisim}`)}
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
 <h2>Turlar ve şehirler</h2>
 <ul class="izgara">
-${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/">${kartFoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.yerler.slice(0, 3).map((y) => y[0]).join(', '))}</p></div></a></li>`).join('\n')}
+${SEHIRLER.map((s) => kartLink(`/tr/${s.yol}/`, s.kapak, s.ad, s.ad, s.yerler.slice(0, 3).map((y) => y[0]).join(', '))).join('\n')}
 </ul>
 <h2>Nasıl çalışır?</h2>
 <ol>
@@ -493,7 +498,7 @@ ${SEHIRLER.map((s) => `<li><a href="/tr/${s.yol}/">${kartFoto(s.kapak, s.ad)}<di
 ${yorumlarBolumu}
 <h2>Japonya gezisi için Türkçe bilgiler</h2>
 <ul class="izgara">
-${CEVAPLAR.map((c) => `<li><a href="/tr/${c.yol}/">${kartFoto(c.kapak, c.h1)}<div class="ki"><h3>${esc(c.h1)}</h3><p>${esc(c.kisa)}</p></div></a></li>`).join('\n')}
+${CEVAPLAR.map((c) => kartLink(`/tr/${c.yol}/`, c.kapak, c.h1, c.h1, c.kisa)).join('\n')}
 </ul>
 <h2>Sık sorulan sorular</h2>
 ${SSS.map(([s, c]) => `<details><summary>${esc(s)}</summary><p>${esc(c)}</p></details>`).join('\n')}
