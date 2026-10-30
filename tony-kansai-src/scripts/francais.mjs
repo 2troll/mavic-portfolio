@@ -80,7 +80,7 @@ const VILLES = [
     yol: 'tokyo', ad: 'Tokyo', nav: 'Tokyo', a: 'à Tokyo', kapak: 'senso-ji-pagode',
     titre: 'Guide francophone à Tokyo : Iheb | Visite privée de Tokyo en français',
     desc: 'Guide privé francophone à Tokyo : Asakusa et Senso-ji, Meiji Jingu, Shibuya, Skytree, marché de Tsukiji. Uniquement pour votre groupe, en français. Tarif sur WhatsApp.',
-    intro: 'Tokyo, c’est des dizaines de quartiers qui ne se ressemblent pas : vieux temples d’Asakusa, forêt du sanctuaire Meiji, carrefour de Shibuya, tours de Shinjuku. Iheb construit la journée à votre rythme et vous la raconte en français.',
+    intro: 'Tokyo, ce sont des dizaines de quartiers qui ne se ressemblent pas : vieux temples d’Asakusa, forêt du sanctuaire Meiji, carrefour de Shibuya, tours de Shinjuku. Iheb construit la journée à votre rythme et vous la raconte en français.',
     lieux: [
       ['Asakusa et Senso-ji', 'Le plus ancien temple de Tokyo, la porte Kaminarimon et sa grande lanterne rouge, puis la rue commerçante Nakamise.', 'kaminarimon'],
       ['Meiji Jingu', 'Le sanctuaire dédié à l’empereur Meiji et à l’impératrice Shoken, au milieu d’une forêt en plein centre, à deux pas de Harajuku.', 'meiji-jingu'],
@@ -149,7 +149,7 @@ const VILLES = [
     yol: 'shizuoka', ad: 'Shizuoka', nav: 'Shizuoka', a: 'à Shizuoka', kapak: 'the-fuji',
     titre: 'Guide francophone à Shizuoka : Iheb | Mont Fuji, Mishima Skywalk et thé',
     desc: 'Visite privée en français côté Shizuoka du mont Fuji : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
-    intro: 'Shizuoka est le versant sud du mont Fuji, face à la mer. Plusieurs lieux y font partie du site « Fujisan, lieu sacré et source d’inspiration artistique », inscrit au patrimoine mondial de l’UNESCO en 2013. C’est aussi l’une des grandes régions de thé vert du Japon.',
+    intro: 'La préfecture de Shizuoka occupe le versant sud du mont Fuji, face à la mer. Plusieurs lieux y font partie du site « Fujisan, lieu sacré et source d’inspiration artistique », inscrit au patrimoine mondial de l’UNESCO en 2013. C’est aussi l’une des grandes régions de thé vert du Japon.',
     lieux: [
       ['Mishima Skywalk', 'Un pont suspendu piéton de 400 mètres, ouvert en 2015, avec le Fuji d’un côté et la baie de Suruga de l’autre.', 'mishima-skywalk'],
       ['Cascades de Shiraito', 'Des centaines de filets d’eau de source qui sortent de la roche, près de Fujinomiya.', 'shiraito'],
@@ -211,18 +211,18 @@ const REPONSES = [
     desc: 'Mont Fuji en une journée depuis Tokyo : Kawaguchiko (pagode Chureito, Oshino Hakkai) ou Hakone (lac Ashi, Owakudani) ? Trains, durées, quand voir le Fuji. Guide francophone Iheb.',
     h1: 'Comment faire une excursion au mont Fuji depuis Tokyo ?',
     court: 'Kawaguchiko ou Hakone : laquelle choisir pour une journée.',
-    reponse: 'Depuis Tokyo, on voit le mont Fuji en une journée en choisissant une seule de ces deux régions : les lacs du Fuji autour de Kawaguchiko (préfecture de Yamanashi), avec la pagode Chureito et Oshino Hakkai, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; ou Hakone (préfecture de Kanagawa), avec le lac Ashi et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar. Les deux régions sont séparées d’environ 1 h 30 de bus : les combiner dans la même journée est déconseillé.',
+    reponse: 'Depuis Tokyo, on voit le mont Fuji en une journée en choisissant une seule de ces deux régions : les lacs du Fuji autour de Kawaguchiko (préfecture de Yamanashi), avec la pagode Chureito et Oshino Hakkai, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; ou Hakone (préfecture de Kanagawa), avec le lac Ashi et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar. Il faut environ 2 heures de bus, avec un changement à Gotemba, pour passer de l’une à l’autre : les combiner dans la même journée est déconseillé.',
     sections: [
       ['Kawaguchiko ou Hakone ?', `<table><tr><th></th><th>Lacs du Fuji (Kawaguchiko)</th><th>Hakone</th></tr>
 <tr><td>Préfecture</td><td>Yamanashi</td><td>Kanagawa</td></tr>
 <tr><td>Depuis Shinjuku</td><td>Train Fuji Excursion, environ 2 h ; ou bus express</td><td>Romancecar d’Odakyu, environ 1 h 20 jusqu’à Hakone-Yumoto</td></tr>
 <tr><td>Vue sur le Fuji</td><td>De très près, au-dessus du lac</td><td>Plus lointaine, depuis le lac Ashi ou le téléphérique</td></tr>
 <tr><td>À voir</td><td>Lac Kawaguchi, pagode Chureito, Oshino Hakkai</td><td>Lac Ashi et son torii, téléphérique, Owakudani</td></tr></table>`],
-      ['Et côté Shizuoka ?', '<p>Le versant sud du Fuji, côté <a href="/fr/shizuoka/">Shizuoka</a>, se rejoint en Shinkansen (Tokyo-Mishima, environ 45 minutes à 1 heure) : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé.</p>'],
+      ['Et côté Shizuoka ?', '<p>On rejoint le versant sud du Fuji, côté <a href="/fr/shizuoka/">Shizuoka</a>, en Shinkansen (Tokyo-Mishima, environ 45 minutes à 1 heure) : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé.</p>'],
       ['Quand voit-on le mont Fuji ?', '<p>Le sommet est souvent caché par les nuages, surtout en été. Les matins d’automne et d’hiver sont en général les plus dégagés. L’ascension, elle, n’est possible qu’en été, en général de juillet à début septembre.</p>'],
     ],
     faq: [
-      ['Peut-on faire Hakone et Kawaguchiko dans la même journée ?', 'C’est déconseillé : il faut environ 1 h 30 de bus entre les deux. Choisissez-en une, ou dormez sur place.'],
+      ['Peut-on faire Hakone et Kawaguchiko dans la même journée ?', 'C’est déconseillé : il faut environ 2 heures de bus entre les deux, avec un changement à Gotemba. Choisissez-en une, ou dormez sur place.'],
       ['Combien de temps entre Tokyo et le mont Fuji ?', 'Environ 2 heures jusqu’à Kawaguchiko depuis Shinjuku en train direct, et environ 1 h 20 jusqu’à Hakone-Yumoto en Romancecar.'],
       ['Y a-t-il une excursion au mont Fuji en français ?', 'Oui : Iheb guide en privé et en français à Hakone, autour de Kawaguchiko et côté Shizuoka. Tarif sur WhatsApp.'],
     ],
@@ -241,7 +241,7 @@ const REPONSES = [
 <tr><td>Narita</td><td>JR Narita Express (N’EX)</td><td>Gare de Tokyo, puis Shinagawa, Shibuya, Shinjuku</td><td>environ 1 h jusqu’à la gare de Tokyo</td></tr>
 <tr><td>Haneda</td><td>Keikyu</td><td>Shinagawa</td><td>environ 15-20 min</td></tr>
 <tr><td>Haneda</td><td>Tokyo Monorail</td><td>Hamamatsucho</td><td>environ 15-20 min</td></tr></table>`],
-      ['Conseils', '<ul class="ozet"><li>Les tarifs évoluent : vérifiez le prix à jour sur le site de la compagnie ou au guichet.</li><li>Les cartes IC (Suica, PASMO) fonctionnent sur ces lignes, sauf pour les places réservées du Skyliner et du N’EX, qui demandent un billet.</li><li>Narita et Haneda disposent de salles de prière.</li><li>Pour vos visites en français à Tokyo, écrivez à Iheb sur WhatsApp.</li></ul>'],
+      ['Conseils', '<ul class="ozet"><li>Les tarifs évoluent : vérifiez le prix à jour sur le site de la compagnie ou au guichet.</li><li>Les cartes IC (Suica, PASMO) fonctionnent sur la ligne Keikyu et le monorail. Le Skyliner et le N’EX n’ont que des places réservées : il faut acheter un billet (distributeur, guichet ou en ligne).</li><li>Narita et Haneda disposent de salles de prière.</li><li>Pour vos visites en français à Tokyo, écrivez à Iheb sur WhatsApp.</li></ul>'],
     ],
     faq: [
       ['Narita ou Haneda : quel aéroport est le plus proche de Tokyo ?', 'Haneda : environ 15 à 30 minutes du centre, contre environ 40 minutes à 1 heure depuis Narita en train rapide.'],
@@ -283,7 +283,7 @@ const REPONSES = [
 <tr><td>Août – septembre</td><td>Chaude</td><td>Saison des typhons ; des trains peuvent être annulés.</td></tr>
 <tr><td>Octobre – début décembre</td><td>Fraîche</td><td>Couleurs d’automne : d’abord en altitude (Nikko, Hakone), puis à Tokyo fin novembre.</td></tr>
 <tr><td>Décembre – février</td><td>Froide, sèche, souvent ensoleillée</td><td>Le Fuji est le plus souvent visible. Singes des neiges à Nagano. Beaucoup de lieux ferment au Nouvel An.</td></tr></table>`],
-      ['Pour éviter la foule', '<p>Allez tôt le matin aux lieux les plus connus (Senso-ji, Meiji Jingu, pagode Chureito). Évitez la Golden Week et la mi-août (Obon). Pendant les cerisiers et l’automne, privilégiez les jours de semaine.</p>'],
+      ['Pour éviter la foule', '<p>Allez tôt le matin aux lieux les plus connus (Senso-ji, Meiji Jingu, pagode Chureito). Évitez la Golden Week et la mi-août (Obon). Pendant la floraison des cerisiers et en automne, privilégiez les jours de semaine.</p>'],
     ],
     faq: [
       ['Quand fleurissent les cerisiers à Tokyo ?', 'En général entre fin mars et début avril ; la date varie de quelques jours d’une année sur l’autre.'],
@@ -518,13 +518,13 @@ ${contact}
 <p>Au Japon, l’anglais n’est pas parlé partout, et entre les panneaux, les dizaines de lignes de train de Tokyo et les menus, on s’y perd vite la première fois. Avec un guide qui parle votre langue, vous écoutez l’histoire et la culture en français et vous posez toutes vos questions sans effort. Comme Iheb vit au Japon, il connaît les trains, les heures d’affluence et les bonnes adresses où manger.</p>
 <h2>Tokyo et ses environs</h2>
 <ul class="izgara">
-${VILLES.map((s) => `<li><a href="/fr/${s.yol}/">${cartePhoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.lieux.slice(0, 3).map((y) => y[0]).join(', '))}</p></div></a></li>`).join('\n')}
+${VILLES.map((s) => `<li><a href="/fr/${s.yol}/">${cartePhoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.lieux.slice(0, 3).map((y, i) => (i && /^(Pont|Cascades?|Lac|Singes|Château) /.test(y[0]) ? y[0][0].toLowerCase() + y[0].slice(1) : y[0])).join(', '))}</p></div></a></li>`).join('\n')}
 </ul>
 <h2>Comment ça marche ?</h2>
 <ol>
 <li><strong>WhatsApp :</strong> écrivez à Iheb avec vos dates, le nombre de personnes et votre ville ou votre hôtel.</li>
 <li><strong>Itinéraire :</strong> il vous propose un programme et un tarif, en français.</li>
-<li><strong>La journée :</strong> vous vous retrouvez le jour J et visitez avec ses explications en français.</li>
+<li><strong>La journée :</strong> le jour J, vous retrouvez Iheb et visitez avec ses explications en français.</li>
 </ol>
 ${sectionAvis}
 <h2>Préparer son voyage au Japon</h2>

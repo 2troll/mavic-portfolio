@@ -43,8 +43,8 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 <main class="kap">
 <div class="kart">
 <form id="form" novalidate>
-<h1>Comment s'est passée votre visite avec Iheb ?</h1>
-<p class="giris">Quelques phrases suffisent. Votre avis sera publié sur la page d'Iheb et aidera d'autres voyageurs francophones à préparer leur séjour au Japon.</p>
+<h1>Comment s’est passée votre visite avec Iheb ?</h1>
+<p class="giris">Quelques phrases suffisent. Votre avis sera publié sur la page d’Iheb et aidera d’autres voyageurs francophones à préparer leur séjour au Japon.</p>
 <label id="puanEt">Votre note</label>
 <div class="yildiz" role="radiogroup" aria-labelledby="puanEt">
 <button type="button" role="radio" aria-checked="false" aria-label="1/5" data-n="1">★</button><button type="button" role="radio" aria-checked="false" aria-label="2/5" data-n="2">★</button><button type="button" role="radio" aria-checked="false" aria-label="3/5" data-n="3">★</button><button type="button" role="radio" aria-checked="false" aria-label="4/5" data-n="4">★</button><button type="button" role="radio" aria-checked="false" aria-label="5/5" data-n="5">★</button>
@@ -56,20 +56,20 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 <label for="tur">Quelle visite ?</label>
 <select id="tur"><option value="">Choisir (facultatif)</option><option>Tokyo</option><option>Kamakura</option><option>Nikko</option><option>Hakone</option><option>Mont Fuji</option><option>Nagano</option><option>Shizuoka</option><option value="">Autre</option></select>
 <label for="yorum">Votre avis</label>
-<textarea id="yorum" maxlength="1200" placeholder="Comment s'est passée la journée ? Qu'avez-vous le plus apprécié chez Iheb ?"></textarea>
+<textarea id="yorum" maxlength="1200" placeholder="Comment s’est passée la journée ? Qu’avez-vous le plus apprécié chez Iheb ?"></textarea>
 <input class="gizli" type="text" id="web" tabindex="-1" autocomplete="off" aria-hidden="true">
-<label class="izin"><input type="checkbox" id="izin"> <span>J'accepte que mon avis soit publié sur le site avec mon prénom et ma ville.</span></label>
-<button class="btn" id="gonder" type="submit">Envoyer l'avis</button>
+<label class="izin"><input type="checkbox" id="izin"> <span>J’accepte que mon avis soit publié sur le site avec mon prénom et ma ville.</span></label>
+<button class="btn" id="gonder" type="submit">Envoyer l’avis</button>
 <div class="uyari" id="uyari" role="alert"></div>
 </form>
 <div class="tamam" id="tamam" role="status">
 <h1 id="tamamMetin"></h1>
-<a href="/fr/">Voir sur la page d'Iheb →</a>
+<a href="/fr/">Voir sur la page d’Iheb →</a>
 </div>
 </div>
 </main>
 <script>
-const T = {"eksik":"Merci de donner une note, d'indiquer votre prénom, d'écrire un avis d'au moins 20 caractères et de cocher la case d'accord.","hata":"Envoi impossible. Vérifiez votre connexion et réessayez.","tamam":"Merci ! Votre avis est publié.","bekle":"Merci ! Votre avis a bien été reçu et sera publié sous peu.","gonder":"Envoyer l'avis","gonderiliyor":"Envoi…"};
+const T = {"eksik":"Merci de donner une note, d’indiquer votre prénom, d’écrire un avis d’au moins 20 caractères et de cocher la case d’accord.","hata":"Envoi impossible. Vérifiez votre connexion et réessayez.","tamam":"Merci ! Votre avis est publié.","bekle":"Merci ! Votre avis a bien été reçu et sera publié sous peu.","gonder":"Envoyer l’avis","gonderiliyor":"Envoi…"};
 const $ = (id) => document.getElementById(id);
 let puan = 0;
 document.querySelectorAll('.yildiz button').forEach((b) => b.addEventListener('click', () => {
