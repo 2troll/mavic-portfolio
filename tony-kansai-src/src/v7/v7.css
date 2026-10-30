@@ -1636,3 +1636,6 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-kndr-nota { margin: 0; font-size: 14px; opacity: .75; }
 .v7-kndr-boton { justify-self: start; padding: 12px 22px; border-radius: 999px; background: #d9b45a; color: #14213a; font-weight: 700; }
 @media (prefers-reduced-motion: reduce) { .v7-kndr-tarjeta img { transition: none; } }
+.v7-kndr-atajos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+.v7-kndr-atajos a { padding: 8px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 14px; text-decoration: none; opacity: .85; }
+.v7-kndr-atajos a:hover { opacity: 1; }

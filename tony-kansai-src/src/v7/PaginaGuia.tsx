@@ -864,6 +864,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                   <span className="v7-kndr-boton">{ru ? 'Смотреть туры и даты →' : 'See tours and dates (in Russian) →'}</span>
                 </div>
               </a>
+              {ru && (
+                <nav className="v7-kndr-atajos" aria-label="Вопросы о КНДР">
+                  {([['Как добраться', 'kak-dobratsya-do-phenyana'], ['Сколько стоит', 'skolko-stoit-tur-v-kndr'], ['Виза', 'viza-v-kndr-dlya-rossiyan'], ['Когда ехать', 'kogda-luchshe-ehat-v-kndr'], ['С детьми', 'kndr-s-detmi'], ['Медовый месяц', 'svadebnoe-puteshestvie-v-kndr'], ['Для компании', 'korporativnyj-tur-v-kndr']] as const).map(([t, y]) => <a key={y} href={`/ru/kndr/${y}/`}>{t}</a>)}
+                </nav>
+              )}
             </section>
           )
         })()}
