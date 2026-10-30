@@ -843,6 +843,18 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Precios p={p} resenas={resenas} />
         </section>
 
+        {/* Larion también acompaña grupos rusos a la RPDC (30-10-2026): HTML estático de
+            scripts/kndr.mjs, fuera del router, por eso <a> y no <Link>. Solo en ruso. */}
+        {p.id === 'ru' && (
+          <section className="v7-seccion">
+            <a href="/ru/kndr/" className="v7-puerta-montana">
+              <span className="v7-kanji" lang="ko">평양</span>
+              <span><strong>Туры в Северную Корею с Ларионом</strong><small>Премиум-группы до 8 человек из Владивостока · 2027 · от $2 900</small></span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </section>
+        )}
+
         {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos. */}
         {p.resenas && resenas.length > 0 && (
           <section className="v7-seccion" id="resenas">
@@ -1089,6 +1101,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 Sin este enlace, Bing (y con él ChatGPT) solo llegaba a /tr/ por el sitemap. */}
             <a href="/tr/" lang="tr">Türkçe · Ferhat</a>
             <a href="/fr/" lang="fr">Français · Iheb</a>
+            {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Ларион</a>}
           </nav>
         </div>
         <details className="v7-creditos">

@@ -1,0 +1,68 @@
+{
+ "pyongyang": {
+  "autor": "Jan Engelhardt",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3APyongyang_Skyline_-_02.jpg",
+  "w": 5504,
+  "h": 3096,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "paektu": {
+  "autor": "SSchlhmr",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3APaektu_Mountain%27s_Heaven_Lake.jpg",
+  "w": 4032,
+  "h": 3024,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "masikryong": {
+  "autor": "Mario Micklisch",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AView_at_the_Masikryong_Ski_Resort_%2821535571040%29.jpg",
+  "w": 5472,
+  "h": 3078,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "wonsan": {
+  "autor": "Clay Gilliland",
+  "lisans": "CC BY-SA 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AEvening_in_Wonsan_DPRK_%2814650111619%29.jpg",
+  "w": 4608,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "myohyang": {
+  "autor": "Mark Fahey from Sydney, Australia",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AMounts_Myohyang_from_the_Pohyon_Temple.jpg",
+  "w": 4000,
+  "h": 3000,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "plaza": {
+  "autor": "Jan Engelhardt",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AKim_Il-sung_Square_-_02.jpg",
+  "w": 5504,
+  "h": 3096,
+  "anchos": [
+   1920,
+   1080
+  ]
+ }
+}

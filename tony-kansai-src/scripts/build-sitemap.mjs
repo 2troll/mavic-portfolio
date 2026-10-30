@@ -42,6 +42,9 @@ const paginas = [
   // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
   ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'argent-liquide-carte-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'guide-prive-tokyo-prix', 'tokyo-en-famille', 'avis-clients', 'french-speaking-guide-japan'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
+  // Larion: tours a la RPDC para rusos, HTML estático de scripts/kndr.mjs.
+  { loc: '/ru/kndr', priority: '0.9', changefreq: 'weekly', v7: 'kndr' },
+  ...['rozhdestvo-v-phenyane', 'masikryon', 'myohyan', 'den-solntsa', 'pektusan', 'vonsan-kalma', 'individualnyj', 'kak-poehat-v-severnuyu-koreyu', 'skolko-stoit-tur-v-kndr', 'pravila-dlya-turistov-v-kndr', 'vonsan-kalma-kurort', 'viza-v-kndr-dlya-rossiyan'].map((c) => ({ loc: `/ru/kndr/${c}`, priority: '0.8', changefreq: 'monthly', v7: 'kndr' })),
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
   ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
@@ -137,6 +140,7 @@ const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs'],
   francais: ['scripts/francais.mjs'],
+  kndr: ['scripts/kndr.mjs'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
   ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],
