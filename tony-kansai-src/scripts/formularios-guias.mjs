@@ -57,14 +57,14 @@ const FORMULARIOS = [
     },
   },
   {
-    ruta: 'fr/avis', lang: 'fr', guia: 'iheb', pagina: '/fr/', serit: 'Iheb · Guide francophone au Japon',
-    ciudades: ['Kyoto', 'Osaka', 'Nara', 'Kobe', 'Himeji', 'Hiroshima'],
+    ruta: 'fr/avis', lang: 'fr', guia: 'iheb', pagina: '/fr/', serit: 'Iheb · Guide francophone à Tokyo',
+    ciudades: ['Tokyo', 'Kamakura', 'Nikko', 'Hakone', 'Mont Fuji', 'Nagano', 'Shizuoka'],
     // Toile de Jouy: bleu de Prusse et rouge garance sur écru.
     tema: { fondo: '#f6f3ec', tinta: '#1b2440', acento: '#24407a', acento2: '#5b7bb5', resalte: '#a6243a', kart: '#fffdf7' },
     patron: `<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2324407a' stroke-width='1.6'><path d='M42 14c6 8 6 16 0 22-6-6-6-14 0-22z'/><path d='M42 36c-9 2-15 8-16 16 9-1 15-7 16-16z'/><path d='M42 36c9 2 15 8 16 16-9-1-15-7-16-16z'/><path d='M42 36v34'/><circle cx='42' cy='72' r='3' fill='%23a6243a' stroke='none'/></g></svg>`,
     t: {
       titulo: 'Comment s\'est passée votre visite avec Iheb ?',
-      baslik: 'Laisser un avis à Iheb | Guide francophone au Japon',
+      baslik: 'Laisser un avis à Iheb | Guide francophone à Tokyo',
       giris: 'Quelques phrases suffisent. Votre avis sera publié sur la page d\'Iheb et aidera d\'autres voyageurs francophones à préparer leur séjour au Japon.',
       puan: 'Votre note', ad: 'Votre prénom', adOrnek: 'Ex. Claire et Karim', ulke: 'Ville / pays', ulkeOrnek: 'Ex. Lyon, France',
       tur: 'Quelle visite ?', turSec: 'Choisir (facultatif)', diger: 'Autre',

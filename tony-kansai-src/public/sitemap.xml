@@ -67,31 +67,37 @@
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/kyoto/</loc>
+    <loc>https://tonykansaiguide.com/fr/tokyo/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/osaka/</loc>
+    <loc>https://tonykansaiguide.com/fr/kamakura/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/nara/</loc>
+    <loc>https://tonykansaiguide.com/fr/nikko/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/kobe/</loc>
+    <loc>https://tonykansaiguide.com/fr/hakone-mont-fuji/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/himeji/</loc>
+    <loc>https://tonykansaiguide.com/fr/nagano/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/fr/shizuoka/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -103,31 +109,25 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/visa-japon/</loc>
+    <loc>https://tonykansaiguide.com/fr/que-faire-a-tokyo/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/halal-mosquees-kansai/</loc>
+    <loc>https://tonykansaiguide.com/fr/excursion-mont-fuji-depuis-tokyo/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/osaka-kyoto-transport/</loc>
+    <loc>https://tonykansaiguide.com/fr/aeroport-narita-haneda-tokyo/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/aeroport-kansai-transport/</loc>
-    <lastmod>2026-10-30</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-  </url>
-  <url>
-    <loc>https://tonykansaiguide.com/fr/itineraire-kansai/</loc>
+    <loc>https://tonykansaiguide.com/fr/itineraire-japon-2-semaines/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
@@ -139,7 +139,13 @@
     <priority>0.85</priority>
   </url>
   <url>
-    <loc>https://tonykansaiguide.com/fr/kyoto-en-un-jour/</loc>
+    <loc>https://tonykansaiguide.com/fr/visa-japon/</loc>
+    <lastmod>2026-10-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/fr/halal-mosquees-tokyo/</loc>
     <lastmod>2026-10-30</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>

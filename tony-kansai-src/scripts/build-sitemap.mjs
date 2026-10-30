@@ -37,9 +37,9 @@ const paginas = [
   { loc: '/ar', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
   { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
-  // Iheb, guía francófono: HTML estático de scripts/francais.mjs.
+  // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
-  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'guide-francophone-japon', 'visa-japon', 'halal-mosquees-kansai', 'osaka-kyoto-transport', 'aeroport-kansai-transport', 'itineraire-kansai', 'quand-partir-japon', 'kyoto-en-un-jour', 'french-speaking-guide-japan'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
+  ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'french-speaking-guide-japan'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
   ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),

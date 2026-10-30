@@ -1,0 +1,378 @@
+{
+ "fuji-chureito": {
+  "autor": "Supanut Arunoprayote",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Chureito_Pagoda_and_Mount_Fuji_20241022.jpg",
+  "w": 6199,
+  "h": 4133,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "senso-ji-pagode": {
+  "autor": "Real Estate Japan from Tokyo, Japan",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Five-Storey_Pagoda_of_Sens%C5%8D-ji,_Asakusa_-_New_Year%27s_Day_2021_(50786251791).jpg",
+  "w": 6240,
+  "h": 4160,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "kamakura-daibutsu": {
+  "autor": "あかれぎ",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Daibutsu_of_Kotoku-in.jpg",
+  "w": 4608,
+  "h": 2592,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "nikko-yomeimon": {
+  "autor": "Koichi Sato",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nikko_toshogu_yomeimon_gate_ver1.jpg",
+  "w": 5973,
+  "h": 3982,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "hakone-ashi-torii": {
+  "autor": "Joli Rumi",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:A_view_of_Lake_Ashi_with_Peace_Torii_gate,_Hakone,_Japan1.jpg",
+  "w": 8160,
+  "h": 4590,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "miho-fuji": {
+  "autor": "Suicasmo",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_and_Miho_no_Matsubara_20151116.jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "kawaguchiko-fuji": {
+  "autor": "Suicasmo",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_from_Lake_Kawaguchi_20170206.jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "kaminarimon": {
+  "autor": "Another Believer",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kaminarimon_(F%C5%ABraijinmon)_at_Sens%C5%8Dji_in_Asakusa,_Tokyo,_2019_-_412.jpg",
+  "w": 4000,
+  "h": 3000,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "meiji-jingu": {
+  "autor": "Asanagi",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Meiji_Shrine_Minami-sando-torii_2023-01-26.jpg",
+  "w": 3782,
+  "h": 2836,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "shibuya": {
+  "autor": "Benh LIEU SONG (Flickr)",
+  "lisans": "CC BY-SA 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tokyo_Shibuya_Scramble_Crossing_2018-10-09.jpg",
+  "w": 5853,
+  "h": 3902,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "skytree": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Worm%27s-eye_view_of_Tokyo_Skytree_with_vertical_symmetry_impression,_a_sunny_day,_in_Japan.jpg",
+  "w": 6241,
+  "h": 4161,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "palais-imperial": {
+  "autor": "Guilhem Vellut from Annecy, France",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Imperial_Palace_East_Gardens_(9000324274).jpg",
+  "w": 3648,
+  "h": 2736,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "tsukiji": {
+  "autor": "Aimaimyi",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tsukiji_Outer_Market_-04.jpg",
+  "w": 2592,
+  "h": 1944,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "odaiba": {
+  "autor": "Suicasmo",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Rainbow_Bridge,_Tokyo_20201112.jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "tsurugaoka": {
+  "autor": "Ocdp",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tsurugaoka_Hachimangu_001.jpg",
+  "w": 4282,
+  "h": 2839,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "hasedera": {
+  "autor": "663highland",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:230128_Hasedera_Kamakura_Kanagawa_pref_Japan04s3.jpg",
+  "w": 6000,
+  "h": 4000,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "enoshima": {
+  "autor": "DXR",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Harbor,_Enoshima_Island_20130809.jpg",
+  "w": 4625,
+  "h": 2602,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "yokohama": {
+  "autor": "Matthide127",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:20250105_Minato_Mirai_21_(Landmark_Tower,_Queen%27s_Square_Yokohama,_Cosmo_Clock_21)_080219.jpg",
+  "w": 4032,
+  "h": 2268,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "shinkyo": {
+  "autor": "Saigen Jiro",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Shinkyo_(Nikko)_-2.JPG",
+  "w": 6016,
+  "h": 4000,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "kegon": {
+  "autor": "Jordy Meow",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kegon_Taki.jpg",
+  "w": 5996,
+  "h": 4002,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "chuzenji": {
+  "autor": "Miyuki Meinaka",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Lake_Chuzenji_and_Mt._Nantai_view_from_Mt._Hangetsu_Observatory.jpg",
+  "w": 4608,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "oshino-hakkai": {
+  "autor": "lumoplank",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Oshino_Hakkai_-_Oshino6878.jpg",
+  "w": 4930,
+  "h": 3579,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "owakudani": {
+  "autor": "Joli Rumi",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:A_view_of_Owakudani_and_ropeway,_Hakone,_Japan4.jpg",
+  "w": 8160,
+  "h": 4590,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "hakone-jinja-torii": {
+  "autor": "Guilhem Vellut from Annecy, France",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Torii_on_Lake_Ashi_@_Hakone_Shrine_(13776878594).jpg",
+  "w": 3968,
+  "h": 2976,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "zenkoji-kondo": {
+  "autor": "Zairon",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nagano_Zenko-ji_Kondo_4.jpg",
+  "w": 4532,
+  "h": 3164,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "singes-jigokudani": {
+  "autor": "Stanislav Beloglazov",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:20111126_Japan_SB_2067.jpg",
+  "w": 5616,
+  "h": 3744,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "matsumoto": {
+  "autor": "663highland",
+  "lisans": "CC BY 2.5",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:130608_Matsumoto_Castle_Matsumoto_Nagano_pref_Japan01bs5.jpg",
+  "w": 4800,
+  "h": 3200,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "mishima-skywalk": {
+  "autor": "くろふね",
+  "lisans": "CC BY 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Mishima_sky_walk.jpg",
+  "w": 6000,
+  "h": 4000,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "shiraito": {
+  "autor": "Alpsdake",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Shiraito_Falls_(Fujinomiya).jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "the-fuji": {
+  "autor": "Alpsdake",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_and_Tea_plantation.jpg",
+  "w": 6000,
+  "h": 4000,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "narita": {
+  "autor": "Calistemon",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Narita_International_Airport_Terminal_3,_April_2023.jpg",
+  "w": 8160,
+  "h": 6120,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "tokyo-camii": {
+  "autor": "Abasaa",
+  "lisans": "Public domain",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tokyo_Camii_01.JPG",
+  "w": 3648,
+  "h": 2736,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "kawaguchiko-sakura": {
+  "autor": "Midori",
+  "lisans": "CC BY 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG",
+  "w": 3872,
+  "h": 2592,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ }
+}

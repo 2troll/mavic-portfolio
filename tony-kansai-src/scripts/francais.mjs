@@ -1,24 +1,29 @@
 #!/usr/bin/env node
-// Genera public/fr/**: la sección en francés de Iheb, guía francófono en Kansai.
+// Genera public/fr/**: la sección en francés de Iheb, guía francófono en Tokio
+// y el Kanto (más Nagano y Shizuoka).
 //
 //   node scripts/francais.mjs
 //
 // Clon de scripts/turkce.mjs (misma arquitectura). Son HTML estáticos a propósito,
 // sin React: GPTBot, ClaudeBot y PerplexityBot no ejecutan JavaScript, y quien
-// pregunta a una IA «guide francophone Japon» tiene que encontrar el texto entero
+// pregunta a una IA «guide francophone Tokyo» tiene que encontrar el texto entero
 // en la primera respuesta del servidor. rutas-estaticas.mjs no las pisa (llevan
 // data-estatica en <html>).
 //
 // Regla de contenido: nada que no sea verdad. De Iheb solo consta (30-10-2026,
 // por Tony): se llama Iheb (solo el nombre), es amigo de Tony, guía en francés,
-// habla también árabe e inglés, guía en las mismas zonas que Tony (Kioto, Osaka,
-// Nara, Kobe, Himeji), vive en Japón, y el precio lo da por WhatsApp según el
-// grupo. NO inventar nacionalidad, años en Japón, apellido, licencias, títulos,
-// reseñas, notas ni precios. Sí se puede decir que habla árabe y que puede meter
-// comida halal, mezquitas y pausas para rezar en el día.
+// habla también árabe e inglés, vive en Japón, guía SOLO en el Kanto (Tokio y
+// alrededores: Kamakura, Yokohama, Nikko, Hakone) más Nagano y Shizuoka (lado
+// del Fuji), y el precio lo da por WhatsApp según el grupo. NO guía en Kansai:
+// Kioto/Osaka son de Tony y solo se nombran para presentar al equipo. NO inventar
+// nacionalidad, años en Japón, apellido, licencias, títulos, reseñas, notas,
+// precios ni recogidas en hotel o aeropuerto. Sí se puede decir que habla árabe y
+// que puede meter comida halal, mezquitas y pausas para rezar en el día. Nada de
+// alcohol (ni sake, ni bares, ni izakaya): la web es halal.
 //
-// Fotos: se reutilizan las de Wikimedia de Ferhat (scripts/turkce-fotolar.json,
-// archivos en /tr/foto/). El retrato de Iheb vive en /fr/foto/iheb-<ancho>.webp.
+// Fotos: Wikimedia Commons con licencia libre (CC BY / CC BY-SA / CC0 / PD);
+// autor, licencia y página de origen en scripts/francais-photos.json, archivos en
+// /fr/foto/<clave>-<ancho>.webp. El retrato de Iheb vive en /fr/foto/iheb-<ancho>.webp.
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -32,7 +37,7 @@ const WA_NUMERO = '818080155322'
 const WA_VISIBLE = '+81 80 8015 5322'
 const ANGLAIS = 'french-speaking-guide-japan'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
-const WA_GENEL = wa('Bonjour Iheb, je cherche un guide francophone au Japon. Dates : ')
+const WA_GENEL = wa('Bonjour Iheb, je cherche un guide francophone à Tokyo. Dates : ')
 
 // Reseñas de Iheb: las manda el cliente desde /fr/avis/ y el Worker las publica.
 // Se meten en el HTML al construir (las IAs no ejecutan JS) y, para quien
@@ -49,279 +54,298 @@ try {
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-const PHOTOS = JSON.parse(readFileSync(join(root, 'scripts/turkce-fotolar.json'), 'utf8'))
+const PHOTOS = JSON.parse(readFileSync(join(root, 'scripts/francais-photos.json'), 'utf8'))
 const photo = (k) => { if (!PHOTOS[k]) throw new Error(`francais: falta la foto ${k}`); return PHOTOS[k] }
-// Algunas fotos solo tienen 1600/800: el ancho «grande» es el mayor ≤ 1920.
+// El ancho «grande» es el mayor ≤ 1920; el 3840 solo entra por srcset.
 const grande = (k) => photo(k).anchos.find((w) => w <= 1920) ?? photo(k).anchos.at(-1)
-const srcset = (k) => photo(k).anchos.map((w) => `/tr/foto/${k}-${w}.webp ${Math.min(w, photo(k).w)}w`).join(', ')
+const srcset = (k) => photo(k).anchos.map((w) => `/fr/foto/${k}-${w}.webp ${Math.min(w, photo(k).w)}w`).join(', ')
 const credit = (k) => `Photo : <a href="${photo(k).kaynak}" rel="nofollow">${esc(photo(k).autor)}</a> · ${esc(photo(k).lisans)}`
 const hero = (k, alt, contenu) => `<section class="kahraman">
-<img src="/tr/foto/${k}-${grande(k)}.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${photo(k).w}" height="${photo(k).h}" fetchpriority="high">
+<img src="/fr/foto/${k}-${grande(k)}.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${photo(k).w}" height="${photo(k).h}" fetchpriority="high">
 <div class="ortu"><div class="kap">${contenu}</div></div>
 <small class="kredi">${credit(k)}</small>
 </section>`
-const cartePhoto = (k, alt) => `<figure class="kf"><img src="/tr/foto/${k}-${photo(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${photo(k).w}" height="${photo(k).h}"><figcaption>${credit(k)}</figcaption></figure>`
+const cartePhoto = (k, alt) => `<figure class="kf"><img src="/fr/foto/${k}-${photo(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${photo(k).w}" height="${photo(k).h}"><figcaption>${credit(k)}</figcaption></figure>`
 
 // Retrato de Iheb (1080×1085).
-const PORTRAIT_ALT = 'Iheb, guide francophone à Kyoto et Osaka'
+const PORTRAIT_ALT = 'Iheb, guide francophone à Tokyo'
 const PORTRAIT_SRCSET = '/fr/foto/iheb-320.webp 320w, /fr/foto/iheb-640.webp 640w, /fr/foto/iheb-1080.webp 1080w'
 const portraitGrand = `<img class="portrait" src="/fr/foto/iheb-640.webp" srcset="${PORTRAIT_SRCSET}" sizes="(max-width:700px) 80vw, 360px" alt="${PORTRAIT_ALT}" width="1080" height="1085" loading="lazy">`
-const contactMini = (lien, texte) => `<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="${PORTRAIT_ALT}" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, votre guide francophone dans le Kansai. Il parle aussi arabe et anglais.</p><p><a class="btn" href="${lien}">${texte}</a></p></div></div>`
+const contactMini = (lien, texte) => `<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="${PORTRAIT_ALT}" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, votre guide francophone à Tokyo et dans ses environs. Il parle aussi arabe et anglais.</p><p><a class="btn" href="${lien}">${texte}</a></p></div></div>`
 
+// Zonas de Iheb: Tokio y el Kanto, más Nagano y Shizuoka. Los cinco lagos del
+// Fuji están en Yamanashi: se dicen como excursión desde Tokio, sin esconderlo.
 const VILLES = [
   {
-    yol: 'kyoto', ad: 'Kyoto', a: 'à Kyoto', kapak: 'fushimi-tunel',
-    titre: 'Guide francophone à Kyoto : Iheb | Visite privée de Kyoto en français',
-    desc: 'Guide privé francophone à Kyoto : Fushimi Inari, Kiyomizu-dera, Gion et Arashiyama. Uniquement pour votre groupe, rendez-vous à votre hôtel. Tarif sur WhatsApp.',
-    intro: 'Kyoto a été la capitale du Japon pendant plus de mille ans. Temples, ruelles de geishas et forêt de bambous : pour beaucoup de voyageurs, c’est la journée la plus marquante du séjour. Iheb la construit à votre rythme et vous la raconte en français.',
+    yol: 'tokyo', ad: 'Tokyo', nav: 'Tokyo', a: 'à Tokyo', kapak: 'senso-ji-pagode',
+    titre: 'Guide francophone à Tokyo : Iheb | Visite privée de Tokyo en français',
+    desc: 'Guide privé francophone à Tokyo : Asakusa et Senso-ji, Meiji Jingu, Shibuya, Skytree, marché de Tsukiji. Uniquement pour votre groupe, en français. Tarif sur WhatsApp.',
+    intro: 'Tokyo, c’est des dizaines de quartiers qui ne se ressemblent pas : vieux temples d’Asakusa, forêt du sanctuaire Meiji, carrefour de Shibuya, tours de Shinjuku. Iheb construit la journée à votre rythme et vous la raconte en français.',
     lieux: [
-      ['Fushimi Inari Taisha', 'Des milliers de torii vermillon qui grimpent à flanc de montagne. Le matin tôt, avant la foule, c’est le meilleur moment.', 'fushimi-orman'],
-      ['Kiyomizu-dera', 'Le temple à la grande terrasse de bois qui domine la ville, et les vieilles ruelles pavées qui y mènent : Ninenzaka et Sannenzaka.', 'kiyomizu-gece'],
-      ['Gion', 'Le quartier des geishas, ses maisons de thé en bois et ses ruelles étroites.', 'gion'],
-      ['Arashiyama', 'La forêt de bambous, le pont Togetsukyo et les berges de la rivière.', 'arashiyama'],
-      ['Kinkaku-ji', 'Le Pavillon d’or : un temple couvert de feuilles d’or au bord d’un étang.', 'kinkakuji'],
-      ['Marché Nishiki', 'Le « garde-manger » de Kyoto : spécialités locales et étals à goûter.', 'nishiki'],
+      ['Asakusa et Senso-ji', 'Le plus ancien temple de Tokyo, la porte Kaminarimon et sa grande lanterne rouge, puis la rue commerçante Nakamise.', 'kaminarimon'],
+      ['Meiji Jingu', 'Le sanctuaire dédié à l’empereur Meiji et à l’impératrice Shoken, au milieu d’une forêt en plein centre, à deux pas de Harajuku.', 'meiji-jingu'],
+      ['Shibuya', 'Le célèbre carrefour où des centaines de piétons traversent en même temps, dans toutes les directions.', 'shibuya'],
+      ['Tokyo Skytree', 'Avec 634 mètres, la plus haute tour du Japon ; vue sur toute la ville par temps clair.', 'skytree'],
+      ['Jardins est du Palais impérial', 'Les jardins bâtis sur les ruines du château d’Edo, au cœur de la ville, près de la gare de Tokyo.', 'palais-imperial'],
+      ['Marché extérieur de Tsukiji', 'Les étals de produits de la mer et de cuisine de rue restés à Tsukiji après le départ du marché de gros à Toyosu en 2018.', 'tsukiji'],
+      ['Odaiba', 'Le front de mer et le Rainbow Bridge, surtout beaux à la tombée de la nuit.', 'odaiba'],
     ],
-    astuce: 'Depuis Osaka, Kyoto est à environ 30-45 minutes en train. L’automne (novembre) et la saison des cerisiers (fin mars-début avril) sont les périodes les plus chargées : réservez tôt.',
+    astuce: 'Pour circuler, une carte IC (Suica ou PASMO) suffit dans le métro, les trains et les bus de Tokyo. Pour les voyageurs musulmans, la Tokyo Camii, à Yoyogi-Uehara, accueille les visiteurs ; Iheb peut l’intégrer à la journée avec les pauses prière.',
   },
   {
-    yol: 'osaka', ad: 'Osaka', a: 'à Osaka', kapak: 'osaka-kale-hendek',
-    titre: 'Guide francophone à Osaka : Iheb | Visite privée d’Osaka en français',
-    desc: 'Guide privé francophone à Osaka : château d’Osaka, Dotonbori, Shinsekai et marché Kuromon. Repas halal et mosquées possibles. Tarif sur WhatsApp.',
-    intro: 'Osaka, c’est la cuisine du Japon : street food, néons et gens chaleureux. C’est aussi la grande ville la plus proche de l’aéroport du Kansai (KIX), si bien que beaucoup de voyageurs commencent leur séjour ici.',
+    yol: 'kamakura', ad: 'Kamakura, Yokohama et Enoshima', nav: 'Kamakura', a: 'à Kamakura', kapak: 'kamakura-daibutsu',
+    titre: 'Guide francophone à Kamakura et Yokohama : Iheb | Excursion depuis Tokyo',
+    desc: 'Excursion en français depuis Tokyo : le Grand Bouddha de Kamakura, Tsurugaoka Hachimangu, Hase-dera, l’île d’Enoshima et Yokohama. Visite privée avec Iheb, tarif sur WhatsApp.',
+    intro: 'Kamakura a été le siège du premier shogunat, de la fin du XIIe siècle à 1333. Aujourd’hui, c’est une petite ville de temples entre collines et mer, à environ une heure de Tokyo en train : l’excursion idéale pour une journée plus calme.',
     lieux: [
-      ['Château d’Osaka', 'Le symbole de la ville ; son parc et ses remparts se prêtent idéalement à une promenade matinale.', 'osaka-kale-gece'],
-      ['Dotonbori', 'Les enseignes lumineuses au bord du canal et la cuisine de rue.', 'dotonbori'],
-      ['Shinsekai', 'Le vieil Osaka, autour de la tour Tsutenkaku.', 'shinsekai'],
-      ['Marché Kuromon', 'Poissons, fruits de mer et fruits frais : « la cuisine d’Osaka ».', 'kuromon'],
-      ['Umeda', 'Gratte-ciel, shopping et vue panoramique sur la ville.', 'umeda'],
+      ['Grand Bouddha (Kotoku-in)', 'Un bouddha de bronze de plus de 11 mètres, assis en plein air depuis que son bâtiment a disparu il y a plusieurs siècles.', 'kamakura-daibutsu'],
+      ['Tsurugaoka Hachimangu', 'Le grand sanctuaire de Kamakura, au bout d’une longue allée qui part de la gare.', 'tsurugaoka'],
+      ['Hase-dera', 'Un temple à flanc de colline avec vue sur la baie ; ses hortensias attirent beaucoup de monde en juin.', 'hasedera'],
+      ['Enoshima', 'Une petite île reliée à la côte par un pont, qu’on rejoint avec le petit train Enoden.', 'enoshima'],
+      ['Yokohama', 'Le port, le quartier de Minato Mirai et son front de mer, à mi-chemin entre Tokyo et Kamakura.', 'yokohama'],
     ],
-    astuce: 'Osaka compte de nombreux restaurants certifiés halal ou Muslim friendly ; Iheb peut intégrer les repas et les pauses prière à la journée.',
+    astuce: 'Depuis la gare de Tokyo, la ligne JR Yokosuka rejoint Kamakura en environ une heure sans changement. Le petit train Enoden relie ensuite Kamakura, le Grand Bouddha (gare de Hase) et Enoshima. Yokohama se combine facilement sur le trajet.',
   },
   {
-    yol: 'nara', ad: 'Nara', a: 'à Nara', kapak: 'nara-fener-geyik',
-    titre: 'Guide francophone à Nara : Iheb | Daims de Nara et Todai-ji',
-    desc: 'Guide privé francophone à Nara : les daims du parc de Nara, le grand Bouddha du Todai-ji et le Kasuga Taisha. En excursion depuis Osaka ou Kyoto. Tarif sur WhatsApp.',
-    intro: 'Nara fut la première capitale permanente du Japon. Avec ses daims en liberté dans le parc et le Todai-ji, l’un des plus grands édifices en bois du monde, elle se visite tranquillement en une demi-journée depuis Osaka ou Kyoto.',
+    yol: 'nikko', ad: 'Nikko', nav: 'Nikko', a: 'à Nikko', kapak: 'nikko-yomeimon',
+    titre: 'Guide francophone à Nikko : Iheb | Excursion à Nikko depuis Tokyo en français',
+    desc: 'Excursion privée en français de Tokyo à Nikko : le Tosho-gu, le pont Shinkyo, la cascade de Kegon et le lac Chuzenji. Patrimoine mondial de l’UNESCO. Tarif sur WhatsApp.',
+    intro: 'Au nord de Tokyo, dans la préfecture de Tochigi, Nikko réunit sanctuaires sculptés et montagnes. Les « sanctuaires et temples de Nikko » sont inscrits au patrimoine mondial de l’UNESCO depuis 1999. C’est une longue journée depuis Tokyo, mais l’une des plus belles.',
     lieux: [
-      ['Parc de Nara', 'Célèbre pour ses daims qui inclinent la tête pour saluer.', 'nara-geyik'],
-      ['Todai-ji', 'Le temple de bois qui abrite un immense Bouddha en bronze.', 'todaiji'],
-      ['Kasuga Taisha', 'Sanctuaire shinto entouré de centaines de lanternes de pierre et de bronze.', 'kasuga'],
-      ['Naramachi', 'Un quartier paisible d’anciennes maisons de marchands.', 'naramachi'],
+      ['Tosho-gu', 'Le mausolée de Tokugawa Ieyasu, fondateur du shogunat d’Edo, et sa porte Yomeimon couverte de sculptures et de dorures.', 'nikko-yomeimon'],
+      ['Pont Shinkyo', 'Le pont sacré laqué de rouge au-dessus de la rivière Daiya, à l’entrée du site.', 'shinkyo'],
+      ['Cascade de Kegon', 'Une chute d’environ 97 mètres, plus haut dans la montagne, vue depuis une plateforme en contrebas.', 'kegon'],
+      ['Lac Chuzenji', 'Un lac d’altitude au pied du mont Nantai, très beau à l’automne.', 'chuzenji'],
     ],
-    astuce: 'Nara se combine bien avec Kyoto le même jour (Fushimi Inari le matin, Nara l’après-midi) ou se fait en demi-journée depuis Osaka.',
+    astuce: 'Depuis Asakusa, le train Tobu Spacia X rejoint Nikko en environ 1 h 50. Le Tosho-gu ferme plus tôt de novembre à mars (vers 16 h). En altitude, autour du lac Chuzenji, les couleurs d’automne arrivent dès octobre, plus tôt qu’à Tokyo.',
   },
   {
-    yol: 'kobe', ad: 'Kobe', a: 'à Kobe', kapak: 'kobe-camii',
-    titre: 'Guide francophone à Kobe : Iheb | Mosquée de Kobe et port',
-    desc: 'Guide privé francophone à Kobe : la mosquée de Kobe (1935, la première du Japon), Kitano, le port et le mont Rokko. Tarif sur WhatsApp.',
-    intro: 'Kobe est une ville portuaire coincée entre montagne et mer. Elle a une place à part pour les voyageurs musulmans : la mosquée de Kobe, ouverte en 1935, est la première mosquée construite au Japon, et on y prie toujours le vendredi.',
+    yol: 'hakone-mont-fuji', ad: 'Hakone et mont Fuji', nav: 'Hakone & Fuji', a: 'à Hakone et au mont Fuji', kapak: 'hakone-ashi-torii',
+    titre: 'Guide francophone à Hakone et au mont Fuji : Iheb | Excursion depuis Tokyo',
+    desc: 'Excursion privée en français depuis Tokyo : Hakone (lac Ashi, Owakudani) ou les lacs du Fuji (Kawaguchiko, pagode Chureito, Oshino Hakkai). Tarif sur WhatsApp.',
+    intro: 'Pour voir le mont Fuji depuis Tokyo, deux régions s’offrent à vous. Hakone, dans la préfecture de Kanagawa : lac Ashi, téléphérique et vallée volcanique. Les cinq lacs du Fuji, autour de Kawaguchiko, sont dans la préfecture voisine de Yamanashi, mais restent une excursion classique d’une journée depuis Tokyo. Les deux ensemble dans la même journée, c’est trop : il faut choisir.',
     lieux: [
-      ['Mosquée de Kobe', 'Ouverte en 1935, c’est la première mosquée du Japon. Dans le quartier de Kitano.', 'kobe-camii-mihrap'],
-      ['Kitano Ijinkan', 'Maisons de style occidental construites par des marchands étrangers au XIXe siècle.', 'kitano'],
-      ['Harborland et parc Meriken', 'Promenade sur le port et la Kobe Port Tower.', 'kobe-liman'],
-      ['Mont Rokko', 'On y monte en téléphérique pour voir toute la ville d’en haut.', 'rokko-gece'],
+      ['Lac Ashi et sanctuaire de Hakone', 'Le torii rouge planté dans l’eau du lac, et la traversée en bateau.', 'hakone-jinja-torii'],
+      ['Owakudani', 'La vallée volcanique fumante, survolée par le téléphérique de Hakone. L’accès peut être restreint selon l’activité volcanique.', 'owakudani'],
+      ['Lac Kawaguchi', 'Le plus accessible des cinq lacs, avec le mont Fuji qui se reflète dans l’eau par temps calme.', 'kawaguchiko-fuji'],
+      ['Pagode Chureito', 'La pagode rouge du parc Arakurayama Sengen, avec le Fuji en arrière-plan : la photo la plus connue de la région.', 'fuji-chureito'],
+      ['Oshino Hakkai', 'Un village de bassins alimentés par les eaux de source du Fuji.', 'oshino-hakkai'],
     ],
-    astuce: 'Kobe est à environ 20-30 minutes d’Osaka en train. Si vous souhaitez prier le vendredi à la mosquée de Kobe, le programme peut s’organiser en conséquence.',
+    astuce: 'Depuis Shinjuku, la Romancecar d’Odakyu rejoint Hakone-Yumoto en environ 1 h 20, et le train Fuji Excursion va directement à Kawaguchiko en environ 2 heures. Le Fuji est souvent caché par les nuages : les matins d’hiver sont en général les plus dégagés.',
   },
   {
-    yol: 'himeji', ad: 'Himeji', a: 'à Himeji', kapak: 'himeji',
-    titre: 'Guide francophone au château de Himeji : Iheb | Visite de Himeji',
-    desc: 'Guide privé francophone à Himeji : le château de Himeji, classé au patrimoine mondial de l’UNESCO, et le jardin Kokoen. En excursion depuis Osaka ou Kobe. Tarif sur WhatsApp.',
-    intro: 'Surnommé le « château du Héron blanc » pour ses murs immaculés, le château de Himeji a été l’un des premiers sites japonais inscrits au patrimoine mondial de l’UNESCO, en 1993. C’est le plus grand des châteaux d’origine, sortis intacts des guerres et des séismes.',
+    yol: 'nagano', ad: 'Nagano', nav: 'Nagano', a: 'à Nagano', kapak: 'zenkoji-kondo',
+    titre: 'Guide francophone à Nagano : Iheb | Zenko-ji, singes des neiges et Matsumoto',
+    desc: 'Visite privée en français dans la préfecture de Nagano : le temple Zenko-ji, les singes des neiges de Jigokudani et le château de Matsumoto. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
+    intro: 'La préfecture de Nagano, au cœur des Alpes japonaises, a accueilli les Jeux olympiques d’hiver de 1998. On y vient pour le grand temple Zenko-ji, pour les macaques qui se baignent dans une source chaude et pour l’un des plus beaux châteaux d’origine du Japon, à Matsumoto.',
     lieux: [
-      ['Château de Himeji', 'Montée au donjon principal, avec sa structure intérieure en bois d’origine.', 'himeji-yakin'],
-      ['Kokoen', 'Des jardins japonais juste à côté du château.', 'kokoen'],
+      ['Zenko-ji', 'L’un des grands temples bouddhiques du Japon, fondé selon la tradition au VIIe siècle ; il est ouvert à tous, quelle que soit l’école.', 'zenkoji-kondo'],
+      ['Singes des neiges (Jigokudani)', 'Au parc Jigokudani Yaen-koen, des macaques sauvages se baignent dans une source chaude, surtout en hiver, au milieu de la neige.', 'singes-jigokudani'],
+      ['Château de Matsumoto', 'Un donjon noir d’origine, classé trésor national, entouré de douves.', 'matsumoto'],
     ],
-    astuce: 'Himeji est à environ 30 minutes de Shin-Osaka en Shinkansen. On peut le combiner avec Kobe dans la même journée.',
+    astuce: 'Le Hokuriku Shinkansen relie Tokyo à Nagano en environ 1 h 20 à 1 h 40. Pour les singes, comptez environ 45 minutes de bus depuis la gare de Nagano, puis une trentaine de minutes de marche en forêt. Matsumoto est à environ 2 h 30 à 3 h de Shinjuku en train express.',
+  },
+  {
+    yol: 'shizuoka', ad: 'Shizuoka', nav: 'Shizuoka', a: 'à Shizuoka', kapak: 'the-fuji',
+    titre: 'Guide francophone à Shizuoka : Iheb | Mont Fuji, Mishima Skywalk et thé',
+    desc: 'Visite privée en français côté Shizuoka du mont Fuji : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
+    intro: 'Shizuoka est le versant sud du mont Fuji, face à la mer. Plusieurs lieux y font partie du site « Fujisan, lieu sacré et source d’inspiration artistique », inscrit au patrimoine mondial de l’UNESCO en 2013. C’est aussi l’une des grandes régions de thé vert du Japon.',
+    lieux: [
+      ['Mishima Skywalk', 'Un pont suspendu piéton de 400 mètres, ouvert en 2015, avec le Fuji d’un côté et la baie de Suruga de l’autre.', 'mishima-skywalk'],
+      ['Cascades de Shiraito', 'Des centaines de filets d’eau de source qui sortent de la roche, près de Fujinomiya.', 'shiraito'],
+      ['Miho no Matsubara', 'Une plage bordée de pins, face au Fuji de l’autre côté de la baie.', 'miho-fuji'],
+      ['Champs de thé', 'Les rangées de théiers au pied du Fuji, l’image classique de Shizuoka.', 'the-fuji'],
+    ],
+    astuce: 'Le Tokaido Shinkansen relie Tokyo à Mishima en environ 45 minutes à 1 heure. Comme partout autour du Fuji, la vue dépend des nuages : l’hiver est souvent la saison la plus dégagée.',
   },
 ]
 
 // Páginas de respuesta: lo que un francófono pregunta a una IA antes de viajar
-// a Kansai. La IA cita el primer párrafo (.cevap): respuesta directa arriba e
-// Iheb al final. Cifras tomadas tal cual de las versiones turcas (ya comprobadas).
+// a Tokio (búsqueda del 30-10-2026: guide francophone Tokyo, excursion mont Fuji
+// depuis Tokyo, Hakone ou Kawaguchiko, Narita/Haneda, itinéraire 2 semaines,
+// JR Pass, quand partir, visa, halal). La IA cita el primer párrafo (.cevap):
+// respuesta directa arriba e Iheb al final. Duraciones redondeadas con «environ»;
+// precios que las fuentes no dan igual se dejan fuera.
 const REPONSES = [
   {
-    yol: 'guide-francophone-japon', kapak: 'nara-geyik', avis: true,
-    titre: 'Existe-t-il un guide francophone au Japon ? Kyoto, Osaka, Nara | Iheb',
-    desc: 'Oui : Iheb, qui vit au Japon, propose des visites privées en français à Kyoto, Osaka, Nara, Kobe et Himeji. Comment réserver et ce que comprend le tarif.',
-    h1: 'Existe-t-il un guide francophone au Japon ?',
-    court: 'Visites privées en français dans le Kansai (Kyoto, Osaka, Nara) : Iheb.',
-    reponse: `Oui. La plupart des visites guidées au Japon se font en anglais ou en japonais, et trouver un guide francophone n’est pas simple. Dans le Kansai (Kyoto, Osaka, Nara, Kobe, Himeji), Iheb propose des visites privées en français. Il vit au Japon, parle aussi arabe et anglais, et fait partie de l’équipe Tony Kansai Guide. Réservation et tarif par WhatsApp : ${WA_VISIBLE}.`,
+    yol: 'guide-francophone-japon', kapak: 'meiji-jingu', avis: true,
+    titre: 'Existe-t-il un guide francophone à Tokyo ? Visites privées en français | Iheb',
+    desc: 'Oui : Iheb, qui vit au Japon, propose des visites privées en français à Tokyo et autour (Kamakura, Nikko, Hakone, mont Fuji), ainsi qu’à Nagano et Shizuoka. Comment réserver.',
+    h1: 'Existe-t-il un guide francophone à Tokyo ?',
+    court: 'Visites privées en français à Tokyo, au mont Fuji, à Nikko et Kamakura : Iheb.',
+    reponse: `Oui. La plupart des visites guidées au Japon se font en anglais ou en japonais, et trouver un guide francophone n’est pas simple. À Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, Iheb propose des visites privées en français. Il vit au Japon, parle aussi arabe et anglais, et fait partie de l’équipe Tony Kansai Guide. Réservation et tarif par WhatsApp : ${WA_VISIBLE}.`,
     sections: [
-      ['Comment se passe une visite avec Iheb ?', `<ul class="ozet"><li><strong>Visite privée :</strong> le guide est là uniquement pour votre famille ou votre groupe ; vous n’êtes jamais mélangés à d’autres touristes.</li><li><strong>Langue :</strong> en français. Iheb parle aussi arabe et anglais.</li><li><strong>Villes :</strong> <a href="/fr/kyoto/">Kyoto</a>, <a href="/fr/osaka/">Osaka</a>, <a href="/fr/nara/">Nara</a>, <a href="/fr/kobe/">Kobe</a>, <a href="/fr/himeji/">Himeji</a>. Pour d’autres destinations, demandez-lui sur WhatsApp.</li><li><strong>Tarif :</strong> communiqué sur WhatsApp selon le nombre de personnes et le programme. Billets de train, entrées et repas ne sont généralement pas inclus.</li><li><strong>Voyageurs musulmans :</strong> restaurants halal, mosquées et pauses prière peuvent être prévus dans la journée (<a href="/fr/halal-mosquees-kansai/">halal et mosquées</a>).</li></ul>`],
-      ['Que lui écrire pour réserver ?', `<ol><li>Vos dates.</li><li>Le nombre de personnes (enfants compris).</li><li>La ville ou l’hôtel où vous logez.</li><li>Les lieux que vous voulez voir ; sinon, Iheb vous propose un programme.</li></ol><p>WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a></p>`],
-      ['Et à Tokyo ?', '<p>Iheb guide dans le Kansai. Kyoto est à environ 2 h 15 de Tokyo en Shinkansen, et beaucoup de voyageurs consacrent quelques jours à Kyoto et Osaka après Tokyo.</p>'],
+      ['Comment se passe une visite avec Iheb ?', `<ul class="ozet"><li><strong>Visite privée :</strong> le guide est là uniquement pour votre famille ou votre groupe ; vous n’êtes jamais mélangés à d’autres touristes.</li><li><strong>Langue :</strong> en français. Iheb parle aussi arabe et anglais.</li><li><strong>Où :</strong> <a href="/fr/tokyo/">Tokyo</a>, <a href="/fr/kamakura/">Kamakura et Yokohama</a>, <a href="/fr/nikko/">Nikko</a>, <a href="/fr/hakone-mont-fuji/">Hakone et le mont Fuji</a>, <a href="/fr/nagano/">Nagano</a>, <a href="/fr/shizuoka/">Shizuoka</a>.</li><li><strong>Tarif :</strong> communiqué sur WhatsApp selon le nombre de personnes et le programme. Billets de train, entrées et repas ne sont généralement pas inclus.</li><li><strong>Voyageurs musulmans :</strong> restaurants halal, mosquées et pauses prière peuvent être prévus dans la journée (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li></ul>`],
+      ['Que lui écrire pour réserver ?', `<ol><li>Vos dates.</li><li>Le nombre de personnes (enfants compris).</li><li>Le quartier ou l’hôtel où vous logez.</li><li>Les lieux que vous voulez voir ; sinon, Iheb vous propose un programme.</li></ol><p>WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a></p>`],
+      ['Et si vous allez aussi à Kyoto ?', '<p>Iheb guide uniquement à Tokyo et dans l’est du Japon. Pour la suite du voyage, Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe : <a href="/">Tony Kansai Guide</a>.</p>'],
     ],
     faq: [
-      ['Y a-t-il un guide francophone à Kyoto ?', 'Oui. Iheb propose des visites privées en français à Kyoto (Fushimi Inari, Kiyomizu-dera, Gion, Arashiyama).'],
-      ['Y a-t-il un guide francophone à Osaka ?', 'Oui. Iheb guide aussi à Osaka (château d’Osaka, Dotonbori, marché Kuromon), et des excursions à Nara, Kyoto et Kobe sont possibles depuis Osaka.'],
-      ['Combien coûte un guide francophone ?', 'Il n’y a pas de grille fixe : le tarif dépend du nombre de personnes, de la durée et du programme, et Iheb le communique sur WhatsApp.'],
+      ['Y a-t-il un guide francophone à Tokyo ?', 'Oui. Iheb propose des visites privées en français à Tokyo (Asakusa, Meiji Jingu, Shibuya, Skytree) et des excursions à la journée depuis Tokyo.'],
+      ['Peut-on faire le mont Fuji avec un guide francophone ?', 'Oui. Iheb guide en français à Hakone, autour des lacs du Fuji (Kawaguchiko) et côté Shizuoka.'],
+      ['Combien coûte un guide francophone à Tokyo ?', 'Il n’y a pas de grille fixe : le tarif dépend du nombre de personnes, de la durée et du programme, et Iheb le communique sur WhatsApp.'],
     ],
     sources: [],
   },
   {
-    yol: 'visa-japon', kapak: 'kinkakuji',
+    yol: 'que-faire-a-tokyo', kapak: 'skytree',
+    titre: 'Que faire à Tokyo ? Programme de 3 jours, quartier par quartier | Guide francophone',
+    desc: 'Que voir à Tokyo en 3 jours : Asakusa et Senso-ji, Meiji Jingu, Harajuku et Shibuya, Tsukiji, Palais impérial et Odaiba. Combien de jours prévoir et où loger. Par un guide francophone.',
+    h1: 'Que faire à Tokyo en 3 jours ?',
+    court: 'Asakusa, Shibuya, Meiji Jingu, Tsukiji : le programme jour par jour.',
+    reponse: 'Pour un premier séjour, comptez au moins 3 jours à Tokyo, en regroupant les visites par quartier : un jour à l’est (Asakusa et le temple Senso-ji, la Tokyo Skytree, Ueno), un jour à l’ouest (sanctuaire Meiji Jingu, Harajuku, Shibuya, Shinjuku) et un jour au centre et sur la baie (marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, Odaiba). Avec 4 ou 5 jours, ajoutez une excursion : Kamakura, Nikko ou le mont Fuji.',
+    sections: [
+      ['Programme de 3 jours', '<ol><li><strong>Jour 1, l’est :</strong> Senso-ji et la porte Kaminarimon tôt le matin, la rue Nakamise, puis la Tokyo Skytree et le parc d’Ueno.</li><li><strong>Jour 2, l’ouest :</strong> Meiji Jingu le matin, Harajuku et Omotesando, le carrefour de Shibuya, et Shinjuku le soir.</li><li><strong>Jour 3, le centre et la baie :</strong> marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, puis Odaiba et le Rainbow Bridge à la tombée de la nuit.</li></ol>'],
+      ['Excursions d’une journée depuis Tokyo', '<ul class="ozet"><li><a href="/fr/kamakura/">Kamakura et Yokohama</a> : environ 1 heure de train.</li><li><a href="/fr/nikko/">Nikko</a> : environ 1 h 50 depuis Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone ou les lacs du Fuji</a> : environ 1 h 20 à 2 heures depuis Shinjuku.</li></ul>'],
+      ['Où loger ?', '<p>Près d’une gare de la ligne circulaire JR Yamanote : Shinjuku ou Shibuya pour l’ouest et les départs vers Hakone et le Fuji, la gare de Tokyo ou Ueno pour l’est, Nikko, l’aéroport de Narita et le Shinkansen.</p>'],
+    ],
+    faq: [
+      ['Combien de jours faut-il pour visiter Tokyo ?', 'Au moins 3 jours pour les quartiers principaux ; 4 à 5 jours avec une excursion (Kamakura, Nikko ou le mont Fuji).'],
+      ['Comment se déplacer à Tokyo ?', 'En métro et en train, avec une carte IC (Suica ou PASMO) qu’on recharge et qu’on passe aux portillons ; elle marche aussi dans les bus.'],
+      ['Le marché de Tsukiji existe-t-il encore ?', 'Le marché de gros a déménagé à Toyosu en 2018, mais le marché extérieur de Tsukiji, avec ses étals et sa cuisine de rue, est toujours ouvert.'],
+    ],
+    sources: [['JNTO (Office national du tourisme japonais)', 'https://www.japan.travel/fr/']],
+  },
+  {
+    yol: 'excursion-mont-fuji-depuis-tokyo', kapak: 'kawaguchiko-fuji',
+    titre: 'Excursion au mont Fuji depuis Tokyo : Hakone ou Kawaguchiko ? | Guide francophone',
+    desc: 'Mont Fuji en une journée depuis Tokyo : Kawaguchiko (pagode Chureito, Oshino Hakkai) ou Hakone (lac Ashi, Owakudani) ? Trains, durées, quand voir le Fuji. Guide francophone Iheb.',
+    h1: 'Comment faire une excursion au mont Fuji depuis Tokyo ?',
+    court: 'Kawaguchiko ou Hakone : laquelle choisir pour une journée.',
+    reponse: 'Depuis Tokyo, on voit le mont Fuji en une journée en choisissant une seule de ces deux régions : les lacs du Fuji autour de Kawaguchiko (préfecture de Yamanashi), avec la pagode Chureito et Oshino Hakkai, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; ou Hakone (préfecture de Kanagawa), avec le lac Ashi et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar. Les deux régions sont séparées d’environ 1 h 30 de bus : les combiner dans la même journée est déconseillé.',
+    sections: [
+      ['Kawaguchiko ou Hakone ?', `<table><tr><th></th><th>Lacs du Fuji (Kawaguchiko)</th><th>Hakone</th></tr>
+<tr><td>Préfecture</td><td>Yamanashi</td><td>Kanagawa</td></tr>
+<tr><td>Depuis Shinjuku</td><td>Train Fuji Excursion, environ 2 h ; ou bus express</td><td>Romancecar d’Odakyu, environ 1 h 20 jusqu’à Hakone-Yumoto</td></tr>
+<tr><td>Vue sur le Fuji</td><td>De très près, au-dessus du lac</td><td>Plus lointaine, depuis le lac Ashi ou le téléphérique</td></tr>
+<tr><td>À voir</td><td>Lac Kawaguchi, pagode Chureito, Oshino Hakkai</td><td>Lac Ashi et son torii, téléphérique, Owakudani</td></tr></table>`],
+      ['Et côté Shizuoka ?', '<p>Le versant sud du Fuji, côté <a href="/fr/shizuoka/">Shizuoka</a>, se rejoint en Shinkansen (Tokyo-Mishima, environ 45 minutes à 1 heure) : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé.</p>'],
+      ['Quand voit-on le mont Fuji ?', '<p>Le sommet est souvent caché par les nuages, surtout en été. Les matins d’automne et d’hiver sont en général les plus dégagés. L’ascension, elle, n’est possible qu’en été, en général de juillet à début septembre.</p>'],
+    ],
+    faq: [
+      ['Peut-on faire Hakone et Kawaguchiko dans la même journée ?', 'C’est déconseillé : il faut environ 1 h 30 de bus entre les deux. Choisissez-en une, ou dormez sur place.'],
+      ['Combien de temps entre Tokyo et le mont Fuji ?', 'Environ 2 heures jusqu’à Kawaguchiko depuis Shinjuku en train direct, et environ 1 h 20 jusqu’à Hakone-Yumoto en Romancecar.'],
+      ['Y a-t-il une excursion au mont Fuji en français ?', 'Oui : Iheb guide en privé et en français à Hakone, autour de Kawaguchiko et côté Shizuoka. Tarif sur WhatsApp.'],
+    ],
+    sources: [['Odakyu : Romancecar', 'https://www.odakyu.jp/english/'], ['JNTO : mont Fuji', 'https://www.japan.travel/fr/']],
+  },
+  {
+    yol: 'aeroport-narita-haneda-tokyo', kapak: 'narita',
+    titre: 'Aéroport de Narita ou Haneda vers Tokyo : trains et durées | Guide francophone',
+    desc: 'De Narita à Tokyo : Narita Express (environ 1 h) ou Keisei Skyliner (environ 40 min jusqu’à Ueno). De Haneda : Keikyu ou monorail, environ 15 à 30 minutes. Quelle option choisir.',
+    h1: 'Comment aller de l’aéroport de Narita ou de Haneda à Tokyo ?',
+    court: 'Narita Express, Skyliner, Keikyu, monorail : les durées.',
+    reponse: 'Depuis Narita, les deux trains rapides sont le Keisei Skyliner, qui rejoint Nippori et Ueno en environ 40 minutes, et le Narita Express (N’EX) de JR, qui va à la gare de Tokyo en environ 1 heure puis continue vers Shinagawa, Shibuya et Shinjuku. Haneda est beaucoup plus proche du centre : la ligne Keikyu (vers Shinagawa) ou le Tokyo Monorail (vers Hamamatsucho) mettent environ 15 à 30 minutes. Des bus directs desservent aussi les grands hôtels depuis les deux aéroports.',
+    sections: [
+      ['Les options', `<table><tr><th>Depuis</th><th>Transport</th><th>Destination</th><th>Durée</th></tr>
+<tr><td>Narita</td><td>Keisei Skyliner</td><td>Nippori, Ueno</td><td>environ 40 min</td></tr>
+<tr><td>Narita</td><td>JR Narita Express (N’EX)</td><td>Gare de Tokyo, puis Shinagawa, Shibuya, Shinjuku</td><td>environ 1 h jusqu’à la gare de Tokyo</td></tr>
+<tr><td>Haneda</td><td>Keikyu</td><td>Shinagawa</td><td>environ 15-20 min</td></tr>
+<tr><td>Haneda</td><td>Tokyo Monorail</td><td>Hamamatsucho</td><td>environ 15-20 min</td></tr></table>`],
+      ['Conseils', '<ul class="ozet"><li>Les tarifs évoluent : vérifiez le prix à jour sur le site de la compagnie ou au guichet.</li><li>Les cartes IC (Suica, PASMO) fonctionnent sur ces lignes, sauf pour les places réservées du Skyliner et du N’EX, qui demandent un billet.</li><li>Narita et Haneda disposent de salles de prière.</li><li>Pour vos visites en français à Tokyo, écrivez à Iheb sur WhatsApp.</li></ul>'],
+    ],
+    faq: [
+      ['Narita ou Haneda : quel aéroport est le plus proche de Tokyo ?', 'Haneda : environ 15 à 30 minutes du centre, contre environ 40 minutes à 1 heure depuis Narita en train rapide.'],
+      ['Quel est le train le plus rapide depuis Narita ?', 'Le Keisei Skyliner, environ 40 minutes jusqu’à Ueno (un peu moins jusqu’à Nippori).'],
+    ],
+    sources: [['JR East : Narita Express', 'https://www.jreast.co.jp/multi/en/nex/'], ['Keisei Skyliner', 'https://www.keisei.co.jp/keisei/tetudou/skyliner/us/'], ['Aéroport de Haneda : accès', 'https://tokyo-haneda.com/en/access/']],
+  },
+  {
+    yol: 'itineraire-japon-2-semaines', kapak: 'shibuya',
+    titre: 'Itinéraire Japon 2 semaines : Tokyo, mont Fuji et environs | Guide francophone',
+    desc: 'Un itinéraire de 2 semaines pour un premier voyage au Japon : Tokyo et ses excursions (Kamakura, Nikko, mont Fuji) la première semaine, puis l’ouest du pays. JR Pass ou billets séparés.',
+    h1: 'Quel itinéraire pour 2 semaines au Japon ?',
+    court: 'Une semaine autour de Tokyo, jour par jour, puis la suite du voyage.',
+    reponse: 'Pour un premier voyage de 2 semaines, beaucoup de voyageurs passent la première semaine à Tokyo et dans ses environs (4 à 5 jours en ville, plus des excursions à Kamakura, Nikko ou au mont Fuji), puis prennent le Shinkansen vers l’ouest pour la seconde semaine. Regrouper les visites par région évite de passer ses journées dans les trains.',
+    sections: [
+      ['Semaine 1 : Tokyo et ses environs', '<ol><li><strong>Jours 1-3, Tokyo :</strong> Asakusa et la Skytree, Meiji Jingu et Shibuya, Tsukiji et le Palais impérial (<a href="/fr/que-faire-a-tokyo/">le détail</a>).</li><li><strong>Jour 4, Kamakura et Yokohama :</strong> le Grand Bouddha, Hase-dera, Enoshima.</li><li><strong>Jour 5, Nikko :</strong> le Tosho-gu et le pont Shinkyo.</li><li><strong>Jours 6-7, Hakone ou les lacs du Fuji :</strong> idéalement avec une nuit sur place (<a href="/fr/excursion-mont-fuji-depuis-tokyo/">Hakone ou Kawaguchiko ?</a>).</li></ol><p>En hiver, Nagano et ses singes des neiges se rejoignent en Shinkansen depuis Tokyo (<a href="/fr/nagano/">Nagano</a>).</p>'],
+      ['Semaine 2 : la suite du voyage', '<p>Iheb guide uniquement à Tokyo et dans l’est du Japon. Pour la seconde semaine, Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe : <a href="/">Tony Kansai Guide</a>.</p>'],
+      ['JR Pass ou billets séparés ?', '<p>Le prix du Japan Rail Pass a fortement augmenté en octobre 2023, si bien qu’il n’est plus automatiquement rentable. Additionnez le prix des billets de votre trajet et comparez avec le prix affiché sur le site officiel du JR Pass avant d’acheter.</p>'],
+    ],
+    faq: [
+      ['Combien de jours à Tokyo pour un premier voyage ?', 'Environ 4 à 5 jours, dont une ou deux excursions (Kamakura, Nikko ou le mont Fuji).'],
+      ['Le JR Pass vaut-il le coup ?', 'Pas toujours depuis la hausse de prix d’octobre 2023 : comparez avec le prix des billets séparés pour votre itinéraire.'],
+    ],
+    sources: [['JNTO : itinéraires', 'https://www.japan.travel/fr/'], ['Japan Rail Pass (site officiel)', 'https://japanrailpass.net/fr/']],
+  },
+  {
+    yol: 'quand-partir-japon', kapak: 'kawaguchiko-sakura',
+    titre: 'Quand partir à Tokyo et au mont Fuji ? Cerisiers, automne, météo | Guide francophone',
+    desc: 'La meilleure période pour Tokyo et le mont Fuji : cerisiers fin mars-début avril, feuillages fin novembre-début décembre, Fuji plus visible en hiver. Saison des pluies, chaleur de l’été et vacances japonaises.',
+    h1: 'Quand partir à Tokyo et au mont Fuji ?',
+    court: 'Cerisiers, couleurs d’automne, Fuji dégagé et périodes chargées.',
+    reponse: 'Les plus belles saisons pour Tokyo sont le printemps et l’automne. Les cerisiers y fleurissent en général entre fin mars et début avril, et les feuillages d’automne se voient surtout de fin novembre à début décembre (dès octobre en montagne, à Nikko). Le mont Fuji est le plus souvent dégagé de l’automne à l’hiver. De juin à mi-juillet, c’est la saison des pluies ; juillet et août sont très chauds et humides.',
+    sections: [
+      ['Tokyo et ses environs mois par mois', `<table><tr><th>Période</th><th>Météo</th><th>À savoir</th></tr>
+<tr><td>Fin mars – début avril</td><td>Douce</td><td>Cerisiers (sakura) à Tokyo et autour du lac Kawaguchi un peu plus tard. Période très chargée.</td></tr>
+<tr><td>Fin avril – début mai</td><td>Douce</td><td>Golden Week : vacances des Japonais, trains et hôtels pleins.</td></tr>
+<tr><td>Juin – mi-juillet</td><td>Pluvieuse</td><td>Saison des pluies (tsuyu) ; hortensias à Kamakura.</td></tr>
+<tr><td>Juillet – août</td><td>Très chaude, humide</td><td>Sortez tôt le matin. Saison de l’ascension du Fuji, mais le sommet est souvent dans les nuages vu d’en bas.</td></tr>
+<tr><td>Août – septembre</td><td>Chaude</td><td>Saison des typhons ; des trains peuvent être annulés.</td></tr>
+<tr><td>Octobre – début décembre</td><td>Fraîche</td><td>Couleurs d’automne : d’abord en altitude (Nikko, Hakone), puis à Tokyo fin novembre.</td></tr>
+<tr><td>Décembre – février</td><td>Froide, sèche, souvent ensoleillée</td><td>Le Fuji est le plus souvent visible. Singes des neiges à Nagano. Beaucoup de lieux ferment au Nouvel An.</td></tr></table>`],
+      ['Pour éviter la foule', '<p>Allez tôt le matin aux lieux les plus connus (Senso-ji, Meiji Jingu, pagode Chureito). Évitez la Golden Week et la mi-août (Obon). Pendant les cerisiers et l’automne, privilégiez les jours de semaine.</p>'],
+    ],
+    faq: [
+      ['Quand fleurissent les cerisiers à Tokyo ?', 'En général entre fin mars et début avril ; la date varie de quelques jours d’une année sur l’autre.'],
+      ['Quelle est la meilleure saison pour voir le mont Fuji ?', 'De l’automne à l’hiver, surtout le matin : l’air est plus sec et le ciel plus souvent dégagé.'],
+      ['Quand voir les singes des neiges ?', 'Toute l’année, mais c’est en hiver, avec la neige (en général de décembre à mars), qu’ils se baignent le plus dans la source chaude.'],
+    ],
+    sources: [['JNTO (Office national du tourisme japonais)', 'https://www.japan.travel/fr/'], ['Jigokudani Yaen-koen', 'https://jigokudani-yaenkoen.co.jp/']],
+  },
+  {
+    yol: 'visa-japon', kapak: 'kaminarimon',
     titre: 'Visa pour le Japon : France, Belgique, Suisse, Canada, Maghreb | Guide francophone',
-    desc: 'Français, Belges, Suisses et Canadiens entrent au Japon sans visa jusqu’à 90 jours pour du tourisme. Maroc et Algérie : visa requis. Formalités, Visit Japan Web et guide francophone dans le Kansai.',
+    desc: 'Français, Belges, Suisses, Canadiens et Tunisiens entrent au Japon sans visa jusqu’à 90 jours pour du tourisme. Maroc et Algérie : visa requis. Formalités, Visit Japan Web et guide francophone à Tokyo.',
     h1: 'Faut-il un visa pour aller au Japon ?',
-    court: 'France, Belgique, Suisse, Canada : pas de visa jusqu’à 90 jours.',
-    reponse: 'Pour un séjour touristique, les ressortissants français, belges, suisses et canadiens sont exemptés de visa et peuvent rester au Japon jusqu’à 90 jours. Pour travailler ou rester plus longtemps, un visa est nécessaire. Les ressortissants marocains et algériens ont besoin d’un visa : consultez l’ambassade du Japon de votre pays. Les règles peuvent changer : vérifiez la liste du ministère japonais des Affaires étrangères avant de partir.',
+    court: 'France, Belgique, Suisse, Canada, Tunisie : pas de visa jusqu’à 90 jours.',
+    reponse: 'Pour un séjour touristique, les ressortissants français, belges, suisses, canadiens et tunisiens sont exemptés de visa et peuvent rester au Japon jusqu’à 90 jours. Pour travailler ou rester plus longtemps, un visa est nécessaire. Les ressortissants marocains et algériens ont besoin d’un visa : consultez l’ambassade du Japon de votre pays. Les règles peuvent changer : vérifiez la liste du ministère japonais des Affaires étrangères avant de partir.',
     sections: [
       ['Selon votre passeport', `<table><tr><th>Passeport</th><th>Séjour touristique</th></tr>
 <tr><td>France, Belgique, Suisse, Canada</td><td>Exemption de visa, jusqu’à 90 jours.</td></tr>
-<tr><td>Maroc, Algérie</td><td>Visa requis : consultez l’ambassade du Japon de votre pays.</td></tr>
-<tr><td>Tunisie</td><td>La Tunisie figure sur la liste d’exemption de visa du ministère japonais des Affaires étrangères ; vérifiez la liste à jour ou consultez l’ambassade du Japon de votre pays.</td></tr></table>`],
+<tr><td>Tunisie</td><td>Exemption de visa, jusqu’à 90 jours, selon la liste du ministère japonais des Affaires étrangères ; vérifiez la liste à jour avant de partir.</td></tr>
+<tr><td>Maroc, Algérie</td><td>Visa requis : consultez l’ambassade du Japon de votre pays.</td></tr></table>`],
       ['À l’arrivée', '<ul class="ozet"><li>Un passeport valide pour toute la durée du séjour.</li><li>On peut vous demander un billet retour ou de continuation et votre adresse d’hébergement.</li><li><strong>Visit Japan Web :</strong> remplissez en ligne, avant le vol, les formulaires d’immigration et de douane, puis passez plus vite grâce au QR code.</li></ul>'],
-      ['Une fois au Japon', '<p>La plupart des voyageurs qui visitent le Kansai (Osaka, Kyoto, Nara) atterrissent à l’aéroport international du Kansai (KIX). Pour rejoindre la ville, voir le <a href="/fr/aeroport-kansai-transport/">guide des transports depuis l’aéroport du Kansai</a>.</p>'],
+      ['Une fois au Japon', '<p>La plupart des voyageurs qui commencent par Tokyo atterrissent à Narita ou à Haneda. Pour rejoindre la ville, voir le <a href="/fr/aeroport-narita-haneda-tokyo/">guide des transports depuis Narita et Haneda</a>.</p>'],
     ],
     faq: [
       ['Les Français ont-ils besoin d’un visa pour le Japon ?', 'Non, pas pour un séjour touristique jusqu’à 90 jours. Pour travailler ou rester plus longtemps, un visa est nécessaire.'],
-      ['Combien de jours peut-on rester au Japon sans visa ?', 'Jusqu’à 90 jours pour les ressortissants de France, de Belgique, de Suisse et du Canada en séjour touristique.'],
+      ['Combien de jours peut-on rester au Japon sans visa ?', 'Jusqu’à 90 jours pour les ressortissants de France, de Belgique, de Suisse, du Canada et de Tunisie en séjour touristique.'],
       ['Les Marocains et les Algériens ont-ils besoin d’un visa pour le Japon ?', 'Oui. Consultez l’ambassade du Japon de votre pays pour la procédure.'],
     ],
     sources: [['Ministère japonais des Affaires étrangères : exemptions de visa', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
   },
   {
-    yol: 'halal-mosquees-kansai', kapak: 'kobe-camii',
-    titre: 'Halal et mosquées à Kyoto, Osaka et Kobe | Guide francophone',
-    desc: 'Prier et manger halal dans le Kansai : mosquée de Kobe (1935, la première du Japon), mosquée d’Osaka Ibaraki, mosquée de Kyoto et salles de prière gratuites à Kyoto. Avec Iheb, guide francophone.',
-    h1: 'Halal et mosquées à Kyoto, Osaka et Kobe',
-    court: 'Mosquée de Kobe, mosquée d’Osaka Ibaraki, mosquée de Kyoto et restaurants halal.',
-    reponse: 'Le Kansai compte trois grandes mosquées : la mosquée de Kobe, ouverte en 1935 et la plus ancienne du Japon ; la mosquée d’Osaka Ibaraki, dans la ville d’Ibaraki au nord d’Osaka ; et la mosquée de Kyoto, près du Palais impérial. À Kyoto, des salles de prière gratuites existent aussi dans des lieux touristiques comme le château de Nijo. Pour les restaurants halal, la liste Halal / Muslim Friendly du site touristique officiel de Kyoto est la source la plus fiable.',
+    yol: 'halal-mosquees-tokyo', kapak: 'tokyo-camii',
+    titre: 'Halal et mosquées à Tokyo : Tokyo Camii, mosquée d’Otsuka | Guide francophone',
+    desc: 'Prier et manger halal à Tokyo : la Tokyo Camii à Yoyogi-Uehara, la mosquée d’Otsuka, les salles de prière des aéroports et comment trouver un restaurant halal. Avec Iheb, guide francophone.',
+    h1: 'Halal et mosquées à Tokyo',
+    court: 'Tokyo Camii, mosquée d’Otsuka, salles de prière et restaurants halal.',
+    reponse: 'La mosquée la plus connue de Tokyo est la Tokyo Camii, de style ottoman, à environ 5 minutes à pied de la gare de Yoyogi-Uehara (lignes Odakyu et Chiyoda) ; elle accueille aussi les visiteurs non musulmans en dehors des heures de prière. La mosquée d’Otsuka, siège du Japan Islamic Trust, est à environ 5 minutes à pied de la gare d’Otsuka (ligne JR Yamanote). Les aéroports de Narita et de Haneda disposent de salles de prière, et Tokyo compte de nombreux restaurants halal ou Muslim friendly.',
     sections: [
-      ['Les mosquées', `<table><tr><th>Mosquée</th><th>Adresse</th><th>À savoir</th></tr>
-<tr><td>Mosquée de Kobe (Kobe Muslim Mosque)</td><td>2-25-14 Nakayamate-dori, Chuo-ku, Kobe</td><td>Ouverte en 1935 ; la plus ancienne du Japon. Dans le quartier de Kitano.</td></tr>
-<tr><td>Mosquée d’Osaka Ibaraki</td><td>4-6-13 Toyokawa, Ibaraki-shi, Osaka</td><td>Prière du vendredi chaque semaine ; demandez l’horaire à la mosquée. Tél. 072-643-7420.</td></tr>
-<tr><td>Mosquée de Kyoto (Kyoto Muslim Association)</td><td>Près du Palais impérial, Kyoto</td><td>Cinq prières quotidiennes, prière du vendredi et prières de l’Aïd. Tél. +81-75-231-3499.</td></tr></table>`],
-      ['Salles de prière gratuites à Kyoto', '<p>Selon le site touristique officiel de Kyoto, des espaces de prière gratuits sont à la disposition des visiteurs musulmans au château de Nijo, au Kyoto International Manga Museum, au Kyoto Handicraft Center et à la Kyoto International Community House.</p>'],
-      ['Comment trouver à manger halal ?', '<p>À Kyoto, les restaurants sont classés Halal, Muslim Friendly, Muslim Welcome et Pork-Free ; la liste est établie sous le contrôle de la Kyoto Muslim Association (KMA) et du Kyoto Council for Sharia and Halal Affairs. L’aéroport du Kansai dispose aussi de salles de prière séparées pour hommes et femmes, avec espace d’ablutions.</p><p>Iheb, qui parle aussi arabe, peut organiser la journée autour des heures de prière et prévoir les repas dans des restaurants halal ou Muslim friendly.</p>'],
+      ['Les mosquées', `<table><tr><th>Mosquée</th><th>Accès</th><th>À savoir</th></tr>
+<tr><td>Tokyo Camii et centre culturel turc</td><td>1-19 Oyama-cho, Shibuya-ku ; environ 5 min à pied de Yoyogi-Uehara</td><td>Mosquée de style ottoman. Visiteurs bienvenus en dehors des prières ; horaires des prières sur le site officiel.</td></tr>
+<tr><td>Mosquée d’Otsuka (Japan Islamic Trust)</td><td>Minami-Otsuka, Toshima-ku ; environ 5 min à pied de la gare d’Otsuka</td><td>Siège du Japan Islamic Trust ; prière du vendredi.</td></tr></table>`],
+      ['Comment trouver à manger halal ?', '<p>Cherchez les mentions « Halal » (certifié) ou « Muslim friendly » (sans porc ni alcool, sans certification), et demandez en cas de doute. Les restaurants halal sont nombreux autour des grandes gares et des quartiers touristiques comme Asakusa.</p><p>Iheb, qui parle aussi arabe, peut organiser la journée autour des heures de prière et prévoir les repas dans des restaurants halal ou Muslim friendly.</p>'],
     ],
     faq: [
-      ['Quelle est la première mosquée du Japon ?', 'La mosquée de Kobe. Ouverte en 1935, elle a traversé la guerre et le séisme de 1995.'],
-      ['Y a-t-il une mosquée à Osaka ?', 'Oui, la mosquée d’Osaka Ibaraki, dans la ville d’Ibaraki au nord d’Osaka (4-6-13 Toyokawa). La prière du vendredi y a lieu chaque semaine.'],
-      ['Où prier à Kyoto ?', 'À la mosquée de Kyoto, près du Palais impérial, ou dans les salles de prière gratuites de lieux comme le château de Nijo.'],
+      ['Quelle est la plus grande mosquée de Tokyo ?', 'La Tokyo Camii, à Shibuya-ku (Yoyogi-Uehara), souvent présentée comme la plus grande mosquée du Japon.'],
+      ['Où prier le vendredi à Tokyo ?', 'À la Tokyo Camii ou à la mosquée d’Otsuka, entre autres ; vérifiez l’horaire de la prière du vendredi auprès de la mosquée.'],
+      ['Y a-t-il des salles de prière dans les aéroports de Tokyo ?', 'Oui, à Narita comme à Haneda.'],
     ],
-    sources: [['Kobe Muslim Mosque', 'https://www.kobemosque.com'], ['Osaka Ibaraki Mosque', 'http://osakamosque.org'], ['Kyoto Tourisme : visiteurs musulmans', 'https://kyoto.travel/en/muslim/'], ['Kyoto : trouver à manger halal', 'https://kyoto.travel/en/muslim/finding-halal-food/']],
-  },
-  {
-    yol: 'osaka-kyoto-transport', kapak: 'gion',
-    titre: 'Aller d’Osaka à Kyoto : trains, durée et prix | Guide francophone',
-    desc: 'D’Osaka à Kyoto en JR, Hankyu, Keihan ou Shinkansen : d’où part chaque train, combien de temps il met et lequel vous convient. Par un guide francophone qui vit au Japon.',
-    h1: 'Comment aller d’Osaka à Kyoto ?',
-    court: 'Quatre trains possibles : de 15 à 50 minutes.',
-    reponse: 'Pour aller d’Osaka à Kyoto, quatre trains font l’affaire : le JR Special Rapid (gare d’Osaka → gare de Kyoto, environ 30 minutes), la ligne Hankyu (Osaka-umeda → Kyoto-kawaramachi, environ 45 minutes), la ligne Keihan (Yodoyabashi → Gion-shijo, environ 50 minutes) et le Shinkansen (Shin-Osaka → Kyoto, environ 15 minutes). Le meilleur choix dépend de l’endroit où vous logez à Osaka et de ce que vous voulez voir à Kyoto.',
-    sections: [
-      ['Les quatre options', `<table><tr><th>Train</th><th>Trajet</th><th>Durée</th><th>Pour qui</th></tr>
-<tr><td>JR Special Rapid</td><td>Osaka (Umeda) → gare de Kyoto, arrêt aussi à Shin-Osaka</td><td>~30 min</td><td>Gare de Kyoto et Fushimi Inari. JR Pass valable.</td></tr>
-<tr><td>Hankyu</td><td>Osaka-umeda → Kyoto-kawaramachi</td><td>~45 min</td><td>Centre de Kyoto, marché Nishiki, Gion à pied. JR Pass non valable.</td></tr>
-<tr><td>Keihan</td><td>Yodoyabashi → Gion-shijo</td><td>~50 min</td><td>Directement à Gion et Higashiyama. Les trains locaux s’arrêtent à Fushimi-Inari. JR Pass non valable.</td></tr>
-<tr><td>Shinkansen</td><td>Shin-Osaka → Kyoto</td><td>~15 min</td><td>Si vous logez à Shin-Osaka ou avez un JR Pass (billet à part pour le Nozomi).</td></tr></table>`],
-      ['Conseils', '<ul class="ozet"><li>Les cartes IC comme ICOCA fonctionnent sur JR, Hankyu et Keihan.</li><li>Les tarifs évoluent : vérifiez le prix à jour en gare ou sur le site de la compagnie.</li><li>Lors d’une visite de Kyoto avec Iheb, c’est lui qui choisit le train et fait le trajet avec vous.</li></ul>'],
-    ],
-    faq: [
-      ['Combien de temps entre Osaka et Kyoto ?', 'De 15 minutes (Shinkansen) à 50 minutes (Keihan) selon le train ; le plus courant, le JR Special Rapid, met environ 30 minutes.'],
-      ['Le JR Pass est-il valable entre Osaka et Kyoto ?', 'Oui sur le JR Special Rapid et le Shinkansen (Hikari, Kodama) ; non sur Hankyu et Keihan.'],
-      ['Combien coûte le train Osaka-Kyoto ? Quel est le moins cher ?', 'Tarifs adultes approximatifs en octobre 2026 : Hankyu (Osaka-umeda → Kyoto-kawaramachi) environ 410 ¥, Keihan (Yodoyabashi → Gion-shijo) environ 430 ¥, JR (Osaka → Kyoto) environ 580 ¥. Le Shinkansen est nettement plus cher. Les tarifs peuvent changer : vérifiez en gare.'],
-      ['Quelle distance entre Osaka et Kyoto ?', 'Environ 43 km par la ligne JR entre la gare d’Osaka et celle de Kyoto. L’aller-retour dans la journée est facile.'],
-    ],
-    sources: [['Horaires JR West', 'https://timetable.jr-odekake.net/line-timetable/2834'], ['Hankyu', 'https://www.hankyu.co.jp/en/'], ['Keihan', 'https://www.keihan.co.jp/travel/en/']],
-  },
-  {
-    yol: 'aeroport-kansai-transport', kapak: 'kix',
-    titre: 'De l’aéroport du Kansai (KIX) à Osaka et Kyoto | Guide francophone',
-    desc: 'De l’aéroport du Kansai à Osaka et Kyoto : Haruka, Nankai Rapi:t, JR Kansai Airport Rapid et bus limousine. Durées et quelle option choisir.',
-    h1: 'Comment aller de l’aéroport du Kansai à Osaka et Kyoto ?',
-    court: 'Haruka, Rapi:t, JR Rapid et bus : les durées.',
-    reponse: 'Depuis l’aéroport du Kansai (KIX), le plus rapide pour le quartier de Namba à Osaka est le Nankai Rapi:t (environ 34 minutes pour le plus rapide), et pour Kyoto le JR Haruka (environ 1 h 20, avec arrêts à Tennoji et Shin-Osaka). Le JR Kansai Airport Rapid va jusqu’à la gare d’Osaka sans supplément (environ 70 minutes). Avec beaucoup de bagages, le bus limousine rejoint Namba en environ 50 minutes et la gare de Kyoto en environ 1 h 30.',
-    sections: [
-      ['Les options', `<table><tr><th>Transport</th><th>Destination</th><th>Durée</th><th>À savoir</th></tr>
-<tr><td>JR Haruka</td><td>Tennoji, Shin-Osaka, Kyoto</td><td>Kyoto ~1 h 20</td><td>Supplément express obligatoire.</td></tr>
-<tr><td>Nankai Rapi:t</td><td>Namba (Osaka)</td><td>~34 min</td><td>Supplément obligatoire ; Regular et Super Seat.</td></tr>
-<tr><td>Nankai Airport Express</td><td>Namba (Osaka)</td><td>~45 min</td><td>Sans supplément.</td></tr>
-<tr><td>JR Kansai Airport Rapid</td><td>Tennoji, gare d’Osaka</td><td>Osaka ~70 min</td><td>Sans supplément.</td></tr>
-<tr><td>Bus limousine</td><td>Namba (OCAT), gare d’Osaka, gare de Kyoto</td><td>~50 min / ~60 min / ~1 h 30</td><td>Sans réservation, premier arrivé premier servi ; départ du Terminal 1.</td></tr></table>`],
-      ['Conseil', '<p>La carte ICOCA fonctionne sur Nankai et JR West. L’aéroport dispose de salles de prière séparées pour hommes et femmes. Pour préparer votre séjour en français, écrivez à Iheb sur WhatsApp.</p>'],
-    ],
-    faq: [
-      ['Combien de temps entre l’aéroport du Kansai et Kyoto ?', 'Environ 1 h 20 en JR Haruka ; environ 1 h 30 en bus limousine.'],
-      ['Quel est le moyen le plus rapide pour aller de l’aéroport du Kansai à Osaka ?', 'Le Nankai Rapi:t jusqu’à Namba, environ 34 minutes pour le plus rapide.'],
-    ],
-    sources: [['JR West : Haruka', 'https://timetable.jr-odekake.net/station-timetable/3162069001'], ['Nankai : accès depuis l’aéroport', 'https://www.nankai.co.jp/en_railway/access-fromkix'], ['Bus limousine KATE', 'https://www.kate.co.jp/en/timetable/detail/OC']],
-  },
-  {
-    yol: 'itineraire-kansai', kapak: 'kiyomizu-gece',
-    titre: 'Itinéraire Kansai en 3 et 5 jours (Kyoto, Osaka, Nara) | Guide francophone',
-    desc: 'Un itinéraire tout prêt pour le Kansai : Kyoto, Osaka et Nara en 3 jours ; Kobe et Himeji en plus sur 5 jours. Par Iheb, guide francophone qui vit au Japon.',
-    h1: 'Itinéraire Kansai : 3 et 5 jours',
-    court: 'Kyoto, Osaka, Nara, Kobe et Himeji, jour par jour.',
-    reponse: 'Prévoyez au moins 3 jours pour le Kansai : une journée à Kyoto (Fushimi Inari, Kiyomizu-dera, Gion), une journée entre Nara et le quartier d’Arashiyama à Kyoto, et une journée à Osaka (château d’Osaka, Dotonbori). Avec 5 jours, ajoutez Kobe (mosquée de Kobe, port) et le château de Himeji. Loger à Osaka est le plus pratique pour les transports.',
-    sections: [
-      ['Itinéraire de 3 jours', '<ol><li><strong>Jour 1, Kyoto :</strong> Fushimi Inari tôt le matin, Kiyomizu-dera et Ninenzaka à midi, Gion le soir.</li><li><strong>Jour 2, Nara + Arashiyama :</strong> parc de Nara et Todai-ji le matin, forêt de bambous à Kyoto l’après-midi.</li><li><strong>Jour 3, Osaka :</strong> château d’Osaka, marché Kuromon, Dotonbori le soir.</li></ol>'],
-      ['Itinéraire de 5 jours', '<p>En plus des trois premiers jours :</p><ol start="4"><li><strong>Jour 4, Kobe :</strong> mosquée de Kobe (prière si c’est un vendredi), Kitano, le port et le mont Rokko.</li><li><strong>Jour 5, Himeji :</strong> château de Himeji et jardin Kokoen (environ 30 minutes de Shin-Osaka en Shinkansen).</li></ol>'],
-      ['Quand partir ?', '<p>Le printemps (cerisiers, fin mars-début avril) et l’automne (novembre) sont les plus belles saisons, mais aussi les plus fréquentées : organisez-vous tôt. L’été est chaud et humide. Plus de détails : <a href="/fr/quand-partir-japon/">quand partir au Japon</a>.</p>'],
-    ],
-    faq: [
-      ['Combien de jours faut-il pour Kyoto ?', 'Au moins une journée complète ; deux jours avec Arashiyama et Nara, c’est l’idéal.'],
-      ['Où loger dans le Kansai ?', 'À Osaka : Kyoto, Nara, Kobe et l’aéroport sont faciles d’accès en train.'],
-    ],
-    sources: [],
-  },
-  {
-    yol: 'quand-partir-japon', kapak: 'arashiyama',
-    titre: 'Quand partir au Japon ? Cerisiers, automne et météo | Guide francophone',
-    desc: 'La meilleure période pour le Japon : cerisiers fin mars-début avril, feuillages d’automne mi-novembre-début décembre. Saison des pluies, chaleur de l’été et vacances japonaises.',
-    h1: 'Quand partir au Japon ?',
-    court: 'Cerisiers, couleurs d’automne, saison des pluies et périodes chargées.',
-    reponse: 'Pour le Japon, et en particulier Kyoto et Osaka, les plus belles saisons sont le printemps et l’automne. À Kyoto, les cerisiers fleurissent en général entre fin mars et début avril, et les feuillages d’automne se voient de mi-novembre à début décembre. Ce sont aussi les périodes les plus chargées et les plus chères pour les hôtels : réservez tôt. De juin à mi-juillet, c’est la saison des pluies ; juillet et août sont très chauds et humides.',
-    sections: [
-      ['Le Kansai mois par mois', `<table><tr><th>Période</th><th>Météo</th><th>À savoir</th></tr>
-<tr><td>Fin mars – début avril</td><td>Douce</td><td>Floraison des cerisiers (sakura). L’une des périodes les plus chargées.</td></tr>
-<tr><td>Fin avril – début mai</td><td>Douce</td><td>Golden Week : vacances des Japonais, trains et hôtels pleins.</td></tr>
-<tr><td>Juin – mi-juillet</td><td>Pluvieuse</td><td>Saison des pluies (tsuyu) ; moins de touristes.</td></tr>
-<tr><td>Juillet – août</td><td>Très chaude, humide</td><td>Marcher en pleine journée est épuisant ; sortez tôt le matin. Congés d’Obon à la mi-août.</td></tr>
-<tr><td>Août – septembre</td><td>Chaude</td><td>Saison des typhons ; des trains peuvent être annulés.</td></tr>
-<tr><td>Mi-novembre – début décembre</td><td>Fraîche</td><td>Feuillages d’automne (momiji) ; l’un des plus beaux moments à Kyoto.</td></tr>
-<tr><td>Décembre – février</td><td>Froide, sèche</td><td>Plus calme et moins cher. Beaucoup de lieux peuvent fermer au Nouvel An.</td></tr></table>`],
-      ['Pour éviter la foule', '<p>Allez tôt le matin aux temples célèbres (Fushimi Inari est presque vide au lever du soleil). Évitez les dates de la Golden Week et d’Obon. Pendant les cerisiers et l’automne, privilégiez les jours de semaine.</p>'],
-    ],
-    faq: [
-      ['Quand fleurissent les cerisiers à Kyoto ?', 'En général entre fin mars et début avril ; la date varie de quelques jours d’une année sur l’autre.'],
-      ['Quand voir les feuillages d’automne au Japon ?', 'À Kyoto et Osaka, en général de mi-novembre à début décembre.'],
-      ['Quelle est la période la moins chère pour le Japon ?', 'Janvier-février (hors Nouvel An) et juin : hôtels moins chers et moins de monde.'],
-    ],
-    sources: [['JNTO (Office national du tourisme japonais)', 'https://www.japan.travel/fr/'], ['Site touristique officiel de Kyoto', 'https://kyoto.travel/en/']],
-  },
-  {
-    yol: 'kyoto-en-un-jour', kapak: 'fushimi-orman',
-    titre: 'Kyoto en un jour : que faire ? Programme heure par heure | Guide francophone',
-    desc: 'Une seule journée à Kyoto : Fushimi Inari le matin, Kiyomizu-dera et Ninenzaka à midi, Gion le soir. Programme heure par heure, transports et guide francophone Iheb.',
-    h1: 'Que faire à Kyoto en un jour ?',
-    court: 'Fushimi Inari, Kiyomizu-dera et Gion : le programme heure par heure.',
-    reponse: 'Avec une seule journée à Kyoto, allez du sud vers le nord : tôt le matin, les torii vermillon de Fushimi Inari ; à midi, le temple Kiyomizu-dera et les vieilles ruelles de Ninenzaka et Sannenzaka ; en fin d’après-midi, Gion et le sanctuaire Yasaka. Ces trois lieux sont proches et bien reliés en train et en bus. Depuis Osaka, Kyoto est à environ 30-50 minutes en train.',
-    sections: [
-      ['Programme heure par heure', '<ol><li><strong>07:30–09:30, Fushimi Inari :</strong> en arrivant tôt, vous marchez dans les tunnels de torii avant la foule. Entrée gratuite.</li><li><strong>10:00–13:00, Kiyomizu-dera :</strong> le temple à la célèbre terrasse de bois, puis les ruelles de Ninenzaka et Sannenzaka.</li><li><strong>13:00–14:00, déjeuner :</strong> pour les restaurants halal ou Muslim friendly, voir <a href="/fr/halal-mosquees-kansai/">cette page</a>.</li><li><strong>14:30–17:00, Gion et Yasaka :</strong> la rue Hanamikoji, le sanctuaire Yasaka, les berges de la Kamo.</li><li><strong>Le soir :</strong> marché Nishiki (il ferme tôt) ou la ruelle de Pontocho.</li></ol>'],
-      ['S’il vous reste du temps', '<p>La forêt de bambous d’Arashiyama et le Kinkaku-ji (Pavillon d’or) sont à l’ouest et au nord de la ville ; tout voir en une journée devient une course. Avec deux jours, gardez Arashiyama et Nara pour le second (<a href="/fr/itineraire-kansai/">itinéraires de 3 et 5 jours</a>).</p>'],
-      ['Transports', '<p>Pour Fushimi Inari, prenez la ligne JR Nara jusqu’à la gare d’Inari. Entre Kiyomizu-dera et Gion, tout se fait à pied. Pour venir d’Osaka, voir <a href="/fr/osaka-kyoto-transport/">ce guide</a>.</p>'],
-    ],
-    faq: [
-      ['Une journée suffit-elle pour Kyoto ?', 'Pour voir l’essentiel, oui, mais au pas de course ; deux jours, c’est plus confortable.'],
-      ['Quand aller à Fushimi Inari ?', 'Tôt le matin ; après 9 h, la foule augmente. L’entrée est gratuite et le site est ouvert 24 h/24.'],
-    ],
-    sources: [['Site touristique officiel de Kyoto', 'https://kyoto.travel/en/']],
+    sources: [['Tokyo Camii', 'https://tokyocamii.org/'], ['Japan Islamic Trust', 'https://www.islam.or.jp/']],
   },
 ]
 
 const FAQ = [
-  ['Qui est Iheb ?', 'Iheb est un guide francophone qui vit au Japon. Il propose des visites privées en français dans le Kansai (Kyoto, Osaka, Nara, Kobe, Himeji) et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.'],
-  ['Existe-t-il un guide francophone au Japon ?', 'Oui. Dans le Kansai (Kyoto, Osaka, Nara, Kobe, Himeji), Iheb propose des visites privées en français. Réservation sur WhatsApp.'],
+  ['Qui est Iheb ?', 'Iheb est un guide francophone qui vit au Japon. Il propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.'],
+  ['Existe-t-il un guide francophone à Tokyo ?', 'Oui. À Tokyo et dans ses environs, Iheb propose des visites privées en français. Réservation sur WhatsApp.'],
   ['En quelle langue se fait la visite ?', 'En français. Iheb parle aussi arabe et anglais, ce qui est pratique pour les familles où l’on parle plusieurs langues.'],
   ['Combien coûte la visite ?', 'Le tarif dépend du nombre de personnes, de la durée et des lieux visités. Iheb vous le communique précisément sur WhatsApp, une fois votre programme connu.'],
   ['Qu’est-ce qui n’est pas compris dans le tarif ?', 'Les billets de train et de bus, les entrées des musées et des temples ainsi que les repas ne sont généralement pas compris ; vous les réglez au fil de la journée.'],
   ['Visite privée ou en groupe ?', 'Visite privée : le guide est uniquement pour votre famille ou votre groupe d’amis. Vous n’êtes pas mélangés à d’autres touristes.'],
-  ['Repas halal et prière : est-ce possible ?', 'Oui. Des restaurants halal et Muslim friendly de Kyoto et d’Osaka ainsi que des mosquées (par exemple la mosquée de Kobe) peuvent être intégrés au programme, avec des pauses aux heures de prière.'],
-  ['Comment réserver ?', `Écrivez sur WhatsApp (${WA_VISIBLE}) en indiquant vos dates, le nombre de personnes et votre hôtel ou votre ville. Iheb vous répond en français.`],
-  ['Dans quelles villes ?', 'Kyoto, Osaka, Nara, Kobe et Himeji. Pour une autre destination, posez la question sur WhatsApp.'],
+  ['Repas halal et prière : est-ce possible ?', 'Oui. Des restaurants halal et Muslim friendly ainsi que des mosquées (par exemple la Tokyo Camii) peuvent être intégrés au programme, avec des pauses aux heures de prière.'],
+  ['Comment réserver ?', `Écrivez sur WhatsApp (${WA_VISIBLE}) en indiquant vos dates, le nombre de personnes et votre hôtel ou votre quartier. Iheb vous répond en français.`],
+  ['Où guide Iheb ?', 'À Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji (lacs du Fuji et Shizuoka) et dans la préfecture de Nagano. Pour une autre destination, posez la question sur WhatsApp.'],
 ]
 
 const CSS = `
@@ -395,15 +419,15 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <style>${CSS}</style>
 </head>
 <body>
-<header><div class="kap"><a href="/fr/">Iheb · Guide francophone au Japon</a>
-<nav aria-label="Villes">${VILLES.map((s) => `<a href="/fr/${s.yol}/">${s.ad}</a>`).join('')}</nav></div></header>
+<header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
+<nav aria-label="Régions">${VILLES.map((s) => `<a href="/fr/${s.yol}/">${s.nav}</a>`).join('')}</nav></div></header>
 <main>
 ${corps}
 </main>
 <footer><div class="kap">
-<p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> (Kansai, Japon), l’équipe de Tony, guide espagnol basé à Osaka. WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+<p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe. WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
 <p>Infos pratiques en français : ${REPONSES.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
-<p lang="en">In English: <a href="/fr/${ANGLAIS}/">French-speaking tour guide in Japan</a></p>
+<p lang="en">In English: <a href="/fr/${ANGLAIS}/">French-speaking tour guide in Tokyo</a></p>
 <p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/ru/" hreflang="ru">Русский</a> · Dernière mise à jour : ${HOY}</p>
 </div></footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp : Iheb</a>
@@ -423,12 +447,12 @@ const guideLd = {
   ],
   homeLocation: { '@type': 'Place', name: 'Japon' },
   worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
-  url: `${BASE}/fr/`, description: 'Guide francophone qui vit au Japon. Visites privées en français à Kyoto, Osaka, Nara, Kobe et Himeji ; parle aussi arabe et anglais.',
+  url: `${BASE}/fr/`, description: 'Guide francophone qui vit au Japon. Visites privées en français à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka ; parle aussi arabe et anglais.',
 }
 const serviceLd = (ville) => ({
-  '@type': 'Service', name: ville ? `Visite privée en français ${ville.a}` : 'Visite guidée privée en français au Japon (Kansai)',
+  '@type': 'Service', name: ville ? `Visite privée en français ${ville.a}` : 'Visite guidée privée en français à Tokyo, dans le Kanto, à Nagano et à Shizuoka',
   serviceType: 'Guide touristique privé', provider: { '@id': `${BASE}/fr/#iheb` }, availableLanguage: ['fr', 'ar', 'en'],
-  areaServed: (ville ? [ville] : VILLES).map((s) => ({ '@type': 'City', name: s.ad, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
+  areaServed: (ville ? [ville] : VILLES).map((s) => ({ '@type': 'Place', name: s.ad, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
   audience: { '@type': 'Audience', audienceType: 'Voyageurs francophones' },
   url: `${BASE}/fr/${ville ? `${ville.yol}/` : ''}`,
 })
@@ -460,22 +484,22 @@ fetch('/api/resenas/publicas?guia=iheb',{cache:'no-cache'}).then(r=>r.ok?r.json(
 const NEGOCIO_LD = { '@type': 'LocalBusiness', '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/`, address: { '@type': 'PostalAddress', addressLocality: 'Osaka', addressRegion: 'Osaka', addressCountry: 'JP' } }
 const avisLd = AVIS.map((y) => ({ '@type': 'Review', reviewRating: { '@type': 'Rating', ratingValue: y.stars, bestRating: 5 }, author: { '@type': 'Person', name: y.name }, reviewBody: y.text, inLanguage: y.lang || 'fr', itemReviewed: NEGOCIO_LD }))
 
-const imageDe = (k) => `${BASE}/tr/foto/${k}-${grande(k)}.webp`
+const imageDe = (k) => `${BASE}/fr/foto/${k}-${grande(k)}.webp`
 
 // Accueil
 {
   const corps = `
-${hero('kiyomizu-sonbahar', 'Kyoto en automne, Kiyomizu-dera', `<span class="etiket">Japon · Kansai · En français</span>
-<h1>Guide francophone à Kyoto, Osaka et Nara — visites privées avec Iheb</h1>
-<p class="alt">Kyoto, Osaka, Nara, Kobe et Himeji, racontés en français. Le guide est là uniquement pour votre groupe.</p>
+${hero('fuji-chureito', 'Le mont Fuji et la pagode Chureito', `<span class="etiket">Japon · Tokyo et Kanto · En français</span>
+<h1>Guide francophone à Tokyo — visites privées avec Iheb</h1>
+<p class="alt">Tokyo, Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, Nagano et Shizuoka, racontés en français. Le guide est là uniquement pour votre groupe.</p>
 ${contact}`)}
 <div class="kap">
 <section class="guide" aria-labelledby="votre-guide">
 ${portraitGrand}
 <div>
 <h2 id="votre-guide">Votre guide : Iheb</h2>
-<p>Iheb vit au Japon et guide en français dans le Kansai, dans les mêmes villes que Tony : Kyoto, Osaka, Nara, Kobe et Himeji. Il parle aussi arabe et anglais.</p>
-<p>C’est un ami de Tony, le guide espagnol de <a href="/">Tony Kansai Guide</a> basé à Osaka, et le guide francophone de l’équipe. Si vous le souhaitez, il prévoit les repas halal, les mosquées et les pauses prière dans la journée.</p>
+<p>Iheb vit au Japon et guide en français à Tokyo et dans ses environs : Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, ainsi que dans les préfectures de Nagano et de Shizuoka. Il parle aussi arabe et anglais.</p>
+<p>C’est un ami de Tony et le guide francophone de l’équipe <a href="/">Tony Kansai Guide</a>. Si votre voyage continue vers l’ouest, Tony guide à Kyoto et Osaka en espagnol, anglais et arabe ; Iheb, lui, reste votre guide à Tokyo et dans l’est du Japon. Si vous le souhaitez, il prévoit les repas halal, les mosquées et les pauses prière dans la journée.</p>
 ${contact}
 </div>
 </section>
@@ -483,7 +507,7 @@ ${contact}
 <ul class="ozet">
 <li><strong>Qui :</strong> Iheb, guide francophone qui vit au Japon.</li>
 <li><strong>Langues :</strong> français ; il parle aussi arabe et anglais.</li>
-<li><strong>Où :</strong> le Kansai : Kyoto, Osaka, Nara, Kobe, Himeji.</li>
+<li><strong>Où :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
 <li><strong>Formule :</strong> visite privée, uniquement votre famille ou votre groupe.</li>
 <li><strong>Tarif :</strong> communiqué sur WhatsApp selon le groupe et le programme. Transports, entrées et repas généralement non compris.</li>
 <li><strong>Voyageurs musulmans :</strong> restaurants halal ou Muslim friendly, mosquées et pauses prière peuvent être prévus.</li>
@@ -491,8 +515,8 @@ ${contact}
 <li><strong>Avis :</strong> ${AVIS.length ? `${RESUME_AVIS}, <a href="#avis">les lire</a>` : '<a href="/fr/avis/">laissez le premier avis</a>'}</li>
 </ul>
 <h2>Pourquoi un guide francophone ?</h2>
-<p>Au Japon, l’anglais n’est pas parlé partout, et entre les panneaux, les lignes de train et les menus, on s’y perd vite la première fois. Avec un guide qui parle votre langue, vous écoutez l’histoire et la culture en français et vous posez toutes vos questions sans effort. Comme Iheb vit au Japon, il connaît les trains, les heures d’affluence et les bonnes adresses où manger.</p>
-<h2>Les villes</h2>
+<p>Au Japon, l’anglais n’est pas parlé partout, et entre les panneaux, les dizaines de lignes de train de Tokyo et les menus, on s’y perd vite la première fois. Avec un guide qui parle votre langue, vous écoutez l’histoire et la culture en français et vous posez toutes vos questions sans effort. Comme Iheb vit au Japon, il connaît les trains, les heures d’affluence et les bonnes adresses où manger.</p>
+<h2>Tokyo et ses environs</h2>
 <ul class="izgara">
 ${VILLES.map((s) => `<li><a href="/fr/${s.yol}/">${cartePhoto(s.kapak, s.ad)}<div class="ki"><h3>${s.ad}</h3><p>${esc(s.lieux.slice(0, 3).map((y) => y[0]).join(', '))}</p></div></a></li>`).join('\n')}
 </ul>
@@ -518,13 +542,13 @@ ${contact}
     '@graph': [
       guideLd, serviceLd(null), ...avisLd,
       { '@type': 'FAQPage', inLanguage: 'fr', mainEntity: FAQ.map(([q, r]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: r } })) },
-      { '@type': 'WebPage', url: `${BASE}/fr/`, inLanguage: 'fr', name: 'Guide francophone au Japon : Iheb', dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, primaryImageOfPage: PORTRAIT_URL },
+      { '@type': 'WebPage', url: `${BASE}/fr/`, inLanguage: 'fr', name: 'Guide francophone à Tokyo : Iheb', dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, primaryImageOfPage: PORTRAIT_URL },
     ],
   }
   ecrire('', page({
     yol: '', image: PORTRAIT_URL, jsonld, corps,
-    titre: 'Guide francophone au Japon : Iheb | Visites privées à Kyoto, Osaka, Nara',
-    desc: 'Iheb, guide francophone qui vit au Japon : visites privées en français à Kyoto, Osaka, Nara, Kobe et Himeji. Parle aussi arabe et anglais ; halal et mosquées possibles. Tarif sur WhatsApp.',
+    titre: 'Guide francophone à Tokyo : Iheb | Visites privées en français, mont Fuji, Nikko, Kamakura',
+    desc: 'Iheb, guide francophone qui vit au Japon : visites privées en français à Tokyo, Kamakura, Yokohama, Nikko, Hakone et au mont Fuji, à Nagano et à Shizuoka. Parle aussi arabe et anglais ; halal et mosquées possibles. Tarif sur WhatsApp.',
   }))
 }
 
@@ -545,7 +569,7 @@ ${s.lieux.map(([nom, texte, k]) => `<li>${cartePhoto(k, nom)}<div class="ki"><h3
 <p>${esc(s.astuce)}</p>
 <h2>La visite en pratique</h2>
 <ul class="ozet">
-<li><strong>Guide :</strong> Iheb, qui vit au Japon.</li>
+<li><strong>Guide :</strong> Iheb, qui vit au Japon et guide à Tokyo et dans ses environs.</li>
 <li><strong>Langues :</strong> français ; aussi arabe et anglais.</li>
 <li><strong>Formule :</strong> visite privée, uniquement votre groupe.</li>
 <li><strong>Tarif :</strong> sur WhatsApp, selon le groupe et le programme.</li>
@@ -553,13 +577,13 @@ ${s.lieux.map(([nom, texte, k]) => `<li>${cartePhoto(k, nom)}<div class="ki"><h3
 </ul>
 ${contactMini(lien, `Écrire à Iheb pour ${s.ad}`)}
 ${sectionAvis}
-<p>Autres villes : ${VILLES.filter((x) => x !== s).map((x) => `<a href="/fr/${x.yol}/">${x.ad}</a>`).join(' · ')} · <a href="/fr/">Accueil</a></p>
+<p>Autres régions : ${VILLES.filter((x) => x !== s).map((x) => `<a href="/fr/${x.yol}/">${x.ad}</a>`).join(' · ')} · <a href="/fr/">Accueil</a></p>
 </div>`
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
       guideLd, serviceLd(s),
-      { '@type': 'TouristDestination', name: s.ad, includesAttraction: s.lieux.map(([nom]) => ({ '@type': 'TouristAttraction', name: nom })) },
+      { '@type': 'TouristDestination', name: s.ad, image: imageDe(s.kapak), includesAttraction: s.lieux.map(([nom]) => ({ '@type': 'TouristAttraction', name: nom })) },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Guide francophone', item: `${BASE}/fr/` },
         { '@type': 'ListItem', position: 2, name: s.ad, item: `${BASE}/fr/${s.yol}/` },
@@ -571,7 +595,7 @@ ${sectionAvis}
 
 // Pages de réponse
 for (const c of REPONSES) {
-  const lien = wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide francophone au Japon. Dates : `)
+  const lien = wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide francophone à Tokyo. Dates : `)
   const corps = `
 ${hero(c.kapak, '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Infos pratiques</span>
 <h1>${esc(c.h1)}</h1>`)}
@@ -581,8 +605,8 @@ ${c.sections.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
 <h2>Questions fréquentes</h2>
 ${c.faq.map(([q, r]) => `<h3>${esc(q)}</h3>\n<p>${esc(r)}</p>`).join('\n')}
 ${c.avis ? sectionAvis : ''}
-<h2>Un guide francophone dans le Kansai</h2>
-<p>Iheb vit au Japon et propose des visites privées en français à Kyoto, Osaka, Nara, Kobe et Himeji ; il parle aussi arabe et anglais. Il communique le tarif sur WhatsApp, selon votre groupe.</p>
+<h2>Un guide francophone à Tokyo</h2>
+<p>Iheb vit au Japon et propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi qu’à Nagano et à Shizuoka ; il parle aussi arabe et anglais. Il communique le tarif sur WhatsApp, selon votre groupe.</p>
 ${contactMini(lien, 'Écrire à Iheb sur WhatsApp')}
 ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<a href="${u}" rel="nofollow">${esc(t)}</a>`).join(' · ')}. Informations vérifiées le ${HOY} ; les durées sont approximatives.</p>` : ''}
 </div>`
@@ -605,45 +629,47 @@ ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<
 // buscan «French speaking guide Japan» en inglés. Mismos datos, nada inventado.
 {
   const corps = `
-${hero('fushimi-tunel', 'Fushimi Inari, Kyoto', `<span class="etiket"><a href="/fr/">Français</a> · English</span>
-<h1>French-speaking tour guide in Japan: Iheb</h1>
-<p class="alt">Private tours in French in Kyoto, Osaka, Nara, Kobe and Himeji.</p>
+${hero('kawaguchiko-fuji', 'Mount Fuji from Lake Kawaguchi', `<span class="etiket"><a href="/fr/">Français</a> · English</span>
+<h1>French-speaking tour guide in Tokyo: Iheb</h1>
+<p class="alt">Private tours in French in Tokyo, Kamakura, Yokohama, Nikko, Hakone and Mount Fuji, Nagano and Shizuoka.</p>
 <p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p>`)}
 <div class="kap">
-<p class="cevap">Yes, there is a French-speaking guide in the Kansai region of Japan: Iheb. He lives in Japan, guides private tours in French in Kyoto, Osaka, Nara, Kobe and Himeji, and also speaks Arabic and English. He quotes a price per group on WhatsApp (${WA_VISIBLE}).</p>
+<p class="cevap">Yes, there is a French-speaking guide in Tokyo: Iheb. He lives in Japan, guides private tours in French in Tokyo and the Kanto region (Kamakura, Yokohama, Nikko, Hakone), around Mount Fuji, and in Nagano and Shizuoka prefectures, and also speaks Arabic and English. He quotes a price per group on WhatsApp (${WA_VISIBLE}).</p>
 <h2>Key facts</h2>
 <ul class="ozet">
 <li><strong>Guide:</strong> Iheb, living in Japan, part of the Tony Kansai Guide team.</li>
 <li><strong>Languages:</strong> French; also Arabic and English.</li>
-<li><strong>Area:</strong> Kansai: Kyoto, Osaka, Nara, Kobe, Himeji.</li>
+<li><strong>Area:</strong> Tokyo and the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji (Fuji Five Lakes and Shizuoka side), Nagano.</li>
 <li><strong>Type:</strong> private tour, only your family or group.</li>
 <li><strong>Price:</strong> per group, quoted on WhatsApp after you send your plan. Trains, entry fees and meals are usually not included.</li>
-<li><strong>Muslim travellers:</strong> halal or Muslim-friendly restaurants, mosques (Kobe Mosque) and prayer breaks can be built into the day.</li>
+<li><strong>Muslim travellers:</strong> halal or Muslim-friendly restaurants, mosques (Tokyo Camii) and prayer breaks can be built into the day.</li>
 ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, average ${MOYENNE.replace(',', '.')}/5 (<a href="/fr/#avis">read them, in French</a>).</li>` : ''}
 <li><strong>Contact:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
 </ul>
-<h2>What about Tokyo?</h2>
-<p>Iheb guides in Kansai. Kyoto is about 2 hours 15 minutes from Tokyo by Shinkansen, and many travellers spend a few days in Kyoto and Osaka after Tokyo.</p>
+<h2>Day trips from Tokyo</h2>
+<ul class="ozet"><li><a href="/fr/kamakura/">Kamakura and Yokohama</a>: about 1 hour by train.</li><li><a href="/fr/nikko/">Nikko</a>: about 1 h 50 from Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone or the Fuji Five Lakes</a>: about 1 h 20 to 2 hours from Shinjuku.</li><li><a href="/fr/nagano/">Nagano</a> (snow monkeys) and <a href="/fr/shizuoka/">Shizuoka</a> (Mount Fuji views): by Shinkansen.</li></ul>
+<h2>Also going to Kyoto?</h2>
+<p>Iheb guides only in Tokyo and eastern Japan. For Kyoto and Osaka, Tony, from the same team, guides in Spanish, English and Arabic (<a href="/en/">Tony Kansai Guide</a>).</p>
 <h2>Other languages</h2>
-<p>The same team has guides in Spanish, English and Arabic (<a href="/en/">Tony</a>), <a href="/tr/">Turkish</a> and <a href="/ru/">Russian</a>.</p>
-<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="Iheb, French-speaking guide in Kyoto and Osaka" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, your French-speaking guide in Kansai.</p><p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p></div></div>
-<p><a href="/fr/">Page en français : guide francophone au Japon, Iheb →</a></p>
+<p>The same team has guides in <a href="/tr/">Turkish</a> and <a href="/ru/">Russian</a>.</p>
+<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="Iheb, French-speaking guide in Tokyo" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, your French-speaking guide in Tokyo and around.</p><p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p></div></div>
+<p><a href="/fr/">Page en français : guide francophone à Tokyo, Iheb →</a></p>
 </div>`
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { ...guideLd, jobTitle: 'French-speaking tour guide', description: 'French-speaking tour guide living in Japan. Private tours in French in Kyoto, Osaka, Nara, Kobe and Himeji; also speaks Arabic and English.' },
-      { ...serviceLd(null), name: 'Private tour in French in Kansai, Japan', url: `${BASE}/fr/${ANGLAIS}/` },
+      { ...guideLd, jobTitle: 'French-speaking tour guide', description: 'French-speaking tour guide living in Japan. Private tours in French in Tokyo, the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji, Nagano and Shizuoka; also speaks Arabic and English.' },
+      { ...serviceLd(null), name: 'Private tour in French in Tokyo and the Kanto region, Japan', url: `${BASE}/fr/${ANGLAIS}/` },
       { '@type': 'FAQPage', inLanguage: 'en', mainEntity: [
-        ['Is there a French-speaking tour guide in Japan?', `Yes. Iheb, a guide living in Japan, runs private tours in French in Kyoto, Osaka, Nara, Kobe and Himeji. WhatsApp ${WA_VISIBLE}.`],
-        ['Is there a French-speaking guide in Kyoto?', 'Yes, Iheb guides private tours in French in Kyoto (Fushimi Inari, Kiyomizu-dera, Gion, Arashiyama).'],
+        ['Is there a French-speaking tour guide in Tokyo?', `Yes. Iheb, a guide living in Japan, runs private tours in French in Tokyo and the Kanto region, around Mount Fuji, and in Nagano and Shizuoka. WhatsApp ${WA_VISIBLE}.`],
+        ['Is there a French-speaking guide for a Mount Fuji day trip from Tokyo?', 'Yes, Iheb guides private tours in French to Hakone, the Fuji Five Lakes (Kawaguchiko) and the Shizuoka side of Mount Fuji.'],
       ].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ],
   }
   ecrire(ANGLAIS, page({
-    yol: ANGLAIS, image: imageDe('fushimi-tunel'), jsonld, corps, lang: 'en',
-    titre: 'French-Speaking Tour Guide in Japan (Kyoto, Osaka, Nara) | Iheb',
-    desc: 'Iheb, a guide living in Japan, runs private tours in French in Kyoto, Osaka, Nara, Kobe and Himeji. Also speaks Arabic and English. Price per group on WhatsApp.',
+    yol: ANGLAIS, image: imageDe('kawaguchiko-fuji'), jsonld, corps, lang: 'en',
+    titre: 'French-Speaking Tour Guide in Tokyo, Mount Fuji and Kanto | Iheb',
+    desc: 'Iheb, a guide living in Japan, runs private tours in French in Tokyo, Kamakura, Yokohama, Nikko, Hakone and Mount Fuji, Nagano and Shizuoka. Also speaks Arabic and English. Price per group on WhatsApp.',
   }))
 }
 
