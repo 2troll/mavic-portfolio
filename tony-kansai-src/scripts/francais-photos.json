@@ -484,5 +484,81 @@
    1920,
    1080
   ]
+ },
+ "shibuya-parco": {
+  "autor": "江戸村のとくぞう",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AShibuya_Parco_191229b.jpg",
+  "w": 3000,
+  "h": 4496,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "gundam-unicorn": {
+  "autor": "Pelpinosas R. Justin James",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3ALife-Sized_Unicorn_Gundam_Statue.jpg",
+  "w": 2976,
+  "h": 3968,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "big-sight": {
+  "autor": "Masato Ohta",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3ATokyo_Big_Sight_at_Night.jpg",
+  "w": 3401,
+  "h": 2551,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "super-potato": {
+  "autor": "iqremix",
+  "lisans": "CC BY-SA 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AAkihabara_-_Super_Potato_Retro_Game_Shop.jpg",
+  "w": 1800,
+  "h": 3034,
+  "anchos": [
+   1080
+  ]
+ },
+ "character-street": {
+  "autor": "Dr.yellow",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3ATokyo_station_%22Ichibangai_-_Character_Street%22.jpg",
+  "w": 3264,
+  "h": 2448,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "yotsugi": {
+  "autor": "nesnad",
+  "lisans": "CC BY 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AKeisei_yotsugi_station_entrance_-_August_2014.jpg",
+  "w": 2592,
+  "h": 1936,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "jump-shop": {
+  "autor": "Taufik",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File%3AJump_Shop_Tokyo_Solamachi_20250831_124810.jpg",
+  "w": 4000,
+  "h": 3000,
+  "anchos": [
+   1920,
+   1080
+  ]
  }
 }

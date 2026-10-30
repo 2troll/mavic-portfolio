@@ -34,8 +34,8 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-10-30'
-const HOY_FR = '30 octobre 2026'
+const HOY = '2026-10-31'
+const HOY_FR = '31 octobre 2026'
 
 // WhatsApp de Iheb (lo dio Tony el 30-10-2026). Las reservas le llegan a él.
 const WA_NUMERO = '818080155322'
@@ -546,7 +546,7 @@ const ANIME = [
       ['Combien coûte un guide anime à Tokyo ?', 'Iheb donne un tarif par groupe, selon la durée et le programme, sur WhatsApp. Les transports, les entrées et vos achats ne sont pas compris.'],
     ],
     sources: [],
-    voir: ['acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo'],
+    voir: ['acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo', 'japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'one-piece-tokyo', 'olive-et-tom-captain-tsubasa-tokyo', 'gundam-odaiba', 'jeux-retro-figurines-akihabara', 'evenements-anime-tokyo', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon'],
   },
   {
     yol: 'acheter-cartes-pokemon-japon', kapak: 'akihabara-rue',
@@ -576,7 +576,7 @@ const ANIME = [
       ['Faut-il déclarer des cartes Pokémon à la douane en France ?', 'Oui si la valeur totale de vos achats hors UE dépasse 430 € (voyageur de plus de 15 ans arrivant en avion) : il faut les déclarer et payer les droits et taxes.'],
     ],
     sources: [['Agence japonaise du tourisme : détaxe', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html'], ['Agence japonaise du tourisme : remboursement', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html'], ['Service-Public.fr : franchises douanières', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F828'], ['Douane française', 'https://www.douane.gouv.fr/demarche/vous-rapportez-du-tabac-de-lalcool-ou-dautres-marchandises-achetees-hors-de-lunion']],
-    voir: ['guide-anime-tokyo', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'nakano-broadway'],
+    voir: ['guide-anime-tokyo', 'boutiques-cartes-pokemon-akihabara', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon', 'pokemon-center-tokyo', 'nakano-broadway'],
   },
   {
     yol: 'boutiques-cartes-pokemon-akihabara', kapak: 'akihabara',
@@ -755,6 +755,187 @@ const ANIME = [
     ],
     sources: [['Fujinomiya : lieux de Yuru Camp (office du tourisme)', 'https://fujinomiya.gr.jp/en/yurucamp/season1-2/'], ['Camping de Fumotoppara (site officiel)', 'https://fumotoppara.net/en/top/'], ['Explore Shizuoka : Numazu', 'https://exploreshizuoka.jp/en/inspirations/stories/spotlight/numazu-spotlight/']],
     voir: ['guide-anime-tokyo', 'akihabara-que-faire', 'musee-ghibli-reservation'],
+  },
+  {
+    yol: 'japon-otaku-que-faire', kapak: 'akihabara', publie: '2026-10-31',
+    titre: 'Voyage otaku au Japon : que faire à Tokyo ? | Guide francophone anime et manga',
+    desc: 'Le Tokyo des fans d’anime et de manga, en français : Akihabara, Nakano, Ikebukuro, Shibuya PARCO, One Piece, Gundam, Olive et Tom, cartes Pokémon, jeux rétro et grands événements. Le plan complet, avec Iheb, guide francophone et passionné.',
+    h1: 'Voyage otaku au Japon : que faire à Tokyo ?',
+    court: 'Le plan complet du Tokyo otaku, quartier par quartier.',
+    reponse: `Pour un voyage otaku à Tokyo, cinq quartiers suffisent à remplir une semaine : Akihabara (figurines, cartes, jeux rétro), Nakano Broadway (objets de collection chez Mandarake), Ikebukuro (Animate, Otome Road, Pokémon Center Mega Tokyo), Shibuya (Nintendo TOKYO, Pokémon Center, Jump Shop et Capcom Store au 6F du PARCO) et Odaiba (The Gundam Base). Ajoutez le musée Ghibli et le Pokémon Café sur réservation, les statues d’Olive et Tom à Katsushika, et un grand événement si vos dates tombent bien (Jump Festa, Comiket). Iheb, guide francophone et professionnel de l’anime et des cartes Pokémon, organise la journée en français : ${WA_VISIBLE}.`,
+    sections: [
+      ['Les quartiers otaku de Tokyo', `<ul class="ozet"><li><strong>Akihabara :</strong> le cœur du Tokyo otaku, avec ses immeubles entiers de figurines, de cartes et de jeux vidéo. <a href="/fr/akihabara-que-faire/">Que faire à Akihabara</a> · <a href="/fr/jeux-retro-figurines-akihabara/">jeux rétro et figurines</a>.</li><li><strong>Nakano Broadway :</strong> la galerie des collectionneurs, pour les objets plus anciens et rares. <a href="/fr/nakano-broadway/">Nakano Broadway</a>.</li><li><strong>Ikebukuro :</strong> Animate, Otome Road et le Pokémon Center Mega Tokyo. <a href="/fr/ikebukuro-anime/">Ikebukuro anime</a>.</li><li><strong>Shibuya :</strong> un étage entier du PARCO consacré au jeu vidéo et à l’anime. <a href="/fr/shibuya-parco-nintendo-pokemon/">Shibuya PARCO : Nintendo, Pokémon, Jump Shop</a>.</li><li><strong>Odaiba :</strong> The Gundam Base, la grande boutique Gunpla. <a href="/fr/gundam-odaiba/">Le Gundam d’Odaiba</a>.</li></ul>`],
+      ['Par série : vos héros préférés', `<ul class="ozet"><li><strong>One Piece, Dragon Ball, Naruto :</strong> les boutiques officielles Mugiwara Store et Jump Shop. <a href="/fr/one-piece-tokyo/">One Piece à Tokyo</a>.</li><li><strong>Pokémon :</strong> <a href="/fr/pokemon-center-tokyo/">les Pokémon Center</a>, <a href="/fr/pokemon-cafe-reservation/">le Pokémon Café</a> et <a href="/fr/acheter-cartes-pokemon-japon/">les cartes</a>.</li><li><strong>Ghibli :</strong> <a href="/fr/musee-ghibli-reservation/">le musée de Mitaka</a>, uniquement sur réservation.</li><li><strong>Olive et Tom :</strong> les statues de bronze de Captain Tsubasa dans le quartier natal de son auteur. <a href="/fr/olive-et-tom-captain-tsubasa-tokyo/">Les statues d’Olive et Tom</a>.</li><li><strong>Slam Dunk, Your Name, Yuru Camp, Love Live! Sunshine!! :</strong> <a href="/fr/pelerinage-anime-tokyo/">les lieux réels des anime</a>.</li></ul>`],
+      ['Une semaine otaku type', `<ol><li><strong>Jour 1 :</strong> Akihabara, puis Nakano Broadway l’après-midi.</li><li><strong>Jour 2 :</strong> Ikebukuro et le Pokémon Center Mega Tokyo, puis Shibuya PARCO.</li><li><strong>Jour 3 :</strong> le musée Ghibli le matin (réservé à l’avance), le parc d’Inokashira à côté.</li><li><strong>Jour 4 :</strong> Odaiba et The Gundam Base, ou Katsushika et les statues d’Olive et Tom.</li><li><strong>Jour 5 :</strong> Kamakura, le passage à niveau de <em>Slam Dunk</em> et la mer.</li></ol><p>Le reste du séjour peut aller vers le mont Fuji ou Hakone : <a href="/fr/itineraire-japon-2-semaines/">itinéraire de deux semaines</a>.</p>`],
+      ['Ramener ses achats en France', `<p>Figurines, cartes et mangas s’additionnent vite. Depuis le 1<sup>er</sup> novembre 2026, la détaxe japonaise fonctionne par remboursement, et la douane française compte vos achats au-delà de 430 € : <a href="/fr/detaxe-douane-japon/">détaxe et douane, mode d’emploi</a>.</p>`],
+    ],
+    faq: [
+      ['Quel est le meilleur quartier otaku à Tokyo ?', 'Akihabara, pour le choix. Nakano Broadway pour les objets de collection anciens, Ikebukuro pour Animate et les fans de shōjo, Shibuya PARCO pour les boutiques officielles Nintendo, Pokémon et Jump.'],
+      ['Combien de jours prévoir pour un voyage otaku à Tokyo ?', 'Trois jours pour les grands quartiers (Akihabara, Nakano, Ikebukuro, Shibuya), cinq si vous ajoutez le musée Ghibli, Odaiba et un lieu réel d’anime comme Kamakura.'],
+      ['Existe-t-il un guide otaku qui parle français à Tokyo ?', 'Oui. Iheb, guide francophone qui vit au Japon, est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon ; il propose des visites privées en français.'],
+    ],
+    sources: [['Shibuya PARCO : plan des étages (site officiel)', 'https://en.shibuya.parco.jp/'], ['Mugiwara Store (site officiel)', 'https://www.mugiwara-store.com/']],
+    voir: ['guide-anime-tokyo', 'akihabara-que-faire', 'one-piece-tokyo', 'evenements-anime-tokyo'],
+  },
+  {
+    yol: 'shibuya-parco-nintendo-pokemon', kapak: 'shibuya-parco', publie: '2026-10-31',
+    titre: 'Shibuya PARCO 6F : Nintendo TOKYO, Pokémon Center, Jump Shop, Capcom | Guide francophone',
+    desc: 'Le 6F du Shibuya PARCO (CYBERSPACE SHIBUYA) : Nintendo TOKYO, Pokémon Center Shibuya et son Mewtwo, Jump Shop, Capcom Store. Horaires, accès, conseils pour éviter la foule. Visite en français avec Iheb.',
+    h1: 'Shibuya PARCO : que trouver au 6F (Nintendo, Pokémon, Jump) ?',
+    court: 'Nintendo TOKYO, Pokémon Center, Jump Shop et Capcom au même étage.',
+    reponse: 'Au 6F du centre commercial Shibuya PARCO, l’étage baptisé CYBERSPACE SHIBUYA réunit les boutiques officielles des fans de jeu vidéo et d’anime : Nintendo TOKYO (la première boutique officielle gérée directement par Nintendo au Japon), le Pokémon Center Shibuya avec son Mewtwo grandeur nature, le Jump Shop (les séries du Weekly Shōnen Jump comme One Piece, Dragon Ball ou Naruto) et le Capcom Store Tokyo (Street Fighter, Monster Hunter, Ace Attorney). L’étage est ouvert de 10 h à 21 h. Le PARCO est à environ 5 minutes à pied de la gare de Shibuya.',
+    sections: [
+      ['Les boutiques du 6F', `<ul class="ozet"><li><strong>Nintendo TOKYO :</strong> consoles, jeux et produits Mario, Zelda, Animal Crossing, Splatoon ; des bornes permettent d’essayer les derniers jeux.</li><li><strong>Pokémon Center Shibuya :</strong> peluches, produits exclusifs et cartes, avec la statue de Mewtwo à l’entrée. <a href="/fr/pokemon-center-tokyo/">Tous les Pokémon Center de Tokyo</a>.</li><li><strong>Jump Shop :</strong> boutique officielle de l’éditeur Shūeisha, avec des illustrations originales des séries du Weekly Shōnen Jump.</li><li><strong>Capcom Store Tokyo :</strong> produits des séries Capcom.</li></ul><p>D’autres boutiques de goodies anime occupent le même étage ; leur liste change, d’où l’intérêt de vérifier le plan officiel avant de venir.</p>`],
+      ['Éviter la foule', '<ul class="ozet"><li><strong>Venez à l’ouverture</strong>, à 10 h : Nintendo TOKYO et le Pokémon Center sont pris d’assaut l’après-midi et le week-end.</li><li><strong>Les nouveautés</strong> (cartes, produits limités) peuvent être soumises à une file ou à une limite d’achat par personne.</li><li><strong>Combinez avec Harajuku</strong>, à une station, ou avec Ikebukuro pour une journée Pokémon complète.</li></ul>'],
+      ['Shibuya PARCO dans une journée otaku', '<p>Le 6F se visite en une à deux heures. Iheb l’intègre à une journée qui passe par Akihabara ou Ikebukuro, en traduisant les étiquettes et en repérant les produits exclusifs à chaque boutique. <a href="/fr/japon-otaku-que-faire/">Le plan complet du Tokyo otaku</a>.</p>'],
+    ],
+    faq: [
+      ['À quel étage est le Nintendo TOKYO ?', 'Au 6F du Shibuya PARCO, à côté du Pokémon Center Shibuya, du Jump Shop et du Capcom Store.'],
+      ['Quels sont les horaires du 6F du Shibuya PARCO ?', 'De 10 h à 21 h selon le plan officiel du PARCO ; vérifiez les jours de fermeture exceptionnelle sur son site.'],
+      ['Peut-on acheter des cartes Pokémon au Pokémon Center Shibuya ?', 'Oui, il vend des cartes officielles, mais les nouveautés partent vite et peuvent être limitées par personne. Pour les cartes à l’unité, les boutiques spécialisées d’Akihabara ont plus de choix.'],
+    ],
+    sources: [['Shibuya PARCO : plan des étages (site officiel)', 'https://en.shibuya.parco.jp/'], ['Pokémon Center : boutiques officielles', 'https://www.pokemon.co.jp/shop/en/']],
+    voir: ['japon-otaku-que-faire', 'pokemon-center-tokyo', 'one-piece-tokyo', 'boutiques-cartes-pokemon-akihabara'],
+  },
+  {
+    yol: 'one-piece-tokyo', kapak: 'character-street', publie: '2026-10-31',
+    titre: 'One Piece à Tokyo : Mugiwara Store, Jump Shop et Jump Festa | Guide francophone',
+    desc: 'One Piece à Tokyo en 2026 : les boutiques officielles Mugiwara Store, les Jump Shop (One Piece, Dragon Ball, Naruto), la Tokyo One Piece Tower fermée depuis 2020 et la Jump Festa de décembre. Visite en français avec Iheb.',
+    h1: 'One Piece à Tokyo : où trouver le monde de Luffy ?',
+    court: 'Mugiwara Store, Jump Shop et Jump Festa.',
+    reponse: 'À Tokyo, le monde de One Piece se trouve d’abord dans les boutiques officielles Mugiwara Store : la liste officielle d’août 2026 en compte notamment à Shibuya, Ikebukuro, Odaiba, Harajuku et dans la gare de Tokyo (Tokyo Character Street, au sous-sol). Les Jump Shop vendent aussi One Piece, avec les autres séries du Weekly Shōnen Jump (Dragon Ball, Naruto, Jujutsu Kaisen…). Attention : la Tokyo One Piece Tower, le parc à thème de la Tokyo Tower, a fermé définitivement le 31 juillet 2020. Le grand rendez-vous des fans reste la Jump Festa, en décembre à Makuhari Messe.',
+    sections: [
+      ['Les boutiques officielles', `<ul class="ozet"><li><strong>Mugiwara Store :</strong> la chaîne officielle One Piece. Les adresses changent parfois (boutiques éphémères, déménagements) : vérifiez la liste à jour sur le site officiel avant de partir.</li><li><strong>Tokyo Character Street :</strong> au sous-sol de la gare de Tokyo (Tokyo Station Ichibangai), une rue entière de boutiques de personnages, dont One Piece et le Jump Shop. Pratique le jour de l’arrivée ou du départ en shinkansen.</li><li><strong>Jump Shop :</strong> au 6F du Shibuya PARCO (<a href="/fr/shibuya-parco-nintendo-pokemon/">Shibuya PARCO</a>) et à Tokyo Solamachi, au pied de la Skytree.</li></ul>`],
+      ['La Jump Festa, en décembre', '<p>La Jump Festa 2027 a lieu les 19 et 20 décembre 2026 à Makuhari Messe (Chiba), à environ 40 minutes de train du centre de Tokyo. On y découvre les annonces des séries du Jump, dont One Piece, et des produits vendus uniquement sur place. L’entrée est gratuite, mais l’inscription préalable se fait dans l’application Jump NAVI. <a href="/fr/evenements-anime-tokyo/">Calendrier des événements anime</a>.</p>'],
+      ['Ce que fait le guide', '<p>Iheb relie les boutiques One Piece et Jump à une journée Akihabara ou Shibuya, vous traduit les étiquettes (éditions limitées, produits exclusifs à une boutique) et vous évite de traverser Tokyo pour une adresse fermée. Pour les cartes du jeu One Piece Card Game, les boutiques de cartes d’Akihabara sont le bon endroit : <a href="/fr/boutiques-cartes-pokemon-akihabara/">les boutiques de cartes</a>.</p>'],
+    ],
+    faq: [
+      ['La Tokyo One Piece Tower est-elle ouverte ?', 'Non. Le parc à thème One Piece de la Tokyo Tower a fermé définitivement le 31 juillet 2020.'],
+      ['Où acheter des produits One Piece officiels à Tokyo ?', 'Dans les Mugiwara Store (Shibuya, Ikebukuro, Odaiba, Harajuku, gare de Tokyo selon la liste officielle d’août 2026) et dans les Jump Shop.'],
+      ['Où trouver Dragon Ball et Naruto à Tokyo ?', 'Dans les Jump Shop, la boutique officielle des séries du Weekly Shōnen Jump, par exemple au 6F du Shibuya PARCO.'],
+    ],
+    sources: [['Mugiwara Store (site officiel)', 'https://www.mugiwara-store.com/'], ['Jump Festa (site officiel)', 'https://www.jumpfesta.com/'], ['Time Out Tokyo : fermeture de la Tokyo One Piece Tower', 'https://www.timeout.com/tokyo/attractions/tokyo-one-piece-tower']],
+    voir: ['japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'evenements-anime-tokyo', 'akihabara-que-faire'],
+  },
+  {
+    yol: 'olive-et-tom-captain-tsubasa-tokyo', kapak: 'yotsugi', publie: '2026-10-31',
+    titre: 'Olive et Tom à Tokyo : les statues de Captain Tsubasa à Katsushika | Guide francophone',
+    desc: 'Les statues de bronze d’Olive et Tom (Captain Tsubasa) à Yotsugi et Tateishi, quartier de Katsushika à Tokyo : Tsubasa (Olive), Genzo Wakabayashi (Thomas Price), Kojiro Hyuga (Mark Landers). Accès, parcours, conseils. Visite en français avec Iheb.',
+    h1: 'Olive et Tom à Tokyo : où voir les statues de Captain Tsubasa ?',
+    court: 'Les statues de bronze du quartier natal de l’auteur.',
+    reponse: 'Les statues d’Olive et Tom se trouvent à Katsushika, dans l’est de Tokyo, quartier natal de Yōichi Takahashi, l’auteur de Captain Tsubasa (le titre original d’Olive et Tom). Inaugurées à partir de 2013 sous sa supervision, ces statues de bronze sont réparties autour des gares de Yotsugi et de Keisei-Tateishi (ligne Keisei Oshiage) : Tsubasa Ōzora (Olive) dans la pose du Golden Twin Shot, Genzo Wakabayashi (Thomas Price), Kojiro Hyuga (Mark Landers), Ryo Ishizaki (Bruce Harper), Sanae Nakazawa (Patty) et Roberto Hongo. La gare de Yotsugi est elle-même décorée aux couleurs de la série.',
+    sections: [
+      ['Le parcours', '<ul class="ozet"><li><strong>Départ :</strong> gare de Yotsugi (ligne Keisei Oshiage), décorée de dessins de Captain Tsubasa. Une carte des statues est disponible sur place.</li><li><strong>À pied :</strong> les statues s’égrènent dans les rues et les parcs entre Yotsugi et Tateishi ; comptez une à deux heures pour les voir toutes en prenant des photos.</li><li><strong>Depuis le centre :</strong> environ 30 minutes de train depuis Asakusa ou Oshiage (Skytree).</li></ul>'],
+      ['Les noms japonais et français', '<p>La version française a changé presque tous les noms. Sur place, tout est écrit avec les noms japonais :</p><ul class="ozet"><li>Tsubasa Ōzora = Olivier Atton (Olive)</li><li>Genzo Wakabayashi = Thomas Price</li><li>Kojiro Hyuga = Mark Landers</li><li>Ryo Ishizaki = Bruce Harper</li><li>Sanae Nakazawa = Patty Gatsby</li><li>Roberto Hongo = Roberto Sedinho</li></ul>'],
+      ['Une matinée nostalgie, puis Asakusa', '<p>Katsushika se combine bien avec Asakusa et la Skytree, sur la même ligne. Pour les enfants du Club Dorothée, c’est la visite qui fait sourire toute la famille. Iheb l’organise en français, avec les autres lieux du Tokyo otaku : <a href="/fr/japon-otaku-que-faire/">le plan complet</a>.</p>'],
+    ],
+    faq: [
+      ['Où sont les statues d’Olive et Tom à Tokyo ?', 'À Katsushika, autour des gares de Yotsugi et de Keisei-Tateishi, sur la ligne Keisei Oshiage, dans l’est de Tokyo.'],
+      ['Combien y a-t-il de statues de Captain Tsubasa ?', 'Les sources en comptent huit ou neuf, réparties entre Yotsugi et Tateishi ; une carte est disponible à la gare de Yotsugi.'],
+      ['Comment aller à Yotsugi depuis Asakusa ?', 'Par la ligne Toei Asakusa puis la ligne Keisei Oshiage, en environ 30 minutes ; Iheb vous y emmène en visite privée.'],
+    ],
+    sources: [['Nippon.com : Captain Tsubasa à Yotsugi', 'https://www.nippon.com/en/guide-to-japan/gu900277/'], ['GO TOKYO : statues de Captain Tsubasa', 'https://www.gotokyo.org/en/spot/1841/index.html'], ['Kanpai : pèlerinage Captain Tsubasa', 'https://www.kanpai.fr/tokyo/pelerinage-captain-tsubasa-yotsugi-tateishi']],
+    voir: ['japon-otaku-que-faire', 'pelerinage-anime-tokyo', 'que-faire-a-tokyo', 'tokyo-en-famille'],
+  },
+  {
+    yol: 'gundam-odaiba', kapak: 'gundam-unicorn', publie: '2026-10-31',
+    titre: 'Gundam d’Odaiba : la statue a-t-elle disparu ? The Gundam Base Tokyo | Guide francophone',
+    desc: 'Le Gundam Unicorn grandeur nature d’Odaiba a été retiré le 31 août 2026. Ce qui reste à voir pour les fans de Gundam à Tokyo : The Gundam Base Tokyo à DiverCity, la nouvelle boutique annoncée à Shibuya. Visite en français avec Iheb.',
+    h1: 'Gundam d’Odaiba : la statue est-elle encore là ?',
+    court: 'La statue est partie ; The Gundam Base reste.',
+    reponse: 'Non : le Gundam Unicorn grandeur nature (19,7 m) qui se dressait devant le centre commercial DiverCity Tokyo Plaza, à Odaiba, a terminé son exposition le 31 août 2026, après presque neuf ans, et son démontage a commencé en septembre. Il avait succédé en 2017 au RX-78-2, présent de 2012 à 2017. Pour les fans de Gunpla, The Gundam Base Tokyo, la grande boutique officielle de maquettes Gundam, se trouve au 7F de DiverCity, et une nouvelle Gundam Base a été annoncée à Shibuya en septembre 2026. Aucune nouvelle statue n’était confirmée à Odaiba en octobre 2026.',
+    sections: [
+      ['Ce qu’il reste à voir à Odaiba', '<ul class="ozet"><li><strong>The Gundam Base Tokyo :</strong> au 7F de DiverCity Tokyo Plaza, des centaines de maquettes Gunpla, des éditions limitées et des modèles exposés.</li><li><strong>Accès :</strong> gare de Daiba (ligne Yurikamome) ou gare de Tokyo Teleport (ligne Rinkai), puis quelques minutes à pied.</li><li><strong>Autour :</strong> Odaiba se prête à une demi-journée en famille, avec la baie de Tokyo et le Rainbow Bridge. <a href="/fr/tokyo-en-famille/">Tokyo en famille</a>.</li></ul>'],
+      ['Une nouvelle statue ?', '<p>Bandai a évoqué un nouveau projet Gundam à Tokyo, sans lieu ni date confirmés en octobre 2026. Avant de prévoir une visite pour une statue, vérifiez le site officiel Gundam : Iheb suit ces annonces et adapte le programme.</p>'],
+      ['Acheter des Gunpla', '<p>The Gundam Base a le plus grand choix de modèles officiels. Pour des boîtes plus anciennes ou d’occasion, les boutiques d’Akihabara et de Nakano Broadway complètent bien : <a href="/fr/jeux-retro-figurines-akihabara/">jeux rétro, figurines et maquettes à Akihabara</a>.</p>'],
+    ],
+    faq: [
+      ['La statue du Gundam d’Odaiba est-elle toujours visible ?', 'Non. Le Gundam Unicorn grandeur nature de DiverCity Tokyo Plaza a été retiré après le 31 août 2026, et aucune nouvelle statue n’était confirmée en octobre 2026.'],
+      ['Où est The Gundam Base Tokyo ?', 'Au 7F de DiverCity Tokyo Plaza, à Odaiba. Une autre Gundam Base a été annoncée à Shibuya en septembre 2026.'],
+      ['Comment aller à Odaiba ?', 'Par la ligne Yurikamome (gare de Daiba) ou la ligne Rinkai (gare de Tokyo Teleport), à environ 30 minutes du centre de Tokyo.'],
+    ],
+    sources: [['Time Out Tokyo : retrait du Gundam Unicorn', 'https://www.timeout.com/tokyo/news/tokyos-life-size-unicorn-gundam-statue-in-odaiba-will-be-retired-this-august-051826'], ['SoraNews24 : nouvelle Gundam Base à Shibuya', 'https://soranews24.com/2026/09/12/new-gundam-megastore-announced-for-one-of-tokyos-most-popular-tourist-neighborhoods/']],
+    voir: ['japon-otaku-que-faire', 'jeux-retro-figurines-akihabara', 'tokyo-en-famille', 'akihabara-que-faire'],
+  },
+  {
+    yol: 'jeux-retro-figurines-akihabara', kapak: 'super-potato', publie: '2026-10-31',
+    titre: 'Jeux rétro et figurines à Akihabara : Super Potato, Mandarake, Radio Kaikan | Guide francophone',
+    desc: 'Où acheter jeux vidéo rétro, figurines et maquettes à Akihabara : Super Potato, Mandarake Complex, Radio Kaikan, Book-Off et Sofmap. Compatibilité des cartouches japonaises, tension 100 V, conseils d’achat. Visite en français avec Iheb.',
+    h1: 'Jeux rétro et figurines à Akihabara : où acheter ?',
+    court: 'Super Potato, Mandarake, Radio Kaikan : où chercher quoi.',
+    reponse: 'À Akihabara, les jeux vidéo rétro se trouvent surtout chez Super Potato (3F à 5F d’un immeuble décoré de Mario, à environ 4 minutes de la gare, avec une petite salle de jeux rétro au 5F), tandis que Book-Off et Sofmap proposent souvent des jeux d’occasion moins chers. Pour les figurines et maquettes, les adresses clés sont le Radio Kaikan, un immeuble entier de boutiques de figurines, de cartes et de maquettes à la sortie de la gare, et Mandarake Complex, consacré à la collection sur plusieurs étages. Attention avant d’acheter : les cartouches japonaises (Famicom, Super Famicom) ne fonctionnent pas toujours sur une console européenne, et les consoles japonaises sont prévues pour du 100 V.',
+    sections: [
+      ['Où chercher quoi', '<ul class="ozet"><li><strong>Super Potato :</strong> consoles et jeux des années 1980-1990, la vitrine du rétro à Akihabara. Pas l’adresse la moins chère, mais la plus complète.</li><li><strong>Book-Off et Sofmap :</strong> jeux et consoles d’occasion, souvent à meilleur prix.</li><li><strong>Radio Kaikan :</strong> figurines, cartes à collectionner et maquettes sur plusieurs étages, juste à la sortie Electric Town de la gare.</li><li><strong>Mandarake Complex :</strong> manga, anime, figurines et jouets anciens.</li></ul>'],
+      ['Avant d’acheter un jeu ou une console', '<ul class="ozet"><li><strong>Région :</strong> une cartouche Famicom n’entre pas dans une NES européenne ; une Super Famicom et une Super Nintendo européenne ne sont pas compatibles sans adaptation. Le plus simple : acheter la console japonaise avec les jeux.</li><li><strong>Tension :</strong> le Japon est en 100 V, la France en 230 V. Une ancienne console japonaise demande un transformateur, pas un simple adaptateur de prise.</li><li><strong>État :</strong> vérifiez les câbles et le contenu de la boîte au moment de l’achat ; Iheb lit pour vous les étiquettes d’état en japonais.</li></ul>'],
+      ['Figurines : neuf ou occasion ?', '<p>Les figurines neuves se trouvent partout ; l’occasion et les pièces anciennes se cherchent plutôt au Radio Kaikan, chez Mandarake et à <a href="/fr/nakano-broadway/">Nakano Broadway</a>. Gardez les tickets : ils servent pour la détaxe et à la douane française (<a href="/fr/detaxe-douane-japon/">détaxe et douane</a>).</p>'],
+    ],
+    faq: [
+      ['Super Potato est-il toujours ouvert à Akihabara ?', 'D’après les guides mis à jour en 2026, oui : la boutique de jeux rétro Super Potato occupe les 3F à 5F de son immeuble, à environ 4 minutes à pied de la gare d’Akihabara.'],
+      ['Les jeux rétro japonais marchent-ils sur une console française ?', 'Pas toujours : les cartouches Famicom et Super Famicom ne sont pas directement compatibles avec les consoles européennes. Le plus sûr est d’acheter la console japonaise, avec un transformateur 230 V vers 100 V.'],
+      ['Où acheter des figurines à Akihabara ?', 'Au Radio Kaikan, chez Mandarake Complex et dans les nombreuses boutiques d’occasion du quartier ; Nakano Broadway complète pour les pièces anciennes.'],
+    ],
+    sources: [['Super Potato Akihabara (site officiel)', 'https://superpotatoakiba.jp/'], ['Tokyo Cheapo : Super Potato', 'https://tokyocheapo.com/place/super-potato/'], ['Mandarake : boutiques', 'https://www.mandarake.co.jp/']],
+    voir: ['akihabara-que-faire', 'nakano-broadway', 'gundam-odaiba', 'japon-otaku-que-faire'],
+  },
+  {
+    yol: 'evenements-anime-tokyo', kapak: 'big-sight', publie: '2026-10-31',
+    titre: 'Événements anime au Japon 2026-2027 : Jump Festa, Comiket, AnimeJapan | Guide francophone',
+    desc: 'Calendrier des grands événements anime et manga au Japon : Jump Festa (19-20 décembre 2026, Makuhari Messe), Comiket d’hiver (fin décembre, Tokyo Big Sight), AnimeJapan 2027 à Osaka, Tokyo Game Show en septembre. Dates, inscription, conseils.',
+    h1: 'Événements anime au Japon : quelles dates en 2026-2027 ?',
+    court: 'Jump Festa, Comiket, AnimeJapan : le calendrier.',
+    reponse: 'Les grands rendez-vous otaku autour de Tokyo sont la Jump Festa 2027, les 19 et 20 décembre 2026 à Makuhari Messe (entrée gratuite, inscription dans l’application Jump NAVI), et le Comiket d’hiver, le plus grand marché de fanzines au monde, au Tokyo Big Sight fin décembre (annoncé du 29 au 31 décembre 2026 ; à vérifier sur le site officiel). Le Tokyo Game Show a lieu chaque année en septembre à Makuhari Messe. Nouveauté : AnimeJapan 2027 quitte Tokyo pour Osaka (Intex Osaka, journées publiques les 27 et 28 mars 2027), car le Tokyo Big Sight entre en travaux.',
+    sections: [
+      ['Le calendrier', '<ul class="ozet"><li><strong>Décembre :</strong> Jump Festa (Makuhari Messe, Chiba) et Comiket d’hiver (Tokyo Big Sight).</li><li><strong>Mars :</strong> AnimeJapan, le grand salon de l’industrie de l’anime ; en 2027 et 2028 à Osaka.</li><li><strong>Août :</strong> Comiket d’été (le C108 a eu lieu les 15 et 16 août 2026).</li><li><strong>Septembre :</strong> Tokyo Game Show, à Makuhari Messe.</li></ul>'],
+      ['Conseils pour ces journées', '<ul class="ozet"><li><strong>Billets et inscriptions :</strong> chaque événement a ses règles (application, billet en ligne, bracelet) ; elles sont souvent en japonais seulement. Iheb vous aide à vous inscrire.</li><li><strong>Foule :</strong> ce sont des dizaines de milliers de visiteurs par jour ; arrivez tôt, avec de l’eau et de l’argent liquide.</li><li><strong>Fin décembre :</strong> le Japon ralentit autour du Nouvel An, beaucoup de boutiques ferment le 1<sup>er</sup> janvier. <a href="/fr/quand-partir-japon/">Quand partir au Japon</a>.</li></ul>'],
+      ['Si vos dates ne tombent pas bien', '<p>Tout le reste de l’année, le Tokyo otaku vit dans ses quartiers : <a href="/fr/japon-otaku-que-faire/">le plan complet</a>. Les boutiques officielles vendent souvent, après coup, une partie des produits des événements.</p>'],
+    ],
+    faq: [
+      ['Quand a lieu la Jump Festa 2027 ?', 'Les 19 et 20 décembre 2026, à Makuhari Messe (Chiba). Malgré son nom, l’édition 2027 se tient en décembre 2026. L’entrée est gratuite, avec inscription préalable dans l’application Jump NAVI.'],
+      ['Quand a lieu le Comiket d’hiver 2026 ?', 'Fin décembre au Tokyo Big Sight : le Comic Market 109 est annoncé du 29 au 31 décembre 2026. Vérifiez sur comiket.co.jp avant de réserver.'],
+      ['AnimeJapan 2027 a-t-il lieu à Tokyo ?', 'Non. AnimeJapan 2027 se tient à Intex Osaka, avec des journées publiques les 27 et 28 mars 2027, à cause des travaux du Tokyo Big Sight. À Osaka, l’équipe de Tony Kansai Guide peut vous guider.'],
+    ],
+    sources: [['Jump Festa (site officiel)', 'https://www.jumpfesta.com/'], ['Comic Market (site officiel)', 'https://www.comiket.co.jp/'], ['AnimeJapan (site officiel)', 'https://www.anime-japan.jp/'], ['Tokyo Game Show (site officiel)', 'https://tgs.nikkeibp.co.jp/tgs/']],
+    voir: ['japon-otaku-que-faire', 'one-piece-tokyo', 'quand-partir-japon', 'guide-anime-tokyo'],
+  },
+  {
+    yol: 'cartes-pokemon-japonaises-ou-francaises', kapak: 'akihabara-rue', publie: '2026-10-31',
+    titre: 'Cartes Pokémon japonaises ou françaises ? Différences et fausses cartes | Guide francophone',
+    desc: 'Cartes Pokémon japonaises ou françaises : sortie plus tôt au Japon, sobres plus petits, qualité d’impression, tournois officiels en Europe, et comment repérer une fausse carte. Achat sur place avec Iheb, guide francophone.',
+    h1: 'Cartes Pokémon japonaises ou françaises : que choisir ?',
+    court: 'Différences, tournois et fausses cartes.',
+    reponse: 'Les cartes Pokémon japonaises sortent plusieurs mois avant les françaises, leurs boosters contiennent moins de cartes et leur impression est réputée plus soignée, notamment sur les cartes rares. Mais attention si vous jouez : les cartes en japonais ne sont pas acceptées dans les tournois officiels en Europe. Pour la collection, elles sont très recherchées ; pour le jeu en tournoi en France, restez sur les cartes françaises ou anglaises. Au Japon, la meilleure protection contre les fausses cartes est d’acheter dans une boutique physique qui délivre un ticket.',
+    sections: [
+      ['Les différences', '<ul class="ozet"><li><strong>Sortie :</strong> les séries paraissent d’abord au Japon, et leur contenu peut différer de la version française.</li><li><strong>Boosters :</strong> plus petits au Japon (souvent 5 cartes au lieu de 10, selon la série).</li><li><strong>Impression :</strong> réputée plus nette, surtout sur les cartes les plus rares (SAR, SIR).</li><li><strong>Tournois :</strong> les cartes japonaises ne sont pas valables dans les tournois officiels européens.</li></ul>'],
+      ['Repérer une fausse carte', '<ul class="ozet"><li>Comparez avec une carte authentique de la même série : dos, couleurs, motif.</li><li>Les cartes texturées ont un relief ; les fausses sont souvent lisses et trop brillantes.</li><li>Une police floue ou des caractères chinois simplifiés à la place du japonais trahissent une fausse.</li><li>Le reflet holographique doit changer de couleur proprement.</li><li>Ne pliez jamais une carte pour la « tester ».</li></ul><p>Aucun test n’est infaillible : achetez dans une boutique établie, avec ticket. C’est là qu’un guide qui lit le japonais et connaît les boutiques fait la différence.</p>'],
+      ['Acheter avec Iheb', '<p>Iheb vous emmène dans les boutiques de cartes d’Akihabara et de Nakano, vous traduit l’état et la rareté indiqués sur les étiquettes et vous explique les limites d’achat sur les nouveautés. <a href="/fr/acheter-cartes-pokemon-japon/">Acheter des cartes Pokémon au Japon</a> · <a href="/fr/boutiques-cartes-pokemon-akihabara/">les boutiques d’Akihabara</a>.</p>'],
+    ],
+    faq: [
+      ['Les cartes Pokémon japonaises sont-elles valables en tournoi en France ?', 'Non. Les cartes en japonais ne sont pas acceptées dans les tournois officiels européens ; elles le sont en Asie.'],
+      ['Pourquoi les cartes japonaises sont-elles recherchées ?', 'Elles sortent avant, leur impression est réputée plus soignée et certaines illustrations ou séries n’existent qu’au Japon.'],
+      ['Comment éviter les fausses cartes Pokémon au Japon ?', 'En achetant dans une boutique physique établie, avec ticket, et en comparant la carte à une authentique de la même série.'],
+    ],
+    sources: [['Lorenzone : cartes FR, EN ou JP ?', 'https://lorenzone.fr/blogs/news/cartes-tcg-fr-en-jp-quelle-langue-choisir'], ['Remambo : reconnaître une fausse carte', 'https://www.remambo.jp/blog/how-to-tell-if-pokemon-cards-are-fake']],
+    voir: ['acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'detaxe-douane-japon', 'nakano-broadway'],
+  },
+  {
+    yol: 'detaxe-douane-japon', kapak: 'narita', publie: '2026-10-31',
+    titre: 'Détaxe au Japon depuis le 1er novembre 2026 et douane française | Guide francophone',
+    desc: 'Nouvelle détaxe japonaise par remboursement depuis le 1er novembre 2026 : payer TTC, faire contrôler ses achats à la sortie sous 90 jours, se faire rembourser. Et au retour : franchise de 430 € en France. Conseils pour figurines et cartes.',
+    h1: 'Détaxe au Japon et douane française : comment ça marche ?',
+    court: 'La nouvelle détaxe et la franchise de 430 €.',
+    reponse: 'Depuis le 1er novembre 2026, la détaxe japonaise fonctionne par remboursement : vous payez le prix avec la taxe de 10 % incluse, la douane japonaise contrôle vos achats à la sortie du pays, puis la boutique ou son prestataire vous rembourse la taxe (virement, carte, application ou espèces à l’aéroport). Il faut quitter le Japon avec les articles dans les 90 jours suivant l’achat, et les avoir sur soi. Au retour en France, la franchise est de 430 € par voyageur de 15 ans et plus arrivant en avion (150 € pour les moins de 15 ans) ; au-delà, il faut déclarer et payer droits et taxes.',
+    sections: [
+      ['La nouvelle détaxe, étape par étape', '<ol><li><strong>En boutique :</strong> présentez votre passeport et payez le prix TTC.</li><li><strong>À l’aéroport :</strong> faites contrôler vos achats par la douane japonaise, par exemple via Visit Japan Web à Narita, Haneda ou Kansai, ou à une borne de remboursement.</li><li><strong>Remboursement :</strong> la boutique ou son prestataire vous rend la taxe, selon le moyen prévu.</li></ol><p>Si un seul article d’un ticket manque au contrôle, c’est tout le ticket qui perd la détaxe. Gardez donc vos achats dans le bagage à main jusqu’au contrôle.</p>'],
+      ['La douane française au retour', '<ul class="ozet"><li><strong>Franchise :</strong> 430 € par voyageur de 15 ans et plus en avion, 150 € en dessous de 15 ans. On ne cumule pas les franchises de plusieurs personnes pour un seul objet.</li><li><strong>Au-delà :</strong> déclarez avant de sortir de l’aéroport et payez droits et taxes sur la valeur facturée. Le simulateur officiel donne le montant.</li><li><strong>Gardez les tickets :</strong> ils prouvent la valeur de vos figurines et cartes.</li></ul>'],
+      ['Ce que fait le guide', '<p>Iheb vous signale les boutiques qui pratiquent la détaxe et vous aide à regrouper les achats. Il ne donne pas de conseil fiscal : en cas de doute, Infos Douane Service répond au 0 800 94 40 40. <a href="/fr/argent-liquide-carte-japon/">Argent liquide ou carte au Japon</a>.</p>'],
+    ],
+    faq: [
+      ['La détaxe change-t-elle au Japon en novembre 2026 ?', 'Oui. Depuis le 1er novembre 2026, on paie la taxe en boutique et on se la fait rembourser après le contrôle des achats par la douane à la sortie du Japon.'],
+      ['Combien de temps pour faire valider la détaxe ?', 'Il faut sortir du Japon avec les articles dans les 90 jours suivant l’achat.'],
+      ['Quelle est la franchise douanière en France pour un retour du Japon ?', '430 € par voyageur de 15 ans et plus arrivant en avion, 150 € pour les moins de 15 ans. Au-delà, il faut déclarer.'],
+    ],
+    sources: [['Agence japonaise du tourisme : nouvelle détaxe', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html'], ['Douane japonaise : remboursement', 'https://www.customs.go.jp/kaigairyoko/taxrefund_e.html'], ['Service-Public.fr : franchises douanières', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F828']],
+    voir: ['acheter-cartes-pokemon-japon', 'argent-liquide-carte-japon', 'budget-tokyo', 'jeux-retro-figurines-akihabara'],
   },
 ]
 const PILIER = ANIME[0]
@@ -1085,7 +1266,7 @@ ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'Article', headline: c.h1, inLanguage: 'fr', datePublished: c.publie ?? HOY, dateModified: HOY, author: { '@id': `${BASE}/fr/#iheb` }, publisher: { '@id': `${BASE}/#negocio` }, mainEntityOfPage: `${BASE}/fr/${c.yol}/`, description: c.desc, image: imageDe(c.kapak) },
+      { '@type': 'Article', headline: c.h1, inLanguage: 'fr', datePublished: c.publie ?? '2026-10-30', dateModified: HOY, author: { '@id': `${BASE}/fr/#iheb` }, publisher: { '@id': `${BASE}/#negocio` }, mainEntityOfPage: `${BASE}/fr/${c.yol}/`, description: c.desc, image: imageDe(c.kapak) },
       guideLd,
       { '@type': 'FAQPage', inLanguage: 'fr', mainEntity: [[c.h1, c.reponse], ...c.faq].map(([q, r]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: r } })) },
       { '@type': 'BreadcrumbList', itemListElement: miettes.map((m, i) => ({ '@type': 'ListItem', position: i + 1, ...m })) },
