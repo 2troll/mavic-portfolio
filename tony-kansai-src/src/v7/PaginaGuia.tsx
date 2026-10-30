@@ -1029,6 +1029,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               <details key={f.q}>
                 <summary>{f.q}</summary>
                 <p>{f.a}</p>
+                {/* /fr/ y similares son HTML estático, fuera del router: <a>, no <Link>. */}
+                {f.enlace && <p><a href={f.enlace.href}>{f.enlace.texto}</a></p>}
               </details>
             ))}
           </div>

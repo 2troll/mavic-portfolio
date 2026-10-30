@@ -16,7 +16,8 @@ export type GuiaId = 'tony' | 'larion'
 export interface Lugar { nombre: string; lat: number; lon: number; pos?: 'izq' | 'abajo' | 'arriba' }
 export interface Plan { nombre: string; detalle: string; precio: string; yenes: number; desde?: boolean }
 export interface Tarjeta { foto: string; titulo: string; texto: string }
-export interface Pregunta { q: string; a: string }
+/** enlace: va a HTML estático fuera del router (p. ej. /fr/), por eso se pinta con <a>. */
+export interface Pregunta { q: string; a: string; enlace?: { texto: string; href: string } }
 
 export interface Pagina {
   id: PaginaId
@@ -247,6 +248,7 @@ const es: Pagina = {
       { q: '¿Me recoges también en Kioto o en Nara?', a: 'Sí. Quedamos en el vestíbulo de tu hotel, esté en Osaka, Kioto, Nara o Kobe.' },
       { q: '¿Y si somos más de 6?', a: 'Los precios son para grupos de hasta 6 personas. Si sois más, escríbeme y te digo cómo lo organizamos.' },
       { q: '¿Hacéis tours de varios días?', a: 'Sí. Dime cuántos días tienes y qué quieres ver, y te paso un precio cerrado por todo.' },
+      { q: '¿Hay guía en francés?', a: 'Sí. En Tokio y la región de Kanto, Nagano y Shizuoka guía Iheb, en francés (también en árabe e inglés).', enlace: { texto: 'Página de Iheb (en francés)', href: '/fr/' } },
       { q: '¿Y si alguien tiene movilidad reducida?', a: 'Dímelo al reservar. Adapto el recorrido, el ritmo y el transporte; algunos templos tienen muchas escaleras y te propongo alternativas.' },
       { q: '¿Y si cambian mis planes?', a: 'Escríbeme. Cancelar con más de 72 horas no cuesta nada; si tu vuelo se retrasa, buscamos otro día.' },
     ],
@@ -385,6 +387,7 @@ const en: Pagina = {
       { q: 'Can you pick us up in Kyoto or Nara too?', a: 'Yes. We meet in your hotel lobby, whether you\'re staying in Osaka, Kyoto, Nara or Kobe.' },
       { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you\'re more, message me and I\'ll tell you how we can organise it.' },
       { q: 'Do you do multi-day tours?', a: 'Yes. Tell me how many days you have and what you\'d like to see, and I\'ll send you one fixed price for everything.' },
+      { q: 'Is there a French-speaking guide?', a: 'Yes. For Tokyo and the Kanto region, Nagano and Shizuoka there is Iheb, who guides in French (and also in Arabic and English).', enlace: { texto: 'Iheb\'s page (in French)', href: '/fr/' } },
       { q: 'What if someone has limited mobility?', a: 'Tell me when you book. I adapt the route, the pace and the transport; some temples have a lot of steps and I suggest alternatives.' },
       { q: 'What if my plans change?', a: 'Message me. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed we find another day.' },
     ],
@@ -525,6 +528,7 @@ const ar: Pagina = {
       { q: 'هل ترافقنا إلى نارا؟', a: 'نعم. نارا على بُعد أقل من ساعة من أوساكا وكيوتو، ويكفيها نصف يوم: تمثال بوذا الكبير في توداي-جي والغزلان في الحديقة.' },
       { q: 'كم السعر بالريال أو الدرهم؟', a: 'الأسعار بالين وللمجموعة كلها لا للشخص. بجانب كل سعر تجد قيمته التقريبية بالريال والدرهم بسعر الصرف اليوم، وهي للتوضيح فقط، أما الدفع فيكون بالين.' },
       { q: 'هل تنظّم جولات لعدة أيام؟', a: 'نعم. أخبرني بعدد الأيام وما تحبون رؤيته، وأرسل لك سعراً ثابتاً للكل.' },
+      { q: 'هل يوجد مرشد بالفرنسية؟', a: 'نعم. في طوكيو ومنطقة كانتو وناغانو وشيزوكا يرشد إيهاب بالفرنسية، وبالعربية والإنجليزية أيضاً.', enlace: { texto: 'صفحة إيهاب (بالفرنسية)', href: '/fr/' } },
       { q: 'وماذا لو كان أحدنا محدود الحركة؟', a: 'أخبرني عند الحجز. أكيّف المسار والوتيرة والمواصلات؛ بعض المعابد فيها درج كثير وأقترح بدائل.' },
       { q: 'وماذا لو تغيّرت خططي؟', a: 'راسلني. الإلغاء قبل أكثر من ٧٢ ساعة مجاني، وإن تأخرت رحلتك نجد يوماً آخر.' },
     ],
