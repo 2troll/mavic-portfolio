@@ -23,7 +23,7 @@
 // Añadido el 30-10-2026 (dato de Tony): Iheb es profesional del anime, la cultura
 // pop japonesa y el intercambio de cartas Pokémon (coleccionar/comprar cartas).
 // Las cartas se presentan SIEMPRE como colección, nunca como inversión ni apuesta.
-// Las páginas dedicadas a anime/Pokémon quedan para después (falta investigación).
+// Las páginas de anime/Pokémon están en ANIME (más abajo), con su propia regla.
 //
 // Fotos: Wikimedia Commons con licencia libre (CC BY / CC BY-SA / CC0 / PD);
 // autor, licencia y página de origen en scripts/francais-photos.json, archivos en
@@ -516,6 +516,249 @@ const REPONSES = [
   },
 ]
 
+// Páginas de anime, cultura pop y cartas Pokémon (30-10-2026). Fuente:
+// ~/Documents/Iheb/anime-pokemon-fiche.md (✅ se usa tal cual; 🟡 con «environ»,
+// «selon» o «à vérifier»; ❓ NO se publica). Tiendas de cartas: solo las
+// comprobadas en web oficial o anuncio de la empresa (Hareruya 2 Akihabara Tower
+// Store, Mandarake Card-kan). Card Rush, Torecolo, Yuyu-tei y Fullcomp NO salen:
+// no se encontró web oficial con la dirección. Nada de oripa (sobres-lotería),
+// «investissement», máquinas de premios ni maid cafés; nada del Gundam de Odaiba
+// (cerró el 31-8-2026). Yuru Camp: solo Fumotoppara (Shizuoka); el lago Motosu
+// (Yamanashi) no se nombra. Fotos: solo calles y edificios, nunca personajes.
+const ANIME = [
+  {
+    yol: 'guide-anime-tokyo', kapak: 'akihabara',
+    titre: 'Guide anime à Tokyo en français : visite privée avec Iheb | Akihabara, Nakano, Ikebukuro',
+    desc: 'Visite anime et cartes Pokémon à Tokyo avec un guide francophone : Akihabara, Nakano Broadway, Ikebukuro, Pokémon Center, musée Ghibli et lieux réels des anime. Une journée type, quartier par quartier. Tarif sur WhatsApp.',
+    h1: 'Guide anime à Tokyo en français : à quoi ressemble la journée ?',
+    court: 'Akihabara, Nakano, Ikebukuro : la journée type avec Iheb.',
+    reponse: `Oui, on peut découvrir le Tokyo de l’anime et des cartes Pokémon avec un guide francophone : Iheb, qui vit au Japon, est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner. Une journée type relie trois quartiers en train : Akihabara (cartes, figurines, jeux vidéo), Nakano Broadway (la galerie des collectionneurs, avec Mandarake) et Ikebukuro (Animate et le Pokémon Center Mega Tokyo). Le musée Ghibli, le Pokémon Café et les lieux réels des anime s’ajoutent sur réservation ou en excursion. Visite privée, en français ; tarif par groupe sur WhatsApp : ${WA_VISIBLE}.`,
+    sections: [
+      ['Une journée type, quartier par quartier', `<ol><li><strong>Le matin, Akihabara :</strong> les rues autour de Chuo-dori, les boutiques de figurines, de jeux vidéo rétro et de cartes à collectionner, dont Hareruya 2, un immeuble entier consacré aux cartes Pokémon. <a href="/fr/akihabara-que-faire/">Que faire à Akihabara</a> · <a href="/fr/boutiques-cartes-pokemon-akihabara/">les boutiques de cartes</a>.</li><li><strong>À midi, Nakano :</strong> environ 30 minutes de train plus à l’ouest. Nakano Broadway et ses dizaines de petites boutiques Mandarake, dont le Card-kan, consacré aux cartes. <a href="/fr/nakano-broadway/">Nakano Broadway</a>.</li><li><strong>L’après-midi, Ikebukuro :</strong> Animate Ikebukuro, la rue surnommée Otome Road, puis le Pokémon Center Mega Tokyo dans Sunshine City. <a href="/fr/ikebukuro-anime/">Ikebukuro anime</a>.</li></ol><p>C’est une journée bien remplie : avec des enfants, ou si vous voulez prendre le temps de choisir vos cartes, on garde deux quartiers sur trois. Shibuya, avec son Pokémon Center dans le centre commercial PARCO, peut remplacer Ikebukuro.</p>`],
+      ['Ce qu’apporte un guide qui connaît ce monde', `<ul class="ozet"><li><strong>Aller droit au but :</strong> à Akihabara, beaucoup de boutiques sont dans les étages des immeubles. Iheb sait où chercher selon ce que vous voulez : cartes, figurines, jeux, mangas.</li><li><strong>Lire les étiquettes :</strong> état de la carte, rareté, édition, tout est écrit en japonais.</li><li><strong>Acheter sereinement :</strong> repérer les fausses cartes, comprendre les limites d’achat et la nouvelle détaxe (<a href="/fr/acheter-cartes-pokemon-japon/">acheter des cartes Pokémon au Japon</a>).</li><li><strong>Le rythme de la journée :</strong> trains, repas halal ou Muslim friendly et pauses prière si vous le souhaitez.</li></ul>`],
+      ['À réserver avant de partir', `<ul class="ozet"><li><strong>Musée Ghibli :</strong> billets mis en vente le 10 du mois précédent, à 10 h heure du Japon ; rien n’est vendu sur place (<a href="/fr/musee-ghibli-reservation/">réserver le musée Ghibli</a>).</li><li><strong>Pokémon Café :</strong> uniquement sur réservation, à 18 h heure du Japon le jour d’ouverture des créneaux (<a href="/fr/pokemon-cafe-reservation/">réserver le Pokémon Café</a>).</li><li><strong>Pokémon Center :</strong> pas de réservation, mais il y en a cinq à Tokyo (<a href="/fr/pokemon-center-tokyo/">toutes les adresses</a>).</li></ul>`],
+      ['Hors de Tokyo : les lieux réels des anime', `<p>Le passage à niveau de <em>Slam Dunk</em> à Kamakura, l’escalier de <em>Your Name</em> à Yotsuya, Numazu pour <em>Love Live! Sunshine!!</em>, le camping de Fumotoppara pour <em>Yuru Camp</em>, Ueda pour <em>Summer Wars</em> : tout est dans la zone d’Iheb (Tokyo, Kanagawa, Shizuoka, Nagano). <a href="/fr/pelerinage-anime-tokyo/">Pèlerinage anime à Tokyo et autour</a>.</p>`],
+    ],
+    faq: [
+      ['Existe-t-il une visite anime à Tokyo en français ?', 'Oui. Iheb, guide francophone et professionnel de l’anime et des cartes Pokémon, propose des visites privées en français à Akihabara, Nakano, Ikebukuro et Shibuya, ainsi que sur les lieux réels des anime autour de Tokyo.'],
+      ['Peut-on faire un tour Pokémon à Tokyo avec un guide ?', 'Oui : Pokémon Center, boutiques de cartes d’Akihabara et de Nakano, Pokémon Café sur réservation. Iheb construit la journée selon ce que vous cherchez : cartes, peluches, jeux.'],
+      ['Combien de quartiers peut-on voir en une journée ?', 'Deux ou trois. Akihabara, Nakano et Ikebukuro tiennent dans une journée bien remplie ; avec des enfants, mieux vaut en choisir deux.'],
+      ['Combien coûte un guide anime à Tokyo ?', 'Iheb donne un tarif par groupe, selon la durée et le programme, sur WhatsApp. Les transports, les entrées et vos achats ne sont pas compris.'],
+    ],
+    sources: [],
+    voir: ['acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo'],
+  },
+  {
+    yol: 'acheter-cartes-pokemon-japon', kapak: 'akihabara-rue',
+    titre: 'Acheter des cartes Pokémon au Japon : cartes japonaises, faux, détaxe et douane | Guide francophone',
+    desc: 'Acheter des cartes Pokémon au Japon : cartes japonaises ou françaises, comment repérer les fausses, achats limités, nouvelle détaxe au 1er novembre 2026 et franchise douanière de 430 € au retour en France.',
+    h1: 'Comment acheter des cartes Pokémon au Japon ?',
+    court: 'Cartes japonaises, fausses cartes, détaxe 2026 et douane.',
+    reponse: 'Au Japon, on achète les cartes Pokémon neuves (boosters, coffrets, accessoires) dans les Pokémon Center officiels, et les cartes à l’unité, neuves ou d’occasion, dans les boutiques spécialisées d’Akihabara, de Nakano ou d’Ikebukuro. Les cartes japonaises ne sont pas les mêmes que les françaises : textes en japonais, séries qui sortent d’abord au Japon, contenu différent, et en général pas acceptées dans les tournois officiels en Europe. Achetez en boutique avec un ticket, examinez chaque carte chère et gardez vos factures : depuis le 1er novembre 2026, la détaxe japonaise fonctionne par remboursement après contrôle à la sortie du pays, et au retour en France la franchise douanière est de 430 € par voyageur de plus de 15 ans arrivant en avion.',
+    sections: [
+      ['Cartes japonaises ou françaises ?', `<table><tr><th></th><th>Cartes japonaises</th><th>Cartes françaises</th></tr>
+<tr><td>Langue</td><td>Japonais</td><td>Français</td></tr>
+<tr><td>Sorties</td><td>Les séries sortent d’abord au Japon</td><td>Plus tard, avec un contenu parfois regroupé autrement</td></tr>
+<tr><td>Boosters</td><td>Nombre de cartes et contenu propres à l’édition japonaise</td><td>Nombre de cartes et contenu propres à l’édition française</td></tr>
+<tr><td>Impression</td><td>Souvent jugée excellente par les collectionneurs, surtout sur les cartes les plus rares</td><td>—</td></tr>
+<tr><td>Tournois officiels en Europe</td><td>En général non acceptées</td><td>Acceptées</td></tr></table>
+<p>En résumé : pour collectionner ou offrir, les cartes japonaises sont très recherchées ; pour jouer en tournoi en France, prenez des cartes françaises. Vérifiez le règlement officiel Play! Pokémon si vous achetez pour jouer.</p>`],
+      ['Comment repérer une fausse carte ?', `<ul class="ozet"><li>Comparez-la avec une carte authentique de la même série : dos, couleurs, motif du tourbillon.</li><li>Les cartes texturées ont un relief au toucher ; les fausses sont souvent lisses et trop brillantes.</li><li>Le texte doit être net. Des caractères chinois simplifiés à la place du japonais sont un signal d’alerte.</li><li>Sur une carte holographique, le reflet doit changer de couleur proprement quand on l’incline.</li><li>Le test de la lampe n’est qu’un indice : certaines fausses le passent, et les cartes holographiques laissent peu passer la lumière.</li><li>Ne pliez jamais une carte pour la « tester ».</li></ul><p>Aucun test n’est infaillible. La meilleure protection : acheter dans une vraie boutique, avec un ticket, et se faire aider par quelqu’un qui lit le japonais et connaît les cartes.</p>`],
+      ['Boosters et coffrets neufs : des achats limités', '<p>Les nouveautés les plus demandées sont souvent limitées par personne en boutique, voire attribuées par tirage au sort pour le droit d’achat : si votre nom est tiré, vous achetez au prix officiel. Les cartes à l’unité, elles, se trouvent dans les boutiques spécialisées, avec un prix affiché pour chaque carte.</p>'],
+      ['La détaxe change le 1er novembre 2026', `<ul class="ozet"><li><strong>Nouveau système :</strong> pour les achats faits à partir du 1er novembre 2026, vous payez le prix taxe comprise (10 %) et la taxe vous est remboursée après le contrôle douanier au départ du Japon : virement, carte bancaire, application ou espèces à l’aéroport, selon la boutique.</li><li><strong>Minimum :</strong> 5 000 yens hors taxe par magasin et par jour.</li><li><strong>Délai :</strong> le contrôle douanier doit se faire dans les 90 jours suivant l’achat, au départ, avant d’enregistrer vos bagages.</li><li><strong>Tout doit être là :</strong> si un seul article d’un ticket manque, aucun article de ce ticket n’est remboursé.</li><li><strong>À l’aéroport :</strong> bornes de détaxe qui lisent le passeport, ou Visit Japan Web à Narita et Haneda.</li><li><strong>Article d’un million de yens ou plus (hors taxe) :</strong> la douane peut demander un certificat d’authenticité ou une garantie.</li></ul>`],
+      ['Douane au retour en France', `<ul class="ozet"><li><strong>Franchise :</strong> 430 € par voyageur de plus de 15 ans arrivant en avion, 150 € pour les moins de 15 ans. Elle porte sur la valeur totale de vos achats faits hors de l’Union européenne.</li><li><strong>Pas de cumul :</strong> un objet compte pour une seule personne ; on ne peut pas additionner les franchises de la famille pour un achat.</li><li><strong>Au-delà :</strong> déclarez vos achats à la douane à l’arrivée et payez les droits et taxes, calculés sur la facture. Simulateur officiel : declare-douane.beta.gouv.fr.</li><li><strong>Gardez toutes vos factures.</strong> Belgique, Suisse, Canada : les règles sont différentes, vérifiez-les auprès de votre douane.</li></ul>`],
+      ['Acheter avec Iheb', '<p>Iheb est un professionnel des cartes Pokémon à collectionner. Il vous emmène dans des boutiques sérieuses, lit pour vous les étiquettes en japonais, vous aide à vérifier une carte avant de payer et vous rappelle les règles de détaxe. Il s’agit ici de collection : cette page n’est pas un conseil financier.</p>'],
+    ],
+    faq: [
+      ['Où acheter des cartes Pokémon à Tokyo ?', 'Le neuf dans les Pokémon Center officiels ; les cartes à l’unité dans les boutiques spécialisées d’Akihabara (par exemple Hareruya 2) et de Nakano Broadway (Mandarake Card-kan).'],
+      ['Les cartes Pokémon japonaises sont-elles valables en tournoi en France ?', 'En général non : les tournois officiels en Europe utilisent les éditions occidentales. Vérifiez le règlement Play! Pokémon avant d’acheter pour jouer.'],
+      ['Comment fonctionne la détaxe au Japon à partir du 1er novembre 2026 ?', 'Vous payez la taxe de 10 % à l’achat, puis elle vous est remboursée après le contrôle douanier au départ du Japon, dans les 90 jours suivant l’achat. Minimum : 5 000 yens hors taxe par magasin et par jour.'],
+      ['Faut-il déclarer des cartes Pokémon à la douane en France ?', 'Oui si la valeur totale de vos achats hors UE dépasse 430 € (voyageur de plus de 15 ans arrivant en avion) : il faut les déclarer et payer les droits et taxes.'],
+    ],
+    sources: [['Agence japonaise du tourisme : détaxe', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00028.html'], ['Agence japonaise du tourisme : remboursement', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html'], ['Service-Public.fr : franchises douanières', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F828'], ['Douane française', 'https://www.douane.gouv.fr/demarche/vous-rapportez-du-tabac-de-lalcool-ou-dautres-marchandises-achetees-hors-de-lunion']],
+    voir: ['guide-anime-tokyo', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'nakano-broadway'],
+  },
+  {
+    yol: 'boutiques-cartes-pokemon-akihabara', kapak: 'akihabara',
+    titre: 'Boutiques de cartes Pokémon à Akihabara : Hareruya 2 et le quartier | Guide francophone',
+    desc: 'Où acheter des cartes Pokémon à Akihabara : Hareruya 2 Akihabara Tower Store, un immeuble entier consacré aux cartes Pokémon, les boutiques dans les étages, conseils d’achat et visite en français avec Iheb.',
+    h1: 'Où acheter des cartes Pokémon à Akihabara ?',
+    court: 'Hareruya 2 et les boutiques de cartes du quartier.',
+    reponse: 'À Akihabara, la grande adresse des cartes Pokémon est Hareruya 2 Akihabara Tower Store : un immeuble entier consacré au jeu de cartes Pokémon (vente, rachat, événements chaque jour), ouvert le 1er février 2026 à environ 3 minutes à pied de la gare JR d’Akihabara, au 1-2-13 Sotokanda. Autour, des dizaines de boutiques de cartes à collectionner occupent les étages des immeubles, souvent sans grande vitrine sur la rue. Les étiquettes (état, rareté, édition) sont en japonais : c’est là qu’un guide qui connaît les cartes et lit le japonais fait gagner du temps.',
+    sections: [
+      ['Hareruya 2 Akihabara Tower Store', `<ul class="ozet"><li><strong>Adresse :</strong> Ishimaru Building n° 3, 1-2-13 Sotokanda, Chiyoda-ku, à environ 3 minutes à pied de la gare JR d’Akihabara.</li><li><strong>Ce qu’on y trouve :</strong> boosters, cartes à l’unité et accessoires du jeu de cartes Pokémon, un service de rachat, des événements tous les jours et des cours de règles pour débutants.</li><li><strong>Horaires annoncés à l’ouverture :</strong> 10 h à 22 h tous les jours ; à vérifier sur le site officiel avant de venir.</li><li><strong>Histoire :</strong> c’est l’ancien magasin principal de Hareruya 2 à Akihabara, déménagé dans un immeuble entier le 1er février 2026.</li></ul>`],
+      ['Le reste du quartier', '<p>Akihabara compte des dizaines de boutiques de cartes à collectionner : Pokémon, mais aussi d’autres jeux de cartes japonais. Beaucoup sont au 2e, 3e ou 4e niveau des immeubles, accessibles par un escalier étroit ou un petit ascenseur. Chaque carte a son prix affiché, et les mentions d’état varient d’une boutique à l’autre. Sur cette page, nous ne nommons que les boutiques dont nous avons vérifié l’adresse sur une source officielle ; sur place, Iheb vous oriente vers celles qui correspondent à ce que vous cherchez.</p>'],
+      ['Conseils d’achat', `<ul class="ozet"><li>Ne touchez pas les cartes en vitrine : demandez au vendeur de vous les montrer.</li><li>Pour une carte chère, regardez le recto, le verso et les bords sous la lumière avant de payer (<a href="/fr/acheter-cartes-pokemon-japon/">repérer une fausse carte</a>).</li><li>Gardez chaque ticket : la détaxe se fait par magasin et par jour, à partir de 5 000 yens hors taxe, et vous en aurez besoin à la douane en France.</li><li>Au Japon, 1F désigne le rez-de-chaussée et 2F le premier étage.</li></ul>`],
+      ['Pourquoi y aller avec Iheb ?', '<p>Iheb est un professionnel des cartes Pokémon à collectionner. Il sait ce que vous cherchez avant d’entrer, traduit les étiquettes et les questions au vendeur, et vous évite de tourner pendant des heures dans les étages. Il peut ensuite enchaîner avec <a href="/fr/nakano-broadway/">Nakano Broadway</a> ou un <a href="/fr/pokemon-center-tokyo/">Pokémon Center</a>.</p>'],
+    ],
+    faq: [
+      ['Où se trouve Hareruya 2 à Akihabara ?', 'Hareruya 2 Akihabara Tower Store est au 1-2-13 Sotokanda (Ishimaru Building n° 3), à environ 3 minutes à pied de la gare JR d’Akihabara. Il occupe tout l’immeuble depuis le 1er février 2026.'],
+      ['Combien de temps prévoir pour les cartes à Akihabara ?', 'Une demi-journée pour Hareruya 2 et quelques autres boutiques ; une journée si vous cherchez des cartes précises.'],
+      ['Akihabara ou Nakano pour les cartes Pokémon ?', 'Les deux se complètent : Akihabara a le plus grand choix de boutiques de cartes, Nakano Broadway le Card-kan de Mandarake au milieu d’autres boutiques de collection. Les deux tiennent dans la même journée.'],
+    ],
+    sources: [['Hareruya 2 : Akihabara Tower Store (site officiel)', 'https://www.hareruya2.com/pages/lp_hareruya2_tower'], ['Gamebiz : annonce de l’ouverture', 'https://gamebiz.jp/news/419412']],
+    voir: ['guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'akihabara-que-faire', 'nakano-broadway'],
+  },
+  {
+    yol: 'pokemon-center-tokyo', kapak: 'takashimaya-nihonbashi',
+    titre: 'Pokémon Center à Tokyo : adresses des 5 boutiques officielles | Guide francophone',
+    desc: 'Les boutiques Pokémon officielles de Tokyo : Pokémon Center Mega Tokyo (Ikebukuro), Tokyo DX et Pokémon Café (Nihonbashi), Shibuya, Skytree Town et gare de Tokyo. Plus Yokohama, Chiba, Narita et Gotemba.',
+    h1: 'Où sont les Pokémon Center à Tokyo ?',
+    court: 'Les 5 boutiques officielles de Tokyo et celles autour.',
+    reponse: 'Tokyo compte cinq boutiques Pokémon officielles : le Pokémon Center Mega Tokyo (Sunshine City, Ikebukuro), le Pokémon Center Tokyo DX avec le Pokémon Café (Takashimaya, Nihonbashi), le Pokémon Center Shibuya (Shibuya PARCO), le Pokémon Center Skytree Town (Solamachi, Oshiage) et le Pokémon Store de la gare de Tokyo. Autour de Tokyo, il y en a aussi deux à Yokohama, un à Funabashi (Chiba), un à l’aéroport de Narita et un à Gotemba (Shizuoka). Il n’y en a aucun dans la préfecture de Nagano.',
+    sections: [
+      ['Les boutiques officielles à Tokyo', `<table><tr><th>Boutique</th><th>Adresse</th><th>Quartier</th></tr>
+<tr><td>Pokémon Center Mega Tokyo (et Pikachu Sweets)</td><td>Sunshine City Alpa, 2F, 3-1-2 Higashi-Ikebukuro, Toshima-ku</td><td>Ikebukuro</td></tr>
+<tr><td>Pokémon Center Tokyo DX et Pokémon Café</td><td>Nihombashi Takashimaya S.C., bâtiment Est, 5F, 2-11-2 Nihombashi, Chuo-ku</td><td>Nihonbashi</td></tr>
+<tr><td>Pokémon Center Shibuya</td><td>Shibuya PARCO, 6F, 15-1 Udagawa-cho, Shibuya-ku</td><td>Shibuya</td></tr>
+<tr><td>Pokémon Center Skytree Town</td><td>Tokyo Skytree Town Solamachi, East Yard, 4F, 1-1-2 Oshiage, Sumida-ku</td><td>Oshiage</td></tr>
+<tr><td>Pokémon Store Tokyo Station</td><td>First Avenue Tokyo Station, 1F, 1-9-1 Marunouchi, Chiyoda-ku</td><td>Gare de Tokyo</td></tr></table>
+<p>Au Japon, 1F désigne le rez-de-chaussée et 2F le premier étage.</p>`],
+      ['Lequel choisir ?', `<ul class="ozet"><li><strong>Mega Tokyo :</strong> souvent présenté comme le plus grand ; à combiner avec <a href="/fr/ikebukuro-anime/">Animate et Ikebukuro</a>.</li><li><strong>Tokyo DX :</strong> le seul avec le <a href="/fr/pokemon-cafe-reservation/">Pokémon Café</a> à côté (sur réservation).</li><li><strong>Shibuya :</strong> connu pour sa grande statue de Mewtwo.</li><li><strong>Skytree Town :</strong> pratique avec la visite de la Tokyo Skytree.</li><li><strong>Gare de Tokyo :</strong> une petite boutique, utile juste avant un Shinkansen.</li></ul>`],
+      ['Autour de Tokyo', `<ul class="ozet"><li><strong>Yokohama :</strong> Pokémon Center Yokohama (Yokohama Sky Building, 8F) et Yokohama Satellite (JOINUS, 2F), près de la gare de Yokohama.</li><li><strong>Chiba :</strong> Pokémon Center Tokyo-Bay (LaLaport Tokyo-Bay, aile Ouest, 2F, Funabashi) et un Pokémon Store au Mitsui Outlet Park de Kisarazu.</li><li><strong>Aéroport de Narita :</strong> Pokémon Store au terminal 1, aile Sud, 4F. À garder en dernier recours, le jour du départ.</li><li><strong>Shizuoka :</strong> Pokémon Store dans le Gotemba Premium Outlets, au pied du Fuji.</li></ul>`],
+      ['Et les cartes ?', '<p>Les Pokémon Center vendent les boosters, coffrets et accessoires du jeu de cartes. Les nouveautés très demandées sont souvent limitées par personne, voire attribuées par tirage au sort pour le droit d’achat. Pour les cartes à l’unité, voyez les <a href="/fr/boutiques-cartes-pokemon-akihabara/">boutiques d’Akihabara</a>.</p>'],
+    ],
+    faq: [
+      ['Quel est le plus grand Pokémon Center de Tokyo ?', 'Le Pokémon Center Mega Tokyo, dans Sunshine City à Ikebukuro, est souvent présenté comme le plus grand.'],
+      ['Combien y a-t-il de Pokémon Center à Tokyo ?', 'Quatre Pokémon Center (Mega Tokyo, Tokyo DX, Shibuya, Skytree Town) et un Pokémon Store à la gare de Tokyo, soit cinq boutiques officielles.'],
+      ['Y a-t-il un Pokémon Center à Nagano ?', 'Non, la liste officielle n’en compte aucun dans la préfecture de Nagano. Le plus proche du Fuji est le Pokémon Store de Gotemba, côté Shizuoka.'],
+      ['Où est le Pokémon Café à Tokyo ?', 'Dans le Pokémon Center Tokyo DX, au 5F du bâtiment Est du Nihombashi Takashimaya S.C., à Nihonbashi. Il faut réserver.'],
+    ],
+    sources: [['Pokémon : liste officielle des boutiques', 'https://www.pokemon.co.jp/shop/en/']],
+    voir: ['guide-anime-tokyo', 'pokemon-cafe-reservation', 'ikebukuro-anime', 'acheter-cartes-pokemon-japon'],
+  },
+  {
+    yol: 'pokemon-cafe-reservation', kapak: 'takashimaya-nihonbashi',
+    titre: 'Pokémon Café Tokyo : comment réserver (heure d’ouverture, règles) | Guide francophone',
+    desc: 'Réserver le Pokémon Café de Tokyo (Nihonbashi) : ouverture des réservations à 18 h heure du Japon, fermeture à 8 h le jour même, 90 minutes sur place, groupes, annulation. Et si c’est complet.',
+    h1: 'Comment réserver le Pokémon Café à Tokyo ?',
+    court: 'Ouverture des réservations, règles sur place, si c’est complet.',
+    reponse: 'Le Pokémon Café de Tokyo se trouve dans le Pokémon Center Tokyo DX, au 5F du bâtiment Est du Nihombashi Takashimaya S.C., à Nihonbashi. On n’y mange qu’avec une réservation faite sur le site officiel : les créneaux sont mis en ligne à 18 h, heure du Japon, à des dates annoncées dans les actualités du site (environ 31 jours à l’avance d’après les guides de voyage), et on peut réserver jusqu’à 8 h le jour même. Les places partent très vite. Sur place, le repas dure 90 minutes et chaque personne de 6 ans et plus commande au moins un article.',
+    sections: [
+      ['Les règles officielles', `<ul class="ozet"><li><strong>Réservation obligatoire :</strong> pas de place sans réservation ; le jour même, des places ne se libèrent qu’en cas d’annulation.</li><li><strong>Tables :</strong> de 1 à 6 personnes selon la table. À partir de 7 personnes, il faut plusieurs réservations, chacune avec une adresse e-mail différente.</li><li><strong>Enfants :</strong> ils comptent dans le nombre de personnes dès la naissance ; à partir de 6 ans, chacun commande au moins un article.</li><li><strong>Durée :</strong> 90 minutes à partir de l’heure réservée, dernière commande 30 minutes avant la fin. Un retard ne donne pas de temps en plus.</li><li><strong>Retard :</strong> sans nouvelles de votre part 10 minutes après l’heure, la réservation est annulée.</li><li><strong>Annulation :</strong> en ligne jusqu’à 22 h la veille ; ensuite, par téléphone au café.</li><li><strong>Horaires :</strong> de 10 h 30 à 21 h, sur réservation.</li></ul>`],
+      ['Le jour de l’ouverture des réservations', '<p>18 h au Japon, c’est 10 h du matin en France en hiver et 11 h en été. Préparez à l’avance vos dates, le nombre de personnes et votre adresse e-mail, et connectez-vous quelques minutes en avance. Les dates exactes d’ouverture sont publiées dans les actualités du site officiel et peuvent changer : vérifiez-les.</p>'],
+      ['Et si c’est complet ?', `<p>Sans réservation, vous pouvez toujours entrer dans le Pokémon Center Tokyo DX juste à côté, et le café vend ses produits à emporter sans table, selon le stock. Il existe aussi un Pokémon Café à Osaka (Daimaru Shinsaibashi, 9F) si votre voyage continue vers l’ouest. Voir aussi <a href="/fr/pokemon-center-tokyo/">tous les Pokémon Center de Tokyo</a>.</p>`],
+    ],
+    faq: [
+      ['Quand ouvrent les réservations du Pokémon Café ?', 'À 18 h, heure du Japon, aux dates annoncées dans les actualités du site officiel ; d’après les guides de voyage, environ 31 jours avant la date de visite.'],
+      ['Peut-on aller au Pokémon Café sans réservation ?', 'Pas pour s’asseoir : le café fonctionne uniquement sur réservation. Le jour même, des places peuvent se libérer en cas d’annulation.'],
+      ['Combien de temps dure le Pokémon Café ?', '90 minutes à partir de l’heure réservée, dernière commande 30 minutes avant la fin.'],
+      ['Où est le Pokémon Café à Tokyo ?', 'Au 5F du bâtiment Est du Nihombashi Takashimaya S.C., à Nihonbashi, dans le Pokémon Center Tokyo DX.'],
+    ],
+    sources: [['Pokémon Café : FAQ officielle', 'https://www.pokemon-cafe.jp/en/cafe/faq/'], ['Pokémon Café : site officiel', 'https://www.pokemon-cafe.jp/en/cafe/']],
+    voir: ['guide-anime-tokyo', 'pokemon-center-tokyo', 'musee-ghibli-reservation'],
+  },
+  {
+    yol: 'musee-ghibli-reservation', kapak: 'inokashira',
+    titre: 'Musée Ghibli : réserver ses billets (le 10 du mois, Lawson Ticket) | Guide francophone',
+    desc: 'Comment réserver le musée Ghibli à Mitaka : billets en vente le 10 du mois précédent à 10 h heure du Japon sur Lawson Ticket, prix de 0 à 1 000 yens, aucune vente sur place, revente interdite.',
+    h1: 'Comment réserver le musée Ghibli ?',
+    court: 'Billets le 10 du mois précédent, sur Lawson Ticket.',
+    reponse: 'Les billets du musée Ghibli, à Mitaka, ne se vendent pas sur place : il faut réserver à l’avance. Les billets d’un mois sont mis en vente le 10 du mois précédent à 10 h, heure du Japon, en ligne sur Lawson Ticket, ou avec l’excursion en bus de Sunrise Tours (JTB) qui inclut le musée. Chaque billet vaut pour une date et une heure d’entrée précises, sans heure de sortie. Prix : 1 000 yens à partir de 19 ans, 700 yens de 13 à 18 ans, 400 yens de 7 à 12 ans, 100 yens de 4 à 6 ans, gratuit jusqu’à 3 ans. La revente est interdite.',
+    sections: [
+      ['Réserver pas à pas', `<ol><li>Repérez la date : pour une visite en mars, les billets sortent le 10 février.</li><li>10 h au Japon, c’est 2 h du matin en France en hiver et 3 h en été : réglez un réveil, ou visez les jours suivants si des créneaux restent.</li><li>Achetez sur Lawson Ticket (site disponible en anglais) : une date, une heure d’entrée, un billet par personne.</li><li>Le jour J, présentez-vous à l’heure indiquée ; ensuite, vous restez autant que vous voulez jusqu’à la fermeture (18 h).</li></ol>`],
+      ['Les prix', `<table><tr><th>Âge</th><th>Prix</th></tr><tr><td>19 ans et plus</td><td>1 000 yens</td></tr><tr><td>13 à 18 ans</td><td>700 yens</td></tr><tr><td>7 à 12 ans</td><td>400 yens</td></tr><tr><td>4 à 6 ans</td><td>100 yens</td></tr><tr><td>3 ans et moins</td><td>gratuit</td></tr></table>`],
+      ['Et si c’est complet ?', '<p>Aucun billet n’est vendu au musée. L’autre voie officielle est l’excursion en bus de Sunrise Tours (JTB), qui comprend le musée et d’autres arrêts. N’achetez pas de billets revendus : la revente est interdite.</p>'],
+      ['Autour du musée', '<p>Le musée est à Mitaka, à l’ouest de Tokyo, en bordure du parc d’Inokashira et de son étang. Iheb peut organiser le reste de la journée autour de votre heure d’entrée : le parc, puis Nakano Broadway, sur la même ligne de train vers le centre (<a href="/fr/nakano-broadway/">Nakano Broadway</a>).</p>'],
+    ],
+    faq: [
+      ['Quand réserver le musée Ghibli ?', 'Le 10 du mois précédant la visite, à partir de 10 h heure du Japon. Par exemple, le 10 février pour une visite en mars.'],
+      ['Peut-on acheter un billet au musée Ghibli sur place ?', 'Non. Aucune réservation ni aucun billet ne sont vendus au musée.'],
+      ['Combien coûte le musée Ghibli ?', '1 000 yens à partir de 19 ans, 700 yens de 13 à 18 ans, 400 yens de 7 à 12 ans, 100 yens de 4 à 6 ans, gratuit jusqu’à 3 ans.'],
+      ['Le musée Ghibli est-il complet ?', 'Les créneaux partent vite, surtout le week-end et pendant les vacances. Sans billet, la seule autre voie officielle est l’excursion de Sunrise Tours (JTB).'],
+    ],
+    sources: [['Musée Ghibli : billets (site officiel)', 'https://www.ghibli-museum.jp/en/tickets/']],
+    voir: ['guide-anime-tokyo', 'pokemon-cafe-reservation', 'nakano-broadway'],
+  },
+  {
+    yol: 'akihabara-que-faire', kapak: 'akihabara-rue',
+    titre: 'Que faire à Akihabara ? Anime, figurines, cartes et jeux vidéo | Guide francophone',
+    desc: 'Que faire à Akihabara : boutiques de figurines et goodies d’anime, jeux vidéo rétro, cartes Pokémon, électronique. Combien de temps prévoir et comment visiter en français avec un guide passionné.',
+    h1: 'Que faire à Akihabara ?',
+    court: 'Figurines, jeux rétro, cartes : le quartier en une demi-journée.',
+    reponse: 'À Akihabara, on vient pour la culture pop japonaise : boutiques de figurines et de goodies d’anime, jeux vidéo neufs et rétro, mangas, cartes à collectionner (dont Hareruya 2, un immeuble entier consacré aux cartes Pokémon) et grands magasins d’électronique. Comptez une demi-journée, davantage si vous cherchez des cartes ou des objets précis. Le quartier entoure la gare JR d’Akihabara, sur la ligne circulaire Yamanote. Avec Iheb, professionnel de l’anime et des cartes Pokémon, vous allez droit aux boutiques qui correspondent à ce que vous cherchez, avec les explications en français.',
+    sections: [
+      ['Que voir et que faire ?', `<ul class="ozet"><li><strong>Chuo-dori :</strong> la grande avenue du quartier, bordée d’immeubles de boutiques sur plusieurs étages.</li><li><strong>Figurines et goodies :</strong> neufs ou d’occasion, souvent rangés étage par étage selon les séries.</li><li><strong>Jeux vidéo rétro :</strong> consoles et cartouches des années 1980 et 1990, en version japonaise.</li><li><strong>Cartes à collectionner :</strong> <a href="/fr/boutiques-cartes-pokemon-akihabara/">les boutiques de cartes Pokémon</a>.</li><li><strong>Électronique :</strong> les grands magasins près de la gare, pour un appareil photo ou des accessoires.</li></ul>`],
+      ['Une demi-journée à Akihabara', '<ol><li>Arrivée par la gare JR d’Akihabara, sortie Electric Town.</li><li>Chuo-dori et les boutiques de figurines.</li><li>Une ou deux boutiques de jeux rétro.</li><li>Les cartes : Hareruya 2 et les boutiques dans les étages.</li><li>Ensuite, <a href="/fr/nakano-broadway/">Nakano Broadway</a> ou <a href="/fr/ikebukuro-anime/">Ikebukuro</a>.</li></ol>'],
+      ['Conseils', `<ul class="ozet"><li>Les meilleures boutiques ne sont pas toujours au rez-de-chaussée : prenez l’escalier ou l’ascenseur.</li><li>Demandez avant de photographier l’intérieur d’une boutique.</li><li>Détaxe : à partir de 5 000 yens hors taxe par magasin et par jour, avec votre passeport (<a href="/fr/acheter-cartes-pokemon-japon/">les nouvelles règles</a>).</li><li>Pour manger halal ou trouver un lieu de prière, demandez à Iheb de le prévoir dans la journée (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li></ul>`],
+    ],
+    faq: [
+      ['Combien de temps faut-il pour visiter Akihabara ?', 'Une demi-journée pour l’essentiel, une journée entière si vous cherchez des cartes, des figurines ou des jeux précis.'],
+      ['Comment aller à Akihabara ?', 'Par la gare JR d’Akihabara, sur la ligne circulaire Yamanote ; le quartier commence à la sortie Electric Town.'],
+      ['Peut-on visiter Akihabara avec un guide francophone ?', 'Oui : Iheb, professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon, guide en français à Akihabara et dans les autres quartiers anime de Tokyo.'],
+    ],
+    sources: [],
+    voir: ['guide-anime-tokyo', 'boutiques-cartes-pokemon-akihabara', 'nakano-broadway', 'ikebukuro-anime'],
+  },
+  {
+    yol: 'nakano-broadway', kapak: 'nakano-broadway',
+    titre: 'Nakano Broadway : Mandarake, cartes et objets de collection | Guide francophone',
+    desc: 'Nakano Broadway, la galerie des collectionneurs à Tokyo : les boutiques Mandarake étage par étage, le Card-kan (cartes à collectionner) au 2F, horaires, accès depuis la gare de Nakano. Visite en français avec Iheb.',
+    h1: 'Nakano Broadway : que trouver chez Mandarake ?',
+    court: 'Mandarake, le Card-kan et les boutiques de collection.',
+    reponse: 'Nakano Broadway est une galerie marchande à environ 5 minutes à pied de la sortie nord de la gare JR de Nakano, à l’ouest de Tokyo. Ses étages sont remplis de boutiques pour collectionneurs, en particulier celles de Mandarake : une trentaine de petites boutiques spécialisées (manga, anime, figurines, jouets anciens), dont le Card-kan, consacré aux cartes à collectionner, au 2F. Les boutiques Mandarake ouvrent tous les jours de 12 h à 20 h. Depuis Akihabara, comptez environ 30 minutes de train.',
+    sections: [
+      ['Mandarake, étage par étage', `<ul class="ozet"><li><strong>2F :</strong> la plus grande partie des boutiques Mandarake, dont le Card-kan (cartes à collectionner), des boutiques de jouets, de figurines et de cosplay.</li><li><strong>3F :</strong> le comptoir de rachat et la boutique principale de Mandarake.</li><li><strong>4F :</strong> l’Anime-kan et d’autres boutiques spécialisées, ainsi que le comptoir de service.</li></ul><p>Au Japon, 1F désigne le rez-de-chaussée : le 2F est donc le premier étage.</p>`],
+      ['Infos pratiques', `<ul class="ozet"><li><strong>Adresse :</strong> 5-52-15 Nakano, Nakano-ku.</li><li><strong>Accès :</strong> environ 5 minutes à pied depuis la sortie nord de la gare JR de Nakano.</li><li><strong>Horaires Mandarake :</strong> de 12 h à 20 h, tous les jours ; rachat jusqu’à 19 h 30.</li><li><strong>Conseil :</strong> arrivez vers midi, à l’ouverture, et demandez avant de photographier dans une boutique.</li></ul>`],
+      ['Nakano et Akihabara dans la même journée', '<p>Les deux quartiers se complètent : Akihabara pour le grand choix de boutiques de cartes et de figurines, Nakano pour les objets de collection plus anciens et rares. Le matin à <a href="/fr/akihabara-que-faire/">Akihabara</a>, l’après-midi à Nakano : Iheb organise le trajet et vous traduit les étiquettes.</p>'],
+    ],
+    faq: [
+      ['Comment aller à Nakano Broadway ?', 'Par la gare JR de Nakano (ligne Chuo), sortie nord, puis environ 5 minutes à pied. Depuis Akihabara, comptez environ 30 minutes de train.'],
+      ['À quelle heure ouvre Mandarake à Nakano ?', 'Les boutiques Mandarake de Nakano Broadway sont ouvertes de 12 h à 20 h, tous les jours.'],
+      ['Trouve-t-on des cartes Pokémon à Nakano Broadway ?', 'Oui, notamment au Card-kan de Mandarake, au 2F, consacré aux cartes à collectionner.'],
+    ],
+    sources: [['Mandarake Nakano : plan des boutiques (site officiel)', 'https://www.mandarake.co.jp/dir/nkn/']],
+    voir: ['guide-anime-tokyo', 'akihabara-que-faire', 'acheter-cartes-pokemon-japon', 'musee-ghibli-reservation'],
+  },
+  {
+    yol: 'ikebukuro-anime', kapak: 'sunshine-city',
+    titre: 'Ikebukuro anime : Animate, Otome Road et Pokémon Center Mega Tokyo | Guide francophone',
+    desc: 'Ikebukuro pour les fans d’anime : Animate Ikebukuro, la rue Otome Road, Sunshine City et le Pokémon Center Mega Tokyo avec Pikachu Sweets. Adresses, horaires et visite en français avec Iheb.',
+    h1: 'Que faire à Ikebukuro quand on aime l’anime ?',
+    court: 'Animate, Otome Road et le Pokémon Center Mega Tokyo.',
+    reponse: 'À Ikebukuro, le Tokyo de l’anime tient en quelques rues à l’est de la gare : Animate Ikebukuro, grand magasin d’anime et de manga au 1-20-7 Higashi-Ikebukuro (de 10 h à 21 h), la rue surnommée Otome Road, avec ses boutiques de manga et de goodies surtout destinées à un public féminin, et le complexe Sunshine City, où se trouvent le Pokémon Center Mega Tokyo et Pikachu Sweets (Alpa, 2F). Comptez une demi-journée.',
+    sections: [
+      ['Les adresses', `<ul class="ozet"><li><strong>Animate Ikebukuro :</strong> 1-20-7 Higashi-Ikebukuro, Toshima-ku, de 10 h à 21 h. Présenté comme le plus grand magasin Animate, rouvert en 2023 après rénovation, sur une dizaine de niveaux.</li><li><strong>Otome Road :</strong> la rue qui longe Sunshine City, connue pour ses boutiques de manga et de goodies destinées surtout à un public féminin.</li><li><strong>Pokémon Center Mega Tokyo et Pikachu Sweets :</strong> Sunshine City Alpa, 2F, 3-1-2 Higashi-Ikebukuro (<a href="/fr/pokemon-center-tokyo/">tous les Pokémon Center</a>).</li></ul>`],
+      ['Une demi-journée à Ikebukuro', '<ol><li>Sortie est de la gare d’Ikebukuro.</li><li>Animate Ikebukuro, étage par étage.</li><li>Otome Road.</li><li>Sunshine City : Pokémon Center Mega Tokyo, puis une pause à Pikachu Sweets.</li></ol><p>Ikebukuro se combine bien avec <a href="/fr/nakano-broadway/">Nakano</a> ou <a href="/fr/akihabara-que-faire/">Akihabara</a> dans la même journée.</p>'],
+    ],
+    faq: [
+      ['Où est Animate Ikebukuro ?', 'Au 1-20-7 Higashi-Ikebukuro, à l’est de la gare d’Ikebukuro ; ouvert de 10 h à 21 h.'],
+      ['Qu’est-ce qu’Otome Road ?', 'Une rue d’Ikebukuro, le long de Sunshine City, connue pour ses boutiques de manga et de goodies destinées surtout à un public féminin.'],
+      ['Où est le Pokémon Center Mega Tokyo ?', 'Dans Sunshine City, au 2F du centre commercial Alpa, 3-1-2 Higashi-Ikebukuro, à Ikebukuro.'],
+    ],
+    sources: [['Animate Ikebukuro (site officiel)', 'https://www.animate.co.jp/shop/ikebukuro/'], ['Pokémon : liste officielle des boutiques', 'https://www.pokemon.co.jp/shop/en/']],
+    voir: ['guide-anime-tokyo', 'pokemon-center-tokyo', 'nakano-broadway', 'akihabara-que-faire'],
+  },
+  {
+    yol: 'pelerinage-anime-tokyo', kapak: 'kamakura-kokomae',
+    titre: 'Pèlerinage anime à Tokyo et autour : Your Name, Slam Dunk, Love Live!, Yuru Camp | Guide francophone',
+    desc: 'Les lieux réels des anime autour de Tokyo : l’escalier de Your Name à Yotsuya, le passage à niveau de Slam Dunk à Kamakura, Numazu (Love Live! Sunshine!!), Fumotoppara (Yuru Camp), Ueda (Summer Wars). Règles de bonne conduite.',
+    h1: 'Pèlerinage anime : quels lieux réels visiter autour de Tokyo ?',
+    court: 'Your Name, Slam Dunk, Love Live!, Yuru Camp : où et comment.',
+    reponse: 'Les lieux réels des anime les plus connus autour de Tokyo sont l’escalier du sanctuaire Suga à Yotsuya (Your Name, Tokyo), le passage à niveau de Kamakura-Kōkōmae (Slam Dunk, préfecture de Kanagawa), Numazu et l’île d’Awashima (Love Live! Sunshine!!, préfecture de Shizuoka), le camping de Fumotoppara au pied du mont Fuji (Yuru Camp, Shizuoka) et la ville d’Ueda (Summer Wars, préfecture de Nagano). Ce sont des quartiers où des gens vivent et travaillent : photo rapide, sans bloquer la rue ni la voie, de préférence tôt le matin.',
+    sections: [
+      ['Les lieux, préfecture par préfecture', `<ul class="izgara">
+<li>${cartePhoto('suga-escalier', 'Escalier du sanctuaire Suga à Yotsuya')}<div class="ki"><h3>Escalier du sanctuaire Suga · Tokyo</h3><p><em>Your Name</em>. Dans le quartier de Yotsuya, à environ 6 à 10 minutes à pied de la station Yotsuya-sanchome (ligne Marunouchi). Rue résidentielle : la photo se prend depuis le bas de l’escalier, sans gêner le passage. Pas besoin d’entrer dans le sanctuaire.</p></div></li>
+<li>${cartePhoto('kamakura-kokomae', 'Passage à niveau près de la gare de Kamakura-Kōkōmae')}<div class="ki"><h3>Passage à niveau de Kamakura-Kōkōmae · Kanagawa</h3><p><em>Slam Dunk</em>. Un passage à niveau en service sur la ligne Enoden, face à la mer. La ville a aménagé un espace photo et placé du personnel pour orienter les visiteurs.</p></div></li>
+<li>${cartePhoto('awashima', 'L’île d’Awashima vue depuis la baie d’Uchiura, à Numazu')}<div class="ki"><h3>Numazu et l’île d’Awashima · Shizuoka</h3><p><em>Love Live! Sunshine!!</em> Le quartier d’Uchiura et l’île d’Awashima, sur la baie de Suruga ; le lycée de l’anime s’inspire d’un établissement réel du secteur.</p></div></li>
+<li>${cartePhoto('fumotoppara', 'Le mont Fuji depuis le camping de Fumotoppara')}<div class="ki"><h3>Camping de Fumotoppara · Shizuoka</h3><p><em>Yuru Camp</em>. Sur le plateau d’Asagiri, à Fujinomiya, face au Fuji, à environ 830 m d’altitude. Plus simple en voiture ; réservation conseillée en haute saison.</p></div></li>
+</ul>`],
+      ['Les règles à respecter', `<ul class="ozet"><li><strong>Kamakura-Kōkōmae :</strong> ne vous arrêtez jamais sur la voie ferrée ni sur la chaussée, utilisez l’espace photo, faites une photo rapide et partez. Les habitants se plaignent des visiteurs qui bloquent la route ; venez tôt.</li><li><strong>Escalier de <em>Your Name</em> :</strong> parlez bas, ne bloquez pas les marches, ne photographiez pas les maisons ni les habitants.</li><li><strong>Partout :</strong> rapportez vos déchets, ne vous garez pas n’importe où, respectez les panneaux.</li></ul>`],
+      ['Shizuoka et Shimizu : d’autres idées', `<ul class="ozet"><li><strong>Chibi Maruko-chan Land :</strong> au 3F du S-Pulse Dream Plaza, à Shimizu (ville de Shizuoka), consacré à la série <em>Chibi Maruko-chan</em> ; horaires et tarifs à vérifier sur le site officiel.</li><li><strong>Shizuoka Hobby Square :</strong> un espace consacré aux maquettes, dont les Gunpla, à côté de la gare de Shizuoka (Southspot Shizuoka, 3F) ; horaires à vérifier avant de venir.</li><li>Plus de lieux côté Shizuoka : <a href="/fr/shizuoka/">Shizuoka avec Iheb</a>.</li></ul>`],
+      ['Nagano : Ueda et Komoro', '<p>Ueda, avec son château, est la ville de <em>Summer Wars</em>. Komoro et le parc Kaikoen, sur le site de l’ancien château, apparaissent dans <em>Ano Natsu de Matteru</em> ; on peut combiner les deux en une journée. Voir <a href="/fr/nagano/">Nagano avec Iheb</a>.</p>'],
+    ],
+    faq: [
+      ['Où sont les escaliers de Your Name à Tokyo ?', 'Ce sont les escaliers du sanctuaire Suga, dans le quartier de Yotsuya (arrondissement de Shinjuku), à environ 6 à 10 minutes à pied de la station Yotsuya-sanchome.'],
+      ['Où est le passage à niveau de Slam Dunk ?', 'Près de la gare de Kamakura-Kōkōmae, sur la ligne Enoden, dans la préfecture de Kanagawa, à un peu plus d’une heure de Tokyo en train.'],
+      ['Où se passe Love Live! Sunshine!! ?', 'À Numazu, dans la préfecture de Shizuoka, autour du quartier d’Uchiura et de l’île d’Awashima.'],
+      ['Où est le camping de Yuru Camp près du Fuji ?', 'Le camping de Fumotoppara, sur le plateau d’Asagiri à Fujinomiya, dans la préfecture de Shizuoka, apparaît dans l’anime.'],
+    ],
+    sources: [['Fujinomiya : lieux de Yuru Camp (office du tourisme)', 'https://fujinomiya.gr.jp/en/yurucamp/season1-2/'], ['Camping de Fumotoppara (site officiel)', 'https://fumotoppara.net/en/top/'], ['Explore Shizuoka : Numazu', 'https://exploreshizuoka.jp/en/inspirations/stories/spotlight/numazu-spotlight/']],
+    voir: ['guide-anime-tokyo', 'akihabara-que-faire', 'musee-ghibli-reservation'],
+  },
+]
+const PILIER = ANIME[0]
+
 const FAQ = [
   ['Qui est Iheb ?', 'Iheb est un guide francophone qui vit au Japon. Il propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.'],
   ['Existe-t-il un guide francophone à Tokyo ?', 'Oui. À Tokyo et dans ses environs, Iheb propose des visites privées en français. Réservation sur WhatsApp.'],
@@ -612,6 +855,7 @@ ${corps}
 <p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe. WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
 <p><a href="/fr/${AVIS_PAGE}/">Avis des voyageurs sur Iheb</a>${RESUME_AVIS ? ` (${RESUME_AVIS})` : ''} · <a href="/fr/avis/">Laisser un avis</a></p>
 <p>Infos pratiques en français : ${REPONSES.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
+<p>Anime et cartes Pokémon : ${ANIME.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
 <p lang="en">In English: <a href="/fr/${ANGLAIS}/">French-speaking tour guide in Tokyo</a></p>
 <p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/ru/" hreflang="ru">Русский</a> · Dernière mise à jour : ${HOY}</p>
 </div></footer>
@@ -725,6 +969,11 @@ ${contact}
 <ul class="izgara">
 ${VILLES.map((s) => carteLien(`/fr/${s.yol}/`, s.kapak, s.ad, s.ad, s.lieux.slice(0, 3).map((y, i) => (i && /^(Pont|Cascades?|Lac|Singes|Château) /.test(y[0]) ? y[0][0].toLowerCase() + y[0].slice(1) : y[0])).join(', '))).join('\n')}
 </ul>
+<h2 id="anime-pokemon">Anime &amp; cartes Pokémon</h2>
+<p>Iheb est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner. Akihabara, Nakano Broadway, Ikebukuro, Pokémon Center, musée Ghibli, lieux réels des anime : il construit la journée autour de votre passion, en français. Tout commence ici : <a href="/fr/${PILIER.yol}/">${esc(PILIER.h1)}</a></p>
+<ul class="izgara">
+${ANIME.map((c) => carteLien(`/fr/${c.yol}/`, c.kapak, c.h1, c.h1, c.court)).join('\n')}
+</ul>
 <h2>Comment ça marche ?</h2>
 <ol>
 <li><strong>WhatsApp :</strong> écrivez à Iheb avec vos dates, le nombre de personnes et votre ville ou votre hôtel.</li>
@@ -799,11 +1048,17 @@ ${sectionAvis}
   ecrire(s.yol, page({ yol: s.yol, titre: s.titre, desc: s.desc, image: imageDe(s.kapak), jsonld, corps }))
 }
 
-// Pages de réponse
-for (const c of REPONSES) {
-  const lien = wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide francophone à Tokyo. Dates : `)
+// Pages de réponse (infos pratiques) y páginas anime/Pokémon: misma plantilla.
+// Las de anime llevan otra etiqueta, un texto de Iheb centrado en el anime,
+// «À lire aussi» con las páginas hermanas y una miga más (la página pilar).
+const trouver = (y) => [...REPONSES, ...ANIME].find((r) => r.yol === y) ?? (() => { throw new Error(`francais: enlace a ${y}, que no existe`) })()
+function pageReponse(c, anime) {
+  const lien = anime
+    ? wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide anime / cartes Pokémon à Tokyo. Dates : `)
+    : wa(`Bonjour Iheb, j’ai lu la page « ${c.h1} ». Je cherche un guide francophone à Tokyo. Dates : `)
+  const etiquette = anime ? `<a href="/fr/${PILIER.yol}/">Anime &amp; Pokémon</a>` : 'Infos pratiques'
   const corps = `
-${hero(c.kapak, '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Infos pratiques</span>
+${hero(c.kapak, '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · ${etiquette}</span>
 <h1>${esc(c.h1)}</h1>
 <p class="maj">Mis à jour le <time datetime="${HOY}">${HOY_FR}</time> · par Iheb, guide francophone à Tokyo</p>`)}
 <div class="kap">
@@ -813,25 +1068,33 @@ ${c.sections.map(([h, html]) => `<h2>${esc(h)}</h2>\n${html}`).join('\n')}
 <h2>Questions fréquentes</h2>
 ${c.faq.map(([q, r]) => `<h3>${esc(q)}</h3>\n<p>${esc(r)}</p>`).join('\n')}
 ${c.avis ? sectionAvis : ''}
-<h2>Un guide francophone à Tokyo</h2>
-<p>Iheb vit au Japon et propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi qu’à Nagano et à Shizuoka ; il parle aussi arabe et anglais. Il communique le tarif sur WhatsApp, selon votre groupe.</p>
+${c.voir ? `<h2>À lire aussi</h2>\n<ul class="ozet">${c.voir.map((y) => `<li><a href="/fr/${y}/">${esc(trouver(y).h1)}</a></li>`).join('')}</ul>` : ''}
+${anime
+    ? `<h2>Un guide francophone qui connaît l’anime et les cartes Pokémon</h2>
+<p>Iheb vit au Japon et guide en français à Tokyo et dans ses environs, ainsi qu’à Nagano et à Shizuoka ; il parle aussi arabe et anglais. C’est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner : il construit la journée autour de ce que vous aimez. Il communique le tarif sur WhatsApp, selon votre groupe.</p>`
+    : `<h2>Un guide francophone à Tokyo</h2>
+<p>Iheb vit au Japon et propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi qu’à Nagano et à Shizuoka ; il parle aussi arabe et anglais. Il communique le tarif sur WhatsApp, selon votre groupe.</p>`}
 ${contactMini(lien, 'Écrire à Iheb sur WhatsApp')}
 ${c.sources.length ? `<p class="kaynak">Sources : ${c.sources.map(([t, u]) => `<a href="${u}" rel="nofollow">${esc(t)}</a>`).join(' · ')}. Informations vérifiées le ${HOY} ; les durées sont approximatives.</p>` : ''}
 </div>`
+  const miettes = [
+    { name: 'Guide francophone', item: `${BASE}/fr/` },
+    ...(anime && c !== PILIER ? [{ name: PILIER.h1, item: `${BASE}/fr/${PILIER.yol}/` }] : []),
+    { name: c.h1, item: `${BASE}/fr/${c.yol}/` },
+  ]
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
       { '@type': 'Article', headline: c.h1, inLanguage: 'fr', datePublished: c.publie ?? HOY, dateModified: HOY, author: { '@id': `${BASE}/fr/#iheb` }, publisher: { '@id': `${BASE}/#negocio` }, mainEntityOfPage: `${BASE}/fr/${c.yol}/`, description: c.desc, image: imageDe(c.kapak) },
       guideLd,
       { '@type': 'FAQPage', inLanguage: 'fr', mainEntity: [[c.h1, c.reponse], ...c.faq].map(([q, r]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: r } })) },
-      { '@type': 'BreadcrumbList', itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Guide francophone', item: `${BASE}/fr/` },
-        { '@type': 'ListItem', position: 2, name: c.h1, item: `${BASE}/fr/${c.yol}/` },
-      ] },
+      { '@type': 'BreadcrumbList', itemListElement: miettes.map((m, i) => ({ '@type': 'ListItem', position: i + 1, ...m })) },
     ],
   }
   ecrire(c.yol, page({ yol: c.yol, titre: c.titre, desc: c.desc, image: imageDe(c.kapak), jsonld, corps }))
 }
+for (const c of REPONSES) pageReponse(c, false)
+for (const c of ANIME) pageReponse(c, true)
 
 // Página pública de reseñas: indexable, con cada reseña en el HTML (las IAs no
 // ejecutan JS) y el mismo script del cliente para las que lleguen tras el build.
@@ -897,6 +1160,8 @@ ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, ave
 </ul>
 <h2>Day trips from Tokyo</h2>
 <ul class="ozet"><li><a href="/fr/kamakura/">Kamakura and Yokohama</a>: about 1 hour by train.</li><li><a href="/fr/nikko/">Nikko</a>: about 1 h 50 from Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone or the Fuji Five Lakes</a>: about 1 h 20 to 2 hours from Shinjuku.</li><li><a href="/fr/nagano/">Nagano</a> (snow monkeys) and <a href="/fr/shizuoka/">Shizuoka</a> (Mount Fuji views): by Shinkansen.</li></ul>
+<h2>Anime and Pokémon cards</h2>
+<p>Iheb is a professional in anime, Japanese pop culture and Pokémon card collecting. He builds the day around Akihabara, Nakano Broadway, Ikebukuro, the Pokémon Centers, the Ghibli Museum and real-life anime locations, in French: <a href="/fr/${PILIER.yol}/" hreflang="fr">anime guide in Tokyo (in French)</a>.</p>
 <h2>Also going to Kyoto?</h2>
 <p>Iheb guides only in Tokyo and eastern Japan. For Kyoto and Osaka, Tony, from the same team, guides in Spanish, English and Arabic (<a href="/en/">Tony Kansai Guide</a>).</p>
 <h2>Other languages</h2>
@@ -927,4 +1192,4 @@ function ecrire(yol, html) {
   mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, 'index.html'), html)
 }
-console.log(`fr: ${VILLES.length + REPONSES.length + 3} pages en public/fr/`)
+console.log(`fr: ${VILLES.length + REPONSES.length + ANIME.length + 3} pages en public/fr/`)
