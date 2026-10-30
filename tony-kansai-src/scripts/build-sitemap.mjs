@@ -37,6 +37,9 @@ const paginas = [
   { loc: '/ar', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
   { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
+  // Iheb, guía francófono: HTML estático de scripts/francais.mjs.
+  { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
+  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'guide-francophone-japon', 'visa-japon', 'halal-mosquees-kansai', 'osaka-kyoto-transport', 'aeroport-kansai-transport', 'itineraire-kansai', 'quand-partir-japon', 'kyoto-en-un-jour', 'french-speaking-guide-japan'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
   ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
@@ -131,6 +134,7 @@ const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs'],
+  francais: ['scripts/francais.mjs'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
   ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],

@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="fr" data-estatica="formulario">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Laisser un avis à Iheb | Guide francophone au Japon</title>
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<style>
+:root{--fondo:#f6f3ec;--tinta:#1b2440;--acento:#24407a;--acento2:#5b7bb5;--resalte:#a6243a;--kart:#fffdf7;--suave:#5b6478}
+@media (prefers-color-scheme:dark){:root{--fondo:#0f1424;--tinta:#e9edf7;--kart:#18203a;--suave:#a5afc7}}
+*{box-sizing:border-box}
+body{margin:0;min-height:100vh;color:var(--tinta);font:17px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:var(--fondo) url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2324407a' stroke-width='1.6'><path d='M42 14c6 8 6 16 0 22-6-6-6-14 0-22z'/><path d='M42 36c-9 2-15 8-16 16 9-1 15-7 16-16z'/><path d='M42 36c9 2 15 8 16 16-9-1-15-7-16-16z'/><path d='M42 36v34'/><circle cx='42' cy='72' r='3' fill='%23a6243a' stroke='none'/></g></svg>") repeat;background-size:80px}
+.kap{max-width:560px;margin:0 auto;padding:20px 16px 48px}
+.serit{background:var(--acento);color:#fff;text-align:center;font-weight:700;letter-spacing:.06em;font-size:15px;padding:16px;border-bottom:6px double var(--acento2)}
+.serit::before,.serit::after{content:"";display:block;height:34px;margin:-16px -16px 12px;background:var(--fondo) url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='84' height='84' viewBox='0 0 84 84'><g fill='none' stroke='%2324407a' stroke-width='1.6'><path d='M42 14c6 8 6 16 0 22-6-6-6-14 0-22z'/><path d='M42 36c-9 2-15 8-16 16 9-1 15-7 16-16z'/><path d='M42 36c9 2 15 8 16 16-9-1-15-7-16-16z'/><path d='M42 36v34'/><circle cx='42' cy='72' r='3' fill='%23a6243a' stroke='none'/></g></svg>") repeat-x center/48px}
+.serit::after{margin:12px -16px -16px}
+.kart{background:var(--kart);border:2px solid var(--acento);border-radius:18px;padding:24px 20px;box-shadow:0 0 0 6px var(--kart),0 0 0 8px var(--acento2),0 18px 40px rgba(0,0,0,.18);margin-top:12px}
+h1{margin:0 0 8px;font-size:clamp(24px,6vw,30px);line-height:1.2;color:var(--acento)}
+@media (prefers-color-scheme:dark){h1{color:var(--tinta)}}
+p.giris{margin:0 0 18px;color:var(--suave)}
+label{display:block;font-weight:600;margin:16px 0 6px}
+input[type=text],textarea,select{width:100%;font:inherit;color:inherit;background:transparent;border:1.5px solid color-mix(in srgb,var(--acento) 45%,transparent);border-radius:10px;padding:11px 12px}
+textarea{min-height:140px;resize:vertical}
+input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline-offset:1px}
+.yildiz{display:flex;gap:6px}
+.yildiz button{font-size:36px;line-height:1;background:none;border:0;padding:2px;cursor:pointer;color:color-mix(in srgb,var(--tinta) 25%,transparent)}
+.yildiz button.on{color:#e3a400}
+.izin{display:flex;gap:10px;align-items:flex-start;font-weight:400;font-size:15px}
+.izin input{margin-top:4px;width:20px;height:20px;flex:none}
+.btn{display:block;width:100%;margin-top:20px;background:var(--acento);color:#fff;border:0;border-radius:999px;padding:15px;font:600 18px system-ui,sans-serif;cursor:pointer}
+.btn:disabled{opacity:.6}
+.uyari{display:none;margin-top:14px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--resalte) 12%,transparent);color:var(--resalte);font-size:15px}
+.uyari.on{display:block}
+.tamam{display:none;text-align:center}.tamam.on{display:block}
+.tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
+.gizli{position:absolute;left:-9999px}
+</style>
+</head>
+<body>
+<div class="serit">Iheb · Guide francophone au Japon</div>
+<main class="kap">
+<div class="kart">
+<form id="form" novalidate>
+<h1>Comment s'est passée votre visite avec Iheb ?</h1>
+<p class="giris">Quelques phrases suffisent. Votre avis sera publié sur la page d'Iheb et aidera d'autres voyageurs francophones à préparer leur séjour au Japon.</p>
+<label id="puanEt">Votre note</label>
+<div class="yildiz" role="radiogroup" aria-labelledby="puanEt">
+<button type="button" role="radio" aria-checked="false" aria-label="1/5" data-n="1">★</button><button type="button" role="radio" aria-checked="false" aria-label="2/5" data-n="2">★</button><button type="button" role="radio" aria-checked="false" aria-label="3/5" data-n="3">★</button><button type="button" role="radio" aria-checked="false" aria-label="4/5" data-n="4">★</button><button type="button" role="radio" aria-checked="false" aria-label="5/5" data-n="5">★</button>
+</div>
+<label for="ad">Votre prénom</label>
+<input type="text" id="ad" maxlength="60" autocomplete="name" placeholder="Ex. Claire et Karim">
+<label for="ulke">Ville / pays</label>
+<input type="text" id="ulke" maxlength="40" placeholder="Ex. Lyon, France">
+<label for="tur">Quelle visite ?</label>
+<select id="tur"><option value="">Choisir (facultatif)</option><option>Kyoto</option><option>Osaka</option><option>Nara</option><option>Kobe</option><option>Himeji</option><option>Hiroshima</option><option value="">Autre</option></select>
+<label for="yorum">Votre avis</label>
+<textarea id="yorum" maxlength="1200" placeholder="Comment s'est passée la journée ? Qu'avez-vous le plus apprécié chez Iheb ?"></textarea>
+<input class="gizli" type="text" id="web" tabindex="-1" autocomplete="off" aria-hidden="true">
+<label class="izin"><input type="checkbox" id="izin"> <span>J'accepte que mon avis soit publié sur le site avec mon prénom et ma ville.</span></label>
+<button class="btn" id="gonder" type="submit">Envoyer l'avis</button>
+<div class="uyari" id="uyari" role="alert"></div>
+</form>
+<div class="tamam" id="tamam" role="status">
+<h1 id="tamamMetin"></h1>
+<a href="/fr/">Voir sur la page d'Iheb →</a>
+</div>
+</div>
+</main>
+<script>
+const T = {"eksik":"Merci de donner une note, d'indiquer votre prénom, d'écrire un avis d'au moins 20 caractères et de cocher la case d'accord.","hata":"Envoi impossible. Vérifiez votre connexion et réessayez.","tamam":"Merci ! Votre avis est publié.","bekle":"Merci ! Votre avis a bien été reçu et sera publié sous peu.","gonder":"Envoyer l'avis","gonderiliyor":"Envoi…"};
+const $ = (id) => document.getElementById(id);
+let puan = 0;
+document.querySelectorAll('.yildiz button').forEach((b) => b.addEventListener('click', () => {
+  puan = +b.dataset.n;
+  document.querySelectorAll('.yildiz button').forEach((x) => {
+    x.classList.toggle('on', +x.dataset.n <= puan);
+    x.setAttribute('aria-checked', String(+x.dataset.n === puan));
+  });
+}));
+$('form').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const uyari = (m) => { $('uyari').textContent = m; $('uyari').classList.add('on'); };
+  $('uyari').classList.remove('on');
+  const ad = $('ad').value.trim(), yorum = $('yorum').value.trim();
+  if (!puan || ad.length < 2 || yorum.length < 20 || !$('izin').checked) return uyari(T.eksik);
+  const b = $('gonder'); b.disabled = true; b.textContent = T.gonderiliyor;
+  try {
+    const r = await fetch('/api/resenas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
+      stars: puan, name: ad, country: $('ulke').value.trim(), tour: $('tur').value, text: yorum,
+      lang: 'fr', guide: 'iheb', consent: true, website: $('web').value, page: location.href,
+    }) });
+    if (!r.ok) throw new Error(r.status);
+    const res = await r.json().catch(() => ({}));
+    $('tamamMetin').textContent = res.publicada ? T.tamam : T.bekle;
+    $('form').style.display = 'none'; $('tamam').classList.add('on');
+  } catch { uyari(T.hata); b.disabled = false; b.textContent = T.gonder; }
+});
+</script>
+</body>
+</html>
