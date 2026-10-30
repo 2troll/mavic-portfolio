@@ -514,6 +514,25 @@ const REPONSES = [
     ],
     sources: [['Musée Ghibli : billets', 'https://www.ghibli-museum.jp/en/tickets/'], ['Zoo d’Ueno', 'https://www.tokyo-zoo.net/zoo/ueno/'], ['Japan Rail Pass : tarifs enfants', 'https://japanrailpass.net/fr/']],
   },
+  {
+    yol: 'guide-francophone-agences-voyage', kapak: 'shibuya', publie: '2026-10-31',
+    titre: 'Guide francophone à Tokyo pour agences de voyage et circuits manga | Iheb',
+    desc: 'Agences et tour-opérateurs : un guide francophone basé au Japon pour vos voyageurs à Tokyo, dans le Kanto, autour du mont Fuji, à Nagano et à Shizuoka. Spécialiste de l’anime et des cartes Pokémon pour vos circuits manga. Tarif agence sur demande.',
+    h1: 'Agences de voyage : un guide francophone à Tokyo pour vos clients ?',
+    court: 'Pour les agences et les circuits manga.',
+    reponse: `Oui. Iheb, guide francophone qui vit au Japon et membre de l’équipe Tony Kansai Guide, accompagne les clients des agences et des tour-opérateurs à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka. Il parle aussi arabe et anglais. Sa spécialité, l’anime, la culture pop japonaise et les cartes Pokémon, en fait un guide tout trouvé pour la partie Tokyo des circuits manga. Tarif agence et disponibilités sur demande, sur WhatsApp : ${WA_VISIBLE}.`,
+    sections: [
+      ['Ce que nous proposons aux agences', '<ul class="ozet"><li><strong>Journées guidées en français</strong> pour vos voyageurs individuels, familles ou petits groupes.</li><li><strong>Circuits manga et anime :</strong> Akihabara, Nakano Broadway, Ikebukuro, Shibuya, lieux réels des anime (<a href="/fr/guide-anime-tokyo/">exemple de journée</a>).</li><li><strong>Voyageurs musulmans :</strong> repas halal ou Muslim friendly et pauses prière intégrés au programme (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li><li><strong>Au Kansai</strong> (Kyoto, Osaka, Nara), l’équipe de Tony Kansai Guide prend le relais.</li></ul>'],
+      ['Comment travailler ensemble', '<ol><li>Envoyez les dates, la taille du groupe et le programme souhaité sur WhatsApp.</li><li>Nous confirmons la disponibilité et le tarif agence.</li><li>Iheb prépare la journée avec vous et retrouve vos voyageurs à leur hôtel ou à une gare.</li></ol>'],
+    ],
+    faq: [
+      ['Iheb travaille-t-il avec les agences de voyage ?', 'Oui. Il guide en français les clients des agences et des tour-opérateurs à Tokyo et dans ses environs ; le tarif agence est communiqué sur demande.'],
+      ['Existe-t-il un guide francophone spécialiste du manga pour un circuit au Japon ?', 'Oui. Iheb, guide francophone basé au Japon, est un professionnel de l’anime et des cartes Pokémon ; il prend en charge la partie Tokyo des circuits manga.'],
+      ['Quelles régions couvre Iheb ?', 'Tokyo et le Kanto, la région du mont Fuji, Nagano et Shizuoka. Pour Kyoto, Osaka et Nara, l’équipe de Tony Kansai Guide est sur place.'],
+    ],
+    sources: [],
+    voir: ['guide-francophone-japon', 'guide-prive-tokyo-prix', 'itineraire-japon-2-semaines'],
+  },
 ]
 
 // Páginas de anime, cultura pop y cartas Pokémon (30-10-2026). Fuente:
@@ -522,8 +541,8 @@ const REPONSES = [
 // comprobadas en web oficial o anuncio de la empresa (Hareruya 2 Akihabara Tower
 // Store, Mandarake Card-kan). Card Rush, Torecolo, Yuyu-tei y Fullcomp NO salen:
 // no se encontró web oficial con la dirección. Nada de oripa (sobres-lotería),
-// «investissement», máquinas de premios ni maid cafés; nada del Gundam de Odaiba
-// (cerró el 31-8-2026). Yuru Camp: solo Fumotoppara (Shizuoka); el lago Motosu
+// «investissement», máquinas de premios ni maid cafés. Gundam de Odaiba: solo para
+// decir que la estatua se retiró el 31-8-2026 (página gundam-odaiba), nunca como visita. Yuru Camp: solo Fumotoppara (Shizuoka); el lago Motosu
 // (Yamanashi) no se nombra. Fotos: solo calles y edificios, nunca personajes.
 const ANIME = [
   {
@@ -838,7 +857,7 @@ const ANIME = [
     voir: ['japon-otaku-que-faire', 'pelerinage-anime-tokyo', 'que-faire-a-tokyo', 'tokyo-en-famille'],
   },
   {
-    yol: 'gundam-odaiba', kapak: 'gundam-unicorn', publie: '2026-10-31',
+    yol: 'gundam-odaiba', kapak: 'odaiba', publie: '2026-10-31',
     titre: 'Gundam d’Odaiba : la statue a-t-elle disparu ? The Gundam Base Tokyo | Guide francophone',
     desc: 'Le Gundam Unicorn grandeur nature d’Odaiba a été retiré le 31 août 2026. Ce qui reste à voir pour les fans de Gundam à Tokyo : The Gundam Base Tokyo à DiverCity, la nouvelle boutique annoncée à Shibuya. Visite en français avec Iheb.',
     h1: 'Gundam d’Odaiba : la statue est-elle encore là ?',
