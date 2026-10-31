@@ -78,11 +78,12 @@ const cartePhoto = (k, alt) => `<figure class="kf">${imgCarte(k, alt)}<figcaptio
 // (auditoría del 30-10-2026). Se superpone a la foto con position:absolute.
 const carteLien = (href, k, alt, titre, texte) => `<li><a href="${href}"><figure class="kf">${imgCarte(k, alt)}</figure><div class="ki"><h3>${esc(titre)}</h3><p>${esc(texte)}</p></div></a><small class="kf-kredi">${credit(k)}</small></li>`
 
-// Retrato de Iheb (1080×1085).
+// Retrato de Iheb (1080×1080, foto que mandó por WhatsApp el 1-11-2026, Dotonbori);
+// iheb-cara-* es el recorte de la cara para la miniatura.
 const PORTRAIT_ALT = 'Iheb, guide francophone à Tokyo'
 const PORTRAIT_SRCSET = '/fr/foto/iheb-320.webp 320w, /fr/foto/iheb-640.webp 640w, /fr/foto/iheb-1080.webp 1080w'
-const portraitGrand = `<img class="portrait" src="/fr/foto/iheb-640.webp" srcset="${PORTRAIT_SRCSET}" sizes="(max-width:700px) 80vw, 360px" alt="${PORTRAIT_ALT}" width="1080" height="1085" loading="lazy">`
-const contactMini = (lien, texte) => `<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="${PORTRAIT_ALT}" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, votre guide francophone à Tokyo et dans ses environs. Il parle aussi arabe et anglais.</p><p><a class="btn" href="${lien}">${texte}</a></p></div></div>`
+const portraitGrand = `<img class="portrait" src="/fr/foto/iheb-640.webp" srcset="${PORTRAIT_SRCSET}" sizes="(max-width:700px) 80vw, 360px" alt="${PORTRAIT_ALT}" width="1080" height="1080" loading="lazy">`
+const contactMini = (lien, texte) => `<div class="iheb-mini"><img src="/fr/foto/iheb-cara-160.webp" srcset="/fr/foto/iheb-cara-160.webp 1x, /fr/foto/iheb-cara-320.webp 2x" alt="${PORTRAIT_ALT}" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, votre guide francophone à Tokyo et dans ses environs. Il parle aussi arabe et anglais.</p><p><a class="btn" href="${lien}">${texte}</a></p></div></div>`
 
 // Zonas de Iheb: Tokio y el Kanto, más Nagano y Shizuoka. Los cinco lagos del
 // Fuji están en Yamanashi: se dicen como excursión desde Tokio, sin esconderlo.
@@ -1052,7 +1053,7 @@ table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px
 .kaynak{font-size:14px;color:var(--soluk)}
 ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}
 .guide{display:grid;grid-template-columns:minmax(220px,360px) 1fr;gap:32px;align-items:center;margin-top:48px}
-.guide .portrait{width:100%;height:auto;aspect-ratio:1080/1085;object-fit:cover;border-radius:24px;box-shadow:0 18px 48px -24px rgba(0,0,0,.5)}
+.guide .portrait{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover;border-radius:24px;box-shadow:0 18px 48px -24px rgba(0,0,0,.5)}
 .guide h2{margin-top:0!important}
 @media (max-width:700px){.guide{grid-template-columns:1fr;gap:18px}.guide .portrait{max-width:320px}}
 .iheb-mini{display:flex;gap:16px;align-items:center;background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;padding:14px 16px;margin:28px 0;max-width:760px}
@@ -1110,13 +1111,13 @@ ${corps}
 const PORTRAIT_URL = `${BASE}/fr/foto/iheb-1080.webp`
 const guideLd = {
   '@type': 'Person', '@id': `${BASE}/fr/#iheb`, name: 'Iheb',
-  jobTitle: 'Guide privé francophone', image: PORTRAIT_URL,
+  jobTitle: 'Guide privé francophone', image: { '@type': 'ImageObject', url: PORTRAIT_URL, width: 1080, height: 1080, caption: 'Iheb, guide privé francophone au Japon' },
   knowsLanguage: [
     { '@type': 'Language', name: 'Français', alternateName: 'fr' },
     { '@type': 'Language', name: 'Arabe', alternateName: 'ar' },
     { '@type': 'Language', name: 'Anglais', alternateName: 'en' },
   ],
-  knowsAbout: ['Anime', 'Manga', 'Japanese pop culture', 'Pokémon Trading Card Game', 'Tokyo', 'Mount Fuji'],
+  knowsAbout: ['Anime', 'Manga', 'Japanese pop culture', 'Otaku culture', 'Pokémon Trading Card Game', 'One Piece', 'Studio Ghibli', 'Gunpla', 'Retro video games', 'Akihabara', 'Nakano Broadway', 'Tokyo', 'Mount Fuji', 'Nikko', 'Hakone', 'Kamakura', 'Halal travel in Japan'],
   homeLocation: { '@type': 'Place', name: 'Japon' },
   areaServed: ['Tokyo', 'Kanto', 'Nagano', 'Shizuoka'].map((name) => ({ '@type': 'Place', name, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
   contactPoint: { '@type': 'ContactPoint', contactType: 'reservations', telephone: `+${WA_NUMERO}`, url: `https://wa.me/${WA_NUMERO}`, availableLanguage: ['fr', 'ar', 'en'] },
@@ -1408,7 +1409,7 @@ ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, ave
 <p>Iheb guides only in Tokyo and eastern Japan. For Kyoto and Osaka, Tony, from the same team, guides in Spanish, English and Arabic (<a href="/en/">Tony Kansai Guide</a>).</p>
 <h2>Other languages</h2>
 <p>The same team has guides in <a href="/tr/">Turkish</a> and <a href="/ru/">Russian</a>.</p>
-<div class="iheb-mini"><img src="/fr/foto/iheb-320.webp" srcset="/fr/foto/iheb-320.webp 1x, /fr/foto/iheb-640.webp 2x" alt="Iheb, French-speaking guide in Tokyo" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, your French-speaking guide in Tokyo and around.</p><p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p></div></div>
+<div class="iheb-mini"><img src="/fr/foto/iheb-cara-160.webp" srcset="/fr/foto/iheb-cara-160.webp 1x, /fr/foto/iheb-cara-320.webp 2x" alt="Iheb, French-speaking guide in Tokyo" width="96" height="96" loading="lazy"><div><p><strong>Iheb</strong>, your French-speaking guide in Tokyo and around.</p><p><a class="btn" href="${WA_GENEL}">WhatsApp Iheb</a></p></div></div>
 <p><a href="/fr/">Page en français : guide francophone à Tokyo, Iheb →</a></p>
 </div>`
   const jsonld = {
