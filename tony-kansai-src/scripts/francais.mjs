@@ -34,8 +34,8 @@ import { fileURLToPath } from 'node:url'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-10-31'
-const HOY_FR = '31 octobre 2026'
+const HOY = '2026-11-01'
+const HOY_FR = '1er novembre 2026'
 
 // WhatsApp de Iheb (lo dio Tony el 30-10-2026). Las reservas le llegan a él.
 const WA_NUMERO = '818080155322'
@@ -531,7 +531,47 @@ const REPONSES = [
       ['Quelles régions couvre Iheb ?', 'Tokyo et le Kanto, la région du mont Fuji, Nagano et Shizuoka. Pour Kyoto, Osaka et Nara, l’équipe de Tony Kansai Guide est sur place.'],
     ],
     sources: [],
-    voir: ['guide-francophone-japon', 'guide-prive-tokyo-prix', 'itineraire-japon-2-semaines'],
+    voir: ['guide-francophone-japon', 'guide-prive-tokyo-prix', 'itineraire-japon-2-semaines', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'],
+  },
+  {
+    yol: 'feuilles-automne-tokyo', kapak: 'kawaguchiko-fuji', publie: '2026-11-01',
+    titre: 'Feuilles d’automne à Tokyo et au mont Fuji 2026 : dates et lieux (momiji) | Guide francophone',
+    desc: 'Momiji 2026 : quand voir les couleurs d’automne à Tokyo (pic vers le 29 novembre), au lac Kawaguchi (festival du 7 au 29 novembre), à Hakone et à Nikko. Les meilleurs lieux, les dates, avec un guide francophone.',
+    h1: 'Feuilles d’automne à Tokyo : quand et où les voir en 2026 ?',
+    court: 'Momiji : les dates 2026 et les meilleurs lieux.',
+    reponse: 'À Tokyo, les couleurs d’automne arrivent tard : selon les prévisions 2026 de la Japan Meteorological Corporation, les ginkgos jaunissent vers le 26 novembre et les érables rougissent vers le 29 novembre, avec de belles couleurs jusqu’à début décembre. Plus tôt, il faut aller en altitude : Nikko dès fin octobre (lac Chuzenji) puis début novembre en ville, Hakone vers la mi-novembre, et le lac Kawaguchi, au pied du Fuji, où le festival des feuilles d’automne a lieu du 7 au 29 novembre 2026, avec illumination le soir jusqu’à 21 h. Iheb organise ces journées en français.',
+    sections: [
+      ['Le calendrier, du plus tôt au plus tard', '<ol><li><strong>Nikko :</strong> fin octobre autour du lac Chuzenji et de la route Irohazaka, début novembre près des temples. <a href="/fr/nikko/">Nikko</a>.</li><li><strong>Hakone :</strong> vers la mi-novembre autour du lac Ashi et de Gora, fin novembre-début décembre à Hakone-Yumoto. <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li><li><strong>Lac Kawaguchi :</strong> le « couloir des érables » culmine en général fin novembre ; festival du 7 au 29 novembre 2026. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li><li><strong>Tokyo :</strong> fin novembre-début décembre, dans les parcs et les jardins.</li></ol>'],
+      ['À Tokyo : où aller', '<ul class="ozet"><li><strong>L’avenue des ginkgos de Meiji Jingu Gaien :</strong> un tunnel jaune fin novembre.</li><li><strong>Les jardins japonais</strong> comme Rikugien, et le parc d’Inokashira, près du musée Ghibli.</li><li><strong>Kamakura :</strong> temples et érables à une heure de Tokyo, jusqu’à début décembre. <a href="/fr/kamakura/">Kamakura</a>.</li></ul>'],
+      ['Conseils', '<ul class="ozet"><li>Les dates bougent d’une ou deux semaines selon la météo : regardez les prévisions mises à jour juste avant de partir.</li><li>Les week-ends de pic sont très fréquentés ; en semaine et tôt le matin, c’est bien plus calme.</li><li>Le Fuji se voit mieux par temps froid et sec, le matin : l’automne est une bonne saison. <a href="/fr/voir-le-mont-fuji/">Voir le mont Fuji</a>.</li></ul>'],
+    ],
+    faq: [
+      ['Quand voir les feuilles d’automne à Tokyo en 2026 ?', 'Vers la fin novembre : les prévisions 2026 placent les ginkgos jaunes vers le 26 novembre et les érables rouges vers le 29 novembre, jusqu’à début décembre.'],
+      ['Quand a lieu le festival des feuilles d’automne du lac Kawaguchi en 2026 ?', 'Du 7 au 29 novembre 2026, avec le couloir des érables illuminé le soir jusqu’à 21 h.'],
+      ['Où voir les feuilles d’automne près de Tokyo début novembre ?', 'À Nikko et à Hakone, plus en altitude, où les couleurs arrivent avant celles de Tokyo.'],
+    ],
+    sources: [['Nippon.com : prévisions des feuilles d’automne 2026', 'https://www.nippon.com/en/japan-data/h02888/'], ['Tokyo Weekender : momiji', 'https://www.tokyoweekender.com/?p=299117']],
+    voir: ['quand-partir-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'excursion-mont-fuji-depuis-tokyo'],
+  },
+  {
+    yol: 'cerisiers-tokyo-2027', kapak: 'kawaguchiko-sakura', publie: '2026-11-01',
+    titre: 'Cerisiers en fleurs à Tokyo 2027 : dates, lieux, conseils (sakura) | Guide francophone',
+    desc: 'Sakura 2027 à Tokyo : floraison en moyenne vers le 24 mars et pleine floraison vers le 31 mars. Où voir les cerisiers à Tokyo et au mont Fuji, quand réserver, quand sortent les prévisions. Guide francophone.',
+    h1: 'Cerisiers en fleurs à Tokyo en 2027 : quelles dates ?',
+    court: 'Sakura : dates moyennes, lieux et réservation.',
+    reponse: 'À Tokyo, les cerisiers fleurissent en moyenne vers le 24 mars, et la pleine floraison arrive environ une semaine plus tard, vers le 31 mars ; les fleurs tiennent une dizaine de jours. Ces dates varient d’une année à l’autre : en 2026, la floraison a été déclarée cinq jours avant la moyenne. Pour 2027, visez la période du 20 mars au 10 avril à Tokyo, et mi-avril autour du mont Fuji, plus froid. Les prévisions officielles sortent à partir de janvier-février. Réservez hôtels et guide tôt : c’est la saison la plus demandée de l’année.',
+    sections: [
+      ['Où voir les cerisiers', '<ul class="ozet"><li><strong>Tokyo :</strong> le parc d’Ueno, les douves de Chidorigafuchi près du palais impérial, la rivière Meguro, le jardin de Shinjuku Gyoen. <a href="/fr/tokyo/">Tokyo</a>.</li><li><strong>Kamakura :</strong> temples et allée de cerisiers de Dankazura. <a href="/fr/kamakura/">Kamakura</a>.</li><li><strong>Mont Fuji :</strong> les rives du lac Kawaguchi, avec le Fuji enneigé derrière les fleurs, en général mi-avril. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li></ul>'],
+      ['Comment s’organiser', '<ul class="ozet"><li><strong>Réservez tôt :</strong> hôtels et guides sont pris des mois à l’avance pour fin mars-début avril.</li><li><strong>Gardez de la souplesse :</strong> placez les journées « cerisiers » au milieu du séjour pour pouvoir les décaler selon la floraison.</li><li><strong>Partez tôt le matin :</strong> les lieux célèbres sont bondés dès 10 h le week-end.</li><li><strong>Vacances japonaises :</strong> début avril correspond aussi à la rentrée au Japon ; la Golden Week (fin avril-début mai) est une autre période chargée. <a href="/fr/quand-partir-japon/">Quand partir au Japon</a>.</li></ul>'],
+      ['Avec un guide francophone', '<p>Iheb suit la floraison au jour le jour et adapte le programme : un parc où les arbres sont au pic, un autre si la pluie a fait tomber les fleurs. Écrivez-lui tôt pour réserver vos dates de fin mars ou d’avril 2027.</p>'],
+    ],
+    faq: [
+      ['Quand fleurissent les cerisiers à Tokyo en 2027 ?', 'En moyenne vers le 24 mars, avec la pleine floraison vers le 31 mars. La date exacte de 2027 dépendra de la météo de l’hiver ; les prévisions sortent à partir de janvier-février.'],
+      ['Combien de temps durent les cerisiers en fleurs ?', 'Une dizaine de jours entre les premières fleurs et la chute des pétales, moins en cas de pluie ou de vent.'],
+      ['Quand voir les cerisiers avec le mont Fuji ?', 'En général mi-avril autour du lac Kawaguchi, plus tard qu’à Tokyo à cause de l’altitude.'],
+    ],
+    sources: [['Agence météorologique du Japon (JMA) : cerisiers', 'https://www.jma.go.jp/jma/en/News/sakura7.html'], ['tenki.jp : prévisions des cerisiers', 'https://tenki.jp/sakura/english/160.html']],
+    voir: ['quand-partir-japon', 'itineraire-japon-2-semaines', 'excursion-mont-fuji-depuis-tokyo', 'que-faire-a-tokyo'],
   },
 ]
 
@@ -938,14 +978,15 @@ const ANIME = [
   },
   {
     yol: 'detaxe-douane-japon', kapak: 'narita', publie: '2026-10-31',
-    titre: 'Détaxe au Japon depuis le 1er novembre 2026 et douane française | Guide francophone',
+    titre: 'Détaxe au Japon depuis le 1er novembre 2026 et douane (France, Belgique, Suisse, Canada) | Guide francophone',
     desc: 'Nouvelle détaxe japonaise par remboursement depuis le 1er novembre 2026 : payer TTC, faire contrôler ses achats à la sortie sous 90 jours, se faire rembourser. Et au retour : franchise de 430 € en France. Conseils pour figurines et cartes.',
-    h1: 'Détaxe au Japon et douane française : comment ça marche ?',
+    h1: 'Détaxe au Japon et douane au retour : comment ça marche ?',
     court: 'La nouvelle détaxe et la franchise de 430 €.',
     reponse: 'Depuis le 1er novembre 2026, la détaxe japonaise fonctionne par remboursement : vous payez le prix avec la taxe de 10 % incluse, la douane japonaise contrôle vos achats à la sortie du pays, puis la boutique ou son prestataire vous rembourse la taxe (virement, carte, application ou espèces à l’aéroport). Il faut quitter le Japon avec les articles dans les 90 jours suivant l’achat, et les avoir sur soi. Au retour en France, la franchise est de 430 € par voyageur de 15 ans et plus arrivant en avion (150 € pour les moins de 15 ans) ; au-delà, il faut déclarer et payer droits et taxes.',
     sections: [
       ['La nouvelle détaxe, étape par étape', '<ol><li><strong>En boutique :</strong> présentez votre passeport et payez le prix TTC.</li><li><strong>À l’aéroport :</strong> faites contrôler vos achats par la douane japonaise, par exemple via Visit Japan Web à Narita, Haneda ou Kansai, ou à une borne de remboursement.</li><li><strong>Remboursement :</strong> la boutique ou son prestataire vous rend la taxe, selon le moyen prévu.</li></ol><p>Si un seul article d’un ticket manque au contrôle, c’est tout le ticket qui perd la détaxe. Gardez donc vos achats dans le bagage à main jusqu’au contrôle.</p>'],
       ['La douane française au retour', '<ul class="ozet"><li><strong>Franchise :</strong> 430 € par voyageur de 15 ans et plus en avion, 150 € en dessous de 15 ans. On ne cumule pas les franchises de plusieurs personnes pour un seul objet.</li><li><strong>Au-delà :</strong> déclarez avant de sortir de l’aéroport et payez droits et taxes sur la valeur facturée. Le simulateur officiel donne le montant.</li><li><strong>Gardez les tickets :</strong> ils prouvent la valeur de vos figurines et cartes.</li></ul>'],
+      ['Belgique, Suisse, Canada', '<ul class="ozet"><li><strong>Belgique :</strong> même règle que la France, celle de l’Union européenne : 430 € par voyageur de 15 ans et plus en avion.</li><li><strong>Suisse :</strong> les achats sont exonérés jusqu’à 300 francs suisses par personne et par jour ; au-delà, la TVA suisse s’applique.</li><li><strong>Canada (Québec) :</strong> après un séjour de plus de 48 heures, jusqu’à 800 $ CA de biens par personne sans droits.</li></ul><p>Ces montants sont ceux des administrations douanières ; vérifiez-les avant le départ, ils peuvent changer.</p>'],
       ['Ce que fait le guide', '<p>Iheb vous signale les boutiques qui pratiquent la détaxe et vous aide à regrouper les achats. Il ne donne pas de conseil fiscal : en cas de doute, Infos Douane Service répond au 0 800 94 40 40. <a href="/fr/argent-liquide-carte-japon/">Argent liquide ou carte au Japon</a>.</p>'],
     ],
     faq: [
@@ -969,6 +1010,7 @@ const FAQ = [
   ['Repas halal et prière : est-ce possible ?', 'Oui. Des restaurants halal et Muslim friendly ainsi que des mosquées (par exemple la Tokyo Camii) peuvent être intégrés au programme, avec des pauses aux heures de prière.'],
   ['Comment réserver ?', `Écrivez sur WhatsApp (${WA_VISIBLE}) en indiquant vos dates, le nombre de personnes et votre hôtel ou votre quartier. Iheb vous répond en français.`],
   ['Iheb peut-il guider des fans d’anime ou de cartes Pokémon ?', 'Oui. Iheb est un professionnel de l’anime, de la culture pop japonaise et des cartes Pokémon à collectionner : il peut construire la journée autour de cette passion, en français.'],
+  ['Je viens de Belgique, de Suisse, du Québec ou du Maghreb : Iheb peut-il me guider ?', 'Oui. Iheb guide en français tous les francophones, quel que soit leur pays, et parle aussi arabe, ce qui est pratique pour les familles du Maghreb. Il communique son tarif en yens sur WhatsApp, qui fonctionne depuis n’importe quel pays. Pour le visa selon votre passeport, voir la page « Faut-il un visa pour aller au Japon ? ».'],
   ['Où guide Iheb ?', 'À Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji (lacs du Fuji et Shizuoka) et dans la préfecture de Nagano. Pour une autre destination, posez la question sur WhatsApp.'],
 ]
 
