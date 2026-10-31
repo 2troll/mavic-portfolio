@@ -153,7 +153,11 @@ for (const ruta of rutas) {
     html = html.replace('</head>', `  <link rel="preload" as="image" href="${foto}.webp" imagesrcset="${foto}-600.webp 600w, ${foto}-900.webp 900w, ${foto}.webp 1800w" imagesizes="${PRECARGA[ruta] ? '(max-width: 900px) 70vw, 50vw' : '100vw'}" fetchpriority="high" />\n  </head>`)
   }
 
-  if (PRERENDER.test(ruta)) {
+  // Las fichas de ventajas también se pintan: sin esto, en el HTML que leen
+  // Bing y las IAs las ~150 eran la misma plantilla y solo cambiaba el título
+  // (el contenido lo ponía React), justo lo que hizo que Bing bloqueara la web
+  // en octubre de 2026. Indexables desde el 29-10, así que tienen que llevar su texto.
+  if (PRERENDER.test(ruta) || FICHA_AFILIADO.test(ruta)) {
     // El CSS de los trozos perezosos (ciudades, manga, figuras) se enlaza ya en
     // la cabecera: si no, el HTML pintado se ve un instante sin esos estilos y
     // luego todo salta (CLS de 0,4 a 1,1 en Lighthouse).
