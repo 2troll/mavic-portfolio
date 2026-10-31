@@ -2,7 +2,7 @@
 // Orden pensado para quien llega sin saber nada: qué es → cómo funciona →
 // quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
 
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { APPS } from './datosVentajas'
 import { FranjaVentajas } from './FranjaVentajas'
@@ -34,6 +34,9 @@ import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
 import { useBilletes } from './Cocina'
+import ShinyText from './reactbits/ShinyText'
+import './kndr-vip.css'
+const KndrVip = lazy(() => import('./KndrVip'))
 import { enlacesHreflang } from '../seo/hreflang'
 import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 
@@ -791,6 +794,15 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <main>
         {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
             otro, a sangre. Sin efectos encima: la foto y el titular bastan. */}
+        {/* Banner de entrada a la extensión VIP de la RPDC, a la vista nada más llegar. */}
+        {(p.id === 'ru' || p.id === 'larion') && (
+          <a href="#kndr" id="kv-banner" className="kv-banner" lang={p.id === 'ru' ? 'ru' : 'en'}>
+            <span className="kv-banner-vip">VIP</span>
+            <strong><ShinyText text={p.id === 'ru' ? 'Новое: VIP-туры в Северную Корею с Ларионом · 2027' : 'New: VIP tours to North Korea with Larion · 2027'} color="#f2ede2" shineColor="#e6c46a" speed={3} /></strong>
+            <span className="kv-banner-ir">{p.id === 'ru' ? 'от $4 900 →' : 'from $4,900 →'}</span>
+          </a>
+        )}
+
         <section className="v9-portada">
           <div className="v9-portada-texto">
             <span className="v9-sello" lang="ja" aria-hidden="true">関西</span>
@@ -843,35 +855,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Precios p={p} resenas={resenas} />
         </section>
 
-        {/* Larion acompaña grupos rusos a la RPDC como viaje VIP (30/31-10-2026): las páginas
-            son HTML estático de scripts/kndr.mjs, fuera del router, por eso <a> y no <Link>.
-            En /larion/ (inglés) se avisa de que solo entra el pasaporte ruso. */}
-        {(p.id === 'ru' || p.id === 'larion') && (() => {
-          const ru = p.id === 'ru'
-          const puntos = ru
-            ? ['Группа до 6 человек или только ваша семья', 'Отдельный автомобиль с водителем', 'Отель «Корё», бизнес-класс при наличии мест', 'Ларион лично с вами 24/7 от Владивостока']
-            : ['Groups of up to 6, or just your family', 'Private car and driver', 'Koryo Hotel, business class when available', 'Larion with you 24/7 from Vladivostok']
-          return (
-            <section className="v7-seccion v7-kndr" id="kndr" lang={ru ? 'ru' : 'en'}>
-              <a href={ru ? '/ru/kndr/' : '/ru/kndr/vip-tur-v-kndr/'} className="v7-kndr-tarjeta">
-                <img src="/ru/kndr/foto/pyongyang-1080.webp" srcSet="/ru/kndr/foto/pyongyang-1080.webp 1080w, /ru/kndr/foto/pyongyang-1920.webp 1920w" sizes="(max-width:900px) 100vw, 1000px" alt={ru ? 'Панорама Пхеньяна' : 'Pyongyang skyline'} loading="lazy" width={1920} height={1080} />
-                <div className="v7-kndr-texto">
-                  <span className="v7-kndr-ceja">VIP · 2027 · <span lang="ko">평양</span></span>
-                  <h2>{ru ? 'VIP-тур в Северную Корею с Ларионом' : 'VIP tours to North Korea with Larion'}</h2>
-                  <ul>{puntos.map((t) => <li key={t}>{t}</li>)}</ul>
-                  <p className="v7-kndr-precio">{ru ? 'от $4 900 на человека · Владивосток — Пхеньян' : 'from $4,900 per person · Vladivostok — Pyongyang'}</p>
-                  {!ru && <p className="v7-kndr-nota">Currently open to Russian passport holders only.</p>}
-                  <span className="v7-kndr-boton">{ru ? 'Смотреть туры и даты →' : 'See tours and dates (in Russian) →'}</span>
-                </div>
-              </a>
-              {ru && (
-                <nav className="v7-kndr-atajos" aria-label="Вопросы о КНДР">
-                  {([['Как добраться', 'kak-dobratsya-do-phenyana'], ['Сколько стоит', 'skolko-stoit-tur-v-kndr'], ['Виза', 'viza-v-kndr-dlya-rossiyan'], ['Когда ехать', 'kogda-luchshe-ehat-v-kndr'], ['С детьми', 'kndr-s-detmi'], ['Медовый месяц', 'svadebnoe-puteshestvie-v-kndr'], ['Для компании', 'korporativnyj-tur-v-kndr']] as const).map(([t, y]) => <a key={y} href={`/ru/kndr/${y}/`}>{t}</a>)}
-                </nav>
-              )}
-            </section>
-          )
-        })()}
+        {/* Extensión VIP de Larion a la RPDC (KndrVip.tsx, cargada aparte). */}
+        {(p.id === 'ru' || p.id === 'larion') && (
+          <Suspense fallback={<div id="kndr" style={{ minHeight: '100svh' }} />}>
+            <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} wa="818085067586" />
+          </Suspense>
+        )}
 
         {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos. */}
         {p.resenas && resenas.length > 0 && (
