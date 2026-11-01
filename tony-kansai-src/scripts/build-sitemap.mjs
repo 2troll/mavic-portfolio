@@ -42,6 +42,9 @@ const paginas = [
   // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
   ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'argent-liquide-carte-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'guide-prive-tokyo-prix', 'tokyo-en-famille', 'avis-clients', 'french-speaking-guide-japan', 'guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo', 'japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'one-piece-tokyo', 'olive-et-tom-captain-tsubasa-tokyo', 'gundam-odaiba', 'jeux-retro-figurines-akihabara', 'evenements-anime-tokyo', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon', 'guide-francophone-agences-voyage', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
+  // Antonio, coordinador de viajes a medida para familias y grupos hispanohablantes: HTML estático de scripts/familias.mjs.
+  { loc: '/familias', priority: '1.0', changefreq: 'weekly', v7: 'familias' },
+  ...['condiciones', 'organizar-viaje-japon-familia', 'viaje-japon-grupo-10-personas', 'transporte-privado-japon', 'ryokan-y-montana-en-familia', 'itinerario-japon-a-medida', 'japon-vip-a-medida', 'guia-en-espanol-japon', 'viaje-japon-desde-espana', 'viaje-japon-desde-mexico', 'viaje-japon-desde-centroamerica', 'tasas-turisticas-japon', 'habitaciones-familia-japon', 'comer-en-japon-en-grupo', 'tarjeta-icoca-japon', 'aeropuerto-al-hotel-japon', 'shinkansen-en-familia', 'viaje-japon-con-ninos', 'agencias-receptivo-japon', 'japon-y-corea-del-sur'].map((c) => ({ loc: `/familias/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'familias' })),
   // Larion: tours a la RPDC para rusos, HTML estático de scripts/kndr.mjs.
   { loc: '/ru/kndr', priority: '0.9', changefreq: 'weekly', v7: 'kndr' },
   ...['rozhdestvo-v-phenyane', 'masikryon', 'myohyan', 'den-solntsa', 'pektusan', 'vonsan-kalma', 'individualnyj', 'kak-poehat-v-severnuyu-koreyu', 'skolko-stoit-tur-v-kndr', 'pravila-dlya-turistov-v-kndr', 'vonsan-kalma-kurort', 'viza-v-kndr-dlya-rossiyan', 'vip-tur-v-kndr', 'kak-dobratsya-do-phenyana', 'kndr-s-detmi', 'otzyvy-turistov-o-kndr', 'svadebnoe-puteshestvie-v-kndr', 'kogda-luchshe-ehat-v-kndr', 'chto-posmotret-v-phenyane', 'kuhnya-kndr', 'korporativnyj-tur-v-kndr'].map((c) => ({ loc: `/ru/kndr/${c}`, priority: '0.8', changefreq: 'monthly', v7: 'kndr' })),
@@ -141,6 +144,7 @@ const FUENTE = {
   turkce: ['scripts/turkce.mjs'],
   francais: ['scripts/francais.mjs'],
   kndr: ['scripts/kndr.mjs'],
+  familias: ['scripts/familias.mjs', 'scripts/familias-datos.mjs'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
   ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],

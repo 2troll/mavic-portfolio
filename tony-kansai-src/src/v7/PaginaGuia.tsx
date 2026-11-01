@@ -1104,10 +1104,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 {k === 'larion' ? 'English · Larion' : HERMANAS[PAGINAS[k].guia].find((h) => h.id === k)?.etiqueta}
               </Link>
             ))}
-            {/* /tr/ y /fr/ son HTML estático (scripts/turkce.mjs, francais.mjs), fuera del router: <a>, no <Link>.
+            {/* /tr/, /fr/ y /familias/ son HTML estático (scripts/turkce.mjs, francais.mjs, familias.mjs), fuera del router: <a>, no <Link>.
                 Sin este enlace, Bing (y con él ChatGPT) solo llegaba a /tr/ por el sitemap. */}
             <a href="/tr/" lang="tr">Türkçe · Ferhat</a>
             <a href="/fr/" lang="fr">Français · Iheb</a>
+            <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Ларион</a>}
           </nav>
         </div>

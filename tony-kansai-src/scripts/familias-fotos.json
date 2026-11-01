@@ -1,0 +1,224 @@
+{
+ "kioto": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Kiyomizu-dera,_Kyoto,_November_2016_-01.jpg",
+  "w": 5852,
+  "h": 3601,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "fushimi": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Double_torii_path_at_Fushimi_Inari_Taisha_Shrine,_Kyoto,_Japan.jpg",
+  "w": 6473,
+  "h": 4315,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "arashiyama": {
+  "autor": "Basile Morin",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Bamboo_Forest,_Arashiyama,_Kyoto,_Japan.jpg",
+  "w": 6558,
+  "h": 4372,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "osaka": {
+  "autor": "Martin Falbisoner",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Osaka_Castle_Outer_Moat_and_Osaka_Business_Park,_November_2016.jpg",
+  "w": 5131,
+  "h": 3420,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "nara": {
+  "autor": "Photos of Japan",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Nara_deer_lounging_at_Todaiji.jpg",
+  "w": 5600,
+  "h": 3728,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "himeji": {
+  "autor": "Nikos Kitsakis",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Himeji_castle_in_may_2015.jpg",
+  "w": 5632,
+  "h": 3754,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "hakone": {
+  "autor": "Charlie fong",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Lake_Ashi_%26_Mt_Fuji_%26_Hakone_Shrine.jpg",
+  "w": 5472,
+  "h": 3648,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "fuji": {
+  "autor": "Romain Guy from San Francisco, USA",
+  "lisans": "CC0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Mount_Fuji_at_sunset,_March_2025.jpg",
+  "w": 11650,
+  "h": 7767,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "takayama": {
+  "autor": "Raita Futo from Tokyo, Japan",
+  "lisans": "CC BY 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Hida_Takayama_old_town_streets_(48519201716).jpg",
+  "w": 5966,
+  "h": 3977,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "shirakawago": {
+  "autor": "663highland",
+  "lisans": "CC BY 2.5",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Ogi_Shirakawa-g%C5%8D,_Gifu,_Japan.jpg",
+  "w": 3200,
+  "h": 2133,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "kawaguchiko": {
+  "autor": "Alpsdake",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Autumn_leaf_color_and_Mount_Fuji_from_Lake_Kawaguchi.jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "tren": {
+  "autor": "tansaisuketti",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Shinkansen_N700_with_Mount_Fuji.jpg",
+  "w": 5184,
+  "h": 3456,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "tokio": {
+  "autor": "David Kernan",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Tokyo_Tower,_Minato_City.jpg",
+  "w": 5991,
+  "h": 3370,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "hiroshima": {
+  "autor": "Jakub Hałun",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_1036_4219.jpg",
+  "w": 5247,
+  "h": 3504,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "miyajima": {
+  "autor": "JordyMeow",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Itsukushima_Gate.jpg",
+  "w": 4200,
+  "h": 2803,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "onsen-montana": {
+  "autor": "ウィキ太郎 (Wiki Taro)",
+  "lisans": "Public domain",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:A_stream_of_H%C5%8CSHI_Onsen_%E6%B3%95%E5%B8%AB%E6%B8%A9%E6%B3%89%E3%81%AE%E5%B0%8F%E5%B7%9D.jpg",
+  "w": 2048,
+  "h": 1536,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "kanazawa": {
+  "autor": "663highland",
+  "lisans": "CC BY 2.5",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:131109_Kenrokuen_Kanazawa_Ishikawa_pref_Japan01s3.jpg",
+  "w": 4912,
+  "h": 3264,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "hero": {
+  "autor": "Olivier Bruchez from Lausanne, Switzerland",
+  "lisans": "CC BY-SA 2.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Chureito_Pagoda,_Fujiyoshida_(33872531360).jpg",
+  "w": 5472,
+  "h": 3648,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ]
+ },
+ "ryokan": {
+  "autor": "Asturio Cantabrio",
+  "lisans": "CC BY-SA 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Shumokukan_washitsu_1_ac_(3).jpg",
+  "w": 5939,
+  "h": 3949,
+  "anchos": [
+   1920,
+   1080
+  ]
+ },
+ "familia": {
+  "autor": "David Monniaux",
+  "lisans": "CC BY-SA 3.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Japan_Kyoto_philosophers_walk_DSC00297.jpg",
+  "w": 2592,
+  "h": 1728,
+  "anchos": [
+   1920,
+   1080
+  ]
+ }
+}
