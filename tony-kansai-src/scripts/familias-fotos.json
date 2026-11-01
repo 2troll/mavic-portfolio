@@ -218,11 +218,11 @@
     ]
   },
   "ryokan": {
-    "autor": "Asturio Cantabrio",
+    "autor": "さかおり",
     "lisans": "CC BY-SA 4.0",
-    "kaynak": "https://commons.wikimedia.org/wiki/File:Shumokukan_washitsu_1_ac_(3).jpg",
-    "w": 5939,
-    "h": 3949,
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Evening_twilight_in_Ginzan_Onsen_town_January_2022_B.jpg",
+    "w": 6000,
+    "h": 4000,
     "anchos": [
       720,
       1080,
@@ -230,11 +230,71 @@
     ]
   },
   "familia": {
-    "autor": "David Monniaux",
+    "autor": "Kirin7739",
+    "lisans": "CC BY-SA 4.0",
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Cherry_blossoms_at_%22Tetsugaku_no_Michi%22.jpg",
+    "w": 1948,
+    "h": 1297,
+    "anchos": [
+      720,
+      1080,
+      1920
+    ]
+  },
+  "sakura": {
+    "autor": "KimonBerlin",
+    "lisans": "CC BY-SA 2.0",
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Okazaki_canal_(3477793760).jpg",
+    "w": 3504,
+    "h": 2336,
+    "anchos": [
+      720,
+      1080,
+      1920
+    ]
+  },
+  "momiji": {
+    "autor": "Martin Falbisoner",
+    "lisans": "CC BY-SA 4.0",
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Eikan-do_Zenrin-ji,_November_2016_-03.jpg",
+    "w": 5816,
+    "h": 3877,
+    "anchos": [
+      720,
+      1080,
+      1920
+    ]
+  },
+  "invierno": {
+    "autor": "Yoshiyuki Ito",
     "lisans": "CC BY-SA 3.0",
-    "kaynak": "https://commons.wikimedia.org/wiki/File:Japan_Kyoto_philosophers_walk_DSC00297.jpg",
-    "w": 2592,
-    "h": 1728,
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Shirakawa_Go_At_Night_(198621599).jpeg",
+    "w": 2048,
+    "h": 1366,
+    "anchos": [
+      720,
+      1080,
+      1920
+    ]
+  },
+  "jardin": {
+    "autor": "663highland",
+    "lisans": "CC BY 2.5",
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Adachi_Museum_of_Art01st3200.jpg",
+    "w": 3200,
+    "h": 2130,
+    "anchos": [
+      720,
+      1080,
+      1920
+    ]
+  },
+  "calle-tradicional": {
+    "autor": "京都新観光提言懇談会メンバー",
+    "lisans": "CC BY-SA 4.0",
+    "kaynak": "https://commons.wikimedia.org/wiki/File:Desolation_of_Sannenzaka_by_Covid19_(1).jpg",
+    "w": 3648,
+    "h": 2736,
     "anchos": [
       720,
       1080,
