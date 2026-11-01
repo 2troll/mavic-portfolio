@@ -1086,6 +1086,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.lang === 'ar' && <a href="https://2troll.github.io/yubisashi/dalil/">دليل الحلال في كانساي</a>}
             {p.id === 'en' && <a href="https://2troll.github.io/yubisashi/panduan/" lang="id">Panduan Halal Kansai</a>}
             {p.id === 'ar' && <a href="https://2troll.github.io/yubisashi/">تطبيق المحادثة للمطاعم</a>}
+            {/* App de Yuru Camp△ de Tony: enlazarla desde aquí ayuda a que Bing (y ChatGPT) la descubran. */}
+            {p.guia === 'tony' && p.lang === 'es' && <a href="https://2troll.github.io/yurucamp-mapa/guia/">Mapa de Yuru Camp△ (anime)</a>}
+            {p.guia === 'tony' && p.lang === 'en' && <a href="https://2troll.github.io/yurucamp-mapa/guia/en.html">Yuru Camp△ anime map</a>}
           </nav>
           {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
               sitemap): Google y las IAs dan menos peso a una página huérfana. */}
