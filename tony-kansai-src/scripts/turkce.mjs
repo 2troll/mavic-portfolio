@@ -15,10 +15,11 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { yeniCevaplar } from './turkce-cevaplar-yeni.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-10-26'
+const HOY = '2026-11-01'
 
 // WhatsApp de Ferhat (lo dio Tony el 23-10-2026). Las reservas le llegan
 // directamente a él.
@@ -47,16 +48,21 @@ const FOTOLAR = JSON.parse(readFileSync(join(root, 'scripts/turkce-fotolar.json'
 const foto = (k) => { if (!FOTOLAR[k]) throw new Error(`turkce: falta la foto ${k}`); return FOTOLAR[k] }
 const srcset = (k) => foto(k).anchos.map((w) => `/tr/foto/${k}-${w}.webp ${Math.min(w, foto(k).w)}w`).join(', ')
 const kredi = (k) => `Fotoğraf: <a href="${foto(k).kaynak}" rel="nofollow">${esc(foto(k).autor)}</a> · ${esc(foto(k).lisans)}`
-const kahraman = (k, alt, icerik) => `<section class="kahraman">
-<img src="/tr/foto/${k}-${foto(k).anchos.find((w) => w <= 1920) ?? foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high">
+// Fondo borroso (~500 bytes, en turkce-fotolar.json) mientras llega la foto grande:
+// antes la portada 4K (hasta 1,8 MB) se veía en negro varios segundos.
+const bulanik = (k) => `background-image:url(${foto(k).lqip})`
+const heroSrc = (k) => `/tr/foto/${k}-${foto(k).anchos.find((w) => w <= 1920) ?? foto(k).anchos.at(-1)}.webp`
+const kahraman = (k, alt, icerik) => `<section class="kahraman" style="${bulanik(k)}">
+<img src="${heroSrc(k)}" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high" decoding="async">
 <div class="ortu"><div class="kap">${icerik}</div></div>
+<div class="muhur" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="mc" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width=".8" opacity=".6"/><text font-size="8.6" letter-spacing="2.4" fill="currentColor"><textPath href="#mc">TÜRKÇE REHBER · KANSAI · JAPONYA ·</textPath></text></svg><b>Ferhat<br>🇹🇷</b></div>
 <small class="kredi">${kredi(k)}</small>
 </section>`
-const kartImg = (k, alt) => `<img src="/tr/foto/${k}-${foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" width="${foto(k).w}" height="${foto(k).h}">`
-const kartFoto = (k, alt) => `<figure class="kf">${kartImg(k, alt)}<figcaption>${kredi(k)}</figcaption></figure>`
+const kartImg = (k, alt) => `<img src="/tr/foto/${k}-${foto(k).anchos.at(-1)}.webp" srcset="${srcset(k)}" sizes="(max-width:700px) 100vw, 380px" alt="${esc(alt)}" loading="lazy" decoding="async" width="${foto(k).w}" height="${foto(k).h}">`
+const kartFoto = (k, alt) => `<figure class="kf" style="${bulanik(k)}">${kartImg(k, alt)}<figcaption>${kredi(k)}</figcaption></figure>`
 // Tarjeta entera clicable: el crédito (con su enlace a Commons) va FUERA del <a>
 // de la tarjeta; un <a> dentro de otro es HTML inválido (auditoría 30-10-2026).
-const kartLink = (href, k, alt, baslik, metin) => `<li><a href="${href}"><figure class="kf">${kartImg(k, alt)}</figure><div class="ki"><h3>${esc(baslik)}</h3><p>${esc(metin)}</p></div></a><small class="kf-kredi">${kredi(k)}</small></li>`
+const kartLink = (href, k, alt, baslik, metin) => `<li><a href="${href}"><figure class="kf" style="${bulanik(k)}">${kartImg(k, alt)}</figure><div class="ki"><h3>${esc(baslik)}</h3><p>${esc(metin)}</p></div></a><small class="kf-kredi">${kredi(k)}</small></li>`
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -152,7 +158,7 @@ const CEVAPLAR = [
     kaynaklar: [['Japonya Dışişleri Bakanlığı: vize muafiyeti listesi', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
   },
   {
-    yol: 'helal-yemek-cami', kapak: 'kobe-camii',
+    yol: 'helal-yemek-cami', kapak: 'kobe-camii-mihrap',
     baslik: "Kyoto, Osaka ve Kobe'de Helal Yemek ve Camiler | Türkçe Rehber",
     aciklama: "Kansai'de namaz ve helal yemek: Kobe Camii (1935, Japonya'nın ilk camisi), Osaka İbaraki Camii, Kyoto Camii ve Kyoto'daki ücretsiz mescitler. Türkçe rehber Ferhat ile.",
     h1: "Kyoto, Osaka ve Kobe'de helal yemek ve camiler",
@@ -323,6 +329,10 @@ const CEVAPLAR = [
   },
 ]
 
+// Páginas 27-10→1-11: preguntas que los turcos hacen a ChatGPT (Osaka en un día,
+// Tokio→Kioto, luna de miel, niños). Texto en turkce-cevaplar-yeni.mjs.
+CEVAPLAR.push(...yeniCevaplar({ WA_GENEL, WA_VISIBLE }))
+
 const SSS = [
   ['Ferhat kimdir?', "Ferhat, Türk bir tur rehberidir ve 4 yıldır Japonya'da yaşıyor. Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel turlar yapıyor. Tony Kansai Guide ekibinin Türkçe rehberidir."],
   ["Japonya'da Türkçe konuşan rehber var mı?", "Evet. Ferhat, Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel tur yapan Türk rehberdir. Rezervasyon WhatsApp'tan."],
@@ -344,15 +354,15 @@ body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 system-ui,-app
 h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em}h2{font-size:clamp(26px,3.4vw,34px)!important;margin-top:56px!important}
 header{border-bottom:1px solid var(--cizgi)}header .kap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px;flex-wrap:wrap}
 header a{color:var(--fg);text-decoration:none;font-weight:600}header nav{display:flex;gap:14px;flex-wrap:wrap;font-size:15px}header nav a{font-weight:500;color:var(--soluk)}
-.kahraman{position:relative;min-height:min(86vh,940px);display:flex;align-items:flex-end;overflow:hidden;background:#111;color:#fff}
+.kahraman{position:relative;min-height:min(86vh,940px);display:flex;align-items:flex-end;overflow:hidden;background-color:#111;background-size:cover;background-position:center;color:#fff}
 .kahraman>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;animation:yakin 18s ease-out both}
 @keyframes yakin{from{transform:scale(1.08)}to{transform:scale(1)}}@media (prefers-reduced-motion:reduce){.kahraman>img{animation:none}}
 .kahraman .ortu{position:relative;width:100%;padding:120px 0 64px;background:linear-gradient(180deg,transparent 0,rgba(0,0,0,.35) 35%,rgba(0,0,0,.78) 100%)}
 .kahraman h1{color:#fff;font-size:clamp(36px,7vw,72px);line-height:1.05;margin:10px 0 14px;text-shadow:0 2px 24px rgba(0,0,0,.4)}
 .kahraman .alt{color:rgba(255,255,255,.9);font-size:clamp(18px,2.4vw,22px);max-width:34em}
 .kahraman .etiket{color:#ffd166;margin:0}.kahraman .etiket a{color:#ffd166}
-.kredi{position:absolute;right:10px;top:8px;font-size:11px;color:rgba(255,255,255,.7)}.kredi a{color:inherit}
-.kf{margin:0;position:relative;aspect-ratio:4/3;overflow:hidden;background:#222}.kf img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.kredi{position:absolute;right:12px;bottom:8px;font-size:10px;color:rgba(255,255,255,.55);z-index:2}.kredi a{color:inherit}
+.kf{margin:0;position:relative;aspect-ratio:4/3;overflow:hidden;background-color:#222;background-size:cover;background-position:center}.kf img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
 .kf figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px 8px 4px;font-size:10px;color:rgba(255,255,255,.75);background:linear-gradient(transparent,rgba(0,0,0,.55))}.kf figcaption a{color:inherit}
 .ki{padding:14px 16px 18px}
 h1{font-size:clamp(28px,5vw,40px);line-height:1.2;margin:28px 0 8px}h2{font-size:24px;margin:40px 0 10px}h3{font-size:18px;margin:0 0 4px}
@@ -361,7 +371,7 @@ h1{font-size:clamp(28px,5vw,40px);line-height:1.2;margin:28px 0 8px}h2{font-size
 .etiket{display:block;margin-top:20px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--kirmizi)}
 ul.ozet{padding-left:20px}ul.ozet li{margin:4px 0}
 .izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:0;list-style:none}
-.izgara li{position:relative}.kf-kredi{position:absolute;left:0;right:0;top:0;padding:4px 8px 14px;font-size:10px;color:rgba(255,255,255,.8);background:linear-gradient(rgba(0,0,0,.5),transparent);pointer-events:none}.kf-kredi a{color:inherit;pointer-events:auto}
+.izgara li{position:relative}.kf-kredi{display:block;padding:0 16px 12px;margin-top:-6px;font-size:10px;color:var(--soluk);opacity:.75}.kf-kredi a{color:inherit}
 .izgara li{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -18px rgba(0,0,0,.35)}
 .izgara li:hover .kf img{transform:scale(1.05)}
 .izgara a{color:var(--fg);text-decoration:none}.izgara p{margin:0;color:var(--soluk);font-size:15px}
@@ -372,7 +382,23 @@ body{padding-bottom:76px}.wa-sabit{position:fixed;right:16px;bottom:16px;z-index
 .cevap{background:var(--kart);border-left:4px solid var(--kirmizi);padding:14px 16px;border-radius:8px;font-size:18px}
 table{border-collapse:collapse;width:100%;font-size:15px}td,th{border-bottom:1px solid var(--cizgi);padding:8px 6px;text-align:left;vertical-align:top}
 .kaynak{font-size:14px;color:var(--soluk)}
-ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}`
+ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{background:var(--kart);border:1px solid var(--cizgi);border-radius:12px;padding:14px 16px}ul.yorumlar p{margin:4px 0}.yildizlar{color:#e3a400;letter-spacing:2px}
+.kahraman>img{will-change:transform}
+.btn2{display:inline-block;margin:8px 0 8px 10px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.55);color:#fff;text-decoration:none;font-weight:600;backdrop-filter:blur(6px);background:rgba(255,255,255,.08)}
+.muhur{position:absolute;right:clamp(16px,5vw,64px);top:clamp(84px,14vh,150px);width:clamp(96px,11vw,132px);aspect-ratio:1;z-index:2;color:#fff;pointer-events:none;border-radius:50%;background:rgba(15,47,92,.55);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
+.muhur svg{width:100%;height:100%;animation:don 26s linear infinite}.muhur b{position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1.1 Fraunces,Georgia,serif;text-align:center}
+@keyframes don{to{transform:rotate(360deg)}}
+.rakamlar{position:relative;background:#0f2f5c;color:#fff;overflow:hidden}
+.rakamlar::before{content:"";position:absolute;inset:0;opacity:.13;background:radial-gradient(circle at 50% 50%,#3fb8af 0 18%,transparent 19%),radial-gradient(circle at 0 0,#c8102e 0 12%,transparent 13%),radial-gradient(circle at 100% 100%,#c8102e 0 12%,transparent 13%);background-size:56px 56px}
+.rakamlar ul{position:relative;list-style:none;margin:0;padding:34px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;text-align:center}
+.rakamlar strong{display:block;font:600 clamp(34px,5vw,52px)/1 Fraunces,Georgia,serif;color:#ffd166}.rakamlar span{font-size:15px;opacity:.85}
+.serit{overflow:hidden;white-space:nowrap;border-block:1px solid var(--cizgi);padding:14px 0;font:600 clamp(20px,3vw,30px)/1 Fraunces,Georgia,serif}
+.serit div{display:inline-block;animation:kay 38s linear infinite}.serit span{margin:0 26px}.serit i{font-style:normal;color:var(--kirmizi);margin-right:10px}
+@keyframes kay{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.muhur svg,.serit div{animation:none}}
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+.hz .gir{opacity:0;transform:translateY(28px)}
+@media (max-width:640px){.muhur{display:none}.btn2{margin-left:0}}`
 
 function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
   const url = `${BASE}/tr/${yol ? `${yol}/` : ''}`
@@ -395,6 +421,7 @@ function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
 <meta property="og:image" content="${BASE}/tr/foto/${gorsel}-1920.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(gorsel)}" imagesrcset="${srcset(gorsel)}" imagesizes="100vw" fetchpriority="high">` : ''}
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
@@ -413,6 +440,10 @@ ${govde}
 <p>Diğer diller: <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/ru/" hreflang="ru">Русский</a> · Son güncelleme: ${HOY}</p>
 </div></footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp: Ferhat</a>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
+<script src="/tr/hareket.js" defer></script>
 </body>
 </html>
 `
@@ -470,7 +501,14 @@ const yorumLd = YORUMLAR.map((y) => ({ '@type': 'Review', reviewRating: { '@type
 ${kahraman('kiyomizu-sonbahar', 'Sonbaharda Kyoto, Kiyomizu-dera', `<span class="etiket">Japonya · Kansai · Türkçe</span>
 <h1>Japonya'da Türkçe Rehber: Ferhat</h1>
 <p class="alt">Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar. Rehber sadece sizin grubunuz için.</p>
-${iletisim}`)}
+<p><a class="btn" href="${WA_GENEL}">WhatsApp'tan Ferhat'a yaz</a><a class="btn2" href="#sehirler">Şehirleri gör ↓</a></p>`)}
+<section class="rakamlar" aria-label="Kısaca rakamlarla"><div class="kap"><ul>
+<li><strong data-say="4">4</strong><span>yıldır Japonya'da</span></li>
+<li><strong data-say="5">5</strong><span>şehir: Kyoto, Osaka, Nara, Kobe, Himeji</span></li>
+<li><strong>%<b data-say="100">100</b></strong><span>Türkçe anlatım</span></li>
+${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} misafir yorumu</span></li>` : ''}
+</ul></div></section>
+<div class="serit" aria-hidden="true"><div>${Array(4).fill('<span><i>京都</i>Kyoto</span><span><i>大阪</i>Osaka</span><span><i>奈良</i>Nara</span><span><i>神戸</i>Kobe</span><span><i>姫路</i>Himeji</span>').join('')}</div></div>
 <div class="kap">
 <h2>Kısaca</h2>
 <ul class="ozet">
@@ -485,7 +523,7 @@ ${iletisim}`)}
 </ul>
 <h2>Neden Türkçe rehber?</h2>
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
-<h2>Turlar ve şehirler</h2>
+<h2 id="sehirler">Turlar ve şehirler</h2>
 <ul class="izgara">
 ${SEHIRLER.map((s) => kartLink(`/tr/${s.yol}/`, s.kapak, s.ad, s.ad, s.yerler.slice(0, 3).map((y) => y[0]).join(', '))).join('\n')}
 </ul>
