@@ -50,10 +50,13 @@ const srcset = (k) => foto(k).anchos.map((w) => `/tr/foto/${k}-${w}.webp ${Math.
 const kredi = (k) => `Fotoğraf: <a href="${foto(k).kaynak}" rel="nofollow">${esc(foto(k).autor)}</a> · ${esc(foto(k).lisans)}`
 // Fondo borroso (~500 bytes, en turkce-fotolar.json) mientras llega la foto grande:
 // antes la portada 4K (hasta 1,8 MB) se veía en negro varios segundos.
+// La portada pide algo menos que el ancho real: en un portátil Retina basta la de
+// 1920 (antes bajaba la 4K, 1,8 MB); la 4K queda para pantallas grandes.
+const HERO_SIZES = '(min-width: 1100px) 64vw, 100vw'
 const bulanik = (k) => `background-image:url(${foto(k).lqip})`
 const heroSrc = (k) => `/tr/foto/${k}-${foto(k).anchos.find((w) => w <= 1920) ?? foto(k).anchos.at(-1)}.webp`
 const kahraman = (k, alt, icerik) => `<section class="kahraman" style="${bulanik(k)}">
-<img src="${heroSrc(k)}" srcset="${srcset(k)}" sizes="100vw" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high" decoding="async">
+<img src="${heroSrc(k)}" srcset="${srcset(k)}" sizes="${HERO_SIZES}" alt="${esc(alt)}" width="${foto(k).w}" height="${foto(k).h}" fetchpriority="high" decoding="async">
 <div class="ortu"><div class="kap">${icerik}</div></div>
 <div class="muhur" aria-hidden="true"><svg viewBox="0 0 100 100"><defs><path id="mc" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs><circle cx="50" cy="50" r="47" fill="none" stroke="currentColor" stroke-width=".8" opacity=".6"/><text font-size="8.6" letter-spacing="2.4" fill="currentColor"><textPath href="#mc">TÜRKÇE REHBER · KANSAI · JAPONYA ·</textPath></text></svg><b>Ferhat<br>🇹🇷</b></div>
 <small class="kredi">${kredi(k)}</small>
@@ -142,7 +145,7 @@ const SEHIRLER = [
 const CEVAPLAR = [
   {
     yol: 'japonya-vize', kapak: 'kinkakuji',
-    baslik: 'Japonya Vizesi Türk Vatandaşları İçin: Vize Gerekli mi? | Türkçe Rehber',
+    baslik: 'Türk Vatandaşlarına Japonya Vizesi Gerekli mi? | Türkçe Rehber',
     aciklama: "Türk vatandaşları turistik amaçla Japonya'ya 90 güne kadar vizesiz girebilir. Giriş için gerekenler, Visit Japan Web ve Kansai'de Türkçe rehber.",
     h1: 'Türk vatandaşları Japonya\'ya vizesiz gidebilir mi?',
     kisa: 'Turistik seyahatte 90 güne kadar vize gerekmez.',
@@ -155,12 +158,12 @@ const CEVAPLAR = [
       ['Japonya için Türklere vize var mı?', "Turistik amaçlı 90 güne kadar kalışlarda umuma mahsus pasaport sahibi Türk vatandaşlarından vize istenmez."],
       ['Japonya\'da kaç gün vizesiz kalabilirim?', '90 güne kadar. Daha uzun kalış veya çalışma için vize gerekir.'],
     ],
-    kaynaklar: [['Japonya Dışişleri Bakanlığı: vize muafiyeti listesi', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
+    kaynaklar: [['Japonya Dışişleri Bakanlığı: vize muafiyeti listesi', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://services.digital.go.jp/en/visit-japan-web/']],
   },
   {
     yol: 'helal-yemek-cami', kapak: 'kobe-camii-mihrap',
     baslik: "Kyoto, Osaka ve Kobe'de Helal Yemek ve Camiler | Türkçe Rehber",
-    aciklama: "Kansai'de namaz ve helal yemek: Kobe Camii (1935, Japonya'nın ilk camisi), Osaka İbaraki Camii, Kyoto Camii ve Kyoto'daki ücretsiz mescitler. Türkçe rehber Ferhat ile.",
+    aciklama: "Kansai'de namaz ve helal yemek: Kobe Camii (1935, Japonya'nın ilk camisi), Osaka İbaraki Camii, Kyoto Camii ve ücretsiz mescitler. Türkçe rehber Ferhat.",
     h1: "Kyoto, Osaka ve Kobe'de helal yemek ve camiler",
     kisa: 'Kobe Camii, Osaka İbaraki Camii, Kyoto Camii ve helal restoran bulma.',
     cevap: "Kansai'de üç ana cami var: 1935'te açılan ve Japonya'nın en eski camisi olan Kobe Camii, Osaka'nın kuzeyindeki İbaraki şehrinde Osaka İbaraki Camii ve Kyoto İmparatorluk Sarayı yakınındaki Kyoto Camii. Kyoto'da Nijo Kalesi gibi turistik yerlerde ücretsiz mescitler de bulunur. Helal restoranlar için Kyoto turizm sitesinin Halal / Muslim Friendly listesi en güvenilir kaynaktır.",
@@ -181,7 +184,7 @@ const CEVAPLAR = [
   },
   {
     yol: 'osakadan-kyotoya-ulasim', kapak: 'gion',
-    baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren, Süre ve Fiyatlar | Türkçe Rehber",
+    baslik: "Osaka'dan Kyoto'ya Nasıl Gidilir? Tren ve Fiyat | Türkçe Rehber",
     aciklama: "Osaka'dan Kyoto'ya JR, Hankyu, Keihan veya Shinkansen: hangi tren nereden kalkar, ne kadar sürer, hangisi size uygun. Japonya'da yaşayan Türk rehberden.",
     h1: "Osaka'dan Kyoto'ya nasıl gidilir?",
     kisa: 'Dört tren seçeneği: 15 ile 50 dakika arası.',
@@ -226,7 +229,7 @@ const CEVAPLAR = [
   },
   {
     yol: 'japonya-gezi-plani', kapak: 'kiyomizu-gece',
-    baslik: 'Japonya Gezi Planı: Kansai\'de 3 ve 5 Gün (Kyoto, Osaka, Nara) | Türkçe Rehber',
+    baslik: 'Japonya Gezi Planı: Kansai\'de 3 ve 5 Gün | Türkçe Rehber',
     aciklama: "Kansai için hazır gezi planı: 3 günde Kyoto, Osaka ve Nara; 5 günde Kobe ve Himeji de eklenir. Japonya'da yaşayan Türk rehber Ferhat'tan.",
     h1: "Kansai gezi planı: 3 ve 5 gün",
     kisa: 'Kyoto, Osaka, Nara, Kobe ve Himeji için gün gün plan.',
@@ -265,8 +268,8 @@ const CEVAPLAR = [
   },
   {
     yol: 'japonya-ne-zaman-gidilir', kapak: 'arashiyama',
-    baslik: "Japonya'ya Ne Zaman Gidilir? Kiraz Çiçeği, Sonbahar ve Hava | Türkçe Rehber",
-    aciklama: "Japonya'ya gitmek için en iyi zaman: kiraz çiçekleri mart sonu-nisan başı, sonbahar yaprakları kasım ortası-aralık başı. Yağmur mevsimi, yaz sıcağı ve kalabalık tatiller.",
+    baslik: "Japonya'ya Ne Zaman Gidilir? Kiraz, Sonbahar | Türkçe Rehber",
+    aciklama: "Japonya'ya en iyi zaman: kiraz çiçekleri mart sonu-nisan başı, sonbahar yaprakları kasım ortası-aralık başı. Yağmur mevsimi, yaz sıcağı ve tatiller.",
     h1: "Japonya'ya ne zaman gidilir?",
     kisa: 'Kiraz çiçeği, sonbahar renkleri, yağmur mevsimi ve kalabalık dönemler.',
     cevap: "Japonya'ya, özellikle Kyoto ve Osaka'ya gitmek için en güzel dönemler ilkbahar ve sonbahardır. Kyoto'da kiraz çiçekleri genellikle mart sonu ile nisan başı arasında, sonbahar yaprakları kasım ortası ile aralık başı arasında görülür. Bu dönemler en kalabalık ve otellerin en pahalı olduğu zamanlardır; erken rezervasyon yapın. Haziran-temmuz arası yağmur mevsimi, temmuz-ağustos ise çok sıcak ve nemlidir.",
@@ -290,8 +293,8 @@ const CEVAPLAR = [
   },
   {
     yol: 'japonya-oncesi-bilinmesi-gerekenler', kapak: 'umeda',
-    baslik: "Japonya'ya Gitmeden Önce Bilinmesi Gerekenler: Para, ICOCA, İnternet, Priz | Türkçe Rehber",
-    aciklama: "Japonya'ya giden Türkler için pratik bilgiler: nakit ve kart, ICOCA kartı, internet (eSIM), priz adaptörü, bahşiş, Visit Japan Web. Japonya'da yaşayan Türk rehber Ferhat'tan.",
+    baslik: "Japonya'ya Gitmeden Önce Bilinmesi Gerekenler | Türkçe Rehber",
+    aciklama: "Japonya'ya giden Türkler için: nakit ve kart, ICOCA, internet (eSIM), priz, bahşiş, Visit Japan Web. Japonya'da yaşayan Türk rehber Ferhat'tan.",
     h1: "Japonya'ya gitmeden önce bilinmesi gerekenler",
     kisa: 'Para, ICOCA kartı, internet, priz, bahşiş ve giriş formları.',
     cevap: "Japonya'ya gitmeden önce: yanınızda biraz nakit yen bulundurun (küçük tapınak ve dükkanlarda kart geçmeyebilir), trenler için bir IC kart (Kansai'de ICOCA) alın, internet için eSIM veya cep Wi-Fi ayarlayın ve A tipi priz adaptörü götürün (Japonya'da 100 V, Türkiye'deki prizler uymaz). Japonya'da bahşiş verilmez. Giriş formlarını Visit Japan Web'de önceden doldurabilirsiniz.",
@@ -307,7 +310,7 @@ const CEVAPLAR = [
       ['Japonya\'da hangi priz kullanılır?', 'A tipi priz, 100 V. Türkiye\'den gelenler adaptör getirmeli.'],
       ['Japonya\'da bahşiş verilir mi?', 'Hayır. Restoran, taksi ve otellerde bahşiş verilmez.'],
     ],
-    kaynaklar: [['JNTO: pratik bilgiler', 'https://www.japan.travel/en/'], ['Visit Japan Web', 'https://www.vjw.digital.go.jp/']],
+    kaynaklar: [['JNTO: pratik bilgiler', 'https://www.japan.travel/en/'], ['Visit Japan Web', 'https://services.digital.go.jp/en/visit-japan-web/']],
   },
   {
     yol: 'kyoto-bir-gunde', kapak: 'fushimi-orman',
@@ -421,7 +424,7 @@ function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
 <meta property="og:image" content="${BASE}/tr/foto/${gorsel}-1920.webp">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(gorsel)}" imagesrcset="${srcset(gorsel)}" imagesizes="100vw" fetchpriority="high">` : ''}
+${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(gorsel)}" imagesrcset="${srcset(gorsel)}" imagesizes="${HERO_SIZES}" fetchpriority="high">` : ''}
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
@@ -603,7 +606,7 @@ ${yorumlarBolumu}
 for (const c of CEVAPLAR) {
   const yazi = wa(`Merhaba Ferhat, "${c.h1}" sayfasını okudum. Japonya için Türkçe rehber arıyorum. Tarihler: `)
   const govde = `
-${kahraman(c.kapak, '', `<span class="etiket"><a href="/tr/">Türkçe rehber</a> · Bilgi</span>
+${kahraman(c.kapak, c.h1, `<span class="etiket"><a href="/tr/">Türkçe rehber</a> · Bilgi</span>
 <h1>${esc(c.h1)}</h1>`)}
 <div class="kap">
 <p class="cevap">${esc(c.cevap)}</p>
