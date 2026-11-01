@@ -3,7 +3,21 @@
 // Regla: ningún precio de Antonio aquí; él cotiza a medida por WhatsApp.
 
 export const HOY = '2026-11-01'
-export const COORDINADOR = 'Antonio'
+// Datos de Antonio dados por Tony el 1-11-2026. Solo esto: nada de apellido,
+// ciudad natal, número de clientes ni reseñas inventadas.
+export const COORDINADOR = {
+  nombre: 'Antonio',
+  rol: 'Coordinador de viajes profesional en Japón',
+  edad: 29,
+  anosEnJapon: 4,
+  idiomas: [['Español', 'es'], ['Japonés', 'ja'], ['Inglés', 'en'], ['Catalán', 'ca']],
+  bio: [
+    'Antonio tiene 29 años y es coordinador de viajes profesional. Vive en Japón desde hace cuatro años y está casado con una japonesa.',
+    'Habla japonés muy bien, además de español, inglés y catalán. En la práctica eso significa que trata en japonés con hoteles, ryokan, conductores y guías, y que a la familia se lo cuenta todo en su idioma.',
+    'Su experiencia está en los viajes que más se complican: ha coordinado familias muy grandes durante muchos días, donde cada jornada hay que cuadrar edades, ritmos y gustos distintos sin que nadie se quede atrás.',
+    'Ha recorrido todo Japón y le encanta viajar, así que las rutas que propone salen de lugares que conoce de primera mano. Es socio del equipo <a href="/es/">Tony Kansai Guide</a>.',
+  ],
+}
 
 export const PORTADA = {
   titulo: 'Viaje a Japón en familia o grupo, a medida | Antonio',
@@ -99,7 +113,8 @@ export const CONDICIONES = {
 }
 
 export const FAQ_GLOBAL = [
-  { p: '¿Quién es Antonio y qué hace?', r: 'Antonio es coordinador y guía en Japón. Organiza viajes a medida para familias y grupos de 6 a 10 personas de España y Latinoamérica, y gestiona guías, itinerario, hoteles, transporte privado para grupos de más de 8 personas, ryokan en montaña y una tarjeta ICOCA con 5.000 ¥ por viajero.' },
+  { p: '¿Quién es Antonio y qué hace?', r: 'Antonio es coordinador de viajes profesional y vive en Japón desde hace cuatro años. Habla español, japonés, inglés y catalán. Organiza viajes a medida para familias y grupos de 6 a 10 personas de España y Latinoamérica, y gestiona guías, itinerario, hoteles, transporte privado para grupos de más de 8 personas, ryokan en montaña y una tarjeta ICOCA con 5.000 ¥ por viajero.' },
+  { p: '¿Antonio habla catalán? (Parla català?)', r: 'Sí. Antonio habla catalán, además de español, japonés e inglés. Si tu familia o grupo viene de Cataluña, puedes preparar todo el viaje con él en catalán por WhatsApp, y en Japón él se entiende en japonés con hoteles, ryokan, conductores y guías.' },
   { p: '¿Cuánto cuesta un viaje a Japón con Antonio?', r: 'Cada viaje es distinto, así que el presupuesto es a medida. Escríbele por WhatsApp con fechas, número de personas y edades y te prepara una propuesta.' },
   { p: '¿A qué partes de Japón puede ir?', r: 'A todo Japón: Kioto, Osaka, Nara, Tokio, Hiroshima, los Alpes japoneses, el monte Fuji y zonas de montaña con ryokan, entre otras.' },
   { p: '¿Se encarga de vuelos, seguro o traslado del aeropuerto?', r: 'No. Vuelos, seguro de viaje, traslado aeropuerto-hotel, billetes de shinkansen y comidas los resuelves tú; en esta web tienes consejos prácticos para cada cosa.' },
@@ -249,6 +264,7 @@ export const PAGINAS = [
     ],
     faq: [
       { p: '¿Hace falta visado para Japón con pasaporte español?', r: 'No, para turismo hasta 90 días no se necesita visado.' },
+      { p: 'Somos de Cataluña: ¿podemos organizarlo en catalán?', r: 'Sí. Antonio habla catalán, además de español, japonés e inglés, así que puedes preparar el viaje con él en catalán.' },
       { p: '¿Qué es Visit Japan Web?', r: 'Es el servicio oficial y gratuito del Gobierno japonés para registrar antes del viaje los datos de inmigración y aduana y obtener un código QR para la llegada.' },
     ],
     foto: 'himeji',
@@ -426,13 +442,14 @@ export const PAGINAS = [
     h1: 'Coordinador en Japón para agencias de viajes con grupos',
     entradilla: 'Si tu agencia lleva grupos a Japón y necesita a alguien de confianza sobre el terreno, Antonio trabaja como coordinador en Japón para agencias de España y Latinoamérica. Gestiona guías en español, itinerario, hoteles, transporte privado para grupos de más de 8 personas y estancias en ryokan, y te prepara una propuesta a medida por WhatsApp.',
     secciones: [
-      { h2: 'Qué aporta a tu agencia', parrafos: ['Una sola persona de contacto en Japón, en español, que conoce el terreno y resuelve sobre la marcha. Tu cliente viaja con tu marca y Antonio coordina en destino.'], lista: ['Diseño del itinerario y revisión de tiempos reales.', 'Guías en español en las visitas.', 'Hoteles y ryokan adecuados al tamaño del grupo.', 'Transporte privado para grupos de más de 8.', 'Tarjeta ICOCA con 5.000 ¥ por viajero.'] },
+      { h2: 'Qué aporta a tu agencia', parrafos: ['Una sola persona de contacto en Japón, en español, que conoce el terreno y resuelve sobre la marcha. Antonio vive en Japón desde hace cuatro años, habla japonés muy bien y también inglés y catalán, y ha coordinado familias muy grandes durante muchos días. Tu cliente viaja con tu marca y Antonio coordina en destino.'], lista: ['Diseño del itinerario y revisión de tiempos reales.', 'Guías en español en las visitas.', 'Hoteles y ryokan adecuados al tamaño del grupo.', 'Transporte privado para grupos de más de 8.', 'Tarjeta ICOCA con 5.000 ¥ por viajero.'] },
       { h2: 'Qué queda fuera', parrafos: ['Vuelos, seguro de viaje, comidas, traslado aeropuerto-hotel y billetes de shinkansen. Antonio coordina y gestiona; no actúa como agencia de viajes con licencia en Japón. Revisa las <a href="/familias/condiciones/">condiciones</a>.'] },
       { h2: 'Cómo empezar', parrafos: ['Escribe por WhatsApp con fechas, tamaño del grupo, perfil de los viajeros y ciudades. Recibirás una propuesta a medida.'] },
     ],
     faq: [
       { p: '¿Trabaja con agencias de México y Centroamérica?', r: 'Sí, con agencias de España y de Latinoamérica.' },
       { p: '¿Qué tamaño de grupo?', r: 'Está pensado sobre todo para grupos de 6 a 10 personas; consulta otros tamaños.' },
+      { p: '¿En qué idiomas trabaja?', r: 'Con la agencia y con los viajeros, en español, inglés o catalán. En Japón trata en japonés con hoteles, ryokan, conductores y guías.' },
       { p: '¿Cuáles son las tarifas para agencias?', r: 'Se cotizan a medida por WhatsApp.' },
     ],
     foto: 'hiroshima',

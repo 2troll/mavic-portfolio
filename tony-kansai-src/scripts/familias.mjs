@@ -24,7 +24,8 @@
 // sin JS queda un enlace normal de WhatsApp.
 //
 // Reglas de contenido: el texto vive en los archivos de datos (otros dueños). Aquí
-// no se inventa nada sobre Antonio: ni precios, ni años, ni títulos, ni reseñas.
+// no se inventa nada sobre Antonio: ni precios, ni títulos, ni reseñas. Sus datos
+// (edad, años en Japón, idiomas) vienen de COORDINADOR en familias-datos.mjs.
 // Nada de alcohol ni juego. Nunca hebreo. Español neutro (nada de «vosotros»).
 //
 // Fotos: scripts/familias-fotos.json (autor, lisans, kaynak, w, h, anchos) y
@@ -153,6 +154,39 @@ function img(k, alt, { sizes = '100vw', hero = false, clase = '' } = {}) {
   return `<img class="${clase}" src="${f.src(hero ? f.grande : f.pequeno)}" srcset="${f.srcset}" sizes="${sizes}" alt="${esc(alt)}" width="${f.w}" height="${f.h}"${hero ? ' fetchpriority="high" decoding="async"' : ' loading="lazy" decoding="async"'}>`
 }
 const imagenOg = (k) => { const f = foto(k); return f ? `${BASE}${f.src(f.grande)}` : `${BASE}/logo-square.svg` }
+
+// Retrato de Antonio: cuadrado, en public/familias/foto/antonio-<ancho>.webp, y la
+// cara recortada en antonio-cara-<ancho>.webp para la miniatura. Solo entran los
+// anchos cuyo archivo existe; sin ninguno sale el monograma «A» de siempre.
+const ALT_RETRATO = `${NOMBRE}, coordinador de viajes en Japón`
+const hay = (n) => existsSync(join(root, 'public/familias/foto', `${n}.webp`))
+const RETRATO_ANCHOS = [320, 640, 1080].filter((w) => hay(`antonio-${w}`))
+const CARA_ANCHOS = [160, 320].filter((w) => hay(`antonio-cara-${w}`))
+if (!RETRATO_ANCHOS.length) console.warn('⚠ familias: sin retrato de Antonio en public/familias/foto/, sale el monograma')
+const RETRATO_W = RETRATO_ANCHOS.at(-1)
+const RETRATO_URL = RETRATO_W ? `${BASE}${SECCION}foto/antonio-${RETRATO_W}.webp` : null
+const retratoGrande = () => (RETRATO_W
+  ? `<img class="retrato" src="${SECCION}foto/antonio-${RETRATO_ANCHOS.find((w) => w >= 640) ?? RETRATO_W}.webp" srcset="${RETRATO_ANCHOS.map((w) => `${SECCION}foto/antonio-${w}.webp ${w}w`).join(', ')}" sizes="(max-width:640px) 70vw, 300px" alt="${esc(ALT_RETRATO)}" width="${RETRATO_W}" height="${RETRATO_W}" loading="lazy" decoding="async">`
+  : `<span class="mono" aria-hidden="true">${esc(NOMBRE[0])}</span>`)
+const miniCara = (cls = 'mono', alt = '') => (CARA_ANCHOS.length
+  ? `<img class="${cls} cara" src="${SECCION}foto/antonio-cara-${CARA_ANCHOS[0]}.webp"${CARA_ANCHOS.length > 1 ? ` srcset="${CARA_ANCHOS.map((w, i) => `${SECCION}foto/antonio-cara-${w}.webp ${i + 1}x`).join(', ')}"` : ''} alt="${esc(alt)}" width="${CARA_ANCHOS.at(-1)}" height="${CARA_ANCHOS.at(-1)}" decoding="async">`
+  : `<span class="${cls}" aria-hidden="true">${esc(NOMBRE[0])}</span>`)
+
+// Reseñas de Antonio: las manda el cliente desde /familias/opiniones/ y el Worker
+// las publica solas. Van en el HTML al construir (las IAs no ejecutan JS) y un
+// script pide las que lleguen después. Sin AggregateRating mientras no haya.
+const SLUG_FORM = 'opiniones'
+const SLUG_OPINIONES = 'opiniones-clientes'
+let OPINIONES = []
+if (process.env.FAMILIAS_SIN_RED !== '1') {
+  try {
+    const res = await fetch('https://tonykansaiguide.com/api/resenas/publicas?guia=antonio', { signal: AbortSignal.timeout(15000) })
+    if (!res.ok) throw new Error(`HTTP ${res.status}`)
+    OPINIONES = ((await res.json()).reviews ?? []).filter((y) => y?.id && y.text && y.stars)
+  } catch (e) { console.warn(`⚠ familias: sin reseñas del Worker (${e.message}); la página sale vacía`) }
+}
+const MEDIA = OPINIONES.length ? (OPINIONES.reduce((t, y) => t + y.stars, 0) / OPINIONES.length).toFixed(1).replace('.', ',') : ''
+const RESUMEN_OP = OPINIONES.length ? `${OPINIONES.length} ${OPINIONES.length === 1 ? 'opinión' : 'opiniones'} de viajeros, media ${MEDIA}/5` : ''
 // `sizes` = ancho real de la tarjeta, para que un móvil denso no baje la de 1920.
 const SIZES_REJILLA = '(max-width:640px) calc(100vw - 32px), (max-width:1100px) calc(50vw - 48px), 370px'
 const SIZES_FILA = '(max-width:640px) calc(100vw - 72px), 340px'
@@ -185,7 +219,7 @@ const T = {
     incluye: 'Qué incluye y qué no', disenar: 'Diseñar el viaje paso a paso', indice: 'En esta página', faq: 'Preguntas frecuentes',
     sigue: 'Sigue leyendo', volver: 'Volver a Familias y grupos', laRuta: 'La ruta', diaADia: 'Día a día',
     waPag: (h) => `Hola ${NOMBRE}, he leído «${h}». Somos una familia/grupo de __ personas y queremos viajar a Japón. Fechas: `,
-    pie: `${NOMBRE} es coordinador y guía en Japón y socio de <a href="/es/">Tony Kansai Guide</a>. Organiza viajes a medida por todo Japón para familias y grupos de España, México y Centroamérica, y trabaja como receptivo para agencias. Corea del Sur, próximamente.`,
+    pie: `${NOMBRE} es coordinador de viajes profesional en Japón, habla español, japonés, inglés y catalán, y es socio de <a href="/es/">Tony Kansai Guide</a>. Organiza viajes a medida por todo Japón para familias y grupos de España, México y Centroamérica, y trabaja como receptivo para agencias. Corea del Sur, próximamente.`,
     actualizado: 'Última actualización', volverWeb: 'Volver a la web de Tony Kansai Guide', otros: 'Otros idiomas', mapa: 'Mapa de Japón con la ruta',
   },
   en: {
@@ -196,7 +230,7 @@ const T = {
     incluye: 'What is included (in Spanish)', disenar: 'Plan the trip step by step (in Spanish)', indice: 'On this page', faq: 'Frequently asked questions',
     sigue: 'Keep reading', volver: 'Back to Families and groups', laRuta: 'The route', diaADia: 'Day by day',
     waPag: (h) => `Hello ${NOMBRE}, I have read «${h}». We are a family/group of __ people and would like to travel to Japan. Dates: `,
-    pie: `${NOMBRE} is a coordinator and guide in Japan and a partner of <a href="/en/">Tony Kansai Guide</a>. He organises tailor-made trips all over Japan for families and groups from Spain, Mexico and Central America, and works as a ground handler for travel agencies. South Korea, coming soon.`,
+    pie: `${NOMBRE} is a professional trip coordinator in Japan who speaks Spanish, Japanese, English and Catalan, and a partner of <a href="/en/">Tony Kansai Guide</a>. He organises tailor-made trips all over Japan for families and groups from Spain, Mexico and Central America, and works as a ground handler for travel agencies. South Korea, coming soon.`,
     actualizado: 'Last updated', volverWeb: 'Back to the Tony Kansai Guide website', otros: 'Other languages', mapa: 'Map of Japan with the route',
   },
 }
@@ -563,6 +597,24 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .persona .mono{width:clamp(88px,12vw,140px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 clamp(44px,6vw,72px)/1 Fraunces,Georgia,serif}
 .persona p{margin:0 0 14px;max-width:62ch}
 @media (max-width:640px){.persona{grid-template-columns:1fr}}
+.persona .retrato{width:clamp(200px,24vw,300px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:24px;display:block;box-shadow:0 24px 50px -28px rgb(var(--sombra)/.6)}
+.marca img.mono{object-fit:cover;padding:0}
+/* ficha rápida */
+.ficha{background:var(--kart);border:1px solid var(--linea);border-radius:20px;padding:22px clamp(18px,3vw,32px) 12px;margin:clamp(32px,5vw,56px) 0 0;max-width:900px}
+.cuerpo .ficha{margin:28px 0}
+.ficha-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
+.ficha-cab h2{font-size:clamp(22px,2.6vw,28px)!important;margin:0!important}
+.ficha-cara{width:56px;height:56px;border-radius:50%;flex:none;object-fit:cover;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 26px/1 Fraunces,Georgia,serif}
+.ficha dl{margin:8px 0 0}
+.ficha dl div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--linea)}
+.ficha dt{font-weight:700;font-size:14.5px;color:var(--suave)}
+.ficha dd{margin:0}
+@media (max-width:560px){.ficha dl div{grid-template-columns:1fr;gap:2px}}
+/* opiniones */
+.opiniones{list-style:none;padding:0;margin:24px 0;display:grid;gap:16px;max-width:820px}
+.opiniones li{background:var(--kart);border:1px solid var(--linea);border-radius:18px;padding:18px 20px}
+.opiniones p{margin:0 0 8px}.opiniones .estrellas{color:var(--ambar);letter-spacing:2px;font-size:18px}.opiniones .autor{color:var(--suave);font-size:14.5px;margin:0}
+.op-vacio{background:var(--kart);border:1px dashed var(--linea);border-radius:18px;padding:22px;max-width:820px}
 /* faq */
 .faq{max-width:820px;margin-top:32px}
 .faq details{border-top:1px solid var(--linea);padding:4px 0}.faq details:last-child{border-bottom:1px solid var(--linea)}
@@ -921,10 +973,56 @@ const HEAD_JS = `<script>(function(){var h=document.documentElement;if(matchMedi
 
 // ---------------------------------------------------------------- piezas comunes
 const NEGOCIO = { '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/` }
+const IDIOMAS = COORDINADOR.idiomas ?? [['Español', 'es']]
 const PERSONA_LD = {
   '@type': 'Person', '@id': `${BASE}${SECCION}#antonio`, name: NOMBRE,
-  jobTitle: COORDINADOR.rol ?? 'Coordinador y guía en Japón', knowsLanguage: { '@type': 'Language', name: 'Español', alternateName: 'es' },
+  jobTitle: COORDINADOR.rol ?? 'Coordinador de viajes en Japón',
+  ...(RETRATO_URL ? { image: { '@type': 'ImageObject', url: RETRATO_URL, width: RETRATO_W, height: RETRATO_W, caption: ALT_RETRATO } } : {}),
+  knowsLanguage: IDIOMAS.map(([name, alternateName]) => ({ '@type': 'Language', name, alternateName })),
+  knowsAbout: ['Coordinación de viajes', 'Viajes a Japón en familia', 'Viajes en grupo por Japón', 'Itinerarios a medida por Japón', 'Ryokan', 'Transporte privado en Japón', 'Receptivo en Japón para agencias de viajes'],
+  homeLocation: { '@type': 'Country', name: 'Japón' },
+  // Mismo @id que el negocio de index.html, para que las IAs unan a Antonio con Tony Kansai Guide.
   worksFor: NEGOCIO, url: url(''),
+  description: `Coordinador de viajes profesional que vive en Japón desde hace ${COORDINADOR.anosEnJapon ?? 4} años. Habla español, japonés, inglés y catalán. Ha coordinado familias muy grandes durante muchos días y ha recorrido todo Japón. Organiza viajes a medida para familias y grupos de España, México y Centroamérica, y trabaja como receptivo para agencias. Socio del equipo Tony Kansai Guide.`,
+}
+const PERSONA_LD_EN = {
+  ...PERSONA_LD, jobTitle: 'Professional trip coordinator in Japan',
+  ...(PERSONA_LD.image ? { image: { ...PERSONA_LD.image, caption: `${NOMBRE}, trip coordinator in Japan` } } : {}),
+  knowsLanguage: PERSONA_LD.knowsLanguage.map((l) => ({ ...l, name: { es: 'Spanish', ja: 'Japanese', en: 'English', ca: 'Catalan' }[l.alternateName] ?? l.name })),
+  knowsAbout: ['Trip coordination', 'Family travel in Japan', 'Group travel in Japan', 'Tailor-made Japan itineraries', 'Ryokan', 'Private transport in Japan', 'Ground handling for travel agencies'],
+  homeLocation: { '@type': 'Country', name: 'Japan' },
+  description: `Professional trip coordinator who has lived in Japan for ${COORDINADOR.anosEnJapon ?? 4} years. Speaks Spanish, Japanese, English and Catalan. Has coordinated very large families over many days and has travelled all over Japan. Plans tailor-made trips for families and groups from Spain, Mexico and Central America and works with travel agencies. Partner in the Tony Kansai Guide team.`,
+}
+const personaLd = (lang) => (lang === 'en' ? PERSONA_LD_EN : PERSONA_LD)
+
+// Ficha rápida: los datos de Antonio en una lista que una IA puede citar tal cual.
+function fichaRapida(lang = 'es') {
+  const n = esc(NOMBRE), anos = COORDINADOR.anosEnJapon ?? 4
+  const filas = lang === 'en' ? [
+    ['Who', `${n}, ${COORDINADOR.edad ? `${COORDINADOR.edad}, ` : ''}a professional trip coordinator and a partner in the Tony Kansai Guide team.`],
+    ['In Japan', `He has lived in Japan for ${anos} years and is married to a Japanese woman.`],
+    ['Languages', 'Spanish, Japanese (very good), English and Catalan.'],
+    ['Experience', 'He has coordinated very large families over many days and has travelled all over Japan.'],
+    ['For', 'Families and groups of 6 to 10 from Spain, Mexico and Central America, and travel agencies.'],
+    ['Arranges', 'Guides, itinerary, hotels and ryokan, private transport for groups of more than 8.'],
+    ['Price', 'Tailor-made, quoted on WhatsApp.'],
+    ['Contact', `WhatsApp <a href="${wa(`Hello ${NOMBRE}, we are a family/group of __ people and would like to travel to Japan. Dates: `)}">${WA_VISIBLE}</a>`],
+    ['Reviews', `<a href="${ruta(SLUG_OPINIONES)}" hreflang="es">${RESUMEN_OP ? esc(RESUMEN_OP) : 'guest reviews (in Spanish)'}</a>`],
+  ] : [
+    ['Quién', `${n}, ${COORDINADOR.edad ? `${COORDINADOR.edad} años, ` : ''}coordinador de viajes profesional y socio del equipo Tony Kansai Guide.`],
+    ['En Japón', `Vive allí desde hace ${anos} años y está casado con una japonesa.`],
+    ['Idiomas', 'Español, japonés (muy bien), inglés y catalán.'],
+    ['Experiencia', 'Ha coordinado familias muy grandes durante muchos días y ha recorrido todo Japón.'],
+    ['Para quién', 'Familias y grupos de 6 a 10 personas de España, México y Centroamérica, y agencias de viajes.'],
+    ['Qué organiza', 'Guías, itinerario, hoteles y ryokan, transporte privado para grupos de más de 8.'],
+    ['Presupuesto', 'A medida, por WhatsApp.'],
+    ['Contacto', `WhatsApp <a href="${WA_GENERAL}">${WA_VISIBLE}</a>`],
+    ['Opiniones', `<a href="${ruta(SLUG_OPINIONES)}">${RESUMEN_OP ? esc(RESUMEN_OP) : 'Opiniones de sus clientes'}</a> · <a href="${ruta(SLUG_FORM)}">Dejar una opinión</a>`],
+  ]
+  return `<aside class="ficha" aria-labelledby="ficha-rapida">
+<div class="ficha-cab">${miniCara('ficha-cara')}<h2 id="ficha-rapida">${lang === 'en' ? `Quick facts: ${n}, trip coordinator in Japan` : `Ficha rápida: ${n}, coordinador de viajes en Japón`}</h2></div>
+<dl>${filas.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('')}</dl>
+</aside>`
 }
 const SERVICIO_LD = {
   '@type': 'Service', '@id': `${BASE}${SECCION}#servicio`,
@@ -983,7 +1081,7 @@ ${HEAD_JS}
 </head>
 <body>
 <header class="cab"><div class="kap">
-<a class="marca" href="${SECCION}"><span class="mono" aria-hidden="true">${esc(NOMBRE[0])}</span><span>${esc(NOMBRE)}<small>${t.sub}</small></span></a>
+<a class="marca" href="${SECCION}">${miniCara()}<span>${esc(NOMBRE)}<small>${t.sub}</small></span></a>
 <nav aria-label="${lang === 'en' ? 'Sections' : 'Secciones'}">${t.nav.map(([n, h, siempre]) => `<a${siempre ? ' class="siempre"' : ''} href="${h}"${lang === 'en' && h.startsWith(SECCION) ? ' hreflang="es"' : ''}>${esc(n)}</a>`).join('')}</nav>
 </div></header>
 <main>
@@ -992,7 +1090,7 @@ ${corps}
 <footer><div class="kap">
 <p>${t.pie}</p>
 <p>WhatsApp: <a href="${WA_GENERAL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
-<div class="pie-cats"><div><h4>${esc(t.seccion)}</h4><ul><li><a href="${SECCION}">${lang === 'en' ? 'Home (Spanish)' : 'Portada'}</a></li><li><a href="${ruta(SLUG_COND)}">${lang === 'en' ? 'What is included (Spanish)' : 'Qué incluye y qué no'}</a></li></ul></div>
+<div class="pie-cats"><div><h4>${esc(t.seccion)}</h4><ul><li><a href="${SECCION}">${lang === 'en' ? 'Home (Spanish)' : 'Portada'}</a></li><li><a href="${ruta(SLUG_COND)}">${lang === 'en' ? 'What is included (Spanish)' : 'Qué incluye y qué no'}</a></li><li><a href="${ruta(SLUG_OPINIONES)}">${lang === 'en' ? 'Guest reviews (Spanish)' : 'Opiniones de clientes'}</a></li></ul></div>
 ${CATS.map((c) => { const ps = PAGINAS.filter((p) => p.cat === c.id); return ps.length ? `<div><h4>${esc(c[lang])}</h4><ul>${ps.map((p) => `<li><a href="${ruta(p.slug)}"${p.lng !== lang ? ` hreflang="${p.lng}"` : ''}>${esc(p.h1)}</a></li>`).join('')}</ul></div>` : '' }).join('\n')}</div>
 <p><a href="${lang === 'en' ? '/en/' : '/es/'}">${t.volverWeb}</a> · ${t.otros}: ${lang === 'en' ? '<a href="/es/" hreflang="es">Español</a>' : '<a href="/en/" hreflang="en">English</a>'} · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/fr/" hreflang="fr">Français</a> · <a href="/tr/" hreflang="tr">Türkçe</a> · <a href="/ru/" hreflang="ru">Русский</a></p>
 <p>${t.actualizado}: <time datetime="${HOY}">${HOY}</time></p>
@@ -1132,8 +1230,10 @@ ${ganchos.length ? `<p class="gancho"><span class="g-rot">${ganchos.map((g) => `
 <div class="kap"><div class="datos">
 <div><strong>Todo Japón</strong><span>Corea del Sur, próximamente</span></div>
 <div><strong>6 a 10 personas</strong><span>Familias y grupos, también agencias</span></div>
-<div><strong>En español</strong><span>Para España, México y Centroamérica</span></div>
-</div></div>
+<div><strong>En español</strong><span>También japonés, inglés y catalán</span></div>
+</div>
+${fichaRapida('es')}
+</div>
 
 ${configuradorHtml()}
 
@@ -1190,10 +1290,11 @@ ${pasos.length ? `<section class="seccion" id="como" aria-labelledby="t-como"><d
 </div></section>
 
 <section class="seccion alt" id="antonio" aria-labelledby="t-antonio"><div class="kap"><div class="persona">
-<span class="mono" aria-hidden="true">${esc(NOMBRE[0])}</span>
+${retratoGrande()}
 <div><h2 id="t-antonio">Quién es ${esc(NOMBRE)}</h2>
 ${[].concat(COORDINADOR.bio ?? COORDINADOR.texto ?? [`${NOMBRE} es ${(COORDINADOR.rol ?? 'coordinador y guía en Japón').toLowerCase()} y socio de Tony Kansai Guide. Organiza viajes a medida por todo Japón para familias y grupos de España, México y Centroamérica, y trabaja como receptivo para agencias de viaje.`]).map((t) => `<p>${rico(t)}</p>`).join('\n')}
-<p><a class="enl" href="/es/">Conocer Tony Kansai Guide ${FLECHA}</a></p></div>
+<p><a class="btn" href="${WA_GENERAL}">${ICO_WA}Escribir a ${esc(NOMBRE)}</a></p>
+<p><a class="enl" href="${ruta(SLUG_OPINIONES)}">Opiniones de sus clientes ${FLECHA}</a> · <a class="enl" href="/es/">Conocer Tony Kansai Guide ${FLECHA}</a></p></div>
 </div></div></section>
 
 ${FAQ_GLOBAL.length ? `<section class="seccion" id="preguntas" aria-labelledby="t-faq"><div class="kap">
@@ -1264,6 +1365,7 @@ ${hero({ k: p.foto, alt: p.h1, sub: true, corps: `${migaHtml(miga, lang)}
 <div class="kap articulo">
 <article class="cuerpo">
 <p class="entr">${rico(p.entradilla)}</p>
+${p.ficha ? fichaRapida(lang) : ''}
 ${mapaFig}
 ${diasHtml}
 ${secciones.map((s) => `<h2 id="${s.id}">${rico(s.h2)}</h2>
@@ -1292,10 +1394,50 @@ ${rel.length ? `<section class="seccion alt" aria-labelledby="t-rel"><div class=
   const jsonld = { '@context': 'https://schema.org', '@graph': [
     migaLd(miga), ...faqLd(p.faq, lang), ...viaje,
     { '@type': 'WebPage', url: url(p.slug), inLanguage: lang, name: p.titulo, description: p.descripcion, dateModified: HOY, about: { '@id': SERVICIO_LD['@id'] }, primaryImageOfPage: imagenOg(p.foto), author: { '@id': PERSONA_LD['@id'] }, publisher: NEGOCIO },
-    PERSONA_LD,
+    personaLd(lang),
   ] }
   escribir(p.slug, pagina({ slug: p.slug, titulo: p.titulo, desc: p.descripcion, image: imagenOg(p.foto), jsonld, corps, lang,
     alternos: lang === 'en' ? [['en', url(p.slug)], ['es', url('')], ['x-default', url('')]] : undefined }))
+}
+
+// ---------------------------------------------------------------- opiniones de clientes
+// Página indexable con cada opinión en el HTML; el formulario es /familias/opiniones/
+// (scripts/formularios-guias.mjs, noindex). El cron diario de deploy las mete en el HTML.
+{
+  const miga = [...migaBase('es'), ['Opiniones de clientes', url(SLUG_OPINIONES)]]
+  const tarjetaOp = (y) => `<li data-id="${esc(y.id)}"><p class="estrellas" aria-label="${y.stars}/5">${'★'.repeat(y.stars)}${'☆'.repeat(5 - y.stars)}</p><p>${esc(y.text)}</p><p class="autor">${esc(y.name)}${y.country ? ` · ${esc(y.country)}` : ''}${y.tour ? ` · ${esc(y.tour)}` : ''}${y.date ? ` · ${esc(y.date)}` : ''}</p></li>`
+  const script = `<script>
+fetch('/api/resenas/publicas?guia=antonio',{cache:'no-cache'}).then(r=>r.ok?r.json():null).then(d=>{
+  const ul=document.getElementById('opLista'); if(!d||!ul) return
+  const e=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c])
+  for(const y of d.reviews||[]){ if(!y.id||!y.text||!y.stars||ul.querySelector('[data-id="'+CSS.escape(y.id)+'"]')) continue
+    ul.insertAdjacentHTML('afterbegin','<li data-id="'+e(y.id)+'"><p class="estrellas">'+'★'.repeat(y.stars)+'☆'.repeat(5-y.stars)+'</p><p>'+e(y.text)+'</p><p class="autor">'+e(y.name)+(y.country?' · '+e(y.country):'')+(y.tour?' · '+e(y.tour):'')+'</p></li>')
+    document.getElementById('opVacio').hidden=true }
+}).catch(()=>{})
+</script>`
+  const corps = `
+${hero({ k: 'familia', alt: 'Opiniones de clientes de Antonio', sub: true, corps: `${migaHtml(miga)}
+<h1>Opiniones de clientes sobre ${esc(NOMBRE)}, coordinador de viajes en Japón</h1>
+<p class="lead entra">${RESUMEN_OP ? `${esc(RESUMEN_OP)}.` : 'Lo que cuentan las familias y los grupos que han viajado por Japón con Antonio.'}</p>` })}
+<section class="seccion" style="padding-top:clamp(48px,7vw,88px)"><div class="kap">
+<p class="lead" style="color:var(--tinta)">${RESUMEN_OP ? `${esc(NOMBRE)}, coordinador de viajes en Japón del equipo Tony Kansai Guide, tiene ${esc(RESUMEN_OP.replace(', media', ', con una media de'))}. Cada opinión la ha dejado un viajero en el formulario de /familias/opiniones/ y se publica tal cual, sin retoques.` : `Todavía no hay opiniones publicadas. Las dejan los propios viajeros en el formulario de /familias/opiniones/ y se publican tal cual, sin retoques; irán apareciendo aquí.`}</p>
+<ul class="opiniones" id="opLista">${OPINIONES.map(tarjetaOp).join('')}</ul>
+<p class="op-vacio" id="opVacio"${OPINIONES.length ? ' hidden' : ''}>¿Has viajado por Japón con ${esc(NOMBRE)}? Tu opinión ayuda a otras familias a decidirse.</p>
+<p><a class="btn" href="${ruta(SLUG_FORM)}">Dejar una opinión</a></p>
+${script}
+${fichaRapida('es')}
+<p style="margin-top:32px"><a class="btn" href="${wa(`Hola ${NOMBRE}, he leído las opiniones de tu página. Somos una familia/grupo de __ personas y queremos viajar a Japón. Fechas: `)}">${ICO_WA}Escribir a ${esc(NOMBRE)}</a></p>
+<p><a class="enl" href="${SECCION}">Volver a Familias y grupos ${FLECHA}</a></p>
+</div></section>`
+  const negocioLd = { '@type': 'LocalBusiness', ...NEGOCIO, address: { '@type': 'PostalAddress', addressLocality: 'Osaka', addressRegion: 'Osaka', addressCountry: 'JP' } }
+  const reviewsLd = OPINIONES.map((y) => ({ '@type': 'Review', reviewRating: { '@type': 'Rating', ratingValue: y.stars, bestRating: 5 }, author: { '@type': 'Person', name: y.name }, reviewBody: y.text, inLanguage: y.lang || 'es', itemReviewed: negocioLd }))
+  const jsonld = { '@context': 'https://schema.org', '@graph': [
+    PERSONA_LD, ...reviewsLd, migaLd(miga),
+    { '@type': 'WebPage', url: url(SLUG_OPINIONES), inLanguage: 'es', name: `Opiniones de clientes sobre ${NOMBRE}`, dateModified: HOY, about: { '@id': PERSONA_LD['@id'] } },
+  ] }
+  escribir(SLUG_OPINIONES, pagina({ slug: SLUG_OPINIONES, image: RETRATO_URL ?? imagenOg('familia'), jsonld, corps,
+    titulo: `Opiniones de clientes sobre ${NOMBRE}, coordinador de viajes en Japón | Tony Kansai Guide`,
+    desc: RESUMEN_OP ? `${NOMBRE}, coordinador de viajes en Japón para familias y grupos: ${RESUMEN_OP}. Leer las opiniones, dejar la tuya y escribirle por WhatsApp.` : `Opiniones de las familias y grupos que viajan por Japón con ${NOMBRE}, coordinador de viajes del equipo Tony Kansai Guide. Deja la tuya o escríbele por WhatsApp.` }))
 }
 
 // ---------------------------------------------------------------- salida y comprobación

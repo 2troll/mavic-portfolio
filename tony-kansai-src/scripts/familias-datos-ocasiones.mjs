@@ -388,7 +388,7 @@ export const PAGINAS_EXTRA = [
       },
       {
         h2: 'Qué gestiona para tu agencia',
-        parrafos: ['Tu cliente viaja con tu marca y Antonio coordina en destino, con una sola persona de contacto en español por WhatsApp.'],
+        parrafos: ['Tu cliente viaja con tu marca y Antonio coordina en destino, con una sola persona de contacto en español por WhatsApp. Vive en Japón desde hace cuatro años y habla japonés muy bien, así que trata directamente con hoteles, ryokan, conductores y guías.'],
         lista: [
           'Diseño del itinerario con tiempos reales.',
           'Guías en español en las visitas.',
@@ -416,9 +416,9 @@ export const PAGINAS_EXTRA = [
   {
     slug: 'spanish-speaking-family-trips-japan',
     titulo: 'Spanish-speaking trip coordinator for families in Japan',
-    descripcion: 'Antonio is a Spanish-speaking coordinator based in Japan for families, groups of 6 to 10 and travel agencies: guides, itineraries, hotels, transport.',
+    descripcion: 'Antonio, a professional trip coordinator living in Japan, works in Spanish, Japanese, English and Catalan with families, groups of 6 to 10 and travel agencies.',
     h1: 'A Spanish-speaking trip coordinator for families and agencies in Japan',
-    entradilla: 'Yes. Antonio is a trip coordinator and guide based in Japan who works in Spanish with families and groups of 6 to 10 people from Spain, Mexico and Central America, and with travel agencies. He arranges Spanish-speaking guides, custom itineraries, hotels, private transport for groups of more than 8, mountain and ryokan stays and VIP-style trips anywhere in Japan. Quotes are tailor-made via WhatsApp.',
+    entradilla: 'Yes. Antonio is a professional trip coordinator who has lived in Japan for four years. He works in Spanish, and also speaks Japanese, English and Catalan, with families and groups of 6 to 10 people from Spain, Mexico and Central America, and with travel agencies. He arranges Spanish-speaking guides, custom itineraries, hotels, private transport for groups of more than 8, mountain and ryokan stays and VIP-style trips anywhere in Japan. Quotes are tailor-made via WhatsApp.',
     secciones: [
       {
         h2: 'What he handles',
@@ -437,6 +437,10 @@ export const PAGINAS_EXTRA = [
         parrafos: ['Flights, travel insurance, meals and restaurant bookings, airport transfers and shinkansen tickets are not handled. Antonio can advise on how to sort them out, but they are the traveller\'s or the agency\'s responsibility.'],
       },
       {
+        h2: 'Languages and experience',
+        parrafos: ['Antonio speaks Spanish, Japanese (very well), English and Catalan. He plans the trip with the family or the agency in Spanish, English or Catalan, and deals in Japanese with hotels, ryokan, drivers and guides. He has coordinated very large families over many days and has travelled all over Japan.'],
+      },
+      {
         h2: 'Who it is for',
         parrafos: ['Spanish-speaking families, multi-generation groups, quinceañera and graduation trips, and travel agencies in Spain, Mexico and Central America that need a reliable coordinator on the ground in Japan. South Korea is coming soon.'],
       },
@@ -444,12 +448,15 @@ export const PAGINAS_EXTRA = [
     faq: [
       { p: 'Is there a Spanish-speaking trip coordinator for families in Japan?', r: 'Yes. Antonio coordinates custom trips in Spanish for families and groups of 6 to 10, and for travel agencies.' },
       { p: 'Does he work with travel agencies?', r: 'Yes, with agencies from Spain, Mexico and Central America.' },
+      { p: 'Which languages does Antonio speak?', r: 'Spanish, Japanese, English and Catalan.' },
+      { p: 'Is there a Catalan-speaking trip coordinator in Japan?', r: 'Yes. Antonio speaks Catalan and can plan the whole trip in Catalan with families from Catalonia.' },
       { p: 'How much does it cost?', r: 'Every trip is quoted individually via WhatsApp.' },
     ],
     foto: 'hero',
     relacionadas: ['organizar-viaje-japon-familia', 'agencias-receptivo-japon', 'guia-en-espanol-japon', 'agencias-mexico-receptivo-japon'],
     categoria: 'agencias',
     lang: 'en',
+    ficha: true,
   },
 ]
 

@@ -3,6 +3,7 @@
 //   /tr/yorum/   Ferhat, en turco, con aire de azulejo de İznik
 //   /ru/otzyv/   Larion, en ruso, con aire de porcelana Gzhel
 //   /fr/avis/    Iheb, en francés, con aire de toile de Jouy
+//   /familias/opiniones/  Antonio, en español, con aire de seigaiha (olas japonesas)
 // Envían al mismo receptor que /opinar.html (Worker /api/resenas) con `guide`,
 // y el Worker las publica solas en la página de ese guía (no en la de Tony).
 // HTML suelto, sin React: rutas-estaticas.mjs no los pisa (data-estatica) y
@@ -75,6 +76,27 @@ const FORMULARIOS = [
       hata: 'Envoi impossible. Vérifiez votre connexion et réessayez.',
       tamam: 'Merci ! Votre avis est publié.', bekle: 'Merci ! Votre avis a bien été reçu et sera publié sous peu.',
       gor: 'Voir tous les avis sur Iheb →',
+    },
+  },
+  {
+    ruta: 'familias/opiniones', lang: 'es', guia: 'antonio', pagina: '/familias/opiniones-clientes/', serit: 'Antonio · Viajes a Japón para familias y grupos',
+    ciudades: ['Kioto', 'Osaka', 'Tokio', 'Nara', 'Hakone y monte Fuji', 'Alpes japoneses', 'Hiroshima y Miyajima', 'Viaje completo por Japón'],
+    // Seigaiha: verde pino y oro sobre papel washi, los colores de /familias/.
+    tema: { fondo: '#f3f2ee', tinta: '#15211c', acento: '#1d5c45', acento2: '#c9861d', resalte: '#a8432c', kart: '#fbfbf8' },
+    patron: `<svg xmlns='http://www.w3.org/2000/svg' width='80' height='40' viewBox='0 0 80 40'><g fill='none' stroke='%231d5c45' stroke-width='1.4'><path d='M0 40a20 20 0 0 1 40 0M8 40a12 12 0 0 1 24 0M16 40a4 4 0 0 1 8 0'/><path d='M40 40a20 20 0 0 1 40 0M48 40a12 12 0 0 1 24 0M56 40a4 4 0 0 1 8 0'/><path d='M-20 20a20 20 0 0 1 40 0M20 20a20 20 0 0 1 40 0M60 20a20 20 0 0 1 40 0' stroke='%23c9861d'/></g></svg>`,
+    t: {
+      titulo: '¿Qué tal el viaje con Antonio?',
+      baslik: 'Dejar una opinión a Antonio | Viajes a Japón para familias y grupos',
+      giris: 'Con unas frases basta. Tu opinión se publica en la página de Antonio y ayuda a otras familias y grupos a preparar su viaje a Japón.',
+      puan: 'Tu nota', ad: 'Tu nombre', adOrnek: 'Ej. Familia García', ulke: 'Ciudad / país', ulkeOrnek: 'Ej. Guadalajara, México',
+      tur: '¿Qué viaje?', turSec: 'Elegir (opcional)', diger: 'Otro',
+      yorum: 'Tu opinión', yorumOrnek: '¿Cómo fue el viaje? ¿Qué es lo que más te gustó de cómo lo organizó Antonio?',
+      izin: 'Acepto que mi opinión se publique en la web con mi nombre y mi ciudad.',
+      gonder: 'Enviar opinión', gonderiliyor: 'Enviando…',
+      eksik: 'Pon una nota, escribe tu nombre, una opinión de al menos 20 caracteres y marca la casilla de permiso.',
+      hata: 'No se ha podido enviar. Revisa la conexión e inténtalo de nuevo.',
+      tamam: '¡Gracias! Tu opinión ya está publicada.', bekle: '¡Gracias! Hemos recibido tu opinión y se publicará en breve.',
+      gor: 'Ver las opiniones sobre Antonio →',
     },
   },
 ]
