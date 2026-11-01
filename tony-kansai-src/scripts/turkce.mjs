@@ -337,7 +337,7 @@ const SSS = [
   ['Ferhat kimdir?', "Ferhat, Türk bir tur rehberidir ve 4 yıldır Japonya'da yaşıyor. Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel turlar yapıyor. Tony Kansai Guide ekibinin Türkçe rehberidir."],
   ["Japonya'da Türkçe konuşan rehber var mı?", "Evet. Ferhat, Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel tur yapan Türk rehberdir. Rezervasyon WhatsApp'tan."],
   ['Tur hangi dilde?', 'Tur tamamen Türkçe. Ferhat yalnızca Türkçe rehberlik yapar; bu yüzden Japonya\'da kendi dilinizde soru sorup cevap alabilirsiniz.'],
-  ['Fiyat ne kadar?', "Fiyat; kişi sayısına, tur süresine ve gidilecek yerlere göre değişir. Ferhat fiyatı WhatsApp'tan, programınızı öğrendikten sonra net olarak bildirir. Fiyatları makuldür."],
+  ['Fiyat ne kadar?', "Fiyat; kişi sayısına, tur süresine ve gidilecek yerlere göre değişir. Ferhat fiyatı WhatsApp'tan, programınızı öğrendikten sonra net olarak bildirir. Fiyatları makuldür. Sitenin diğer dillerindeki sabit fiyatlar (örneğin 4 saat 38.000 ¥, 8 saat 58.000 ¥) Tony'nin turlarıdır, Ferhat'ın değil." ],
   ['Fiyata neler dahil değil?', 'Tren ve otobüs biletleri, müze ve tapınak giriş ücretleri ve yemekler genellikle fiyata dahil değildir; gün içinde siz ödersiniz.'],
   ['Tur özel mi, grup turu mu?', 'Özel tur: rehber sadece sizin aileniz veya arkadaş grubunuz içindir. Başka turistlerle birleştirilmez.'],
   ['Helal yemek ve namaz için yardım var mı?', "Evet. Kyoto ve Osaka'daki helal ve Müslüman dostu restoranlar ile camiler (örneğin Kobe Camii) programa eklenebilir, namaz vakitlerine göre mola verilir."],
@@ -516,7 +516,7 @@ ${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} 
 <li><strong>Dil:</strong> Türkçe. Tur baştan sona Türkçe anlatılır.</li>
 <li><strong>Nerede:</strong> Kansai bölgesi: Kyoto, Osaka, Nara, Kobe, Himeji. Hiroshima, Miyajima ve Koyasan için günübirlik turlar sorulabilir.</li>
 <li><strong>Tur tipi:</strong> Özel tur, sadece sizin aileniz veya grubunuz. Başka turistlerle birleştirilmez.</li>
-<li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan bildirilir; makul fiyatlar. Ulaşım, giriş ücretleri ve yemekler genellikle dahil değildir.</li>
+<li><strong>Fiyat:</strong> Gruba ve programa göre WhatsApp'tan bildirilir; makul fiyatlar. Ulaşım, giriş ücretleri ve yemekler genellikle dahil değildir. Sitenin diğer dillerindeki sabit fiyatlar (örneğin 4 saat 38.000 ¥, 8 saat 58.000 ¥) Tony'nin turlarıdır, Ferhat'ın değil.</li>
 <li><strong>Müslüman gezginler için:</strong> Helal ve Müslüman dostu restoranlar, camiler ve namaz molaları programa eklenebilir.</li>
 <li><strong>İletişim:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
 <li><strong>Yorumlar:</strong> ${YORUMLAR.length ? `${OZET_YORUM}, <a href="#yorumlar">okuyun</a>` : '<a href="/tr/yorum/">ilk yorumu yazın</a>'}</li>
@@ -647,7 +647,7 @@ ${kahraman('fushimi-tunel', 'Fushimi Inari, Kyoto', `<span class="etiket"><a hre
 <li><strong>Language:</strong> Turkish only. The whole tour is in Turkish.</li>
 <li><strong>Area:</strong> Kansai: Kyoto, Osaka, Nara, Kobe, Himeji. Day trips further away (Hiroshima, Miyajima, Koyasan) on request.</li>
 <li><strong>Type:</strong> private tour, only your family or group.</li>
-<li><strong>Price:</strong> per group, quoted on WhatsApp after you send your plan. Trains, entry fees and meals are usually not included.</li>
+<li><strong>Price:</strong> per group, quoted on WhatsApp after you send your plan. Trains, entry fees and meals are usually not included. The fixed prices shown elsewhere on this site (e.g. 38,000 ¥ for 4 hours, 58,000 ¥ for 8 hours) are Tony's tours, not Ferhat's.</li>
 <li><strong>Muslim travellers:</strong> halal or Muslim-friendly restaurants, mosques (Kobe Mosque) and prayer breaks can be built into the day.</li>
 ${YORUMLAR.length ? `<li><strong>Reviews:</strong> ${YORUMLAR.length} guest reviews, average ${ORTALAMA.replace(',', '.')}/5 (<a href="/tr/#yorumlar">read them, in Turkish</a>).</li>` : ''}
 <li><strong>Contact:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
