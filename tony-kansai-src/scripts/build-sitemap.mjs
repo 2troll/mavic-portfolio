@@ -49,7 +49,9 @@ const paginas = [
   { loc: '/familias', priority: '1.0', changefreq: 'weekly', v7: 'familias' },
   ...['condiciones', 'organizar-viaje-japon-familia', 'viaje-japon-grupo-10-personas', 'transporte-privado-japon', 'ryokan-y-montana-en-familia', 'itinerario-japon-a-medida', 'japon-vip-a-medida', 'guia-en-espanol-japon', 'viaje-japon-desde-espana', 'viaje-japon-desde-mexico', 'viaje-japon-desde-centroamerica', 'tasas-turisticas-japon', 'habitaciones-familia-japon', 'comer-en-japon-en-grupo', 'tarjeta-icoca-japon', 'aeropuerto-al-hotel-japon', 'shinkansen-en-familia', 'viaje-japon-con-ninos', 'agencias-receptivo-japon', 'japon-y-corea-del-sur',
     // Ronda 2: destinos, itinerarios, temporadas, ocasiones y agencias (familias-datos-destinos.mjs y familias-datos-ocasiones.mjs).
-    'kioto-en-familia', 'osaka-en-familia', 'tokio-en-familia', 'nara-en-familia', 'hakone-y-monte-fuji-en-familia', 'takayama-y-shirakawago-en-familia', 'kanazawa-en-familia', 'hiroshima-y-miyajima-en-familia', 'itinerario-japon-7-dias-familia', 'itinerario-japon-10-dias-familia', 'itinerario-japon-14-dias-familia', 'universal-studios-japan-en-familia', 'tokyo-disney-en-familia', 'sakura-2027-en-familia', 'semana-santa-japon-2027', 'otono-momiji-japon-familia', 'japon-en-invierno-con-ninos', 'vacaciones-de-verano-japon-familia', 'viaje-quinceanera-japon', 'viaje-japon-con-abuelos', 'reunion-familiar-japon', 'viaje-graduacion-japon', 'agencias-mexico-receptivo-japon', 'spanish-speaking-family-trips-japan', 'opiniones-clientes'].map((c) => ({ loc: `/familias/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'familias' })),
+    'kioto-en-familia', 'osaka-en-familia', 'tokio-en-familia', 'nara-en-familia', 'hakone-y-monte-fuji-en-familia', 'takayama-y-shirakawago-en-familia', 'kanazawa-en-familia', 'hiroshima-y-miyajima-en-familia', 'itinerario-japon-7-dias-familia', 'itinerario-japon-10-dias-familia', 'itinerario-japon-14-dias-familia', 'universal-studios-japan-en-familia', 'tokyo-disney-en-familia', 'sakura-2027-en-familia', 'semana-santa-japon-2027', 'otono-momiji-japon-familia', 'japon-en-invierno-con-ninos', 'vacaciones-de-verano-japon-familia', 'viaje-quinceanera-japon', 'viaje-japon-con-abuelos', 'reunion-familiar-japon', 'viaje-graduacion-japon', 'agencias-mexico-receptivo-japon', 'spanish-speaking-family-trips-japan', 'opiniones-clientes',
+    // Ronda 3 (3-11-2026): Sudamérica, Colombia, familias hispanas de EE. UU., jubilados, presupuesto y vuelos (familias-datos-latam.mjs).
+    'viaje-japon-desde-colombia', 'viaje-japon-desde-argentina', 'viaje-japon-desde-chile', 'viaje-japon-desde-peru', 'viaje-japon-desde-estados-unidos', 'japon-grupo-amigos-jubilados', 'presupuesto-viaje-japon-familia-dolares', 'vuelos-latinoamerica-japon-escalas'].map((c) => ({ loc: `/familias/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'familias' })),
   // Larion: tours a la RPDC para rusos, HTML estático de scripts/kndr.mjs.
   // Larion, respuestas en ruso para las IAs y Yandex: HTML estático de scripts/russkij.mjs.
   { loc: '/ru/otvety', priority: '0.9', changefreq: 'weekly', v7: 'russkij' },
@@ -58,7 +60,7 @@ const paginas = [
   ...['rozhdestvo-v-phenyane', 'masikryon', 'myohyan', 'den-solntsa', 'pektusan', 'vonsan-kalma', 'individualnyj', 'kak-poehat-v-severnuyu-koreyu', 'skolko-stoit-tur-v-kndr', 'pravila-dlya-turistov-v-kndr', 'vonsan-kalma-kurort', 'viza-v-kndr-dlya-rossiyan', 'vip-tur-v-kndr', 'kak-dobratsya-do-phenyana', 'kndr-s-detmi', 'otzyvy-turistov-o-kndr', 'svadebnoe-puteshestvie-v-kndr', 'kogda-luchshe-ehat-v-kndr', 'chto-posmotret-v-phenyane', 'kuhnya-kndr', 'korporativnyj-tur-v-kndr'].map((c) => ({ loc: `/ru/kndr/${c}`, priority: '0.8', changefreq: 'monthly', v7: 'kndr' })),
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },
-  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'osaka-bir-gunde', 'tokyodan-kyotoya', 'japonya-balayi', 'japonya-aile-cocuk', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
+  ...['kyoto', 'osaka', 'nara', 'kobe', 'himeji', 'japonya-vize', 'helal-yemek-cami', 'osakadan-kyotoya-ulasim', 'kansai-havalimani-ulasim', 'japonya-gezi-plani', 'turkce-rehber-japonya', 'japonya-ne-zaman-gidilir', 'japonya-oncesi-bilinmesi-gerekenler', 'kyoto-bir-gunde', 'osaka-bir-gunde', 'tokyodan-kyotoya', 'japonya-balayi', 'japonya-aile-cocuk', 'kyoto-helal-restoranlar', 'osaka-helal-restoranlar', 'japonyada-namaz-vakitleri-ve-mescitler', 'ramazanda-japonya', 'japonya-balayi-7-gun', 'turkiyeden-japonyaya-ucus', 'japonya-butce-hesabi', 'kyoto-kimono-kiralama', 'turkish-speaking-guide-japan'].map((c) => ({ loc: `/tr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'turkce' })),
   { loc: '/es/montana', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/en/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
   { loc: '/ar/hiking', priority: '0.9', changefreq: 'monthly', v7: 'montana' },
@@ -149,12 +151,12 @@ const V7 = {
 const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
-  turkce: ['scripts/turkce.mjs'],
+  turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
   francais: ['scripts/francais.mjs'],
   private: ['scripts/private.mjs'],
   kndr: ['scripts/kndr.mjs'],
   russkij: ['scripts/russkij.mjs', 'scripts/russkij-otvety.mjs', 'scripts/russkij-otvety-poezdka.mjs', 'scripts/russkij-otvety-poezdka-2.mjs'],
-  familias: ['scripts/familias.mjs', 'scripts/familias-datos.mjs', 'scripts/familias-datos-destinos.mjs', 'scripts/familias-datos-ocasiones.mjs', 'scripts/familias-fotos.json'],
+  familias: ['scripts/familias.mjs', 'scripts/familias-datos.mjs', 'scripts/familias-datos-destinos.mjs', 'scripts/familias-datos-ocasiones.mjs', 'scripts/familias-datos-latam.mjs', 'scripts/familias-fotos.json'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
   ciudadTony: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'], ciudadLarion: ['src/v8/ciudades.ts', 'src/v8/CiudadPagina.tsx'],
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],

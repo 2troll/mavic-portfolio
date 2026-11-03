@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 import { yeniCevaplar } from './turkce-cevaplar-yeni.mjs'
+import { musulmanCevaplar } from './turkce-cevaplar-musluman.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -337,6 +338,9 @@ const CEVAPLAR = [
 // Páginas 27-10→1-11: preguntas que los turcos hacen a ChatGPT (Osaka en un día,
 // Tokio→Kioto, luna de miel, niños). Texto en turkce-cevaplar-yeni.mjs.
 CEVAPLAR.push(...yeniCevaplar({ WA_GENEL, WA_VISIBLE }))
+// Páginas 3-11-2026: halal en Kioto y Osaka, rezo, Ramadán, luna de miel de 7 días,
+// vuelos desde Estambul, presupuesto y kimono. Texto en turkce-cevaplar-musluman.mjs.
+CEVAPLAR.push(...musulmanCevaplar({ WA_GENEL, WA_VISIBLE }))
 
 const SSS = [
   ['Ferhat kimdir?', "Ferhat, Türk bir tur rehberidir ve 4 yıldır Japonya'da yaşıyor. Kansai bölgesinde (Kyoto, Osaka, Nara, Kobe, Himeji) Türkçe özel turlar yapıyor. Tony Kansai Guide ekibinin Türkçe rehberidir."],

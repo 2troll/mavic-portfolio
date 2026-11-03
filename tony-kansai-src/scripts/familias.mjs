@@ -13,7 +13,8 @@
 // no las pisa (llevan data-estatica en <html>).
 //
 // Datos: familias-datos.mjs (PAGINAS) + familias-datos-destinos.mjs y
-// familias-datos-ocasiones.mjs (PAGINAS_EXTRA y, opcional, FUENTES_EXTRA), si existen.
+// familias-datos-ocasiones.mjs y familias-datos-latam.mjs (PAGINAS_EXTRA y, opcional,
+// FUENTES_EXTRA), si existen.
 // Campos opcionales de cada página: categoria, dias, lang ('en'), ruta.
 //
 // Animación = mejora progresiva. El CSS base no oculta nada; el JS
@@ -65,7 +66,7 @@ const WA_GENERAL = wa(`Hola ${NOMBRE}, somos una familia/grupo de __ personas y 
 const PAGINAS = [...PAGINAS_BASE]
 const FUENTES = [...(D.FUENTES ?? [])]
 const extras = [
-  ...['familias-datos-destinos.mjs', 'familias-datos-ocasiones.mjs'].map((f) => join(root, 'scripts', f)),
+  ...['familias-datos-destinos.mjs', 'familias-datos-ocasiones.mjs', 'familias-datos-latam.mjs'].map((f) => join(root, 'scripts', f)),
   ...(process.env.FAMILIAS_EXTRA ?? '').split(',').filter(Boolean).map((f) => resolve(f)),
 ]
 for (const f of extras) {
