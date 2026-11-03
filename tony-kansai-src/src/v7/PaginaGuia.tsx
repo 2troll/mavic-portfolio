@@ -1153,6 +1153,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <a href="/private/" lang="en">Private guide · Mario</a>
             <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Ларион</a>}
+            {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
         </div>
         <details className="v7-creditos">
