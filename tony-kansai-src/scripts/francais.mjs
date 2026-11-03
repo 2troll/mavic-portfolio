@@ -31,6 +31,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
+import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1086,22 +1088,30 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
-<style>${CSS}</style>
+${equipoFuente}
+<style>${CSS}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
-<nav aria-label="Régions">${VILLES.map((s) => `<a href="/fr/${s.yol}/">${s.nav}</a>`).join('')}<a href="/fr/${AVIS_PAGE}/">Avis</a></nav></div></header>
+${navHTML({ etiqueta: 'Menu principal', abrir: 'Ouvrir le menu', variante: 'fr', grupos: [
+  { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
+  { t: 'Infos pratiques', enlaces: [...REPONSES.slice(0, 6).map((c) => [esc(c.h1), `/fr/${c.yol}/`]), ...ANIME.slice(0, 2).map((c) => [esc(c.h1), `/fr/${c.yol}/`])] },
+  { t: 'Iheb', enlaces: [['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English', h: `/fr/${ANGLAIS}/`, lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/']] },
+], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp : Iheb' } })}</div></header>
 <main>
 ${corps}
 </main>
-<footer><div class="kap">
-<p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe. WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
-<p><a href="/fr/${AVIS_PAGE}/">Avis des voyageurs sur Iheb</a>${RESUME_AVIS ? ` (${RESUME_AVIS})` : ''} · <a href="/fr/avis/">Laisser un avis</a></p>
-<p>Infos pratiques en français : ${REPONSES.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
-<p>Anime et cartes Pokémon : ${ANIME.map((c) => `<a href="/fr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
-<p lang="en">In English: <a href="/fr/${ANGLAIS}/">French-speaking tour guide in Tokyo</a></p>
-<p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/ru/" hreflang="ru">Русский</a> · Dernière mise à jour : ${HOY}</p>
-</div></footer>
+<footer>${pieHTML({ variante: 'fr', mas: 'Tout voir',
+  intro: `<p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe.</p><p><a href="/fr/${AVIS_PAGE}/">Avis des voyageurs sur Iheb</a>${RESUME_AVIS ? ` (${RESUME_AVIS})` : ''} · <a href="/fr/avis/">Laisser un avis</a></p>`,
+  columnas: [
+    { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
+    { t: 'Infos pratiques', enlaces: [...REPONSES.map((c) => [esc(c.h1), `/fr/${c.yol}/`]), { t: 'French-speaking tour guide in Tokyo', h: `/fr/${ANGLAIS}/`, lang: 'en', hreflang: 'en' }] },
+    { t: 'Anime et Pokémon', enlaces: ANIME.map((c) => [esc(c.h1), `/fr/${c.yol}/`]) },
+    { t: 'Contact', fija: true, html: `<p>WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a></p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p><p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/tr/" hreflang="tr">Türkçe</a> · <a href="/ru/" hreflang="ru">Русский</a></p>` },
+  ],
+  equipo: equipoHTML({ lang, actual: 'iheb', variante: 'fr' }),
+  fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Dernière mise à jour : ${HOY_FR}</span>`,
+})}</footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp : Iheb</a>
 </body>
 </html>
@@ -1264,7 +1274,7 @@ ${s.lieux.map(([nom, texte, k]) => `<li>${cartePhoto(k, nom)}<div class="ki"><h3
 </ul>
 <h2>Bon à savoir</h2>
 <p>${esc(s.astuce)}</p>
-${s.voir ? `<p>À lire aussi : ${s.voir.map((y) => { const c = REPONSES.find((r) => r.yol === y); if (!c) throw new Error(`francais: ${s.yol} enlaza a ${y}, que no existe`); return `<a href="/fr/${y}/">${esc(c.h1)}</a>` }).join(' · ')}</p>` : ''}
+${s.voir ? tarjetasHTML({ t: 'À lire aussi', variante: 'fr', mas: 'Tout voir', enlaces: s.voir.map((y) => { const c = REPONSES.find((r) => r.yol === y); if (!c) throw new Error(`francais: ${s.yol} enlaza a ${y}, que no existe`); return [esc(c.h1), `/fr/${y}/`] }) }) : ''}
 <h2>La visite en pratique</h2>
 <ul class="ozet">
 <li><strong>Guide :</strong> Iheb, qui vit au Japon et guide à Tokyo et dans ses environs.</li>
@@ -1275,7 +1285,7 @@ ${s.voir ? `<p>À lire aussi : ${s.voir.map((y) => { const c = REPONSES.find((r)
 </ul>
 ${contactMini(lien, `Écrire à Iheb pour ${s.ad}`)}
 ${sectionAvis}
-<p>Autres régions : ${VILLES.filter((x) => x !== s).map((x) => `<a href="/fr/${x.yol}/">${x.ad}</a>`).join(' · ')} · <a href="/fr/">Accueil</a></p>
+${tarjetasHTML({ t: 'Autres régions', variante: 'fr', mas: 'Tout voir', enlaces: [...VILLES.filter((x) => x !== s).map((x) => [x.ad, `/fr/${x.yol}/`]), ['Accueil', '/fr/']] })}
 </div>`
   const jsonld = {
     '@context': 'https://schema.org',

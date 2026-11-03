@@ -25,7 +25,7 @@
 
   // Entradas al hacer scroll: tarjetas, títulos, listas y reseñas.
   document.documentElement.classList.add('hz')
-  const gir = g.utils.toArray('main h2, .izgara > li, ul.ozet > li, ul.yorumlar > li, details, .cevap, main ol > li')
+  const gir = g.utils.toArray('main h2, .izgara > li, ul.ozet > li, ul.yorumlar > li, main details, .cevap, main ol > li')
   gir.forEach((el) => el.classList.add('gir'))
   ST.batch(gir, {
     start: 'top 90%', once: true,

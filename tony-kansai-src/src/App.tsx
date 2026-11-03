@@ -67,6 +67,8 @@ const RUTAS_CIUDAD = [
 ]
 import { Corte } from './v7/Corte'
 import { MarcoLegal } from './v7/MarcoLegal'
+// Franja «Nuestros guías» al final de cada página (también la 404 y las legales).
+import { Equipo } from './v7/Equipo'
 
 // Páginas legales: el contenido de siempre dentro del marco nuevo de papel y tinta.
 // Rutas que aún sirve la web antigua; cualquier otra cosa es un 404 con el marco claro v7.
@@ -132,7 +134,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <CiudadPagina key={pathname} pg={ciudad} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -151,7 +153,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Viajeros key={mercado} id={mercado} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -165,7 +167,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Ventajas key={`${ventajas.id}-${ventajas.app ?? ''}`} id={ventajas.id} app={ventajas.app} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       </>
     )
@@ -178,7 +180,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <PaginaRespuesta key={respuesta} id={respuesta} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_GUIA), ...Object.keys(RUTAS_RESPUESTA)]} />
       </>
@@ -192,7 +194,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <GuiaTransporte key={guia} id={guia} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -206,7 +208,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Otono key={otono} id={otono} />
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -219,7 +221,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
-        <CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -228,6 +230,7 @@ export function Layout() {
 
   if (LEGALES.includes(pathname.replace(/\/+$/, ''))) {
     return (
+      <>
       <MarcoLegal>
         <Suspense fallback={<div className="min-h-screen" />}>
           <Routes>
@@ -241,6 +244,8 @@ export function Layout() {
         </Suspense>
         <CookieTardio compacto /><AvisoRuso />
       </MarcoLegal>
+      <Equipo />
+      </>
     )
   }
 
@@ -253,9 +258,12 @@ export function Layout() {
 
   if (!isAdmin && !RUTA_ANTIGUA.test(pathname)) {
     return (
+      <>
       <MarcoLegal sinPixel>
         <Suspense fallback={<div className="min-h-screen" />}><Pagina404 /></Suspense>
       </MarcoLegal>
+      <Equipo />
+      </>
     )
   }
 

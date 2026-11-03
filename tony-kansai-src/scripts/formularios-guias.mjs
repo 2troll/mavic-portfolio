@@ -11,6 +11,7 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -113,7 +114,8 @@ function html(f) {
 <title>${esc(t.baslik)}</title>
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<style>
+${equipoFuente}
+<style>${equipoCSS}
 :root{--fondo:${c.fondo};--tinta:${c.tinta};--acento:${c.acento};--acento2:${c.acento2};--resalte:${c.resalte};--kart:${c.kart};--suave:#5b6478}
 @media (prefers-color-scheme:dark){:root{--fondo:#0f1424;--tinta:#e9edf7;--kart:#18203a;--suave:#a5afc7}}
 *{box-sizing:border-box}
@@ -205,6 +207,7 @@ $('form').addEventListener('submit', async (e) => {
   } catch { uyari(T.hata); b.disabled = false; b.textContent = T.gonder; }
 });
 </script>
+${equipoHTML({ lang: f.lang, actual: f.guia })}
 </body>
 </html>
 `

@@ -15,6 +15,8 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
+import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 import { yeniCevaplar } from './turkce-cevaplar-yeni.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -428,20 +430,30 @@ ${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(go
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
-<style>${CSS}</style>
+${equipoFuente}
+<style>${CSS}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/tr/">Ferhat · Japonya Türkçe Rehber</a>
-<nav aria-label="Şehirler">${SEHIRLER.map((s) => `<a href="/tr/${s.yol}/">${s.ad}</a>`).join('')}</nav></div></header>
+${navHTML({ etiqueta: 'Ana menü', abrir: 'Menüyü aç', variante: 'tr', grupos: [
+  { t: 'Şehirler', enlaces: [...SEHIRLER.map((s) => [s.ad, `/tr/${s.yol}/`]), ['Ana sayfa', '/tr/']] },
+  { t: 'Bilgiler', enlaces: CEVAPLAR.slice(0, 8).map((c) => [esc(c.h1), `/tr/${c.yol}/`]) },
+  { t: 'Ekip', enlaces: [['Ferhat', '/tr/'], ['Rehberlerimiz', `#eq-titulo-${dil}`], { t: 'In English', h: `/tr/${INGILIZCE}/`, lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/en/']] },
+], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp: Ferhat' } })}</div></header>
 <main>
 ${govde}
 </main>
-<footer><div class="kap">
-<p>Ferhat, <a href="/en/">Tony Kansai Guide</a> ekibinin Türkçe rehberidir (Kansai, Japonya). WhatsApp: <a href="${WA_GENEL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
-<p>Türkçe bilgiler: ${CEVAPLAR.map((c) => `<a href="/tr/${c.yol}/">${esc(c.h1)}</a>`).join(' · ')}</p>
-<p lang="en">In English: <a href="/tr/${INGILIZCE}/">Turkish-speaking tour guide in Japan</a></p>
-<p>Diğer diller: <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/ru/" hreflang="ru">Русский</a> · Son güncelleme: ${HOY}</p>
-</div></footer>
+<footer>${pieHTML({ variante: 'tr', mas: 'Tümünü gör',
+  intro: `<p>Ferhat, <a href="/en/">Tony Kansai Guide</a> ekibinin Türkçe rehberidir (Kansai, Japonya).</p>`,
+  columnas: [
+    { t: 'Şehirler', enlaces: [...SEHIRLER.map((s) => [s.ad, `/tr/${s.yol}/`]), ['Ana sayfa', '/tr/']] },
+    { t: 'Türkçe bilgiler', enlaces: [...CEVAPLAR.map((c) => [esc(c.h1), `/tr/${c.yol}/`]), { t: 'Turkish-speaking tour guide in Japan', h: `/tr/${INGILIZCE}/`, lang: 'en', hreflang: 'en' }] },
+    { t: 'İletişim', fija: true, html: `<p>WhatsApp: <a href="${WA_GENEL}">${WA_VISIBLE}</a></p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` },
+    { t: 'Diğer diller', enlaces: [{ t: 'Español', h: '/es/', hreflang: 'es' }, { t: 'English', h: '/en/', hreflang: 'en' }, { t: 'العربية', h: '/ar/', hreflang: 'ar' }, { t: 'Русский', h: '/ru/', hreflang: 'ru' }, { t: 'Français', h: '/fr/', hreflang: 'fr' }] },
+  ],
+  equipo: equipoHTML({ lang: dil, actual: 'ferhat', variante: 'tr' }),
+  fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Son güncelleme: ${HOY}</span>`,
+})}</footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp: Ferhat</a>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
@@ -586,7 +598,7 @@ ${s.yerler.map(([ad, metin, k]) => `<li>${kartFoto(k, ad)}<div class="ki"><h3>${
 <li><strong>İletişim:</strong> WhatsApp <a href="${yazi}">${WA_VISIBLE}</a></li>
 </ul>
 ${yorumlarBolumu}
-<p>Diğer şehirler: ${SEHIRLER.filter((x) => x !== s).map((x) => `<a href="/tr/${x.yol}/">${x.ad}</a>`).join(' · ')} · <a href="/tr/">Ana sayfa</a></p>
+${tarjetasHTML({ t: 'Diğer şehirler', variante: 'tr', mas: 'Tümünü gör', enlaces: [...SEHIRLER.filter((x) => x !== s).map((x) => [x.ad, `/tr/${x.yol}/`]), ['Ana sayfa', '/tr/']] })}
 </div>`
   const jsonld = {
     '@context': 'https://schema.org',

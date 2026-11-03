@@ -34,6 +34,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
+import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
+import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -384,7 +386,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .marca small{display:block;font-weight:400;opacity:.8;font-size:12.5px}
 .cab nav{display:flex;gap:22px;font-size:14.5px;align-items:center}.cab nav a{opacity:.85}.cab nav a:hover{opacity:1}
 .cab nav a.siempre{opacity:1;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
-@media (max-width:860px){.cab nav a:not(.siempre){display:none}}
+
 /* hero */
 .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:flex-end;overflow:hidden;background:#0f1a15;color:#fff;isolation:isolate}
 .hero .fondo{position:absolute;inset:-3%;z-index:-2}.hero .fondo img,.hero .fondo .sinfoto{width:100%;height:100%;object-fit:cover;display:block}
@@ -1077,29 +1079,53 @@ ${alt.map(([l, h]) => `<link rel="alternate" hreflang="${l}" href="${h}">`).join
 ${HEAD_JS}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
-<style>${CSS}</style>
+${equipoFuente}
+<style>${CSS}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header class="cab"><div class="kap">
 <a class="marca" href="${SECCION}">${miniCara()}<span>${esc(NOMBRE)}<small>${t.sub}</small></span></a>
-<nav aria-label="${lang === 'en' ? 'Sections' : 'Secciones'}">${t.nav.map(([n, h, siempre]) => `<a${siempre ? ' class="siempre"' : ''} href="${h}"${lang === 'en' && h.startsWith(SECCION) ? ' hreflang="es"' : ''}>${esc(n)}</a>`).join('')}</nav>
+${navFamilias(lang, t)}
 </div></header>
 <main>
 ${corps}
 </main>
-<footer><div class="kap">
-<p>${t.pie}</p>
-<p>WhatsApp: <a href="${WA_GENERAL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
-<div class="pie-cats"><div><h4>${esc(t.seccion)}</h4><ul><li><a href="${SECCION}">${lang === 'en' ? 'Home (Spanish)' : 'Portada'}</a></li><li><a href="${ruta(SLUG_COND)}">${lang === 'en' ? 'What is included (Spanish)' : 'Qué incluye y qué no'}</a></li><li><a href="${ruta(SLUG_OPINIONES)}">${lang === 'en' ? 'Guest reviews (Spanish)' : 'Opiniones de clientes'}</a></li></ul></div>
-${CATS.map((c) => { const ps = PAGINAS.filter((p) => p.cat === c.id); return ps.length ? `<div><h4>${esc(c[lang])}</h4><ul>${ps.map((p) => `<li><a href="${ruta(p.slug)}"${p.lng !== lang ? ` hreflang="${p.lng}"` : ''}>${esc(p.h1)}</a></li>`).join('')}</ul></div>` : '' }).join('\n')}</div>
-<p><a href="${lang === 'en' ? '/en/' : '/es/'}">${t.volverWeb}</a> · ${t.otros}: ${lang === 'en' ? '<a href="/es/" hreflang="es">Español</a>' : '<a href="/en/" hreflang="en">English</a>'} · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/fr/" hreflang="fr">Français</a> · <a href="/tr/" hreflang="tr">Türkçe</a> · <a href="/ru/" hreflang="ru">Русский</a></p>
-<p>${t.actualizado}: <time datetime="${HOY}">${HOY}</time></p>
-</div></footer>
+<footer>${pieFamilias(lang, t)}</footer>
 <a class="wa-fijo" href="${lang === 'en' ? wa(`Hello ${NOMBRE}, we are a family/group of __ people and would like to travel to Japan. Dates: `) : WA_GENERAL}">${ICO_WA}<span>${esc(t.escribir)}</span></a>
 <script src="${SECCION}familias.js" defer></script>
 </body>
 </html>
 `
+}
+
+// Cabecera y pie (patrón de nawatravel.ae, scripts/menu-estatico.mjs): 3 desplegables
+// + botón arriba; abajo columnas cortas con el resto plegado, el equipo y una línea final.
+const enlacePag = (p, lang) => ({ t: esc(p.h1), h: ruta(p.slug), hreflang: p.lng !== lang ? p.lng : undefined })
+const pagsDe = (cats, lang) => PAGINAS.filter((p) => cats.includes(p.cat)).map((p) => enlacePag(p, lang))
+function navFamilias(lang, t) {
+  const en = lang === 'en'
+  const [cta, ...resto] = t.nav
+  const seccion = (h) => (en && h.startsWith(SECCION) ? { hreflang: 'es' } : {})
+  return navHTML({ etiqueta: en ? 'Sections' : 'Secciones', abrir: en ? 'Open menu' : 'Abrir menú', variante: 'familias', grupos: [
+    { t: en ? 'Destinations' : 'Destinos', enlaces: pagsDe(['destino', 'itinerario'], lang).slice(0, 8) },
+    { t: en ? 'Plan' : 'Planificar', enlaces: pagsDe(['practico', 'temporada', 'ocasion'], lang).slice(0, 8) },
+    { t: NOMBRE, enlaces: [...resto.map(([n, h]) => ({ t: esc(n), h, ...seccion(h) })), { t: en ? 'Guest reviews (Spanish)' : 'Opiniones de clientes', h: ruta(SLUG_OPINIONES), ...seccion(SECCION) }, { t: en ? 'Our guides' : 'Nuestros guías', h: `#eq-titulo-${lang}` }] },
+  ], cta: { t: esc(cta[0]), h: cta[1], cls: 'siempre' } })
+}
+function pieFamilias(lang, t) {
+  const en = lang === 'en'
+  const col = (id) => CATS.find((c) => c.id === id)[lang]
+  return pieHTML({ variante: 'familias', mas: en ? 'See all' : 'Ver todo',
+    intro: `<p>${t.pie}</p>`,
+    columnas: [
+      { t: `${col('destino')} · ${col('itinerario')}`, enlaces: pagsDe(['destino', 'itinerario'], lang) },
+      { t: `${col('temporada')} · ${col('ocasion')}`, enlaces: pagsDe(['temporada', 'ocasion'], lang) },
+      { t: col('practico'), enlaces: [{ t: en ? 'Home (Spanish)' : 'Portada', h: SECCION }, { t: en ? 'What is included (Spanish)' : 'Qué incluye y qué no', h: ruta(SLUG_COND) }, { t: en ? 'Guest reviews (Spanish)' : 'Opiniones de clientes', h: ruta(SLUG_OPINIONES) }, ...pagsDe(['practico', 'agencias'], lang)] },
+      { t: en ? 'Contact' : 'Contacto', fija: true, html: `<p>WhatsApp: <a href="${WA_GENERAL}">${WA_VISIBLE}</a></p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p><p><a href="${en ? '/en/' : '/es/'}">${t.volverWeb}</a></p><p>${t.otros}: ${en ? '<a href="/es/" hreflang="es">Español</a>' : '<a href="/en/" hreflang="en">English</a>'} · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/fr/" hreflang="fr">Français</a> · <a href="/tr/" hreflang="tr">Türkçe</a> · <a href="/ru/" hreflang="ru">Русский</a></p>` },
+    ],
+    equipo: equipoHTML({ lang, actual: 'antonio', variante: 'familias' }),
+    fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>${t.actualizado}: <time datetime="${HOY}">${HOY}</time></span>`,
+  })
 }
 
 function hero({ k, alt, corps, sub = false, clase = '', tras = '' }) {

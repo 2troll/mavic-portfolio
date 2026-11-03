@@ -1,0 +1,98 @@
+{
+  "_nota": "Fuente única del equipo de guías. La leen src/v7/datosEquipo.ts (páginas React) y scripts/equipo-estatico.mjs (/tr/, /fr/, /ru/kndr/, /familias/, /private/). Solo datos ya publicados en la web y en public/llms.txt: no inventar.",
+  "ui": {
+    "titulo": { "es": "Nuestros guías", "en": "Our guides", "ar": "مرشدونا", "ru": "Наши гиды", "tr": "Rehberlerimiz", "fr": "Nos guides" },
+    "sub": {
+      "es": "Cada guía te atiende en su idioma. Elige el tuyo.",
+      "en": "Each guide speaks with you in their own language. Pick yours.",
+      "ar": "كل مرشد يخدمك بلغته. اختر مرشدك.",
+      "ru": "Каждый гид говорит с вами на своём языке. Выберите своего.",
+      "tr": "Her rehber size kendi dilinde hizmet verir. Sizinkini seçin.",
+      "fr": "Chaque guide vous parle dans sa langue. Choisissez le vôtre."
+    },
+    "aqui": { "es": "Estás aquí", "en": "You are here", "ar": "أنت هنا", "ru": "Вы здесь", "tr": "Buradasınız", "fr": "Vous êtes ici" },
+    "equipo": { "es": "Equipo de Tony Kansai Guide", "en": "The Tony Kansai Guide team", "ar": "فريق Tony Kansai Guide", "ru": "Команда Tony Kansai Guide", "tr": "Tony Kansai Guide ekibi", "fr": "L’équipe Tony Kansai Guide" }
+  },
+  "idiomas": {
+    "es": "Español", "en": "English", "ar": "العربية", "ru": "Русский", "tr": "Türkçe", "fr": "Français", "ja": "日本語", "ca": "Català"
+  },
+  "guias": [
+    {
+      "id": "tony",
+      "ld": "/#tony",
+      "idiomas": ["es", "en", "ar"],
+      "zona": "Kansai: Kyoto, Osaka, Nara, Kobe, Himeji",
+      "foto": "/guides/tony-retrato.webp",
+      "contacto": { "wa": "34634193106" },
+      "versiones": {
+        "es": { "ruta": "/es/", "nombre": "Tony Hanma", "linea": "Guía privado en Kansai, en español", "boton": "Ver página", "oculto": " de Tony", "alt": "Foto de Tony Hanma",
+          "desc": "Tony Hanma, español que vive en Osaka, guía tours privados en español (nativo), inglés y árabe por Kioto, Osaka, Nara, Kobe y Himeji." },
+        "en": { "ruta": "/en/", "nombre": "Tony Hanma", "linea": "Private guide in Kansai, in English", "boton": "View page", "oculto": " of Tony", "alt": "Photo of Tony Hanma",
+          "desc": "Tony Hanma, a Spanish guide who lives in Osaka, runs private tours in Spanish (native), English and Arabic in Kyoto, Osaka, Nara, Kobe and Himeji." },
+        "ar": { "ruta": "/ar/", "nombre": "طوني هانما", "linea": "مرشد خاص في كانساي بالعربية", "boton": "عرض الصفحة", "oculto": " الخاصة بطوني", "alt": "صورة طوني هانما",
+          "desc": "طوني هانما، مرشد إسباني يعيش في أوساكا، ينظّم جولات خاصة بالإسبانية والإنجليزية والعربية في كيوتو وأوساكا ونارا وكوبي وهيميجي." }
+      }
+    },
+    {
+      "id": "larion",
+      "ld": "/#larion",
+      "idiomas": ["ru", "en"],
+      "zona": "Kansai and west Japan (Hiroshima, Miyajima)",
+      "foto": "/guides/guide-larion.webp",
+      "contacto": { "tg": "LUiGi19" },
+      "versiones": {
+        "ru": { "ruta": "/ru/", "nombre": "Ларион", "linea": "Гид на русском: Кансай и запад Японии", "boton": "Открыть", "oculto": " страницу Лариона", "alt": "Фото Лариона",
+          "desc": "Ларион, русскоязычный гид команды, проводит частные экскурсии на русском и английском по Киото, Осаке, Наре и западу Японии (Хиросима, Миядзима). Telegram @LUiGi19: ответит Тони, координатор Лариона." }
+      },
+      "extra": { "ruta": "/larion/", "lang": "en", "texto": "English" }
+    },
+    {
+      "id": "ferhat",
+      "ld": "/tr/#ferhat",
+      "idiomas": ["tr"],
+      "zona": "Kansai: Kyoto, Osaka, Nara, Kobe, Himeji",
+      "emblema": "F",
+      "contacto": { "wa": "818024786402" },
+      "versiones": {
+        "tr": { "ruta": "/tr/", "nombre": "Ferhat", "linea": "Kansai'de Türkçe özel rehber", "boton": "Sayfaya git", "oculto": ": Ferhat",
+          "desc": "Ferhat, 4 yıldır Japonya'da yaşayan Türk rehber; Kyoto, Osaka, Nara, Kobe ve Himeji'de yalnızca Türkçe özel turlar yapıyor." }
+      }
+    },
+    {
+      "id": "iheb",
+      "ld": "/fr/#iheb",
+      "idiomas": ["fr", "ar", "en"],
+      "zona": "Tokyo, Kanto, Nagano, Shizuoka",
+      "foto": "/fr/foto/iheb-cara-160.webp",
+      "contacto": { "wa": "818080155322" },
+      "versiones": {
+        "fr": { "ruta": "/fr/", "nombre": "Iheb", "linea": "Guide francophone à Tokyo et dans le Kanto", "boton": "Voir la page", "oculto": " d’Iheb", "alt": "Photo d’Iheb",
+          "desc": "Iheb guide en français (il parle aussi arabe et anglais) à Tokyo et dans le Kanto, autour du mont Fuji côté Shizuoka et dans la préfecture de Nagano ; spécialiste de l’anime et des cartes Pokémon." }
+      }
+    },
+    {
+      "id": "antonio",
+      "ld": "/familias/#antonio",
+      "idiomas": ["es", "ja", "en", "ca"],
+      "zona": "All of Japan",
+      "foto": "/familias/foto/antonio-cara-160.webp",
+      "contacto": { "wa": "34634193106" },
+      "versiones": {
+        "es": { "ruta": "/familias/", "nombre": "Antonio", "linea": "Viajes por todo Japón para familias y grupos", "boton": "Ver página", "oculto": " de Antonio", "alt": "Foto de Antonio",
+          "desc": "Antonio, coordinador de viajes profesional que vive en Japón desde hace cuatro años, organiza en español viajes a medida por todo Japón para familias y grupos; habla también japonés, inglés y catalán." }
+      }
+    },
+    {
+      "id": "mario",
+      "ld": "/private/#mario",
+      "idiomas": ["en", "es"],
+      "zona": "Based in Kansai, all of Japan",
+      "foto": "/private/foto/mario-480.webp",
+      "contacto": { "wa": "817089968582" },
+      "versiones": {
+        "en": { "ruta": "/private/", "nombre": "Mario", "linea": "Private guide in English, all of Japan", "boton": "View page", "oculto": " of Mario", "alt": "Photo of Mario",
+          "desc": "Mario, a professional private guide for four years based in Kansai, travels with English-speaking parties anywhere in Japan: otaku days (anime, Pokémon cards, trains, cameras, electronics) and full-service trips for older travelers. He also speaks Spanish." }
+      }
+    }
+  ]
+}

@@ -22,6 +22,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
+import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -441,21 +443,30 @@ function pagina({ yol, titulo, desc, fotoOg, jsonld, cuerpo }) {
 <script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Unbounded:wght@500;700&display=swap">
-<style>${CSS}</style>
+${equipoFuente}
+<style>${CSS}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header class="top"><div class="kap"><a class="marca" href="/ru/kndr/">КНДР с Ларионом</a>
-<nav aria-label="Разделы">${NAV.map(([t, h]) => `<a href="${h}">${t}</a>`).join('')}</nav></div></header>
+${navHTML({ etiqueta: 'Разделы', abrir: 'Открыть меню', variante: 'kndr', grupos: [
+  { t: 'Туры', enlaces: [['Все туры 2027', '/ru/kndr/#tury'], ...TURY.map((t) => [esc(t.nombre), `/ru/kndr/${t.yol}/`])] },
+  { t: 'Поездка', enlaces: NAV.filter(([, h]) => h.startsWith('/ru/kndr/') && !h.includes('#')).map(([t, h]) => [t, h]) },
+  { t: 'Ларион', enlaces: [['Ларион в Японии', '/ru/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }, ['Наши гиды', '#eq-titulo-ru'], ['Отзывы туристов', '/ru/kndr/otzyvy-turistov-o-kndr/']] },
+], cta: { t: `${TG_ICONO} Telegram`, h: TG_URL, aria: `Telegram ${TG_VISIBLE}: ${TG_NOTA}` } })}</div></header>
 <main>
 ${cuerpo}
 </main>
-<footer><div class="kap">
-<p>Ларион — русскоязычный гид команды <a href="/ru/">Tony Kansai Guide</a> (Япония), гражданин России. Туры в КНДР проводит аккредитованный российский туроператор; в КНДР с группой работают местные гиды.</p>
-<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a> (${TG_NOTA}) · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
-<p>Туры: ${TURY.map((t) => `<a href="/ru/kndr/${t.yol}/">${esc(t.nombre)}</a>`).join(' · ')}</p>
-<p>Вопросы: ${OTVETY.map((o) => `<a href="/ru/kndr/${o.yol}/">${esc(o.h1)}</a>`).join(' · ')}</p>
-<p>Ларион в Японии: <a href="/ru/">экскурсии по Киото, Осаке и Наре</a> · <a href="/larion/">Larion (English)</a> · Обновлено: ${HOY}</p>
-</div></footer>
+<footer>${pieHTML({ variante: 'kndr', mas: 'Показать все',
+  intro: `<p>Ларион — русскоязычный гид команды <a href="/ru/">Tony Kansai Guide</a> (Япония), гражданин России. Туры в КНДР проводит аккредитованный российский туроператор; в КНДР с группой работают местные гиды.</p>`,
+  columnas: [
+    { t: 'Туры', enlaces: TURY.map((t) => [esc(t.nombre), `/ru/kndr/${t.yol}/`]) },
+    { t: 'Вопросы', enlaces: OTVETY.map((o) => [esc(o.h1), `/ru/kndr/${o.yol}/`]) },
+    { t: 'Ларион в Японии', enlaces: [['Экскурсии по Киото, Осаке и Наре', '/ru/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
+    { t: 'Контакт', fija: true, html: `<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a></p><p>${TG_NOTA}</p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` },
+  ],
+  equipo: equipoHTML({ lang: 'ru', actual: 'larion', variante: 'kndr' }),
+  fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Обновлено: ${HOY}</span>`,
+})}</footer>
 <a class="wa-fijo" href="${TG_URL}" aria-label="Telegram ${TG_VISIBLE}: ${TG_NOTA}">${TG_ICONO} Telegram</a>
 </body>
 </html>

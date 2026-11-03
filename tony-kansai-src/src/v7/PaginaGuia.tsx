@@ -3,6 +3,8 @@
 // quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
 
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
+import { Children } from 'react'
+import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { APPS } from './datosVentajas'
 import { FranjaVentajas } from './FranjaVentajas'
@@ -205,7 +207,7 @@ const LEER_MAS: Record<string, [string, string]> = { es: ['Leer más', 'Leer men
 /** Recorta a la vista las reseñas largas para que todas las tarjetas midan
  *  parecido. El texto completo sigue en el HTML (buscadores e IAs lo leen
  *  entero); solo se oculta con CSS hasta pulsar «Leer más». */
-function TextoRecortable({ largo, lang, children }: { largo: boolean; lang: string; children: React.ReactNode }) {
+function TextoRecortable({ largo, lang, children }: { largo: boolean; lang: string; children: ReactNode }) {
   const [abierto, setAbierto] = useState(false)
   if (!largo) return <>{children}</>
   const [mas, menos] = LEER_MAS[lang] ?? LEER_MAS.en
@@ -731,6 +733,30 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
 }
 
 const RESPUESTAS_TITULO: Record<string, string> = { es: 'Guías y precios', en: 'Guides and prices', ar: 'أدلة وأسعار' }
+/** Columna del pie: título + hasta 6 enlaces a la vista; el resto en «Ver todo (N)».
+ *  Abierta en el HTML; en el móvil se pliega al montar (acordeón). */
+const VER_TODO: Record<string, string> = { es: 'Ver todo', en: 'See all', ar: 'عرض الكل', ru: 'Показать все' }
+function PieColumna({ titulo, lang, children }: { titulo: string; lang: string; children: ReactNode }) {
+  const ref = useRef<HTMLDetailsElement>(null)
+  useEffect(() => { if (ref.current && window.matchMedia('(max-width: 720px)').matches) ref.current.open = false }, [])
+  const hijos = Children.toArray(children)
+  const vis = hijos.slice(0, 6), resto = hijos.slice(6)
+  return (
+    <details className="v7-pie-col" open ref={ref}>
+      <summary className="v7-pie-titulo">{titulo}</summary>
+      <nav aria-label={titulo}>
+        {vis}
+        {resto.length > 0 && (
+          <details className="v7-pie-mas">
+            <summary>{VER_TODO[lang] ?? VER_TODO.en} ({hijos.length})</summary>
+            <div>{resto}</div>
+          </details>
+        )}
+      </nav>
+    </details>
+  )
+}
+
 export default function PaginaGuia({ id }: { id: PaginaId }) {
   const p = PAGINAS[id]
   const g = GUIAS[p.guia]
@@ -1088,7 +1114,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {g.tg && <p className="v7-nota-tg">{notaTg(p)}</p>}
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
           </div>
-          <nav aria-label={p.pie.legal}>
+          {/* Columnas cortas con título (patrón de nawatravel.ae): en el móvil son
+              acordeones cerrados (PieColumna los cierra tras montar); el HTML las
+              trae abiertas, así Google y las IAs leen todos los enlaces. */}
+          <PieColumna lang={p.lang} titulo={p.pie.legal}>
             <Link to={`/legal?lang=${p.lang}`}>{p.pie.legal}</Link>
             <Link to={`/privacy?lang=${p.lang}`}>{p.pie.privacidad}</Link>
             <Link to={`/terms?lang=${p.lang}`}>{p.pie.condiciones}</Link>
@@ -1101,32 +1130,30 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {/* App de Yuru Camp△ de Tony: enlazarla desde aquí ayuda a que Bing (y ChatGPT) la descubran. */}
             {p.guia === 'tony' && p.lang === 'es' && <a href="https://2troll.github.io/yurucamp-mapa/guia/">Mapa de Yuru Camp△ (anime)</a>}
             {p.guia === 'tony' && p.lang === 'en' && <a href="https://2troll.github.io/yurucamp-mapa/guia/en.html">Yuru Camp△ anime map</a>}
-          </nav>
+          </PieColumna>
           {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
               sitemap): Google y las IAs dan menos peso a una página huérfana. */}
           {p.guia === 'tony' && RESPUESTAS_PROPIAS.some(([, r]) => r.lang === p.lang) && (
-            <nav aria-label={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
-              <span className="v7-pie-titulo">{RESPUESTAS_TITULO[p.lang] ?? 'Guides'}</span>
+            <PieColumna lang={p.lang} titulo={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
               {RESPUESTAS_PROPIAS.filter(([, r]) => r.lang === p.lang).map(([, r]) => (
                 <Link key={r.ruta} to={r.ruta}>{r.titulo}</Link>
               ))}
-            </nav>
+            </PieColumna>
           )}
-          <nav aria-label={p.pie.otrosIdiomas}>
-            <span className="v7-pie-titulo">{p.pie.otrosIdiomas}</span>
+          <PieColumna lang={p.lang} titulo={p.pie.otrosIdiomas}>
             {(Object.keys(PAGINAS) as PaginaId[]).filter((k) => k !== p.id).map((k) => (
               <Link key={k} to={PAGINAS[k].ruta} lang={PAGINAS[k].lang}>
                 {k === 'larion' ? 'English · Larion' : HERMANAS[PAGINAS[k].guia].find((h) => h.id === k)?.etiqueta}
               </Link>
             ))}
-            {/* /tr/, /fr/, /private/ y /familias/ son HTML estático (scripts/turkce.mjs, francais.mjs, private.mjs, familias.mjs), fuera del router: <a>, no <Link>.
-                Sin este enlace, Bing (y con él ChatGPT) solo llegaba a /tr/ por el sitemap. */}
+            {/* /tr/, /fr/, /private/ y /familias/ (HTML estático, <a> y no <Link>) salen
+                también en la franja del equipo, justo debajo. */}
             <a href="/tr/" lang="tr">Türkçe · Ferhat</a>
             <a href="/fr/" lang="fr">Français · Iheb</a>
             <a href="/private/" lang="en">Private guide · Mario</a>
             <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Ларион</a>}
-          </nav>
+          </PieColumna>
         </div>
         <details className="v7-creditos">
           <summary>{p.pie.creditos}</summary>
