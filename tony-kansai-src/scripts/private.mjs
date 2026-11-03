@@ -27,6 +27,8 @@
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
+import { pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -427,7 +429,6 @@ html.easy .bagla a:hover,html.easy .bagla a:focus-visible{border-color:var(--ink
 /* Pie: créditos */
 footer{border-top:4px solid var(--win);padding:64px 0 40px;font-size:16px;color:var(--mute);background:var(--panel)}
 footer a{color:var(--fg)}
-.pie-izgara{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:32px;margin:40px 0}
 footer h2{font:400 15px/1.4 var(--px);letter-spacing:.1em;text-transform:uppercase;color:var(--yel);-webkit-text-stroke:0;text-shadow:none;margin:0 0 8px;padding:0}footer h2::after{display:none}
 html.easy footer h2{color:var(--ver)}
 footer ul{list-style:none;padding:0;margin:0}footer li a{display:inline-block;padding:8px 0;line-height:1.4}
@@ -517,7 +518,7 @@ function page({ yol, titre, desc, image, jsonld, corps }) {
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Inter:wght@400;600&display=swap">
-<style>${CSS}</style>
+<style>${CSS}${menuCSS}${equipoCSS}${CSS_PIE}</style>
 </head>
 <body>
 <header class="ust"><div class="kap"><a class="marka" href="/private/"><b>MARIO</b><small>PRIVATE GUIDE · JAPAN</small></a>
@@ -542,19 +543,7 @@ function page({ yol, titre, desc, image, jsonld, corps }) {
 <main>
 ${corps}
 </main>
-<footer><div class="kap">
-<a class="marka" href="/private/"><b>MARIO</b><small>PRIVATE GUIDE · JAPAN</small></a>
-<p style="max-width:720px;margin-top:24px">Mario is the premium English-speaking guide of <a href="/">Tony Kansai Guide</a>, based in Kansai and traveling with private parties across Japan. Tony, the founder, guides in Spanish, English and Arabic in Kansai. Bookings for Mario go directly to him on WhatsApp.</p>
-<div class="pie-izgara">
-<div><h2>Contact</h2><ul><li><a href="${WA_GENEL}" aria-label="WhatsApp ${WA_VISIBLE}">WhatsApp <span data-cifra>${WA_VISIBLE}</span></a></li><li><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></li><li><a href="/private/#prices">Prices</a></li><li><a href="/private/reviews/">Reviews</a></li><li><a href="/private/about-mario/">About Mario</a></li></ul></div>
-<div><h2>Journeys</h2><ul>${REGIONES.map((r) => `<li><a href="/private/${r.yol}/">${esc(r.ad)}</a></li>`).join('')}</ul></div>
-<div><h2>Otaku Japan</h2><ul>${RESPUESTAS.filter((c) => c.otaku).map((c) => `<li><a href="/private/${c.yol}/">${esc(c.kisaBaslik)}</a></li>`).join('')}</ul></div>
-<div><h2>Full-service trips</h2><ul>${RESPUESTAS.filter((c) => c.servis).map((c) => `<li><a href="/private/${c.yol}/">${esc(c.kisaBaslik)}</a></li>`).join('')}</ul></div>
-<div><h2>Plan your trip</h2><ul>${RESPUESTAS.filter((c) => !c.otaku && !c.servis).map((c) => `<li><a href="/private/${c.yol}/">${esc(c.kisaBaslik)}</a></li>`).join('')}</ul></div>
-<div><h2>Other languages</h2><ul><li><a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> <span>(Tony)</span></li><li><a href="/tr/" hreflang="tr">Türkçe</a> <span>(Ferhat)</span></li><li><a href="/fr/" hreflang="fr">Français</a> <span>(Iheb)</span></li><li><a href="/ru/" hreflang="ru">Русский</a></li></ul></div>
-</div>
-<p class="pie-alt">Prices in Japanese yen, per private party. Last updated <time datetime="${HOY}">${HOY_EN}</time>.</p>
-</div></footer>
+<footer>${PIE()}</footer>
 <a class="wa-sabit" href="${WA_GENEL}" aria-label="WhatsApp Mario">${WA_ICONO}WhatsApp Mario</a>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
@@ -565,6 +554,45 @@ ${yol === 'otaku-japan-private-guide' ? '<script src="https://cdn.jsdelivr.net/n
 </html>
 `
 }
+
+// Pie compartido con el resto de la web (scripts/menu-estatico.mjs): columnas
+// cortas con «See all», la franja «Our guides» y una línea final. Los enlaces
+// plegados siguen en el HTML para Google y las IAs.
+const enl = (lista) => lista.map((c) => [esc(c.kisaBaslik ?? c.ad), `/private/${c.yol}/`])
+const PIE = () => pieHTML({
+  variante: 'private', mas: 'See all', visibles: 6,
+  intro: `<a class="marka" href="/private/"><b>MARIO</b><small>PRIVATE GUIDE · JAPAN</small></a><p>Mario is the premium English-speaking guide of <a href="/">Tony Kansai Guide</a>, based in Kansai and traveling with private parties across Japan. Tony, the founder, guides in Spanish, English and Arabic in Kansai. Bookings for Mario go directly to him on WhatsApp.</p>`,
+  columnas: [
+    { t: 'Journeys', enlaces: [...enl(REGIONES), ...enl(RESPUESTAS.filter((c) => !c.otaku && !c.servis))] },
+    { t: 'Otaku Japan', enlaces: enl(RESPUESTAS.filter((c) => c.otaku)) },
+    { t: 'Full-service trips', enlaces: enl(RESPUESTAS.filter((c) => c.servis)) },
+    { t: 'Contact', fija: true, enlaces: [[`WhatsApp ${WA_VISIBLE}`, WA_GENEL], ['tony@tonykansaiguide.com', 'mailto:tony@tonykansaiguide.com'], ['Prices', '/private/#prices'], ['Reviews', '/private/reviews/'], ['About Mario', '/private/about-mario/']] },
+  ],
+  equipo: equipoHTML({ lang: 'en', actual: 'mario', variante: 'private' }),
+  fin: `<span>Prices in Japanese yen, for the whole private group. Updated <time datetime="${HOY}">${HOY_EN}</time>.</span><span><a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/fr/" hreflang="fr">Français</a> (Iheb) · <a href="/ru/" hreflang="ru">Русский</a></span>`,
+})
+// Filas «see also» compartidas, con aspecto de loseta de juego (CSS_PIE).
+const verTambien = (t, yollar) => tarjetasHTML({ variante: 'private', t, mas: 'See all', visibles: 4, enlaces: yollar.map((y) => [esc(tituloDe(y)), `/private/${y}/`]) })
+// Ajustes de la hoja compartida al modo juego de /private/.
+const CSS_PIE = `footer{padding:56px 0 0}
+.mn--private .mn-col>summary{font:400 15px/1.3 var(--px);letter-spacing:.08em;color:var(--yel)}
+html.easy .mn--private .mn-col>summary{color:var(--ver)}
+.mn--private .mn-col a{font-size:15px;opacity:1;color:var(--fg)}
+.mn--private .mn-intro .marka{margin-bottom:16px}
+.mn--private .mn-intro p{font-size:15px;color:var(--mute)}
+.mn--private .mn-mas>summary{font:400 15px var(--px);color:var(--cyan);opacity:1;min-height:44px}
+.mn--private .mn-fin{border-top:2px dashed var(--line);font:400 14px/1.6 var(--px);color:var(--mute);opacity:1}
+.eq.eq--private{border-top:4px solid var(--win)}
+.eq h2,.eq h3{-webkit-text-stroke:0;text-shadow:none;padding:0}.eq h2::after{display:none}
+.eq--private .eq-titulo{font-family:var(--disp);color:#fff;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink),var(--glow)}
+html.easy .eq--private .eq-titulo{color:var(--fg);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--yel)}
+.mn-tarjetas.mn--private{margin-top:48px}
+.mn--private .mn-tt{font:400 15px var(--px);letter-spacing:.08em;color:var(--ink);background:var(--yel);display:inline-block;padding:4px 12px;opacity:1}
+.mn--private .mn-fila a{border:3px solid var(--win);border-radius:0;background:var(--panel);font:400 17px/1.4 var(--px);min-height:64px;transition:transform .08s steps(2)}
+.mn--private .mn-fila a::after{content:"▶";opacity:1;color:var(--yel)}
+html.easy .mn--private .mn-fila a::after{color:var(--ver)}
+.mn--private .mn-fila a:hover,.mn--private .mn-fila a:focus-visible{transform:translate(-2px,-2px);box-shadow:5px 5px 0 var(--sombra);border-color:var(--win)}
+.mn--private .mn-mas .mn-fila{margin-top:12px!important}`
 
 // ---------- Datos estructurados comunes ----------
 const NEGOCIO_LD = { '@type': 'LocalBusiness', '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide', url: `${BASE}/`, address: { '@type': 'PostalAddress', addressLocality: 'Osaka', addressRegion: 'Osaka', addressCountry: 'JP' } }
@@ -2181,7 +2209,7 @@ ${listaResenas(3)}
 </div></section>
 <section class="blok"><div class="kap">
 <div class="bas"><p class="etiket">Plan your trip</p><h2>Answers before you go</h2></div>
-<ul class="bagla">${RESPUESTAS.filter((c) => !c.otaku).map((c) => `<li><a href="/private/${c.yol}/">${esc(c.h1)}</a></li>`).join('')}</ul>
+${verTambien('Plan your trip', RESPUESTAS.filter((c) => !c.otaku).map((c) => c.yol))}
 </div></section>
 <section class="blok"><div class="kap">
 <div class="bas"><p class="etiket">Questions</p><h2>Frequently asked</h2></div>
@@ -2250,7 +2278,7 @@ ${contactCard(lien)}
 </div></section>
 <section class="blok"><div class="kap">
 <div class="bas"><p class="etiket">Plan ahead</p><h2>Read next</h2></div>
-<ul class="bagla">${r.voir.map((y) => `<li><a href="/private/${y}/">${esc(tituloDe(y))}</a></li>`).join('')}</ul>
+${verTambien('Read next', r.voir)}
 <div class="bas" style="margin-top:72px"><p class="etiket">More journeys</p><h2>Other places Mario guides</h2></div>
 <ol class="liste">${otras.map((o, i) => satir(i, `/private/${o.yol}/`, esc(o.ad), esc(o.yerler.slice(0, 3).map((y) => y[0]).join(' · ')), o.largo ? 'Long day trip · beyond 8 h · Private group' : 'Full day · 8 h · Private group', o.largo ? `from ${yen(PRECIO.largo)}` : yen(PRECIO.completo), 'for the whole private group')).join('\n')}</ol>
 </div></section>
@@ -2310,7 +2338,7 @@ ${contactCard(lien)}
 </div></section>
 <section class="blok"><div class="kap">
 <div class="bas"><p class="etiket">Plan ahead</p><h2>Read next</h2></div>
-<ul class="bagla">${c.voir.map((y) => `<li><a href="/private/${y}/">${esc(tituloDe(y))}</a></li>`).join('')}${REGIONES.slice(0, 3).map((r) => `<li><a href="/private/${r.yol}/">Private guide: ${esc(r.ad)}</a></li>`).join('')}</ul>
+${verTambien('Read next', [...c.voir, ...REGIONES.slice(0, 3).map((r) => r.yol)])}
 </div></section>
 ${bant(lien)}`
   const jsonld = {

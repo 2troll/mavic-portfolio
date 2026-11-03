@@ -8,7 +8,7 @@
 //
 // lang: idioma de la página (es, en, ar, ru, tr, fr). actual: id del guía de
 // la página (tony, larion, ferhat, iheb, antonio, mario) o null. variante:
-// 'tr' | 'fr' | 'kndr' | 'familias' toma fondo y acento de esa página (lee sus
+// 'tr' | 'fr' | 'kndr' | 'familias' | 'private' toma fondo y acento de esa página (lee sus
 // variables CSS); sin variante, los colores píxel de la web principal.
 
 import { readFileSync } from 'node:fs'
@@ -16,7 +16,7 @@ import { readFileSync } from 'node:fs'
 const DATOS = JSON.parse(readFileSync(new URL('./equipo.json', import.meta.url), 'utf8'))
 const IDIOMAS_UI = Object.keys(DATOS.ui.titulo)
 const IDS = DATOS.guias.map((g) => g.id)
-const VARIANTES = ['tr', 'fr', 'kndr', 'familias']
+const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private']
 
 /** La hoja de src/v7/equipo.css, sin comentarios ni saltos (va dentro de un <style>). */
 export const equipoCSS = readFileSync(new URL('../src/v7/equipo.css', import.meta.url), 'utf8')

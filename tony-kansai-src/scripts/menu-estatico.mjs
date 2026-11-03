@@ -12,9 +12,10 @@
 // Un enlace es { t, h, hreflang?, lang?, rel? } o [t, h]. Todo va sin JS: los
 // desplegables son <details>; un script mínimo (lo trae pieHTML) cierra al
 // pulsar fuera o con Escape, abre el menú del móvil y pliega el pie en el móvil.
-// variante: 'tr' | 'fr' | 'kndr' | 'familias' toma los colores de esa página.
+// variante: 'tr' | 'fr' | 'kndr' | 'familias' | 'private' toma los colores de esa página
+// (/private/ tiene dos juegos: modo FAN de neón y modo EASY claro, por clase en <html>).
 
-const VARIANTES = ['tr', 'fr', 'kndr', 'familias']
+const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private']
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 function norm(e) {
@@ -85,6 +86,8 @@ if(matchMedia('(max-width:719px)').matches)[].forEach.call(d.querySelectorAll('.
 export const menuCSS = `
 .mn--tr,.mn--fr{--mn-tarjeta:var(--kart);--mn-texto:var(--fg);--mn-linea:var(--cizgi);--mn-suave:var(--bg);--mn-acento:var(--yesil)}
 .mn--kndr{--mn-tarjeta:var(--papel);--mn-texto:var(--tinta);--mn-linea:var(--linea);--mn-suave:var(--chip);--mn-acento:#229ED9}
+.mn--private{--mn-tarjeta:#15152e;--mn-texto:#f4f4ff;--mn-linea:#ffffff;--mn-suave:#1e1e40;--mn-acento:#128c4a}
+html.easy .mn--private{--mn-tarjeta:#ffffff;--mn-texto:#15131a;--mn-linea:#15131a;--mn-suave:#f3ecdc;--mn-acento:#128c4a}
 .mn--familias{--mn-tarjeta:var(--kart);--mn-texto:var(--tinta);--mn-linea:var(--linea);--mn-suave:var(--acento-2);--mn-acento:var(--acento)}
 .mn-nav{display:flex!important;align-items:center;gap:6px!important;flex-wrap:nowrap!important;font-size:15px!important;opacity:1!important;position:relative;z-index:80;margin-inline-start:auto}
 .mn-g,.mn-col,.mn-mas{background:none!important;border:0!important;border-radius:0!important;padding:0!important;margin:0!important;box-shadow:none!important;max-width:none!important}
