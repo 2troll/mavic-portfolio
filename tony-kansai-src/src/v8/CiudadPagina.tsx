@@ -9,7 +9,7 @@ import { Suspense, lazy, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO } from '../v7/contenido'
+import { GUIAS, CORREO, enlaceGuia, NOTA_TG } from '../v7/contenido'
 import { HORAS, ITINERARIOS, META_ITIN } from '../v7/datosItinerarios'
 import { PRECIO, ETIQUETAS } from '../v7/datosRutas'
 import { HeroTinta } from '../v7/HeroTinta'
@@ -31,7 +31,7 @@ import '../v7/v7.css'
 import '../v7/estilo-pixel.css'
 import './v8.css'
 import './figura.css'
-import { IconoWa } from '../v7/IconoWa'
+import { IconoCanal } from '../v7/IconoWa'
 import { BarraWa } from '../v7/BarraWa'
 import { SelloCiudad, LibroSellos } from '../v9/Sellos'
 import { BotonTema } from '../v7/Tema'
@@ -109,7 +109,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   const etiquetaIdioma: Record<string, string> = { '/es': 'Español', '/en': 'English', '/ar': 'العربية', '/ru': 'Русский', '/larion': 'English' }
   const langDe = (p: string): Lengua => (p === '/larion' ? 'en' : (p.slice(1) as Lengua))
   const titulo = tituloSeo(c.id, lang, guia)
-  const wa = `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(`${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)}`
+  const tg = !!GUIAS[guia].tg
+  const wa = enlaceGuia(guia, `${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)
 
   return (
     <div className={`v7 v7-pagina v8-ciudad lang-${lang}`} lang={lang} dir={dir}>
@@ -138,7 +139,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         <BotonTema lang={lang} />
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${g} WhatsApp`}>
-          <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>
+          <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 
@@ -172,8 +173,9 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           </dl>
           <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
             onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `ciudad-${c.id}`, canal: 'whatsapp_ficha' })}>
-            <IconoWa /> {et.escribe(g)}
+            <IconoCanal tg={tg} /> {et.escribe(g)}
           </a>
+          {tg && <p className="v7-nota-tg">Telegram @{GUIAS[guia].tg} · {NOTA_TG[lang === 'ru' ? 'ru' : 'en']}</p>}
         </section>
 
         {/* 2. Zonas: pista horizontal que avanza con el scroll vertical */}

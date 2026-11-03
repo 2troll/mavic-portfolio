@@ -9,6 +9,8 @@ import { Contador, SelloCumbre, useBilletes, useSellos } from './Cocina'
 import SplitFlapText from './reactbits/SplitFlapText'
 import { CapaEstacion } from './Estaciones'
 import './cumbres.css'
+import { enlaceGuia } from './contenido'
+import type { GuiaId } from './contenido'
 
 const BASE = 'https://tonykansaiguide.com'
 const MAX_DESNIVEL = Math.max(...CUMBRES.map((c) => c.desnivel))
@@ -72,14 +74,15 @@ export function Banda({ lang }: { lang: Lengua }) {
   )
 }
 
-export function Cumbres({ lang, waNumero }: { lang: Lengua; waNumero: string }) {
+export function Cumbres({ lang, guia }: { lang: Lengua; guia: GuiaId }) {
   const t = TEXTOS_CUMBRES[lang]
   const [filtro, setFiltro] = useState<'todas' | Nivel>('todas')
   const lista = CUMBRES.filter((c) => filtro === 'todas' || c.nivel === filtro)
   const raiz = useRef<HTMLElement>(null)
   useBilletes(raiz)
   useSellos(raiz, filtro)
-  const wa = (ruta: string) => `https://wa.me/${waNumero}?text=${encodeURIComponent(t.saludo(ruta))}`
+  // Larion: Telegram sin texto; Tony: WhatsApp con la ruta escrita.
+  const wa = (ruta: string) => enlaceGuia(guia, t.saludo(ruta))
 
   return (
     <>

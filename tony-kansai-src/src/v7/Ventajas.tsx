@@ -10,9 +10,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO } from './contenido'
+import { CORREO, enlaceGuia, NOTA_TG } from './contenido'
 import { Logo } from './Logo'
-import { IconoWa } from './IconoWa'
+import { IconoWa, IconoCanal } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, CIUDADES, SEO_VENTAJAS, cuponDe, esAfiliado, enlaceDe, type Categoria, type Ciudad } from './datosVentajas'
@@ -114,7 +114,7 @@ const T: Record<VentajasId, Textos> = {
       'Всегда платите в иенах, а не в своей валюте, когда терминал предлагает выбор: курс магазина хуже.',
     ],
     aviso: 'Некоторые ссылки партнёрские: если вы покупаете через них, сервис платит нам небольшую комиссию. Для вас цена не меняется.',
-    finalTitulo: 'Не хотите разбираться с приложениями?', finalTexto: 'На экскурсии Ларион берёт все поездки на себя: встречает в отеле, и вы едете вместе.', finalBoton: 'Написать в WhatsApp', volver: 'На страницу Лариона',
+    finalTitulo: 'Не хотите разбираться с приложениями?', finalTexto: 'На экскурсии Ларион берёт все поездки на себя: встречает в отеле, и вы едете вместе.', finalBoton: 'Написать в Telegram', volver: 'На страницу Лариона',
     saludo: 'Здравствуйте, Ларион! Увидел страницу с полезными приложениями и хочу спросить об экскурсии.',
   },
 }
@@ -302,7 +302,7 @@ function Barra({ id, sufijo, wa, boton }: { id: VentajasId; sufijo: string; wa: 
         ))}
       </nav>
       <a className="vt-wa" href={wa} target="_blank" rel="noopener noreferrer" aria-label={boton}>
-        <IconoWa /><span className="vt-solo-ancho">{boton}</span>
+        <IconoCanal tg={id === 'ru'} /><span className="vt-solo-ancho">{boton}</span>
       </a>
     </header>
   )
@@ -355,8 +355,7 @@ function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
   const t = EXP_T[id]
   const tx = textoApp(a, id)
   const cupon = cuponDe(a)
-  const numero = (id === 'ru' ? GUIAS.larion : GUIAS.tony).wa
-  const wa = `https://wa.me/${numero}?text=${encodeURIComponent(t.msg.replace('{n}', a.nombre))}`
+  const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', t.msg.replace('{n}', a.nombre))
   return (
     <div className="vn-det" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
       <div className={`vn-det-cara${FOTO_EXP[a.clave] ? ' con-foto' : ''}`}>
@@ -377,7 +376,7 @@ function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
         )}
         {cupon && <p className="vn-det-cupon"><bdi dir="ltr"><code>{cupon}</code></bdi></p>}
         <div className="vn-det-acciones">
-          <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {t.reservar}</a>
+          <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={id === 'ru'} /> {t.reservar}</a>
           <a className="vn-boton vn-boton-linea" href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">{t.abrir}</a>
           <Link className={`vn-enlace${GUIA[a.clave] ? ' vn-enlace-solo' : ''}`} to={`${ruta}${a.clave}/`}>{GUIA[a.clave] ? t.solo : MAS[id]}</Link>
         </div>
@@ -469,8 +468,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   const sufijo = appSel ? `${appSel.clave}/` : ''
   const url = `${BASE}${RUTA[id]}${sufijo}`
   const inicio = id === 'ru' ? '/ru/' : `/${id}/`
-  // La versión rusa es de Larion: el WhatsApp y la vuelta son suyos.
-  const wa = `https://wa.me/${(id === 'ru' ? GUIAS.larion : GUIAS.tony).wa}?text=${encodeURIComponent(p.saludo)}`
+  // La versión rusa es de Larion: el contacto (Telegram, lo lleva Tony) y la vuelta son suyos.
+  const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', p.saludo)
   const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}${sufijo}` }))
   const raiz = useRef<HTMLDivElement>(null)
   const H = HERO[id]
@@ -712,7 +711,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             <div className="vn-final-tour vn-sube">
               <h2 className="vn-h2">{p.finalTitulo}</h2>
               <p>{p.finalTexto}</p>
-              <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.finalBoton}</a>
+              <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={id === 'ru'} /> {p.finalBoton}</a>
+              {id === 'ru' && <small className="v7-nota-tg">Telegram @LUiGi19 · {NOTA_TG.ru}</small>}
               <Link className="vn-enlace" to={inicio}>{p.volver}</Link>
             </div>
             <div className="vn-final-socios vn-sube" id="colaborar">

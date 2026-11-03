@@ -78,8 +78,19 @@ export const PAGAR: Record<string, { boton: string; wise: string; nota: string }
   en: { boton: 'Pay with PayPal', wise: 'Wise (Wise account)', nota: 'If you pay in advance, do it only once we have confirmed your date on WhatsApp.' },
   ar: { boton: 'ادفع عبر PayPal', wise: 'Wise (لأصحاب حساب Wise)', nota: 'إن دفعت مسبقاً، فادفع فقط بعد تأكيد الموعد عبر واتساب.' },
 }
-/** WhatsApp de Larion (+81 80 8506 7586). */
-export const WA_LARION = '818085067586'
+/** Contacto de Larion: Telegram, no WhatsApp (los clientes rusohablantes no usan
+ *  WhatsApp). La cuenta es de Tony, que coordina y contesta por Larion; su nombre
+ *  de perfil es «Luigi Prince Torres», de ahí la nota NOTA_TG para no despistar.
+ *  t.me/<usuario> no admite texto prellenado. */
+export const TG_LARION = 'LUiGi19'
+export const TG_LARION_URL = `https://t.me/${TG_LARION}`
+export const TG_LARION_VISIBLE = `@${TG_LARION}`
+export const TG_AZUL = '#229ED9'
+export const NOTA_TG: Record<'ru' | 'en', string> = {
+  ru: 'Ответит Тони, координатор Лариона',
+  en: "Tony, Larion's coordinator, answers here",
+}
+export const BOTON_TG: Record<'ru' | 'en', string> = { ru: 'Написать в Telegram', en: 'Message on Telegram' }
 export const CORREO = 'tony@tonykansaiguide.com'
 
 const F = '/v7/fotos/'
@@ -679,13 +690,13 @@ const ru: Pagina = {
   },
   contacto: {
     titulo: 'Расскажите о поездке',
-    sub: 'Заполните то, что знаете, — откроется WhatsApp с готовым сообщением. Сайт ничего не сохраняет.',
+    sub: 'Заполните то, что знаете: мы скопируем готовое сообщение, откроется Telegram — просто вставьте его. Сайт ничего не сохраняет.',
     nombre: 'Ваше имя', pais: 'Откуда вы приезжаете?', ciudad: 'Город', fechas: 'Даты', personas: 'Сколько человек',
     hotel: 'Отель или район, где вы остановились', intereses: 'Что вам интересно', notas: 'Что-то ещё (дети, здоровье, еда…)',
     paises: ['Россия', 'Казахстан', 'Беларусь', 'Узбекистан', 'Армения', 'Грузия', 'Другая страна'],
     opcionesIntereses: ['Киото', 'Осака', 'Нара', 'Хиросима', 'Миядзима', 'Химэдзи', 'Горы и природа', 'Еда'],
-    wa: 'Отправить в WhatsApp', mail: 'Лучше по почте', vista: 'Ваше сообщение',
-    aviso: 'Ларион ответит лично, обычно в тот же день.',
+    wa: 'Написать в Telegram', mail: 'Лучше по почте', vista: 'Ваше сообщение',
+    aviso: 'Ответит Тони, координатор Лариона, обычно в тот же день.',
     asuntoMail: 'Частная экскурсия в Японии',
     plantilla: (d) => `Здравствуйте, Ларион! Пишу с сайта.\n\n` + lineas([
       ['Имя', d.nombre], ['Откуда', [d.ciudad, d.pais].filter(Boolean).join(', ')], ['Даты', d.fechas],
@@ -760,9 +771,11 @@ const larion: Pagina = {
   resenas: { titulo: 'What guests say', nota: 'Messages guests sent Larion on WhatsApp, gathered here and translated from Russian. Tap “See original” to read them as written.', opinar: 'Toured with Larion? Leave a review', fuente: '/reviews-larion.json' },
   contacto: {
     ...en.contacto,
+    sub: 'Fill in what you know: we copy the message for you and Telegram opens, just paste it. Nothing is stored on this site.',
+    wa: 'Message on Telegram',
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],
     opcionesIntereses: ['Kyoto', 'Osaka', 'Nara', 'Hiroshima', 'Miyajima', 'Himeji', 'Mountains & nature', 'Food'],
-    aviso: 'Larion replies personally, usually the same day.',
+    aviso: "Tony, Larion's coordinator, answers here, usually the same day.",
     plantilla: (d) => `Hi Larion, I'm writing from the website.\n\n` + lineas([
       ['Name', d.nombre], ['Travelling from', [d.ciudad, d.pais].filter(Boolean).join(', ')], ['Dates', d.fechas],
       ['People', d.personas], ['Staying at', d.hotel], ['Interested in', d.intereses.join(', ')], ['Also', d.notas],
@@ -778,9 +791,29 @@ export const HERMANAS: Record<GuiaId, { id: PaginaId; etiqueta: string }[]> = {
   larion: [{ id: 'ru', etiqueta: 'Русский' }, { id: 'larion', etiqueta: 'English' }],
 }
 
-export const GUIAS: Record<GuiaId, { nombre: string; foto: string; wa: string }> = {
+/** `wa` solo existe para quien atiende por WhatsApp; Larion va por Telegram (`tg`).
+ *  Para enlazar a cualquier guía, usar enlaceGuia() y no montar wa.me a mano. */
+export const GUIAS: Record<GuiaId, { nombre: string; foto: string; wa?: string; tg?: string }> = {
   tony: { nombre: 'Tony Hanma', foto: '/guides/tony-retrato.webp', wa: WA_TONY },
-  larion: { nombre: 'Larion', foto: '/guides/guide-larion.webp', wa: WA_LARION },
+  larion: { nombre: 'Larion', foto: '/guides/guide-larion.webp', tg: TG_LARION },
+}
+
+/** Enlace para escribir al guía: Telegram (sin texto, t.me no lo admite) o WhatsApp con texto. */
+export function enlaceGuia(guia: GuiaId, texto?: string): string {
+  const g = GUIAS[guia]
+  if (g.tg) return `https://t.me/${g.tg}`
+  return `https://wa.me/${g.wa}${texto ? `?text=${encodeURIComponent(texto)}` : ''}`
+}
+
+/** ¿Este guía atiende por Telegram? (para icono, color y nota del botón). */
+export const esTelegram = (guia: GuiaId): boolean => !!GUIAS[guia].tg
+
+/** Campos de contacto para el JSON-LD de un guía (teléfono solo si es WhatsApp). */
+export function contactoLd(guia: GuiaId): Record<string, unknown> {
+  const g = GUIAS[guia]
+  return g.tg
+    ? { contactPoint: { '@type': 'ContactPoint', contactType: 'reservations', url: `https://t.me/${g.tg}`, availableLanguage: ['ru', 'en'] } }
+    : { telephone: `+${g.wa}` }
 }
 
 /** Nombre del guía tal como se escribe en cada idioma. */

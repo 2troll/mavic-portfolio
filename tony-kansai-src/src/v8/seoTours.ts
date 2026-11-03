@@ -1,7 +1,7 @@
 // Datos estructurados de los tours (schema.org TouristTrip) para Google: una
 // lista en la página de cada guía y el tour completo en cada página de ciudad.
 // Precios y duraciones salen de los mismos tramos que las tarjetas.
-import { GUIAS } from '../v7/contenido'
+import { GUIAS, contactoLd } from '../v7/contenido'
 import { PRECIO } from '../v7/datosRutas'
 import type { Tramo } from '../v7/datosRutas'
 import { CIUDADES } from './ciudades'
@@ -28,7 +28,7 @@ export function viajeTuristico(id: CiudadId, lang: Lengua, guia: 'tony' | 'lario
       '@type': 'ItemList',
       itemListElement: c.zonas.map((z, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'TouristAttraction', name: z.nombre[lang], description: z.linea[lang] } })),
     },
-    provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
+    provider: { '@type': 'Person', name: g.nombre, ...contactoLd(guia), worksFor: { '@id': `${BASE}/#negocio` } },
     offers: t.map((x) => ({
       '@type': 'Offer',
       price: PRECIO[x],

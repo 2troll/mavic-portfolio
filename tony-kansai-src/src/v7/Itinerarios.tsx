@@ -9,7 +9,7 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, CREDITOS } from './contenido'
+import { GUIAS, CORREO, CREDITOS, enlaceGuia } from './contenido'
 import { ETIQUETAS, PRECIO } from './datosRutas'
 import { ET_ITIN, HORAS, ITINERARIOS, META_ITIN, ORDEN_LARION, ORDEN_TONY } from './datosItinerarios'
 import type { ItinId } from './datosItinerarios'
@@ -26,7 +26,7 @@ import { MANGA_APROBADO } from '../v8/ciudades'
 const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osaka', nara: 'nara', himeji: 'himeji', kobe: 'kobe', hiroshima: 'hiroshima' }
 import './v7.css'
 import './estilo-pixel.css'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE } from './formato'
@@ -78,7 +78,8 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
   }, [id])
 
   const yen = (n: number) => yenLocal(n, lang)
-  const wa = (texto: string) => `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(SALUDO[lang](g, texto))}`
+  const wa = (texto: string) => enlaceGuia(guia, SALUDO[lang](g, texto))
+  const tg = !!GUIAS[guia].tg
 
   return (
     <div className={`v7 v7-pagina v7-itinerarios lang-${lang}`} lang={lang} dir={dir}>
@@ -107,7 +108,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <BotonTema lang={lang} />
         <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa('')} target="_blank" rel="noopener noreferrer" aria-label={`${g} — WhatsApp`}>
-          <span className="v7-solo-ancho">WhatsApp</span><span className="v7-solo-movil"><IconoWa /></span>
+          <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 

@@ -6,10 +6,10 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, CREDITOS } from './contenido'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, CREDITOS, enlaceGuia, contactoLd } from './contenido'
 import { foto } from './foto'
 import { Logo } from './Logo'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { useCambio } from './cambio'
@@ -31,9 +31,10 @@ export default function Viajeros({ id }: { id: MercadoId }) {
   const { setLang } = useLanguage()
   useEffect(() => { setLang(m.lang) }, [m.lang, setLang])
   const cambios = useCambio([...m.divisas])
-  // El guía de la página: Tony por defecto; Larion en la de Rusia (su WhatsApp, sin el PayPal de Tony).
+  // El guía de la página: Tony por defecto; Larion en la de Rusia (su Telegram, sin el PayPal de Tony).
   const g = GUIAS[m.guia ?? 'tony']
-  const wa = `https://wa.me/${g.wa}?text=${encodeURIComponent(m.saludo)}`
+  const wa = enlaceGuia(m.guia ?? 'tony', m.saludo)
+  const tg = !!g.tg
   const pie = PIE[m.lang]
   const pagar = (m.guia ?? 'tony') === 'tony' ? PAGAR[m.lang] : undefined
   const zona = (creditosZonas as Record<string, { autor: string; licencia: string; url: string }>)[m.foto.match(/zonas\/([a-z-]+)\.jpg$/)?.[1] ?? '']
@@ -51,7 +52,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
     description: m.seo.descripcion, url: `${BASE}${m.ruta}`, inLanguage: m.lang, touristType: m.touristType,
     offers: YENES.map((y, i) => ({ '@type': 'Offer', name: m.planes[i], price: y, priceCurrency: 'JPY', url: `${BASE}${m.ruta}` })),
     // El negocio es el #negocio común del index.html; el teléfono va en la persona del guía.
-    provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
+    provider: { '@type': 'Person', name: g.nombre, ...contactoLd(m.guia ?? 'tony'), worksFor: { '@id': `${BASE}/#negocio` } },
   }
 
   return (
@@ -74,7 +75,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <span aria-hidden="true" style={{ flex: 1 }} />
         <BotonTema lang={m.lang} />
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={m.final.boton}>
-          <span className="v7-solo-ancho">{m.escribe}</span><span className="v7-solo-movil"><IconoWa /></span>
+          <span className="v7-solo-ancho">{m.escribe}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 
@@ -85,7 +86,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
             <p className="v7-antetitulo">{m.bandera} {m.antetitulo}</p>
             <h1>{m.titulo}</h1>
             <p>{m.sub}</p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {m.cta}</a>
+            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {m.cta}</a>
           </div>
         </section>
 
@@ -153,7 +154,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <section className="v7-seccion v7-otono-final">
           <h2>{m.final.titulo}</h2>
           <p className="v7-entradilla">{m.final.texto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {m.final.boton}</a>
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {m.final.boton}</a>
           <p><Link to={m.inicio}>{m.final.principal}</Link></p>
         </section>
       </main>

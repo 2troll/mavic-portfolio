@@ -63,14 +63,16 @@ function tipoDeClic(el: Element): string | null {
     if (/paypal/i.test(texto)) return 'paypal'
     // El botón del formulario de contacto envía por WhatsApp. Su texto cambia
     // con el idioma, así que se reconoce por ser el «submit» del formulario.
-    if (el.closest('form.v7-formulario') && (el.type === 'submit' || /whatsapp|واتساب/i.test(texto))) {
-      return 'whatsapp_formulario'
+    if (el.closest('form.v7-formulario') && (el.type === 'submit' || /whatsapp|واتساب|telegram/i.test(texto))) {
+      return /telegram/i.test(texto) ? 'telegram_formulario' : 'whatsapp_formulario'
     }
     return null
   }
   const href = (el as HTMLAnchorElement).href || ''
   if (href.includes('paypal.me/')) return 'paypal'
-  if (href.includes('wa.me/')) return href.includes('818085067586') ? 'whatsapp_larion' : 'whatsapp_tony'
+  // Larion atiende por Telegram (t.me/LUiGi19, lo lleva Tony); WhatsApp ya es solo de Tony.
+  if (href.includes('t.me/')) return 'telegram_larion'
+  if (href.includes('wa.me/')) return 'whatsapp_tony'
   if (href.startsWith('mailto:')) return 'correo'
   if (href.startsWith('tel:')) return 'telefono'
   // Después de WhatsApp: un enlace a wa.me cuyo texto nombre PayPal sigue siendo WhatsApp.

@@ -1639,3 +1639,9 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-kndr-atajos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
 .v7-kndr-atajos a { padding: 8px 14px; border: 1px solid currentColor; border-radius: 999px; font-size: 14px; text-decoration: none; opacity: .85; }
 .v7-kndr-atajos a:hover { opacity: 1; }
+
+/* Botones de contacto de Larion: Telegram (azul de Telegram), no WhatsApp. */
+.v7-boton.v7-tg, a.v7-tg.v7-boton { background: #229ED9; color: #fff !important; }
+.v7-nota-tg { font-size: 13px; opacity: 0.8; margin: 6px 0 0; }
+/* Cualquier botón que lleve a Telegram (Larion) se pinta con su azul, aunque el componente no lo marque. */
+a.v7-boton[href^="https://t.me/"], a.cu-boton[href^="https://t.me/"], a.vn-boton[href^="https://t.me/"] { background: #229ED9; color: #fff !important; }

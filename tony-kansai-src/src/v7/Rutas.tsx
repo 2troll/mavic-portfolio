@@ -15,7 +15,7 @@ import { ET_ITIN } from './datosItinerarios'
 // Página del día hora a hora de cada portada; Miyajima va dentro del día de Hiroshima.
 const PAGINA_DIA: Record<string, string> = { es: '/es/rutas/', en: '/en/routes/', ar: '/ar/routes/', ru: '/ru/routes/', larion: '/larion/routes/' }
 import type { Pagina } from './contenido'
-import { GUIAS } from './contenido'
+import { enlaceGuia } from './contenido'
 import { compone, opacidad, muestrea } from './modelos3d'
 import { movimientoReducido } from './petalos'
 import { suena } from './sonido'
@@ -38,7 +38,7 @@ export function Rutas({ p }: { p: Pagina }) {
   const yen = (n: number) => '¥' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep)
   const pedir = (opcion: string) => {
     const texto = p.contacto.plantilla({ nombre: '', pais: '', ciudad: '', fechas: '', personas: '', hotel: '', intereses: [`${r.titulo} — ${opcion}`], notas: '' })
-    return `https://wa.me/${GUIAS[p.guia].wa}?text=${encodeURIComponent(texto)}`
+    return enlaceGuia(p.guia, texto)
   }
 
   // Scroll → progreso 0 … n-1.

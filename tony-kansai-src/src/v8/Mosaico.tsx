@@ -4,10 +4,10 @@
 // Duración y precio salen de los tramos de cada ruta (datosRutas): no se desfasan.
 import { Link } from 'react-router-dom'
 import { foto } from '../v7/foto'
-import { GUIAS } from '../v7/contenido'
+import { GUIAS, enlaceGuia } from '../v7/contenido'
 import { META, PRECIO } from '../v7/datosRutas'
 import type { Tramo } from '../v7/datosRutas'
-import { IconoWa } from '../v7/IconoWa'
+import { IconoCanal } from '../v7/IconoWa'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import SplitFlapText from '../v7/reactbits/SplitFlapText'
@@ -78,7 +78,7 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
           const c = CIUDADES[id]
           const t = tramos(id)
           const desde = Math.min(...t.map((x) => PRECIO[x]))
-          const wa = `https://wa.me/${GUIAS[guia].wa}?text=${encodeURIComponent(et.msg(NOMBRE[guia][lang], c.nombre[lang]))}`
+          const wa = enlaceGuia(guia, et.msg(NOMBRE[guia][lang], c.nombre[lang]))
           return (
             <li key={id} className="v9-fila">
               <Link to={`${prefijo}/${id}/`} className="v9-fila-foto" tabIndex={-1} aria-hidden="true">
@@ -95,7 +95,7 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
                 <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer"
                   aria-label={`${et.reservar}: ${c.nombre[lang]} (WhatsApp)`}
                   onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `tours-${id}`, canal: 'whatsapp_tarjeta' })}>
-                  <IconoWa /> {et.reservar}
+                  <IconoCanal tg={!!GUIAS[guia].tg} /> {et.reservar}
                 </a>
                 <Link className="v9-enlace" to={`${prefijo}/${id}/`}>{et.ver}</Link>
               </div>

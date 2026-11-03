@@ -10,7 +10,7 @@ import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, NOTA_TG } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -21,7 +21,7 @@ import { Logo } from './Logo'
 import { useCambio } from './cambio'
 import './v7.css'
 import './estilo-pixel.css'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import './figuras.css'
 import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
@@ -55,14 +55,15 @@ declare global {
 
 // ── Utilidades ───────────────────────────────────────────────────────────────
 
-/** Número legible según el país: España +34 634 193 106; Japón +81 80 8506 7586. */
+/** Número legible según el país: España +34 634 193 106; Japón +81 XX XXXX XXXX. */
 function telefono(n: string) {
   return n.startsWith('34') ? `+34 ${n.slice(2, 5)} ${n.slice(5, 8)} ${n.slice(8)}` : `+${n.slice(0, 2)} ${n.slice(2, 4)} ${n.slice(4, 8)} ${n.slice(8)}`
 }
 
-function enlaceWa(numero: string, texto: string) {
-  return `https://wa.me/${numero}?text=${encodeURIComponent(texto)}`
-}
+/** Canal visible del guía: «Telegram» para Larion, «WhatsApp» para el resto. */
+const canal = (p: Pagina) => (GUIAS[p.guia].tg ? 'Telegram' : 'WhatsApp')
+/** Nota para que no despiste el perfil de Telegram (es de Tony, que coordina a Larion). */
+const notaTg = (p: Pagina) => (GUIAS[p.guia].tg ? NOTA_TG[p.lang === 'ru' ? 'ru' : 'en'] : '')
 
 const VACIO: DatosContacto = { nombre: '', pais: '', ciudad: '', fechas: '', personas: '', hotel: '', intereses: [], notas: '' }
 
@@ -280,8 +281,8 @@ function Cabecera({ p }: { p: Pagina }) {
       </nav>
       <BotonTema lang={p.lang} />
       <BotonSonido lang={p.lang} ambiente="ciudad" />
-      <a className="v7-boton v7-boton-peq" href={enlaceWa(g.wa, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — WhatsApp`}>
-        <IconoWa /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
+      <a className={`v7-boton v7-boton-peq${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — ${canal(p)}`}>
+        <IconoCanal tg={!!g.tg} /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
       </a>
     </header>
   )
@@ -331,6 +332,8 @@ const mediaResenas = (l: Resena[], lang: string) =>
   (l.reduce((a, r) => a + r.stars, 0) / l.length).toLocaleString(lang === 'ar' ? 'ar-u-nu-latn' : lang, { minimumFractionDigits: 1, maximumFractionDigits: 1 })
 
 const RESERVAR_PLAN: Record<string, string> = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
+/** Larion: Telegram (t.me no prellena, el plan lo dice el cliente). */
+const RESERVAR_PLAN_TG: Record<string, string> = { en: 'Book on Telegram', ru: 'Забронировать в Telegram' }
 const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con PayPal', en: 'or pay in advance with PayPal', ar: 'أو ادفع مسبقاً عبر PayPal', ru: 'или оплатить заранее через PayPal' }
 
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
@@ -414,9 +417,9 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
             <div className="ck-corte" aria-hidden="true"><i /></div>
             {/* Primero se habla (WhatsApp con el plan ya escrito) y luego se paga:
                 el botón grande de pagar antes de escribir echaba para atrás. */}
-            <a className="v7-plan-pagar" href={enlaceWa(GUIAS[p.guia].wa, p.contacto.plantilla({ ...VACIO, intereses: [plan.nombre] }))} target="_blank" rel="noopener noreferrer"
-              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, valor: plan.yenes, canal: 'whatsapp-precio' })}>
-              {RESERVAR_PLAN[p.lang] ?? RESERVAR_PLAN.en}
+            <a className="v7-plan-pagar" href={enlaceGuia(p.guia, p.contacto.plantilla({ ...VACIO, intereses: [plan.nombre] }))} target="_blank" rel="noopener noreferrer"
+              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, valor: plan.yenes, canal: GUIAS[p.guia].tg ? 'telegram-precio' : 'whatsapp-precio' })}>
+              {(GUIAS[p.guia].tg ? RESERVAR_PLAN_TG : RESERVAR_PLAN)[p.lang] ?? RESERVAR_PLAN.en}
             </a>
             {pagar && !plan.desde && (
               <a className="v7-plan-pagar-enlace" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
@@ -467,7 +470,13 @@ function Contacto({ p }: { p: Pagina }) {
 
   return (
     <div className="v7-contacto">
-      <form className="v7-formulario tarjeta" onSubmit={(e) => { e.preventDefault(); avisaAnalytics('whatsapp'); window.open(enlaceWa(g.wa, msg), '_blank', 'noopener') }}>
+      <form className="v7-formulario tarjeta" onSubmit={(e) => {
+        e.preventDefault()
+        avisaAnalytics(g.tg ? 'telegram' : 'whatsapp')
+        // t.me no admite texto: se copia el mensaje para pegarlo en el chat.
+        if (g.tg) navigator.clipboard?.writeText(msg).catch(() => {})
+        window.open(enlaceGuia(p.guia, msg), '_blank', 'noopener')
+      }}>
         <div className="v7-campos">
           <label><span>{p.contacto.nombre}</span><input value={d.nombre} onChange={cambia('nombre')} autoComplete="name" /></label>
           <label><span>{p.contacto.pais}</span>
@@ -494,7 +503,7 @@ function Contacto({ p }: { p: Pagina }) {
         </fieldset>
         <label className="v7-ancho"><span>{p.contacto.notas}</span><textarea rows={2} value={d.notas} onChange={cambia('notas')} /></label>
         <div className="v7-acciones">
-          <button type="submit" className="v7-boton"><IconoWa /> {p.contacto.wa}</button>
+          <button type="submit" className={`v7-boton${g.tg ? ' v7-tg' : ''}`}><IconoCanal tg={!!g.tg} /> {p.contacto.wa}</button>
           <a className="v7-boton v7-boton-sec" href={`mailto:${CORREO}?subject=${encodeURIComponent(p.contacto.asuntoMail)}&body=${encodeURIComponent(msg)}`} onClick={() => avisaAnalytics('email')}>
             {p.contacto.mail}
           </a>
@@ -545,7 +554,7 @@ function BarraMovil({ p, href, conResenas }: { p: Pagina; href: string; conResen
       <nav className="v7-barra-atajos" aria-label={atajos.map(([, t]) => t).join(' · ')}>
         {atajos.map(([id, t]) => <a key={id} href={`#${id}`} tabIndex={ver ? 0 : -1} aria-current={activa === id ? 'true' : undefined}>{t}</a>)}
       </nav>
-      <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1} aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /></a>
+      <a className={`v7-boton${GUIAS[p.guia].tg ? ' v7-tg' : ''}`} href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1} aria-label={`${p.hero.cta} — ${canal(p)}`}><IconoCanal tg={!!GUIAS[p.guia].tg} /></a>
     </div>
   )
 }
@@ -613,7 +622,7 @@ function datosEstructurados(p: Pagina) {
       image: `${BASE}${g.foto}`,
       jobTitle: 'Private tour guide',
       knowsLanguage: idiomas,
-      telephone: `+${g.wa}`,
+      ...contactoLd(p.guia),
       worksFor: { '@id': NEGOCIO_ID },
     },
     offers: p.precios.planes.map((pl) => ({
@@ -661,12 +670,12 @@ const RAZONES: Record<PaginaId, { titulo: string; lista: [string, string, string
     ['組', 'لمجموعتك وحدها', 'سعر ثابت للمجموعة حتى ٦ أشخاص، وإلغاء مجاني حتى ٧٢ ساعة قبل الموعد.'],
   ] },
   ru: { titulo: 'Почему со мной', lista: [
-    ['直', 'Напрямую', 'Вы договариваетесь с гидом, без агентства: кто отвечает в WhatsApp, тот и встречает вас.'],
+    ['直', 'Напрямую', 'Без агентства: в Telegram отвечает Тони, координатор Лариона, а встречает вас сам Ларион.'],
     ['語', 'На вашем языке', 'Веду туры на русском и на английском.'],
     ['組', 'Только ваша компания', 'Фиксированная цена за группу до 6 человек и бесплатная отмена не позднее чем за 72 часа.'],
   ] },
   larion: { titulo: 'Why book with me', lista: [
-    ['直', 'Direct contact', 'You book with your guide, not an agency: the person who answers on WhatsApp is the one who meets you.'],
+    ['直', 'Direct contact', "No agency: Tony, Larion's coordinator, answers you on Telegram, and Larion himself meets you."],
     ['語', 'In your language', 'Russian and English.'],
     ['組', 'Just your party', 'One fixed price per group of up to 6, and free cancellation up to 72 hours before.'],
   ] },
@@ -810,9 +819,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
               {/* «Reservar» abre WhatsApp con el mensaje listo: es la reserva de verdad. */}
-              <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — WhatsApp`}><IconoWa /> {p.hero.cta}</a>
+              <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — ${canal(p)}`}><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
               <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>
             </div>
+            {g.tg && <p className="v7-nota-tg">Telegram {TG_LARION_VISIBLE} · {notaTg(p)}</p>}
             {/* La nota sale de las reseñas reales; sin reseñas no se enseña nada. */}
             {resenas.length > 0 && (
               <p className="v7-hero-nota"><a href="#resenas">
@@ -858,7 +868,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Extensión VIP de Larion a la RPDC (KndrVip.tsx, cargada aparte). */}
         {(p.id === 'ru' || p.id === 'larion') && (
           <Suspense fallback={<div id="kndr" style={{ minHeight: '100svh' }} />}>
-            <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} wa="818085067586" />
+            <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} tg={TG_LARION_URL} />
           </Suspense>
         )}
 
@@ -971,7 +981,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 {FICHA_RAPIDA[p.lang].map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
               </dl>
             )}
-            <a className="v7-boton" href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> {p.hero.cta}</a>
+            <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
+            {g.tg && <p className="v7-nota-tg">{notaTg(p)}</p>}
             {p.guiaTxt.otro && (
               <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
             )}
@@ -1064,7 +1075,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Contacto p={p} />
         </section>
       </main>
-      <BarraMovil p={p} href={enlaceWa(g.wa, msgCorto)} conResenas={!!p.resenas && resenas.length > 0} />
+      <BarraMovil p={p} href={enlaceGuia(p.guia, msgCorto)} conResenas={!!p.resenas && resenas.length > 0} />
 
       <FranjaVentajas lang={p.lang} />
 
@@ -1073,7 +1084,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <div>
             <strong><Logo /></strong>
             <p>{p.pie.lema}</p>
-            <p className="v7-pie-wa"><a href={enlaceWa(g.wa, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoWa /> <bdi dir="ltr">{telefono(g.wa)}</bdi></a></p>
+            <p className="v7-pie-wa"><a href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoCanal tg={!!g.tg} /> <bdi dir="ltr">{g.tg ? `Telegram ${TG_LARION_VISIBLE}` : telefono(g.wa ?? '')}</bdi></a></p>
+            {g.tg && <p className="v7-nota-tg">{notaTg(p)}</p>}
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
           </div>
           <nav aria-label={p.pie.legal}>

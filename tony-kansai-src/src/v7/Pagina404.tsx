@@ -9,7 +9,7 @@ import { useEffect, useMemo, useState, type FormEvent } from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS } from './contenido'
+import { enlaceGuia } from './contenido'
 import './pagina404.css'
 
 type L = 'es' | 'en' | 'ar' | 'ru'
@@ -47,8 +47,8 @@ const T: Record<L, {
     barrido: 'РАЗВЁРТКА', sector: 'СЕКТОР КАНСАЙ', tu: 'Вы', titulo: 'На радаре пусто.',
     texto: 'Я дважды прочесал все маршруты Кансая, а этот адрес не отвечает. Возможно, в ссылке опечатка: найдите нужное или вернитесь на главную.',
     perdida: 'Сигнал потерян', quizas: 'Возможно, вы искали…', buscando: 'Ищу похожие страницы…', nada: 'Ничего похожего на радаре. Попробуйте поиск или ссылки ниже.',
-    buscar: 'Найти страницу: Киото, аэропорт, сакура…', sinResultados: 'Ничего не нашлось. Спросите в WhatsApp, я подскажу.',
-    atajos: 'Чаще всего ищут', inicio: 'На главную', wa: 'Спросить в WhatsApp',
+    buscar: 'Найти страницу: Киото, аэропорт, сакура…', sinResultados: 'Ничего не нашлось. Спросите в Telegram — ответит Тони, координатор Лариона.',
+    atajos: 'Чаще всего ищут', inicio: 'На главную', wa: 'Написать в Telegram',
     waTexto: 'Здравствуйте, Ларион! Искал(а) эту страницу и не нашёл(ла): {url}', ruta: '/ru/',
   },
 }
@@ -199,7 +199,8 @@ export default function Pagina404() {
   }
 
   const url = typeof window !== 'undefined' ? window.location.href : pathname
-  const wa = `https://wa.me/${(l === 'ru' ? GUIAS.larion : GUIAS.tony).wa}?text=${encodeURIComponent(t.waTexto.replace('{url}', url))}`
+  // ru = Larion: Telegram (t.me no prellena; el enlace roto no viaja, pero el botón sí funciona).
+  const wa = enlaceGuia(l === 'ru' ? 'larion' : 'tony', t.waTexto.replace('{url}', url))
 
   return (
     <main className="p404" lang={l} dir={l === 'ar' ? 'rtl' : 'ltr'}>
@@ -277,7 +278,9 @@ export default function Pagina404() {
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" /></svg>{t.inicio}
             </Link>
             <a className="p404-boton p404-boton-wa" href={wa} target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z" /></svg>{t.wa}
+              {l === 'ru'
+                ? <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 4 3 11l6 2 2 6 3-4 5 4z" /></svg>
+                : <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-11.6 7.1L4 20l1-4.2A8 8 0 1 1 20 12z" /></svg>}{t.wa}
             </a>
           </div>
         </section>

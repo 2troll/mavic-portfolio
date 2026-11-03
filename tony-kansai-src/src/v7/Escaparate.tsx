@@ -9,7 +9,7 @@ import { APPS, CIUDADES, cuponDe, enlaceDe, type Ciudad } from './datosVentajas'
 import { ICONOS_APP } from './logosMarcas'
 import { ICONO_EXP } from './iconosExperiencia'
 import { textoApp, MAS } from './FichaVentaja'
-import { GUIAS } from './contenido'
+import { enlaceGuia } from './contenido'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
 type Filtro = '' | 'musulman' | 'conTony' | Ciudad
@@ -37,7 +37,8 @@ function Copiar({ texto, t }: { texto: string; t: (typeof T)[Id] }) {
 export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
   const t = T[id]
   const [filtro, setFiltro] = useState<Filtro>('')
-  const numero = (id === 'ru' ? GUIAS.larion : GUIAS.tony).wa
+  // La versión rusa es de Larion: va por Telegram (sin texto prellenado).
+  const guia = id === 'ru' ? 'larion' : 'tony'
   const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => a.ciudad === c))
   const pasa = (a: (typeof APPS)[number]) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : a.ciudad === filtro)
   const chips: { k: Filtro; txt: string; n: number }[] = [
@@ -70,7 +71,7 @@ export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
               const tx = textoApp(a, id)
               const Ico = ICONO_EXP[a.clave]
               const cupon = cuponDe(a)
-              const wa = `https://wa.me/${numero}?text=${encodeURIComponent(t.msg.replace('{n}', a.nombre))}`
+              const wa = enlaceGuia(guia, t.msg.replace('{n}', a.nombre))
               return (
                 <motion.article key={a.clave} id={a.clave} className="vt-exp-tarjeta" layout
                   initial={{ opacity: 0, y: 24, scale: 0.96 }} animate={{ opacity: 1, y: 0, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }}

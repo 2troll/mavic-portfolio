@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
 import { MONTANA, MONTES, KANJI, CIUDAD, CIMA } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
@@ -19,7 +19,7 @@ import './expedicion.css'
 import { Atlas, Corte, Medidor, Meses } from './Expedicion'
 import { PortadaViva, Travesia, SelloMetal, Altimetro, CintaMontes, useSuave, useRevelados, usePila, suaveA } from './MontanaViva'
 import { EXP, CREDITOS as CREDITOS_FOTO } from './datosExpedicion'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { milesLocal, PIE } from './formato'
@@ -64,7 +64,7 @@ function datosEstructurados(p: (typeof MONTANA)[MontanaId], tc: (t: string) => s
             '@type': 'Mountain', name: `${tc(r.title)} (${KANJI[m]})`,
             geo: { '@type': 'GeoCoordinates', latitude: CIMA[m].lat, longitude: CIMA[m].lon, elevation: CIMA[m].m },
           },
-          provider: { '@type': 'Person', name: g.nombre, telephone: `+${g.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
+          provider: { '@type': 'Person', name: g.nombre, ...contactoLd(p.guias[0]), worksFor: { '@id': `${BASE}/#negocio` } },
           ...(precio > 0 ? { offers: { '@type': 'Offer', price: precio, priceCurrency: 'JPY', availability: 'https://schema.org/InStock', url: `${BASE}${p.ruta}`,
             eligibleQuantity: { '@type': 'QuantitativeValue', maxValue: 6, unitText: 'people per group' } } } : {}),
         },
@@ -93,7 +93,9 @@ export default function Montana({ id }: { id: MontanaId }) {
   const nombres = useMemo(() => Object.fromEntries(MONTES.map((m) => [m, `${KANJI[m]} ${tc(ruta(m).title)}  ${CIMA[m].m} m`])) as Record<MonteId, string>, [tc])
   const t = EXP[p.lang]
   const MAX_GRUPO = 6
-  const wa = (g: 'tony' | 'larion', texto: string) => `https://wa.me/${GUIAS[g].wa}?text=${encodeURIComponent(p.saludo(nombreGuia(g), texto))}`
+  // Larion va por Telegram (enlaceGuia lo decide; t.me no lleva texto).
+  const wa = (g: 'tony' | 'larion', texto: string) => enlaceGuia(g, p.saludo(nombreGuia(g), texto))
+  const tg = !!GUIAS[p.guias[0]].tg
 
   // Salta al capítulo i del relieve 3D (0 = portada del relieve): el progreso
   // de MontesScroll es lineal con el scroll de su sección.
@@ -140,8 +142,8 @@ export default function Montana({ id }: { id: MontanaId }) {
         </a>
         <div className="v7-monte-pie">
           <span className="v7-monte-precio"><bdi>{milesLocal(r.price, p.lang)}</bdi> <small>{p.et.porGrupo}</small></span>
-          <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], tc(r.title))} target="_blank" rel="noopener noreferrer"
-            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, ruta: m, canal: 'whatsapp_montana' })}>
+          <a className={`v7-boton v7-boton-peq${tg ? ' v7-tg' : ''}`} href={wa(p.guias[0], tc(r.title))} target="_blank" rel="noopener noreferrer"
+            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: p.id, ruta: m, canal: tg ? 'telegram_montana' : 'whatsapp_montana' })}>
             {p.et.pedir}
           </a>
         </div>
@@ -186,8 +188,8 @@ export default function Montana({ id }: { id: MontanaId }) {
           ))}
         </nav>
         <BotonSonido lang={p.lang} ambiente="montana" />
-        <a className="v7-boton v7-boton-peq" href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — WhatsApp`}>
-          <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span className="v7-solo-movil"><IconoWa /></span>
+        <a className={`v7-boton v7-boton-peq${tg ? ' v7-tg' : ''}`} href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — ${tg ? 'Telegram' : 'WhatsApp'}`}>
+          <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 
@@ -203,7 +205,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         <MontesScroll tinta="#e8b23a" bruma={[0.93, 0.89, 0.8]} montes={MONTES} nombres={nombres} capitulo={capitulo} etiquetaAria={p.intro.titulo} />
 
         <Banda lang={p.lang} />
-        <Cumbres lang={p.lang} waNumero={GUIAS[p.guias[0]].wa} />
+        <Cumbres lang={p.lang} guia={p.guias[0]} />
 
         <section id="oficio" className="v7-seccion">
           <h2><span className="v7-kanji" lang="ja">山</span>{p.oficio.titulo}</h2>
@@ -227,8 +229,9 @@ export default function Montana({ id }: { id: MontanaId }) {
             {p.guias.map((g) => (
               <a key={g} className="v7-montana-guia tarjeta" href={wa(g, '')} target="_blank" rel="noopener noreferrer">
                 <img loading="lazy" src={GUIAS[g].foto} alt="" width={72} height={72} />
-                <span><strong>{nombreGuia(g)}</strong><small>{g === 'tony' ? 'Español · English · العربية' : 'Русский · English'}</small></span>
-                <span className="v7-boton v7-boton-peq">{p.final.escribir(nombreGuia(g))}</span>
+                <span><strong>{nombreGuia(g)}</strong><small>{g === 'tony' ? 'Español · English · العربية' : 'Русский · English'}</small>
+                  {GUIAS[g].tg && <small>Telegram · {NOTA_TG[p.lang === 'ru' ? 'ru' : 'en']}</small>}</span>
+                <span className={`v7-boton v7-boton-peq${GUIAS[g].tg ? ' v7-tg' : ''}`}>{p.final.escribir(nombreGuia(g))}</span>
               </a>
             ))}
           </div>

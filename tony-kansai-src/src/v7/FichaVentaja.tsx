@@ -7,7 +7,7 @@ import { CodigoCifrado } from './Cocina'
 import { APPS, CATEGORIAS, type App, cuponDe, esAfiliado } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import { GuiaTienda } from './GuiaTienda'
 import { FOTO_EXP } from './datosVentajasGuia'
 import { FotoZona } from './FotoZona'
@@ -191,7 +191,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
       <section className="vt-final">
         <h2>{final.finalTitulo}</h2>
         <p>{final.finalTexto}</p>
-        <a className="vt-wa vt-wa-grande" href={wa} target="_blank" rel="noopener noreferrer"><IconoWa /> {final.finalBoton}</a>
+        <a className="vt-wa vt-wa-grande" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={wa.includes('t.me/')} /> {final.finalBoton}</a>
       </section>
     </main>
   )

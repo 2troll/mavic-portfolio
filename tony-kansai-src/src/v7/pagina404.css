@@ -169,3 +169,4 @@
 @media (prefers-reduced-motion: reduce) {
   .p404-barrido, .p404-punto, .p404-cero i { animation: none; }
 }
+.p404-boton-wa[href^="https://t.me/"] svg { color: #229ED9; }

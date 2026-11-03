@@ -298,7 +298,7 @@ export function Travesia({ lang, paradas, onVer3d }: { lang: Lengua; paradas: Pa
               <Linea id={p.id} />
               <p className="mv-parada-datos"><span>{p.duracion}</span><span><bdi>{p.precio}</bdi></span></p>
               <div className="mv-parada-botones">
-                <a className="v7-boton v7-boton-peq" href={p.wa} target="_blank" rel="noopener noreferrer">{p.pedir}</a>
+                <a className={`v7-boton v7-boton-peq${p.wa.includes('t.me/') ? ' v7-tg' : ''}`} href={p.wa} target="_blank" rel="noopener noreferrer">{p.pedir}</a>
                 <button type="button" className="mv-3d" onClick={() => onVer3d(i)}>{tx.mas} ↓</button>
               </div>
             </div>

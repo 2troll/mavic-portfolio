@@ -27,10 +27,16 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
 const HOY = '2026-10-30'
 
-const WA_NUMERO = '818085067586'
-const WA_VISIBLE = '+81 80 8506 7586'
-const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
-const WA_GENERAL = wa('Здравствуйте, Ларион! Интересует тур в КНДР. Даты и количество человек: ')
+// Contacto: Telegram, no WhatsApp (los clientes rusos no usan WhatsApp). La cuenta
+// es de Tony (perfil «Luigi Prince Torres»), que coordina y contesta por Larion:
+// por eso va siempre la nota TG_NOTA. t.me no admite texto prellenado, así que el
+// saludo se sugiere como texto visible.
+const TG_USUARIO = 'LUiGi19'
+const TG_URL = `https://t.me/${TG_USUARIO}`
+const TG_VISIBLE = `@${TG_USUARIO}`
+const TG_NOTA = 'Ответит Тони, координатор Лариона'
+const TG_ICONO = '<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.4 3.6 2.9 10.7c-1 .4-1 1.7 0 2l4.6 1.5 1.8 5.6c.3.8 1.3 1 1.9.4l2.6-2.5 4.8 3.5c.7.5 1.7.1 1.9-.7l3.1-15c.2-1-.8-1.8-1.7-1.4ZM9.6 14.3l-.5 3.3-1.2-3.9 9.6-6.2-7.9 6.8Z"/></svg>'
+const SUGERENCIA_GENERAL = 'Здравствуйте! Интересует тур в КНДР. Даты и количество человек: …'
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -341,8 +347,10 @@ header.top nav{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:14px;opacity:.
 .ruta{display:flex;align-items:center;gap:12px;font:500 13px/1 var(--mono);letter-spacing:.1em;color:rgba(255,255,255,.75)}
 .ruta i{flex:0 1 120px;height:2px;background:repeating-linear-gradient(90deg,#ffb3ad 0 8px,transparent 8px 14px)}
 .cta{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center}
-.btn{display:inline-flex;align-items:center;padding:14px 24px;border-radius:999px;background:var(--acento);color:#fff;font:600 16px/1 var(--cuerpo);text-decoration:none}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;border-radius:999px;background:var(--acento);color:#fff;font:600 16px/1 var(--cuerpo);text-decoration:none}
 .tel{font-family:var(--mono);user-select:all}
+.btn-tg{background:#229ED9}
+.sug{flex-basis:100%;margin:0;font-size:14px;opacity:.8}
 main section{padding-block:48px 0}
 main section > .kap{display:grid;gap:20px}
 .otvet{font-size:19px;line-height:1.6;max-width:68ch;border-left:3px solid var(--acento);padding-left:18px}
@@ -395,7 +403,7 @@ details p{margin-top:8px;color:var(--suave)}
 footer{margin-top:64px;background:var(--tinta);color:#e9e6df;padding-block:36px 96px;font-size:14px}
 @media (prefers-color-scheme:dark){footer{background:#0a0f1b}}
 footer .kap{display:grid;gap:10px}
-.wa-fijo{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:#1f8f4e;color:#fff;text-decoration:none;font:600 15px/1 var(--cuerpo);padding:14px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:5}
+.wa-fijo{position:fixed;right:max(16px,env(safe-area-inset-right,0px));bottom:max(16px,env(safe-area-inset-bottom,0px));background:#229ED9;color:#fff;text-decoration:none;font:600 15px/1 var(--cuerpo);padding:14px 20px;border-radius:999px;box-shadow:0 6px 20px rgba(0,0,0,.25);z-index:5}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 `
 
@@ -443,18 +451,19 @@ ${cuerpo}
 </main>
 <footer><div class="kap">
 <p>Ларион — русскоязычный гид команды <a href="/ru/">Tony Kansai Guide</a> (Япония), гражданин России. Туры в КНДР проводит аккредитованный российский туроператор; в КНДР с группой работают местные гиды.</p>
-<p>WhatsApp: <a href="${WA_GENERAL}">${WA_VISIBLE}</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a> (${TG_NOTA}) · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
 <p>Туры: ${TURY.map((t) => `<a href="/ru/kndr/${t.yol}/">${esc(t.nombre)}</a>`).join(' · ')}</p>
 <p>Вопросы: ${OTVETY.map((o) => `<a href="/ru/kndr/${o.yol}/">${esc(o.h1)}</a>`).join(' · ')}</p>
 <p>Ларион в Японии: <a href="/ru/">экскурсии по Киото, Осаке и Наре</a> · <a href="/larion/">Larion (English)</a> · Обновлено: ${HOY}</p>
 </div></footer>
-<a class="wa-fijo" href="${WA_GENERAL}">WhatsApp: Ларион</a>
+<a class="wa-fijo" href="${TG_URL}" aria-label="Telegram ${TG_VISIBLE}: ${TG_NOTA}">${TG_ICONO} Telegram</a>
 </body>
 </html>
 `
 }
 
-const ctaBloque = (href = WA_GENERAL, texto = 'Написать Лариону в WhatsApp') => `<div class="cta"><a class="btn" href="${href}">${texto}</a><span class="tel">${WA_VISIBLE}</span></div>`
+// `sugerencia`: qué escribir en Telegram (t.me no lo deja escrito).
+const ctaBloque = (sugerencia = SUGERENCIA_GENERAL, texto = 'Написать в Telegram') => `<div class="cta"><a class="btn btn-tg" href="${TG_URL}">${TG_ICONO}${texto}</a><span class="tel">${TG_VISIBLE}</span><span>${TG_NOTA}</span><p class="sug">Можно написать так: «${esc(sugerencia)}»</p></div>`
 
 const tablo = `<div class="tablo" role="table" aria-label="Туры в КНДР 2027">
 <div class="tablo-cab" role="row"><span>Даты</span><span>Тур</span><span>Дней</span><span style="text-align:right">Цена</span></div>
@@ -558,7 +567,7 @@ function trip(t) {
 
 // --- Páginas de tour ---
 function paginaTur(t) {
-  const waTur = wa(`Здравствуйте, Ларион! Интересует тур «${t.nombre}» (${t.fechas}). Нас: `)
+  const waTur = `Здравствуйте! Интересует тур «${t.nombre}» (${t.fechas}). Нас: …`
   const otros = TURY.filter((x) => x.yol !== t.yol).slice(0, 3)
   const cuerpo = `${heroe(t.foto, t.nombre, `<span class="ceja"><a href="/ru/kndr/" style="color:inherit">Туры в КНДР</a> · ${esc(t.fechas)}</span>
 <h1>${esc(t.nombre)}</h1>

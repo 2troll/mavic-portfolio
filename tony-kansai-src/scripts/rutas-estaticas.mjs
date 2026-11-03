@@ -221,7 +221,7 @@ const portada = `
       <p>Private day tours in Kyoto, Osaka, Nara, Kobe, Himeji, Hiroshima and Miyajima. Your guide meets you in your hotel lobby and the day is for your group only.</p>
       <ul>
         <li><a href="/en/">Tony Hanma</a>: Spanish, lives in Osaka; guides in Spanish, English and Arabic. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</li>
-        <li><a href="/larion/">Larion</a>: guides in Russian and English. WhatsApp <a href="${WA('818085067586')}">+81 80 8506 7586</a>.</li>
+        <li><a href="/larion/">Larion</a>: guides in Russian and English. Telegram <a href="https://t.me/LUiGi19">@LUiGi19</a> (Tony, Larion's coordinator, answers here).</li>
         <li><a href="/tr/">Ferhat</a>: Turkish guide, 4 years in Japan; guides in Turkish only.</li>
         <li><a href="/fr/">Iheb</a>: guides in French in Tokyo and the Kanto region, Nagano and Shizuoka; also speaks Arabic and English. WhatsApp <a href="${WA('818080155322')}">+81 80 8015 5322</a>.</li>
         <li><a href="/private/">Mario</a>: premium private guide in English anywhere in Japan, multi-day trips possible; also speaks Spanish. WhatsApp <a href="${WA('817089968582')}">+81 70 8996 8582</a>.</li>

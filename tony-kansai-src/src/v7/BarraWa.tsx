@@ -2,9 +2,11 @@
 // aparece en cuanto se deja atrás la primera pantalla, para que reservar
 // esté siempre a un toque. La portada de cada guía tiene la suya (BarraMovil).
 import { useEffect, useState } from 'react'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 
 const TEXTO = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
+// Larion (t.me) va por Telegram: misma barra, otro texto, icono y color.
+const TEXTO_TG = { es: 'Escribir por Telegram', en: 'Message on Telegram', ar: 'راسلنا عبر تيليغرام', ru: 'Написать в Telegram' }
 
 /** `ocultaEn`: selector de una sección con botones propios de reservar (las
  *  fichas de montaña); mientras ocupa la pantalla, la barra se aparta. */
@@ -24,11 +26,12 @@ export function BarraWa({ href, lang, pagina, ocultaEn }: { href: string; lang: 
     addEventListener('scroll', al, { passive: true })
     return () => { cancelAnimationFrame(raf); removeEventListener('scroll', al) }
   }, [ocultaEn])
+  const tg = href.includes('t.me/')
   return (
     <div className={`v7-barra-movil cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
-      <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}
-        onClick={() => window.gtag?.('event', 'generate_lead', { pagina, canal: 'whatsapp_barra' })}>
-        <IconoWa /> {TEXTO[lang]}
+      <a className={`v7-boton${tg ? ' v7-tg' : ''}`} href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}
+        onClick={() => window.gtag?.('event', 'generate_lead', { pagina, canal: tg ? 'telegram_barra' : 'whatsapp_barra' })}>
+        <IconoCanal tg={tg} /> {(tg ? TEXTO_TG : TEXTO)[lang]}
       </a>
     </div>
   )

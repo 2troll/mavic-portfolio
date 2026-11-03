@@ -102,3 +102,4 @@ html.lenis { scroll-behavior: auto !important; }
 #kndr .kv-bandeja { border-radius: 20px !important; }
 #kndr .kv-bandeja li { border-radius: 15px !important; }
 @media (max-width: 700px) { #kv-banner { border-radius: 20px !important; } }
+.kv-boton-tg { display: inline-flex; align-items: center; gap: 8px; background: #229ED9; color: #fff; border-color: #229ED9; }

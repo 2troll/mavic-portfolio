@@ -1,5 +1,5 @@
 // Páginas de temporada en Kioto: otoño (momiji) y primavera (sakura), en es/en/ar/ru.
-// Las rusas son de Larion (su WhatsApp, sin PayPal).
+// Las rusas serían de Larion (su Telegram, sin PayPal).
 // Es la que se enseña en anuncios y publicaciones de octubre y noviembre, y la
 // que busca quien viene a ver los arces rojos. Los textos, en datosOtono.ts.
 
@@ -7,10 +7,10 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, WA_LARION } from './contenido'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd } from './contenido'
 import { foto } from './foto'
 import { Logo } from './Logo'
-import { IconoWa } from './IconoWa'
+import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
@@ -39,7 +39,11 @@ export default function Otono({ id }: { id: OtonoId }) {
   const { setLang } = useLanguage()
   useEffect(() => { setLang(p.lang) }, [p.lang, setLang])
 
-  const wa = `https://wa.me/${p.guia === 'larion' ? WA_LARION : GUIAS.tony.wa}?text=${encodeURIComponent(p.saludo)}`
+  // Larion: Telegram (t.me no prellena texto); Tony: WhatsApp con el saludo.
+  const wa = enlaceGuia(p.guia, p.saludo)
+  const tg = !!GUIAS[p.guia].tg
+  const claseBoton = tg ? ' v7-tg' : ''
+  const canal = tg ? 'telegram' : 'whatsapp'
   // El PayPal es de Tony: en las páginas de Larion no se ofrece.
   const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const dir = p.lang === 'ar' ? 'rtl' : 'ltr'
@@ -61,7 +65,7 @@ export default function Otono({ id }: { id: OtonoId }) {
       { '@type': 'Offer', name: p.completo, price: PRECIO.completo, priceCurrency: 'JPY', url: `${BASE}${p.ruta}` },
     ],
     // El negocio es el #negocio común del index.html; el teléfono va en la persona de cada guía.
-    provider: { '@type': 'Person', name: p.guia === 'larion' ? 'Larion' : GUIAS.tony.nombre, telephone: `+${p.guia === 'larion' ? WA_LARION : GUIAS.tony.wa}`, worksFor: { '@id': `${BASE}/#negocio` } },
+    provider: { '@type': 'Person', name: p.guia === 'larion' ? 'Larion' : GUIAS.tony.nombre, ...contactoLd(p.guia), worksFor: { '@id': `${BASE}/#negocio` } },
   }
 
   return (
@@ -87,8 +91,8 @@ export default function Otono({ id }: { id: OtonoId }) {
           ))}
         </nav>
         <BotonTema lang={p.lang} />
-        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.boton}`}>
-          <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoWa /></span>
+        <a className={`v7-boton v7-boton-peq${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.boton}`}>
+          <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 
@@ -99,8 +103,8 @@ export default function Otono({ id }: { id: OtonoId }) {
             <p className="v7-antetitulo">{emoji} {p.antetitulo}</p>
             <h1>{p.titulo}</h1>
             <p>{p.sub}</p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
-              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal: 'whatsapp' })}><IconoWa /> {p.cta}</a>
+            <a className={`v7-boton${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer"
+              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {p.cta}</a>
           </div>
         </section>
 
@@ -157,8 +161,8 @@ export default function Otono({ id }: { id: OtonoId }) {
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>
           <p className="v7-entradilla">{p.final.texto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
-            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal: 'whatsapp' })}><IconoWa /> {p.final.boton}</a>
+          <a className={`v7-boton${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer"
+            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {p.final.boton}</a>
           {otra && <p className="v7-temporada-enlace"><Link to={otra.ruta}>{OTRA_TXT[p.temporada][p.lang]} →</Link></p>}
           <p><Link to={p.inicio}>{p.volver}</Link></p>
         </section>

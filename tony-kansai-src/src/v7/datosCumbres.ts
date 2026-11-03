@@ -283,7 +283,7 @@ export const TEXTOS_CUMBRES: Record<Lengua, TextosCumbres> = {
     titulo: 'Десять вершин для тех, кто уже прошёл всё',
     sub: 'Настоящий набор высоты, траверсы на целый день и горы, где почти не бывает иностранцев. Данные маршрутов — из AllTrails; от нас гид, логистика и темп.',
     filtros: { todas: 'Все', exigente: 'Сложные', experto: 'Эксперт', ultra: 'Ультра' },
-    et: { km: 'км', desnivel: 'набор м', horas: 'часов', cima: 'Вершина', acceso: 'Старт', meses: 'Сезон', alltrails: 'Маршрут в AllTrails', pedir: 'Хочу с гидом', precio: 'Цена в WhatsApp' },
+    et: { km: 'км', desnivel: 'набор м', horas: 'часов', cima: 'Вершина', acceso: 'Старт', meses: 'Сезон', alltrails: 'Маршрут в AllTrails', pedir: 'Хочу с гидом', precio: 'Цена в Telegram' },
     sellos: { unesco: 'ЮНЕСКО', hyakumeizan: '百名山 · 100 знаменитых гор', techo: 'Крыша Кансая', 'varios-dias': 'По этапам' },
     nivelDesc: { exigente: 'Длинные маршруты или большой набор. Хорошая форма.', experto: 'Больше 1000 м набора и от 6 часов. Опыт в горах.', ultra: 'Больше 25 км или несколько дней. Только для хорошо подготовленных.' },
     apps: {

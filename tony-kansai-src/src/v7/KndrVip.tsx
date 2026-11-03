@@ -6,6 +6,7 @@
 //  · dqnamo, rehecho: billete de embarque con inclinación y foil, bandeja de
 //    tarjetas y sellos troquelados con las fotos de cada destino.
 // Con «reducir movimiento» no se anima nada y se ve el estado final.
+import { IconoTg } from './IconoWa'
 import { useEffect, useRef } from 'react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -53,9 +54,9 @@ const T = {
       ['06', 'Встреча во Владивостоке', 'Трансфер, отель накануне и брифинг о правилах за ужином.'],
     ],
     destinosT: 'Куда летим в 2027', dias: 'дн.',
-    cta: 'Смотреть туры и даты', wa: 'Написать Лариону', solo: 'Только для граждан РФ: КНДР пока принимает туристов только с российским паспортом.',
+    cta: 'Смотреть туры и даты', wa: 'Написать в Telegram', solo: 'Только для граждан РФ: КНДР пока принимает туристов только с российским паспортом.',
     atajos: [['Как добраться', 'kak-dobratsya-do-phenyana'], ['Сколько стоит', 'skolko-stoit-tur-v-kndr'], ['Виза', 'viza-v-kndr-dlya-rossiyan'], ['Когда ехать', 'kogda-luchshe-ehat-v-kndr'], ['С детьми', 'kndr-s-detmi'], ['Медовый месяц', 'svadebnoe-puteshestvie-v-kndr'], ['Для компании', 'korporativnyj-tur-v-kndr']],
-    waTxt: 'Здравствуйте, Ларион! Интересует VIP-тур в КНДР. Даты и количество человек: ', fotos: 'Фото',
+    waTxt: 'Ответит Тони, координатор Лариона. Напишите, например: «Интересует VIP-тур в КНДР, даты и количество человек».', fotos: 'Фото',
   },
   en: {
     ceja: "Larion's new destination · 2027",
@@ -74,9 +75,9 @@ const T = {
       ['06', 'Vladivostok welcome', 'Transfer, hotel the night before and a rules briefing over dinner.'],
     ],
     destinosT: 'Where we fly in 2027', dias: 'days',
-    cta: 'See tours and dates (in Russian)', wa: 'Message Larion', solo: 'Russian passport holders only: the DPRK currently admits tourists with a Russian passport only.',
+    cta: 'See tours and dates (in Russian)', wa: 'Message on Telegram', solo: 'Russian passport holders only: the DPRK currently admits tourists with a Russian passport only.',
     atajos: [] as string[][],
-    waTxt: 'Hello Larion! I am interested in a VIP tour to North Korea. Dates and number of people: ', fotos: 'Photos',
+    waTxt: "Tony, Larion's coordinator, answers here. Say, for example: “VIP tour to North Korea, dates and number of people”.", fotos: 'Photos',
   },
 }
 const CREDITOS = 'Jan Engelhardt (CC BY-SA 4.0), SSchlhmr (CC BY-SA 4.0), Mario Micklisch (CC BY 2.0), Clay Gilliland (CC BY-SA 2.0), Mark Fahey (CC BY 2.0) · Wikimedia Commons'
@@ -97,7 +98,8 @@ function useSuave() {
   }, [])
 }
 
-export default function KndrVip({ lang, wa }: { lang: Lang; wa: string }) {
+/** `tg`: enlace de Telegram de Larion (t.me no admite texto prellenado; el saludo va como texto visible). */
+export default function KndrVip({ lang, tg }: { lang: Lang; tg: string }) {
   const t = T[lang]
   const raiz = useRef<HTMLElement>(null)
   useSuave()
@@ -143,7 +145,6 @@ export default function KndrVip({ lang, wa }: { lang: Lang; wa: string }) {
   }, { scope: raiz })
 
   const toursUrl = lang === 'ru' ? '/ru/kndr/#tury' : '/ru/kndr/vip-tur-v-kndr/'
-  const waUrl = `https://wa.me/${wa}?text=${encodeURIComponent(t.waTxt)}`
 
   return (
     <section ref={raiz} className="kv" id="kndr" lang={lang} aria-labelledby="kv-titulo">
@@ -213,8 +214,9 @@ export default function KndrVip({ lang, wa }: { lang: Lang; wa: string }) {
           <Magnet padding={80} magnetStrength={3}>
             <a className="kv-boton" href={toursUrl}>{t.cta} →</a>
           </Magnet>
-          <a className="kv-boton kv-boton-2" href={waUrl}>{t.wa}</a>
+          <a className="kv-boton kv-boton-2 kv-boton-tg" href={tg} target="_blank" rel="noopener noreferrer"><IconoTg /> {t.wa}</a>
         </div>
+        <p className="kv-solo">{t.waTxt}</p>
         <p className="kv-solo">{t.solo}</p>
         {t.atajos.length > 0 && (
           <nav className="kv-atajos" aria-label="Вопросы о КНДР">

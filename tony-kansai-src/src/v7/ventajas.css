@@ -695,3 +695,5 @@
   .vt-escaparate:not(.con-foto) { width: 180px; }
   .vt-escaparate.con-foto { aspect-ratio: 16 / 10; width: 100%; }
 }
+/* Versión rusa (Larion): el contacto va por Telegram, con su azul. */
+.vt-wa[href^="https://t.me/"], .vn-boton-wa[href^="https://t.me/"], .vt-exp-reservar[href^="https://t.me/"] { background: #229ED9; color: #fff !important; }
