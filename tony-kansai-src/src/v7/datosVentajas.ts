@@ -316,6 +316,16 @@ const LISTA: App[] = [
     },
   },
   {
+    // Chapka (Aon France): afiliado desde el 22-10-2026, app=tonykansaiguide (correo de Sara Sanz, 2-11). Cap Trip = seguro de viaje corto.
+    clave: 'chapka', cat: 'utiles', nombre: 'Chapka', enlace: 'https://www.chapkadirect.es/index.php?action=produit&id=956&app=tonykansaiguide',
+    marca: { fondo: '#e4572e', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e4572e', palabra: 'Chapka' },
+    t: {
+      es: { que: 'Seguro de viaje para Japón: gastos médicos, repatriación, equipaje y anulación. Se contrata online en unos minutos.', ventaja: 'Con mi enlace llegas directo al seguro Cap Trip, pensado para viajes cortos como el tuyo.' },
+      en: { que: 'Travel insurance for Japan: medical costs, repatriation, luggage and cancellation. You buy it online in a few minutes.', ventaja: 'My link takes you straight to Cap Trip, their plan for short trips like yours.' },
+      ar: { que: 'تأمين سفر لليابان: النفقات الطبية والإعادة إلى الوطن والأمتعة والإلغاء. يُشترى عبر الإنترنت في دقائق.', ventaja: 'رابطي يأخذك مباشرة إلى خطة Cap Trip المخصصة للرحلات القصيرة مثل رحلتك.' },
+    },
+  },
+  {
     clave: 'wargo', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
     marca: { fondo: '#b5274a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#b5274a', palabra: '着物' },
     t: {
