@@ -1,0 +1,41 @@
+{
+ "miyajima-torii": {
+  "autor": "Jakub Hałun",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii_at_sunset,_Miyajima,_Japan,_20240816_1812_4144.jpg",
+  "w": 4840,
+  "h": 3230,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ],
+  "dir": "/private/foto"
+ },
+ "hiroshima-domo": {
+  "autor": "Jakub Hałun",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0824_4206.jpg",
+  "w": 4508,
+  "h": 2990,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ],
+  "dir": "/private/foto"
+ },
+ "miyajima-santuario": {
+  "autor": "Jakub Hałun",
+  "lisans": "CC BY 4.0",
+  "kaynak": "https://commons.wikimedia.org/wiki/File:Haraiden_of_Mar%C5%8Ddo_Shrine_and_Floating_Torii_Gate,_Itsukushima_Shinto_Shrine,_Miyajima,_20240816_1707_4004.jpg",
+  "w": 5547,
+  "h": 3704,
+  "anchos": [
+   3840,
+   1920,
+   1080
+  ],
+  "dir": "/private/foto"
+ }
+}

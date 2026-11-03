@@ -224,6 +224,7 @@ const portada = `
         <li><a href="/larion/">Larion</a>: guides in Russian and English. WhatsApp <a href="${WA('818085067586')}">+81 80 8506 7586</a>.</li>
         <li><a href="/tr/">Ferhat</a>: Turkish guide, 4 years in Japan; guides in Turkish only.</li>
         <li><a href="/fr/">Iheb</a>: guides in French in Tokyo and the Kanto region, Nagano and Shizuoka; also speaks Arabic and English. WhatsApp <a href="${WA('818080155322')}">+81 80 8015 5322</a>.</li>
+        <li><a href="/private/">Mario</a>: premium private guide in English anywhere in Japan, multi-day trips possible; also speaks Spanish. WhatsApp <a href="${WA('817089968582')}">+81 70 8996 8582</a>.</li>
       </ul>
       <p>Prices per group of up to 6 people: half day (4 hours) ${yen(P.medio)}, full day (8 hours) ${yen(P.completo)}, long day trips (Kōyasan, Amanohashidate, Kumano) from ${yen(P.lejos)}. Larger groups up to 14 people on request. Trains, entry fees and meals are not included. Pay cash on the day, or in advance with PayPal or Wise. Free cancellation up to 72 hours before.</p>
       <p>Choose your language:</p>
@@ -234,6 +235,7 @@ const portada = `
         <li lang="ru"><a href="/ru/">Русский</a>: частный гид на русском в Киото, Осаке и Хиросиме, с Ларионом.</li>
         <li lang="tr"><a href="/tr/">Türkçe</a>: Kyoto, Osaka ve Nara'da Türkçe özel rehber, Ferhat ile.</li>
         <li lang="fr"><a href="/fr/">Français</a> : guide privé francophone à Tokyo et dans le Kanto, avec Iheb.</li>
+        <li lang="en"><a href="/private/">English, all of Japan</a>: premium private guide anywhere in Japan, with Mario.</li>
       </ul>
       <p>Guides: <a href="/en/kyoto/">Private guide in Kyoto: prices</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
     </main>

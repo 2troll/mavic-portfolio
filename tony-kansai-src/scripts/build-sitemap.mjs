@@ -42,6 +42,9 @@ const paginas = [
   // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
   ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'argent-liquide-carte-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'guide-prive-tokyo-prix', 'tokyo-en-famille', 'avis-clients', 'french-speaking-guide-japan', 'guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo', 'japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'one-piece-tokyo', 'olive-et-tom-captain-tsubasa-tokyo', 'gundam-odaiba', 'jeux-retro-figurines-akihabara', 'evenements-anime-tokyo', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon', 'guide-francophone-agences-voyage', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
+  // Mario, guía privado premium en inglés (todo Japón): HTML estático de scripts/private.mjs.
+  { loc: '/private', priority: '1.0', changefreq: 'weekly', v7: 'private' },
+  ...['kyoto', 'tokyo', 'osaka-nara', 'mount-fuji-hakone', 'nikko-kamakura', 'himeji-kobe', 'hiroshima-miyajima', 'luxury-private-tour-guide-japan', 'private-tour-guide-japan-cost', 'japan-itinerary-two-weeks', 'kyoto-private-tour-car-driver', 'japan-honeymoon-private-guide', 'japan-family-trip-private-guide', 'multi-day-private-guide-japan', 'best-time-to-visit-japan', 'first-time-japan-tips', 'reviews', 'about-mario'].map((c) => ({ loc: `/private/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'private' })),
   // Antonio, coordinador de viajes a medida para familias y grupos hispanohablantes: HTML estático de scripts/familias.mjs.
   { loc: '/familias', priority: '1.0', changefreq: 'weekly', v7: 'familias' },
   ...['condiciones', 'organizar-viaje-japon-familia', 'viaje-japon-grupo-10-personas', 'transporte-privado-japon', 'ryokan-y-montana-en-familia', 'itinerario-japon-a-medida', 'japon-vip-a-medida', 'guia-en-espanol-japon', 'viaje-japon-desde-espana', 'viaje-japon-desde-mexico', 'viaje-japon-desde-centroamerica', 'tasas-turisticas-japon', 'habitaciones-familia-japon', 'comer-en-japon-en-grupo', 'tarjeta-icoca-japon', 'aeropuerto-al-hotel-japon', 'shinkansen-en-familia', 'viaje-japon-con-ninos', 'agencias-receptivo-japon', 'japon-y-corea-del-sur',
@@ -145,6 +148,7 @@ const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs'],
   francais: ['scripts/francais.mjs'],
+  private: ['scripts/private.mjs'],
   kndr: ['scripts/kndr.mjs'],
   familias: ['scripts/familias.mjs', 'scripts/familias-datos.mjs', 'scripts/familias-datos-destinos.mjs', 'scripts/familias-datos-ocasiones.mjs', 'scripts/familias-fotos.json'],
   montana: ['src/v7/datosMontana.ts', 'src/v7/Montana.tsx', 'src/v7/datosCumbres.ts'],
