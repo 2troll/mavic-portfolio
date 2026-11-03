@@ -281,7 +281,7 @@ export const PAGINAS_EXTRA = [
           'Hoteles con cama y, si hace falta, habitación accesible.',
           'Transporte privado para grupos de más de 8.',
           'Envío de maletas entre hoteles para viajar ligeros.',
-          'Lleva un seguro de viaje que cubra a todos, también a los mayores.',
+          'Lleva un seguro de viaje que cubra a todos, también a los mayores; nosotros recomendamos <a href="https://www.iatiseguros.com/?r=28859190572940">IATI Seguros</a>.',
         ],
       },
     ],
@@ -400,7 +400,7 @@ export const PAGINAS_EXTRA = [
       },
       {
         h2: 'Qué queda fuera',
-        parrafos: ['Vuelos, seguro de viaje, comidas y reservas de restaurantes, traslado aeropuerto-hotel y billetes de shinkansen. Antonio te orienta sobre cómo resolverlos, pero no los gestiona. Revisa las <a href="/familias/condiciones/">condiciones</a>.'],
+        parrafos: ['Vuelos, seguro de viaje, comidas y reservas de restaurantes, traslado aeropuerto-hotel y billetes de shinkansen. Antonio te orienta sobre cómo resolverlos, pero no los gestiona. Para el seguro de viaje recomendamos <a href="https://www.iatiseguros.com/?r=28859190572940">IATI Seguros</a>. Revisa las <a href="/familias/condiciones/">condiciones</a>.'],
       },
     ],
     faq: [
