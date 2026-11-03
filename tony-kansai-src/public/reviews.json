@@ -1,6 +1,6 @@
 {
-  "updated": "2026-10-08",
-  "count": 8,
+  "updated": "2026-11-03",
+  "count": 12,
   "average": 5,
   "reviews": [
     {
@@ -120,6 +120,50 @@
         "ar": "زرنا قلعة نيجو ومعبد كينكاكو-جي (الجناح الذهبي) وحديقة كيوتو غيوين الوطنية، وتناولنا الطعام في تلك المنطقة، ثم زرنا معبد كيوميزو-ديرا، وحصلنا على كل الإرشادات لنختم اليوم في فوشيمي إيناري تايشا (بوابات التوري الحمراء).",
         "ru": "Мы посетили замок Нидзё, храм Кинкаку-дзи (Золотой павильон) и национальный сад Киото Гёэн, пообедали в том районе, посетили храм Киёмидзу-дэра, и нам дали все указания, чтобы закончить день в Фусими Инари Тайся (красные ворота тории)."
       }
+    },
+    {
+      "id": "wa-20261101-anavictoria",
+      "stars": 5,
+      "name": "Ana Victoria",
+      "country": "España",
+      "tour": "Viaje de 8 días por Japón (grupo, octubre 2026)",
+      "text": "“Toni san”, muchas gracias por tu simpatía y tu alegría.",
+      "lang": "es",
+      "date": "2026-11-01",
+      "photo": ""
+    },
+    {
+      "id": "wa-20261101-alejandra",
+      "stars": 5,
+      "name": "Alejandra",
+      "country": "España",
+      "tour": "Viaje de 8 días por Japón (grupo, octubre 2026)",
+      "text": "¡Toni! Muchísimas gracias por tu acompañamiento y amabilidad. Te deseo un futuro maravilloso.",
+      "lang": "es",
+      "date": "2026-11-01",
+      "photo": ""
+    },
+    {
+      "id": "wa-20261101-pilar",
+      "stars": 5,
+      "name": "Pilar",
+      "country": "España",
+      "tour": "Viaje de 8 días por Japón (grupo, octubre 2026)",
+      "text": "Muchas gracias por ayudarnos a subir las maletas el día del hotel perdido en la selva. Gracias a ti se nos hizo más llevadero.",
+      "lang": "es",
+      "date": "2026-11-01",
+      "photo": ""
+    },
+    {
+      "id": "wa-20261101-karmen",
+      "stars": 5,
+      "name": "Karmen",
+      "country": "España",
+      "tour": "Viaje de 8 días por Japón (grupo, octubre 2026)",
+      "text": "Estoy con mis compañeras: gracias, Toni, por tu alegría y generosidad. Que te vaya muy bien.",
+      "lang": "es",
+      "date": "2026-11-01",
+      "photo": ""
     }
   ]
 }
