@@ -1407,7 +1407,7 @@ ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, ave
 <li><strong>Contact:</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
 </ul>
 <h2>Day trips from Tokyo</h2>
-<ul class="ozet"><li><a href="/fr/kamakura/">Kamakura and Yokohama</a>: about 1 hour by train.</li><li><a href="/fr/nikko/">Nikko</a>: about 1 h 50 from Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone or the Fuji Five Lakes</a>: about 1 h 20 to 2 hours from Shinjuku.</li><li><a href="/fr/nagano/">Nagano</a> (snow monkeys) and <a href="/fr/shizuoka/">Shizuoka</a> (Mount Fuji views): by Shinkansen.</li></ul>
+<ul class="ozet"><li><a href="/fr/kamakura/">Yokohama and Enoshima</a>: about 1 hour by train.</li><li><a href="/fr/nikko/">Nikko</a>: about 1 h 50 from Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone or the Fuji Five Lakes</a>: about 1 h 20 to 2 hours from Shinjuku.</li><li><a href="/fr/nagano/">Nagano</a> (snow monkeys) and <a href="/fr/shizuoka/">Shizuoka</a> (Mount Fuji views): by Shinkansen.</li></ul>
 <h2>Anime and Pokémon cards</h2>
 <p>Iheb is a professional in anime, Japanese pop culture and Pokémon card collecting. He builds the day around Akihabara, Nakano Broadway, Ikebukuro, the Pokémon Centers, the Ghibli Museum and real-life anime locations, in French: <a href="/fr/${PILIER.yol}/" hreflang="fr">anime guide in Tokyo (in French)</a>.</p>
 <h2>Also going to Kyoto?</h2>
