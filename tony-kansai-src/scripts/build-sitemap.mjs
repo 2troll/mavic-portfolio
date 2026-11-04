@@ -39,6 +39,8 @@ const paginas = [
   { loc: '/ar', priority: '1.0', changefreq: 'weekly', v7: 'tony' },
   { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
+  // Iheb en árabe y en inglés (público americano): scripts/iheb.mjs.
+  ...['/ar/tokyo', '/ar/tokyo/halal-masajid', '/ar/tokyo/anime-pokemon', '/ar/tokyo/wakalat', '/en/tokyo-anime-guide', '/en/tokyo-anime-guide/travel-agencies'].map((loc) => ({ loc, priority: '0.9', changefreq: 'monthly', v7: 'iheb' })),
   // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
   ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'argent-liquide-carte-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'guide-prive-tokyo-prix', 'tokyo-en-famille', 'avis-clients', 'french-speaking-guide-japan', 'guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo', 'japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'one-piece-tokyo', 'olive-et-tom-captain-tsubasa-tokyo', 'gundam-odaiba', 'jeux-retro-figurines-akihabara', 'evenements-anime-tokyo', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon', 'guide-francophone-agences-voyage', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
@@ -153,6 +155,7 @@ const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
   francais: ['scripts/francais.mjs'],
+  iheb: ['scripts/iheb.mjs', 'scripts/iheb-estilo.mjs'],
   private: ['scripts/private.mjs'],
   kndr: ['scripts/kndr.mjs'],
   russkij: ['scripts/russkij.mjs', 'scripts/russkij-otvety.mjs', 'scripts/russkij-otvety-poezdka.mjs', 'scripts/russkij-otvety-poezdka-2.mjs'],

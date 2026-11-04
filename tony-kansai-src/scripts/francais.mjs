@@ -24,6 +24,7 @@
 // pop japonesa y el intercambio de cartas Pokémon (coleccionar/comprar cartas).
 // Las cartas se presentan SIEMPRE como colección, nunca como inversión ni apuesta.
 // Las páginas de anime/Pokémon están en ANIME (más abajo), con su propia regla.
+// 4-11-2026 (Tony): Iheb es tunecino y musulmán; NADA de templos, budas, santuarios, torii ni pagodas en sus páginas.
 //
 // Fotos: Wikimedia Commons con licencia libre (CC BY / CC BY-SA / CC0 / PD);
 // autor, licencia y página de origen en scripts/francais-photos.json, archivos en
@@ -33,6 +34,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
+import { ANIME_CSS, ANIME_FUENTES } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -91,84 +93,77 @@ const contactMini = (lien, texte) => `<div class="iheb-mini"><img src="/fr/foto/
 // Fuji están en Yamanashi: se dicen como excursión desde Tokio, sin esconderlo.
 const VILLES = [
   {
-    yol: 'tokyo', ad: 'Tokyo', nav: 'Tokyo', a: 'à Tokyo', kapak: 'senso-ji-pagode',
+    yol: 'tokyo', ad: 'Tokyo', nav: 'Tokyo', a: 'à Tokyo', kapak: 'shibuya',
     titre: 'Guide francophone à Tokyo : Iheb | Visite privée de Tokyo en français',
-    desc: 'Guide privé francophone à Tokyo : Asakusa et Senso-ji, Meiji Jingu, Shibuya, Skytree, marché de Tsukiji. Uniquement pour votre groupe, en français. Tarif sur WhatsApp.',
-    intro: 'Tokyo, ce sont des dizaines de quartiers qui ne se ressemblent pas : vieux temples d’Asakusa, forêt du sanctuaire Meiji, carrefour de Shibuya, tours de Shinjuku. Iheb construit la journée à votre rythme et vous la raconte en français.',
+    desc: 'Guide privé francophone à Tokyo : Shibuya, Harajuku, Akihabara, Skytree, marché de Tsukiji, Odaiba et la Tokyo Camii. Uniquement pour votre groupe, en français. Tarif sur WhatsApp.',
+    intro: 'Tokyo, ce sont des dizaines de quartiers qui ne se ressemblent pas : carrefour de Shibuya, rue Takeshita de Harajuku, boutiques d’Akihabara, tours de Shinjuku, front de mer d’Odaiba. Iheb construit la journée à votre rythme et vous la raconte en français.',
     lieux: [
-      ['Asakusa et Senso-ji', 'Le plus ancien temple de Tokyo, la porte Kaminarimon et sa grande lanterne rouge, puis la rue commerçante Nakamise.', 'kaminarimon'],
-      ['Meiji Jingu', 'Le sanctuaire dédié à l’empereur Meiji et à l’impératrice Shoken, au milieu d’une forêt en plein centre, à deux pas de Harajuku.', 'meiji-jingu'],
-      ['Shibuya', 'Le célèbre carrefour où des centaines de piétons traversent en même temps, dans toutes les directions.', 'shibuya'],
+      ['Shibuya', 'Le célèbre carrefour où des centaines de piétons traversent en même temps, dans toutes les directions ; Harajuku et la rue Takeshita sont à une station.', 'shibuya'],
+      ['Akihabara', 'Le quartier de l’électronique, de l’anime, des jeux vidéo et des cartes à collectionner, autour de la gare JR d’Akihabara.', 'akihabara'],
       ['Tokyo Skytree', 'Avec 634 mètres, la plus haute tour du Japon ; vue sur toute la ville par temps clair.', 'skytree'],
       ['Jardins est du Palais impérial', 'Les jardins bâtis sur les ruines du château d’Edo, au cœur de la ville, près de la gare de Tokyo.', 'palais-imperial'],
       ['Marché extérieur de Tsukiji', 'Les étals de produits de la mer et de cuisine de rue restés à Tsukiji après le départ du marché de gros à Toyosu en 2018.', 'tsukiji'],
       ['Odaiba', 'Le front de mer et le Rainbow Bridge, surtout beaux à la tombée de la nuit.', 'odaiba'],
+      ['Tokyo Camii', 'La grande mosquée de style ottoman de Yoyogi-Uehara, ouverte aux visiteurs en dehors des heures de prière ; on peut y faire la prière dans la journée.', 'tokyo-camii'],
     ],
-    astuce: 'Pour circuler, une carte IC (Suica ou PASMO) suffit dans le métro, les trains et les bus de Tokyo. Pour les voyageurs musulmans, la Tokyo Camii, à Yoyogi-Uehara, accueille les visiteurs ; Iheb peut l’intégrer à la journée avec les pauses prière.',
+    astuce: 'Pour circuler, une carte IC (Suica ou PASMO) suffit dans le métro, les trains et les bus de Tokyo. Le parc d’Ueno, avec son zoo et le Musée national de Tokyo, l’observatoire gratuit de la mairie de Tokyo à Shinjuku et le jardin de Shinjuku Gyoen complètent bien une journée. Pour les voyageurs musulmans, Iheb peut prévoir la Tokyo Camii et les pauses prière.',
     voir: ['que-faire-a-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'tokyo-en-famille', 'guide-prive-tokyo-prix', 'halal-mosquees-tokyo'],
   },
   {
-    yol: 'kamakura', ad: 'Kamakura, Yokohama et Enoshima', nav: 'Kamakura', a: 'à Kamakura', kapak: 'kamakura-daibutsu',
-    titre: 'Guide francophone à Kamakura et Yokohama : Iheb | Excursion depuis Tokyo',
-    desc: 'Excursion en français depuis Tokyo : le Grand Bouddha de Kamakura, Tsurugaoka Hachimangu, Hase-dera, l’île d’Enoshima et Yokohama. Visite privée avec Iheb, tarif sur WhatsApp.',
-    intro: 'Kamakura a été le siège du premier shogunat, de la fin du XIIe siècle à 1333. Aujourd’hui, c’est une petite ville de temples entre collines et mer, à environ une heure de Tokyo en train : l’excursion idéale pour une journée plus calme.',
+    yol: 'kamakura', ad: 'Yokohama, Enoshima et Kamakura côté mer', nav: 'Yokohama & Enoshima', a: 'à Yokohama et Enoshima', kapak: 'yokohama',
+    titre: 'Guide francophone à Yokohama et Enoshima : Iheb | Excursion côté mer depuis Tokyo',
+    desc: 'Excursion en français depuis Tokyo : Yokohama (Minato Mirai, Cup Noodles Museum, Chinatown), le petit train Enoden, le passage à niveau de Slam Dunk, la plage de Yuigahama et l’île d’Enoshima. Visite privée avec Iheb, tarif sur WhatsApp.',
+    intro: 'Au sud de Tokyo, la baie de Tokyo et la baie de Sagami offrent une journée tournée vers la mer : le port de Yokohama et ses quais, puis la côte de Kamakura et d’Enoshima, à environ une heure de Tokyo en train. L’excursion idéale pour une journée plus calme, au bord de l’eau.',
     lieux: [
-      ['Grand Bouddha (Kotoku-in)', 'Un bouddha de bronze de plus de 11 mètres, assis en plein air depuis que son bâtiment a disparu il y a plusieurs siècles.', 'kamakura-daibutsu'],
-      ['Tsurugaoka Hachimangu', 'Le grand sanctuaire de Kamakura, au bout d’une longue allée qui part de la gare.', 'tsurugaoka'],
-      ['Hase-dera', 'Un temple à flanc de colline avec vue sur la baie ; ses hortensias attirent beaucoup de monde en juin.', 'hasedera'],
-      ['Enoshima', 'Une petite île reliée à la côte par un pont, qu’on rejoint avec le petit train Enoden.', 'enoshima'],
-      ['Yokohama', 'Le port, le quartier de Minato Mirai et son front de mer, à mi-chemin entre Tokyo et Kamakura.', 'yokohama'],
+      ['Yokohama', 'Le port, le quartier de Minato Mirai et son front de mer, le Cup Noodles Museum et les rues commerçantes de Chinatown, à mi-chemin entre Tokyo et Kamakura.', 'yokohama'],
+      ['Passage à niveau de Kamakura-Kōkōmae', 'Le passage à niveau de la ligne Enoden, face à la mer, rendu célèbre par l’anime Slam Dunk.', 'kamakura-kokomae'],
+      ['Enoshima', 'Une petite île reliée à la côte par un pont, qu’on rejoint avec le petit train Enoden ; vue sur la mer et, par temps clair, sur le mont Fuji.', 'enoshima'],
     ],
-    astuce: 'Depuis la gare de Tokyo, la ligne JR Yokosuka rejoint Kamakura en environ une heure sans changement. Le petit train Enoden relie ensuite Kamakura, le Grand Bouddha (gare de Hase) et Enoshima. Yokohama se combine facilement sur le trajet.',
+    astuce: 'Depuis la gare de Tokyo, la ligne JR Yokosuka rejoint Kamakura en environ une heure sans changement, en passant près de Yokohama. Le petit train Enoden longe ensuite la côte jusqu’à Enoshima, avec la plage de Yuigahama et le passage à niveau de Kamakura-Kōkōmae en chemin.',
     voir: ['tokyo-en-famille', 'jr-pass-ou-suica'],
   },
   {
-    yol: 'nikko', ad: 'Nikko', nav: 'Nikko', a: 'à Nikko', kapak: 'nikko-yomeimon',
+    yol: 'nikko', ad: 'Nikko', nav: 'Nikko', a: 'à Nikko', kapak: 'kegon',
     titre: 'Guide francophone à Nikko : Iheb | Excursion à Nikko depuis Tokyo en français',
-    desc: 'Excursion privée en français de Tokyo à Nikko : le Tosho-gu, le pont Shinkyo, la cascade de Kegon et le lac Chuzenji. Patrimoine mondial de l’UNESCO. Tarif sur WhatsApp.',
-    intro: 'Au nord de Tokyo, dans la préfecture de Tochigi, Nikko réunit sanctuaires sculptés et montagnes. Les « sanctuaires et temples de Nikko » sont inscrits au patrimoine mondial de l’UNESCO depuis 1999. C’est une longue journée depuis Tokyo, mais l’une des plus belles.',
+    desc: 'Excursion privée en français de Tokyo à Nikko : la cascade de Kegon, le lac Chuzenji, la route en lacets d’Irohazaka et le parc à thème Edo Wonderland. Nature et montagne. Tarif sur WhatsApp.',
+    intro: 'Au nord de Tokyo, dans la préfecture de Tochigi, Nikko est une région de montagnes, de forêts, de cascades et de lacs, dans le parc national de Nikko. C’est une longue journée depuis Tokyo, mais l’une des plus belles pour la nature.',
     lieux: [
-      ['Tosho-gu', 'Le mausolée de Tokugawa Ieyasu, fondateur du shogunat d’Edo, et sa porte Yomeimon couverte de sculptures et de dorures.', 'nikko-yomeimon'],
-      ['Pont Shinkyo', 'Le pont sacré laqué de rouge au-dessus de la rivière Daiya, à l’entrée du site.', 'shinkyo'],
       ['Cascade de Kegon', 'Une chute d’environ 97 mètres, plus haut dans la montagne, vue depuis une plateforme en contrebas.', 'kegon'],
-      ['Lac Chuzenji', 'Un lac d’altitude au pied du mont Nantai, très beau à l’automne.', 'chuzenji'],
+      ['Lac Chuzenji et route Irohazaka', 'Un lac d’altitude au pied du mont Nantai, très beau à l’automne, qu’on rejoint par la route en lacets d’Irohazaka.', 'chuzenji'],
     ],
-    astuce: 'Depuis Asakusa, le train Tobu Spacia X rejoint Nikko en environ 1 h 50. Le Tosho-gu ferme plus tôt de novembre à mars (vers 16 h). En altitude, autour du lac Chuzenji, les couleurs d’automne arrivent dès octobre, plus tôt qu’à Tokyo.',
+    astuce: 'Depuis Asakusa, le train Tobu Spacia X rejoint Nikko en environ 1 h 50 ; la cascade de Kegon et le lac Chuzenji se rejoignent ensuite en bus par la route Irohazaka. Avec des enfants, Edo Wonderland, un parc à thème qui reconstitue une ville de l’époque d’Edo, du côté de Kinugawa, peut remplacer la montagne. En altitude, autour du lac Chuzenji, les couleurs d’automne arrivent dès octobre, plus tôt qu’à Tokyo.',
     voir: ['nikko-ou-hakone', 'quand-partir-japon'],
   },
   {
-    yol: 'hakone-mont-fuji', ad: 'Hakone et mont Fuji', nav: 'Hakone & Fuji', a: 'à Hakone et au mont Fuji', kapak: 'hakone-ashi-torii',
+    yol: 'hakone-mont-fuji', ad: 'Hakone et mont Fuji', nav: 'Hakone & Fuji', a: 'à Hakone et au mont Fuji', kapak: 'kawaguchiko-fuji',
     titre: 'Guide francophone à Hakone et au mont Fuji : Iheb | Excursion depuis Tokyo',
-    desc: 'Excursion privée en français depuis Tokyo : Hakone (lac Ashi, Owakudani) ou les lacs du Fuji (Kawaguchiko, pagode Chureito, Oshino Hakkai). Tarif sur WhatsApp.',
+    desc: 'Excursion privée en français depuis Tokyo : Hakone (lac Ashi en bateau, téléphérique, Owakudani, Hakone Open-Air Museum) ou les lacs du Fuji (Kawaguchiko, Oshino Hakkai, Fuji-Q Highland). Tarif sur WhatsApp.',
     intro: 'Pour voir le mont Fuji depuis Tokyo, deux régions s’offrent à vous. Hakone, dans la préfecture de Kanagawa : lac Ashi, téléphérique et vallée volcanique. Les cinq lacs du Fuji, autour de Kawaguchiko, sont dans la préfecture voisine de Yamanashi, mais restent une excursion classique d’une journée depuis Tokyo. Les deux ensemble dans la même journée, c’est trop : il faut choisir.',
     lieux: [
-      ['Lac Ashi et sanctuaire de Hakone', 'Le torii rouge planté dans l’eau du lac, et la traversée en bateau.', 'hakone-jinja-torii'],
       ['Owakudani', 'La vallée volcanique fumante, survolée par le téléphérique de Hakone. L’accès peut être restreint selon l’activité volcanique.', 'owakudani'],
       ['Lac Kawaguchi', 'Le plus accessible des cinq lacs, avec le mont Fuji qui se reflète dans l’eau par temps calme.', 'kawaguchiko-fuji'],
-      ['Pagode Chureito', 'La pagode rouge du parc Arakurayama Sengen, avec le Fuji en arrière-plan : la photo la plus connue de la région.', 'fuji-chureito'],
       ['Oshino Hakkai', 'Un village de bassins alimentés par les eaux de source du Fuji.', 'oshino-hakkai'],
     ],
-    astuce: 'Depuis Shinjuku, la Romancecar d’Odakyu rejoint Hakone-Yumoto en environ 1 h 20, et le train Fuji Excursion va directement à Kawaguchiko en environ 2 heures. Le Fuji est souvent caché par les nuages : les matins d’hiver sont en général les plus dégagés.',
+    astuce: 'À Hakone, la traversée du lac Ashi en bateau et le Hakone Open-Air Museum, un musée de sculptures en plein air, complètent la boucle ; côté lacs du Fuji, le parc d’attractions Fuji-Q Highland plaît aux amateurs de montagnes russes. Depuis Shinjuku, la Romancecar d’Odakyu rejoint Hakone-Yumoto en environ 1 h 20, et le train Fuji Excursion va directement à Kawaguchiko en environ 2 heures. Le Fuji est souvent caché par les nuages : les matins d’hiver sont en général les plus dégagés.',
     voir: ['voir-le-mont-fuji', 'nikko-ou-hakone', 'excursion-mont-fuji-depuis-tokyo'],
   },
   {
-    yol: 'nagano', ad: 'Nagano', nav: 'Nagano', a: 'à Nagano', kapak: 'zenkoji-kondo',
-    titre: 'Guide francophone à Nagano : Iheb | Zenko-ji, singes des neiges et Matsumoto',
-    desc: 'Visite privée en français dans la préfecture de Nagano : le temple Zenko-ji, les singes des neiges de Jigokudani et le château de Matsumoto. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
-    intro: 'La préfecture de Nagano, au cœur des Alpes japonaises, a accueilli les Jeux olympiques d’hiver de 1998. On y vient pour le grand temple Zenko-ji, pour les macaques qui se baignent dans une source chaude et pour l’un des plus beaux châteaux d’origine du Japon, à Matsumoto.',
+    yol: 'nagano', ad: 'Nagano', nav: 'Nagano', a: 'à Nagano', kapak: 'singes-jigokudani',
+    titre: 'Guide francophone à Nagano : Iheb | Singes des neiges, Matsumoto et Karuizawa',
+    desc: 'Visite privée en français dans la préfecture de Nagano : les singes des neiges de Jigokudani, le château de Matsumoto et Karuizawa. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
+    intro: 'La préfecture de Nagano, au cœur des Alpes japonaises, a accueilli les Jeux olympiques d’hiver de 1998. On y vient pour les macaques qui se baignent dans une source chaude, pour l’un des plus beaux châteaux d’origine du Japon, à Matsumoto, et pour l’air frais de Karuizawa, au pied des montagnes.',
     lieux: [
-      ['Zenko-ji', 'L’un des grands temples bouddhiques du Japon, fondé selon la tradition au VIIe siècle ; il est ouvert à tous, quelle que soit l’école.', 'zenkoji-kondo'],
       ['Singes des neiges (Jigokudani)', 'Au parc Jigokudani Yaen-koen, des macaques sauvages se baignent dans une source chaude, surtout en hiver, au milieu de la neige.', 'singes-jigokudani'],
       ['Château de Matsumoto', 'Un donjon noir d’origine, classé trésor national, entouré de douves.', 'matsumoto'],
     ],
-    astuce: 'Le Hokuriku Shinkansen relie Tokyo à Nagano en environ 1 h 20 à 1 h 40. Pour les singes, comptez environ 45 minutes de bus depuis la gare de Nagano, puis une trentaine de minutes de marche en forêt. Matsumoto est à environ 2 h 30 à 3 h de Shinjuku en train express.',
+    astuce: 'Le Hokuriku Shinkansen relie Tokyo à Nagano en environ 1 h 20 à 1 h 40. Pour les singes, comptez environ 45 minutes de bus depuis la gare de Nagano, puis une trentaine de minutes de marche en forêt. Matsumoto est à environ 2 h 30 à 3 h de Shinjuku en train express. Karuizawa, station de villégiature dans la forêt, est sur la ligne du Hokuriku Shinkansen, à environ 1 heure de Tokyo.',
     voir: ['jr-pass-ou-suica', 'quand-partir-japon'],
   },
   {
     yol: 'shizuoka', ad: 'Shizuoka', nav: 'Shizuoka', a: 'à Shizuoka', kapak: 'the-fuji',
     titre: 'Guide francophone à Shizuoka : Iheb | Mont Fuji, Mishima Skywalk et thé',
     desc: 'Visite privée en français côté Shizuoka du mont Fuji : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé. Depuis Tokyo en Shinkansen. Tarif sur WhatsApp.',
-    intro: 'La préfecture de Shizuoka occupe le versant sud du mont Fuji, face à la mer. Plusieurs lieux y font partie du site « Fujisan, lieu sacré et source d’inspiration artistique », inscrit au patrimoine mondial de l’UNESCO en 2013. C’est aussi l’une des grandes régions de thé vert du Japon.',
+    intro: 'La préfecture de Shizuoka occupe le versant sud du mont Fuji, face à la mer. On y trouve des cascades, des plages de pins et des points de vue sur le Fuji face à la baie de Suruga. C’est aussi l’une des grandes régions de thé vert du Japon.',
     lieux: [
       ['Mishima Skywalk', 'Un pont suspendu piéton de 400 mètres, ouvert en 2015, avec le Fuji d’un côté et la baie de Suruga de l’autre.', 'mishima-skywalk'],
       ['Cascades de Shiraito', 'Des centaines de filets d’eau de source qui sortent de la roche, près de Fujinomiya.', 'shiraito'],
@@ -188,19 +183,19 @@ const VILLES = [
 // precios que las fuentes no dan igual se dejan fuera.
 const REPONSES = [
   {
-    yol: 'guide-francophone-japon', kapak: 'meiji-jingu', avis: true,
+    yol: 'guide-francophone-japon', kapak: 'tokyo-camii', avis: true,
     titre: 'Existe-t-il un guide francophone à Tokyo ? Visites privées en français | Iheb',
     desc: 'Oui : Iheb, qui vit au Japon, propose des visites privées en français à Tokyo et autour (Kamakura, Nikko, Hakone, mont Fuji), ainsi qu’à Nagano et Shizuoka. Comment réserver.',
     h1: 'Existe-t-il un guide francophone à Tokyo ?',
     court: 'Visites privées en français à Tokyo, au mont Fuji, à Nikko et Kamakura : Iheb.',
     reponse: `Oui. La plupart des visites guidées au Japon se font en anglais ou en japonais, et trouver un guide francophone n’est pas simple. À Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, Iheb propose des visites privées en français. Il vit au Japon, parle aussi arabe et anglais, et fait partie de l’équipe Tony Kansai Guide. Réservation et tarif par WhatsApp : ${WA_VISIBLE}.`,
     sections: [
-      ['Comment se passe une visite avec Iheb ?', `<ul class="ozet"><li><strong>Visite privée :</strong> le guide est là uniquement pour votre famille ou votre groupe ; vous n’êtes jamais mélangés à d’autres touristes.</li><li><strong>Langue :</strong> en français. Iheb parle aussi arabe et anglais.</li><li><strong>Où :</strong> <a href="/fr/tokyo/">Tokyo</a>, <a href="/fr/kamakura/">Kamakura et Yokohama</a>, <a href="/fr/nikko/">Nikko</a>, <a href="/fr/hakone-mont-fuji/">Hakone et le mont Fuji</a>, <a href="/fr/nagano/">Nagano</a>, <a href="/fr/shizuoka/">Shizuoka</a>.</li><li><strong>Tarif :</strong> communiqué sur WhatsApp selon le nombre de personnes et le programme. Billets de train, entrées et repas ne sont généralement pas inclus.</li><li><strong>Voyageurs musulmans :</strong> restaurants halal, mosquées et pauses prière peuvent être prévus dans la journée (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li></ul>`],
+      ['Comment se passe une visite avec Iheb ?', `<ul class="ozet"><li><strong>Visite privée :</strong> le guide est là uniquement pour votre famille ou votre groupe ; vous n’êtes jamais mélangés à d’autres touristes.</li><li><strong>Langue :</strong> en français. Iheb parle aussi arabe et anglais.</li><li><strong>Où :</strong> <a href="/fr/tokyo/">Tokyo</a>, <a href="/fr/kamakura/">Yokohama et Enoshima</a>, <a href="/fr/nikko/">Nikko</a>, <a href="/fr/hakone-mont-fuji/">Hakone et le mont Fuji</a>, <a href="/fr/nagano/">Nagano</a>, <a href="/fr/shizuoka/">Shizuoka</a>.</li><li><strong>Tarif :</strong> communiqué sur WhatsApp selon le nombre de personnes et le programme. Billets de train, entrées et repas ne sont généralement pas inclus.</li><li><strong>Voyageurs musulmans :</strong> restaurants halal, mosquées et pauses prière peuvent être prévus dans la journée (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li></ul>`],
       ['Que lui écrire pour réserver ?', `<ol><li>Vos dates.</li><li>Le nombre de personnes (enfants compris).</li><li>Le quartier ou l’hôtel où vous logez.</li><li>Les lieux que vous voulez voir ; sinon, Iheb vous propose un programme.</li></ol><p>WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a></p>`],
       ['Et si vous allez aussi à Kyoto ?', '<p>Iheb guide uniquement à Tokyo et dans l’est du Japon. Pour la suite du voyage, Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe : <a href="/">Tony Kansai Guide</a>.</p>'],
     ],
     faq: [
-      ['Y a-t-il un guide francophone à Tokyo ?', 'Oui. Iheb propose des visites privées en français à Tokyo (Asakusa, Meiji Jingu, Shibuya, Skytree) et des excursions à la journée depuis Tokyo.'],
+      ['Y a-t-il un guide francophone à Tokyo ?', 'Oui. Iheb propose des visites privées en français à Tokyo (Shibuya, Harajuku, Akihabara, Skytree, Tsukiji) et des excursions à la journée depuis Tokyo.'],
       ['Peut-on faire le mont Fuji avec un guide francophone ?', 'Oui. Iheb guide en français à Hakone, autour des lacs du Fuji (Kawaguchiko) et côté Shizuoka.'],
       ['Combien coûte un guide francophone à Tokyo ?', 'Il n’y a pas de grille fixe : le tarif dépend du nombre de personnes, de la durée et du programme, et Iheb le communique sur WhatsApp.'],
     ],
@@ -209,17 +204,17 @@ const REPONSES = [
   {
     yol: 'que-faire-a-tokyo', kapak: 'skytree',
     titre: 'Que faire à Tokyo ? Programme de 3 jours, quartier par quartier | Guide francophone',
-    desc: 'Que voir à Tokyo en 3 jours : Asakusa et Senso-ji, Meiji Jingu, Harajuku et Shibuya, Tsukiji, Palais impérial et Odaiba. Combien de jours prévoir et où loger. Par un guide francophone.',
+    desc: 'Que voir à Tokyo en 3 jours : Akihabara, Ueno, Skytree, Harajuku et Shibuya, Tsukiji, Palais impérial et Odaiba. Combien de jours prévoir et où loger. Par un guide francophone.',
     h1: 'Que faire à Tokyo en 3 jours ?',
-    court: 'Asakusa, Shibuya, Meiji Jingu, Tsukiji : le programme jour par jour.',
-    reponse: 'Pour un premier séjour, comptez au moins 3 jours à Tokyo, en regroupant les visites par quartier : un jour à l’est (Asakusa et le temple Senso-ji, la Tokyo Skytree, Ueno), un jour à l’ouest (sanctuaire Meiji Jingu, Harajuku, Shibuya, Shinjuku) et un jour au centre et sur la baie (marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, Odaiba). Avec 4 ou 5 jours, ajoutez une excursion : Kamakura, Nikko ou le mont Fuji.',
+    court: 'Akihabara, Shibuya, Harajuku, Tsukiji : le programme jour par jour.',
+    reponse: 'Pour un premier séjour, comptez au moins 3 jours à Tokyo, en regroupant les visites par quartier : un jour à l’est (Akihabara, le parc d’Ueno et ses musées, la Tokyo Skytree), un jour à l’ouest (Harajuku et la rue Takeshita, Shibuya, Shinjuku) et un jour au centre et sur la baie (marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, Odaiba). Avec 4 ou 5 jours, ajoutez une excursion : Yokohama et Enoshima, Nikko ou le mont Fuji.',
     sections: [
-      ['Programme de 3 jours', '<ol><li><strong>Jour 1, l’est :</strong> Senso-ji et la porte Kaminarimon tôt le matin, la rue Nakamise, puis la Tokyo Skytree et le parc d’Ueno.</li><li><strong>Jour 2, l’ouest :</strong> Meiji Jingu le matin, Harajuku et Omotesando, le carrefour de Shibuya, et Shinjuku le soir.</li><li><strong>Jour 3, le centre et la baie :</strong> marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, puis Odaiba et le Rainbow Bridge à la tombée de la nuit.</li></ol>'],
-      ['Excursions d’une journée depuis Tokyo', '<ul class="ozet"><li><a href="/fr/kamakura/">Kamakura et Yokohama</a> : environ 1 heure de train.</li><li><a href="/fr/nikko/">Nikko</a> : environ 1 h 50 depuis Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone ou les lacs du Fuji</a> : environ 1 h 20 à 2 heures depuis Shinjuku.</li></ul>'],
+      ['Programme de 3 jours', '<ol><li><strong>Jour 1, l’est :</strong> Akihabara le matin, le parc d’Ueno avec son zoo et le Musée national de Tokyo, puis la Tokyo Skytree.</li><li><strong>Jour 2, l’ouest :</strong> Harajuku et la rue Takeshita, Omotesando, le carrefour de Shibuya, le jardin de Shinjuku Gyoen, puis Shinjuku et l’observatoire gratuit de la mairie de Tokyo. Pour les voyageurs musulmans, la Tokyo Camii, à Yoyogi-Uehara, se glisse facilement dans cette journée.</li><li><strong>Jour 3, le centre et la baie :</strong> marché extérieur de Tsukiji, jardins est du Palais impérial, Ginza, puis Odaiba et le Rainbow Bridge à la tombée de la nuit.</li></ol>'],
+      ['Excursions d’une journée depuis Tokyo', '<ul class="ozet"><li><a href="/fr/kamakura/">Yokohama et Enoshima</a> : environ 1 heure de train.</li><li><a href="/fr/nikko/">Nikko</a> : environ 1 h 50 depuis Asakusa.</li><li><a href="/fr/hakone-mont-fuji/">Hakone ou les lacs du Fuji</a> : environ 1 h 20 à 2 heures depuis Shinjuku.</li></ul>'],
       ['Où loger ?', '<p>Près d’une gare de la ligne circulaire JR Yamanote : Shinjuku ou Shibuya pour l’ouest et les départs vers Hakone et le Fuji, la gare de Tokyo ou Ueno pour l’est, Nikko, l’aéroport de Narita et le Shinkansen.</p>'],
     ],
     faq: [
-      ['Combien de jours faut-il pour visiter Tokyo ?', 'Au moins 3 jours pour les quartiers principaux ; 4 à 5 jours avec une excursion (Kamakura, Nikko ou le mont Fuji).'],
+      ['Combien de jours faut-il pour visiter Tokyo ?', 'Au moins 3 jours pour les quartiers principaux ; 4 à 5 jours avec une excursion (Yokohama et Enoshima, Nikko ou le mont Fuji).'],
       ['Comment se déplacer à Tokyo ?', 'En métro et en train, avec une carte IC (Suica ou PASMO) qu’on recharge et qu’on passe aux portillons ; elle marche aussi dans les bus.'],
       ['Le marché de Tsukiji existe-t-il encore ?', 'Le marché de gros a déménagé à Toyosu en 2018, mais le marché extérieur de Tsukiji, avec ses étals et sa cuisine de rue, est toujours ouvert.'],
     ],
@@ -228,16 +223,16 @@ const REPONSES = [
   {
     yol: 'excursion-mont-fuji-depuis-tokyo', kapak: 'kawaguchiko-fuji',
     titre: 'Excursion au mont Fuji depuis Tokyo : Hakone ou Kawaguchiko ? | Guide francophone',
-    desc: 'Mont Fuji en une journée depuis Tokyo : Kawaguchiko (pagode Chureito, Oshino Hakkai) ou Hakone (lac Ashi, Owakudani) ? Trains, durées, quand voir le Fuji. Guide francophone Iheb.',
+    desc: 'Mont Fuji en une journée depuis Tokyo : Kawaguchiko (lac Kawaguchi, Oshino Hakkai) ou Hakone (lac Ashi, Owakudani) ? Trains, durées, quand voir le Fuji. Guide francophone Iheb.',
     h1: 'Comment faire une excursion au mont Fuji depuis Tokyo ?',
     court: 'Kawaguchiko ou Hakone : laquelle choisir pour une journée.',
-    reponse: 'Depuis Tokyo, on voit le mont Fuji en une journée en choisissant une seule de ces deux régions : les lacs du Fuji autour de Kawaguchiko (préfecture de Yamanashi), avec la pagode Chureito et Oshino Hakkai, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; ou Hakone (préfecture de Kanagawa), avec le lac Ashi et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar. Il faut environ 2 heures de bus, avec un changement à Gotemba, pour passer de l’une à l’autre : les combiner dans la même journée est déconseillé.',
+    reponse: 'Depuis Tokyo, on voit le mont Fuji en une journée en choisissant une seule de ces deux régions : les lacs du Fuji autour de Kawaguchiko (préfecture de Yamanashi), avec le lac Kawaguchi et Oshino Hakkai, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; ou Hakone (préfecture de Kanagawa), avec le lac Ashi et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar. Il faut environ 2 heures de bus, avec un changement à Gotemba, pour passer de l’une à l’autre : les combiner dans la même journée est déconseillé.',
     sections: [
       ['Kawaguchiko ou Hakone ?', `<table><tr><th></th><th>Lacs du Fuji (Kawaguchiko)</th><th>Hakone</th></tr>
 <tr><td>Préfecture</td><td>Yamanashi</td><td>Kanagawa</td></tr>
 <tr><td>Depuis Shinjuku</td><td>Train Fuji Excursion, environ 2 h ; ou bus express</td><td>Romancecar d’Odakyu, environ 1 h 20 jusqu’à Hakone-Yumoto</td></tr>
 <tr><td>Vue sur le Fuji</td><td>De très près, au-dessus du lac</td><td>Plus lointaine, depuis le lac Ashi ou le téléphérique</td></tr>
-<tr><td>À voir</td><td>Lac Kawaguchi, pagode Chureito, Oshino Hakkai</td><td>Lac Ashi et son torii, téléphérique, Owakudani</td></tr></table>`],
+<tr><td>À voir</td><td>Lac Kawaguchi, Oshino Hakkai, Fuji-Q Highland</td><td>Lac Ashi en bateau, téléphérique, Owakudani, Hakone Open-Air Museum</td></tr></table>`],
       ['Et côté Shizuoka ?', '<p>On rejoint le versant sud du Fuji, côté <a href="/fr/shizuoka/">Shizuoka</a>, en Shinkansen (Tokyo-Mishima, environ 45 minutes à 1 heure) : Mishima Skywalk, cascades de Shiraito, Miho no Matsubara et champs de thé.</p>'],
       ['Quand voit-on le mont Fuji ?', '<p>Le sommet est souvent caché par les nuages, surtout en été. Les matins d’automne et d’hiver sont en général les plus dégagés. L’ascension, elle, n’est possible qu’en été, en général de juillet à début septembre.</p>'],
     ],
@@ -277,7 +272,7 @@ const REPONSES = [
     court: 'Une semaine autour de Tokyo, jour par jour, puis la suite du voyage.',
     reponse: 'Pour un premier voyage de 2 semaines, beaucoup de voyageurs passent la première semaine à Tokyo et dans ses environs (4 à 5 jours en ville, plus des excursions à Kamakura, Nikko ou au mont Fuji), puis prennent le Shinkansen vers l’ouest pour la seconde semaine. Regrouper les visites par région évite de passer ses journées dans les trains.',
     sections: [
-      ['Semaine 1 : Tokyo et ses environs', '<ol><li><strong>Jours 1-3, Tokyo :</strong> Asakusa et la Skytree, Meiji Jingu et Shibuya, Tsukiji et le Palais impérial (<a href="/fr/que-faire-a-tokyo/">le détail</a>).</li><li><strong>Jour 4, Kamakura et Yokohama :</strong> le Grand Bouddha, Hase-dera, Enoshima.</li><li><strong>Jour 5, Nikko :</strong> le Tosho-gu et le pont Shinkyo.</li><li><strong>Jours 6-7, Hakone ou les lacs du Fuji :</strong> idéalement avec une nuit sur place (<a href="/fr/excursion-mont-fuji-depuis-tokyo/">Hakone ou Kawaguchiko ?</a>).</li></ol><p>En hiver, Nagano et ses singes des neiges se rejoignent en Shinkansen depuis Tokyo (<a href="/fr/nagano/">Nagano</a>).</p>'],
+      ['Semaine 1 : Tokyo et ses environs', '<ol><li><strong>Jours 1-3, Tokyo :</strong> Akihabara, Ueno et la Skytree, Harajuku et Shibuya, Tsukiji et le Palais impérial (<a href="/fr/que-faire-a-tokyo/">le détail</a>).</li><li><strong>Jour 4, Yokohama et Enoshima :</strong> le port de Yokohama, le petit train Enoden le long de la mer et l’île d’Enoshima.</li><li><strong>Jour 5, Nikko :</strong> la cascade de Kegon et le lac Chuzenji.</li><li><strong>Jours 6-7, Hakone ou les lacs du Fuji :</strong> idéalement avec une nuit sur place (<a href="/fr/excursion-mont-fuji-depuis-tokyo/">Hakone ou Kawaguchiko ?</a>).</li></ol><p>En hiver, Nagano et ses singes des neiges se rejoignent en Shinkansen depuis Tokyo (<a href="/fr/nagano/">Nagano</a>).</p>'],
       ['Semaine 2 : la suite du voyage', '<p>Iheb guide uniquement à Tokyo et dans l’est du Japon. Pour la seconde semaine, Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe : <a href="/">Tony Kansai Guide</a>.</p>'],
       ['JR Pass ou billets séparés ?', '<p>Le prix du Japan Rail Pass a fortement augmenté en octobre 2023, si bien qu’il n’est plus automatiquement rentable. Additionnez le prix des billets de votre trajet et comparez avec le prix affiché sur le site officiel du JR Pass avant d’acheter.</p>'],
     ],
@@ -298,12 +293,12 @@ const REPONSES = [
       ['Tokyo et ses environs mois par mois', `<table><tr><th>Période</th><th>Météo</th><th>À savoir</th></tr>
 <tr><td>Fin mars – début avril</td><td>Douce</td><td>Cerisiers (sakura) à Tokyo et autour du lac Kawaguchi un peu plus tard. Période très chargée.</td></tr>
 <tr><td>Fin avril – début mai</td><td>Douce</td><td>Golden Week : vacances des Japonais, trains et hôtels pleins.</td></tr>
-<tr><td>Juin – mi-juillet</td><td>Pluvieuse</td><td>Saison des pluies (tsuyu) ; hortensias à Kamakura.</td></tr>
+<tr><td>Juin – mi-juillet</td><td>Pluvieuse</td><td>Saison des pluies (tsuyu) ; prévoyez des visites à l’abri (musées, Akihabara).</td></tr>
 <tr><td>Juillet – août</td><td>Très chaude, humide</td><td>Sortez tôt le matin. Saison de l’ascension du Fuji, mais le sommet est souvent dans les nuages vu d’en bas.</td></tr>
 <tr><td>Août – septembre</td><td>Chaude</td><td>Saison des typhons ; des trains peuvent être annulés.</td></tr>
 <tr><td>Octobre – début décembre</td><td>Fraîche</td><td>Couleurs d’automne : d’abord en altitude (Nikko, Hakone), puis à Tokyo fin novembre.</td></tr>
 <tr><td>Décembre – février</td><td>Froide, sèche, souvent ensoleillée</td><td>Le Fuji est le plus souvent visible. Singes des neiges à Nagano. Beaucoup de lieux ferment au Nouvel An.</td></tr></table>`],
-      ['Pour éviter la foule', '<p>Allez tôt le matin aux lieux les plus connus (Senso-ji, Meiji Jingu, pagode Chureito). Évitez la Golden Week et la mi-août (Obon). Pendant la floraison des cerisiers et en automne, privilégiez les jours de semaine.</p>'],
+      ['Pour éviter la foule', '<p>Allez tôt le matin aux lieux les plus connus (carrefour de Shibuya, rue Takeshita, lac Kawaguchi). Évitez la Golden Week et la mi-août (Obon). Pendant la floraison des cerisiers et en automne, privilégiez les jours de semaine.</p>'],
     ],
     faq: [
       ['Quand fleurissent les cerisiers à Tokyo ?', 'En général entre fin mars et début avril ; la date varie de quelques jours d’une année sur l’autre.'],
@@ -313,7 +308,7 @@ const REPONSES = [
     sources: [['JNTO (Office national du tourisme japonais)', 'https://www.japan.travel/fr/'], ['Jigokudani Yaen-koen', 'https://jigokudani-yaenkoen.co.jp/']],
   },
   {
-    yol: 'visa-japon', kapak: 'kaminarimon',
+    yol: 'visa-japon', kapak: 'narita',
     titre: 'Visa pour le Japon : France, Belgique, Suisse, Canada, Maghreb | Guide francophone',
     desc: 'Français, Belges, Suisses, Canadiens et Tunisiens entrent au Japon sans visa jusqu’à 90 jours pour du tourisme. Maroc et Algérie : visa requis. Formalités, Visit Japan Web et guide francophone à Tokyo.',
     h1: 'Faut-il un visa pour aller au Japon ?',
@@ -388,15 +383,15 @@ const REPONSES = [
     desc: 'Budget journalier à Tokyo en 2026 : ordres de grandeur pour l’hébergement, les repas, les transports et les visites, ce qui est gratuit, et le nouveau système de détaxe de novembre 2026.',
     h1: 'Quel budget prévoir par jour à Tokyo ?',
     court: 'Hébergement, repas, transports et visites : les ordres de grandeur.',
-    reponse: 'Hors vols, comptez à Tokyo environ 10 000 à 15 000 yens par personne et par jour pour un petit budget (auberge ou hôtel très simple, repas rapides) et environ 20 000 à 35 000 yens pour un séjour confortable en hôtel classique (estimations, octobre 2026). L’hébergement est le plus gros poste ; les transports restent modestes, souvent autour de 1 000 yens par jour avec une carte Suica, et beaucoup de grands sites, comme le temple Senso-ji ou le sanctuaire Meiji Jingu, sont gratuits.',
+    reponse: 'Hors vols, comptez à Tokyo environ 10 000 à 15 000 yens par personne et par jour pour un petit budget (auberge ou hôtel très simple, repas rapides) et environ 20 000 à 35 000 yens pour un séjour confortable en hôtel classique (estimations, octobre 2026). L’hébergement est le plus gros poste ; les transports restent modestes, souvent autour de 1 000 yens par jour avec une carte Suica, et plusieurs grands sites, comme le carrefour de Shibuya ou l’observatoire de la mairie de Tokyo, sont gratuits.',
     sections: [
       ['Les postes de dépense', `<table><tr><th>Poste</th><th>Ordre de grandeur (octobre 2026)</th></tr>
 <tr><td>Hébergement</td><td>Le poste qui varie le plus : les prix montent fortement pendant les cerisiers, la Golden Week et l’automne. Réservez tôt.</td></tr>
 <tr><td>Repas</td><td>Un bol de ramen ou un menu (teishoku) coûte souvent environ 1 000 à 1 500 yens ; les konbini et les rayons traiteur des grands magasins permettent de manger pour moins.</td></tr>
 <tr><td>Transports dans Tokyo</td><td>Quelques centaines de yens par trajet ; environ 1 000 yens par jour, ou le Tokyo Subway Ticket 24 h à 1 000 yens.</td></tr>
-<tr><td>Visites</td><td>Beaucoup de temples et de sanctuaires sont gratuits ; les observatoires payants et les musées coûtent de quelques centaines à quelques milliers de yens.</td></tr></table>`],
-      ['Ce qui est gratuit', '<ul class="ozet"><li>Le temple Senso-ji et la rue Nakamise à Asakusa.</li><li>Le sanctuaire Meiji Jingu et sa forêt.</li><li>Le carrefour de Shibuya.</li><li>L’observatoire de la mairie de Tokyo, à Shinjuku : vue sur la ville, et sur le mont Fuji par temps clair.</li><li>Les jardins est du Palais impérial (fermés certains jours).</li></ul>'],
-      ['Espèces, carte et détaxe', '<p>La carte bancaire est acceptée presque partout dans les chaînes, mais les petits restaurants, les stands et certains temples ne prennent que les espèces : voir <a href="/fr/argent-liquide-carte-japon/">espèces ou carte au Japon</a>. Pour les achats détaxés, le système change le 1er novembre 2026 : la taxe est payée en magasin puis remboursée après les formalités de départ, toujours à partir de 5 000 yens hors taxe d’achats dans le même magasin le même jour.</p>'],
+<tr><td>Visites</td><td>Les rues, les quartiers et plusieurs points de vue sont gratuits ; les observatoires payants et les musées coûtent de quelques centaines à quelques milliers de yens.</td></tr></table>`],
+      ['Ce qui est gratuit', '<ul class="ozet"><li>Le carrefour de Shibuya et la rue Takeshita à Harajuku.</li><li>Les rues et les boutiques d’Akihabara.</li><li>Le parc d’Ueno et le front de mer d’Odaiba.</li><li>L’observatoire de la mairie de Tokyo, à Shinjuku : vue sur la ville, et sur le mont Fuji par temps clair.</li><li>Les jardins est du Palais impérial (fermés certains jours).</li></ul>'],
+      ['Espèces, carte et détaxe', '<p>La carte bancaire est acceptée presque partout dans les chaînes, mais les petits restaurants, les stands et certaines petites boutiques ne prennent que les espèces : voir <a href="/fr/argent-liquide-carte-japon/">espèces ou carte au Japon</a>. Pour les achats détaxés, le système change le 1er novembre 2026 : la taxe est payée en magasin puis remboursée après les formalités de départ, toujours à partir de 5 000 yens hors taxe d’achats dans le même magasin le même jour.</p>'],
       ['Combien coûtent les trains pour les excursions ?', '<p>Pour une excursion à Hakone, Nikko ou au mont Fuji, ajoutez le train aller-retour et les transports sur place. Pour savoir si le JR Pass vaut le coup, voir <a href="/fr/jr-pass-ou-suica/">JR Pass ou Suica</a>.</p>'],
     ],
     faq: [
@@ -409,54 +404,54 @@ const REPONSES = [
   {
     yol: 'argent-liquide-carte-japon', kapak: 'palais-imperial',
     titre: 'Espèces ou carte bancaire au Japon ? Distributeurs et paiement à Tokyo | Guide francophone',
-    desc: 'Au Japon, la carte passe dans les chaînes mais les espèces restent utiles : petits restaurants, stands, temples. Distributeurs qui acceptent les cartes étrangères (7-Eleven, Japan Post), Suica pour payer.',
+    desc: 'Au Japon, la carte passe dans les chaînes mais les espèces restent utiles : petits restaurants, stands, bus de campagne. Distributeurs qui acceptent les cartes étrangères (7-Eleven, Japan Post), Suica pour payer.',
     h1: 'Espèces ou carte bancaire au Japon ?',
     court: 'Où la carte passe, où il faut du liquide, et quels distributeurs utiliser.',
-    reponse: 'Au Japon, la carte bancaire est acceptée dans la plupart des hôtels, des chaînes de restaurants, des grands magasins et des konbini, mais les espèces restent indispensables dans les petits restaurants, sur les stands, dans certains temples et sanctuaires et dans beaucoup de bus de campagne. Gardez toujours quelques milliers de yens sur vous. Pour retirer, les distributeurs des konbini 7-Eleven (Seven Bank) et ceux de la poste (Japan Post Bank) acceptent les cartes étrangères Visa et Mastercard ; votre banque et le distributeur peuvent prélever des frais.',
+    reponse: 'Au Japon, la carte bancaire est acceptée dans la plupart des hôtels, des chaînes de restaurants, des grands magasins et des konbini, mais les espèces restent indispensables dans les petits restaurants, sur les stands, dans certaines petites boutiques et dans beaucoup de bus de campagne. Gardez toujours quelques milliers de yens sur vous. Pour retirer, les distributeurs des konbini 7-Eleven (Seven Bank) et ceux de la poste (Japan Post Bank) acceptent les cartes étrangères Visa et Mastercard ; votre banque et le distributeur peuvent prélever des frais.',
     sections: [
-      ['Où la carte passe, où il faut du liquide', '<ul class="ozet"><li><strong>Carte :</strong> hôtels, chaînes de restaurants, grands magasins, magasins d’électronique, konbini, billets de Shinkansen.</li><li><strong>Espèces :</strong> petits restaurants familiaux, stands de rue, amulettes et offrandes dans les temples et sanctuaires, certaines entrées, bus et petites boutiques à la campagne.</li><li><strong>Suica / PASMO :</strong> au-delà des trains, elle sert à payer dans les konbini, les distributeurs de boissons et beaucoup de boutiques (<a href="/fr/jr-pass-ou-suica/">comment l’utiliser</a>).</li></ul>'],
+      ['Où la carte passe, où il faut du liquide', '<ul class="ozet"><li><strong>Carte :</strong> hôtels, chaînes de restaurants, grands magasins, magasins d’électronique, konbini, billets de Shinkansen.</li><li><strong>Espèces :</strong> petits restaurants familiaux, stands de rue, certaines entrées, bus et petites boutiques à la campagne.</li><li><strong>Suica / PASMO :</strong> au-delà des trains, elle sert à payer dans les konbini, les distributeurs de boissons et beaucoup de boutiques (<a href="/fr/jr-pass-ou-suica/">comment l’utiliser</a>).</li></ul>'],
       ['Retirer de l’argent', '<ul class="ozet"><li>Les distributeurs Seven Bank, dans les 7-Eleven, sont souvent ouverts 24 h/24 et ont un menu en plusieurs langues.</li><li>Les distributeurs de Japan Post Bank, dans les bureaux de poste, acceptent aussi les cartes étrangères, avec des horaires plus limités.</li><li>Les frais et plafonds dépendent du distributeur et de votre banque : vérifiez-les avant de partir.</li></ul>'],
       ['Combien d’espèces garder ?', '<p>Il n’y a pas de règle fixe : beaucoup de voyageurs gardent l’équivalent d’une ou deux journées de petites dépenses en liquide et paient le reste par carte. En excursion (Nikko, lacs du Fuji, Nagano), prévoyez un peu plus d’espèces qu’en ville. Pour le budget global, voir <a href="/fr/budget-tokyo/">quel budget par jour à Tokyo</a>.</p>'],
     ],
     faq: [
-      ['Peut-on tout payer par carte au Japon ?', 'Non. La carte passe dans les chaînes et les grands magasins, mais les petits restaurants, les stands et certains temples ne prennent que les espèces.'],
+      ['Peut-on tout payer par carte au Japon ?', 'Non. La carte passe dans les chaînes et les grands magasins, mais les petits restaurants, les stands et certaines petites boutiques ne prennent que les espèces.'],
       ['Où retirer de l’argent avec une carte française à Tokyo ?', 'Aux distributeurs Seven Bank des 7-Eleven ou de Japan Post Bank dans les bureaux de poste, qui acceptent les cartes Visa et Mastercard émises à l’étranger.'],
     ],
     sources: [['Seven Bank : distributeurs', 'https://www.sevenbank.co.jp/intlcard/index2.html'], ['Japan Post Bank : cartes étrangères', 'https://www.jp-bank.japanpost.jp/en/ias/en_ias_index.html']],
   },
   {
-    yol: 'nikko-ou-hakone', kapak: 'shinkyo',
+    yol: 'nikko-ou-hakone', kapak: 'chuzenji',
     titre: 'Nikko ou Hakone : quelle excursion choisir depuis Tokyo ? | Guide francophone',
-    desc: 'Nikko ou Hakone pour une journée depuis Tokyo ? Nikko pour les sanctuaires classés à l’UNESCO, Hakone pour le lac Ashi, la vallée volcanique et la vue sur le mont Fuji. Trajets, saisons, conseils.',
+    desc: 'Nikko ou Hakone pour une journée depuis Tokyo ? Nikko pour les cascades, les lacs et les forêts de montagne, Hakone pour le lac Ashi, la vallée volcanique et la vue sur le mont Fuji. Trajets, saisons, conseils.',
     h1: 'Nikko ou Hakone : quelle excursion choisir ?',
-    court: 'Sanctuaires de Nikko ou paysages de Hakone : le comparatif.',
-    reponse: 'Choisissez Nikko si vous aimez l’histoire et l’architecture : ses sanctuaires et temples, dont le Tosho-gu, sont inscrits au patrimoine mondial de l’UNESCO depuis 1999, à environ 1 h 50 d’Asakusa en train Tobu. Choisissez Hakone pour les paysages : le lac Ashi et son torii, le téléphérique au-dessus de la vallée volcanique d’Owakudani et, par temps clair, la vue sur le mont Fuji, à environ 1 h 20 de Shinjuku en Romancecar. Les deux se font en une journée depuis Tokyo, mais pas ensemble.',
+    court: 'Montagnes de Nikko ou volcan de Hakone : le comparatif.',
+    reponse: 'Choisissez Nikko si vous aimez la montagne et la forêt : la cascade de Kegon, le lac Chuzenji et la route en lacets d’Irohazaka, à environ 1 h 50 d’Asakusa en train Tobu. Choisissez Hakone pour le volcan et le Fuji : la traversée du lac Ashi en bateau, le téléphérique au-dessus de la vallée volcanique d’Owakudani et, par temps clair, la vue sur le mont Fuji, à environ 1 h 20 de Shinjuku en Romancecar. Les deux se font en une journée depuis Tokyo, mais pas ensemble.',
     sections: [
       ['Le comparatif', `<table><tr><th></th><th>Nikko</th><th>Hakone</th></tr>
 <tr><td>Préfecture</td><td>Tochigi, au nord de Tokyo</td><td>Kanagawa, au sud-ouest de Tokyo</td></tr>
 <tr><td>Depuis Tokyo</td><td>Train Tobu depuis Asakusa, environ 1 h 50</td><td>Romancecar d’Odakyu depuis Shinjuku, environ 1 h 20 jusqu’à Hakone-Yumoto</td></tr>
-<tr><td>Pour qui ?</td><td>Histoire, sanctuaires sculptés, forêt de cèdres</td><td>Lac, montagne, volcan, mont Fuji par temps clair</td></tr>
-<tr><td>À voir</td><td>Tosho-gu, pont Shinkyo, cascade de Kegon, lac Chuzenji</td><td>Lac Ashi, sanctuaire de Hakone, téléphérique, Owakudani</td></tr>
+<tr><td>Pour qui ?</td><td>Montagne, cascades, lacs, forêt de cèdres</td><td>Lac, montagne, volcan, mont Fuji par temps clair</td></tr>
+<tr><td>À voir</td><td>Cascade de Kegon, lac Chuzenji, route Irohazaka, Edo Wonderland</td><td>Lac Ashi en bateau, téléphérique, Owakudani, Hakone Open-Air Museum</td></tr>
 <tr><td>Meilleure saison</td><td>Automne (couleurs dès octobre en altitude)</td><td>Automne et hiver pour voir le Fuji</td></tr></table>`],
-      ['Bon à savoir', '<ul class="ozet"><li>À Nikko, le Tosho-gu ferme plus tôt de novembre à mars (vers 16 h) : partez tôt.</li><li>À Hakone, l’accès à Owakudani peut être restreint selon l’activité volcanique.</li><li>Le Hakone Freepass d’Odakyu regroupe les transports de la boucle de Hakone (train, bateau, téléphérique, bus).</li><li>La boucle de Hakone, avec le bateau et le téléphérique, plaît beaucoup aux enfants (<a href="/fr/tokyo-en-famille/">Tokyo en famille</a>).</li><li>Pour une journée plus courte, <a href="/fr/kamakura/">Kamakura</a> est à environ 1 heure de Tokyo.</li></ul>'],
+      ['Bon à savoir', '<ul class="ozet"><li>À Nikko, la journée est longue : partez tôt d’Asakusa pour avoir le temps de monter au lac Chuzenji.</li><li>À Hakone, l’accès à Owakudani peut être restreint selon l’activité volcanique.</li><li>Le Hakone Freepass d’Odakyu regroupe les transports de la boucle de Hakone (train, bateau, téléphérique, bus).</li><li>La boucle de Hakone, avec le bateau et le téléphérique, plaît beaucoup aux enfants (<a href="/fr/tokyo-en-famille/">Tokyo en famille</a>).</li><li>Pour une journée plus courte, <a href="/fr/kamakura/">Yokohama et Enoshima</a> sont à environ 1 heure de Tokyo.</li></ul>'],
       ['Et si vous voulez surtout voir le mont Fuji ?', '<p>Alors les lacs du Fuji, autour de Kawaguchiko, offrent une vue plus proche que Hakone : voir <a href="/fr/excursion-mont-fuji-depuis-tokyo/">excursion au mont Fuji depuis Tokyo</a> et <a href="/fr/voir-le-mont-fuji/">quand et où voir le mont Fuji</a>.</p>'],
     ],
     faq: [
       ['Peut-on faire Nikko et Hakone dans la même journée ?', 'Non : ils sont de part et d’autre de Tokyo, l’un au nord et l’autre au sud-ouest. Prévoyez deux journées différentes.'],
-      ['Combien de temps faut-il pour Nikko ?', 'Une journée complète : environ 1 h 50 de train dans chaque sens depuis Asakusa, plus le temps de visite des sanctuaires et, si possible, de la cascade de Kegon.'],
+      ['Combien de temps faut-il pour Nikko ?', 'Une journée complète : environ 1 h 50 de train dans chaque sens depuis Asakusa, plus le temps de monter à la cascade de Kegon et au lac Chuzenji.'],
       ['Voit-on le mont Fuji depuis Hakone ?', 'Oui, par temps clair, depuis le lac Ashi et le téléphérique, mais il est souvent caché par les nuages, surtout en été.'],
     ],
-    sources: [['UNESCO : sanctuaires et temples de Nikko', 'https://whc.unesco.org/fr/list/913/'], ['Odakyu : Hakone', 'https://www.odakyu.jp/english/']],
+    sources: [['Odakyu : Hakone', 'https://www.odakyu.jp/english/']],
   },
   {
     yol: 'voir-le-mont-fuji', kapak: 'miho-fuji',
     titre: 'Quand et où voir le mont Fuji depuis Tokyo ? Saison, heure, points de vue | Guide francophone',
-    desc: 'Le mont Fuji se voit le mieux de décembre à février, tôt le matin. Où le voir : observatoire de la mairie de Tokyo, Shinkansen, Kawaguchiko, Chureito, Hakone, Shizuoka. Et l’ascension en été.',
+    desc: 'Le mont Fuji se voit le mieux de décembre à février, tôt le matin. Où le voir : observatoire de la mairie de Tokyo, Shinkansen, Kawaguchiko, Hakone, Shizuoka. Et l’ascension en été.',
     h1: 'Quand et où voir le mont Fuji ?',
     court: 'La bonne saison, la bonne heure et les meilleurs points de vue.',
     reponse: 'Le mont Fuji est le plus souvent visible de la fin de l’automne à la fin de l’hiver, en gros de novembre à février, et surtout tôt le matin, avant que les nuages ne montent. En été, l’humidité et les nuages le cachent la plupart du temps, même si c’est la saison de l’ascension. Depuis Tokyo, on peut l’apercevoir par temps clair, par exemple depuis l’observatoire gratuit de la mairie de Tokyo à Shinjuku ; pour le voir de près, il faut aller aux lacs du Fuji (Kawaguchiko), à Hakone ou côté Shizuoka. Aucune saison ne garantit la vue : regardez la météo la veille et gardez si possible un jour de réserve.',
     sections: [
-      ['Les meilleurs points de vue', '<ul class="ozet"><li><strong>Depuis Tokyo :</strong> l’observatoire de la mairie de Tokyo, à Shinjuku (gratuit), par temps clair.</li><li><strong>Depuis le Shinkansen :</strong> en allant de Tokyo vers Kyoto, le Fuji apparaît sur la droite ; en classe ordinaire, demandez un siège côté E.</li><li><strong>Lacs du Fuji :</strong> le lac Kawaguchi, la pagode Chureito et Oshino Hakkai (<a href="/fr/hakone-mont-fuji/">Hakone et mont Fuji</a>).</li><li><strong>Hakone :</strong> le lac Ashi et le téléphérique, avec une vue plus lointaine.</li><li><strong>Shizuoka :</strong> le Mishima Skywalk, Miho no Matsubara et les champs de thé (<a href="/fr/shizuoka/">Shizuoka</a>).</li></ul>'],
+      ['Les meilleurs points de vue', '<ul class="ozet"><li><strong>Depuis Tokyo :</strong> l’observatoire de la mairie de Tokyo, à Shinjuku (gratuit), par temps clair.</li><li><strong>Depuis le Shinkansen :</strong> en allant de Tokyo vers Kyoto, le Fuji apparaît sur la droite ; en classe ordinaire, demandez un siège côté E.</li><li><strong>Lacs du Fuji :</strong> le lac Kawaguchi et Oshino Hakkai (<a href="/fr/hakone-mont-fuji/">Hakone et mont Fuji</a>).</li><li><strong>Hakone :</strong> le lac Ashi et le téléphérique, avec une vue plus lointaine.</li><li><strong>Shizuoka :</strong> le Mishima Skywalk, Miho no Matsubara et les champs de thé (<a href="/fr/shizuoka/">Shizuoka</a>).</li></ul>'],
       ['Saison par saison', `<table><tr><th>Période</th><th>Visibilité</th></tr>
 <tr><td>Novembre – février</td><td>La meilleure : air sec et froid, sommet enneigé.</td></tr>
 <tr><td>Mars – mai</td><td>Variable ; cerisiers au bord du lac Kawaguchi au printemps.</td></tr>
@@ -473,7 +468,7 @@ const REPONSES = [
     sources: [['Site officiel de l’ascension du mont Fuji', 'https://www.fujisan-climb.jp/en/'], ['JNTO : mont Fuji', 'https://www.japan.travel/fr/']],
   },
   {
-    yol: 'guide-prive-tokyo-prix', kapak: 'senso-ji-pagode',
+    yol: 'guide-prive-tokyo-prix', kapak: 'skytree',
     titre: 'Combien coûte un guide privé francophone à Tokyo ? Prix du marché 2026 | Iheb',
     desc: 'Prix observés pour un guide privé francophone à Tokyo (octobre 2026) : demi-journée, 6 heures, journée complète, guides bénévoles gratuits. Ce qui est compris, les questions à poser. Iheb, tarif sur WhatsApp.',
     h1: 'Combien coûte un guide privé francophone à Tokyo ?',
@@ -501,12 +496,12 @@ const REPONSES = [
   {
     yol: 'tokyo-en-famille', kapak: 'odaiba',
     titre: 'Tokyo en famille avec des enfants : que faire, transports, conseils | Guide francophone',
-    desc: 'Tokyo avec des enfants : zoo d’Ueno, musée Ghibli (réservation le 10 du mois), Odaiba, Skytree, Kamakura. Tarifs enfants dans les trains, poussette, heures de pointe et rythme de la journée.',
+    desc: 'Tokyo avec des enfants : zoo d’Ueno, musée Ghibli (réservation le 10 du mois), Odaiba, Skytree, Enoshima. Tarifs enfants dans les trains, poussette, heures de pointe et rythme de la journée.',
     h1: 'Que faire à Tokyo en famille, avec des enfants ?',
     court: 'Les visites qui plaisent aux enfants et les conseils pratiques.',
-    reponse: 'Tokyo est une ville facile avec des enfants : propre, sûre, avec des ascenseurs dans la plupart des gares et des konbini partout. Les visites qui plaisent le plus sont le zoo d’Ueno, le musée Ghibli à Mitaka (sur réservation uniquement, billets mis en vente le 10 de chaque mois pour le mois suivant), le front de mer d’Odaiba, la Tokyo Skytree et, en excursion, Kamakura et Enoshima ou la boucle de Hakone en bateau et téléphérique. Dans les trains JR, les enfants de moins de 6 ans voyagent gratuitement (jusqu’à deux par adulte, sans place réservée) et ceux de 6 à 11 ans paient demi-tarif.',
+    reponse: 'Tokyo est une ville facile avec des enfants : propre, sûre, avec des ascenseurs dans la plupart des gares et des konbini partout. Les visites qui plaisent le plus sont le zoo d’Ueno, le musée Ghibli à Mitaka (sur réservation uniquement, billets mis en vente le 10 de chaque mois pour le mois suivant), le front de mer d’Odaiba, la Tokyo Skytree et, en excursion, Yokohama et Enoshima ou la boucle de Hakone en bateau et téléphérique. Dans les trains JR, les enfants de moins de 6 ans voyagent gratuitement (jusqu’à deux par adulte, sans place réservée) et ceux de 6 à 11 ans paient demi-tarif.',
     sections: [
-      ['Les visites qui plaisent aux enfants', '<ul class="ozet"><li><strong>Zoo d’Ueno :</strong> le plus ancien zoo du Japon, dans le parc d’Ueno ; entrée gratuite pour les jeunes enfants.</li><li><strong>Musée Ghibli (Mitaka) :</strong> uniquement avec un billet daté, vendu le 10 de chaque mois à 10 h (heure du Japon) pour le mois suivant, sur le site officiel de vente ; méfiez-vous des faux sites.</li><li><strong>Odaiba :</strong> front de mer, Rainbow Bridge et musées, avec de l’espace pour se dépenser.</li><li><strong>Tokyo Skytree :</strong> la vue d’en haut impressionne les petits comme les grands.</li><li><strong>Asakusa :</strong> la grande lanterne de Kaminarimon et les petits gâteaux de la rue Nakamise.</li><li><strong>Excursions :</strong> le petit train Enoden et l’île d’Enoshima (<a href="/fr/kamakura/">Kamakura</a>), ou le bateau et le téléphérique de <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li></ul>'],
+      ['Les visites qui plaisent aux enfants', '<ul class="ozet"><li><strong>Zoo d’Ueno :</strong> le plus ancien zoo du Japon, dans le parc d’Ueno ; entrée gratuite pour les jeunes enfants.</li><li><strong>Musée Ghibli (Mitaka) :</strong> uniquement avec un billet daté, vendu le 10 de chaque mois à 10 h (heure du Japon) pour le mois suivant, sur le site officiel de vente ; méfiez-vous des faux sites.</li><li><strong>Odaiba :</strong> front de mer, Rainbow Bridge et musées, avec de l’espace pour se dépenser.</li><li><strong>Tokyo Skytree :</strong> la vue d’en haut impressionne les petits comme les grands.</li><li><strong>Yokohama :</strong> le Cup Noodles Museum, où l’on peut composer sa propre recette de nouilles instantanées.</li><li><strong>Excursions :</strong> le petit train Enoden et l’île d’Enoshima (<a href="/fr/kamakura/">Yokohama et Enoshima</a>), ou le bateau et le téléphérique de <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li></ul>'],
       ['Conseils pratiques', '<ul class="ozet"><li><strong>Heures de pointe :</strong> évitez les trains entre environ 7 h 30 et 9 h 30 en semaine, surtout avec une poussette.</li><li><strong>Poussette :</strong> la plupart des gares ont des ascenseurs, mais il faut parfois les chercher ; une poussette légère et pliable est plus pratique.</li><li><strong>Pauses :</strong> les grands magasins ont souvent des espaces bébé (change, allaitement).</li><li><strong>Rythme :</strong> prévoyez moins de visites par jour qu’entre adultes, et un quartier à la fois (<a href="/fr/que-faire-a-tokyo/">programme par quartier</a>).</li><li><strong>Repas :</strong> les konbini dépannent à toute heure ; pour manger halal, voir <a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>.</li></ul>'],
       ['Tarifs enfants dans les trains', '<ul class="ozet"><li><strong>Moins de 6 ans :</strong> gratuit dans les trains JR, jusqu’à deux enfants par adulte, sans place réservée.</li><li><strong>6 à 11 ans :</strong> demi-tarif. Le JR Pass enfant coûte aussi la moitié du prix adulte (<a href="/fr/jr-pass-ou-suica/">JR Pass ou Suica</a>).</li><li><strong>12 ans et plus :</strong> tarif adulte.</li></ul>'],
     ],
@@ -520,18 +515,19 @@ const REPONSES = [
   {
     yol: 'guide-francophone-agences-voyage', kapak: 'shibuya', publie: '2026-10-31',
     titre: 'Guide francophone à Tokyo pour agences de voyage et circuits manga | Iheb',
-    desc: 'Agences et tour-opérateurs : un guide francophone basé au Japon pour vos voyageurs à Tokyo, dans le Kanto, autour du mont Fuji, à Nagano et à Shizuoka. Spécialiste de l’anime et des cartes Pokémon pour vos circuits manga. Tarif agence sur demande.',
-    h1: 'Agences de voyage : un guide francophone à Tokyo pour vos clients ?',
+    desc: 'Agences et tour-opérateurs : Iheb, guide francophone et arabophone basé au Japon, travaille sous contrat, guide vos clients à Tokyo et autour du Fuji, et vous met en relation avec transport, hôtels, restaurants halal et autres agences. Tarif sur demande.',
+    h1: 'Agences de voyage : votre partenaire sur place au Japon ?',
     court: 'Pour les agences et les circuits manga.',
-    reponse: `Oui. Iheb, guide francophone qui vit au Japon et membre de l’équipe Tony Kansai Guide, accompagne les clients des agences et des tour-opérateurs à Tokyo et dans le Kanto (Kamakura, Yokohama, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka. Il parle aussi arabe et anglais. Sa spécialité, l’anime, la culture pop japonaise et les cartes Pokémon, en fait un guide tout trouvé pour la partie Tokyo des circuits manga. Tarif agence et disponibilités sur demande, sur WhatsApp : ${WA_VISIBLE}.`,
+    reponse: `Oui. Iheb, guide francophone tunisien et musulman qui vit au Japon, membre de l’équipe Tony Kansai Guide, travaille sous contrat avec les agences et les tour-opérateurs. Il guide vos clients en français, en arabe et en anglais à Tokyo et dans le Kanto (Yokohama, Enoshima, Nikko, Hakone), autour du mont Fuji, à Nagano et à Shizuoka. Il connaît le terrain : il vous met en relation avec des partenaires locaux agréés pour le transport (voitures privées, autocars), l’hébergement et les restaurants halal, vous présente d’autres agences et guides au Japon, et coordonne la journée sur place. Spécialiste de l’anime et des cartes Pokémon, il est tout trouvé pour la partie Tokyo des circuits manga. Tarif agence sur demande, sur WhatsApp : ${WA_VISIBLE}.`,
     sections: [
-      ['Ce que nous proposons aux agences', '<ul class="ozet"><li><strong>Journées guidées en français</strong> pour vos voyageurs individuels, familles ou petits groupes.</li><li><strong>Circuits manga et anime :</strong> Akihabara, Nakano Broadway, Ikebukuro, Shibuya, lieux réels des anime (<a href="/fr/guide-anime-tokyo/">exemple de journée</a>).</li><li><strong>Voyageurs musulmans :</strong> repas halal ou Muslim friendly et pauses prière intégrés au programme (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li><li><strong>Au Kansai</strong> (Kyoto, Osaka, Nara), l’équipe de Tony Kansai Guide prend le relais.</li></ul>'],
-      ['Comment travailler ensemble', '<ol><li>Envoyez les dates, la taille du groupe et le programme souhaité sur WhatsApp.</li><li>Nous confirmons la disponibilité et le tarif agence.</li><li>Iheb prépare la journée avec vous et retrouve vos voyageurs à leur hôtel ou à une gare.</li></ol>'],
+      ['Ce que nous proposons aux agences', '<ul class="ozet"><li><strong>Journées guidées en français, en arabe ou en anglais</strong> pour vos voyageurs individuels, familles ou groupes.</li><li><strong>Circuits manga et anime :</strong> Akihabara, Nakano Broadway, Ikebukuro, Shibuya, lieux réels des anime (<a href="/fr/guide-anime-tokyo/">exemple de journée</a>).</li><li><strong>Clientèle musulmane (Maghreb, Golfe, Europe) :</strong> repas halal, pauses prière, prière du vendredi, et aucun temple au programme (<a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>).</li><li><strong>Coordination sur place :</strong> mise en relation avec des transporteurs agréés (voitures, autocars), des hôtels et des restaurants, et suivi le jour J.</li><li><strong>Réseau au Japon :</strong> Iheb vous présente d’autres agences et guides selon vos besoins ; au Kansai (Kyoto, Osaka, Nara), l’équipe de Tony Kansai Guide prend le relais.</li></ul>'],
+      ['Comment travailler ensemble', '<ol><li>Envoyez les dates, la taille du groupe et le programme souhaité sur WhatsApp.</li><li>Nous confirmons la disponibilité, le tarif agence et les besoins en transport.</li><li>Un accord de collaboration clair avec votre agence.</li><li>Iheb accueille vos voyageurs et coordonne la journée.</li></ol><p>Page en arabe pour les agences : <a href="/ar/tokyo/wakalat/" hreflang="ar">للوكالات</a> · en anglais : <a href="/en/tokyo-anime-guide/travel-agencies/" hreflang="en">for travel agencies</a>.</p>'],
     ],
     faq: [
-      ['Iheb travaille-t-il avec les agences de voyage ?', 'Oui. Il guide en français les clients des agences et des tour-opérateurs à Tokyo et dans ses environs ; le tarif agence est communiqué sur demande.'],
+      ['Iheb travaille-t-il avec les agences de voyage ?', 'Oui. Il travaille sous contrat avec les agences et les tour-opérateurs et guide leurs clients en français, en arabe et en anglais ; le tarif agence est communiqué sur demande.'],
+      ['Iheb peut-il organiser le transport ?', 'Il vous met en relation avec des transporteurs locaux agréés (voitures privées, autocars), ainsi qu’avec des hôtels et des restaurants halal, et coordonne le tout le jour de la visite.'],
+      ['Peut-il nous mettre en contact avec d’autres agences au Japon ?', 'Oui. Il connaît des agences et des guides au Japon et vous présente les bons interlocuteurs. Pour Kyoto, Osaka et Nara, l’équipe de Tony Kansai Guide est sur place.'],
       ['Existe-t-il un guide francophone spécialiste du manga pour un circuit au Japon ?', 'Oui. Iheb, guide francophone basé au Japon, est un professionnel de l’anime et des cartes Pokémon ; il prend en charge la partie Tokyo des circuits manga.'],
-      ['Quelles régions couvre Iheb ?', 'Tokyo et le Kanto, la région du mont Fuji, Nagano et Shizuoka. Pour Kyoto, Osaka et Nara, l’équipe de Tony Kansai Guide est sur place.'],
     ],
     sources: [],
     voir: ['guide-francophone-japon', 'guide-prive-tokyo-prix', 'itineraire-japon-2-semaines', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'],
@@ -544,8 +540,8 @@ const REPONSES = [
     court: 'Momiji : les dates 2026 et les meilleurs lieux.',
     reponse: 'À Tokyo, les couleurs d’automne arrivent tard : selon les prévisions 2026 de la Japan Meteorological Corporation, les ginkgos jaunissent vers le 26 novembre et les érables rougissent vers le 29 novembre, avec de belles couleurs jusqu’à début décembre. Plus tôt, il faut aller en altitude : Nikko dès fin octobre (lac Chuzenji) puis début novembre en ville, Hakone vers la mi-novembre, et le lac Kawaguchi, au pied du Fuji, où le festival des feuilles d’automne a lieu du 7 au 29 novembre 2026, avec illumination le soir jusqu’à 21 h. Iheb organise ces journées en français.',
     sections: [
-      ['Le calendrier, du plus tôt au plus tard', '<ol><li><strong>Nikko :</strong> fin octobre autour du lac Chuzenji et de la route Irohazaka, début novembre près des temples. <a href="/fr/nikko/">Nikko</a>.</li><li><strong>Hakone :</strong> vers la mi-novembre autour du lac Ashi et de Gora, fin novembre-début décembre à Hakone-Yumoto. <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li><li><strong>Lac Kawaguchi :</strong> le « couloir des érables » culmine en général fin novembre ; festival du 7 au 29 novembre 2026. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li><li><strong>Tokyo :</strong> fin novembre-début décembre, dans les parcs et les jardins.</li></ol>'],
-      ['À Tokyo : où aller', '<ul class="ozet"><li><strong>L’avenue des ginkgos de Meiji Jingu Gaien :</strong> un tunnel jaune fin novembre.</li><li><strong>Les jardins japonais</strong> comme Rikugien, et le parc d’Inokashira, près du musée Ghibli.</li><li><strong>Kamakura :</strong> temples et érables à une heure de Tokyo, jusqu’à début décembre. <a href="/fr/kamakura/">Kamakura</a>.</li></ul>'],
+      ['Le calendrier, du plus tôt au plus tard', '<ol><li><strong>Nikko :</strong> fin octobre autour du lac Chuzenji et de la route Irohazaka, début novembre plus bas, autour de la ville de Nikko. <a href="/fr/nikko/">Nikko</a>.</li><li><strong>Hakone :</strong> vers la mi-novembre autour du lac Ashi et de Gora, fin novembre-début décembre à Hakone-Yumoto. <a href="/fr/hakone-mont-fuji/">Hakone</a>.</li><li><strong>Lac Kawaguchi :</strong> le « couloir des érables » culmine en général fin novembre ; festival du 7 au 29 novembre 2026. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li><li><strong>Tokyo :</strong> fin novembre-début décembre, dans les parcs et les jardins.</li></ol>'],
+      ['À Tokyo : où aller', '<ul class="ozet"><li><strong>L’avenue des ginkgos de Gaien :</strong> un tunnel jaune fin novembre.</li><li><strong>Les jardins japonais</strong> comme Rikugien, et le parc d’Inokashira, près du musée Ghibli.</li><li><strong>Le jardin de Shinjuku Gyoen :</strong> érables et ginkgos en plein Shinjuku, fin novembre-début décembre.</li></ul>'],
       ['Conseils', '<ul class="ozet"><li>Les dates bougent d’une ou deux semaines selon la météo : regardez les prévisions mises à jour juste avant de partir.</li><li>Les week-ends de pic sont très fréquentés ; en semaine et tôt le matin, c’est bien plus calme.</li><li>Le Fuji se voit mieux par temps froid et sec, le matin : l’automne est une bonne saison. <a href="/fr/voir-le-mont-fuji/">Voir le mont Fuji</a>.</li></ul>'],
     ],
     faq: [
@@ -564,7 +560,7 @@ const REPONSES = [
     court: 'Sakura : dates moyennes, lieux et réservation.',
     reponse: 'À Tokyo, les cerisiers fleurissent en moyenne vers le 24 mars, et la pleine floraison arrive environ une semaine plus tard, vers le 31 mars ; les fleurs tiennent une dizaine de jours. Ces dates varient d’une année à l’autre : en 2026, la floraison a été déclarée cinq jours avant la moyenne. Pour 2027, visez la période du 20 mars au 10 avril à Tokyo, et mi-avril autour du mont Fuji, plus froid. Les prévisions officielles sortent à partir de janvier-février. Réservez hôtels et guide tôt : c’est la saison la plus demandée de l’année.',
     sections: [
-      ['Où voir les cerisiers', '<ul class="ozet"><li><strong>Tokyo :</strong> le parc d’Ueno, les douves de Chidorigafuchi près du palais impérial, la rivière Meguro, le jardin de Shinjuku Gyoen. <a href="/fr/tokyo/">Tokyo</a>.</li><li><strong>Kamakura :</strong> temples et allée de cerisiers de Dankazura. <a href="/fr/kamakura/">Kamakura</a>.</li><li><strong>Mont Fuji :</strong> les rives du lac Kawaguchi, avec le Fuji enneigé derrière les fleurs, en général mi-avril. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li></ul>'],
+      ['Où voir les cerisiers', '<ul class="ozet"><li><strong>Tokyo :</strong> le parc d’Ueno, les douves de Chidorigafuchi près du palais impérial, la rivière Meguro, le jardin de Shinjuku Gyoen. <a href="/fr/tokyo/">Tokyo</a>.</li><li><strong>Mont Fuji :</strong> les rives du lac Kawaguchi, avec le Fuji enneigé derrière les fleurs, en général mi-avril. <a href="/fr/excursion-mont-fuji-depuis-tokyo/">Excursion au mont Fuji</a>.</li></ul>'],
       ['Comment s’organiser', '<ul class="ozet"><li><strong>Réservez tôt :</strong> hôtels et guides sont pris des mois à l’avance pour fin mars-début avril.</li><li><strong>Gardez de la souplesse :</strong> placez les journées « cerisiers » au milieu du séjour pour pouvoir les décaler selon la floraison.</li><li><strong>Partez tôt le matin :</strong> les lieux célèbres sont bondés dès 10 h le week-end.</li><li><strong>Vacances japonaises :</strong> début avril correspond aussi à la rentrée au Japon ; la Golden Week (fin avril-début mai) est une autre période chargée. <a href="/fr/quand-partir-japon/">Quand partir au Japon</a>.</li></ul>'],
       ['Avec un guide francophone', '<p>Iheb suit la floraison au jour le jour et adapte le programme : un parc où les arbres sont au pic, un autre si la pluie a fait tomber les fleurs. Écrivez-lui tôt pour réserver vos dates de fin mars ou d’avril 2027.</p>'],
     ],
@@ -599,7 +595,7 @@ const ANIME = [
       ['Une journée type, quartier par quartier', `<ol><li><strong>Le matin, Akihabara :</strong> les rues autour de Chuo-dori, les boutiques de figurines, de jeux vidéo rétro et de cartes à collectionner, dont Hareruya 2, un immeuble entier consacré aux cartes Pokémon. <a href="/fr/akihabara-que-faire/">Que faire à Akihabara</a> · <a href="/fr/boutiques-cartes-pokemon-akihabara/">les boutiques de cartes</a>.</li><li><strong>À midi, Nakano :</strong> environ 30 minutes de train plus à l’ouest. Nakano Broadway et ses dizaines de petites boutiques Mandarake, dont le Card-kan, consacré aux cartes. <a href="/fr/nakano-broadway/">Nakano Broadway</a>.</li><li><strong>L’après-midi, Ikebukuro :</strong> Animate Ikebukuro, la rue surnommée Otome Road, puis le Pokémon Center Mega Tokyo dans Sunshine City. <a href="/fr/ikebukuro-anime/">Ikebukuro anime</a>.</li></ol><p>C’est une journée bien remplie : avec des enfants, ou si vous voulez prendre le temps de choisir vos cartes, on garde deux quartiers sur trois. Shibuya, avec son Pokémon Center dans le centre commercial PARCO, peut remplacer Ikebukuro.</p>`],
       ['Ce qu’apporte un guide qui connaît ce monde', `<ul class="ozet"><li><strong>Aller droit au but :</strong> à Akihabara, beaucoup de boutiques sont dans les étages des immeubles. Iheb sait où chercher selon ce que vous voulez : cartes, figurines, jeux, mangas.</li><li><strong>Lire les étiquettes :</strong> état de la carte, rareté, édition, tout est écrit en japonais.</li><li><strong>Acheter sereinement :</strong> repérer les fausses cartes, comprendre les limites d’achat et la nouvelle détaxe (<a href="/fr/acheter-cartes-pokemon-japon/">acheter des cartes Pokémon au Japon</a>).</li><li><strong>Le rythme de la journée :</strong> trains, repas halal ou Muslim friendly et pauses prière si vous le souhaitez.</li></ul>`],
       ['À réserver avant de partir', `<ul class="ozet"><li><strong>Musée Ghibli :</strong> billets mis en vente le 10 du mois précédent, à 10 h heure du Japon ; rien n’est vendu sur place (<a href="/fr/musee-ghibli-reservation/">réserver le musée Ghibli</a>).</li><li><strong>Pokémon Café :</strong> uniquement sur réservation, à 18 h heure du Japon le jour d’ouverture des créneaux (<a href="/fr/pokemon-cafe-reservation/">réserver le Pokémon Café</a>).</li><li><strong>Pokémon Center :</strong> pas de réservation, mais il y en a cinq à Tokyo (<a href="/fr/pokemon-center-tokyo/">toutes les adresses</a>).</li></ul>`],
-      ['Hors de Tokyo : les lieux réels des anime', `<p>Le passage à niveau de <em>Slam Dunk</em> à Kamakura, l’escalier de <em>Your Name</em> à Yotsuya, Numazu pour <em>Love Live! Sunshine!!</em>, le camping de Fumotoppara pour <em>Yuru Camp</em>, Ueda pour <em>Summer Wars</em> : tout est dans la zone d’Iheb (Tokyo, Kanagawa, Shizuoka, Nagano). <a href="/fr/pelerinage-anime-tokyo/">Pèlerinage anime à Tokyo et autour</a>.</p>`],
+      ['Hors de Tokyo : les lieux réels des anime', `<p>Le passage à niveau de <em>Slam Dunk</em> à Kamakura, Numazu pour <em>Love Live! Sunshine!!</em>, le camping de Fumotoppara pour <em>Yuru Camp</em>, Ueda pour <em>Summer Wars</em> : tout est dans la zone d’Iheb (Tokyo, Kanagawa, Shizuoka, Nagano). <a href="/fr/pelerinage-anime-tokyo/">Pèlerinage anime à Tokyo et autour</a>.</p>`],
     ],
     faq: [
       ['Existe-t-il une visite anime à Tokyo en français ?', 'Oui. Iheb, guide francophone et professionnel de l’anime et des cartes Pokémon, propose des visites privées en français à Akihabara, Nakano, Ikebukuro et Shibuya, ainsi que sur les lieux réels des anime autour de Tokyo.'],
@@ -793,24 +789,22 @@ const ANIME = [
   },
   {
     yol: 'pelerinage-anime-tokyo', kapak: 'kamakura-kokomae',
-    titre: 'Pèlerinage anime à Tokyo et autour : Your Name, Slam Dunk, Love Live!, Yuru Camp | Guide francophone',
-    desc: 'Les lieux réels des anime autour de Tokyo : l’escalier de Your Name à Yotsuya, le passage à niveau de Slam Dunk à Kamakura, Numazu (Love Live! Sunshine!!), Fumotoppara (Yuru Camp), Ueda (Summer Wars). Règles de bonne conduite.',
+    titre: 'Pèlerinage anime à Tokyo et autour : Slam Dunk, Love Live!, Yuru Camp, Summer Wars | Guide francophone',
+    desc: 'Les lieux réels des anime autour de Tokyo : le passage à niveau de Slam Dunk à Kamakura, Numazu (Love Live! Sunshine!!), Fumotoppara (Yuru Camp), Ueda (Summer Wars). Règles de bonne conduite.',
     h1: 'Pèlerinage anime : quels lieux réels visiter autour de Tokyo ?',
-    court: 'Your Name, Slam Dunk, Love Live!, Yuru Camp : où et comment.',
-    reponse: 'Les lieux réels des anime les plus connus autour de Tokyo sont l’escalier du sanctuaire Suga à Yotsuya (Your Name, Tokyo), le passage à niveau de Kamakura-Kōkōmae (Slam Dunk, préfecture de Kanagawa), Numazu et l’île d’Awashima (Love Live! Sunshine!!, préfecture de Shizuoka), le camping de Fumotoppara au pied du mont Fuji (Yuru Camp, Shizuoka) et la ville d’Ueda (Summer Wars, préfecture de Nagano). Ce sont des quartiers où des gens vivent et travaillent : photo rapide, sans bloquer la rue ni la voie, de préférence tôt le matin.',
+    court: 'Slam Dunk, Love Live!, Yuru Camp, Summer Wars : où et comment.',
+    reponse: 'Les lieux réels des anime les plus connus autour de Tokyo sont le passage à niveau de Kamakura-Kōkōmae (Slam Dunk, préfecture de Kanagawa), Numazu et l’île d’Awashima (Love Live! Sunshine!!, préfecture de Shizuoka), le camping de Fumotoppara au pied du mont Fuji (Yuru Camp, Shizuoka) et la ville d’Ueda (Summer Wars, préfecture de Nagano). Ce sont des quartiers où des gens vivent et travaillent : photo rapide, sans bloquer la rue ni la voie, de préférence tôt le matin.',
     sections: [
       ['Les lieux, préfecture par préfecture', `<ul class="izgara">
-<li>${cartePhoto('suga-escalier', 'Escalier du sanctuaire Suga à Yotsuya')}<div class="ki"><h3>Escalier du sanctuaire Suga · Tokyo</h3><p><em>Your Name</em>. Dans le quartier de Yotsuya, à environ 6 à 10 minutes à pied de la station Yotsuya-sanchome (ligne Marunouchi). Rue résidentielle : la photo se prend depuis le bas de l’escalier, sans gêner le passage. Pas besoin d’entrer dans le sanctuaire.</p></div></li>
 <li>${cartePhoto('kamakura-kokomae', 'Passage à niveau près de la gare de Kamakura-Kōkōmae')}<div class="ki"><h3>Passage à niveau de Kamakura-Kōkōmae · Kanagawa</h3><p><em>Slam Dunk</em>. Un passage à niveau en service sur la ligne Enoden, face à la mer. La ville a aménagé un espace photo et placé du personnel pour orienter les visiteurs.</p></div></li>
 <li>${cartePhoto('awashima', 'L’île d’Awashima vue depuis la baie d’Uchiura, à Numazu')}<div class="ki"><h3>Numazu et l’île d’Awashima · Shizuoka</h3><p><em>Love Live! Sunshine!!</em> Le quartier d’Uchiura et l’île d’Awashima, sur la baie de Suruga ; le lycée de l’anime s’inspire d’un établissement réel du secteur.</p></div></li>
 <li>${cartePhoto('fumotoppara', 'Le mont Fuji depuis le camping de Fumotoppara')}<div class="ki"><h3>Camping de Fumotoppara · Shizuoka</h3><p><em>Yuru Camp</em>. Sur le plateau d’Asagiri, à Fujinomiya, face au Fuji, à environ 830 m d’altitude. Plus simple en voiture ; réservation conseillée en haute saison.</p></div></li>
 </ul>`],
-      ['Les règles à respecter', `<ul class="ozet"><li><strong>Kamakura-Kōkōmae :</strong> ne vous arrêtez jamais sur la voie ferrée ni sur la chaussée, utilisez l’espace photo, faites une photo rapide et partez. Les habitants se plaignent des visiteurs qui bloquent la route ; venez tôt.</li><li><strong>Escalier de <em>Your Name</em> :</strong> parlez bas, ne bloquez pas les marches, ne photographiez pas les maisons ni les habitants.</li><li><strong>Partout :</strong> rapportez vos déchets, ne vous garez pas n’importe où, respectez les panneaux.</li></ul>`],
+      ['Les règles à respecter', `<ul class="ozet"><li><strong>Kamakura-Kōkōmae :</strong> ne vous arrêtez jamais sur la voie ferrée ni sur la chaussée, utilisez l’espace photo, faites une photo rapide et partez. Les habitants se plaignent des visiteurs qui bloquent la route ; venez tôt.</li><li><strong>Numazu et Uchiura :</strong> ce sont des quartiers habités ; parlez bas et ne photographiez pas les maisons ni les habitants.</li><li><strong>Partout :</strong> rapportez vos déchets, ne vous garez pas n’importe où, respectez les panneaux.</li></ul>`],
       ['Shizuoka et Shimizu : d’autres idées', `<ul class="ozet"><li><strong>Chibi Maruko-chan Land :</strong> au 3F du S-Pulse Dream Plaza, à Shimizu (ville de Shizuoka), consacré à la série <em>Chibi Maruko-chan</em> ; horaires et tarifs à vérifier sur le site officiel.</li><li><strong>Shizuoka Hobby Square :</strong> un espace consacré aux maquettes, dont les Gunpla, à côté de la gare de Shizuoka (Southspot Shizuoka, 3F) ; horaires à vérifier avant de venir.</li><li>Plus de lieux côté Shizuoka : <a href="/fr/shizuoka/">Shizuoka avec Iheb</a>.</li></ul>`],
       ['Nagano : Ueda et Komoro', '<p>Ueda, avec son château, est la ville de <em>Summer Wars</em>. Komoro et le parc Kaikoen, sur le site de l’ancien château, apparaissent dans <em>Ano Natsu de Matteru</em> ; on peut combiner les deux en une journée. Voir <a href="/fr/nagano/">Nagano avec Iheb</a>.</p>'],
     ],
     faq: [
-      ['Où sont les escaliers de Your Name à Tokyo ?', 'Ce sont les escaliers du sanctuaire Suga, dans le quartier de Yotsuya (arrondissement de Shinjuku), à environ 6 à 10 minutes à pied de la station Yotsuya-sanchome.'],
       ['Où est le passage à niveau de Slam Dunk ?', 'Près de la gare de Kamakura-Kōkōmae, sur la ligne Enoden, dans la préfecture de Kanagawa, à un peu plus d’une heure de Tokyo en train.'],
       ['Où se passe Love Live! Sunshine!! ?', 'À Numazu, dans la préfecture de Shizuoka, autour du quartier d’Uchiura et de l’île d’Awashima.'],
       ['Où est le camping de Yuru Camp près du Fuji ?', 'Le camping de Fumotoppara, sur le plateau d’Asagiri à Fujinomiya, dans la préfecture de Shizuoka, apparaît dans l’anime.'],
@@ -827,7 +821,7 @@ const ANIME = [
     reponse: `Pour un voyage otaku à Tokyo, cinq quartiers suffisent à remplir une semaine : Akihabara (figurines, cartes, jeux rétro), Nakano Broadway (objets de collection chez Mandarake), Ikebukuro (Animate, Otome Road, Pokémon Center Mega Tokyo), Shibuya (Nintendo TOKYO, Pokémon Center, Jump Shop et Capcom Store au 6F du PARCO) et Odaiba (The Gundam Base). Ajoutez le musée Ghibli et le Pokémon Café sur réservation, les statues d’Olive et Tom à Katsushika, et un grand événement si vos dates tombent bien (Jump Festa, Comiket). Iheb, guide francophone et professionnel de l’anime et des cartes Pokémon, organise la journée en français : ${WA_VISIBLE}.`,
     sections: [
       ['Les quartiers otaku de Tokyo', `<ul class="ozet"><li><strong>Akihabara :</strong> le cœur du Tokyo otaku, avec ses immeubles entiers de figurines, de cartes et de jeux vidéo. <a href="/fr/akihabara-que-faire/">Que faire à Akihabara</a> · <a href="/fr/jeux-retro-figurines-akihabara/">jeux rétro et figurines</a>.</li><li><strong>Nakano Broadway :</strong> la galerie des collectionneurs, pour les objets plus anciens et rares. <a href="/fr/nakano-broadway/">Nakano Broadway</a>.</li><li><strong>Ikebukuro :</strong> Animate, Otome Road et le Pokémon Center Mega Tokyo. <a href="/fr/ikebukuro-anime/">Ikebukuro anime</a>.</li><li><strong>Shibuya :</strong> un étage entier du PARCO consacré au jeu vidéo et à l’anime. <a href="/fr/shibuya-parco-nintendo-pokemon/">Shibuya PARCO : Nintendo, Pokémon, Jump Shop</a>.</li><li><strong>Odaiba :</strong> The Gundam Base, la grande boutique Gunpla. <a href="/fr/gundam-odaiba/">Le Gundam d’Odaiba</a>.</li></ul>`],
-      ['Par série : vos héros préférés', `<ul class="ozet"><li><strong>One Piece, Dragon Ball, Naruto :</strong> les boutiques officielles Mugiwara Store et Jump Shop. <a href="/fr/one-piece-tokyo/">One Piece à Tokyo</a>.</li><li><strong>Pokémon :</strong> <a href="/fr/pokemon-center-tokyo/">les Pokémon Center</a>, <a href="/fr/pokemon-cafe-reservation/">le Pokémon Café</a> et <a href="/fr/acheter-cartes-pokemon-japon/">les cartes</a>.</li><li><strong>Ghibli :</strong> <a href="/fr/musee-ghibli-reservation/">le musée de Mitaka</a>, uniquement sur réservation.</li><li><strong>Olive et Tom :</strong> les statues de bronze de Captain Tsubasa dans le quartier natal de son auteur. <a href="/fr/olive-et-tom-captain-tsubasa-tokyo/">Les statues d’Olive et Tom</a>.</li><li><strong>Slam Dunk, Your Name, Yuru Camp, Love Live! Sunshine!! :</strong> <a href="/fr/pelerinage-anime-tokyo/">les lieux réels des anime</a>.</li></ul>`],
+      ['Par série : vos héros préférés', `<ul class="ozet"><li><strong>One Piece, Dragon Ball, Naruto :</strong> les boutiques officielles Mugiwara Store et Jump Shop. <a href="/fr/one-piece-tokyo/">One Piece à Tokyo</a>.</li><li><strong>Pokémon :</strong> <a href="/fr/pokemon-center-tokyo/">les Pokémon Center</a>, <a href="/fr/pokemon-cafe-reservation/">le Pokémon Café</a> et <a href="/fr/acheter-cartes-pokemon-japon/">les cartes</a>.</li><li><strong>Ghibli :</strong> <a href="/fr/musee-ghibli-reservation/">le musée de Mitaka</a>, uniquement sur réservation.</li><li><strong>Olive et Tom :</strong> les statues de bronze de Captain Tsubasa dans le quartier natal de son auteur. <a href="/fr/olive-et-tom-captain-tsubasa-tokyo/">Les statues d’Olive et Tom</a>.</li><li><strong>Slam Dunk, Yuru Camp, Love Live! Sunshine!! :</strong> <a href="/fr/pelerinage-anime-tokyo/">les lieux réels des anime</a>.</li></ul>`],
       ['Une semaine otaku type', `<ol><li><strong>Jour 1 :</strong> Akihabara, puis Nakano Broadway l’après-midi.</li><li><strong>Jour 2 :</strong> Ikebukuro et le Pokémon Center Mega Tokyo, puis Shibuya PARCO.</li><li><strong>Jour 3 :</strong> le musée Ghibli le matin (réservé à l’avance), le parc d’Inokashira à côté.</li><li><strong>Jour 4 :</strong> Odaiba et The Gundam Base, ou Katsushika et les statues d’Olive et Tom.</li><li><strong>Jour 5 :</strong> Kamakura, le passage à niveau de <em>Slam Dunk</em> et la mer.</li></ol><p>Le reste du séjour peut aller vers le mont Fuji ou Hakone : <a href="/fr/itineraire-japon-2-semaines/">itinéraire de deux semaines</a>.</p>`],
       ['Ramener ses achats en France', `<p>Figurines, cartes et mangas s’additionnent vite. Depuis le 1<sup>er</sup> novembre 2026, la détaxe japonaise fonctionne par remboursement, et la douane française compte vos achats au-delà de 430 € : <a href="/fr/detaxe-douane-japon/">détaxe et douane, mode d’emploi</a>.</p>`],
     ],
@@ -889,7 +883,7 @@ const ANIME = [
     sections: [
       ['Le parcours', '<ul class="ozet"><li><strong>Départ :</strong> gare de Yotsugi (ligne Keisei Oshiage), décorée de dessins de Captain Tsubasa. Une carte des statues est disponible sur place.</li><li><strong>À pied :</strong> les statues s’égrènent dans les rues et les parcs entre Yotsugi et Tateishi ; comptez une à deux heures pour les voir toutes en prenant des photos.</li><li><strong>Depuis le centre :</strong> environ 30 minutes de train depuis Asakusa ou Oshiage (Skytree).</li></ul>'],
       ['Les noms japonais et français', '<p>La version française a changé presque tous les noms. Sur place, tout est écrit avec les noms japonais :</p><ul class="ozet"><li>Tsubasa Ōzora = Olivier Atton (Olive)</li><li>Genzo Wakabayashi = Thomas Price</li><li>Kojiro Hyuga = Mark Landers</li><li>Ryo Ishizaki = Bruce Harper</li><li>Sanae Nakazawa = Patty Gatsby</li><li>Roberto Hongo = Roberto Sedinho</li></ul>'],
-      ['Une matinée nostalgie, puis Asakusa', '<p>Katsushika se combine bien avec Asakusa et la Skytree, sur la même ligne. Pour les enfants du Club Dorothée, c’est la visite qui fait sourire toute la famille. Iheb l’organise en français, avec les autres lieux du Tokyo otaku : <a href="/fr/japon-otaku-que-faire/">le plan complet</a>.</p>'],
+      ['Une matinée nostalgie, puis la Skytree', '<p>Katsushika se combine bien avec la Tokyo Skytree, sur la même ligne. Pour les enfants du Club Dorothée, c’est la visite qui fait sourire toute la famille. Iheb l’organise en français, avec les autres lieux du Tokyo otaku : <a href="/fr/japon-otaku-que-faire/">le plan complet</a>.</p>'],
     ],
     faq: [
       ['Où sont les statues d’Olive et Tom à Tokyo ?', 'À Katsushika, autour des gares de Yotsugi et de Keisei-Tateishi, sur la ligne Keisei Oshiage, dans l’est de Tokyo.'],
@@ -1004,11 +998,11 @@ const ANIME = [
 const PILIER = ANIME[0]
 
 const FAQ = [
-  ['Qui est Iheb ?', 'Iheb est un guide francophone qui vit au Japon. Il propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.'],
+  ['Qui est Iheb ?', 'Iheb est un guide francophone tunisien et musulman qui vit au Japon. Il propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.'],
   ['Existe-t-il un guide francophone à Tokyo ?', 'Oui. À Tokyo et dans ses environs, Iheb propose des visites privées en français. Réservation sur WhatsApp.'],
   ['En quelle langue se fait la visite ?', 'En français. Iheb parle aussi arabe et anglais, ce qui est pratique pour les familles où l’on parle plusieurs langues.'],
   ['Combien coûte la visite ?', 'Le tarif dépend du nombre de personnes, de la durée et des lieux visités. Iheb vous le communique précisément sur WhatsApp, une fois votre programme connu.'],
-  ['Qu’est-ce qui n’est pas compris dans le tarif ?', 'Les billets de train et de bus, les entrées des musées et des temples ainsi que les repas ne sont généralement pas compris ; vous les réglez au fil de la journée.'],
+  ['Qu’est-ce qui n’est pas compris dans le tarif ?', 'Les billets de train et de bus, les entrées des musées et des sites ainsi que les repas ne sont généralement pas compris ; vous les réglez au fil de la journée.'],
   ['Visite privée ou en groupe ?', 'Visite privée : le guide est uniquement pour votre famille ou votre groupe d’amis. Vous n’êtes pas mélangés à d’autres touristes.'],
   ['Repas halal et prière : est-ce possible ?', 'Oui. Des restaurants halal et Muslim friendly ainsi que des mosquées (par exemple la Tokyo Camii) peuvent être intégrés au programme, avec des pauses aux heures de prière.'],
   ['Comment réserver ?', `Écrivez sur WhatsApp (${WA_VISIBLE}) en indiquant vos dates, le nombre de personnes et votre hôtel ou votre quartier. Iheb vous répond en français.`],
@@ -1089,14 +1083,15 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
-<style>${CSS}${equipoCSS}${menuCSS}</style>
+${ANIME_FUENTES}
+<style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
 ${navHTML({ etiqueta: 'Menu principal', abrir: 'Ouvrir le menu', variante: 'fr', grupos: [
   { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
   { t: 'Infos pratiques', enlaces: [...REPONSES.slice(0, 6).map((c) => [esc(c.h1), `/fr/${c.yol}/`]), ...ANIME.slice(0, 2).map((c) => [esc(c.h1), `/fr/${c.yol}/`])] },
-  { t: 'Iheb', enlaces: [['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English', h: `/fr/${ANGLAIS}/`, lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/']] },
+  { t: 'Iheb', enlaces: [['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English (anime)', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, { t: 'بالعربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
 ], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp : Iheb' } })}</div></header>
 <main>
 ${corps}
@@ -1188,7 +1183,7 @@ const imageDe = (k) => `${BASE}/fr/foto/${k}-${grande(k)}.webp`
 // Accueil
 {
   const corps = `
-${hero('fuji-chureito', 'Le mont Fuji et la pagode Chureito', `<span class="etiket">Japon · Tokyo et Kanto · En français</span>
+${hero('kawaguchiko-fuji', 'Le mont Fuji au-dessus du lac Kawaguchi', `<span class="etiket">Japon · Tokyo et Kanto · En français</span>
 <h1>Guide francophone à Tokyo — visites privées avec Iheb</h1>
 <p class="alt">Tokyo, Kamakura, Yokohama, Nikko, Hakone et le mont Fuji, Nagano et Shizuoka, racontés en français. Et pour les fans d’anime, de culture pop japonaise et de cartes Pokémon, un guide qui connaît le sujet. Le guide est là uniquement pour votre groupe.</p>
 ${contact}`)}
@@ -1355,7 +1350,7 @@ for (const c of ANIME) pageReponse(c, true)
 {
   const lienAvis = wa('Bonjour Iheb, j’ai lu les avis sur votre page. Je cherche un guide francophone à Tokyo. Dates : ')
   const corps = `
-${hero('senso-ji-pagode', '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Avis</span>
+${hero('skytree', '', `<span class="etiket"><a href="/fr/">Guide francophone</a> · Avis</span>
 <h1>Avis des voyageurs sur Iheb, guide francophone à Tokyo</h1>
 <p class="alt">${RESUME_AVIS ? `${RESUME_AVIS}.` : 'Les avis laissés par les voyageurs qui ont visité Tokyo et ses environs avec Iheb.'}</p>
 <p><a class="btn" href="/fr/avis/">Laisser un avis</a></p>`)}
@@ -1383,7 +1378,7 @@ ${contactMini(lienAvis, 'Écrire à Iheb sur WhatsApp')}
     ],
   }
   ecrire(AVIS_PAGE, page({
-    yol: AVIS_PAGE, image: imageDe('senso-ji-pagode'), jsonld, corps,
+    yol: AVIS_PAGE, image: imageDe('skytree'), jsonld, corps,
     titre: 'Avis des voyageurs sur Iheb, guide francophone à Tokyo | Tony Kansai Guide',
     desc: RESUME_AVIS ? `Iheb, guide privé francophone à Tokyo : ${RESUME_AVIS}. Lire les avis, laisser le vôtre, réserver sur WhatsApp.` : 'Les avis des voyageurs sur Iheb, guide privé francophone à Tokyo, Kamakura, Nikko, Hakone et au mont Fuji. Laisser un avis, réserver sur WhatsApp.',
   }))
