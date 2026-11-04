@@ -4,6 +4,7 @@
 //   /ru/otzyv/   Larion, en ruso, con aire de porcelana Gzhel
 //   /fr/avis/    Iheb, en francés, con aire de toile de Jouy
 //   /familias/opiniones/  Antonio, en español, con aire de seigaiha (olas japonesas)
+//   /private/review/  Mario, en inglés, con el aire de juego de /private/ (FAN/EASY)
 // Envían al mismo receptor que /opinar.html (Worker /api/resenas) con `guide`,
 // y el Worker las publica solas en la página de ese guía (no en la de Tony).
 // HTML suelto, sin React: rutas-estaticas.mjs no los pisa (data-estatica) y
@@ -100,6 +101,61 @@ const FORMULARIOS = [
       gor: 'Ver las opiniones sobre Antonio →',
     },
   },
+  {
+    ruta: 'private/review', lang: 'en', guia: 'mario', pagina: '/private/reviews/', serit: 'MARIO · PRIVATE GUIDE · JAPAN',
+    variante: 'private', inicio: '/private/',
+    ciudades: ['Kyoto', 'Tokyo', 'Osaka & Nara', 'Mount Fuji & Hakone', 'Nikko & Kamakura', 'Himeji & Kobe', 'Hiroshima & Miyajima', 'Multi-day journey', 'Otaku Japan', 'Full-service trip'],
+    // Mismos colores y letras que /private/ (scripts/private.mjs): FAN de noche
+    // con neón rosa y cian, EASY claro; se respeta el modo que eligió en la sección.
+    tema: { fondo: '#0b0b1a', tinta: '#f4f4ff', acento: '#ff2e88', acento2: '#00e5ff', resalte: '#ff5a36', kart: '#15152e' },
+    patron: `<svg xmlns='http://www.w3.org/2000/svg' width='8' height='8'/>`,
+    cabeza: `<meta name="theme-color" content="#0b0b1a">
+<script>try{var m=localStorage.getItem('mario-modo');if(m==='easy'||m==='fan')document.documentElement.className=m}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=Inter:wght@400;600&display=swap">`,
+    css: `:root,html.fan{--fondo:#0b0b1a;--tinta:#f4f4ff;--kart:#15152e;--suave:#c2c2e0;--acento:#ff2e88;--acento2:#00e5ff;--resalte:#ff5a36;--yel:#ffe14d;--win:#fff;--ink:#0b0b1a;--line:#34345f;--sombra:#ff2e88;--glow:0 0 4px rgba(255,46,136,.9),0 0 14px rgba(255,46,136,.6),0 0 28px rgba(255,46,136,.35);--disp:"Dela Gothic One","Arial Black",Impact,sans-serif;--px:"DotGothic16","Courier New",monospace;--sans:Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color-scheme:dark}
+html.easy{--fondo:#fbf6ea;--tinta:#15131a;--kart:#fff;--suave:#3b3846;--acento:#b0124f;--acento2:#006c80;--resalte:#b8321a;--yel:#ffd21f;--win:#15131a;--ink:#15131a;--line:#d6cdb8;--sombra:#15131a;--glow:none;color-scheme:light}
+body{font-family:var(--sans);background:radial-gradient(rgba(255,255,255,.55) 1px,transparent 1.5px) 0 0/56px 56px,radial-gradient(rgba(0,229,255,.35) 1px,transparent 1.5px) 28px 28px/56px 56px,repeating-linear-gradient(transparent 0 3px,rgba(255,255,255,.025) 3px 4px),var(--fondo)}
+html.easy body{background:var(--fondo)}
+.serit{background:var(--fondo);color:var(--yel);font:400 15px/1.4 var(--px);letter-spacing:.12em;border-bottom:4px solid var(--win);padding:18px 16px}
+.serit::before,.serit::after{display:none}
+html.easy .serit{color:var(--tinta)}
+.serit a{color:inherit;text-decoration:none}
+.kap{max-width:620px;padding-top:32px}
+.kart{border:3px solid var(--win);border-radius:0;background:var(--kart);box-shadow:6px 6px 0 var(--sombra)}
+h1{font-family:var(--disp);font-weight:400;color:#fff;-webkit-text-stroke:6px var(--ink);paint-order:stroke fill;text-shadow:4px 4px 0 var(--ink),var(--glow);letter-spacing:.01em;font-size:clamp(26px,6vw,34px)}
+html.easy h1{color:var(--tinta);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--yel)}
+.ante{display:inline-block;font:400 14px/1.4 var(--px);letter-spacing:.08em;color:var(--ink);background:var(--yel);padding:4px 12px;margin:0 0 16px}
+html.easy .ante{color:#15131a}
+label{font:400 16px/1.4 var(--px);letter-spacing:.06em;color:var(--yel)}
+html.easy label{color:var(--acento)}
+label.izin{font-family:var(--sans);color:var(--tinta)}
+input[type=text],textarea,select{border:3px solid var(--line);border-radius:0;background:var(--fondo)}
+select option{background:var(--fondo);color:var(--tinta)}
+input:focus,textarea:focus,select:focus{outline:3px solid var(--acento2);border-color:var(--acento2)}
+.yildiz button{color:var(--line)}
+.yildiz button.on{color:var(--yel);text-shadow:2px 2px 0 var(--ink)}
+html.easy .yildiz button.on{color:#e3a400}
+.btn{background:var(--yel);color:#0b0b1a;border:3px solid var(--win);border-radius:0;box-shadow:4px 4px 0 var(--sombra);font:400 18px/1 var(--px);letter-spacing:.08em;padding:17px;transition:transform .08s steps(2)}
+.btn:hover,.btn:focus-visible{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--sombra)}
+.uyari{border-radius:0;border:2px solid var(--resalte)}
+.tamam a{color:var(--acento2);font-family:var(--px)}
+.otra{margin:18px 0 0;font-size:15px;color:var(--suave)}.otra a{color:var(--acento2)}`,
+    ante: 'GUEST REVIEW',
+    t: {
+      titulo: 'How was your day with Mario?',
+      baslik: 'Leave a review for Mario | Private English-speaking guide in Japan',
+      giris: 'A few sentences are enough. Your review is published on Mario’s reviews page, as written, and helps other travelers plan their trip to Japan.',
+      puan: 'Your rating', ad: 'Your name', adOrnek: 'e.g. Sarah and James', ulke: 'City / country', ulkeOrnek: 'e.g. Melbourne, Australia',
+      tur: 'Which tour?', turSec: 'Choose (optional)', diger: 'Other',
+      yorum: 'Your review', yorumOrnek: 'How did the day go? What did you enjoy most about touring with Mario?',
+      izin: 'I agree that my review may be published on the website with my name and city.',
+      gonder: 'SEND REVIEW ▶', gonderiliyor: 'Sending…',
+      eksik: 'Please give a rating, write your name, a review of at least 20 characters, and tick the consent box.',
+      hata: 'It could not be sent. Check your connection and try again.',
+      tamam: 'Thank you! Your review is published.', bekle: 'Thank you! Your review has been received and will be published shortly.',
+      gor: 'See all reviews of Mario →',
+    },
+  },
 ]
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
@@ -114,7 +170,7 @@ function html(f) {
 <title>${esc(t.baslik)}</title>
 <meta name="robots" content="noindex, follow">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-${equipoFuente}
+${equipoFuente}${f.cabeza ? '\n' + f.cabeza : ''}
 <style>${equipoCSS}
 :root{--fondo:${c.fondo};--tinta:${c.tinta};--acento:${c.acento};--acento2:${c.acento2};--resalte:${c.resalte};--kart:${c.kart};--suave:#5b6478}
 @media (prefers-color-scheme:dark){:root{--fondo:#0f1424;--tinta:#e9edf7;--kart:#18203a;--suave:#a5afc7}}
@@ -144,15 +200,15 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 .uyari.on{display:block}
 .tamam{display:none;text-align:center}.tamam.on{display:block}
 .tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
-.gizli{position:absolute;left:-9999px}
+.gizli{position:absolute;left:-9999px}${f.css ? '\n' + f.css : ''}
 </style>
 </head>
 <body>
-<div class="serit">${esc(f.serit)}</div>
+<div class="serit">${f.inicio ? `<a href="${f.inicio}">${esc(f.serit)}</a>` : esc(f.serit)}</div>
 <main class="kap">
 <div class="kart">
 <form id="form" novalidate>
-<h1>${esc(t.titulo)}</h1>
+${f.ante ? `<p class="ante">${esc(f.ante)}</p>\n` : ''}<h1>${esc(t.titulo)}</h1>
 <p class="giris">${esc(t.giris)}</p>
 <label id="puanEt">${esc(t.puan)}</label>
 <div class="yildiz" role="radiogroup" aria-labelledby="puanEt">
@@ -207,7 +263,7 @@ $('form').addEventListener('submit', async (e) => {
   } catch { uyari(T.hata); b.disabled = false; b.textContent = T.gonder; }
 });
 </script>
-${equipoHTML({ lang: f.lang, actual: f.guia })}
+${equipoHTML({ lang: f.lang, actual: f.guia, variante: f.variante ?? null })}
 </body>
 </html>
 `

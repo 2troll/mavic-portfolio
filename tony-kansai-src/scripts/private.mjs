@@ -566,7 +566,7 @@ const PIE = () => pieHTML({
     { t: 'Journeys', enlaces: [...enl(REGIONES), ...enl(RESPUESTAS.filter((c) => !c.otaku && !c.servis))] },
     { t: 'Otaku Japan', enlaces: enl(RESPUESTAS.filter((c) => c.otaku)) },
     { t: 'Full-service trips', enlaces: enl(RESPUESTAS.filter((c) => c.servis)) },
-    { t: 'Contact', fija: true, enlaces: [[`WhatsApp ${WA_VISIBLE}`, WA_GENEL], ['tony@tonykansaiguide.com', 'mailto:tony@tonykansaiguide.com'], ['Prices', '/private/#prices'], ['Reviews', '/private/reviews/'], ['About Mario', '/private/about-mario/']] },
+    { t: 'Contact', fija: true, enlaces: [[`WhatsApp ${WA_VISIBLE}`, WA_GENEL], ['tony@tonykansaiguide.com', 'mailto:tony@tonykansaiguide.com'], ['Prices', '/private/#prices'], ['Reviews', '/private/reviews/'], ['Leave a review', '/private/review/'], ['About Mario', '/private/about-mario/']] },
   ],
   equipo: equipoHTML({ lang: 'en', actual: 'mario', variante: 'private' }),
   fin: `<span>Prices in Japanese yen, for the whole private group. Updated <time datetime="${HOY}">${HOY_EN}</time>.</span><span><a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> (Tony) · <a href="/tr/" hreflang="tr">Türkçe</a> (Ferhat) · <a href="/fr/" hreflang="fr">Français</a> (Iheb) · <a href="/ru/" hreflang="ru">Русский</a></span>`,
@@ -639,6 +639,9 @@ fetch('/api/resenas/publicas?guia=mario',{cache:'no-cache'}).then(r=>r.ok?r.json
 // Nota grande (como en la demo de Kansai) solo si hay reseñas reales.
 const puanBlok = RESENAS.length ? `<div class="puan"><b>${(RESENAS.reduce((t, y) => t + y.stars, 0) / RESENAS.length).toFixed(1)}</b><span>out of 5 · ${RESENAS.length} guest review${RESENAS.length === 1 ? '' : 's'}</span></div>` : ''
 const WA_RESENA = wa('Hello Mario, here is my review of our time together in Japan: ')
+// Formulario propio (scripts/formularios-guias.mjs): la reseña llega al Worker
+// con guide=mario y sale sola en /private/reviews/. WhatsApp queda de respaldo.
+const FORM_RESENA = '/private/review/'
 const listaResenas = (limite) => `<ul class="yorumlar" id="resenaLista">${(limite ? RESENAS.slice(0, limite) : RESENAS).map(carteResena).join('')}</ul>
 <p class="bos" id="resenaVacia" ${RESENAS.length ? 'hidden' : ''}>Reviews from Mario’s guests are being added here.</p>
 ${RESENA_SCRIPT}`
@@ -2205,7 +2208,7 @@ ${[
 <div class="bas"><p class="etiket">Guests</p><h2>In their words</h2></div>
 ${puanBlok}
 ${listaResenas(3)}
-<p style="margin-top:36px"><a href="/private/reviews/">All reviews</a> · <a href="${WA_RESENA}">Leave a review</a></p>
+<p style="margin-top:36px"><a href="/private/reviews/">All reviews</a> · <a href="${FORM_RESENA}">Leave a review</a></p>
 </div></section>
 <section class="blok"><div class="kap">
 <div class="bas"><p class="etiket">Plan your trip</p><h2>Answers before you go</h2></div>
@@ -2363,7 +2366,7 @@ ${bant(lien)}`
 ${heroDuz(`<span class="etiket"><a href="/private/">Private guide</a> · Reviews</span>
 <h1>Guest reviews of Mario</h1>
 <p class="alt">What travelers say after a day, or a week, in Japan with Mario.</p>
-<div class="dugmeler"><a class="btn" href="${WA_RESENA}">Leave a review</a><a class="btn2" href="${WA_GENEL}">Book Mario</a></div>`)}
+<div class="dugmeler"><a class="btn" href="${FORM_RESENA}">Leave a review</a><a class="btn2" href="${WA_GENEL}">Book Mario</a></div>`)}
 <section class="blok"><div class="kap">
 <p class="cevap" style="max-width:820px">${esc(resumen)}</p>
 </div></section>
@@ -2372,8 +2375,8 @@ ${heroDuz(`<span class="etiket"><a href="/private/">Private guide</a> · Reviews
 ${listaResenas(0)}
 </div></section>
 <section class="blok"><div class="kap">
-<div class="bas"><p class="etiket">Traveled with Mario?</p><h2>Leave a review</h2><p>Send your review to Mario on WhatsApp, with your name, country and the day or trip you shared. It will be published here as written.</p></div>
-<div class="dugmeler"><a class="btn" href="${WA_RESENA}">Leave a review on WhatsApp</a></div>
+<div class="bas"><p class="etiket">Traveled with Mario?</p><h2>Leave a review</h2><p>Fill in the short review form with your rating, name, country and the day or trip you shared. It will be published here as written. You can also send it to Mario on WhatsApp.</p></div>
+<div class="dugmeler"><a class="btn" href="${FORM_RESENA}">Leave a review</a><a class="btn2" href="${WA_RESENA}">Send it on WhatsApp</a></div>
 ${contactCard(WA_GENEL)}
 </div></section>
 ${bant(WA_GENEL)}`
@@ -2389,8 +2392,8 @@ ${bant(WA_GENEL)}`
     yol: 'reviews', image: PORTRAIT_URL, jsonld, corps,
     titre: 'Guest Reviews of Mario, Private Guide in Japan',
     desc: RESENAS.length
-      ? `Guest reviews of Mario, private English-speaking guide in Japan: ${RESENAS.length} review${RESENAS.length === 1 ? '' : 's'}, average ${media}/5. Read them or leave yours on WhatsApp.`
-      : 'Guest reviews of Mario, private English-speaking guide in Japan, published as written. Traveled with Mario? Leave your review on WhatsApp.',
+      ? `Guest reviews of Mario, private English-speaking guide in Japan: ${RESENAS.length} review${RESENAS.length === 1 ? '' : 's'}, average ${media}/5. Read them or leave yours with the review form.`
+      : 'Guest reviews of Mario, private English-speaking guide in Japan, published as written. Traveled with Mario? Leave your review with the review form.',
   }))
 }
 
@@ -2460,10 +2463,12 @@ ${bant(WA_GENEL)}`
 // Todo enlace interno /private/... tiene que existir, y toda foto servida tiene
 // que estar en disco: si no, el build se para antes de escribir nada.
 const errores = []
+// Páginas de /private/ que genera otro script del build (formularios-guias.mjs).
+const AJENAS = new Set(['review'])
 for (const [yol, html] of PAGINAS) {
   for (const m of html.matchAll(/href="\/private\/([^"#?]*)/g)) {
     const destino = m[1].replace(/\/$/, '')
-    if (!PAGINAS.has(destino)) errores.push(`/private/${yol} enlaza a /private/${m[1]}, que no existe`)
+    if (!PAGINAS.has(destino) && !AJENAS.has(destino)) errores.push(`/private/${yol} enlaza a /private/${m[1]}, que no existe`)
   }
   for (const m of html.matchAll(/\/(?:tr|fr|private)\/foto\/[\w.-]+\.webp/g)) {
     if (!existsSync(join(root, 'public', m[0]))) errores.push(`/private/${yol}: falta el archivo ${m[0]}`)
