@@ -34,7 +34,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES } from './iheb-estilo.mjs'
+import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1108,6 +1108,7 @@ ${corps}
   fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Dernière mise à jour : ${HOY_FR}</span>`,
 })}</footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp : Iheb</a>
+${ANIME_JS}
 </body>
 </html>
 `

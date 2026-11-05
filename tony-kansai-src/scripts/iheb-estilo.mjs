@@ -10,6 +10,12 @@
 
 export const ANIME_FUENTES = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=M+PLUS+Rounded+1c:wght@500;800&family=Lalezar&family=Tajawal:wght@500;800&display=swap">'
 
+// Scripts de movimiento (mismas versiones que /tr/); van justo antes de </body>.
+export const ANIME_JS = `<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
+<script src="/iheb/movimiento.js" defer></script>`
+
 export const ANIME_CSS = `
 :root{--bg:#fff8ec;--fg:#16132a;--soluk:#4d4866;--kart:#fff;--cizgi:#16132a;--kirmizi:#e8325a;--yesil:#13a05a;--sol:#ffd23f;--gok:#3ec5ff;--mor:#7b5cff;--golge:#16132a;--nokta:rgba(22,19,42,.07)}
 @media (prefers-color-scheme:dark){:root{--bg:#14112a;--fg:#f4f1ff;--soluk:#bdb6dc;--kart:#1f1a3d;--cizgi:#f4f1ff;--kirmizi:#ff6d8a;--yesil:#2fd27f;--sol:#ffd23f;--gok:#5fd1ff;--mor:#a48bff;--golge:#000;--nokta:rgba(255,255,255,.06)}}
@@ -69,4 +75,42 @@ html[lang=ar] h1,html[lang=ar] h2,html[lang=ar] h3,html[lang=ar] .tcg-ust,html[l
 html[lang=ar] .wa-sabit{right:auto;left:16px}
 html[lang=ar] ul.ozet{padding-left:0;padding-right:20px}
 html[lang=ar] td,html[lang=ar] th{text-align:right}
+/* ——— Movimiento (public/iheb/movimiento.js) ——— */
+html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
+.hz .gir{opacity:0}
+.ilerleme{position:fixed;top:0;left:0;right:0;height:5px;z-index:50;transform:scaleX(0);transform-origin:0 50%;background:linear-gradient(90deg,var(--sol),var(--kirmizi),var(--mor));pointer-events:none}
+[dir=rtl] .ilerleme{transform-origin:100% 50%}
+.adimlar li.zipla::before{animation:zipla .7s cubic-bezier(.3,1.8,.5,1) both}
+@keyframes zipla{0%{transform:scale(0) rotate(-30deg)}100%{transform:scale(1) rotate(0)}}
+.tcg::before{background:radial-gradient(circle at var(--hx,30%) var(--hy,20%),rgba(255,255,255,.6),transparent 40%),linear-gradient(115deg,transparent 30%,rgba(255,255,255,.55) 45%,rgba(62,197,255,.35) 52%,transparent 66%);background-size:100% 100%,250% 250%}
+/* Cinta de palabras clave que desfila (estilo opening de anime) */
+.serit{overflow:hidden;white-space:nowrap;background:var(--sol);color:#16132a;border-block:3px solid #16132a;padding:12px 0;font-family:"Dela Gothic One",system-ui,sans-serif;font-size:clamp(18px,2.6vw,26px);transform:rotate(-1.2deg);margin:28px -16px}
+.serit div{display:inline-block;animation:kay 30s linear infinite}.serit span{margin:0 22px}.serit i{font-style:normal;color:var(--kirmizi);margin-inline-end:10px}
+[dir=rtl] .serit div{animation-direction:reverse}
+@keyframes kay{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.serit div{animation:none}}
+/* ——— Móvil ——— */
+@media (max-width:640px){
+  body{font-size:16px}
+  .kahraman{min-height:88svh}.kahraman .ortu{padding:96px 0 104px}
+  .kahraman h1{-webkit-text-stroke:1px #16132a;text-shadow:3px 3px 0 #16132a}
+  .kahraman .btn{display:block;text-align:center}
+  /* Las rejillas largas se deslizan de lado, con imán, en vez de una columna eterna */
+  .izgara{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:16px;margin-inline:-16px;padding:6px 16px 22px;scroll-padding-inline:16px;scrollbar-width:none}
+  .izgara::-webkit-scrollbar{display:none}
+  .izgara>li{flex:0 0 82%;scroll-snap-align:start}
+  .izgara li:hover{transform:none}
+  /* Tablas: las anchas se deslizan; las de «10 lecciones» (.dersler) pasan a fichas */
+  table{display:block;overflow-x:auto;white-space:normal}
+  table.dersler,table.dersler tbody,table.dersler tr,table.dersler td,table.dersler th{display:block;width:100%}
+  table.dersler{border:0;background:none;overflow:visible;box-shadow:none}
+  table.dersler tr:first-child{display:none}
+  table.dersler tr{background:var(--kart);border:3px solid var(--cizgi);border-radius:14px;box-shadow:4px 4px 0 var(--golge);padding:10px 14px;margin:0 0 12px}
+  table.dersler td{border:0;padding:2px 0}table.dersler td:first-child{font-family:"Dela Gothic One",system-ui,sans-serif;color:var(--kirmizi)}
+  .cevap{font-size:16px}
+  .adimlar{grid-template-columns:1fr}
+  .wa-sabit{left:16px;right:16px;text-align:center;bottom:12px}
+  html[lang=ar] .wa-sabit{left:16px;right:16px}
+  .guide .portrait,.tcg{transform:none}
+}
 `

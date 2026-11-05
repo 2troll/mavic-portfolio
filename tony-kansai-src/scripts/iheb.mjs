@@ -26,7 +26,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES } from './iheb-estilo.mjs'
+import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -168,6 +168,7 @@ ${corps}
   fin: `<span>© Tony Kansai Guide</span><span>${{ ar: 'آخر تحديث', fr: 'Mise à jour' }[lang] ?? 'Last updated'}: ${HOY}</span>`,
 })}</footer>
 <a class="wa-sabit" href="${l.waGenel}">${esc(l.waBoton)}</a>
+${ANIME_JS}
 </body>
 </html>
 `
@@ -409,6 +410,7 @@ function enPortada() {
 <p class="alt">Private tours in English with Iheb: card shops he actually knows, Pokémon Centers, Nintendo TOKYO, Ghibli and Mt. Fuji. Just your group, at your pace.</p>
 <p><a class="btn" href="${L.en.waGenel}">Message Iheb on WhatsApp</a></p>`)}
 <div class="kap">
+<div class="serit" aria-hidden="true"><div><span><i>★</i>Akihabara</span><span><i>★</i>Pokémon cards</span><span><i>★</i>Nakano Broadway</span><span><i>★</i>Retro games</span><span><i>★</i>Ikebukuro</span><span><i>★</i>Nintendo TOKYO</span><span><i>★</i>Gundam</span><span><i>★</i>Mt. Fuji</span><span><i>★</i>Akihabara</span><span><i>★</i>Pokémon cards</span><span><i>★</i>Nakano Broadway</span><span><i>★</i>Retro games</span><span><i>★</i>Ikebukuro</span><span><i>★</i>Nintendo TOKYO</span><span><i>★</i>Gundam</span><span><i>★</i>Mt. Fuji</span></div></div>
 <ul class="rozetler"><li>English</li><li>Français</li><li>العربية</li><li>Pokémon cards</li><li>Anime</li><li>Retro games</li><li>Families</li><li>Halal-friendly</li></ul>
 <p class="cevap">Yes, you can explore Tokyo’s anime and Pokémon world with a specialist guide: Iheb, who lives in Japan, is a professional in anime, Japanese pop culture and Pokémon card collecting. A typical day links three neighborhoods by train: Akihabara (cards, figures, video games), Nakano Broadway (the collectors’ mall, with Mandarake) and Ikebukuro (Animate and Pokémon Center Mega Tokyo). Ghibli Museum, the Pokémon Café and real anime locations can be added with reservations or as a day trip. Private tour; price per group on WhatsApp: ${WA_VISIBLE}.</p>
 <section class="guide"><div>${cartaIheb('en')}</div><div>
@@ -525,6 +527,7 @@ function enOtaku() {
 <p><a class="btn" href="${L.en.waGenel}">Plan my otaku day with Iheb</a></p>`)}
 <div class="kap">
 <p class="cevap">The best otaku areas in Tokyo are Akihabara (cards, figures, retro games), Nakano Broadway (rare collectibles) and Ikebukuro (Animate, Pokémon Center Mega Tokyo, Otome Road). Add Shibuya PARCO for Nintendo TOKYO, Tokyo Station’s Character Street, and Odaiba for the life-size Gundam. Iheb, a pop-culture and Pokémon card specialist who lives in Japan, plans the order, the trains and the shops for your group.</p>
+<div class="serit" aria-hidden="true"><div><span><i>★</i>Figures</span><span><i>★</i>Manga</span><span><i>★</i>Trading cards</span><span><i>★</i>Capsule toys</span><span><i>★</i>Arcades</span><span><i>★</i>Anime goods</span><span><i>★</i>Retro consoles</span><span><i>★</i>Figures</span><span><i>★</i>Manga</span><span><i>★</i>Trading cards</span><span><i>★</i>Capsule toys</span><span><i>★</i>Arcades</span><span><i>★</i>Anime goods</span><span><i>★</i>Retro consoles</span></div></div>
 <h2>The districts, one by one</h2>
 <ul class="izgara">${barrios.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
 <h2>Real anime locations (day trips)</h2>
@@ -589,7 +592,7 @@ ${carte('en', 'oshino-hakkai', 'Oshino Hakkai', 'Oshino Hakkai', 'Crystal-clear 
 ${carte('en', 'yokohama', 'Yokohama', 'Yokohama', 'The harbor, Chinatown and the bayfront, an easy half day from Tokyo.')}
 </ul>
 <h2>Japan in ten short lessons</h2>
-<table>
+<table class="dersler">
 <tr><th>Topic</th><th>What to know</th></tr>
 <tr><td>Tipping</td><td>Not done. Leaving money can confuse staff.</td></tr>
 <tr><td>Paying</td><td>Put cash or card in the small tray at the counter, not in the hand.</td></tr>
@@ -642,7 +645,7 @@ ${carte('fr', 'kawaguchiko-sakura', 'Le Fuji et les cerisiers', 'Voyage confort'
 ${carte('fr', 'tokyo-camii', 'Tokyo Camii', 'Voyageurs musulmans', 'Repas halal et pauses pour la prière intégrés à la journée.', '/fr/halal-mosquees-tokyo/')}
 </ul>
 <h2>Le Japon en dix leçons courtes</h2>
-<table>
+<table class="dersler">
 <tr><th>Sujet</th><th>À savoir</th></tr>
 <tr><td>Pourboire</td><td>Ça ne se fait pas. Le service est compris.</td></tr>
 <tr><td>Payer</td><td>On pose l’argent ou la carte dans le petit plateau au comptoir.</td></tr>
