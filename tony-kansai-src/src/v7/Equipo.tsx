@@ -6,7 +6,6 @@
 
 import { Link, useLocation } from 'react-router-dom'
 import type { ReactNode } from 'react'
-import '@fontsource/dotgothic16/latin-400.css'
 import { useLanguage } from '../contexts/LanguageContext'
 import { EQUIPO, NOMBRE_IDIOMA, UI_EQUIPO, versionGuia } from './datosEquipo'
 import { CORREO } from './contenido'
@@ -36,7 +35,7 @@ function Tarjeta({ g, langPagina, aqui }: { g: GuiaEquipo; langPagina: IdiomaEqu
       {aqui && <span className="eq-sello" lang={langPagina} dir={langPagina === 'ar' ? 'rtl' : 'ltr'}>{UI_EQUIPO.aqui[langPagina]}</span>}
       <div className="eq-cabeza">
         {g.foto
-          ? <img className="eq-foto" src={g.foto} alt={v.alt ?? v.nombre} width={72} height={72} loading="lazy" decoding="async" />
+          ? <img className="eq-foto" src={g.foto} alt={v.alt ?? v.nombre} width={320} height={400} loading="lazy" decoding="async" />
           : <span className="eq-emblema" aria-hidden="true"><span>{g.emblema}</span></span>}
         <div>
           <h3 className="eq-nombre">{v.nombre}</h3>

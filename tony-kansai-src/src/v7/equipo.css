@@ -1,137 +1,152 @@
 /* ── Franja «Nuestros guías» (.eq-*) ───────────────────────────────────────
    Una sola hoja para las páginas React (Equipo.tsx la importa) y las secciones
    estáticas (scripts/equipo-estatico.mjs la lee y la mete en su <style>).
-   Estilo «píxel japonés de día» (estilo-pixel.css): fondo de shoji, tarjetas de
-   tatami con franja matcha, botón de torii en relieve y sin esquinas redondas.
-   Lleva sus propias variables para verse igual dentro y fuera de .v7; las
-   secciones estáticas cambian fondo y acento con .eq--tr, .eq--fr… para verse
-   de la casa. El oscuro va con :where() para que esas variantes le ganen. */
+   5-11-2026: rehecha «de calidad» (Tony: «se ve mal»). Fuera la letra pixelada y
+   el shoji: tarjetas redondeadas con retrato grande, nombre e idiomas sobre la
+   foto, botón de píldora y carrusel deslizable en el móvil. Lleva sus propias
+   variables para verse igual dentro y fuera de .v7; las secciones estáticas
+   cambian fondo y acento con .eq--tr, .eq--fr… El oscuro va con :where() para
+   que esas variantes le ganen. Los nombres --eq-torii/--eq-shoji se conservan
+   porque las variantes los usan (ya no pintan un torii ni un shoji). */
 
 .eq {
-  --eq-fondo: #f6f0e2; --eq-shoji: #e7dcc5; --eq-tarjeta: #f8f1df; --eq-borde: #1b1b1b; --eq-sombra: #1b1b1b;
-  --eq-matcha: #6c8f3c; --eq-torii: #d23a2a; --eq-torii-osc: #8f2116; --eq-torii-claro: #f08070;
-  --eq-texto: #1b1b1b; --eq-tenue: #5a5346; --eq-chip: #efe5cf; --eq-boton-texto: #fff; --eq-boton-sombra: rgba(0, 0, 0, .25);
-  --eq-pixel: 'DotGothic16', 'Hiragino Kaku Gothic ProN', ui-monospace, monospace;
+  --eq-fondo: #f7f4ee; --eq-shoji: #e6e0d4; --eq-tarjeta: #ffffff; --eq-borde: #1b1b1b; --eq-sombra: rgba(24, 20, 12, .10);
+  --eq-matcha: #6c8f3c; --eq-torii: #c8372a; --eq-torii-osc: #8f2116; --eq-torii-claro: #f08070;
+  --eq-texto: #17150f; --eq-tenue: #5d574b; --eq-chip: #f1ece2; --eq-boton-texto: #fff; --eq-boton-sombra: rgba(0, 0, 0, .25);
+  --eq-pixel: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   --eq-cuerpo: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
   box-sizing: border-box;
   clear: both;
   width: 100%;
   margin: 0;
-  padding: 56px 16px 64px;
+  padding: 72px 16px 56px;
   color: var(--eq-texto);
   font: 400 16px/1.5 var(--eq-cuerpo);
-  background-color: var(--eq-fondo);
-  background-image: linear-gradient(var(--eq-shoji) 2px, transparent 2px), linear-gradient(90deg, var(--eq-shoji) 2px, transparent 2px);
-  background-size: 48px 64px;
-  border-top: 3px solid var(--eq-borde);
-  overflow: hidden; /* la sombra dura de la última tarjeta no debe crear scroll lateral */
+  background: var(--eq-fondo);
+  border-top: 1px solid var(--eq-shoji);
+  overflow: hidden;
 }
 :where(:root[data-tema='oscuro']) .eq {
-  --eq-fondo: #15141c; --eq-shoji: #22202d; --eq-tarjeta: #1f1d29; --eq-borde: #e9dfc8; --eq-sombra: #000000;
+  --eq-fondo: #121118; --eq-shoji: #2a2833; --eq-tarjeta: #1b1a23; --eq-borde: #e9dfc8; --eq-sombra: rgba(0, 0, 0, .45);
   --eq-matcha: #86b04d; --eq-torii: #e0493a; --eq-torii-claro: #ff8d7d;
-  --eq-texto: #f2ecdf; --eq-tenue: #b9b1a0; --eq-chip: #2b2838;
+  --eq-texto: #f2ecdf; --eq-tenue: #b3ac9e; --eq-chip: #26242f;
   color-scheme: dark;
 }
 @media (prefers-color-scheme: dark) {
   :where(:root:not([data-tema='claro'])) .eq {
-    --eq-fondo: #15141c; --eq-shoji: #22202d; --eq-tarjeta: #1f1d29; --eq-borde: #e9dfc8; --eq-sombra: #000000;
+    --eq-fondo: #121118; --eq-shoji: #2a2833; --eq-tarjeta: #1b1a23; --eq-borde: #e9dfc8; --eq-sombra: rgba(0, 0, 0, .45);
     --eq-matcha: #86b04d; --eq-torii: #e0493a; --eq-torii-claro: #ff8d7d;
-    --eq-texto: #f2ecdf; --eq-tenue: #b9b1a0; --eq-chip: #2b2838;
+    --eq-texto: #f2ecdf; --eq-tenue: #b3ac9e; --eq-chip: #26242f;
     color-scheme: dark;
   }
 }
 
-.eq *, .eq *::before, .eq *::after { box-sizing: border-box; border-radius: 0 !important; }
+.eq *, .eq *::before, .eq *::after { box-sizing: border-box; }
 .eq :is(h2, h3, p, ul, li) { margin: 0; padding: 0; }
 .eq ul { list-style: none; }
 .eq li::before { content: none; }
 
-.eq .eq-kap { max-width: 1200px; margin: 0 auto; }
-.eq .eq-ante { font: 400 14px/1.3 var(--eq-pixel); color: var(--eq-torii); letter-spacing: .02em; }
-.eq .eq-ante span { color: var(--eq-texto); background: var(--eq-tarjeta); border: 2px solid var(--eq-borde); padding: 1px 6px; margin-inline-end: 6px; }
+.eq .eq-kap { max-width: 1240px; margin: 0 auto; }
+.eq .eq-ante { display: inline-flex; align-items: center; gap: 8px; font: 600 12px/1 var(--eq-cuerpo); letter-spacing: .14em; text-transform: uppercase; color: var(--eq-torii); }
+.eq .eq-ante span { letter-spacing: .2em; color: var(--eq-tenue); font-weight: 500; }
 .eq .eq-titulo {
-  font: 400 clamp(26px, 3.2vw, 36px)/1.2 var(--eq-pixel) !important;
-  letter-spacing: 0 !important; margin: 12px 0 6px !important; color: var(--eq-texto); font-synthesis: none;
+  font: 700 clamp(28px, 3.6vw, 44px)/1.1 var(--eq-cuerpo) !important;
+  letter-spacing: -.02em !important; margin: 14px 0 10px !important; color: var(--eq-texto);
+  background: none !important; padding: 0 !important; display: block !important; text-transform: none !important;
+  -webkit-text-stroke: 0 !important; text-shadow: none !important;
 }
-.eq .eq-sub { color: var(--eq-tenue); font-size: 15px; margin-bottom: 28px; max-width: 60ch; }
-/* DotGothic16 no trae árabe y su cirílico sale espaciado: esos idiomas, con su letra. */
-.eq:is(:lang(ar), :lang(ru)) .eq-ante { font-family: var(--eq-cuerpo); }
-.eq:is(:lang(ar), :lang(ru)) .eq-titulo { font-family: var(--eq-cuerpo) !important; font-weight: 700 !important; }
+.eq .eq-titulo::before, .eq .eq-titulo::after { content: none !important; }
+.eq .eq-sub { color: var(--eq-tenue); font-size: 16px; margin-bottom: 32px; max-width: 62ch; }
+.eq:lang(ar) .eq-ante, .eq:lang(ar) .eq-ante span { letter-spacing: 0; }
 
-.eq .eq-fila { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 12px; }
-@media (min-width: 720px) { .eq .eq-fila { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 26px 18px; } }
-@media (min-width: 1120px) { .eq .eq-fila { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+/* Rejilla en escritorio; carrusel con imán en el móvil. */
+.eq .eq-fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+@media (min-width: 1180px) { .eq .eq-fila { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; } }
+@media (max-width: 719px) {
+  .eq .eq-fila {
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin: 0 -16px; padding: 4px 16px 18px; scroll-padding-inline: 16px; scrollbar-width: none;
+  }
+  .eq .eq-fila::-webkit-scrollbar { display: none; }
+  .eq .eq-tarjeta { flex: 0 0 78%; max-width: 300px; scroll-snap-align: start; }
+}
 
 .eq .eq-tarjeta {
-  position: relative; display: flex; flex-direction: column; gap: 8px; min-width: 0;
-  padding: 14px 12px 12px;
+  position: relative; display: flex; flex-direction: column; min-width: 0;
   background: var(--eq-tarjeta);
-  border: 3px solid var(--eq-borde); border-top: 10px solid var(--eq-matcha);
-  box-shadow: 5px 5px 0 var(--eq-sombra);
+  border: 1px solid var(--eq-shoji); border-radius: 22px; overflow: hidden;
+  box-shadow: 0 1px 2px var(--eq-sombra), 0 14px 34px -18px var(--eq-sombra);
   text-align: start;
+  transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease;
 }
-.eq .eq-tarjeta.eq-aqui { border-top-color: var(--eq-torii); }
+@media (hover: hover) {
+  .eq .eq-tarjeta:hover { transform: translateY(-4px); box-shadow: 0 2px 4px var(--eq-sombra), 0 26px 50px -22px var(--eq-sombra); }
+  .eq .eq-tarjeta:hover .eq-foto { transform: scale(1.04); }
+}
+.eq .eq-tarjeta.eq-aqui { border-color: var(--eq-torii); box-shadow: 0 0 0 2px var(--eq-torii), 0 14px 34px -18px var(--eq-sombra); }
 .eq .eq-sello {
-  position: absolute; top: -19px; inset-inline-end: 8px;
-  font: 400 12px/1 var(--eq-pixel); color: var(--eq-boton-texto); background: var(--eq-torii);
-  border: 2px solid var(--eq-borde); padding: 4px 6px; box-shadow: 2px 2px 0 var(--eq-sombra);
+  position: absolute; z-index: 2; top: 12px; inset-inline-start: 12px;
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 600 11px/1 var(--eq-cuerpo); letter-spacing: .04em; color: #fff;
+  background: rgba(15, 14, 20, .62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, .25); border-radius: 999px; padding: 6px 10px;
 }
-.eq .eq-sello:lang(ar), .eq .eq-sello:lang(ru) { font-family: var(--eq-cuerpo); font-weight: 700; }
+.eq .eq-sello::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 3px rgba(61, 220, 132, .25); }
 
-.eq .eq-cabeza { display: flex; align-items: center; gap: 10px; min-width: 0; }
-.eq .eq-cabeza > div { min-width: 0; }
+/* Cabeza = retrato grande con el nombre y los idiomas encima. */
+.eq .eq-cabeza { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--eq-chip); }
+.eq .eq-cabeza::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 45%, rgba(8, 7, 12, .78) 100%); }
+.eq .eq-cabeza > div { position: absolute; z-index: 1; inset-inline: 14px; bottom: 12px; min-width: 0; }
 .eq .eq-foto {
-  flex: none; width: 56px; height: 56px; max-width: none; object-fit: cover; object-position: 50% 25%;
-  border: 3px solid var(--eq-borde); background: var(--eq-chip); display: block;
+  display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 22%;
+  transition: transform .7s cubic-bezier(.2, .8, .2, 1);
 }
-/* Sin foto: emblema de torii con la inicial (no se inventa una cara). */
+/* Sin foto: degradado con la inicial grande (no se inventa una cara). */
 .eq .eq-emblema {
-  flex: none; position: relative; width: 56px; height: 56px; margin-top: 6px;
-  display: grid; place-items: center;
-  background: var(--eq-torii); border: 3px solid var(--eq-borde);
-  box-shadow: inset -4px -4px 0 var(--eq-torii-osc), inset 4px 4px 0 var(--eq-torii-claro);
+  position: absolute; inset: 0; display: grid; place-items: center;
+  background: radial-gradient(120% 90% at 20% 10%, var(--eq-torii-claro), transparent 60%), linear-gradient(150deg, var(--eq-torii), var(--eq-torii-osc));
 }
-.eq .eq-emblema::before { content: ''; position: absolute; top: -9px; left: -9px; right: -9px; height: 6px; background: var(--eq-borde); }
-.eq .eq-emblema span { font: 400 26px/1 var(--eq-pixel); color: var(--eq-boton-texto); text-shadow: 2px 2px 0 var(--eq-boton-sombra); }
+.eq .eq-emblema span { font: 800 clamp(64px, 9vw, 96px)/1 var(--eq-cuerpo); color: rgba(255, 255, 255, .92); letter-spacing: -.04em; transform: translateY(-14%); }
 
-.eq .eq-nombre { font: 400 18px/1.15 var(--eq-pixel) !important; letter-spacing: 0 !important; color: var(--eq-texto); overflow-wrap: anywhere; margin: 0 !important; }
-.eq .eq-nombre:lang(ar), .eq .eq-nombre:lang(ru) { font-family: var(--eq-cuerpo) !important; font-weight: 700 !important; }
-.eq .eq-idiomas { display: flex; flex-wrap: wrap; gap: 3px; margin-top: 5px; }
-.eq .eq-idiomas li { font: 400 11px/1 var(--eq-pixel); padding: 3px 4px 2px; border: 2px solid var(--eq-borde); background: var(--eq-chip); color: var(--eq-texto); }
+.eq .eq-nombre { font: 700 22px/1.1 var(--eq-cuerpo) !important; letter-spacing: -.01em !important; color: #fff !important; overflow-wrap: anywhere; margin: 0 !important; background: none !important; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
+.eq .eq-idiomas { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
+.eq .eq-idiomas li {
+  font: 600 10.5px/1 var(--eq-cuerpo); letter-spacing: .06em; padding: 5px 8px; border-radius: 999px;
+  color: #fff; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .32);
+  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
+}
 
-.eq .eq-linea { font-size: 14px; line-height: 1.35; font-weight: 600; color: var(--eq-texto); }
+.eq .eq-linea { padding: 16px 16px 0; font-size: 15px; line-height: 1.4; font-weight: 600; color: var(--eq-texto); }
 /* La frase completa: pequeña y recortada a la vista, entera en el HTML. */
 .eq .eq-desc {
-  font-size: 12px; line-height: 1.45; color: var(--eq-tenue);
-  border-top: 2px dashed var(--eq-shoji); padding-top: 7px;
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 4; line-clamp: 4; overflow: hidden;
+  margin: 8px 16px 0 !important; font-size: 13px; line-height: 1.5; color: var(--eq-tenue);
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
 }
-.eq .eq-acciones { margin-top: auto; padding-top: 4px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; }
+.eq .eq-acciones { margin-top: auto; padding: 16px; display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
 .eq a.eq-boton {
-  flex: 1 1 auto; display: inline-flex; align-items: center; justify-content: center; gap: 6px;
-  min-height: 44px; padding: 6px 10px;
-  font: 400 14px/1.15 var(--eq-pixel); text-align: center; text-decoration: none;
-  color: var(--eq-boton-texto); background: var(--eq-torii); border: 3px solid var(--eq-borde);
-  box-shadow: inset -4px -4px 0 var(--eq-torii-osc), inset 4px 4px 0 var(--eq-torii-claro), 3px 3px 0 var(--eq-sombra);
-  text-shadow: 2px 2px 0 var(--eq-boton-sombra);
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  min-height: 46px; padding: 10px 16px; border-radius: 999px;
+  font: 600 14px/1.15 var(--eq-cuerpo); text-align: center; text-decoration: none;
+  color: var(--eq-boton-texto); background: var(--eq-torii); border: 0;
+  transition: filter .2s ease, transform .2s ease;
 }
-.eq a.eq-boton:lang(ar), .eq a.eq-boton:lang(ru) { font-family: var(--eq-cuerpo); font-weight: 700; }
+.eq a.eq-boton > span[aria-hidden] { transition: transform .25s ease; }
 .eq a.eq-boton:hover { filter: brightness(1.08); }
-.eq a.eq-boton:active { transform: translate(2px, 2px); box-shadow: inset -4px -4px 0 var(--eq-torii-osc), inset 4px 4px 0 var(--eq-torii-claro), 1px 1px 0 var(--eq-sombra); }
+.eq a.eq-boton:hover > span[aria-hidden] { transform: translateX(3px); }
+.eq [dir='rtl'] a.eq-boton:hover > span[aria-hidden] { transform: translateX(-3px); }
+.eq a.eq-boton:active { transform: scale(.98); }
 .eq a.eq-boton:focus-visible, .eq a.eq-extra:focus-visible { outline: 3px solid var(--eq-matcha); outline-offset: 2px; }
 /* La tarjeta de la página en la que ya estás: botón apagado, sigue siendo enlace. */
-.eq .eq-aqui a.eq-boton { background: var(--eq-chip); color: var(--eq-texto); text-shadow: none; box-shadow: 3px 3px 0 var(--eq-sombra); }
-.eq a.eq-extra { display: inline-flex; align-items: center; min-height: 44px; padding: 0 2px; font-size: 13px; color: var(--eq-texto); text-decoration: underline; text-underline-offset: 3px; }
+.eq .eq-aqui a.eq-boton { background: var(--eq-chip); color: var(--eq-texto); }
+.eq a.eq-extra { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; font-size: 13px; color: var(--eq-tenue); text-decoration: underline; text-underline-offset: 3px; }
 .eq .eq-oculto { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 
 @media (max-width: 719px) {
-  .eq { padding: 44px 16px 104px; } /* hueco para las barras fijas de WhatsApp/Telegram del móvil */
-  .eq .eq-cabeza { flex-direction: column; align-items: flex-start; }
-  .eq .eq-desc { -webkit-line-clamp: 3; line-clamp: 3; }
+  .eq { padding: 52px 16px 104px; } /* hueco para las barras fijas de WhatsApp/Telegram del móvil */
 }
-.eq .eq-fin { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 40px; padding-top: 16px; border-top: 2px solid var(--eq-borde); font-size: 13px; color: var(--eq-tenue); }
+.eq .eq-fin { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--eq-shoji); font-size: 13px; color: var(--eq-tenue); }
 .eq .eq-fin a { color: inherit; }
-@media (prefers-reduced-motion: reduce) { .eq a.eq-boton:active { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .eq .eq-tarjeta, .eq .eq-foto, .eq a.eq-boton { transition: none; } .eq .eq-tarjeta:hover, .eq .eq-tarjeta:hover .eq-foto { transform: none; } }
 
 /* Variantes de las secciones estáticas: fondo, tarjeta y acento de la página. */
 .eq.eq--tr, .eq.eq--fr { --eq-fondo: var(--bg); --eq-shoji: var(--cizgi); --eq-tarjeta: var(--kart); --eq-texto: var(--fg); --eq-tenue: var(--soluk); --eq-torii: var(--kirmizi); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }

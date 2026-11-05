@@ -1091,7 +1091,7 @@ ${ANIME_FUENTES}
 ${navHTML({ etiqueta: 'Menu principal', abrir: 'Ouvrir le menu', variante: 'fr', grupos: [
   { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
   { t: 'Infos pratiques', enlaces: [...REPONSES.slice(0, 6).map((c) => [esc(c.h1), `/fr/${c.yol}/`]), ...ANIME.slice(0, 2).map((c) => [esc(c.h1), `/fr/${c.yol}/`])] },
-  { t: 'Iheb', enlaces: [['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English (anime)', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, { t: 'بالعربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
+  { t: 'Iheb', enlaces: [['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English (anime)', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, { t: 'بالعربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
 ], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp : Iheb' } })}</div></header>
 <main>
 ${corps}

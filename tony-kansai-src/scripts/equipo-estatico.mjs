@@ -25,7 +25,8 @@ export const equipoCSS = readFileSync(new URL('../src/v7/equipo.css', import.met
   .trim()
 
 /** DotGothic16 (OFL) de Google Fonts, solo latín: para el <head> de cada página estática. */
-export const equipoFuente = '<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DotGothic16&display=swap">'
+// 5-11-2026: la franja ya no usa letra pixelada; se deja vacía para no romper a quien la importa.
+export const equipoFuente = ''
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
@@ -39,7 +40,7 @@ function tarjeta(g, langPagina, aqui) {
   const rtl = lang === 'ar'
   const nombresIdiomas = g.idiomas.map((i) => DATOS.idiomas[i]).join(', ')
   const cara = g.foto
-    ? `<img class="eq-foto" src="${esc(g.foto)}" alt="${esc(v.alt ?? v.nombre)}" width="72" height="72" loading="lazy" decoding="async">`
+    ? `<img class="eq-foto" src="${esc(g.foto)}" alt="${esc(v.alt ?? v.nombre)}" width="320" height="400" loading="lazy" decoding="async">`
     : `<span class="eq-emblema" aria-hidden="true"><span>${esc(g.emblema)}</span></span>`
   return `<li class="eq-tarjeta${aqui ? ' eq-aqui' : ''}" lang="${lang}" dir="${rtl ? 'rtl' : 'ltr'}">`
     + (aqui ? `<span class="eq-sello" lang="${langPagina}" dir="${langPagina === 'ar' ? 'rtl' : 'ltr'}">${esc(DATOS.ui.aqui[langPagina])}</span>` : '')

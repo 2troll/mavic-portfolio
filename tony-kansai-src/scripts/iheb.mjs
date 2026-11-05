@@ -62,6 +62,15 @@ const L = {
     waBoton: 'WhatsApp: Iheb', menu: 'Main menu', abrir: 'Open menu', mas: 'See all',
     alt: 'Iheb, anime and Pokémon tour guide in Tokyo',
   },
+  fr: {
+    dir: 'ltr', locale: 'fr_CA', base: '/fr/',
+    marca: 'Iheb · Guide francophone à Tokyo',
+    foto: 'Photo', credito: (k) => `Photo : <a href="${photo(k).kaynak}" rel="nofollow">${esc(photo(k).autor)}</a> · ${esc(photo(k).lisans)}`,
+    waGenel: wa('Bonjour Iheb, nous venons du Canada et cherchons un guide francophone à Tokyo. Dates : '),
+    waAgence: wa('Bonjour Iheb, nous sommes une agence de voyages et aimerions travailler avec vous au Japon. '),
+    waBoton: 'WhatsApp : Iheb', menu: 'Menu principal', abrir: 'Ouvrir le menu', mas: 'Tout voir',
+    alt: 'Iheb, guide francophone privé à Tokyo',
+  },
 }
 
 const carte = (lang, k, alt, titre, texte, href = null) => {
@@ -95,6 +104,8 @@ const ALTERNAS = {
   portada: { ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/', fr: '/fr/' },
   anime: { ar: '/ar/tokyo/anime-pokemon/', en: '/en/tokyo-anime-guide/', fr: '/fr/guide-anime-tokyo/' },
   halal: { ar: '/ar/tokyo/halal-masajid/', fr: '/fr/halal-mosquees-tokyo/' },
+  primera: { en: '/en/tokyo-anime-guide/first-time-japan/', fr: '/fr/tokyo-quebec-canada/' },
+  otaku: { en: '/en/tokyo-anime-guide/otaku-guide/' },
   agencias: { ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/', fr: '/fr/guide-francophone-agences-voyage/' },
 }
 
@@ -107,12 +118,19 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/']] },
         { t: 'لغات أخرى', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'English', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/ar/']] },
       ]
+    : lang === 'fr'
+    ? [
+        { t: 'Iheb', enlaces: [['Accueil', '/fr/'], ['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Guide anime', '/fr/guide-anime-tokyo/'], ['Pour les agences', '/fr/guide-francophone-agences-voyage/']] },
+        { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
+      ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Pokémon Centers (FR)', '/fr/pokemon-center-tokyo/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
     ? '<p>إيهاب هو مرشد <a href="/ar/">Tony Kansai Guide</a> في طوكيو وشرق اليابان. أما كيوتو وأوساكا فيرشد فيهما توني من الفريق نفسه، بالعربية والإسبانية والإنجليزية.</p>'
+    : lang === 'fr'
+    ? '<p>Iheb est le guide de l’équipe <a href="/fr/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon. À Kyoto et Osaka, Tony, de la même équipe, prend le relais.</p>'
     : '<p>Iheb is the <a href="/en/">Tony Kansai Guide</a> team’s guide for Tokyo and eastern Japan. For Kyoto and Osaka, Tony from the same team takes over.</p>'
   return `<!doctype html>
 <html lang="${lang}" dir="${l.dir}" data-estatica="iheb">
@@ -147,7 +165,7 @@ ${corps}
 </main>
 <footer>${pieHTML({ variante: 'fr', mas: l.mas, intro, columnas: grupos.map((g) => ({ t: g.t, enlaces: g.enlaces })).concat([{ t: lang === 'ar' ? 'تواصل' : 'Contact', fija: true, html: `<p>WhatsApp: <a href="${l.waGenel}" dir="ltr">${WA_VISIBLE}</a></p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` }]),
   equipo: equipoHTML({ lang, actual: 'iheb', variante: 'fr' }),
-  fin: `<span>© Tony Kansai Guide</span><span>${lang === 'ar' ? 'آخر تحديث' : 'Last updated'}: ${HOY}</span>`,
+  fin: `<span>© Tony Kansai Guide</span><span>${{ ar: 'آخر تحديث', fr: 'Mise à jour' }[lang] ?? 'Last updated'}: ${HOY}</span>`,
 })}</footer>
 <a class="wa-sabit" href="${l.waGenel}">${esc(l.waBoton)}</a>
 </body>
@@ -402,6 +420,13 @@ function enPortada() {
 <li><strong>Three languages:</strong> English, French and Arabic.</li>
 </ul>
 <p><a class="btn" href="${L.en.waGenel}">Plan my day</a></p></div></section>
+<h2>Pick your path</h2>
+<ul class="izgara">
+${carte('en', 'super-potato', 'Super Potato retro games', 'The otaku guide', 'Every district, shop rule and anime location explained.', '/en/tokyo-anime-guide/otaku-guide/')}
+${carte('en', 'kawaguchiko-sakura', 'Mount Fuji with cherry blossoms', 'First time in Japan', 'A calm private tour for first-timers and seniors, everything explained.', '/en/tokyo-anime-guide/first-time-japan/')}
+${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim travelers', 'Halal-friendly food and prayer breaks built into the day.', '/fr/halal-mosquees-tokyo/')}
+${carte('en', 'shibuya', 'Shibuya crossing', 'Travel agencies', 'Ground partner in English, French and Arabic.', '/en/tokyo-anime-guide/travel-agencies/')}
+</ul>
 <h2>Your quest map</h2>
 <ul class="izgara">${lugares.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
 <h2>A sample quest day</h2>
@@ -465,5 +490,189 @@ ${faqHTML(EN_FAQ_AG)}
     image: imageDe('shibuya'), jsonld: [faqLd(EN_FAQ_AG)], corps }))
 }
 
-const hechas = [arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias()]
+// ———— 5-11-2026: tres páginas más para el público que paga bien y habla inglés o francés ————
+// Otakus americanos (guía completa), gente mayor y primerizos (todo explicado, ritmo cómodo)
+// y francófonos de Québec/Canadá. Solo datos generales verificables de Japón; nada inventado de Iheb.
+
+const EN_FAQ_OTAKU = [
+  ['What is the best area in Tokyo for anime fans?', 'Akihabara is the classic start (cards, figures, retro games). Collectors also love Nakano Broadway, and Ikebukuro is the hub for anime goods, Animate and Otome Road. Most fans need at least one full day for these three.'],
+  ['Can I take photos inside anime and card shops?', 'Often not. Many shops in Akihabara and Nakano ban photos of their display cases. Look for the sign or ask first; Iheb tells you shop by shop.'],
+  ['Is tax-free shopping available for tourists?', 'Yes, at shops that display the Tax-Free sign: bring your passport, keep the receipts and do not open the goods before you leave Japan, because the refund is processed on departure.'],
+  ['How do I get big purchases home?', 'Many shops pack figures well; for large boxes you can send them home by Japan Post (EMS) or forward your suitcase to the airport with a luggage delivery service.'],
+  ['When is Comiket?', 'Comic Market is usually held twice a year, in August and December, at Tokyo Big Sight. It is huge and very crowded; check the official dates first.'],
+]
+
+function enOtaku() {
+  const barrios = [
+    ['akihabara-rue', 'Akihabara street', 'Akihabara', 'Card shops on every floor, figure towers, capsule toys and arcades. Best on a weekday morning, before the crowds.'],
+    ['super-potato', 'Super Potato, Akihabara', 'Retro games', 'Floors of classic consoles and cartridges, from the 8-bit era to the 2000s, plus a small retro arcade.'],
+    ['nakano-broadway', 'Nakano Broadway', 'Nakano Broadway', 'The collectors’ mall: rare figures, vintage toys, manga and cards, many in Mandarake shops.'],
+    ['sunshine-city', 'Sunshine City, Ikebukuro', 'Ikebukuro', 'Pokémon Center Mega Tokyo, the huge Animate flagship and Otome Road, the street for anime goods aimed at women fans.'],
+    ['shibuya-parco', 'Shibuya PARCO', 'Shibuya PARCO 6F', 'Nintendo TOKYO, Pokémon Center Shibuya, Jump Shop and Capcom Store on one floor.'],
+    ['character-street', 'Tokyo Character Street', 'Tokyo Station', 'Character Street: dozens of official character shops underground at Tokyo Station. Perfect on arrival or departure day.'],
+    ['odaiba', 'Odaiba', 'Odaiba', 'The life-size Unicorn Gundam statue at DiverCity Tokyo Plaza, with Tokyo Bay views.'],
+    ['big-sight', 'Tokyo Big Sight', 'Tokyo Big Sight', 'Home of Comic Market and big anime and game events. Check the event calendar for your dates.'],
+    ['yotsugi', 'Yotsugi, Katsushika', 'Yotsugi', 'The neighborhood of a famous soccer manga, with character statues around the station area.'],
+  ]
+  const peregrinaje = [
+    ['kamakura-kokomae', 'Kamakura-Kokomae crossing', 'Kamakura-Kokomae', 'The seaside railway crossing from a legendary basketball anime. Go early: it gets busy, and locals live here.'],
+    ['fumotoppara', 'Fumotoppara campsite', 'Fumotoppara', 'The Mt. Fuji campsite from a hit camping anime, a day trip from Tokyo by car.'],
+    ['awashima', 'Awashima, Numazu', 'Numazu', 'Seaside Numazu in Shizuoka, the setting of a well-known idol anime series.'],
+  ]
+  const corps = `${hero('en', 'akihabara-rue', 'Akihabara street', `<p class="etiket"><a href="/en/tokyo-anime-guide/">Iheb</a> · The otaku guide</p>
+<h1>The complete otaku guide to Tokyo</h1>
+<p class="alt">Every anime, manga, card and retro-game district explained: what each one is for, when to go, the shop rules nobody tells you, and how to get it all home.</p>
+<p><a class="btn" href="${L.en.waGenel}">Plan my otaku day with Iheb</a></p>`)}
+<div class="kap">
+<p class="cevap">The best otaku areas in Tokyo are Akihabara (cards, figures, retro games), Nakano Broadway (rare collectibles) and Ikebukuro (Animate, Pokémon Center Mega Tokyo, Otome Road). Add Shibuya PARCO for Nintendo TOKYO, Tokyo Station’s Character Street, and Odaiba for the life-size Gundam. Iheb, a pop-culture and Pokémon card specialist who lives in Japan, plans the order, the trains and the shops for your group.</p>
+<h2>The districts, one by one</h2>
+<ul class="izgara">${barrios.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
+<h2>Real anime locations (day trips)</h2>
+<ul class="izgara">${peregrinaje.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
+<h2>Shop rules nobody tells you</h2>
+<ul class="ozet">
+<li><strong>Photos:</strong> many shops ban photos of their cases. Look for the sign, or ask.</li>
+<li><strong>Floors:</strong> the best shops are often on the 4th floor and up. The ground floor is the tourist floor.</li>
+<li><strong>Cash:</strong> most big shops take cards, but small stalls and capsule machines need cash and coins.</li>
+<li><strong>Tax-free:</strong> bring your passport, keep every receipt, and keep goods sealed until you leave Japan.</li>
+<li><strong>Carry less:</strong> leave bags in a station coin locker and shop with your hands free.</li>
+<li><strong>Getting it home:</strong> post big boxes home by EMS, or send your suitcase to the airport.</li>
+</ul>
+<h2>Who comes with Iheb</h2>
+<ol class="adimlar">
+<li><strong>Serious collectors</strong> hunting Japanese Pokémon cards, vintage figures or retro games.</li>
+<li><strong>Families</strong> with kids who love Pokémon, Nintendo and anime, at a kid-friendly pace.</li>
+<li><strong>First-timers</strong> who want the whole otaku world in one well-planned day.</li>
+<li><strong>Muslim fans:</strong> halal-friendly lunches and prayer breaks built into the day.</li>
+</ol>
+<h2>FAQ</h2>
+${faqHTML(EN_FAQ_OTAKU)}
+<p>Pokémon is a trademark of Nintendo, Creatures and GAME FREAK; Gundam and other names belong to their owners. This is an independent private tour, not affiliated with them.</p>
+<p><a class="btn" href="${L.en.waGenel}">Message Iheb on WhatsApp</a></p>
+</div>`
+  return ecrire('en/tokyo-anime-guide/otaku-guide', page({ lang: 'en', ruta: '/en/tokyo-anime-guide/otaku-guide/', alterna: 'otaku',
+    titre: 'The Complete Otaku Guide to Tokyo: Akihabara, Nakano, Ikebukuro & More | Iheb',
+    desc: 'Every otaku district in Tokyo explained: Akihabara, Nakano Broadway, Ikebukuro, Shibuya PARCO, Character Street, Odaiba Gundam, Big Sight, anime locations. Shop rules, tax-free, shipping home. Private guide in English.',
+    image: imageDe('akihabara-rue'), jsonld: [faqLd(EN_FAQ_OTAKU)], corps }))
+}
+
+const EN_FAQ_PRIMERA = [
+  ['Is Japan easy for older travelers?', 'Yes, with good planning. Japan is very safe and clean, and most stations have elevators. The hard parts are long walks inside big stations, stairs at some exits and crowded rush hours, which a private guide plans around.'],
+  ['Do I need to tip in Japan?', 'No. Tipping is not part of the culture, in restaurants, taxis or hotels. Good service is included.'],
+  ['Cash or card?', 'Cards work in most hotels, department stores and chains, but small restaurants and shops may be cash only. Convenience-store ATMs (7-Eleven, for example) accept most foreign cards.'],
+  ['How do I move my luggage between cities?', 'Use a luggage delivery service (takkyubin): your hotel sends your suitcase to the next hotel or the airport, usually the next day, so you travel light.'],
+  ['Can we use a private car instead of trains?', 'Yes. For a more comfortable day, Iheb can arrange a private vehicle with a driver through licensed local partners. Price on request.'],
+  ['Do Americans and Canadians need a visa?', 'For short tourist stays, US and Canadian passport holders currently do not need a visa (up to 90 days). Check the official rules before you fly.'],
+]
+
+function enPrimera() {
+  const corps = `${hero('en', 'kawaguchiko-sakura', 'Mount Fuji with cherry blossoms at Lake Kawaguchi', `<p class="etiket"><a href="/en/tokyo-anime-guide/">Iheb</a> · First time in Japan</p>
+<h1>Japan, explained. A calm private tour for first-timers and seniors</h1>
+<p class="alt">Tokyo and Mt. Fuji at your pace: fewer stairs, real breaks, a private car if you prefer, and someone who explains every detail before you need to ask.</p>
+<p><a class="btn" href="${L.en.waGenel}">Ask Iheb a question</a></p>`)}
+<div class="kap">
+<p class="cevap">Yes, Japan is a very comfortable country for older and first-time travelers, if the day is planned around walking and crowds. With Iheb, a private English-speaking guide who lives in Japan, you set the pace: later starts, elevators instead of stairs, sit-down breaks and lunch, and a private car with a driver (through licensed partners) when trains are too much. Everything, from paying to bowing, is explained on the way.</p>
+<h2>How a comfortable day works</h2>
+<ol class="adimlar">
+<li><strong>Start after 9:30 am</strong>, after the commuter rush, with pickup at your hotel.</li>
+<li><strong>One or two areas per day</strong>, not five. Quality over rushing.</li>
+<li><strong>Breaks you can count on:</strong> a café, a bench with a view, a long sit-down lunch.</li>
+<li><strong>Elevators and taxis</strong> when they make sense; a private car for Mt. Fuji.</li>
+</ol>
+<h2>Where we can take you</h2>
+<ul class="izgara">
+${carte('en', 'palais-imperial', 'Imperial Palace East Gardens', 'Imperial Palace gardens', 'Flat paths, wide lawns and Tokyo’s history, right in the center.')}
+${carte('en', 'tsukiji', 'Tsukiji outer market', 'Tsukiji outer market', 'Street food and fresh seafood stalls, best in the morning.')}
+${carte('en', 'skytree', 'Tokyo Skytree', 'Tokyo Skytree', 'The whole city from above, by fast elevator. On clear days, Fuji too.')}
+${carte('en', 'kawaguchiko-fuji', 'Mount Fuji and Lake Kawaguchi', 'Mt. Fuji by private car', 'Lake Kawaguchi and the Fuji views, with no transfers to worry about.')}
+${carte('en', 'oshino-hakkai', 'Oshino Hakkai', 'Oshino Hakkai', 'Crystal-clear spring ponds in a village at the foot of Fuji.')}
+${carte('en', 'yokohama', 'Yokohama', 'Yokohama', 'The harbor, Chinatown and the bayfront, an easy half day from Tokyo.')}
+</ul>
+<h2>Japan in ten short lessons</h2>
+<table>
+<tr><th>Topic</th><th>What to know</th></tr>
+<tr><td>Tipping</td><td>Not done. Leaving money can confuse staff.</td></tr>
+<tr><td>Paying</td><td>Put cash or card in the small tray at the counter, not in the hand.</td></tr>
+<tr><td>Trains</td><td>Quiet cars: no phone calls, speak softly. Priority seats are near the doors.</td></tr>
+<tr><td>Train card</td><td>An IC card (Suica or PASMO) or your phone, tapped at the gate. No tickets to figure out.</td></tr>
+<tr><td>Shoes</td><td>Off in some restaurants and traditional inns. Wear shoes that slip off easily.</td></tr>
+<tr><td>Trash</td><td>Few public bins. Carry a small bag; convenience stores have bins.</td></tr>
+<tr><td>Toilets</td><td>Clean and free in stations, malls and convenience stores. The buttons are explained on the day.</td></tr>
+<tr><td>Luggage</td><td>Send suitcases hotel to hotel (takkyubin) and travel light.</td></tr>
+<tr><td>Internet</td><td>An eSIM or pocket Wi-Fi from day one makes maps and translation easy.</td></tr>
+<tr><td>Health</td><td>Pharmacies are everywhere; bring your prescriptions in their original boxes.</td></tr>
+</table>
+<h2>Coming from the US or Canada</h2>
+<ul class="ozet">
+<li><strong>Time difference:</strong> Japan is 13 to 14 hours ahead of New York, Toronto and Montréal, and 16 to 17 hours ahead of Los Angeles and Vancouver. Plan an easy first day.</li>
+<li><strong>Language:</strong> Iheb guides in English, and in French for Québec and other French-speaking travelers (<a href="/fr/tokyo-quebec-canada/" hreflang="fr">page en français</a>).</li>
+<li><strong>Multi-day trips:</strong> Tokyo, Mt. Fuji, Hakone and Nagano with Iheb; Kyoto and Osaka with <a href="/en/">Tony</a> from the same team.</li>
+</ul>
+<h2>FAQ</h2>
+${faqHTML(EN_FAQ_PRIMERA)}
+<p><a class="btn" href="${L.en.waGenel}">Message Iheb on WhatsApp</a></p>
+</div>`
+  return ecrire('en/tokyo-anime-guide/first-time-japan', page({ lang: 'en', ruta: '/en/tokyo-anime-guide/first-time-japan/', alterna: 'primera',
+    titre: 'First Time in Japan? A Calm Private Tokyo & Mt. Fuji Tour for Seniors & First-Timers | Iheb',
+    desc: 'A comfortable private tour of Tokyo and Mt. Fuji in English, at your pace: fewer stairs, real breaks, private car option. Japan explained for first-timers and seniors from the US and Canada.',
+    image: imageDe('kawaguchiko-sakura'), jsonld: [faqLd(EN_FAQ_PRIMERA)], corps }))
+}
+
+const FR_FAQ_QC = [
+  ['Y a-t-il un guide francophone à Tokyo pour les Québécois ?', `Oui. Iheb, qui vit au Japon, guide en français (et en anglais et en arabe) des visites privées à Tokyo, au mont Fuji et dans les environs. Contact sur WhatsApp : ${WA_VISIBLE}.`],
+  ['Faut-il un visa pour un Canadien ?', 'Pour un court séjour touristique, les titulaires d’un passeport canadien n’ont actuellement pas besoin de visa (jusqu’à 90 jours). Vérifiez les règles officielles avant le départ.'],
+  ['Quel est le décalage horaire avec le Québec ?', 'Le Japon a 14 heures d’avance sur Montréal et Québec en hiver, et 13 heures en été.'],
+  ['Laisse-t-on un pourboire au Japon ?', 'Non. Le pourboire ne fait pas partie de la culture, ni au restaurant, ni en taxi, ni à l’hôtel.'],
+  ['Peut-on voyager en voiture privée ?', 'Oui. Pour plus de confort, Iheb peut organiser un véhicule privé avec chauffeur auprès de partenaires locaux licenciés. Prix sur demande.'],
+  ['Combien coûte la visite ?', 'Cela dépend du nombre de personnes, de la durée et des lieux. Iheb vous envoie un prix sur WhatsApp une fois votre projet connu.'],
+]
+
+function frQuebec() {
+  const corps = `${hero('fr', 'kawaguchiko-fuji', 'Le mont Fuji et le lac Kawaguchi', `<p class="etiket"><a href="/fr/">Iheb</a> · Québec et Canada</p>
+<h1>Un guide francophone à Tokyo pour les voyageurs du Québec et du Canada</h1>
+<p class="alt">Visites privées en français, tout expliqué du début à la fin : Tokyo, le mont Fuji, l’univers anime, à votre rythme et en voiture privée si vous le souhaitez.</p>
+<p><a class="btn" href="${L.fr.waGenel}">Écrire à Iheb sur WhatsApp</a></p>`)}
+<div class="kap">
+<p class="cevap">Oui, il existe un guide francophone privé à Tokyo pour les Québécois et les Canadiens : Iheb, qui vit au Japon, fait partie de l’équipe Tony Kansai Guide. Il guide en français, en anglais et en arabe, à Tokyo, autour du mont Fuji, à Hakone et à Nagano. Rythme confortable, pauses, voiture privée avec chauffeur via des partenaires licenciés, et chaque détail du Japon expliqué en chemin. Prix par groupe sur WhatsApp : ${WA_VISIBLE}.</p>
+<h2>Pour qui ?</h2>
+<ul class="izgara">
+${carte('fr', 'palais-imperial', 'Jardins du palais impérial', 'Premier voyage au Japon', 'Tout est expliqué : payer, prendre le train, les codes de politesse. Aucune question n’est de trop.')}
+${carte('fr', 'akihabara', 'Akihabara', 'Fans d’anime et de manga', 'Akihabara, Nakano Broadway, Ikebukuro, cartes Pokémon et jeux rétro, avec un spécialiste.', '/fr/guide-anime-tokyo/')}
+${carte('fr', 'kawaguchiko-sakura', 'Le Fuji et les cerisiers', 'Voyage confort', 'Départs après l’heure de pointe, peu d’escaliers, vraies pauses, voiture privée pour le Fuji.')}
+${carte('fr', 'tokyo-camii', 'Tokyo Camii', 'Voyageurs musulmans', 'Repas halal et pauses pour la prière intégrés à la journée.', '/fr/halal-mosquees-tokyo/')}
+</ul>
+<h2>Le Japon en dix leçons courtes</h2>
+<table>
+<tr><th>Sujet</th><th>À savoir</th></tr>
+<tr><td>Pourboire</td><td>Ça ne se fait pas. Le service est compris.</td></tr>
+<tr><td>Payer</td><td>On pose l’argent ou la carte dans le petit plateau au comptoir.</td></tr>
+<tr><td>Argent</td><td>La carte passe presque partout, mais les petits restos aiment encore l’argent comptant. Les guichets des dépanneurs (7-Eleven) acceptent les cartes étrangères.</td></tr>
+<tr><td>Train</td><td>Une carte IC (Suica ou PASMO) ou votre téléphone. Pas d’appels dans les wagons.</td></tr>
+<tr><td>Chaussures</td><td>On les enlève dans certains restaurants et auberges traditionnelles.</td></tr>
+<tr><td>Poubelles</td><td>Rares dans la rue : gardez un petit sac, les dépanneurs en ont.</td></tr>
+<tr><td>Toilettes</td><td>Propres et gratuites dans les gares, les centres commerciaux et les dépanneurs.</td></tr>
+<tr><td>Valises</td><td>Faites-les envoyer d’un hôtel à l’autre (takkyubin) et voyagez léger.</td></tr>
+<tr><td>Internet</td><td>Une eSIM ou un routeur Wi-Fi dès l’arrivée.</td></tr>
+<tr><td>Hiver</td><td>Tokyo est plus doux que Montréal, mais le Fuji et Nagano sont froids : prévoyez des couches.</td></tr>
+</table>
+<h2>Une journée type, sans stress</h2>
+<ol class="adimlar">
+<li><strong>Vers 9 h 30</strong>, Iheb vous retrouve à l’hôtel, après l’heure de pointe.</li>
+<li><strong>Un ou deux quartiers</strong> par jour, pas cinq.</li>
+<li><strong>Un vrai dîner</strong> assis (le repas du midi, comme on dit chez vous).</li>
+<li><strong>Retour à l’hôtel</strong> en taxi ou en voiture privée si les jambes sont fatiguées.</li>
+</ol>
+<h2>Plusieurs jours au Japon</h2>
+<p>Tokyo, le mont Fuji, Hakone et Nagano avec Iheb ; Kyoto et Osaka avec <a href="/">Tony</a>, de la même équipe. Un seul interlocuteur pour tout le voyage.</p>
+<h2>Questions fréquentes</h2>
+${faqHTML(FR_FAQ_QC)}
+<p><a class="btn" href="${L.fr.waGenel}">Écrire à Iheb sur WhatsApp</a></p>
+</div>`
+  return ecrire('fr/tokyo-quebec-canada', page({ lang: 'fr', ruta: '/fr/tokyo-quebec-canada/', alterna: 'primera',
+    titre: 'Guide francophone à Tokyo pour Québécois et Canadiens | Iheb, visites privées',
+    desc: 'Guide privé en français à Tokyo et au mont Fuji pour les voyageurs du Québec et du Canada : tout expliqué, rythme confortable, voiture privée, univers anime, option halal. Prix sur WhatsApp.',
+    image: imageDe('kawaguchiko-fuji'), jsonld: [faqLd(FR_FAQ_QC)], corps }))
+}
+
+const hechas = [arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)

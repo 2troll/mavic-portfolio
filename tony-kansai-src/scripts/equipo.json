@@ -92,8 +92,7 @@
       "id": "larion",
       "ld": "/#larion",
       "idiomas": [
-        "ru",
-        "en"
+        "ru"
       ],
       "zona": "Kansai and west Japan (Hiroshima, Miyajima)",
       "foto": "/guides/guide-larion.webp",
@@ -108,13 +107,8 @@
           "boton": "Открыть",
           "oculto": " страницу Лариона",
           "alt": "Фото Лариона",
-          "desc": "Ларион, русскоязычный гид команды, проводит частные экскурсии на русском и английском по Киото, Осаке, Наре и западу Японии (Хиросима, Миядзима). Telegram @LUiGi19: ответит Тони, координатор Лариона."
+          "desc": "Ларион, русскоязычный гид команды, проводит частные экскурсии на русском по Киото, Осаке, Наре и западу Японии (Хиросима, Миядзима). Telegram @LUiGi19: ответит Тони, координатор Лариона."
         }
-      },
-      "extra": {
-        "ruta": "/larion/",
-        "lang": "en",
-        "texto": "English"
       }
     },
     {
@@ -148,7 +142,7 @@
         "en"
       ],
       "zona": "Tokyo, Kanto, Nagano, Shizuoka",
-      "foto": "/fr/foto/iheb-cara-160.webp",
+      "foto": "/fr/foto/iheb-640.webp",
       "contacto": {
         "wa": "818080155322"
       },
@@ -192,7 +186,7 @@
         "ca"
       ],
       "zona": "All of Japan",
-      "foto": "/familias/foto/antonio-cara-160.webp",
+      "foto": "/familias/foto/antonio-640.webp",
       "contacto": {
         "wa": "34634193106"
       },
@@ -216,7 +210,7 @@
         "es"
       ],
       "zona": "Based in Kansai, all of Japan",
-      "foto": "/private/foto/mario-480.webp",
+      "foto": "/private/foto/mario-960.webp",
       "contacto": {
         "wa": "817089968582"
       },
