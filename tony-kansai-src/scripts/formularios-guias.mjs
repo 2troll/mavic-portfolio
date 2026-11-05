@@ -240,7 +240,7 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 .uyari.on{display:block}
 .tamam{display:none;text-align:center}.tamam.on{display:block}
 .tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
-.gizli{position:absolute;left:-9999px}${f.css ? '\n' + f.css : ''}
+.gizli{position:absolute;inset-inline-start:0;width:1px!important;height:1px!important;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;opacity:0}${f.css ? '\n' + f.css : ''}
 </style>
 </head>
 <body>
