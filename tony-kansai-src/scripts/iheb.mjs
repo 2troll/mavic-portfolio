@@ -134,7 +134,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
   const alts = Object.entries(ALTERNAS[alterna] ?? {}).map(([hl, r]) => `<link rel="alternate" hreflang="${hl}" href="${BASE}${r}">`).join('\n')
   const grupos = lang === 'ar'
     ? [
-        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/']] },
+        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/'], ['اكتب رأيك', '/ar/tokyo/taqyim/']] },
         { t: 'لغات أخرى', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'English', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/ar/']] },
       ]
     : lang === 'fr'
@@ -143,7 +143,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'

@@ -21,6 +21,9 @@ import './v7.css'
 import './estilo-pixel.css'
 import { FranjaVentajas } from './FranjaVentajas'
 
+/** Secciones de HTML estático (Iheb, /fr/, /tr/…): enlace normal, no del router, o saldría el 404 de la app. */
+const ESTATICA = /^\/(ar\/tokyo|en\/tokyo-anime-guide|en\/arabic-speaking-guide-tokyo|en\/muslim-guide-tokyo|fr|tr|familias|private)\//
+
 const BASE = 'https://tonykansaiguide.com'
 const YENES = [38000, 58000] as const
 /** Crédito de cada foto de portada (están en CREDITOS de contenido.ts). */
@@ -144,7 +147,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
           <ul className="v7-otono-sitios">
             {m.ideas.map((x) => (
               <li key={x.t} className="tarjeta">
-                <h3><Link to={x.a}>{x.t} {flecha}</Link></h3>
+                <h3>{ESTATICA.test(x.a) ? <a href={x.a}>{x.t} {flecha}</a> : <Link to={x.a}>{x.t} {flecha}</Link>}</h3>
                 <p>{x.d}</p>
               </li>
             ))}

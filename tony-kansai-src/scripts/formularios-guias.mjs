@@ -158,12 +158,52 @@ html.easy .yildiz button.on{color:#e3a400}
   },
 ]
 
+// 6-11-2026: Iheb también recibe clientes árabes (Golfo, Magreb) y de habla inglesa:
+// mismo diseño que /fr/avis/, en su idioma. Las reseñas van todas a la página de Iheb.
+{
+  const fr = FORMULARIOS.find((f) => f.guia === 'iheb')
+  FORMULARIOS.push(
+    { ...fr, ruta: 'ar/tokyo/taqyim', lang: 'ar', dir: 'rtl', serit: 'إيهاب · مرشد عربي في طوكيو',
+      ciudades: ['طوكيو', 'جبل فوجي', 'هاكوني', 'يوكوهاما', 'ناغانو', 'شيزوكا'],
+      t: {
+        titulo: 'كيف كانت جولتكم مع إيهاب؟',
+        baslik: 'اكتب رأيك في إيهاب | مرشد عربي في طوكيو',
+        giris: 'بضع جمل تكفي. يُنشر رأيكم في صفحة إيهاب ويساعد عائلات عربية أخرى على التخطيط لرحلتها إلى اليابان.',
+        puan: 'تقييمكم', ad: 'الاسم', adOrnek: 'مثال: أبو خالد وعائلته', ulke: 'المدينة / البلد', ulkeOrnek: 'مثال: الرياض، السعودية',
+        tur: 'أي جولة؟', turSec: 'اختر (اختياري)', diger: 'أخرى',
+        yorum: 'رأيكم', yorumOrnek: 'كيف كان اليوم؟ ما الذي أعجبكم أكثر في إيهاب؟',
+        izin: 'أوافق على نشر رأيي في الموقع مع اسمي ومدينتي.',
+        gonder: 'إرسال الرأي', gonderiliyor: 'جارٍ الإرسال…',
+        eksik: 'يرجى اختيار التقييم، وكتابة الاسم، وكتابة رأي من 20 حرفًا على الأقل، والموافقة على النشر.',
+        hata: 'تعذّر الإرسال. تحقّقوا من الاتصال بالإنترنت وحاولوا مرة أخرى.',
+        tamam: 'شكرًا لكم! تم نشر رأيكم.', bekle: 'شكرًا لكم! وصلنا رأيكم وسيُنشر قريبًا.',
+        gor: 'كل الآراء عن إيهاب ←',
+      } },
+    { ...fr, ruta: 'en/tokyo-anime-guide/review', lang: 'en', serit: 'Iheb · Tokyo private guide',
+      ciudades: ['Tokyo', 'Anime & Pokémon day', 'Mt. Fuji', 'Hakone', 'Yokohama', 'Nagano', 'Shizuoka'],
+      t: {
+        titulo: 'How was your day with Iheb?',
+        baslik: 'Leave a review for Iheb | Tokyo private guide',
+        giris: 'A few sentences are enough. Your review is published on Iheb’s page and helps other travelers plan their trip to Japan.',
+        puan: 'Your rating', ad: 'Your first name', adOrnek: 'e.g. Sarah and Adam', ulke: 'City / country', ulkeOrnek: 'e.g. Toronto, Canada',
+        tur: 'Which tour?', turSec: 'Choose (optional)', diger: 'Other',
+        yorum: 'Your review', yorumOrnek: 'How was the day? What did you like most about Iheb?',
+        izin: 'I agree that my review may be published on the website with my first name and city.',
+        gonder: 'Send review', gonderiliyor: 'Sending…',
+        eksik: 'Please give a rating, enter your first name, write at least 20 characters and tick the consent box.',
+        hata: 'Could not send. Check your connection and try again.',
+        tamam: 'Thank you! Your review is published.', bekle: 'Thank you! Your review was received and will be published soon.',
+        gor: 'See all reviews of Iheb →',
+      } },
+  )
+}
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 function html(f) {
   const { t, tema: c } = f
   return `<!doctype html>
-<html lang="${f.lang}" data-estatica="formulario">
+<html lang="${f.lang}"${f.dir ? ` dir="${f.dir}"` : ''} data-estatica="formulario">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">

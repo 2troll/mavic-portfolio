@@ -313,6 +313,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       { p: 'أين مسجد أوساكا؟', r: 'مسجد أوساكا إيباراكي في 4-6-13 Toyokawa بمدينة إيباراكي، شمال أوساكا. تُقام فيه صلاة الجمعة كل أسبوع.' },
       { p: 'هل في مطار كانساي مصلى؟', r: 'نعم، مصليات منفصلة للرجال والنساء مع مكان للوضوء.' },
       { p: 'هل المرشد مسلم ويتكلم العربية؟', r: 'نعم. أنا طوني، مسلم وأتكلم العربية والإسبانية والإنجليزية، وأضع أوقات الصلاة في المسار من البداية.' },
+      { p: 'وفي طوكيو؟', r: 'في طوكيو وحول جبل فوجي وناغانو وشيزوكا يرشدكم إيهاب من الفريق نفسه، وهو تونسي مسلم يتكلم العربية: سيارة خاصة مع سائق، طعام حلال، وأوقات الصلاة. صفحته: tonykansaiguide.com/ar/tokyo/fakhira/' },
     ],
     fuentesTitulo: 'المصادر',
     fuentes: FUENTES_MEZQUITAS,
@@ -647,6 +648,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     faqTitulo: 'Preguntas frecuentes',
     faq: [
       { p: '¿Hay un guía en Japón que hable español y árabe?', r: 'Sí. Tony guía en español, árabe e inglés en Osaka, Kioto, Nara y Kobe.' },
+      { p: '¿Y en Tokio?', r: 'En Tokio, alrededor del Fuji, Nagano y Shizuoka guía Iheb, del mismo equipo: tunecino musulmán, en árabe, francés e inglés, con coche privado, comida halal y horas de oración.' },
       { p: '¿Se puede comer halal durante el tour?', r: 'Sí. Elijo restaurantes con certificado halal en la ruta; dímelo al reservar.' },
       { p: '¿Hay tiempo para rezar?', r: 'Sí. Los horarios de oración van en el plan del día desde el principio.' },
       { p: '¿Cuánto cuesta?', r: `${yenEs(M.medio)} medio día y ${yenEs(M.completo)} día completo, por grupo de hasta 6 personas.` },
@@ -780,6 +782,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     faqTitulo: 'FAQ',
     faq: [
       { p: 'Is there an Arabic-speaking guide in Kyoto or Osaka?', r: 'Yes. Tony guides private tours in Arabic, English and Spanish in Osaka, Kyoto, Nara and Kobe.' },
+      { p: 'And in Tokyo?', r: 'In Tokyo, around Mt. Fuji and in Nagano and Shizuoka, Iheb from the same team guides in Arabic, French and English. He is a Tunisian Muslim, with private cars, halal meals and prayer times: tonykansaiguide.com/en/arabic-speaking-guide-tokyo/' },
       { p: 'Is the guide Muslim?', r: 'Yes. Tony is Muslim and plans halal meals and prayer times into the day.' },
       { p: 'Can we eat halal during the tour?', r: 'Yes. I pick halal-certified restaurants on the route; tell me when you book.' },
       { p: 'How much does it cost?', r: `${yenEn(M.medio)} half day and ${yenEn(M.completo)} full day, per group of up to 6. Groups up to 14 on request.` },
