@@ -105,6 +105,7 @@ const ALTERNAS = {
   anime: { ar: '/ar/tokyo/anime-pokemon/', en: '/en/tokyo-anime-guide/', fr: '/fr/guide-anime-tokyo/' },
   halal: { ar: '/ar/tokyo/halal-masajid/', fr: '/fr/halal-mosquees-tokyo/' },
   primera: { en: '/en/tokyo-anime-guide/first-time-japan/', fr: '/fr/tokyo-quebec-canada/' },
+  lujo: { ar: '/ar/tokyo/fakhira/', en: '/en/arabic-speaking-guide-tokyo/' },
   otaku: { en: '/en/tokyo-anime-guide/otaku-guide/' },
   agencias: { ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/', fr: '/fr/guide-francophone-agences-voyage/' },
 }
@@ -115,7 +116,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
   const alts = Object.entries(ALTERNAS[alterna] ?? {}).map(([hl, r]) => `<link rel="alternate" hreflang="${hl}" href="${BASE}${r}">`).join('\n')
   const grupos = lang === 'ar'
     ? [
-        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/']] },
+        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/']] },
         { t: 'لغات أخرى', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'English', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/ar/']] },
       ]
     : lang === 'fr'
@@ -124,7 +125,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
@@ -246,6 +247,7 @@ function arPortada() {
 <ul class="rozetler"><li>العربية</li><li>الفرنسية</li><li>الإنجليزية</li><li>طعام حلال</li><li>أوقات الصلاة</li><li>أنمي</li><li>بطاقات بوكيمون</li><li>عائلات</li><li>وكالات السفر</li></ul>
 <p class="cevap">إيهاب مرشد سياحي تونسي مسلم يعيش في اليابان، ويقدّم جولات خاصة بالعربية والفرنسية والإنجليزية في طوكيو ومنطقة كانتو، وحول جبل فوجي، وفي شيزوكا وناغانو. يبني يومك حول ما تحبّه: الأنمي وبطاقات بوكيمون، والتسوّق، والطبيعة، مع وجبات حلال ووقفات للصلاة. السعر حسب المجموعة، على واتساب: <span dir="ltr">${WA_VISIBLE}</span>.</p>
 <section class="guide"><div>${cartaIheb('ar')}</div><div>
+<p class="cevap">للعائلات الخليجية: سيارة خاصة مع سائق، حلال، وخصوصية تامة. <a href="/ar/tokyo/fakhira/">رحلات خاصة لعائلات الخليج ←</a></p>
 <h2>لماذا إيهاب؟</h2>
 <ul class="ozet">
 <li><strong>مسلم مثلك:</strong> يعرف ما تحتاجه العائلة المسلمة في اليابان، من المطاعم الحلال إلى أماكن الصلاة وصلاة الجمعة.</li>
@@ -480,6 +482,7 @@ ${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim-friendly programs', 'Halal m
 ${carte('en', 'narita', 'Narita Airport', 'Ground coordination', 'Coordination with licensed transport partners (cars, coaches), hotels and restaurants.')}
 ${carte('en', 'yokohama', 'Yokohama', 'Partner network', 'Introductions to other agencies and guides in Japan; Kansai with Tony’s team.')}
 </ul>
+<p>Serving Gulf (GCC) clients? See <a href="/en/arabic-speaking-guide-tokyo/">Arabic-speaking guide for GCC agencies</a>.</p>
 <h2>How we work together</h2>
 <ol class="adimlar"><li>Send dates, group size and the program on WhatsApp.</li><li>We confirm availability, the agency rate and any transport needed.</li><li>A clear cooperation agreement with your agency.</li><li>Iheb meets your clients and runs the day.</li></ol>
 <h2>FAQ</h2>
@@ -677,5 +680,121 @@ ${faqHTML(FR_FAQ_QC)}
     image: imageDe('kawaguchiko-fuji'), jsonld: [faqLd(FR_FAQ_QC)], corps }))
 }
 
-const hechas = [arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ———— 5-11-2026: clientes árabes con dinero (familias del Golfo) y agencias que trabajan con ellos ————
+// Las tarifas las da Iheb por WhatsApp: aquí no se publica ningún precio.
+const WA_FAMILIA_GOLFO = wa('السلام عليكم إيهاب، نحن عائلة من الخليج ونخطط لرحلة خاصة إلى اليابان. التواريخ وعدد الأشخاص: ')
+const WA_AGENCIA_GOLFO = wa('Hi Iheb, we are a travel agency with Gulf / Arab clients and need a ground partner in Japan. Dates and group: ')
+
+const AR_FAQ_FAKHIRA = [
+  ['هل يوجد مرشد عربي مسلم في طوكيو للعائلات الخليجية؟', `نعم. إيهاب مرشد تونسي مسلم يعيش في اليابان ويتكلّم العربية والفرنسية والإنجليزية. يرافق عائلتكم وحدها في طوكيو وحول جبل فوجي وشيزوكا وناغانو. للتواصل عبر واتساب: <span dir="ltr">${WA_VISIBLE}</span>.`],
+  ['هل يمكن التنقّل بسيارة خاصة مع سائق؟', 'نعم، عبر شركاء نقل مرخّصين في اليابان: سيارات خاصة، أو حافلات صغيرة للعائلات الكبيرة. السعر عند الطلب عبر واتساب.'],
+  ['هل الطعام الحلال متوفّر في طوكيو؟', 'نعم، في طوكيو مطاعم حلال كثيرة، منها مطاعم لحم واغيو حلال. يختار إيهاب ما يناسب عائلتكم ويرتّب الحجز.'],
+  ['كم السعر؟', 'يعتمد على عدد الأشخاص وعدد الأيام ونوع السيارة. يرسل إيهاب الأسعار مباشرة عبر واتساب بعد معرفة برنامجكم.'],
+  ['هل يرافقنا في كيوتو وأوساكا؟', 'في كيوتو وأوساكا يستقبلكم توني من الفريق نفسه، وهو يتكلّم العربية أيضًا، فتبقى الرحلة كلها مع فريق واحد.'],
+]
+
+function arFakhira() {
+  const corps = `${hero('ar', 'kawaguchiko-fuji', 'جبل فوجي وبحيرة كاواغوتشي', `<p class="etiket"><a href="/ar/tokyo/">إيهاب</a> · خاص · حلال</p>
+<h1>اليابان بخصوصية تامة لعائلتك</h1>
+<p class="alt">إيهاب، مرشد عربي مسلم يعيش في اليابان، يرافق عائلتكم من المطار حتى آخر يوم: سيارة خاصة مع سائق، مطاعم حلال، أوقات الصلاة، وكل التفاصيل بالعربية.</p>
+<p><a class="btn" href="${WA_FAMILIA_GOLFO}">اطلب برنامجك والأسعار عبر واتساب</a></p>`)}
+<div class="kap">
+<ul class="rozetler"><li>عائلات الخليج</li><li>سيارة خاصة</li><li>حلال</li><li>أوقات الصلاة</li><li>تسوّق راقٍ</li><li>شهر العسل</li><li>بالعربية</li></ul>
+<p class="cevap">نعم، يوجد مرشد عربي مسلم في طوكيو للعائلات الخليجية: إيهاب، تونسي يعيش في اليابان ويتكلّم العربية والفرنسية والإنجليزية. يرتّب جولة خاصة لعائلتكم وحدها: استقبال في المطار، سيارة خاصة مع سائق عبر شركاء مرخّصين، مطاعم حلال، استراحات للصلاة، تسوّق في غينزا وأوموتيساندو، ورحلة إلى جبل فوجي. الأسعار تُرسل عبر واتساب: <span dir="ltr">${WA_VISIBLE}</span>.</p>
+<h2>ما يرتّبه إيهاب لكم</h2>
+<ul class="izgara">
+${carte('ar', 'narita', 'مطار ناريتا', 'الاستقبال في المطار', 'لقاء في ناريتا أو هانيدا، ثم إلى الفندق بسيارة خاصة.')}
+${carte('ar', 'tokyo-camii', 'مسجد طوكيو', 'الصلاة والحلال', 'مسجد طوكيو، مطاعم حلال، وأوقات الصلاة محسوبة في برنامج كل يوم.', '/ar/tokyo/halal-masajid/')}
+${carte('ar', 'palais-imperial', 'حدائق القصر الإمبراطوري', 'تسوّق راقٍ', 'غينزا وأوموتيساندو ومتاجر الماركات الكبرى، مع الإعفاء الضريبي للسيّاح بجواز السفر.')}
+${carte('ar', 'kawaguchiko-sakura', 'جبل فوجي وأزهار الكرز', 'جبل فوجي بسيارة خاصة', 'بحيرة كاواغوتشي ومناظر فوجي، بلا قطارات ولا تبديل.')}
+${carte('ar', 'skytree', 'برج طوكيو سكاي تري', 'طوكيو من الأعلى', 'برج سكاي تري بمصعد سريع، وفي الأيام الصافية يظهر فوجي.')}
+${carte('ar', 'akihabara', 'أكيهابارا', 'يوم للأطفال', 'أنمي وبوكيمون وألعاب الفيديو، مع مرشد يعرف هذا العالم جيدًا.', '/ar/tokyo/anime-pokemon/')}
+</ul>
+<h2>لماذا تختار العائلات الخليجية إيهاب؟</h2>
+<ul class="ozet">
+<li><strong>خصوصية:</strong> جولة لعائلتكم وحدها، لا تختلطون بسيّاح آخرين.</li>
+<li><strong>مسلم يفهم احتياجاتكم:</strong> الحلال، الصلاة، واحترام خصوصية العائلة.</li>
+<li><strong>يتكلّم العربية:</strong> لا ترجمة ولا سوء فهم مع المطاعم والفنادق والسائقين.</li>
+<li><strong>شبكة محلية:</strong> شركات نقل مرخّصة، فنادق، مطاعم حلال، ووكالات في اليابان.</li>
+<li><strong>اليابان كلها:</strong> طوكيو مع إيهاب، وكيوتو وأوساكا مع توني من الفريق نفسه.</li>
+</ul>
+<h2>برنامج مقترح لخمسة أيام</h2>
+<ol class="adimlar">
+<li><strong>الوصول:</strong> استقبال في المطار، الفندق، وعشاء حلال قريب.</li>
+<li><strong>طوكيو:</strong> مسجد طوكيو، برج سكاي تري، وتسوّق في غينزا.</li>
+<li><strong>جبل فوجي بسيارة خاصة:</strong> بحيرة كاواغوتشي وأوشينو هاكاي.</li>
+<li><strong>يوم العائلة:</strong> أنمي وبوكيمون للأطفال، أو أوديابا على خليج طوكيو.</li>
+<li><strong>إلى كيوتو بالقطار السريع شينكانسن،</strong> حيث يستقبلكم توني.</li>
+</ol>
+<p class="kaynak">كل برنامج يُصمَّم لعائلتكم، وهذا مجرد مثال.</p>
+<h2>أفضل الأوقات للزيارة</h2>
+<ul class="ozet">
+<li><strong>الخريف (نوفمبر):</strong> أوراق الخريف الحمراء والطقس لطيف للتنزّه.</li>
+<li><strong>الشتاء (ديسمبر إلى فبراير):</strong> بارد وصافٍ، وأوضح أيام السنة لرؤية جبل فوجي.</li>
+<li><strong>الربيع (أواخر مارس وأبريل):</strong> موسم أزهار الكرز، والطقس معتدل.</li>
+</ul>
+<h2>شهر العسل في اليابان</h2>
+<p>للعرسان: برنامج هادئ وخاص، بإيقاع مريح، مع مطاعم حلال مختارة ومناظر جبل فوجي. يرتّب إيهاب التفاصيل ويرسل الأسعار عبر واتساب.</p>
+</div>
+<section class="bant"><div class="kap">
+<h2>وكالات السفر التي تخدم عملاء الخليج</h2>
+<p>إيهاب يعمل مع الوكالات باتفاق مباشر، ويرافق عملاءكم بالعربية، ويربطكم بشركات النقل المرخّصة والفنادق والمطاعم الحلال ووكالات أخرى في اليابان.</p>
+<p><a class="btn" href="/ar/tokyo/wakalat/">للوكالات</a></p>
+</div></section>
+<div class="kap">
+<h2>أسئلة شائعة</h2>
+${faqHTML(AR_FAQ_FAKHIRA)}
+<p><a class="btn" href="${WA_FAMILIA_GOLFO}">تواصل مع إيهاب عبر واتساب</a></p>
+</div>`
+  return ecrire('ar/tokyo/fakhira', page({ lang: 'ar', ruta: '/ar/tokyo/fakhira/', alterna: 'lujo',
+    titre: 'رحلات خاصة في طوكيو واليابان للعائلات الخليجية | مرشد عربي مسلم: إيهاب',
+    desc: 'مرشد عربي مسلم في طوكيو لعائلات الخليج: استقبال في المطار، سيارة خاصة مع سائق، مطاعم حلال، أوقات الصلاة، تسوّق في غينزا، وجبل فوجي. الأسعار عبر واتساب.',
+    image: imageDe('kawaguchiko-fuji'), jsonld: [faqLd(AR_FAQ_FAKHIRA)], corps }))
+}
+
+const EN_FAQ_GCC = [
+  ['Is there an Arabic-speaking Muslim guide in Tokyo for agencies?', `Yes. Iheb, a Tunisian Muslim who lives in Japan, guides agency clients in Arabic, French and English in Tokyo, around Mt. Fuji, Shizuoka and Nagano. WhatsApp: ${WA_VISIBLE}.`],
+  ['What are the rates?', 'Iheb sends agency rates directly on WhatsApp, based on dates, group size, days and vehicles.'],
+  ['Can he arrange private cars and drivers?', 'Yes, through licensed transport partners in Japan: private cars, or minibuses for large families, coordinated on the day.'],
+  ['Can he handle large families or several groups at once?', 'He coordinates with other guides and agencies in Japan when a program needs more than one guide. In Kyoto and Osaka, Tony from the same team (who also speaks Arabic) takes over.'],
+  ['How do we work together?', 'A direct cooperation agreement with your agency. You keep the client relationship; Iheb runs the days in Japan.'],
+]
+
+function enGcc() {
+  const corps = `${hero('en', 'tokyo-camii', 'Tokyo Camii mosque', `<p class="etiket"><a href="/en/tokyo-anime-guide/">Iheb</a> · Arabic-speaking · GCC</p>
+<h1>Your Arabic-speaking ground partner in Tokyo for Gulf clients</h1>
+<p class="alt">For agencies serving GCC and Arab families: a Muslim guide who speaks your clients’ language, plus licensed private cars, halal dining and prayer times built into every day.</p>
+<p><a class="btn" href="${WA_AGENCIA_GOLFO}">Ask for agency rates on WhatsApp</a></p>`)}
+<div class="kap">
+<ul class="rozetler"><li>العربية</li><li>English</li><li>Français</li><li>VIP families</li><li>Private cars</li><li>Halal</li><li>Prayer times</li></ul>
+<p class="cevap">Yes, there is an Arabic-speaking Muslim guide in Tokyo who works with travel agencies: Iheb, part of the Tony Kansai Guide team. He guides your Gulf and Arab clients in Arabic, French and English, and connects your agency with licensed transport partners, hotels, halal restaurants and other agencies in Japan. Agency rates are sent on WhatsApp: ${WA_VISIBLE}.</p>
+<h2>What your clients get</h2>
+<ul class="izgara">
+${carte('en', 'narita', 'Narita Airport', 'Airport welcome', 'Met at Narita or Haneda, then to the hotel by private car.')}
+${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Halal & prayer', 'Halal restaurants, prayer breaks and Friday prayer at Tokyo Camii.')}
+${carte('en', 'palais-imperial', 'Imperial Palace gardens', 'Ginza & luxury shopping', 'Ginza, Omotesando and flagship stores, with tourist tax-free shopping.')}
+${carte('en', 'kawaguchiko-fuji', 'Mount Fuji and Lake Kawaguchi', 'Mt. Fuji by private car', 'Lake Kawaguchi and the Fuji views with no train changes.')}
+${carte('en', 'akihabara', 'Akihabara', 'Days for the kids', 'Anime, Pokémon and games with a real specialist.', '/en/tokyo-anime-guide/otaku-guide/')}
+${carte('en', 'yokohama', 'Yokohama', 'Partner network', 'Introductions to other agencies and guides in Japan; Kyoto and Osaka with Tony.')}
+</ul>
+<h2>Why agencies with Gulf clients choose Iheb</h2>
+<ul class="ozet">
+<li><strong>Same language, same values:</strong> an Arabic-speaking Muslim guide; no translation gap with families.</li>
+<li><strong>Privacy:</strong> private days for one family, never mixed with other tourists.</li>
+<li><strong>Local network:</strong> licensed transport, hotels, halal restaurants and other agencies in Japan.</li>
+<li><strong>All of Japan with one team:</strong> Tokyo with Iheb; Kyoto and Osaka with Tony, who also speaks Arabic.</li>
+</ul>
+<h2>How we work with your agency</h2>
+<ol class="adimlar"><li>Send dates, family size and the program on WhatsApp.</li><li>Iheb replies with availability and agency rates.</li><li>A direct cooperation agreement with your agency.</li><li>Iheb welcomes your clients and runs the days in Japan.</li></ol>
+<h2>FAQ</h2>
+${faqHTML(EN_FAQ_GCC)}
+<p><a class="btn" href="${WA_AGENCIA_GOLFO}">Contact Iheb as an agency</a></p>
+</div>`
+  return ecrire('en/arabic-speaking-guide-tokyo', page({ lang: 'en', ruta: '/en/arabic-speaking-guide-tokyo/', alterna: 'lujo',
+    titre: 'Arabic-Speaking Muslim Guide in Tokyo for GCC Travel Agencies & VIP Families | Iheb',
+    desc: 'For travel agencies serving Gulf (GCC) and Arab clients: Iheb, an Arabic-speaking Muslim guide in Tokyo, with licensed private cars, halal dining, prayer times and luxury shopping. Agency rates on WhatsApp.',
+    image: imageDe('tokyo-camii'), jsonld: [faqLd(EN_FAQ_GCC)], corps }))
+}
+
+const hechas = [arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)
