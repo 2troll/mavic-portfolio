@@ -30,7 +30,7 @@ import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-11-04'
+const HOY = '2026-11-05'
 const WA_NUMERO = '818080155322'
 const WA_VISIBLE = '+81 80 8015 5322'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
@@ -110,6 +110,22 @@ const ALTERNAS = {
   agencias: { ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/', fr: '/fr/guide-francophone-agences-voyage/' },
 }
 
+// Para quién es cada página (schema.org audience): lo leen Google y las IAs al decidir a quién recomendarla.
+const GOLFO = ['Saudi Arabia', 'United Arab Emirates', 'Qatar', 'Kuwait', 'Bahrain', 'Oman']
+const NORTEAMERICA = ['United States', 'Canada']
+const MAGREB = ['Tunisia', 'Algeria', 'Morocco']
+const pais = (n) => ({ '@type': 'Country', name: n })
+const AUDIENCIA = {
+  lujo: { audienceType: 'VIP and affluent Gulf (GCC) and Arab families, and travel agencies serving them', paises: GOLFO },
+  primera: { audienceType: 'First-time and senior travelers from the United States and Canada, including French-speaking Québec', paises: NORTEAMERICA },
+  otaku: { audienceType: 'Anime, manga and Pokémon fans from the United States and Canada', paises: NORTEAMERICA },
+  portada: { audienceType: 'Arabic, French and English speaking travelers to Tokyo', paises: [...GOLFO, ...MAGREB, 'France', 'Belgium', 'Switzerland', ...NORTEAMERICA] },
+  agencias: { audienceType: 'Travel agencies and tour operators', paises: [...GOLFO, ...MAGREB, 'France', 'Belgium', ...NORTEAMERICA] },
+  halal: { audienceType: 'Muslim travelers', paises: [...GOLFO, ...MAGREB, 'Malaysia', 'Indonesia'] },
+  anime: { audienceType: 'Anime and Pokémon fans and their families', paises: [...GOLFO, ...NORTEAMERICA] },
+}
+const audiencia = (alterna) => { const a = AUDIENCIA[alterna]; return a ? { audience: { '@type': 'Audience', audienceType: a.audienceType, geographicArea: a.paises.map(pais) } } : {} }
+
 function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
   const l = L[lang]
   const url = `${BASE}${ruta}`
@@ -152,7 +168,7 @@ ${alts}
 <meta property="og:image" content="${image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` } }, PERSON_LD, ...jsonld] })}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, ...audiencia(alterna) }, PERSON_LD, ...jsonld] })}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${ANIME_FUENTES}
 ${equipoFuente}
