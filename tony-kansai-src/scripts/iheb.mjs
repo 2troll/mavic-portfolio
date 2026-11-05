@@ -30,7 +30,7 @@ import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
-const HOY = '2026-11-05'
+const HOY = '2026-11-06'
 const WA_NUMERO = '818080155322'
 const WA_VISIBLE = '+81 80 8015 5322'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
@@ -103,9 +103,10 @@ const PERSON_LD = { '@type': 'Person', '@id': `${BASE}/fr/#iheb`, name: 'Iheb', 
 const ALTERNAS = {
   portada: { ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/', fr: '/fr/' },
   anime: { ar: '/ar/tokyo/anime-pokemon/', en: '/en/tokyo-anime-guide/', fr: '/fr/guide-anime-tokyo/' },
-  halal: { ar: '/ar/tokyo/halal-masajid/', fr: '/fr/halal-mosquees-tokyo/' },
+  halal: { ar: '/ar/tokyo/halal-masajid/', en: '/en/muslim-guide-tokyo/', fr: '/fr/halal-mosquees-tokyo/' },
   primera: { en: '/en/tokyo-anime-guide/first-time-japan/', fr: '/fr/tokyo-quebec-canada/' },
   lujo: { ar: '/ar/tokyo/fakhira/', en: '/en/arabic-speaking-guide-tokyo/' },
+  musulman: { en: '/en/muslim-guide-tokyo/', ar: '/ar/tokyo/halal-masajid/', fr: '/fr/halal-mosquees-tokyo/' },
   otaku: { en: '/en/tokyo-anime-guide/otaku-guide/' },
   agencias: { ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/', fr: '/fr/guide-francophone-agences-voyage/' },
 }
@@ -121,6 +122,7 @@ const AUDIENCIA = {
   otaku: { audienceType: 'Anime, manga and Pokémon fans from the United States and Canada', paises: NORTEAMERICA },
   portada: { audienceType: 'Arabic, French and English speaking travelers to Tokyo', paises: [...GOLFO, ...MAGREB, 'France', 'Belgium', 'Switzerland', ...NORTEAMERICA] },
   agencias: { audienceType: 'Travel agencies and tour operators', paises: [...GOLFO, ...MAGREB, 'France', 'Belgium', ...NORTEAMERICA] },
+  musulman: { audienceType: 'Muslim travelers and families from Southeast Asia and the United Kingdom', paises: ['Malaysia', 'Singapore', 'Brunei', 'Indonesia', 'United Kingdom'] },
   halal: { audienceType: 'Muslim travelers', paises: [...GOLFO, ...MAGREB, 'Malaysia', 'Indonesia'] },
   anime: { audienceType: 'Anime and Pokémon fans and their families', paises: [...GOLFO, ...NORTEAMERICA] },
 }
@@ -141,7 +143,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
@@ -444,7 +446,7 @@ function enPortada() {
 <ul class="izgara">
 ${carte('en', 'super-potato', 'Super Potato retro games', 'The otaku guide', 'Every district, shop rule and anime location explained.', '/en/tokyo-anime-guide/otaku-guide/')}
 ${carte('en', 'kawaguchiko-sakura', 'Mount Fuji with cherry blossoms', 'First time in Japan', 'A calm private tour for first-timers and seniors, everything explained.', '/en/tokyo-anime-guide/first-time-japan/')}
-${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim travelers', 'Halal-friendly food and prayer breaks built into the day.', '/fr/halal-mosquees-tokyo/')}
+${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim travelers', 'Halal-friendly food and prayer breaks built into the day.', '/en/muslim-guide-tokyo/')}
 ${carte('en', 'shibuya', 'Shibuya crossing', 'Travel agencies', 'Ground partner in English, French and Arabic.', '/en/tokyo-anime-guide/travel-agencies/')}
 </ul>
 <h2>Your quest map</h2>
@@ -812,5 +814,56 @@ ${faqHTML(EN_FAQ_GCC)}
     image: imageDe('tokyo-camii'), jsonld: [faqLd(EN_FAQ_GCC)], corps }))
 }
 
-const hechas = [arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ———— 6-11-2026: musulmanes de Malasia, Singapur, Brunéi, Indonesia y Reino Unido (inglés) ————
+const WA_MUSULMAN = wa('Assalamualaikum Iheb, we are Muslim travelers planning a private trip to Tokyo. Dates and group size: ')
+const EN_FAQ_MUSLIM = [
+  ['Is there a Muslim tour guide in Tokyo?', `Yes. Iheb is a Muslim guide from Tunisia who lives in Japan and runs private tours in English, Arabic and French in Tokyo, around Mt. Fuji, Shizuoka and Nagano. WhatsApp: ${WA_VISIBLE}.`],
+  ['Is it easy to find halal food in Tokyo?', 'Yes, more and more: halal ramen, halal wagyu, Indian, Turkish and Malaysian restaurants, plus Muslim-friendly menus in some hotels. Iheb picks places that fit your group and books ahead.'],
+  ['Where can we pray in Tokyo?', 'Tokyo Camii is the best-known mosque, and there are prayer rooms at Narita and Haneda airports and in some malls and stations. Iheb builds prayer times into the day.'],
+  ['Is Tokyo good for Muslim families with children?', 'Yes. It is safe and clean, and the anime, Pokémon and Nintendo shops are a favorite with kids. A private tour lets you set the pace and the breaks.'],
+  ['How much does it cost?', 'It depends on group size, days and transport. Iheb sends the price directly on WhatsApp.'],
+]
+
+function enMuslim() {
+  const corps = `${hero('en', 'tokyo-camii', 'Tokyo Camii mosque', `<p class="etiket"><a href="/en/tokyo-anime-guide/">Iheb</a> · Muslim-friendly Tokyo</p>
+<h1>A Muslim guide for your private Tokyo trip</h1>
+<p class="alt">For families and friends from Malaysia, Singapore, Brunei, Indonesia, the UK and beyond: halal food, prayer times and Mt. Fuji, planned by a Muslim guide who lives in Japan.</p>
+<p><a class="btn" href="${WA_MUSULMAN}">Message Iheb on WhatsApp</a></p>`)}
+<div class="kap">
+<ul class="rozetler"><li>Halal food</li><li>Prayer times</li><li>Private</li><li>Families</li><li>Mt. Fuji</li><li>Anime &amp; Pokémon</li><li>English · العربية</li></ul>
+<p class="cevap">Yes, there is a Muslim tour guide in Tokyo: Iheb, from Tunisia, lives in Japan and guides private groups in English, Arabic and French. He plans every day around halal meals and prayer times, from Tokyo Camii and halal ramen to Mt. Fuji by private car (through licensed partners) and the anime and Pokémon shops kids love. Price on WhatsApp: ${WA_VISIBLE}.</p>
+<h2>What a Muslim-friendly day looks like</h2>
+<ol class="adimlar">
+<li><strong>Morning:</strong> Tokyo Camii, then the city’s highlights at your pace.</li>
+<li><strong>Lunch:</strong> halal ramen, wagyu or another halal restaurant, booked ahead.</li>
+<li><strong>Afternoon:</strong> shopping, Skytree or the anime districts, with a prayer break.</li>
+<li><strong>Evening:</strong> a halal dinner close to your hotel.</li>
+</ol>
+<h2>Where we go</h2>
+<ul class="izgara">
+${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Tokyo Camii', 'Tokyo’s best-known mosque, with Ottoman-style architecture.', '/fr/halal-mosquees-tokyo/')}
+${carte('en', 'kawaguchiko-fuji', 'Mount Fuji and Lake Kawaguchi', 'Mt. Fuji', 'Lake Kawaguchi and the Fuji views, by private car if you prefer.')}
+${carte('en', 'skytree', 'Tokyo Skytree', 'Tokyo Skytree', 'The whole city from above, by fast elevator.')}
+${carte('en', 'akihabara', 'Akihabara', 'Anime & Pokémon', 'The district kids ask for, with a real specialist.', '/en/tokyo-anime-guide/otaku-guide/')}
+${carte('en', 'odaiba', 'Odaiba', 'Odaiba', 'Tokyo Bay, the life-size Gundam and big malls, easy for families.')}
+${carte('en', 'oshino-hakkai', 'Oshino Hakkai', 'Oshino Hakkai', 'Clear spring ponds in a village at the foot of Mt. Fuji.')}
+</ul>
+<h2>Good to know</h2>
+<ul class="ozet">
+<li><strong>Read labels:</strong> many snacks contain pork extract, lard or mirin. Iheb helps you check in the shop.</li>
+<li><strong>Airports:</strong> Narita and Haneda have prayer rooms.</li>
+<li><strong>Best seasons:</strong> autumn colors in November, clear Fuji views in winter, cherry blossoms in late March and April.</li>
+<li><strong>All of Japan:</strong> Tokyo with Iheb; Kyoto and Osaka with <a href="/en/">Tony</a>, who also speaks Arabic.</li>
+</ul>
+<h2>FAQ</h2>
+${faqHTML(EN_FAQ_MUSLIM)}
+<p><a class="btn" href="${WA_MUSULMAN}">Message Iheb on WhatsApp</a></p>
+</div>`
+  return ecrire('en/muslim-guide-tokyo', page({ lang: 'en', ruta: '/en/muslim-guide-tokyo/', alterna: 'musulman',
+    titre: 'Muslim Tour Guide in Tokyo: Halal Food, Prayer Times & Mt. Fuji | Private Tours with Iheb',
+    desc: 'Private Muslim-friendly tours in Tokyo and Mt. Fuji with Iheb, a Muslim guide who lives in Japan: halal restaurants, prayer times, Tokyo Camii, families. For travelers from Malaysia, Singapore, Brunei, Indonesia and the UK.',
+    image: imageDe('tokyo-camii'), jsonld: [faqLd(EN_FAQ_MUSLIM)], corps }))
+}
+
+const hechas = [enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)
