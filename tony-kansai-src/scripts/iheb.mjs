@@ -26,7 +26,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
+import { ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -99,17 +99,8 @@ const faqHTML = (faq) => faq.map(([q, a]) => `<details><summary>${esc(q)}</summa
 const faqLd = (faq) => ({ '@type': 'FAQPage', mainEntity: faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a.replace(/<[^>]+>/g, '') } })) })
 const PERSON_LD = { '@type': 'Person', '@id': `${BASE}/fr/#iheb`, name: 'Iheb', jobTitle: 'Private tour guide', image: `${BASE}/fr/foto/iheb-1080.webp`, knowsLanguage: ['fr', 'ar', 'en'], knowsAbout: ['Anime', 'Japanese pop culture', 'Pokémon Trading Card Game', 'Halal travel in Tokyo', 'Tokyo', 'Mount Fuji'], areaServed: ['Tokyo', 'Kanto', 'Shizuoka', 'Nagano'], worksFor: { '@type': 'LocalBusiness', '@id': `${BASE}/#negocio`, name: 'Tony Kansai Guide' }, contactPoint: { '@type': 'ContactPoint', telephone: `+${WA_NUMERO}`, contactType: 'customer service', availableLanguage: ['French', 'Arabic', 'English'] } }
 
-// Versiones de cada página para hreflang (la francesa equivalente, si existe).
-const ALTERNAS = {
-  portada: { ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/', fr: '/fr/' },
-  anime: { ar: '/ar/tokyo/anime-pokemon/', en: '/en/tokyo-anime-guide/', fr: '/fr/guide-anime-tokyo/' },
-  halal: { ar: '/ar/tokyo/halal-masajid/', en: '/en/muslim-guide-tokyo/', fr: '/fr/halal-mosquees-tokyo/' },
-  primera: { en: '/en/tokyo-anime-guide/first-time-japan/', fr: '/fr/tokyo-quebec-canada/' },
-  lujo: { ar: '/ar/tokyo/fakhira/', en: '/en/arabic-speaking-guide-tokyo/' },
-  musulman: { en: '/en/muslim-guide-tokyo/', ar: '/ar/tokyo/halal-masajid/', fr: '/fr/halal-mosquees-tokyo/' },
-  otaku: { en: '/en/tokyo-anime-guide/otaku-guide/' },
-  agencias: { ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/', fr: '/fr/guide-francophone-agences-voyage/' },
-}
+// Las versiones de cada página en otros idiomas (hreflang y selector) están en
+// IHEB_EQUIVALENTES (iheb-estilo.mjs), compartidas con francais.mjs y el sitemap.
 
 // Para quién es cada página (schema.org audience): lo leen Google y las IAs al decidir a quién recomendarla.
 const GOLFO = ['Saudi Arabia', 'United Arab Emirates', 'Qatar', 'Kuwait', 'Bahrain', 'Oman']
@@ -126,12 +117,16 @@ const AUDIENCIA = {
   halal: { audienceType: 'Muslim travelers', paises: [...GOLFO, ...MAGREB, 'Malaysia', 'Indonesia'] },
   anime: { audienceType: 'Anime and Pokémon fans and their families', paises: [...GOLFO, ...NORTEAMERICA] },
 }
-const audiencia = (alterna) => { const a = AUDIENCIA[alterna]; return a ? { audience: { '@type': 'Audience', audienceType: a.audienceType, geographicArea: a.paises.map(pais) } } : {} }
+// A los países propios de cada página se suman los mercados del idioma (IHEB_PAISES).
+const audiencia = (alterna, lang) => {
+  const a = AUDIENCIA[alterna] ?? { audienceType: { ar: 'Arabic-speaking travelers from the Gulf (GCC)', en: 'English-speaking travelers', fr: 'French-speaking travelers' }[lang], paises: [] }
+  return { audience: { '@type': 'Audience', audienceType: a.audienceType, geographicArea: [...new Set([...a.paises, ...IHEB_PAISES[lang]])].map(pais) } }
+}
 
 function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
   const l = L[lang]
   const url = `${BASE}${ruta}`
-  const alts = Object.entries(ALTERNAS[alterna] ?? {}).map(([hl, r]) => `<link rel="alternate" hreflang="${hl}" href="${BASE}${r}">`).join('\n')
+  const alts = ihebHreflang(ruta, lang, BASE)
   const grupos = lang === 'ar'
     ? [
         { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/'], ['اكتب رأيك', '/ar/tokyo/taqyim/']] },
@@ -143,7 +138,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Akihabara', '/en/tokyo-anime-guide/akihabara/'], ['Nakano Broadway', '/en/tokyo-anime-guide/nakano-broadway/'], ['Ikebukuro', '/en/tokyo-anime-guide/ikebukuro/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
@@ -170,14 +165,15 @@ ${alts}
 <meta property="og:image" content="${image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, ...audiencia(alterna) }, PERSON_LD, ...jsonld] })}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, ...audiencia(alterna, lang) }, PERSON_LD, ...jsonld] })}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${ANIME_FUENTES}
 ${equipoFuente}
-<style>${CSS_BASE}${ANIME_CSS}${equipoCSS}${menuCSS}</style>
+<style>${CSS_BASE}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="${l.base}">${esc(l.marca)}</a>
+${ihebIdiomas(ruta, lang)}
 ${navHTML({ etiqueta: l.menu, abrir: l.abrir, variante: 'fr', grupos, cta: { t: 'WhatsApp', h: l.waGenel, aria: l.waBoton } })}</div></header>
 <main>
 ${corps}
@@ -265,7 +261,7 @@ function arPortada() {
 <ul class="rozetler"><li>العربية</li><li>الفرنسية</li><li>الإنجليزية</li><li>طعام حلال</li><li>أوقات الصلاة</li><li>أنمي</li><li>بطاقات بوكيمون</li><li>عائلات</li><li>وكالات السفر</li></ul>
 <p class="cevap">إيهاب مرشد سياحي تونسي مسلم يعيش في اليابان، ويقدّم جولات خاصة بالعربية والفرنسية والإنجليزية في طوكيو ومنطقة كانتو، وحول جبل فوجي، وفي شيزوكا وناغانو. يبني يومك حول ما تحبّه: الأنمي وبطاقات بوكيمون، والتسوّق، والطبيعة، مع وجبات حلال ووقفات للصلاة. السعر حسب المجموعة، على واتساب: <span dir="ltr">${WA_VISIBLE}</span>.</p>
 <section class="guide"><div>${cartaIheb('ar')}</div><div>
-<p class="cevap">للعائلات الخليجية: سيارة خاصة مع سائق، حلال، وخصوصية تامة. <a href="/ar/tokyo/fakhira/">رحلات خاصة لعائلات الخليج ←</a></p>
+<p class="cevap">للعائلات الخليجية من قطر والإمارات والسعودية والبحرين وعُمان والكويت: سيارة خاصة مع سائق، حلال، وخصوصية تامة. <a href="/ar/tokyo/fakhira/">رحلات خاصة لعائلات الخليج ←</a></p>
 <h2>لماذا إيهاب؟</h2>
 <ul class="ozet">
 <li><strong>مسلم مثلك:</strong> يعرف ما تحتاجه العائلة المسلمة في اليابان، من المطاعم الحلال إلى أماكن الصلاة وصلاة الجمعة.</li>
@@ -440,11 +436,15 @@ function enPortada() {
 <li><strong>No wasted time:</strong> the right floor, the right shop, the right train between them.</li>
 <li><strong>Private:</strong> just your family or friends, never mixed with strangers.</li>
 <li><strong>Three languages:</strong> English, French and Arabic.</li>
+<li><strong>Made for international fans:</strong> whether you fly in from the US, Canada, the UK or India, or from Switzerland or the Netherlands, the day is planned and explained in clear English.</li>
 </ul>
 <p><a class="btn" href="${L.en.waGenel}">Plan my day</a></p></div></section>
 <h2>Pick your path</h2>
 <ul class="izgara">
 ${carte('en', 'super-potato', 'Super Potato retro games', 'The otaku guide', 'Every district, shop rule and anime location explained.', '/en/tokyo-anime-guide/otaku-guide/')}
+${carte('en', 'akihabara-rue', 'Akihabara street', 'Akihabara', 'Card towers, figures and retro games: a half-day plan.', '/en/tokyo-anime-guide/akihabara/')}
+${carte('en', 'nakano-broadway', 'Nakano Broadway', 'Nakano Broadway', 'The collectors’ mall and its Mandarake shops, floor by floor.', '/en/tokyo-anime-guide/nakano-broadway/')}
+${carte('en', 'sunshine-city', 'Sunshine City, Ikebukuro', 'Ikebukuro', 'Animate, Otome Road and Pokémon Center Mega Tokyo.', '/en/tokyo-anime-guide/ikebukuro/')}
 ${carte('en', 'kawaguchiko-sakura', 'Mount Fuji with cherry blossoms', 'First time in Japan', 'A calm private tour for first-timers and seniors, everything explained.', '/en/tokyo-anime-guide/first-time-japan/')}
 ${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim travelers', 'Halal-friendly food and prayer breaks built into the day.', '/en/muslim-guide-tokyo/')}
 ${carte('en', 'shibuya', 'Shibuya crossing', 'Travel agencies', 'Ground partner in English, French and Arabic.', '/en/tokyo-anime-guide/travel-agencies/')}
@@ -527,13 +527,13 @@ const EN_FAQ_OTAKU = [
 
 function enOtaku() {
   const barrios = [
-    ['akihabara-rue', 'Akihabara street', 'Akihabara', 'Card shops on every floor, figure towers, capsule toys and arcades. Best on a weekday morning, before the crowds.'],
+    ['akihabara-rue', 'Akihabara street', 'Akihabara', 'Card shops on every floor, figure towers, capsule toys and arcades. Best on a weekday morning, before the crowds.', '/en/tokyo-anime-guide/akihabara/'],
     ['super-potato', 'Super Potato, Akihabara', 'Retro games', 'Floors of classic consoles and cartridges, from the 8-bit era to the 2000s, plus a small retro arcade.'],
-    ['nakano-broadway', 'Nakano Broadway', 'Nakano Broadway', 'The collectors’ mall: rare figures, vintage toys, manga and cards, many in Mandarake shops.'],
-    ['sunshine-city', 'Sunshine City, Ikebukuro', 'Ikebukuro', 'Pokémon Center Mega Tokyo, the huge Animate flagship and Otome Road, the street for anime goods aimed at women fans.'],
+    ['nakano-broadway', 'Nakano Broadway', 'Nakano Broadway', 'The collectors’ mall: rare figures, vintage toys, manga and cards, many in Mandarake shops.', '/en/tokyo-anime-guide/nakano-broadway/'],
+    ['sunshine-city', 'Sunshine City, Ikebukuro', 'Ikebukuro', 'Pokémon Center Mega Tokyo, the huge Animate flagship and Otome Road, the street for anime goods aimed at women fans.', '/en/tokyo-anime-guide/ikebukuro/'],
     ['shibuya-parco', 'Shibuya PARCO', 'Shibuya PARCO 6F', 'Nintendo TOKYO, Pokémon Center Shibuya, Jump Shop and Capcom Store on one floor.'],
     ['character-street', 'Tokyo Character Street', 'Tokyo Station', 'Character Street: dozens of official character shops underground at Tokyo Station. Perfect on arrival or departure day.'],
-    ['odaiba', 'Odaiba', 'Odaiba', 'The life-size Unicorn Gundam statue at DiverCity Tokyo Plaza, with Tokyo Bay views.'],
+    ['odaiba', 'Odaiba', 'Odaiba', 'The life-size Unicorn Gundam statue was retired on 31 August 2026; The Gundam Base Tokyo at DiverCity remains, with Tokyo Bay views.'],
     ['big-sight', 'Tokyo Big Sight', 'Tokyo Big Sight', 'Home of Comic Market and big anime and game events. Check the event calendar for your dates.'],
     ['yotsugi', 'Yotsugi, Katsushika', 'Yotsugi', 'The neighborhood of a famous soccer manga, with character statues around the station area.'],
   ]
@@ -547,10 +547,10 @@ function enOtaku() {
 <p class="alt">Every anime, manga, card and retro-game district explained: what each one is for, when to go, the shop rules nobody tells you, and how to get it all home.</p>
 <p><a class="btn" href="${L.en.waGenel}">Plan my otaku day with Iheb</a></p>`)}
 <div class="kap">
-<p class="cevap">The best otaku areas in Tokyo are Akihabara (cards, figures, retro games), Nakano Broadway (rare collectibles) and Ikebukuro (Animate, Pokémon Center Mega Tokyo, Otome Road). Add Shibuya PARCO for Nintendo TOKYO, Tokyo Station’s Character Street, and Odaiba for the life-size Gundam. Iheb, a pop-culture and Pokémon card specialist who lives in Japan, plans the order, the trains and the shops for your group.</p>
+<p class="cevap">The best otaku areas in Tokyo are Akihabara (cards, figures, retro games), Nakano Broadway (rare collectibles) and Ikebukuro (Animate, Pokémon Center Mega Tokyo, Otome Road). Add Shibuya PARCO for Nintendo TOKYO, Tokyo Station’s Character Street, and The Gundam Base Tokyo in Odaiba. Iheb, a pop-culture and Pokémon card specialist who lives in Japan, plans the order, the trains and the shops for your group.</p>
 <div class="serit" aria-hidden="true"><div><span><i>★</i>Figures</span><span><i>★</i>Manga</span><span><i>★</i>Trading cards</span><span><i>★</i>Capsule toys</span><span><i>★</i>Arcades</span><span><i>★</i>Anime goods</span><span><i>★</i>Retro consoles</span><span><i>★</i>Figures</span><span><i>★</i>Manga</span><span><i>★</i>Trading cards</span><span><i>★</i>Capsule toys</span><span><i>★</i>Arcades</span><span><i>★</i>Anime goods</span><span><i>★</i>Retro consoles</span></div></div>
 <h2>The districts, one by one</h2>
-<ul class="izgara">${barrios.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
+<ul class="izgara">${barrios.map(([k, alt, t, p, h]) => carte('en', k, alt, t, p, h)).join('')}</ul>
 <h2>Real anime locations (day trips)</h2>
 <ul class="izgara">${peregrinaje.map(([k, alt, t, p]) => carte('en', k, alt, t, p)).join('')}</ul>
 <h2>Shop rules nobody tells you</h2>
@@ -576,7 +576,7 @@ ${faqHTML(EN_FAQ_OTAKU)}
 </div>`
   return ecrire('en/tokyo-anime-guide/otaku-guide', page({ lang: 'en', ruta: '/en/tokyo-anime-guide/otaku-guide/', alterna: 'otaku',
     titre: 'The Complete Otaku Guide to Tokyo: Akihabara, Nakano, Ikebukuro & More | Iheb',
-    desc: 'Every otaku district in Tokyo explained: Akihabara, Nakano Broadway, Ikebukuro, Shibuya PARCO, Character Street, Odaiba Gundam, Big Sight, anime locations. Shop rules, tax-free, shipping home. Private guide in English.',
+    desc: 'Every otaku district in Tokyo explained: Akihabara, Nakano Broadway, Ikebukuro, Shibuya PARCO, Character Street, Gundam Base, Big Sight, anime locations. Shop rules, tax-free, shipping home. Private guide in English.',
     image: imageDe('akihabara-rue'), jsonld: [faqLd(EN_FAQ_OTAKU)], corps }))
 }
 
@@ -845,7 +845,7 @@ ${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Tokyo Camii', 'Tokyo’s best-known
 ${carte('en', 'kawaguchiko-fuji', 'Mount Fuji and Lake Kawaguchi', 'Mt. Fuji', 'Lake Kawaguchi and the Fuji views, by private car if you prefer.')}
 ${carte('en', 'skytree', 'Tokyo Skytree', 'Tokyo Skytree', 'The whole city from above, by fast elevator.')}
 ${carte('en', 'akihabara', 'Akihabara', 'Anime & Pokémon', 'The district kids ask for, with a real specialist.', '/en/tokyo-anime-guide/otaku-guide/')}
-${carte('en', 'odaiba', 'Odaiba', 'Odaiba', 'Tokyo Bay, the life-size Gundam and big malls, easy for families.')}
+${carte('en', 'odaiba', 'Odaiba', 'Odaiba', 'Tokyo Bay, The Gundam Base and big malls, easy for families.')}
 ${carte('en', 'oshino-hakkai', 'Oshino Hakkai', 'Oshino Hakkai', 'Clear spring ponds in a village at the foot of Mt. Fuji.')}
 </ul>
 <h2>Good to know</h2>
@@ -865,5 +865,182 @@ ${faqHTML(EN_FAQ_MUSLIM)}
     image: imageDe('tokyo-camii'), jsonld: [faqLd(EN_FAQ_MUSLIM)], corps }))
 }
 
-const hechas = [enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ———— 6-11-2026: un barrio por página, en inglés, para otakus americanos ————
+// Akihabara, Nakano Broadway e Ikebukuro, cada uno con su equivalente francés
+// (IHEB_EQUIVALENTES). Solo datos ya comprobados en francais.mjs (Hareruya 2,
+// Mandarake, Super Potato, Animate, Pokémon Center Mega Tokyo) y sus fuentes.
+// Ninguna tienda de cartas más (Card Rush, Yuyu-tei… no tienen dirección oficial).
+const enBarrio = ({ yol, kapak, alt, etiqueta, h1, sub, cevap, secciones, faq, fuentes, fr, titre, desc, wa: texto }) => {
+  const enlace = wa(texto)
+  const ruta = `/en/tokyo-anime-guide/${yol}/`
+  const corps = `${hero('en', kapak, alt, `<p class="etiket"><a href="/en/tokyo-anime-guide/">Iheb</a> · ${etiqueta}</p>
+<h1>${h1}</h1>
+<p class="alt">${sub}</p>
+<p><a class="btn" href="${enlace}">Plan this day with Iheb</a></p>`)}
+<div class="kap">
+<p class="cevap">${cevap}</p>
+${secciones.map(([t, h]) => `<h2>${t}</h2>\n${h}`).join('\n')}
+<h2>FAQ</h2>
+${faqHTML(faq)}
+<p class="kaynak">Sources: ${fuentes.map(([t, u]) => `<a href="${u}" rel="nofollow">${esc(t)}</a>`).join(' · ')}. Opening hours change: check the official site before you go.</p>
+<p>Also on this site: <a href="/en/tokyo-anime-guide/otaku-guide/">the complete otaku guide to Tokyo</a> · <a href="${fr}" hreflang="fr">this page in French</a>.</p>
+<p>Pokémon is a trademark of Nintendo, Creatures and GAME FREAK; other names belong to their owners. This is an independent private tour, not affiliated with them.</p>
+<p><a class="btn" href="${enlace}">Message Iheb on WhatsApp</a></p>
+</div>`
+  const jsonld = [faqLd(faq), { '@type': 'BreadcrumbList', itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Tokyo anime guide', item: `${BASE}/en/tokyo-anime-guide/` },
+    { '@type': 'ListItem', position: 2, name: etiqueta, item: `${BASE}${ruta}` },
+  ] }]
+  return ecrire(ruta.slice(1, -1), page({ lang: 'en', ruta, alterna: 'otaku', titre, desc, image: imageDe(kapak), jsonld, corps }))
+}
+
+function enAkihabara() {
+  return enBarrio({
+    yol: 'akihabara', kapak: 'akihabara-rue', alt: 'Akihabara street', etiqueta: 'Akihabara',
+    fr: '/fr/akihabara-que-faire/',
+    wa: 'Hi Iheb, I read your Akihabara page and would like an otaku tour in Tokyo. Dates and group size: ',
+    titre: 'Akihabara Otaku Tour with a Private Guide: Cards, Figures & Retro Games | Iheb',
+    desc: 'Akihabara with a private English-speaking otaku guide: Hareruya 2 Pokémon card tower, figure buildings, Super Potato retro games, shop rules, tax-free. Half-day plan and tips. Price on WhatsApp.',
+    h1: 'Akihabara otaku tour with a private guide',
+    sub: 'Pokémon cards, figures, retro games and manga: the right buildings, the right floors, and someone who reads the Japanese labels for you.',
+    cevap: `Akihabara is the place to start an otaku trip to Tokyo: buildings full of figure and anime-goods shops, new and retro video games, manga, trading cards and big electronics stores, all around JR Akihabara Station on the Yamanote loop line. Plan half a day for the highlights and a full day if you are hunting specific cards or figures. Iheb, a private guide who lives in Japan and specializes in anime, Japanese pop culture and Pokémon card collecting, takes you straight to the shops that match your list and explains everything in English. Price per group on WhatsApp: ${WA_VISIBLE}.`,
+    secciones: [
+      ['What Akihabara is good for', `<ul class="ozet">
+<li><strong>Chuo-dori:</strong> the main avenue, lined with multi-story shop buildings.</li>
+<li><strong>Figures and anime goods:</strong> new and pre-owned, often sorted floor by floor by series.</li>
+<li><strong>Retro video games:</strong> Japanese consoles and cartridges from the 1980s and 1990s.</li>
+<li><strong>Trading cards:</strong> dozens of card shops, many of them upstairs with no shop window on the street.</li>
+<li><strong>Electronics:</strong> the big stores near the station, for a camera, a lens or accessories.</li>
+</ul>`],
+      ['Pokémon cards: Hareruya 2 Akihabara Tower Store', `<p>The big name for Pokémon cards in Akihabara is <strong>Hareruya 2 Akihabara Tower Store</strong>: a whole building dedicated to the Pokémon Trading Card Game (sealed product, single cards, accessories, a buy counter and daily events, plus rules lessons for beginners). It moved into the building on 1 February 2026 and stands at Ishimaru Building No. 3, 1-2-13 Sotokanda, about 3 minutes on foot from JR Akihabara Station. Hours announced at the opening were 10 am to 10 pm daily; check the official site before you go.</p>
+<p>Around it, many more card shops fill the upper floors of the neighborhood’s buildings. Every single card has its own price tag, and condition grades vary from shop to shop and are written in Japanese. On this site we only name shops whose address we have checked on an official source; on the day, Iheb points you to the ones that fit what you collect.</p>`],
+      ['Retro games and figures', `<ul class="ozet">
+<li><strong>Super Potato:</strong> the showcase of retro gaming in Akihabara, on the 3rd to 5th floors of its building about 4 minutes from the station, with a small retro arcade on 5F. The most complete selection, not the cheapest.</li>
+<li><strong>Book-Off and Sofmap:</strong> used games and consoles, often at lower prices.</li>
+<li><strong>Radio Kaikan:</strong> a whole building of figure, trading-card and model-kit shops, right by the Electric Town exit of the station.</li>
+<li><strong>Mandarake Complex:</strong> several floors of manga, anime goods, figures and vintage toys.</li>
+</ul>
+<p><strong>Before you buy a console:</strong> Japan runs on 100 V and uses its own regions. A Japanese Famicom cartridge does not fit an American NES, and Japanese Super Famicom games are not plug-and-play on a US Super Nintendo without an adapter. The simple route is to buy the Japanese console with the games, and check the power needs at home.</p>`],
+      ['A half-day in Akihabara', `<ol class="adimlar">
+<li>Arrive at JR Akihabara Station, Electric Town exit.</li>
+<li>Walk Chuo-dori and the figure buildings.</li>
+<li>One or two retro-game shops.</li>
+<li>Cards: Hareruya 2 and the upstairs shops.</li>
+</ol>
+<p>Then continue to <a href="/en/tokyo-anime-guide/nakano-broadway/">Nakano Broadway</a> (about 30 minutes by train) or <a href="/en/tokyo-anime-guide/ikebukuro/">Ikebukuro</a> for the Pokémon Center Mega Tokyo and Animate.</p>`],
+      ['Shop rules that save you time', `<ul class="ozet">
+<li>The best shops are often not on the ground floor: take the stairs or the small elevator. In Japan, 1F is the ground floor and 2F is one floor up.</li>
+<li>Many shops do not allow photos inside; look for the sign or ask.</li>
+<li>Do not touch cards in the display case: ask the staff to show them to you, and look at the front, back and edges of an expensive card under the light before paying.</li>
+<li>Tax-free: bring your passport and keep every receipt. Under the system in force since 1 November 2026, you pay the price with tax and get the tax back after the customs check when you leave Japan, from 5,000 yen before tax per store per day.</li>
+<li>Halal-friendly lunch or a place to pray: ask Iheb to build it into the day (<a href="/en/muslim-guide-tokyo/">Muslim-friendly Tokyo</a>).</li>
+</ul>`],
+      ['Why go with Iheb', `<p>Akihabara is easy to walk around and hard to read. Iheb knows Pokémon cards and Japanese pop culture professionally: he asks what you collect before you go in, translates labels and your questions to the staff, and keeps you from losing hours on the wrong floors. It is a private tour, just your family or friends, in English (he also guides in French and Arabic).</p>
+<p>Whether you fly in from the US, Canada, the UK or India, the whole plan, trains included, is explained in clear English.</p>`],
+    ],
+    faq: [
+      ['How long do I need in Akihabara?', 'Half a day for the essentials; a full day if you are looking for specific cards, figures or games.'],
+      ['Where is Hareruya 2 in Akihabara?', 'Hareruya 2 Akihabara Tower Store is at 1-2-13 Sotokanda (Ishimaru Building No. 3), about 3 minutes on foot from JR Akihabara Station. It has used the whole building since 1 February 2026.'],
+      ['Will Japanese retro games work in the US?', 'Not always: Famicom and Super Famicom games are not directly compatible with American consoles. Buying the Japanese console with the games is the safest choice.'],
+      ['Can I book an Akihabara tour with an English-speaking guide?', `Yes. Iheb guides private anime and Pokémon tours in Akihabara and Tokyo’s other otaku districts in English. Message him on WhatsApp: ${WA_VISIBLE}.`],
+    ],
+    fuentes: [['Hareruya 2: Akihabara Tower Store (official)', 'https://www.hareruya2.com/pages/lp_hareruya2_tower'], ['Super Potato Akihabara (official)', 'https://superpotatoakiba.jp/'], ['Mandarake (official)', 'https://www.mandarake.co.jp/']],
+  })
+}
+
+function enNakano() {
+  return enBarrio({
+    yol: 'nakano-broadway', kapak: 'nakano-broadway', alt: 'Nakano Broadway', etiqueta: 'Nakano Broadway',
+    fr: '/fr/nakano-broadway/',
+    wa: 'Hi Iheb, I read your Nakano Broadway page and would like a collectors’ tour in Tokyo. Dates and group size: ',
+    titre: 'Nakano Broadway Guide: Mandarake, Trading Cards & Vintage Collectibles | Iheb',
+    desc: 'Nakano Broadway, Tokyo’s collectors’ mall: the Mandarake shops floor by floor, the Card-kan on 2F, hours, how to get there from Akihabara. Private otaku tour in English with Iheb. Price on WhatsApp.',
+    h1: 'Nakano Broadway: the collectors’ mall, floor by floor',
+    sub: 'Vintage toys, rare figures, manga and trading cards in one building, many of them in the Mandarake shops. Here is how it works.',
+    cevap: `Nakano Broadway is a shopping arcade about 5 minutes on foot from the north exit of JR Nakano Station, west of central Tokyo. Its upper floors are packed with shops for collectors, above all the Mandarake shops: around thirty small specialist stores (manga, anime, figures, vintage toys), including the Card-kan for trading cards on 2F. Mandarake opens every day from noon to 8 pm. From Akihabara it is about 30 minutes by train, so the two fit in the same day. Iheb, a private guide in Tokyo who specializes in anime and Pokémon card collecting, can plan it for your group: ${WA_VISIBLE}.`,
+    secciones: [
+      ['Mandarake, floor by floor', `<ul class="ozet">
+<li><strong>2F:</strong> most of the Mandarake shops, including the Card-kan (trading cards), plus toy, figure and cosplay shops.</li>
+<li><strong>3F:</strong> the Mandarake buy counter and the main shop.</li>
+<li><strong>4F:</strong> the Anime-kan and other specialist shops, and the service counter.</li>
+</ul>
+<p>Remember that in Japan 1F is the ground floor, so 2F is one floor up. The ground floor is mostly everyday shops and food; the collectors’ world starts upstairs.</p>`],
+      ['Practical info', `<ul class="ozet">
+<li><strong>Address:</strong> 5-52-15 Nakano, Nakano-ku, Tokyo.</li>
+<li><strong>Getting there:</strong> JR Chuo Line to Nakano Station, north exit, then about 5 minutes on foot through the covered shopping street.</li>
+<li><strong>Mandarake hours:</strong> noon to 8 pm, every day; the buy counter takes items until 7:30 pm.</li>
+<li><strong>Best time:</strong> arrive around noon, when the shops open, and leave time to go back to a shop after you have compared prices.</li>
+</ul>`],
+      ['What collectors come for', `<p>Akihabara has the biggest choice of new goods and card shops; Nakano is where older and rarer items turn up. Think vintage toys, out-of-print manga and art books, figures from series that ended years ago, and single trading cards at the Card-kan. Each Mandarake shop has its own specialty, so it pays to know what you are looking for before you go up the escalator.</p>
+<p>Prices and condition notes are mostly in Japanese. Iheb reads them for you, explains the grading words, and asks the staff the questions you would not know how to ask: whether a box is complete, whether an item can be taken out of the case, whether the shop ships abroad.</p>`],
+      ['Nakano and Akihabara in one day', `<ol class="adimlar">
+<li>Morning in <a href="/en/tokyo-anime-guide/akihabara/">Akihabara</a>: cards, figures, retro games.</li>
+<li>Lunch on the way (halal-friendly options on request).</li>
+<li>About 30 minutes by train west to Nakano.</li>
+<li>Afternoon at Nakano Broadway, from noon opening onwards.</li>
+</ol>
+<p>Prefer something else in the afternoon? <a href="/en/tokyo-anime-guide/ikebukuro/">Ikebukuro</a> has the Pokémon Center Mega Tokyo and the Animate flagship.</p>`],
+      ['Shop etiquette', `<ul class="ozet">
+<li>Many shops in Nakano Broadway do not allow photos of their cases. Look for the sign or ask first.</li>
+<li>Ask staff to take items out of locked cases; do not open boxes yourself.</li>
+<li>Keep every receipt for the tax refund at departure (passport needed, from 5,000 yen before tax per store per day).</li>
+<li>Big purchases: shops pack figures well, and you can post large boxes home by EMS or send your suitcase ahead to the airport.</li>
+</ul>`],
+      ['Why go with Iheb', `<p>Iheb lives in Japan and works with anime and Pokémon cards professionally. In a building where everything is small, upstairs and labeled in Japanese, that saves real time. The tour is private (just your group), in English, and also available in French and Arabic. Fans from the US, Canada, the UK, India and Europe get the whole day planned for them, trains included.</p>`],
+    ],
+    faq: [
+      ['How do I get to Nakano Broadway?', 'Take the JR Chuo Line to Nakano Station, use the north exit and walk about 5 minutes. From Akihabara it is about 30 minutes by train.'],
+      ['What time does Mandarake open in Nakano?', 'The Mandarake shops in Nakano Broadway are open from noon to 8 pm, every day.'],
+      ['Can I find Pokémon cards at Nakano Broadway?', 'Yes, in particular at Mandarake’s Card-kan on 2F, which specializes in trading cards.'],
+      ['Is Nakano Broadway worth it if I already did Akihabara?', 'Yes, for collectors: Akihabara is stronger on new goods and card shops, Nakano on older and rarer items. They complement each other well in one day.'],
+    ],
+    fuentes: [['Mandarake Nakano: shop map (official)', 'https://www.mandarake.co.jp/dir/nkn/']],
+  })
+}
+
+function enIkebukuro() {
+  return enBarrio({
+    yol: 'ikebukuro', kapak: 'sunshine-city', alt: 'Sunshine City, Ikebukuro', etiqueta: 'Ikebukuro',
+    fr: '/fr/ikebukuro-anime/',
+    wa: 'Hi Iheb, I read your Ikebukuro page and would like an anime tour in Tokyo. Dates and group size: ',
+    titre: 'Ikebukuro for Anime Fans: Animate, Otome Road & Pokémon Center Mega Tokyo | Iheb',
+    desc: 'Ikebukuro for anime fans: the Animate Ikebukuro flagship, Otome Road, Sunshine City with Pokémon Center Mega Tokyo and Pikachu Sweets. Addresses, hours, half-day plan. Private guide in English.',
+    h1: 'Ikebukuro for anime fans: Animate, Otome Road and Pokémon Center Mega Tokyo',
+    sub: 'Anime goods, manga, Otome Road and Tokyo’s biggest Pokémon Center, all a few minutes from the east exit of Ikebukuro Station.',
+    cevap: `In Ikebukuro, anime Tokyo fits into a few streets east of the station: Animate Ikebukuro, a huge anime and manga store at 1-20-7 Higashi-Ikebukuro (10 am to 9 pm); the street nicknamed Otome Road, with manga and anime-goods shops aimed mostly at women fans; and the Sunshine City complex, home to the Pokémon Center Mega Tokyo and Pikachu Sweets (Alpa, 2F). Plan half a day. Iheb, a private guide who lives in Japan and specializes in anime and Pokémon cards, can combine it with Akihabara or Nakano in one day: ${WA_VISIBLE}.`,
+    secciones: [
+      ['The addresses', `<ul class="ozet">
+<li><strong>Animate Ikebukuro:</strong> 1-20-7 Higashi-Ikebukuro, Toshima-ku, 10 am to 9 pm. Presented as the largest Animate store; it reopened in 2023 after renovation and spreads over about ten levels.</li>
+<li><strong>Otome Road:</strong> the street along Sunshine City, known for its manga and anime-goods shops aimed mostly at women fans.</li>
+<li><strong>Pokémon Center Mega Tokyo and Pikachu Sweets:</strong> Sunshine City Alpa, 2F, 3-1-2 Higashi-Ikebukuro. Often described as the largest Pokémon Center in Tokyo.</li>
+</ul>`],
+      ['A half-day in Ikebukuro', `<ol class="adimlar">
+<li>East exit of Ikebukuro Station.</li>
+<li>Animate Ikebukuro, floor by floor.</li>
+<li>A walk along Otome Road.</li>
+<li>Sunshine City: Pokémon Center Mega Tokyo, then a break at Pikachu Sweets.</li>
+</ol>
+<p>Ikebukuro pairs well with <a href="/en/tokyo-anime-guide/akihabara/">Akihabara</a> in the morning or <a href="/en/tokyo-anime-guide/nakano-broadway/">Nakano Broadway</a>, which opens at noon.</p>`],
+      ['Pokémon Center Mega Tokyo: what to expect', `<p>The Pokémon Centers sell plush, goods and sealed Trading Card Game products (booster packs, boxes, accessories). The most wanted new releases are often limited per person, and sometimes sold by lottery for the right to buy. Single cards are not what the Pokémon Centers are for: for those, go to the specialist shops of Akihabara (Hareruya 2) or Mandarake’s Card-kan in Nakano.</p>
+<p>Tokyo has five official Pokémon stores: Mega Tokyo (Ikebukuro), Tokyo DX with the Pokémon Café (Nihonbashi Takashimaya), Shibuya (PARCO 6F), Skytree Town (Solamachi) and the Pokémon Store at Tokyo Station. The Pokémon Café is by reservation only, so book before your trip.</p>`],
+      ['Tips for the day', `<ul class="ozet">
+<li>Weekday mornings are calmer; weekends and school holidays get very busy at Sunshine City.</li>
+<li>In Japan, 1F is the ground floor and 2F is one floor up.</li>
+<li>Ask before taking photos inside shops.</li>
+<li>Bring your passport for tax-free shopping and keep every receipt: the tax is refunded after the customs check at departure, from 5,000 yen before tax per store per day.</li>
+<li>Muslim travelers: Iheb can plan a halal-friendly lunch and prayer breaks (<a href="/en/muslim-guide-tokyo/">Muslim-friendly Tokyo</a>).</li>
+</ul>`],
+      ['Why go with Iheb', `<p>Animate alone can take hours if you do not know which floor holds your series. Iheb works with anime, Japanese pop culture and Pokémon cards professionally, plans the route between districts, and translates labels and questions. The tour is private, in English (also French and Arabic), and built around what your group loves. It suits families with Pokémon-loving kids as much as serious collectors, from the US and Canada to the UK and India.</p>`],
+    ],
+    faq: [
+      ['Where is Animate Ikebukuro?', 'At 1-20-7 Higashi-Ikebukuro, east of Ikebukuro Station; open 10 am to 9 pm.'],
+      ['What is Otome Road?', 'A street in Ikebukuro, along Sunshine City, known for manga and anime-goods shops aimed mostly at women fans.'],
+      ['Where is the Pokémon Center Mega Tokyo?', 'In Sunshine City, on 2F of the Alpa shopping mall, 3-1-2 Higashi-Ikebukuro, Ikebukuro.'],
+      ['Can I buy single Pokémon cards in Ikebukuro?', 'The Pokémon Center sells sealed products. For single cards, specialist shops in Akihabara (such as Hareruya 2) and Nakano Broadway (Mandarake Card-kan) are the better choice.'],
+    ],
+    fuentes: [['Animate Ikebukuro (official)', 'https://www.animate.co.jp/shop/ikebukuro/'], ['Pokémon: official store list', 'https://www.pokemon.co.jp/shop/en/']],
+  })
+}
+
+const hechas = [enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)

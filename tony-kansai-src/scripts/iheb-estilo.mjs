@@ -114,3 +114,78 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
   .guide .portrait,.tcg{transform:none}
 }
 `
+
+// ——— Idiomas de Iheb: selector visible + hreflang con países (6-11-2026) ———
+// Iheb pidió un selector como el de la cabecera de Tony (Français · العربية · English)
+// que lleve a la MISMA página en el otro idioma cuando existe; si no, a la portada
+// de ese idioma. Las mismas parejas dan los hreflang (página y sitemap), con
+// variantes por país para que Google sirva cada idioma en su mercado:
+// francés → Francia, Bélgica, Luxemburgo, Suiza, Canadá (Québec);
+// árabe → Golfo (Catar, EAU, Arabia Saudí, Baréin, Omán, Kuwait);
+// inglés → EE. UU., Canadá, Reino Unido, India, Suiza, Países Bajos.
+export const IHEB_IDIOMAS = ['fr', 'ar', 'en']
+const NOMBRE_IDIOMA = { fr: 'Français', ar: 'العربية', en: 'English' }
+export const IHEB_INICIO = { fr: '/fr/', ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/' }
+export const IHEB_REGIONES = { fr: ['FR', 'BE', 'LU', 'CH', 'CA'], ar: ['QA', 'AE', 'SA', 'BH', 'OM', 'KW'], en: ['US', 'CA', 'GB', 'IN', 'CH', 'NL'] }
+// Los mismos mercados con nombre, para schema.org (audience.geographicArea).
+export const IHEB_PAISES = {
+  fr: ['France', 'Belgium', 'Luxembourg', 'Switzerland', 'Canada'],
+  ar: ['Qatar', 'United Arab Emirates', 'Saudi Arabia', 'Bahrain', 'Oman', 'Kuwait'],
+  en: ['United States', 'Canada', 'United Kingdom', 'India', 'Switzerland', 'Netherlands'],
+}
+
+// Páginas equivalentes (una por idioma como mucho). Una página que no está aquí
+// forma su propio grupo de un solo idioma: hreflang a sí misma con sus países.
+// Los formularios de reseñas (noindex) solo usan el selector, sin hreflang.
+export const IHEB_EQUIVALENTES = [
+  { fr: '/fr/', ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/' },
+  { fr: '/fr/guide-anime-tokyo/', ar: '/ar/tokyo/anime-pokemon/', en: '/en/tokyo-anime-guide/otaku-guide/' },
+  { fr: '/fr/halal-mosquees-tokyo/', ar: '/ar/tokyo/halal-masajid/', en: '/en/muslim-guide-tokyo/' },
+  { fr: '/fr/guide-francophone-agences-voyage/', ar: '/ar/tokyo/wakalat/', en: '/en/tokyo-anime-guide/travel-agencies/' },
+  { fr: '/fr/avis/', ar: '/ar/tokyo/taqyim/', en: '/en/tokyo-anime-guide/review/' },
+  { fr: '/fr/tokyo-quebec-canada/', en: '/en/tokyo-anime-guide/first-time-japan/' },
+  { ar: '/ar/tokyo/fakhira/', en: '/en/arabic-speaking-guide-tokyo/' },
+  { fr: '/fr/akihabara-que-faire/', en: '/en/tokyo-anime-guide/akihabara/' },
+  { fr: '/fr/nakano-broadway/', en: '/en/tokyo-anime-guide/nakano-broadway/' },
+  { fr: '/fr/ikebukuro-anime/', en: '/en/tokyo-anime-guide/ikebukuro/' },
+]
+{
+  // Una ruta en dos grupos rompería la reciprocidad: mejor fallar en el build.
+  const vistas = new Set()
+  for (const g of IHEB_EQUIVALENTES) for (const r of Object.values(g)) {
+    if (vistas.has(r)) throw new Error(`iheb-estilo: ${r} está en dos grupos de IHEB_EQUIVALENTES`)
+    vistas.add(r)
+  }
+}
+const grupoDe = (ruta, lang) => IHEB_EQUIVALENTES.find((g) => Object.values(g).includes(ruta)) ?? { [lang]: ruta }
+
+/** [hreflang, ruta] del grupo de una página: idioma, idioma-país y x-default (la inglesa). */
+export function ihebAlternas(ruta, lang) {
+  const g = grupoDe(ruta, lang)
+  const filas = IHEB_IDIOMAS.filter((l) => g[l]).flatMap((l) => [[l, g[l]], ...IHEB_REGIONES[l].map((p) => [`${l}-${p}`, g[l]])])
+  return [...filas, ['x-default', g.en ?? g.fr ?? g.ar]]
+}
+export const ihebHreflang = (ruta, lang, base = 'https://tonykansaiguide.com') =>
+  ihebAlternas(ruta, lang).map(([hl, r]) => `<link rel="alternate" hreflang="${hl}" href="${base}${r}">`).join('\n')
+
+/** Selector de idioma: el activo no es enlace (aria-current), los otros llevan a la equivalente. */
+export function ihebIdiomas(ruta, lang) {
+  const g = grupoDe(ruta, lang)
+  const etiqueta = { fr: 'Langue', ar: 'اللغة', en: 'Language' }[lang]
+  return `<nav class="idiomas" aria-label="${etiqueta}">${IHEB_IDIOMAS.map((l) => {
+    const atr = `lang="${l}"${l === 'ar' ? ' dir="rtl"' : ''}`
+    return l === lang
+      ? `<span ${atr} aria-current="page">${NOMBRE_IDIOMA[l]}</span>`
+      : `<a ${atr} hreflang="${l}" href="${g[l] ?? IHEB_INICIO[l]}">${NOMBRE_IDIOMA[l]}</a>`
+  }).join('')}</nav>`
+}
+// Pastillas con sombra dura (estilo anime). Con colores de reserva para los
+// formularios de reseñas, que no cargan ANIME_CSS.
+export const IHEB_IDIOMAS_CSS = `
+.idiomas{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.idiomas a,.idiomas span{display:inline-block;padding:3px 12px;border:2px solid var(--cizgi,#16132a);border-radius:999px;font-weight:800;font-size:14px;line-height:1.5;text-decoration:none;color:var(--fg,#16132a);background:var(--kart,#fff);white-space:nowrap}
+.idiomas a:hover{background:var(--gok,#3ec5ff);color:#16132a}
+.idiomas [aria-current]{background:var(--sol,#ffd23f);color:#16132a;box-shadow:2px 2px 0 #16132a}
+.idiomas [lang=ar]{font-family:Tajawal,system-ui,sans-serif}
+header .idiomas{margin-inline-start:auto}
+@media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}`

@@ -10,6 +10,7 @@ import { readFileSync, writeFileSync } from 'node:fs'
 import { execFileSync } from 'node:child_process'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { ihebAlternas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -40,7 +41,7 @@ const paginas = [
   { loc: '/ru', priority: '1.0', changefreq: 'weekly', v7: 'larion' },
   { loc: '/larion', priority: '0.9', changefreq: 'weekly', v7: 'larion' },
   // Iheb en árabe y en inglés (público americano): scripts/iheb.mjs.
-  ...['/ar/tokyo', '/ar/tokyo/halal-masajid', '/ar/tokyo/anime-pokemon', '/ar/tokyo/wakalat', '/en/tokyo-anime-guide', '/en/tokyo-anime-guide/travel-agencies', '/en/tokyo-anime-guide/otaku-guide', '/en/tokyo-anime-guide/first-time-japan', '/fr/tokyo-quebec-canada', '/ar/tokyo/fakhira', '/en/arabic-speaking-guide-tokyo', '/en/muslim-guide-tokyo'].map((loc) => ({ loc, priority: '0.9', changefreq: 'monthly', v7: 'iheb' })),
+  ...['/ar/tokyo', '/ar/tokyo/halal-masajid', '/ar/tokyo/anime-pokemon', '/ar/tokyo/wakalat', '/en/tokyo-anime-guide', '/en/tokyo-anime-guide/travel-agencies', '/en/tokyo-anime-guide/otaku-guide', '/en/tokyo-anime-guide/akihabara', '/en/tokyo-anime-guide/nakano-broadway', '/en/tokyo-anime-guide/ikebukuro', '/en/tokyo-anime-guide/first-time-japan', '/fr/tokyo-quebec-canada', '/ar/tokyo/fakhira', '/en/arabic-speaking-guide-tokyo', '/en/muslim-guide-tokyo'].map((loc) => ({ loc, priority: '0.9', changefreq: 'monthly', v7: 'iheb' })),
   // Iheb, guía francófono (Tokio, Kanto, Nagano, Shizuoka): HTML estático de scripts/francais.mjs.
   { loc: '/fr', priority: '1.0', changefreq: 'weekly', v7: 'francais' },
   ...['tokyo', 'kamakura', 'nikko', 'hakone-mont-fuji', 'nagano', 'shizuoka', 'guide-francophone-japon', 'que-faire-a-tokyo', 'excursion-mont-fuji-depuis-tokyo', 'aeroport-narita-haneda-tokyo', 'itineraire-japon-2-semaines', 'quand-partir-japon', 'visa-japon', 'halal-mosquees-tokyo', 'jr-pass-ou-suica', 'budget-tokyo', 'argent-liquide-carte-japon', 'nikko-ou-hakone', 'voir-le-mont-fuji', 'guide-prive-tokyo-prix', 'tokyo-en-famille', 'avis-clients', 'french-speaking-guide-japan', 'guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'pokemon-center-tokyo', 'pokemon-cafe-reservation', 'musee-ghibli-reservation', 'akihabara-que-faire', 'nakano-broadway', 'ikebukuro-anime', 'pelerinage-anime-tokyo', 'japon-otaku-que-faire', 'shibuya-parco-nintendo-pokemon', 'one-piece-tokyo', 'olive-et-tom-captain-tsubasa-tokyo', 'gundam-odaiba', 'jeux-retro-figurines-akihabara', 'evenements-anime-tokyo', 'cartes-pokemon-japonaises-ou-francaises', 'detaxe-douane-japon', 'guide-francophone-agences-voyage', 'feuilles-automne-tokyo', 'cerisiers-tokyo-2027'].map((c) => ({ loc: `/fr/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'francais' })),
@@ -208,6 +209,12 @@ const url = ({ loc, priority, changefreq, v7 }) => {
       : tipo === 'ciudadLarion' ? [['ru', `/ru/${ciudad}/`], ['en', `/larion/${ciudad}/`]]
       : tipo === 'ventajaApp' ? [['es', `/es/ventajas/${ciudad}/`], ['en', `/en/perks/${ciudad}/`], ['ar', `/ar/perks/${ciudad}/`], ['ru', `/ru/perks/${ciudad}/`]]
       : V7[v7 === true ? 'portada' : v7]
+    // Iheb (fr/ar/en): sus grupos con variantes por país, los mismos que en cada página.
+    if (tipo === 'iheb' || tipo === 'francais') {
+      const lang = conBarra.startsWith('/ar/') ? 'ar' : conBarra.startsWith('/en/') || conBarra === '/fr/french-speaking-guide-japan/' ? 'en' : 'fr'
+      const alt = ihebAlternas(conBarra, lang).map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
+      return `  <url>\n    <loc>${abs}</loc>${alt}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
+    }
     return `  <url>\n    <loc>${abs}</loc>${hreflangs(grupo)}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
   }
   const alternates = loc.endsWith('.html') ? '' : LANGS.map((l) =>

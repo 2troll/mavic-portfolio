@@ -34,7 +34,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES, ANIME_JS } from './iheb-estilo.mjs'
+import { ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1059,7 +1059,8 @@ ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{backg
 .iheb-mini img{width:96px;height:96px;border-radius:50%;object-fit:cover;flex:none}.iheb-mini p{margin:0}.iheb-mini .btn{margin:8px 0 0}`
 
 function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
-  const url = `${BASE}/fr/${yol ? `${yol}/` : ''}`
+  const ruta = `/fr/${yol ? `${yol}/` : ''}`
+  const url = `${BASE}${ruta}`
   return `<!doctype html>
 <html lang="${lang}" data-estatica="francais">
 <head>
@@ -1069,7 +1070,7 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
 <link rel="canonical" href="${url}">
-<link rel="alternate" hreflang="${lang}" href="${url}">${yol === '' ? `\n<link rel="alternate" hreflang="en" href="${BASE}/fr/${ANGLAIS}/">` : ''}${yol === ANGLAIS ? `\n<link rel="alternate" hreflang="fr" href="${BASE}/fr/">` : ''}
+${ihebHreflang(ruta, lang, BASE)}
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Tony Kansai Guide">
 <meta property="og:locale" content="${lang === 'en' ? 'en_US' : 'fr_FR'}">
@@ -1084,10 +1085,11 @@ function page({ yol, titre, desc, image, jsonld, corps, lang = 'fr' }) {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
 ${ANIME_FUENTES}
-<style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}</style>
+<style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
+${ihebIdiomas(ruta, lang)}
 ${navHTML({ etiqueta: 'Menu principal', abrir: 'Ouvrir le menu', variante: 'fr', grupos: [
   { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
   { t: 'Infos pratiques', enlaces: [...REPONSES.slice(0, 6).map((c) => [esc(c.h1), `/fr/${c.yol}/`]), ...ANIME.slice(0, 2).map((c) => [esc(c.h1), `/fr/${c.yol}/`])] },
@@ -1135,7 +1137,7 @@ const serviceLd = (ville) => ({
   '@type': 'Service', name: ville ? `Visite privée en français ${ville.a}` : 'Visite guidée privée en français à Tokyo, dans le Kanto, à Nagano et à Shizuoka',
   serviceType: 'Guide touristique privé', provider: { '@id': `${BASE}/fr/#iheb` }, availableLanguage: ['fr', 'ar', 'en'],
   areaServed: (ville ? [ville] : VILLES).map((s) => ({ '@type': 'Place', name: s.ad, containedInPlace: { '@type': 'Country', name: 'Japon' } })),
-  audience: { '@type': 'Audience', audienceType: 'Voyageurs francophones' },
+  audience: { '@type': 'Audience', audienceType: 'Voyageurs francophones (France, Belgique, Luxembourg, Suisse, Québec et Canada)', geographicArea: IHEB_PAISES.fr.map((name) => ({ '@type': 'Country', name })) },
   url: `${BASE}/fr/${ville ? `${ville.yol}/` : ''}`,
 })
 const ficheRapide = () => `<aside class="fiche" aria-labelledby="fiche-rapide">
@@ -1207,6 +1209,7 @@ ${contact}
 <li><strong>Spécialités :</strong> anime, culture pop japonaise, cartes Pokémon (collection).</li>
 <li><strong>Où :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
 <li><strong>Formule :</strong> visite privée, uniquement votre famille ou votre groupe.</li>
+<li><strong>Pour qui :</strong> les voyageurs de France, de Belgique, de Suisse, du Luxembourg et du Québec, et tous les francophones.</li>
 <li><strong>Tarif :</strong> communiqué sur WhatsApp selon le groupe et le programme. Transports, entrées et repas généralement non compris.</li>
 <li><strong>Voyageurs musulmans :</strong> restaurants halal ou Muslim friendly, mosquées et pauses prière peuvent être prévus.</li>
 <li><strong>Contact :</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>

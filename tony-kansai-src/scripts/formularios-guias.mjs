@@ -13,6 +13,7 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
+import { IHEB_IDIOMAS_CSS, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
@@ -198,6 +199,14 @@ html.easy .yildiz button.on{color:#e3a400}
   )
 }
 
+// 6-11-2026: los tres formularios de Iheb llevan su selector de idioma (fr · ar · en).
+for (const f of FORMULARIOS) if (f.guia === 'iheb') f.idiomas = ihebIdiomas(`/${f.ruta}/`, f.lang)
+// Colores del formulario (no los del estilo anime), también en modo oscuro.
+const IDIOMAS_FORM_CSS = `${IHEB_IDIOMAS_CSS}
+.idiomas{justify-content:center;padding:12px 16px 0}
+.idiomas a,.idiomas span{color:var(--tinta);background:var(--kart);border-color:var(--acento)}
+.idiomas [aria-current]{background:var(--acento);color:#fff;box-shadow:none}`
+
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 function html(f) {
@@ -240,12 +249,12 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 .uyari.on{display:block}
 .tamam{display:none;text-align:center}.tamam.on{display:block}
 .tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
-.gizli{position:absolute;inset-inline-start:0;width:1px!important;height:1px!important;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;opacity:0}${f.css ? '\n' + f.css : ''}
+.gizli{position:absolute;inset-inline-start:0;width:1px!important;height:1px!important;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;opacity:0}${f.css ? '\n' + f.css : ''}${f.idiomas ? IDIOMAS_FORM_CSS : ''}
 </style>
 </head>
 <body>
 <div class="serit">${f.inicio ? `<a href="${f.inicio}">${esc(f.serit)}</a>` : esc(f.serit)}</div>
-<main class="kap">
+${f.idiomas ?? ''}<main class="kap">
 <div class="kart">
 <form id="form" novalidate>
 ${f.ante ? `<p class="ante">${esc(f.ante)}</p>\n` : ''}<h1>${esc(t.titulo)}</h1>
