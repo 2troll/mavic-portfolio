@@ -12,7 +12,9 @@
 //
 // Reglas de contenido (6-11-2026, Tony):
 // - De Max solo consta: ruso, con pasaporte ruso, acompañante de todos los viajes
-//   a la RPDC. Nada de apellido, edad, foto, años de experiencia ni reseñas.
+//   a la RPDC. Nada de apellido, edad, años de experiencia ni reseñas. Foto: desde el
+//   7-11-2026 Tony la manda; va en public/ru/maks/foto/maks-{320,640}.webp (si falta,
+//   la tarjeta muestra la inicial).
 // - Contacto: Telegram de Tony (@LUiGi19), que coordina. Botón «Записаться в группу»
 //   arriba, en medio y abajo de cada página.
 // - Modelo: grupos de 15 personas (también parejas). Sin cifras falsas de plazas.
@@ -426,6 +428,53 @@ const CSS_GRUPO = `
 .pasos li::before{content:counter(p);display:inline-grid;place-items:center;width:30px;height:30px;margin-bottom:8px;border-radius:50%;background:#229ED9;color:#fff;font:600 15px/1 var(--mono)}
 @media (max-width:420px){.plazas{gap:4px}}`
 
+// Movimiento (public/ru/kndr/movimiento.js) y la portada de Max (/ru/maks/).
+// .mov solo existe con JS y sin «reducir movimiento».
+const CSS_MOV = `
+.progreso{position:fixed;inset:0 0 auto;height:3px;background:linear-gradient(90deg,var(--acento),#f2b544);transform:scaleX(0);transform-origin:0 50%;z-index:60}
+.pal{display:inline-block;overflow:hidden;vertical-align:bottom;padding-bottom:.08em}.pal>span{display:inline-block}
+.heroe img{will-change:transform}
+.btn{will-change:transform}
+.hm{position:relative;overflow:hidden;color:#fff;background:#0b1222;isolation:isolate}
+.hm::before,.hm::after{content:"";position:absolute;inset:-30%;z-index:-1;filter:blur(60px);opacity:.75;background:radial-gradient(40% 35% at 20% 30%,#b8322a 0,transparent 70%),radial-gradient(35% 30% at 80% 20%,#2b59c3 0,transparent 70%),radial-gradient(30% 30% at 60% 80%,#f2b544 0,transparent 70%);animation:aurora 18s ease-in-out infinite alternate}
+.hm::after{opacity:.35;animation-duration:26s;animation-direction:alternate-reverse}
+@keyframes aurora{0%{transform:translate3d(0,0,0) rotate(0)}50%{transform:translate3d(4%,-3%,0) rotate(8deg)}100%{transform:translate3d(-4%,3%,0) rotate(-6deg)}}
+@media (prefers-reduced-motion:reduce){.hm::before,.hm::after{animation:none}}
+.hm .kap{display:grid;grid-template-columns:1.25fr .9fr;gap:40px;align-items:center;padding-block:72px 64px}
+.hm .ceja{color:#ffb3ad}.hm .lead{font-size:19px;color:rgba(255,255,255,.88);max-width:56ch}
+.hm .izq{display:grid;gap:20px}
+.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;counter-reset:p}
+.pasos li{counter-increment:p;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);border-radius:14px;padding:12px 14px;font-size:14px;line-height:1.4;backdrop-filter:blur(6px)}
+.pasos li::before{content:counter(p);display:grid;place-items:center;width:28px;height:28px;margin-bottom:8px;border-radius:50%;background:#fff;color:#0b1222;font:700 13px var(--disp)}
+.pasos strong{display:block;font-family:var(--disp);font-weight:500;font-size:15px}
+.perfil{perspective:900px;transform-style:preserve-3d;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);border-radius:24px;padding:22px;display:grid;gap:14px;box-shadow:0 30px 80px rgba(0,0,0,.35);backdrop-filter:blur(10px)}
+.perfil .cara{width:100%;aspect-ratio:1;border-radius:18px;overflow:hidden;background:conic-gradient(from 200deg,#b8322a,#f2b544,#2b59c3,#b8322a);display:grid;place-items:center}
+.perfil .cara img{width:100%;height:100%;object-fit:cover;display:block}
+.perfil .cara span{font:700 clamp(64px,10vw,120px)/1 var(--disp);color:#fff;text-shadow:0 6px 30px rgba(0,0,0,.3)}
+.perfil .nombre{display:flex;justify-content:space-between;align-items:baseline;gap:8px}.perfil .nombre b{font:700 24px var(--disp)}
+.perfil .chips{display:flex;flex-wrap:wrap;gap:6px}.perfil .chips span{font:500 12px/1 var(--mono);padding:7px 10px;border-radius:999px;background:rgba(255,255,255,.14)}
+.perfil .verde{color:#7ee2a8;font:500 12px var(--mono)}
+.cifras{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;padding:0;margin:0;list-style:none}
+.cifras li{background:var(--papel);border:1px solid var(--linea);border-radius:18px;padding:18px}
+.cifras b{display:block;font:700 clamp(30px,5vw,44px)/1 var(--disp);color:var(--acento)}
+.cifras span{font-size:14px;color:var(--suave)}
+.tarjetas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.tarjetas article{background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:22px;display:grid;gap:10px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.tarjetas article:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(20,33,58,.14)}
+.tarjetas .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--chip);font-size:22px}
+.cinta{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
+.cinta .pista{display:flex;gap:14px;width:max-content;padding-block:6px}
+.cinta a{position:relative;display:block;width:260px;aspect-ratio:4/3;border-radius:18px;overflow:hidden;color:#fff;text-decoration:none;flex:none}
+.cinta a img{width:100%;height:100%;object-fit:cover;transition:transform .6s}.cinta a:hover img{transform:scale(1.07)}
+.cinta a span{position:absolute;inset:auto 0 0;padding:28px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,.75));font:500 14px/1.3 var(--disp)}
+.cinta a small{display:block;font:500 11px var(--mono);opacity:.85;margin-top:4px}
+.cierre{border-radius:26px;padding:clamp(28px,5vw,56px);background:#0b1222;color:#fff;position:relative;overflow:hidden;isolation:isolate;display:grid;gap:16px}
+.cierre::before{content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(35% 35% at 30% 40%,#b8322a,transparent 70%),radial-gradient(30% 30% at 75% 60%,#2b59c3,transparent 70%);filter:blur(50px);opacity:.7;animation:aurora 20s ease-in-out infinite alternate}
+.cierre h2{font-size:clamp(24px,4vw,38px);font-weight:700}
+@media (max-width:860px){.hm .kap{grid-template-columns:1fr;padding-block:48px}.perfil{max-width:380px}.cifras{grid-template-columns:repeat(2,1fr)}.tarjetas{grid-template-columns:1fr}}
+@media (max-width:520px){.pasos{grid-template-columns:1fr}}
+`
+
 function pagina({ yol, ruta, titulo, desc, fotoOg, jsonld, cuerpo }) {
   const url = ruta ? `${BASE}${ruta}` : `${BASE}/ru/kndr/${yol ? `${yol}/` : ''}`
   return `<!doctype html>
@@ -451,7 +500,7 @@ function pagina({ yol, ruta, titulo, desc, fotoOg, jsonld, cuerpo }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Unbounded:wght@500;700&display=swap">
 ${equipoFuente}
-<style>${CSS}${CSS_GRUPO}${equipoCSS}${menuCSS}</style>
+<style>${CSS}${CSS_GRUPO}${CSS_MOV}${equipoCSS}${menuCSS}</style>
 </head>
 <body>
 <header class="top"><div class="kap"><a class="marca" href="/ru/kndr/">КНДР с Максом</a>
@@ -475,6 +524,10 @@ ${cuerpo}
   fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Обновлено: ${HOY}</span>`,
 })}</footer>
 <a class="wa-fijo" href="${TG_URL}" aria-label="Записаться в группу в Telegram ${TG_VISIBLE}: ${TG_NOTA}">${TG_ICONO} Записаться в группу</a>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
+<script src="/ru/kndr/movimiento.js" defer></script>
 </body>
 </html>
 `
@@ -674,10 +727,48 @@ const FAQ_MAKS = [
   ['Как оплатить?', OPLATA_TXT],
 ]
 function paginaMaks() {
-  const cuerpo = `${heroe('pyongyang', 'Панорама Пхеньяна', `<span class="ceja">Сопровождающий групп в КНДР</span>
-<h1>Макс — сопровождающий наших групп в Северную Корею</h1>
-<p class="lead">Макс — гражданин России с российским паспортом. Он едет с группой из Владивостока в Пхеньян и обратно и отвечает за то, чтобы поездка прошла спокойно.</p>
-${ctaBloque('Здравствуйте! Хочу поехать в КНДР в группе с Максом. Нас: … человек, даты: …')}`)}
+  const conFoto = existsSync(join(root, 'public/ru/maks/foto/maks-640.webp'))
+  const cara = conFoto
+    ? `<img src="/ru/maks/foto/maks-640.webp" srcset="/ru/maks/foto/maks-320.webp 320w, /ru/maks/foto/maks-640.webp 640w" sizes="(max-width:860px) 340px, 380px" alt="Макс, сопровождающий групп в КНДР" width="640" height="640" fetchpriority="high">`
+    : '<span aria-hidden="true">М</span>'
+  const cuerpo = `<section class="hm"><div class="kap">
+<div class="izq">
+<span class="ceja">Сопровождающий групп в КНДР · 2027</span>
+<h1>Макс — с вами от Владивостока до Пхеньяна и обратно</h1>
+<p class="lead">Макс — гражданин России с российским паспортом. Он едет вместе с группой и отвечает за то, чтобы поездка в самую закрытую страну мира прошла спокойно.</p>
+<ol class="pasos">
+<li><strong>Запишитесь</strong>Напишите в Telegram: даты и сколько вас.</li>
+<li><strong>Документы</strong>Макс собирает их и подаёт на визу минимум за месяц.</li>
+<li><strong>Летим</strong>Встреча во Владивостоке и вместе в Пхеньян.</li>
+</ol>
+${ctaBloque('Здравствуйте! Хочу поехать в КНДР в группе с Максом. Нас: … человек, даты: …')}
+</div>
+<div class="perfil">
+<div class="cara">${cara}</div>
+<div class="nombre"><b>Макс</b><span class="verde">● набирает группу</span></div>
+<div class="chips"><span>🇷🇺 паспорт РФ</span><span>группа 15 человек</span><span>можно парами</span><span>оплата в рублях</span></div>
+</div>
+</div></section>
+<section><div class="kap">
+<ul class="cifras">
+<li><b data-cuenta="15">15</b><span>человек в группе, можно парами</span></li>
+<li><b data-cuenta="${TURY.length}">${TURY.length}</b><span>туров на 2027 год</span></li>
+<li><b data-cuenta="5">5</b><span>дней — базовый тур в Пхеньян</span></li>
+<li><b data-cuenta="30">30</b><span>дней — документы на визу заранее</span></li>
+</ul>
+</div></section>
+<section><div class="kap">
+<span class="ceja">Почему с Максом</span><h2>Вы не одни в незнакомой стране</h2>
+<div class="tarjetas">
+<article><span class="ico">🛂</span><h3>Документы без стресса</h3><p>Макс проверяет паспорта и анкеты группы и вовремя отправляет их на визу.</p></article>
+<article><span class="ico">🗣️</span><h3>Всё по-русски</h3><p>Правила, программа и ответы на вопросы — на вашем языке, до поездки и на месте, вместе с местными гидами.</p></article>
+<article><span class="ico">💬</span><h3>Чат группы</h3><p>Общий чат в Telegram от записи до возвращения домой: сборы, вылет, новости.</p></article>
+</div>
+</div></section>
+<section><div class="kap">
+<span class="ceja">Куда едем</span><h2>Туры 2027 с Максом</h2>
+<div class="cinta"><div class="pista">${TURY.map((t) => `<a href="/ru/kndr/${t.yol}/"><img src="/ru/kndr/foto/${t.foto}-1080.webp" alt="${esc(t.nombre)}" loading="lazy" width="1080" height="${alto(t.foto, 1080)}"><span>${esc(t.nombre)}<small>${esc(t.fechas)}</small></span></a>`).join('')}</div></div>
+</div></section>
 <section><div class="kap">
 <p class="otvet"><strong>Кто такой Макс?</strong> Макс — гражданин России с российским паспортом и сопровождающий всех поездок команды Tony Kansai Guide в КНДР. КНДР сейчас принимает туристов только с паспортом РФ, поэтому с группой едет именно Макс. Запись — в Telegram ${TG_VISIBLE}, отвечает координатор Тони.</p>
 </div></section>
@@ -700,8 +791,13 @@ ${oplata}
 <span class="ceja">Вопросы</span><h2>Частые вопросы о Максе и поездке</h2>
 <div>${FAQ_MAKS.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</div>
 <p><a href="/ru/kndr/">Все туры в КНДР →</a></p>
+</div></section>
+<section><div class="kap"><div class="cierre">
+<span class="ceja">Группа формируется</span>
+<h2>Самая закрытая страна мира — вместе с Максом</h2>
+<p>Пхеньян, Вонсан, горы Мёхян и Пэктусан. Напишите в Telegram, и мы забронируем вам место в группе.</p>
 ${ctaBloque()}
-</div></section>`
+</div></div></section>`
   const dir = join(root, 'public/ru/maks')
   mkdirSync(dir, { recursive: true })
   writeFileSync(join(dir, 'index.html'), pagina({
