@@ -1142,6 +1142,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <a href="/fr/" lang="fr">Français · Iheb</a>
             <a href="/private/" lang="en">Private guide · Mario</a>
             <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
+            <a href={p.lang === 'ar' ? '/partners/?lang=ar' : p.lang === 'es' ? '/partners/' : '/partners/?lang=en'}>
+              {p.lang === 'ar' ? 'للوكالات · Hanma Travel Partners' : p.lang === 'es' ? 'Agencias · Hanma Travel Partners' : 'Agencies · Hanma Travel Partners'}
+            </a>
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Макс</a>}
             {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
