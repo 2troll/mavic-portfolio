@@ -85,4 +85,32 @@
     cinta.addEventListener('pointerleave', () => g.to(tw, { timeScale: 1, duration: 0.4 }))
     cinta.addEventListener('focusin', () => tw.pause())
   }
+
+  // Carruseles del móvil: la tarjeta del centro crece y las de los lados se apagan.
+  g.utils.toArray('.tarjetas, .ventajas, .regiones').forEach((cz) => {
+    if (getComputedStyle(cz).overflowX !== 'auto') return
+    const items = [...cz.children]
+    const pinta = () => {
+      const c = cz.getBoundingClientRect(), mid = c.left + c.width / 2
+      items.forEach((it) => {
+        const r = it.getBoundingClientRect(), d = Math.min(1, Math.abs(r.left + r.width / 2 - mid) / c.width)
+        it.style.transform = `scale(${1 - d * 0.08})`
+        it.style.opacity = String(1 - d * 0.4)
+      })
+    }
+    cz.addEventListener('scroll', () => requestAnimationFrame(pinta), { passive: true })
+    pinta()
+  })
+  // Los 15 círculos del grupo se encienden uno a uno.
+  const plazas = document.querySelectorAll('.plazas i')
+  if (plazas.length) g.from(plazas, { scale: 0, opacity: 0, duration: 0.4, ease: 'back.out(3)', stagger: 0.05, scrollTrigger: { trigger: '.plazas', start: 'top 90%', once: true } })
+  // La línea Владивосток → Пхеньян se dibuja.
+  const ruta = document.querySelector('.ruta i')
+  if (ruta) g.from(ruta, { scaleX: 0, transformOrigin: '0 50%', duration: 1.2, ease: 'power2.inOut', delay: 0.5 })
+  // Filas del tablo: entran como un panel de salidas.
+  const filas = document.querySelectorAll('.tablo a')
+  if (filas.length) g.from(filas, { rotateX: -90, opacity: 0, transformOrigin: '50% 0', duration: 0.6, ease: 'power2.out', stagger: 0.08, scrollTrigger: { trigger: '.tablo', start: 'top 85%', once: true } })
+  // Botón fijo: un saltito cada pocos segundos.
+  const fijo = document.querySelector('.wa-fijo')
+  if (fijo) g.timeline({ repeat: -1, repeatDelay: 5, delay: 3 }).to(fijo, { y: -8, duration: 0.18, ease: 'power2.out' }).to(fijo, { y: 0, duration: 0.6, ease: 'bounce.out' })
 })()

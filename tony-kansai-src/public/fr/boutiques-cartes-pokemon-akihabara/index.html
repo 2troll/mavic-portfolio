@@ -119,6 +119,10 @@ table{border:3px solid var(--cizgi);border-radius:12px;overflow:hidden;backgroun
 .tcg-rozet{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0 0}.tcg-rozet span{background:var(--sol);border:2px solid #16132a;border-radius:999px;padding:1px 10px;font-size:13px;font-weight:800}
 /* Pegatinas y bandas */
 .rozetler{display:flex;flex-wrap:wrap;gap:10px;padding:0;list-style:none;margin:18px 0}
+html,body{overflow-x:clip}
+.btn:active,.wa-sabit:active{transform:scale(.94)!important}
+.izgara>li{transition:transform .25s ease-out,opacity .25s}
+@media (max-width:640px){.rozetler{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-inline:-16px;padding:6px 16px 10px}.rozetler>li{flex:none}}
 .rozetler li{background:var(--kart);border:3px solid var(--cizgi);border-radius:999px;padding:6px 14px;font-weight:800;box-shadow:3px 3px 0 var(--golge)}
 .rozetler li:nth-child(4n+1){background:var(--sol);color:#16132a}.rozetler li:nth-child(4n+3){background:var(--gok);color:#16132a}
 .bant{background:var(--fg);color:var(--bg);border-block:4px solid var(--sol);padding:26px 0;margin-top:56px}

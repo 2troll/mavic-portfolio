@@ -76,4 +76,32 @@
     b.addEventListener('mousemove', (e) => { const r = b.getBoundingClientRect(); x((e.clientX - r.left - r.width / 2) * 0.25); y((e.clientY - r.top - r.height / 2) * 0.25) })
     b.addEventListener('mouseleave', () => { x(0); y(0) })
   })
+
+  // 7-11-2026: más vida, sobre todo en el móvil.
+  // Títulos: el subrayado de rotulador se pinta de izquierda a derecha.
+  g.utils.toArray('main h2').forEach((h) => {
+    if (getComputedStyle(h).backgroundImage === 'none') return
+    g.fromTo(h, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', backgroundPosition: rtl ? '100% 0' : '0 0', duration: 0.9, ease: 'power2.out', scrollTrigger: { trigger: h, start: 'top 88%', once: true } })
+  })
+  // Foto de portada: zoom lento y paralaje al bajar.
+  const kimg = document.querySelector('.kahraman img')
+  if (kimg) g.fromTo(kimg, { scale: 1.12 }, { scale: 1, yPercent: 10, ease: 'none', scrollTrigger: { trigger: '.kahraman', start: 'top top', end: 'bottom top', scrub: true } })
+  // Carruseles del móvil: la tarjeta del centro crece y las de los lados se apagan.
+  g.utils.toArray('.izgara').forEach((cz) => {
+    if (getComputedStyle(cz).overflowX !== 'auto') return
+    const items = [...cz.children]
+    const pinta = () => {
+      const c = cz.getBoundingClientRect(), mid = c.left + c.width / 2
+      items.forEach((it) => {
+        const r = it.getBoundingClientRect(), d = Math.min(1, Math.abs(r.left + r.width / 2 - mid) / c.width)
+        it.style.transform = `scale(${1 - d * 0.1}) rotate(${(rtl ? -1 : 1) * d * 2}deg)`
+        it.style.opacity = String(1 - d * 0.35)
+      })
+    }
+    cz.addEventListener('scroll', () => requestAnimationFrame(pinta), { passive: true })
+    pinta()
+  })
+  // Botón fijo de WhatsApp: un saltito cada pocos segundos para que se vea.
+  const fijo = document.querySelector('.wa-sabit')
+  if (fijo) g.timeline({ repeat: -1, repeatDelay: 5, delay: 3 }).to(fijo, { y: -8, rotate: -2, duration: 0.18, ease: 'power2.out' }).to(fijo, { y: 0, rotate: 0, duration: 0.6, ease: 'bounce.out' })
 })()

@@ -458,10 +458,10 @@ const CSS_MOV = `
 .cifras li{background:var(--papel);border:1px solid var(--linea);border-radius:18px;padding:18px}
 .cifras b{display:block;font:700 clamp(30px,5vw,44px)/1 var(--disp);color:var(--acento)}
 .cifras span{font-size:14px;color:var(--suave)}
-.tarjetas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
-.tarjetas article{background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:22px;display:grid;gap:10px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
-.tarjetas article:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(20,33,58,.14)}
-.tarjetas .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--chip);font-size:22px}
+.ventajas{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.ventajas article{background:var(--papel);border:1px solid var(--linea);border-radius:20px;padding:22px;display:grid;gap:10px;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s}
+.ventajas article:hover{transform:translateY(-6px);box-shadow:0 18px 40px rgba(20,33,58,.14)}
+.ventajas .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--chip);font-size:22px}
 .cinta{overflow:hidden;mask-image:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent)}
 .cinta .pista{display:flex;gap:14px;width:max-content;padding-block:6px}
 .cinta a{position:relative;display:block;width:260px;aspect-ratio:4/3;border-radius:18px;overflow:hidden;color:#fff;text-decoration:none;flex:none}
@@ -471,7 +471,9 @@ const CSS_MOV = `
 .cierre{border-radius:26px;padding:clamp(28px,5vw,56px);background:#0b1222;color:#fff;position:relative;overflow:hidden;isolation:isolate;display:grid;gap:16px}
 .cierre::before{content:"";position:absolute;inset:-40%;z-index:-1;background:radial-gradient(35% 35% at 30% 40%,#b8322a,transparent 70%),radial-gradient(30% 30% at 75% 60%,#2b59c3,transparent 70%);filter:blur(50px);opacity:.7;animation:aurora 20s ease-in-out infinite alternate}
 .cierre h2{font-size:clamp(24px,4vw,38px);font-weight:700}
-@media (max-width:860px){.hm .kap{grid-template-columns:1fr;padding-block:48px}.perfil{max-width:380px}.cifras{grid-template-columns:repeat(2,1fr)}.tarjetas{grid-template-columns:1fr}}
+@media (max-width:860px){.hm .kap{grid-template-columns:1fr;padding-block:48px}.perfil{max-width:380px}.cifras{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:700px){.tarjetas,.ventajas,.regiones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-16px;padding:4px 16px 18px;scroll-padding-inline:16px;scrollbar-width:none}.tarjetas>li,.ventajas>article,.regiones>li{flex:0 0 78%;scroll-snap-align:start;transition:transform .25s ease-out,opacity .25s}.tarjetas small{display:none}.tarjetas a{border-radius:16px}}
+.btn:active{transform:scale(.94)!important}
 @media (max-width:520px){.pasos{grid-template-columns:1fr}}
 `
 
@@ -759,7 +761,7 @@ ${ctaBloque('Здравствуйте! Хочу поехать в КНДР в г
 </div></section>
 <section><div class="kap">
 <span class="ceja">Почему с Максом</span><h2>Вы не одни в незнакомой стране</h2>
-<div class="tarjetas">
+<div class="ventajas">
 <article><span class="ico">🛂</span><h3>Документы без стресса</h3><p>Макс проверяет паспорта и анкеты группы и вовремя отправляет их на визу.</p></article>
 <article><span class="ico">🗣️</span><h3>Всё по-русски</h3><p>Правила, программа и ответы на вопросы — на вашем языке, до поездки и на месте, вместе с местными гидами.</p></article>
 <article><span class="ico">💬</span><h3>Чат группы</h3><p>Общий чат в Telegram от записи до возвращения домой: сборы, вылет, новости.</p></article>
