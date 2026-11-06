@@ -1093,7 +1093,7 @@ ${ihebIdiomas(ruta, lang)}
 ${navHTML({ etiqueta: 'Menu principal', abrir: 'Ouvrir le menu', variante: 'fr', grupos: [
   { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
   { t: 'Infos pratiques', enlaces: [...REPONSES.slice(0, 6).map((c) => [esc(c.h1), `/fr/${c.yol}/`]), ...ANIME.slice(0, 2).map((c) => [esc(c.h1), `/fr/${c.yol}/`])] },
-  { t: 'Iheb', enlaces: [['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English (anime)', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, { t: 'بالعربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
+  { t: 'Iheb', enlaces: [['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Maghreb et Afrique francophone', '/fr/tokyo-maghreb/'], ['Excursions depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Itinéraires de 3, 5 et 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['Avis des voyageurs', `/fr/${AVIS_PAGE}/`], ['Laisser un avis', '/fr/avis/'], ['Nos guides', `#eq-titulo-${lang}`], { t: 'In English (anime)', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, { t: 'بالعربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
 ], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp : Iheb' } })}</div></header>
 <main>
 ${corps}
@@ -1102,7 +1102,7 @@ ${corps}
   intro: `<p>Iheb est le guide francophone de <a href="/">Tony Kansai Guide</a> pour Tokyo et l’est du Japon ; Tony, de la même équipe, guide à Kyoto et Osaka en espagnol, anglais et arabe.</p><p><a href="/fr/${AVIS_PAGE}/">Avis des voyageurs sur Iheb</a>${RESUME_AVIS ? ` (${RESUME_AVIS})` : ''} · <a href="/fr/avis/">Laisser un avis</a></p>`,
   columnas: [
     { t: 'Régions', enlaces: [...VILLES.map((v) => [v.nav, `/fr/${v.yol}/`]), ['Accueil', '/fr/']] },
-    { t: 'Infos pratiques', enlaces: [...REPONSES.map((c) => [esc(c.h1), `/fr/${c.yol}/`]), { t: 'French-speaking tour guide in Tokyo', h: `/fr/${ANGLAIS}/`, lang: 'en', hreflang: 'en' }] },
+    { t: 'Infos pratiques', enlaces: [['Excursions d’une journée depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Itinéraire Tokyo en 3, 5 ou 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['Tokyo depuis le Maghreb', '/fr/tokyo-maghreb/'], ...REPONSES.map((c) => [esc(c.h1), `/fr/${c.yol}/`]), { t: 'French-speaking tour guide in Tokyo', h: `/fr/${ANGLAIS}/`, lang: 'en', hreflang: 'en' }] },
     { t: 'Anime et Pokémon', enlaces: ANIME.map((c) => [esc(c.h1), `/fr/${c.yol}/`]) },
     { t: 'Contact', fija: true, html: `<p>WhatsApp : <a href="${WA_GENEL}">${WA_VISIBLE}</a></p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p><p>Autres langues : <a href="/es/" hreflang="es">Español</a> · <a href="/en/" hreflang="en">English</a> · <a href="/ar/" hreflang="ar">العربية</a> · <a href="/tr/" hreflang="tr">Türkçe</a> · <a href="/ru/" hreflang="ru">Русский</a></p>` },
   ],
@@ -1209,7 +1209,8 @@ ${contact}
 <li><strong>Spécialités :</strong> anime, culture pop japonaise, cartes Pokémon (collection).</li>
 <li><strong>Où :</strong> Tokyo et le Kanto (Kamakura, Yokohama, Nikko, Hakone), le mont Fuji, Nagano et Shizuoka.</li>
 <li><strong>Formule :</strong> visite privée, uniquement votre famille ou votre groupe.</li>
-<li><strong>Pour qui :</strong> les voyageurs de France, de Belgique, de Suisse, du Luxembourg et du Québec, et tous les francophones.</li>
+<li><strong>Pour qui :</strong> les voyageurs de France, de Belgique, de Suisse, du Luxembourg et du Québec, et tous les francophones, dont ceux du <a href="/fr/tokyo-maghreb/">Maghreb et d’Afrique de l’Ouest</a>.</li>
+<li><strong>Programmes :</strong> <a href="/fr/excursions-depuis-tokyo/">excursions d’une journée</a> et <a href="/fr/itineraire-tokyo-3-5-7-jours/">itinéraires de 3, 5 et 7 jours</a>.</li>
 <li><strong>Tarif :</strong> communiqué sur WhatsApp selon le groupe et le programme. Transports, entrées et repas généralement non compris.</li>
 <li><strong>Voyageurs musulmans :</strong> restaurants halal ou Muslim friendly, mosquées et pauses prière peuvent être prévus.</li>
 <li><strong>Contact :</strong> WhatsApp <a href="${WA_GENEL}">${WA_VISIBLE}</a></li>
@@ -1426,6 +1427,7 @@ ${AVIS.length ? `<li><strong>Reviews:</strong> ${AVIS.length} guest reviews, ave
     '@graph': [
       { ...guideLd, jobTitle: 'French-speaking tour guide', description: 'French-speaking tour guide living in Japan. Private tours in French in Tokyo, the Kanto region (Kamakura, Yokohama, Nikko, Hakone), Mount Fuji, Nagano and Shizuoka; also speaks Arabic and English. Specialist in anime, Japanese pop culture and Pokémon card collecting.' },
       { ...serviceLd(null), name: 'Private tour in French in Tokyo and the Kanto region, Japan', url: `${BASE}/fr/${ANGLAIS}/` },
+      { '@type': 'BreadcrumbList', itemListElement: [{ '@type': 'ListItem', position: 1, name: 'Guide francophone', item: `${BASE}/fr/` }, { '@type': 'ListItem', position: 2, name: 'French-speaking tour guide in Tokyo', item: `${BASE}/fr/${ANGLAIS}/` }] },
       { '@type': 'FAQPage', inLanguage: 'en', mainEntity: [
         ['Is there a French-speaking tour guide in Tokyo?', `Yes. Iheb, a guide living in Japan, runs private tours in French in Tokyo and the Kanto region, around Mount Fuji, and in Nagano and Shizuoka. WhatsApp ${WA_VISIBLE}.`],
         ['Is there a French-speaking guide for a Mount Fuji day trip from Tokyo?', 'Yes, Iheb guides private tours in French to Hakone, the Fuji Five Lakes (Kawaguchiko) and the Shizuoka side of Mount Fuji.'],

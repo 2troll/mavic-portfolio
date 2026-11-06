@@ -148,21 +148,26 @@ export const IHEB_EQUIVALENTES = [
   { fr: '/fr/akihabara-que-faire/', en: '/en/tokyo-anime-guide/akihabara/' },
   { fr: '/fr/nakano-broadway/', en: '/en/tokyo-anime-guide/nakano-broadway/' },
   { fr: '/fr/ikebukuro-anime/', en: '/en/tokyo-anime-guide/ikebukuro/' },
+  // 6-11-2026, fase 2. El Magreb lleva además sus países (solo en este grupo).
+  { fr: '/fr/tokyo-maghreb/', ar: '/ar/tokyo/maghreb/', extra: { fr: ['TN', 'MA', 'DZ', 'SN', 'CI'], ar: ['TN', 'MA', 'DZ'] } },
+  { fr: '/fr/excursions-depuis-tokyo/', ar: '/ar/tokyo/rihlat-min-tokyo/', en: '/en/tokyo-anime-guide/day-trips/' },
+  { fr: '/fr/itineraire-tokyo-3-5-7-jours/', ar: '/ar/tokyo/barnamaj-tokyo/', en: '/en/tokyo-anime-guide/tokyo-itinerary/' },
 ]
+const rutasDe = (g) => IHEB_IDIOMAS.map((l) => g[l]).filter(Boolean)
 {
   // Una ruta en dos grupos rompería la reciprocidad: mejor fallar en el build.
   const vistas = new Set()
-  for (const g of IHEB_EQUIVALENTES) for (const r of Object.values(g)) {
+  for (const g of IHEB_EQUIVALENTES) for (const r of rutasDe(g)) {
     if (vistas.has(r)) throw new Error(`iheb-estilo: ${r} está en dos grupos de IHEB_EQUIVALENTES`)
     vistas.add(r)
   }
 }
-const grupoDe = (ruta, lang) => IHEB_EQUIVALENTES.find((g) => Object.values(g).includes(ruta)) ?? { [lang]: ruta }
+const grupoDe = (ruta, lang) => IHEB_EQUIVALENTES.find((g) => rutasDe(g).includes(ruta)) ?? { [lang]: ruta }
 
 /** [hreflang, ruta] del grupo de una página: idioma, idioma-país y x-default (la inglesa). */
 export function ihebAlternas(ruta, lang) {
   const g = grupoDe(ruta, lang)
-  const filas = IHEB_IDIOMAS.filter((l) => g[l]).flatMap((l) => [[l, g[l]], ...IHEB_REGIONES[l].map((p) => [`${l}-${p}`, g[l]])])
+  const filas = IHEB_IDIOMAS.filter((l) => g[l]).flatMap((l) => [[l, g[l]], ...[...IHEB_REGIONES[l], ...(g.extra?.[l] ?? [])].map((p) => [`${l}-${p}`, g[l]])])
   return [...filas, ['x-default', g.en ?? g.fr ?? g.ar]]
 }
 export const ihebHreflang = (ruta, lang, base = 'https://tonykansaiguide.com') =>

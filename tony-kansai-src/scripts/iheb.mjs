@@ -116,11 +116,27 @@ const AUDIENCIA = {
   musulman: { audienceType: 'Muslim travelers and families from Southeast Asia and the United Kingdom', paises: ['Malaysia', 'Singapore', 'Brunei', 'Indonesia', 'United Kingdom'] },
   halal: { audienceType: 'Muslim travelers', paises: [...GOLFO, ...MAGREB, 'Malaysia', 'Indonesia'] },
   anime: { audienceType: 'Anime and Pokémon fans and their families', paises: [...GOLFO, ...NORTEAMERICA] },
+  magreb: { audienceType: 'Arabic and French speaking travelers from the Maghreb and francophone West Africa', paises: [...MAGREB, 'Senegal', 'Côte d’Ivoire'] },
 }
 // A los países propios de cada página se suman los mercados del idioma (IHEB_PAISES).
 const audiencia = (alterna, lang) => {
   const a = AUDIENCIA[alterna] ?? { audienceType: { ar: 'Arabic-speaking travelers from the Gulf (GCC)', en: 'English-speaking travelers', fr: 'French-speaking travelers' }[lang], paises: [] }
   return { audience: { '@type': 'Audience', audienceType: a.audienceType, geographicArea: [...new Set([...a.paises, ...IHEB_PAISES[lang]])].map(pais) } }
+}
+
+// Datos estructurados comunes a todas las páginas: miga (portada del idioma → página)
+// y el servicio de Iheb con su zona. La miga toma el título hasta « | » o « : ».
+const ZONA_LD = ['Tokyo', 'Kanto', 'Shizuoka', 'Nagano'].map((name) => ({ '@type': 'Place', name, containedInPlace: { '@type': 'Country', name: 'Japan' } }))
+const HUB = { ar: 'إيهاب في طوكيو', en: 'Iheb · Tokyo anime guide', fr: 'Iheb · Guide francophone' }
+function ldComun({ lang, ruta, titre, alterna }) {
+  const l = L[lang]
+  const nombre = titre.split(/ [|:] /)[0]
+  const miga = [{ '@type': 'ListItem', position: 1, name: HUB[lang], item: `${BASE}${l.base}` }]
+  if (ruta !== l.base) miga.push({ '@type': 'ListItem', position: 2, name: nombre, item: `${BASE}${ruta}` })
+  return [
+    { '@type': 'BreadcrumbList', itemListElement: miga },
+    { '@type': 'Service', '@id': `${BASE}${ruta}#servicio`, name: nombre, serviceType: 'Private tour guide', provider: { '@id': `${BASE}/fr/#iheb` }, areaServed: ZONA_LD, availableLanguage: ['fr', 'ar', 'en'], ...audiencia(alterna, lang) },
+  ]
 }
 
 function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
@@ -129,16 +145,16 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
   const alts = ihebHreflang(ruta, lang, BASE)
   const grupos = lang === 'ar'
     ? [
-        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['للوكالات', '/ar/tokyo/wakalat/'], ['اكتب رأيك', '/ar/tokyo/taqyim/']] },
+        { t: 'إيهاب', enlaces: [['الرئيسية', '/ar/tokyo/'], ['عائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد', '/ar/tokyo/halal-masajid/'], ['أنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['رحلات يومية', '/ar/tokyo/rihlat-min-tokyo/'], ['برنامج 3 و5 و7 أيام', '/ar/tokyo/barnamaj-tokyo/'], ['من المغرب العربي', '/ar/tokyo/maghreb/'], ['للوكالات', '/ar/tokyo/wakalat/'], ['اكتب رأيك', '/ar/tokyo/taqyim/']] },
         { t: 'لغات أخرى', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'English', h: '/en/tokyo-anime-guide/', lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/ar/']] },
       ]
     : lang === 'fr'
     ? [
-        { t: 'Iheb', enlaces: [['Accueil', '/fr/'], ['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Guide anime', '/fr/guide-anime-tokyo/'], ['Pour les agences', '/fr/guide-francophone-agences-voyage/']] },
+        { t: 'Iheb', enlaces: [['Accueil', '/fr/'], ['Québec et Canada', '/fr/tokyo-quebec-canada/'], ['Maghreb et Afrique', '/fr/tokyo-maghreb/'], ['Excursions depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Itinéraires 3, 5, 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['Guide anime', '/fr/guide-anime-tokyo/'], ['Pour les agences', '/fr/guide-francophone-agences-voyage/']] },
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Akihabara', '/en/tokyo-anime-guide/akihabara/'], ['Nakano Broadway', '/en/tokyo-anime-guide/nakano-broadway/'], ['Ikebukuro', '/en/tokyo-anime-guide/ikebukuro/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Akihabara', '/en/tokyo-anime-guide/akihabara/'], ['Nakano Broadway', '/en/tokyo-anime-guide/nakano-broadway/'], ['Ikebukuro', '/en/tokyo-anime-guide/ikebukuro/'], ['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Itineraries: 3, 5, 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
@@ -165,7 +181,7 @@ ${alts}
 <meta property="og:image" content="${image}">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, ...audiencia(alterna, lang) }, PERSON_LD, ...jsonld] })}</script>
+<script type="application/ld+json">${JSON.stringify({ '@context': 'https://schema.org', '@graph': [{ '@type': 'WebPage', '@id': url, url, name: titre, description: desc, inLanguage: lang, dateModified: HOY, about: { '@id': `${BASE}/fr/#iheb` }, ...audiencia(alterna, lang) }, PERSON_LD, ...ldComun({ lang, ruta, titre, alterna }), ...jsonld] })}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${ANIME_FUENTES}
 ${equipoFuente}
@@ -280,7 +296,7 @@ function arPortada() {
 <li><strong>المساء:</strong> أوداييبا وجسر قوس قزح عند الغروب.</li>
 </ol>
 <p class="kaynak">كل برنامج يُبنى حسب رغبتكم؛ هذا مثال فقط.</p>
-<p><a class="btn" href="/ar/tokyo/anime-pokemon/">دليل الأنمي وبوكيمون</a> <a class="btn" href="/ar/tokyo/halal-masajid/">حلال ومساجد طوكيو</a></p>
+<p><a class="btn" href="/ar/tokyo/anime-pokemon/">دليل الأنمي وبوكيمون</a> <a class="btn" href="/ar/tokyo/halal-masajid/">حلال ومساجد طوكيو</a> <a class="btn" href="/ar/tokyo/rihlat-min-tokyo/">رحلات يومية من طوكيو</a> <a class="btn" href="/ar/tokyo/barnamaj-tokyo/">برنامج 3 و5 و7 أيام</a> <a class="btn" href="/ar/tokyo/maghreb/">من المغرب العربي</a></p>
 </div>
 <section class="bant"><div class="kap">
 <h2>وكالات السفر: إيهاب شريككم في اليابان</h2>
@@ -445,6 +461,8 @@ ${carte('en', 'super-potato', 'Super Potato retro games', 'The otaku guide', 'Ev
 ${carte('en', 'akihabara-rue', 'Akihabara street', 'Akihabara', 'Card towers, figures and retro games: a half-day plan.', '/en/tokyo-anime-guide/akihabara/')}
 ${carte('en', 'nakano-broadway', 'Nakano Broadway', 'Nakano Broadway', 'The collectors’ mall and its Mandarake shops, floor by floor.', '/en/tokyo-anime-guide/nakano-broadway/')}
 ${carte('en', 'sunshine-city', 'Sunshine City, Ikebukuro', 'Ikebukuro', 'Animate, Otome Road and Pokémon Center Mega Tokyo.', '/en/tokyo-anime-guide/ikebukuro/')}
+${carte('en', 'kawaguchiko-fuji', 'Mount Fuji and Lake Kawaguchi', 'Day trips', 'Mt. Fuji, Hakone or the coast, one per day.', '/en/tokyo-anime-guide/day-trips/')}
+${carte('en', 'shibuya', 'Shibuya crossing', 'Itineraries', 'Tokyo in 3, 5 or 7 days: anime, city and Fuji.', '/en/tokyo-anime-guide/tokyo-itinerary/')}
 ${carte('en', 'kawaguchiko-sakura', 'Mount Fuji with cherry blossoms', 'First time in Japan', 'A calm private tour for first-timers and seniors, everything explained.', '/en/tokyo-anime-guide/first-time-japan/')}
 ${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim travelers', 'Halal-friendly food and prayer breaks built into the day.', '/en/muslim-guide-tokyo/')}
 ${carte('en', 'shibuya', 'Shibuya crossing', 'Travel agencies', 'Ground partner in English, French and Arabic.', '/en/tokyo-anime-guide/travel-agencies/')}
@@ -887,10 +905,7 @@ ${faqHTML(faq)}
 <p>Pokémon is a trademark of Nintendo, Creatures and GAME FREAK; other names belong to their owners. This is an independent private tour, not affiliated with them.</p>
 <p><a class="btn" href="${enlace}">Message Iheb on WhatsApp</a></p>
 </div>`
-  const jsonld = [faqLd(faq), { '@type': 'BreadcrumbList', itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Tokyo anime guide', item: `${BASE}/en/tokyo-anime-guide/` },
-    { '@type': 'ListItem', position: 2, name: etiqueta, item: `${BASE}${ruta}` },
-  ] }]
+  const jsonld = [faqLd(faq)]
   return ecrire(ruta.slice(1, -1), page({ lang: 'en', ruta, alterna: 'otaku', titre, desc, image: imageDe(kapak), jsonld, corps }))
 }
 
@@ -1042,5 +1057,264 @@ function enIkebukuro() {
   })
 }
 
-const hechas = [enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ———— 6-11-2026, fase 2: más mercados que pagan ————
+// Magreb (fr + ar), excursiones desde Tokio sin lugares de culto (fr/en/ar) e
+// itinerarios de 3, 5 y 7 días (fr/en/ar). Solo datos que ya están comprobados
+// en francais.mjs (trenes, tiempos, museos, mezquitas, visados). Sin precios.
+const TXT = {
+  fr: { wa: 'Écrire à Iheb sur WhatsApp', faq: 'Questions fréquentes', otro: 'À lire aussi' },
+  ar: { wa: 'اكتب لإيهاب على واتساب', faq: 'أسئلة شائعة', otro: 'اقرأ أيضًا' },
+  en: { wa: 'Message Iheb on WhatsApp', faq: 'FAQ', otro: 'Read next' },
+}
+function generica({ lang, ruta, alterna, kapak, alt, etiqueta, h1, sub, cevap, secciones, faq, ver, titre, desc, wa: texto, ld = [] }) {
+  const enlace = wa(texto)
+  const t = TXT[lang]
+  const corps = `${hero(lang, kapak, alt, `<p class="etiket"><a href="${L[lang].base}">${lang === 'ar' ? 'إيهاب' : 'Iheb'}</a> · ${etiqueta}</p>
+<h1>${h1}</h1>
+<p class="alt">${sub}</p>
+<p><a class="btn" href="${enlace}">${t.wa}</a></p>`)}
+<div class="kap">
+<p class="cevap">${cevap}</p>
+${secciones.map(([h, c]) => `<h2>${h}</h2>\n${c}`).join('\n')}
+<h2>${t.faq}</h2>
+${faqHTML(faq)}
+<h2>${t.otro}</h2>
+<ul class="ozet">${ver.map(([x, h]) => `<li><a href="${h}">${x}</a></li>`).join('')}</ul>
+<p><a class="btn" href="${enlace}">${t.wa}</a></p>
+</div>`
+  return ecrire(ruta.slice(1, -1), page({ lang, ruta, alterna, titre, desc, image: imageDe(kapak), jsonld: [faqLd(faq), ...ld], corps }))
+}
+// Un TouristTrip con sus etapas, para excursiones e itinerarios.
+const viajeLd = (name, touristType, etapas) => ({ '@type': 'TouristTrip', name, touristType, provider: { '@id': `${BASE}/fr/#iheb` },
+  itinerary: { '@type': 'ItemList', itemListElement: etapas.map((n, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'Place', name: n } })) } })
+
+// ——— Magreb ———
+function frMaghreb() {
+  return generica({
+    lang: 'fr', ruta: '/fr/tokyo-maghreb/', alterna: 'magreb', kapak: 'tokyo-camii', alt: 'La Tokyo Camii', etiqueta: 'Maghreb et Afrique francophone',
+    wa: 'Bonjour Iheb, nous venons du Maghreb et préparons un voyage privé à Tokyo. Dates et nombre de personnes : ',
+    titre: 'Voyage à Tokyo depuis la Tunisie, le Maroc et l’Algérie : guide qui parle arabe et français | Iheb',
+    desc: 'Voyageurs de Tunisie, du Maroc, d’Algérie, du Sénégal et de Côte d’Ivoire : visite privée de Tokyo et du mont Fuji en français ou en arabe avec Iheb, repas halal et pauses prière. Visa, mosquées, tarif sur WhatsApp.',
+    h1: 'Tokyo depuis le Maghreb : un guide qui parle arabe et français',
+    sub: 'Tokyo, le mont Fuji, l’anime et la mer, en visite privée, avec des repas halal et le temps de la prière.',
+    cevap: `Oui, on peut visiter Tokyo avec un guide qui parle à la fois arabe et français : Iheb, guide musulman qui vit au Japon, accompagne en visite privée les voyageurs de Tunisie, du Maroc et d’Algérie, et aussi du Sénégal et de Côte d’Ivoire, à Tokyo, dans le Kanto, autour du mont Fuji, à Shizuoka et à Nagano. La journée se construit avec des restaurants halal ou Muslim friendly et des pauses prière, sans lieux de culte non musulmans au programme. Tarif par groupe sur WhatsApp : ${WA_VISIBLE}.`,
+    secciones: [
+      ['Pourquoi un guide qui parle arabe et français ?', `<ul class="ozet"><li><strong>Votre langue, au choix :</strong> en famille, les grands-parents écoutent en arabe, les enfants en français ; Iheb passe de l’un à l’autre.</li><li><strong>Musulman lui-même :</strong> il sait trouver un repas halal, une mosquée pour la prière du vendredi ou un endroit calme pour prier.</li><li><strong>Visite privée :</strong> uniquement votre famille ou votre groupe, à votre rythme.</li><li><strong>Japonais au quotidien :</strong> il vit au Japon et s’occupe des trains, des menus et des réservations.</li></ul>`],
+      ['Visa : selon votre passeport', `<table><tr><th>Passeport</th><th>Séjour touristique</th></tr>
+<tr><td>Tunisie</td><td>Exemption de visa jusqu’à 90 jours, selon la liste du ministère japonais des Affaires étrangères ; vérifiez la liste à jour avant de partir.</td></tr>
+<tr><td>Maroc, Algérie</td><td>Visa requis : consultez l’ambassade du Japon de votre pays.</td></tr>
+<tr><td>Sénégal, Côte d’Ivoire</td><td>Renseignez-vous auprès de l’ambassade du Japon de votre pays avant de réserver.</td></tr></table>
+<p>Détails et formalités d’arrivée : <a href="/fr/visa-japon/">visa pour le Japon</a>.</p>`],
+      ['Halal et prière à Tokyo', `<ul class="ozet"><li><strong>Tokyo Camii :</strong> mosquée de style ottoman à environ 5 minutes à pied de la gare de Yoyogi-Uehara ; les visiteurs y sont bienvenus en dehors des heures de prière.</li><li><strong>Mosquée d’Otsuka :</strong> siège du Japan Islamic Trust, à environ 5 minutes à pied de la gare d’Otsuka (ligne JR Yamanote), avec la prière du vendredi.</li><li><strong>Aéroports :</strong> Narita et Haneda disposent de salles de prière.</li><li><strong>Repas :</strong> Iheb prévoit des restaurants halal ou Muslim friendly sur votre trajet.</li></ul>
+<p>Tout le détail : <a href="/fr/halal-mosquees-tokyo/">halal et mosquées à Tokyo</a>.</p>`],
+      ['Que faire ensemble ?', `<ul class="izgara">
+${carte('fr', 'shibuya', 'Le carrefour de Shibuya', 'Tokyo moderne', 'Shibuya, Shinjuku, Odaiba : la ville d’aujourd’hui.', '/fr/itineraire-tokyo-3-5-7-jours/')}
+${carte('fr', 'akihabara', 'Akihabara', 'Anime et cartes Pokémon', 'Akihabara, Nakano, Ikebukuro avec un passionné.', '/fr/guide-anime-tokyo/')}
+${carte('fr', 'kawaguchiko-fuji', 'Le mont Fuji et le lac Kawaguchi', 'Mont Fuji', 'Le lac Kawaguchi ou Hakone, en une journée.', '/fr/excursions-depuis-tokyo/')}
+${carte('fr', 'enoshima', 'Enoshima', 'Côté mer', 'Yokohama, le petit train Enoden et Enoshima.', '/fr/kamakura/')}
+</ul>`],
+      ['Comment réserver ?', `<ol class="adimlar"><li>Écrivez à Iheb sur WhatsApp, en arabe ou en français : dates, nombre de personnes, hôtel.</li><li>Il vous propose un programme et un tarif pour votre groupe.</li><li>Le jour venu, il vous retrouve à votre hôtel ou à une gare.</li></ol>`],
+    ],
+    faq: [
+      ['Y a-t-il un guide qui parle arabe et français à Tokyo ?', `Oui : Iheb, guide qui vit au Japon, guide en arabe, en français et en anglais à Tokyo et autour. WhatsApp : ${WA_VISIBLE}.`],
+      ['Les Tunisiens ont-ils besoin d’un visa pour le Japon ?', 'Pour un séjour touristique jusqu’à 90 jours, les Tunisiens sont exemptés de visa selon la liste du ministère japonais des Affaires étrangères ; vérifiez la liste à jour avant de partir. Les Marocains et les Algériens ont besoin d’un visa.'],
+      ['Peut-on manger halal et prier pendant la visite ?', 'Oui. Iheb prévoit des restaurants halal ou Muslim friendly et des pauses prière ; la Tokyo Camii et la mosquée d’Otsuka accueillent la prière du vendredi.'],
+      ['Quel est le tarif ?', 'Il dépend du nombre de personnes, de la durée et du programme. Iheb vous l’envoie sur WhatsApp.'],
+    ],
+    ver: [['Excursions depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Itinéraires de 3, 5 et 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['Halal et mosquées à Tokyo', '/fr/halal-mosquees-tokyo/'], ['Visa pour le Japon', '/fr/visa-japon/']],
+  })
+}
+function arMaghreb() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/maghreb/', alterna: 'magreb', kapak: 'tokyo-camii', alt: 'جامع طوكيو', etiqueta: 'من المغرب العربي',
+    wa: 'السلام عليكم إيهاب، نحن من المغرب العربي ونخطط لرحلة خاصة إلى طوكيو. التواريخ وعدد الأشخاص: ',
+    titre: 'رحلة إلى طوكيو من تونس والمغرب والجزائر: مرشد يتكلم العربية والفرنسية | إيهاب',
+    desc: 'للمسافرين من تونس والمغرب والجزائر: جولات خاصة في طوكيو وجبل فوجي بالعربية أو بالفرنسية مع إيهاب، طعام حلال ووقت للصلاة. التأشيرة والمساجد، والسعر على واتساب.',
+    h1: 'من المغرب العربي إلى طوكيو: مرشد يتكلم لغتك',
+    sub: 'طوكيو وجبل فوجي والأنمي والبحر، في جولة خاصة بكم، مع طعام حلال ووقت للصلاة.',
+    cevap: `نعم، يمكنكم زيارة طوكيو مع مرشد يتكلم العربية والفرنسية معًا: إيهاب، مرشد تونسي مسلم يعيش في اليابان، يرافق المسافرين من تونس والمغرب والجزائر في جولات خاصة في طوكيو ومنطقة كانتو وحول جبل فوجي وفي شيزوكا وناغانو. يُبنى اليوم حول مطاعم حلال أو مناسبة للمسلمين ووقفات للصلاة، بلا أماكن عبادة غير إسلامية في البرنامج. السعر حسب المجموعة على واتساب: <span dir="ltr">${WA_VISIBLE}</span>.`,
+    secciones: [
+      ['لماذا مرشد يتكلم العربية والفرنسية؟', `<ul class="ozet"><li><strong>بلغتكم:</strong> بالعربية أو بالفرنسية، أو بالاثنتين معًا داخل العائلة الواحدة.</li><li><strong>مسلم مثلكم:</strong> يعرف أين تجدون الطعام الحلال والمساجد وصلاة الجمعة.</li><li><strong>جولة خاصة:</strong> لعائلتكم أو مجموعتكم فقط، على إيقاعكم.</li><li><strong>يعيش في اليابان:</strong> يتولّى القطارات وقوائم الطعام والحجوزات.</li></ul>`],
+      ['التأشيرة حسب جواز السفر', `<table><tr><th>الجواز</th><th>السياحة</th></tr>
+<tr><td>تونس</td><td>إعفاء من التأشيرة حتى 90 يومًا حسب قائمة وزارة الخارجية اليابانية؛ تحقّقوا من القائمة المحدّثة قبل السفر.</td></tr>
+<tr><td>المغرب، الجزائر</td><td>التأشيرة مطلوبة: راجعوا سفارة اليابان في بلدكم.</td></tr></table>`],
+      ['الحلال والصلاة في طوكيو', `<ul class="ozet"><li><strong>جامع طوكيو (Tokyo Camii):</strong> على بعد نحو 5 دقائق سيرًا من محطة يويوغي-أويهارا.</li><li><strong>مسجد أوتسوكا:</strong> مقر Japan Islamic Trust، على بعد نحو 5 دقائق سيرًا من محطة أوتسوكا، وفيه صلاة الجمعة.</li><li><strong>المطارات:</strong> في ناريتا وهانيدا غرف للصلاة.</li><li><strong>الطعام:</strong> يختار إيهاب مطاعم حلال أو مناسبة للمسلمين على طريقكم.</li></ul>
+<p>التفاصيل: <a href="/ar/tokyo/halal-masajid/">حلال ومساجد طوكيو</a>.</p>`],
+      ['ماذا نزور معًا؟', `<ul class="izgara">
+${carte('ar', 'shibuya', 'تقاطع شيبويا', 'طوكيو الحديثة', 'شيبويا وشينجوكو وأوداييبا: مدينة اليوم.', '/ar/tokyo/barnamaj-tokyo/')}
+${carte('ar', 'akihabara', 'أكيهابارا', 'أنمي وبطاقات بوكيمون', 'أكيهابارا وناكانو وإيكيبوكورو مع خبير.', '/ar/tokyo/anime-pokemon/')}
+${carte('ar', 'kawaguchiko-fuji', 'جبل فوجي وبحيرة كاواغوتشي', 'جبل فوجي', 'بحيرة كاواغوتشي أو هاكوني في يوم واحد.', '/ar/tokyo/rihlat-min-tokyo/')}
+</ul>`],
+      ['كيف تحجزون؟', `<ol class="adimlar"><li>اكتبوا لإيهاب على واتساب بالعربية أو بالفرنسية: التواريخ وعدد الأشخاص والفندق.</li><li>يقترح عليكم برنامجًا وسعرًا لمجموعتكم.</li><li>في اليوم المحدد يلقاكم في الفندق أو في المحطة.</li></ol>`],
+    ],
+    faq: [
+      ['هل يوجد مرشد في طوكيو يتكلم العربية والفرنسية؟', `نعم: إيهاب، مرشد يعيش في اليابان، يرشد بالعربية والفرنسية والإنجليزية في طوكيو وحولها. واتساب: <span dir="ltr">${WA_VISIBLE}</span>.`],
+      ['هل يحتاج التونسيون إلى تأشيرة لليابان؟', 'للسياحة حتى 90 يومًا، التونسيون معفون من التأشيرة حسب قائمة وزارة الخارجية اليابانية؛ تحقّقوا من القائمة المحدّثة قبل السفر. أما المغاربة والجزائريون فيحتاجون إلى تأشيرة.'],
+      ['هل نجد طعامًا حلالًا ووقتًا للصلاة؟', 'نعم. يرتّب إيهاب مطاعم حلال أو مناسبة للمسلمين ووقفات للصلاة، وتُقام صلاة الجمعة في جامع طوكيو ومسجد أوتسوكا.'],
+      ['كم السعر؟', 'يختلف حسب عدد الأشخاص والمدة والبرنامج، ويرسله لكم إيهاب على واتساب.'],
+    ],
+    ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['برنامج طوكيو 3 و5 و7 أيام', '/ar/tokyo/barnamaj-tokyo/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']],
+  })
+}
+
+// ——— Excursiones de un día (sin santuarios ni templos) ———
+const ETAPAS_EXC = ['Lake Kawaguchi', 'Oshino Hakkai', 'Lake Ashi', 'Owakudani', 'Hakone Open-Air Museum', 'Yokohama', 'Kamakura-Kokomae', 'Enoshima']
+function frExcursions() {
+  return generica({
+    lang: 'fr', ruta: '/fr/excursions-depuis-tokyo/', alterna: 'excursiones', kapak: 'kawaguchiko-fuji', alt: 'Le mont Fuji et le lac Kawaguchi', etiqueta: 'Excursions',
+    wa: 'Bonjour Iheb, nous cherchons une excursion d’une journée depuis Tokyo (Fuji, Hakone ou la mer). Dates et nombre de personnes : ',
+    titre: 'Excursions d’une journée depuis Tokyo : mont Fuji, Hakone, Enoshima | Guide francophone',
+    desc: 'Trois excursions d’une journée depuis Tokyo avec un guide francophone : le mont Fuji et le lac Kawaguchi, Hakone (lac Ashi, téléphérique, Owakudani, onsen) et la côte de Yokohama et Enoshima. Trains, durées, conseils.',
+    h1: 'Excursions d’une journée depuis Tokyo : Fuji, Hakone ou la mer ?',
+    sub: 'Trois journées classiques, nature, lacs et bord de mer, avec les trains, les durées et ce qu’il faut savoir.',
+    cevap: 'Depuis Tokyo, trois excursions d’une journée sont faciles : les lacs du Fuji autour de Kawaguchiko, à environ 2 heures de Shinjuku par le train direct Fuji Excursion ; Hakone, avec le lac Ashi, le téléphérique et la vallée volcanique d’Owakudani, à environ 1 h 20 de Shinjuku en Romancecar ; et la côte de Yokohama, Kamakura et Enoshima, à environ une heure de la gare de Tokyo par la ligne JR Yokosuka. Choisissez une région par jour : passer du Fuji à Hakone demande environ 2 heures de bus. Iheb, guide francophone qui vit au Japon, organise la journée en privé pour votre groupe.',
+    secciones: [
+      ['1. Le mont Fuji et le lac Kawaguchi', `<ul class="ozet"><li><strong>Accès :</strong> train direct Fuji Excursion depuis Shinjuku, environ 2 heures (ou bus express).</li><li><strong>Lac Kawaguchi :</strong> le plus accessible des cinq lacs, avec le Fuji qui s’y reflète par temps calme.</li><li><strong>Oshino Hakkai :</strong> un village de bassins alimentés par les eaux de source du Fuji.</li><li><strong>Fuji-Q Highland :</strong> le parc d’attractions pour les amateurs de montagnes russes.</li></ul>`],
+      ['2. Hakone : lac, téléphérique et onsen', `<ul class="ozet"><li><strong>Accès :</strong> Romancecar d’Odakyu depuis Shinjuku, environ 1 h 20 jusqu’à Hakone-Yumoto.</li><li><strong>La boucle :</strong> la traversée du lac Ashi en bateau et le téléphérique au-dessus d’Owakudani, la vallée volcanique fumante (accès parfois restreint selon l’activité volcanique).</li><li><strong>Hakone Open-Air Museum :</strong> un musée de sculptures en plein air.</li><li><strong>Onsen :</strong> Hakone est une région de sources chaudes, idéale pour finir la journée.</li></ul>`],
+      ['3. La mer : Yokohama, Kamakura-Kōkōmae et Enoshima', `<ul class="ozet"><li><strong>Accès :</strong> ligne JR Yokosuka depuis la gare de Tokyo, environ une heure jusqu’à Kamakura sans changement, en passant près de Yokohama.</li><li><strong>Yokohama :</strong> le port, Minato Mirai et son front de mer, le Cup Noodles Museum, Chinatown.</li><li><strong>Le petit train Enoden :</strong> il longe la côte, avec la plage de Yuigahama et le passage à niveau de Kamakura-Kōkōmae, rendu célèbre par l’anime Slam Dunk.</li><li><strong>Enoshima :</strong> une petite île reliée à la côte par un pont, avec vue sur la mer et, par temps clair, sur le Fuji.</li></ul>`],
+      ['Bien choisir', `<table><tr><th></th><th>Lacs du Fuji</th><th>Hakone</th><th>Côte (Enoshima)</th></tr>
+<tr><td>Depuis Tokyo</td><td>Environ 2 h depuis Shinjuku</td><td>Environ 1 h 20 depuis Shinjuku</td><td>Environ 1 h depuis la gare de Tokyo</td></tr>
+<tr><td>Pour qui</td><td>Voir le Fuji de près</td><td>Lac, volcan, onsen</td><td>Journée calme, anime, mer</td></tr></table>
+<p>Le Fuji est souvent caché par les nuages : les matins d’hiver sont en général les plus dégagés. Sur demande, la journée peut se faire en véhicule privé avec des partenaires agréés.</p>`],
+    ],
+    faq: [
+      ['Peut-on faire le Fuji et Hakone dans la même journée ?', 'C’est déconseillé : il faut environ 2 heures de bus, avec un changement à Gotemba, pour passer de l’un à l’autre. Choisissez une région par jour.'],
+      ['Quelle est l’excursion la plus simple depuis Tokyo ?', 'La côte de Yokohama et d’Enoshima : environ une heure de train depuis la gare de Tokyo, sans changement jusqu’à Kamakura.'],
+      ['Quand voit-on le mieux le mont Fuji ?', 'Les matins d’hiver sont en général les plus dégagés ; en été, il est souvent dans les nuages.'],
+    ],
+    ver: [['Hakone et mont Fuji', '/fr/hakone-mont-fuji/'], ['Yokohama et Enoshima', '/fr/kamakura/'], ['Excursion au mont Fuji depuis Tokyo', '/fr/excursion-mont-fuji-depuis-tokyo/'], ['Itinéraires de 3, 5 et 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/']],
+    ld: [viajeLd('Excursions d’une journée depuis Tokyo', 'Voyageurs francophones', ETAPAS_EXC)],
+  })
+}
+function enExcursions() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/day-trips/', alterna: 'excursiones', kapak: 'kawaguchiko-fuji', alt: 'Mount Fuji and Lake Kawaguchi', etiqueta: 'Day trips',
+    wa: 'Hi Iheb, we would like a private day trip from Tokyo (Mt. Fuji, Hakone or the coast). Dates and group size: ',
+    titre: 'Day Trips from Tokyo with a Private Guide: Mt. Fuji, Hakone, Enoshima | Iheb',
+    desc: 'Three easy day trips from Tokyo with a private English-speaking guide: Mt. Fuji and Lake Kawaguchi, Hakone (Lake Ashi, ropeway, Owakudani, hot springs) and the Yokohama–Enoshima coast. Trains, times and tips.',
+    h1: 'Day trips from Tokyo: Mt. Fuji, Hakone or the coast?',
+    sub: 'Three classic days out, lakes, a volcano valley and the seaside, with the trains, the times and what to know.',
+    cevap: 'Three day trips from Tokyo are easy: the Fuji Five Lakes around Kawaguchiko, about 2 hours from Shinjuku on the direct Fuji Excursion train; Hakone, with Lake Ashi, the ropeway and the volcanic Owakudani valley, about 1 h 20 from Shinjuku on the Romancecar; and the Yokohama, Kamakura and Enoshima coast, about an hour from Tokyo Station on the JR Yokosuka Line. Pick one area per day: getting from the Fuji lakes to Hakone takes about 2 hours by bus. Iheb, a private guide who lives in Japan, plans the day for your group in English.',
+    secciones: [
+      ['1. Mt. Fuji and Lake Kawaguchi', `<ul class="ozet"><li><strong>Getting there:</strong> the direct Fuji Excursion train from Shinjuku, about 2 hours (or an express bus).</li><li><strong>Lake Kawaguchi:</strong> the easiest of the five lakes, with Fuji reflected in the water on calm days.</li><li><strong>Oshino Hakkai:</strong> a village of ponds fed by Fuji’s spring water.</li><li><strong>Fuji-Q Highland:</strong> the theme park for roller-coaster fans.</li></ul>`],
+      ['2. Hakone: lake, ropeway and hot springs', `<ul class="ozet"><li><strong>Getting there:</strong> the Odakyu Romancecar from Shinjuku, about 1 h 20 to Hakone-Yumoto.</li><li><strong>The loop:</strong> a boat across Lake Ashi and the ropeway over Owakudani, the steaming volcanic valley (access is sometimes restricted depending on volcanic activity).</li><li><strong>Hakone Open-Air Museum:</strong> an outdoor sculpture museum.</li><li><strong>Onsen:</strong> Hakone is a hot-spring area, a good way to end the day.</li></ul>`],
+      ['3. The coast: Yokohama, Kamakura-Kokomae and Enoshima', `<ul class="ozet"><li><strong>Getting there:</strong> the JR Yokosuka Line from Tokyo Station, about an hour to Kamakura with no change, passing near Yokohama.</li><li><strong>Yokohama:</strong> the port, the Minato Mirai waterfront, the Cup Noodles Museum and Chinatown.</li><li><strong>The Enoden line:</strong> a small coastal train past Yuigahama beach and the Kamakura-Kokomae railway crossing made famous by the anime Slam Dunk.</li><li><strong>Enoshima:</strong> a small island linked to the shore by a bridge, with sea views and, on clear days, Mt. Fuji.</li></ul>`],
+      ['Which one?', `<table><tr><th></th><th>Fuji lakes</th><th>Hakone</th><th>Coast (Enoshima)</th></tr>
+<tr><td>From Tokyo</td><td>About 2 h from Shinjuku</td><td>About 1 h 20 from Shinjuku</td><td>About 1 h from Tokyo Station</td></tr>
+<tr><td>Best for</td><td>Seeing Fuji up close</td><td>Lake, volcano, onsen</td><td>A calm day, anime, the sea</td></tr></table>
+<p>Fuji often hides in the clouds: winter mornings are usually the clearest. On request, the day can be done by private vehicle with licensed partners.</p>`],
+    ],
+    faq: [
+      ['Can I do Mt. Fuji and Hakone in one day?', 'Not recommended: it takes about 2 hours by bus, with a change at Gotemba, to go from one to the other. Pick one area per day.'],
+      ['What is the easiest day trip from Tokyo?', 'The Yokohama and Enoshima coast: about an hour by train from Tokyo Station, with no change to Kamakura.'],
+      ['When is Mt. Fuji most visible?', 'Winter mornings are usually the clearest; in summer it is often in the clouds.'],
+    ],
+    ver: [['Tokyo itineraries: 3, 5 and 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['The otaku guide to Tokyo', '/en/tokyo-anime-guide/otaku-guide/']],
+    ld: [viajeLd('Day trips from Tokyo', 'International travelers', ETAPAS_EXC)],
+  })
+}
+function arExcursions() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/rihlat-min-tokyo/', alterna: 'excursiones', kapak: 'kawaguchiko-fuji', alt: 'جبل فوجي وبحيرة كاواغوتشي', etiqueta: 'رحلات يومية',
+    wa: 'السلام عليكم إيهاب، نريد رحلة يومية خاصة من طوكيو (فوجي أو هاكوني أو البحر). التواريخ وعدد الأشخاص: ',
+    titre: 'رحلات يومية من طوكيو مع مرشد عربي: جبل فوجي وهاكوني وإينوشيما | إيهاب',
+    desc: 'ثلاث رحلات يومية من طوكيو مع مرشد عربي مسلم: جبل فوجي وبحيرة كاواغوتشي، هاكوني (بحيرة آشي والتلفريك وأواكوداني والينابيع الحارة)، وساحل يوكوهاما وإينوشيما. القطارات والمدة والنصائح.',
+    h1: 'رحلات يومية من طوكيو: فوجي أم هاكوني أم البحر؟',
+    sub: 'ثلاثة أيام كلاسيكية بين البحيرات والوادي البركاني والبحر، مع القطارات والمدة وما يجب معرفته.',
+    cevap: 'من طوكيو ثلاث رحلات يومية سهلة: بحيرات فوجي حول كاواغوتشيكو، على بعد نحو ساعتين من شينجوكو بقطار Fuji Excursion المباشر؛ وهاكوني، مع بحيرة آشي والتلفريك ووادي أواكوداني البركاني، على بعد نحو ساعة و20 دقيقة من شينجوكو بقطار Romancecar؛ وساحل يوكوهاما وكاماكورا وإينوشيما، على بعد نحو ساعة من محطة طوكيو بخط JR Yokosuka. اختاروا منطقة واحدة في اليوم: الانتقال من بحيرات فوجي إلى هاكوني يأخذ نحو ساعتين بالحافلة. يرتّب إيهاب اليوم لمجموعتكم بالعربية، مع طعام حلال ووقت للصلاة.',
+    secciones: [
+      ['1. جبل فوجي وبحيرة كاواغوتشي', `<ul class="ozet"><li><strong>الوصول:</strong> قطار Fuji Excursion المباشر من شينجوكو، نحو ساعتين (أو حافلة سريعة).</li><li><strong>بحيرة كاواغوتشي:</strong> أسهل البحيرات الخمس، ويظهر فيها انعكاس فوجي حين يهدأ الماء.</li><li><strong>أوشينو هاكّاي:</strong> قرية من البرك تغذّيها مياه ينابيع فوجي.</li><li><strong>Fuji-Q Highland:</strong> مدينة ألعاب لمحبي الأفعوانيات.</li></ul>`],
+      ['2. هاكوني: بحيرة وتلفريك وينابيع حارة', `<ul class="ozet"><li><strong>الوصول:</strong> قطار Romancecar من شينجوكو، نحو ساعة و20 دقيقة إلى هاكوني-يوموتو.</li><li><strong>الجولة:</strong> عبور بحيرة آشي بالقارب، ثم التلفريك فوق أواكوداني، الوادي البركاني الذي يتصاعد منه البخار (قد يُقيَّد الدخول حسب النشاط البركاني).</li><li><strong>متحف هاكوني في الهواء الطلق:</strong> متحف منحوتات مفتوح.</li><li><strong>الينابيع الحارة (أونسن):</strong> هاكوني منطقة ينابيع حارة، ختام جميل لليوم.</li></ul>`],
+      ['3. البحر: يوكوهاما وكاماكورا-كوكوماي وإينوشيما', `<ul class="ozet"><li><strong>الوصول:</strong> خط JR Yokosuka من محطة طوكيو، نحو ساعة إلى كاماكورا بلا تبديل، مرورًا بقرب يوكوهاما.</li><li><strong>يوكوهاما:</strong> الميناء وواجهة ميناتو ميراي البحرية ومتحف Cup Noodles والحي الصيني.</li><li><strong>قطار إينودن الصغير:</strong> يسير على الساحل مرورًا بشاطئ يويغاهاما وتقاطع كاماكورا-كوكوماي الشهير من أنمي Slam Dunk.</li><li><strong>إينوشيما:</strong> جزيرة صغيرة يصلها جسر بالساحل، بإطلالة على البحر وعلى فوجي في الأيام الصافية.</li></ul>`],
+      ['أيّها تختارون؟', `<table><tr><th></th><th>بحيرات فوجي</th><th>هاكوني</th><th>الساحل</th></tr>
+<tr><td>من طوكيو</td><td>نحو ساعتين من شينجوكو</td><td>نحو ساعة و20 دقيقة من شينجوكو</td><td>نحو ساعة من محطة طوكيو</td></tr>
+<tr><td>مناسبة لـ</td><td>رؤية فوجي عن قرب</td><td>بحيرة وبركان وينابيع</td><td>يوم هادئ وبحر</td></tr></table>
+<p>كثيرًا ما تُخفي الغيوم جبل فوجي، وصباحات الشتاء هي الأصفى عادةً. وعند الطلب تكون الرحلة بسيارة خاصة مع شركاء مرخّصين.</p>`],
+    ],
+    faq: [
+      ['هل يمكن زيارة فوجي وهاكوني في يوم واحد؟', 'لا ننصح بذلك: الانتقال بينهما يأخذ نحو ساعتين بالحافلة مع تبديل في غوتيمبا. اختاروا منطقة واحدة في اليوم.'],
+      ['ما أسهل رحلة يومية من طوكيو؟', 'ساحل يوكوهاما وإينوشيما: نحو ساعة بالقطار من محطة طوكيو، بلا تبديل حتى كاماكورا.'],
+      ['متى يظهر جبل فوجي بوضوح؟', 'صباحات الشتاء هي الأصفى عادةً، وفي الصيف يختفي كثيرًا خلف الغيوم.'],
+    ],
+    ver: [['برنامج طوكيو 3 و5 و7 أيام', '/ar/tokyo/barnamaj-tokyo/'], ['رحلات خاصة لعائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']],
+    ld: [viajeLd('رحلات يومية من طوكيو', 'Arabic-speaking travelers', ETAPAS_EXC)],
+  })
+}
+
+// ——— Itinerarios de 3, 5 y 7 días (otaku + ciudad + Fuji) ———
+const ETAPAS_IT = ['Akihabara', 'Nakano Broadway', 'Ikebukuro', 'Shibuya', 'Shinjuku', 'Lake Kawaguchi', 'Ueno', 'Tokyo Skytree', 'Odaiba', 'Enoshima', 'Ghibli Museum', 'Nikko']
+function frItineraire() {
+  return generica({
+    lang: 'fr', ruta: '/fr/itineraire-tokyo-3-5-7-jours/', alterna: 'itinerario', kapak: 'shibuya', alt: 'Le carrefour de Shibuya', etiqueta: 'Itinéraires',
+    wa: 'Bonjour Iheb, nous préparons un séjour à Tokyo et aimerions votre aide pour l’itinéraire. Dates et nombre de personnes : ',
+    titre: 'Itinéraire Tokyo en 3, 5 ou 7 jours : anime, ville et mont Fuji | Guide francophone',
+    desc: 'Trois programmes jour par jour pour Tokyo : 3 jours (anime, ville, mont Fuji), 5 jours (avec l’est de Tokyo et la mer) et 7 jours (musée Ghibli, Nikko). Trains, réservations et où loger, avec un guide francophone.',
+    h1: 'Tokyo en 3, 5 ou 7 jours : quel programme ?',
+    sub: 'Anime, ville moderne et mont Fuji, jour par jour, avec les trains et les réservations à prévoir.',
+    cevap: 'En 3 jours, on peut voir l’essentiel de Tokyo en trois thèmes : une journée anime (Akihabara, Nakano Broadway, Ikebukuro), une journée ville (Harajuku, Shibuya, Shinjuku) et une excursion au mont Fuji ou à Hakone. Avec 5 jours, ajoutez l’est et la baie (Ueno, la Tokyo Skytree, Tsukiji, Odaiba) et la côte de Yokohama et Enoshima. Avec 7 jours, ajoutez le musée Ghibli (sur réservation) et la nature de Nikko. Iheb, guide francophone qui vit au Japon, adapte le programme à votre groupe et vous guide les jours que vous choisissez.',
+    secciones: [
+      ['Tokyo en 3 jours', `<ol class="adimlar"><li><strong>Jour 1, anime :</strong> Akihabara le matin (figurines, jeux rétro, cartes Pokémon chez Hareruya 2), Nakano Broadway à l’ouverture de Mandarake à midi, puis Ikebukuro : Animate et le Pokémon Center Mega Tokyo.</li><li><strong>Jour 2, la ville :</strong> Harajuku et la rue Takeshita, Omotesando, le carrefour de Shibuya et Shibuya PARCO (Nintendo TOKYO, Pokémon Center), le jardin de Shinjuku Gyoen, puis l’observatoire gratuit de la mairie de Tokyo. La Tokyo Camii, à Yoyogi-Uehara, se glisse facilement dans cette journée.</li><li><strong>Jour 3, le mont Fuji :</strong> le lac Kawaguchi (environ 2 heures de Shinjuku en Fuji Excursion) ou Hakone (environ 1 h 20 en Romancecar).</li></ol>`],
+      ['Tokyo en 5 jours', `<p>Les trois jours ci-dessus, plus :</p><ol class="adimlar"><li><strong>Jour 4, l’est et la baie :</strong> le parc d’Ueno avec son zoo et le Musée national de Tokyo, la Tokyo Skytree, puis le marché extérieur de Tsukiji, Ginza et Odaiba au coucher du soleil.</li><li><strong>Jour 5, la mer :</strong> Yokohama, le petit train Enoden, le passage à niveau de Kamakura-Kōkōmae et l’île d’Enoshima (environ une heure de la gare de Tokyo).</li></ol>`],
+      ['Tokyo en 7 jours', `<p>Les cinq jours ci-dessus, plus :</p><ol class="adimlar"><li><strong>Jour 6, Ghibli et Pokémon :</strong> le musée Ghibli à Mitaka, près du parc d’Inokashira (billets mis en vente le 10 du mois précédent, à 10 h heure du Japon, rien sur place), puis le Pokémon Center Tokyo DX à Nihonbashi, avec le Pokémon Café sur réservation, et Character Street à la gare de Tokyo.</li><li><strong>Jour 7, la nature à Nikko :</strong> la cascade de Kegon (environ 97 mètres) et le lac Chuzenji par la route Irohazaka, à environ 1 h 50 d’Asakusa en Tobu Spacia X. Ou une journée libre pour les derniers achats.</li></ol>`],
+      ['Réservations et logement', `<ul class="ozet"><li><strong>Musée Ghibli :</strong> le 10 du mois précédent, à 10 h heure du Japon (<a href="/fr/musee-ghibli-reservation/">comment réserver</a>).</li><li><strong>Pokémon Café :</strong> uniquement sur réservation, à 18 h heure du Japon le jour d’ouverture des créneaux (<a href="/fr/pokemon-cafe-reservation/">comment réserver</a>).</li><li><strong>Où loger :</strong> près d’une gare de la ligne JR Yamanote. Shinjuku ou Shibuya pour l’ouest et les départs vers Hakone et le Fuji ; la gare de Tokyo ou Ueno pour l’est, Nikko, Narita et le Shinkansen.</li></ul>`],
+    ],
+    faq: [
+      ['Combien de jours faut-il pour Tokyo ?', 'Au moins 3 jours pour l’essentiel ; 5 jours pour ajouter l’est de la ville et la mer ; 7 jours pour le musée Ghibli et une journée nature.'],
+      ['Peut-on faire le mont Fuji en une journée depuis Tokyo ?', 'Oui : environ 2 heures de Shinjuku jusqu’au lac Kawaguchi en Fuji Excursion, ou 1 h 20 jusqu’à Hakone en Romancecar. Choisissez l’un des deux.'],
+      ['Iheb peut-il guider seulement certains jours ?', 'Oui. Il guide les jours que vous choisissez, et vous conseille pour les autres. Tarif sur WhatsApp selon le groupe.'],
+    ],
+    ver: [['Excursions depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Guide anime à Tokyo', '/fr/guide-anime-tokyo/'], ['Que faire à Tokyo', '/fr/que-faire-a-tokyo/'], ['Tokyo depuis le Maghreb', '/fr/tokyo-maghreb/']],
+    ld: [viajeLd('Itinéraire Tokyo en 3, 5 ou 7 jours', 'Voyageurs francophones', ETAPAS_IT)],
+  })
+}
+function enItinerary() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/tokyo-itinerary/', alterna: 'itinerario', kapak: 'shibuya', alt: 'Shibuya crossing', etiqueta: 'Itineraries',
+    wa: 'Hi Iheb, we are planning a trip to Tokyo and would like help with the itinerary. Dates and group size: ',
+    titre: 'Tokyo Itinerary for 3, 5 or 7 Days: Anime, City & Mt. Fuji | Iheb',
+    desc: 'Day-by-day Tokyo itineraries: 3 days (anime, city, Mt. Fuji), 5 days (add east Tokyo and the coast) and 7 days (Ghibli Museum, Nikko). Trains, bookings and where to stay, with a private English-speaking guide.',
+    h1: 'Tokyo in 3, 5 or 7 days: anime, city and Mt. Fuji',
+    sub: 'Day-by-day plans with the trains and the bookings you need, built around what anime fans and first-timers love.',
+    cevap: 'In 3 days you can cover Tokyo in three themes: an anime day (Akihabara, Nakano Broadway, Ikebukuro), a city day (Harajuku, Shibuya, Shinjuku) and a Mt. Fuji or Hakone day trip. With 5 days, add the east and the bay (Ueno, Tokyo Skytree, Tsukiji, Odaiba) and the Yokohama–Enoshima coast. With 7 days, add the Ghibli Museum (booked in advance) and the nature of Nikko. Iheb, a private guide who lives in Japan, adapts the plan to your group and guides the days you choose.',
+    secciones: [
+      ['Tokyo in 3 days', `<ol class="adimlar"><li><strong>Day 1, anime:</strong> Akihabara in the morning (figures, retro games, Pokémon cards at Hareruya 2), Nakano Broadway when Mandarake opens at noon, then Ikebukuro: Animate and Pokémon Center Mega Tokyo. <a href="/en/tokyo-anime-guide/akihabara/">Akihabara</a> · <a href="/en/tokyo-anime-guide/nakano-broadway/">Nakano</a> · <a href="/en/tokyo-anime-guide/ikebukuro/">Ikebukuro</a>.</li><li><strong>Day 2, the city:</strong> Harajuku and Takeshita Street, Omotesando, Shibuya crossing and Shibuya PARCO (Nintendo TOKYO, Pokémon Center), Shinjuku Gyoen garden, then the free observatory at the Tokyo Metropolitan Government Building. Muslim travelers can fit in Tokyo Camii at Yoyogi-Uehara.</li><li><strong>Day 3, Mt. Fuji:</strong> Lake Kawaguchi (about 2 hours from Shinjuku on the Fuji Excursion) or Hakone (about 1 h 20 on the Romancecar). <a href="/en/tokyo-anime-guide/day-trips/">Day trips</a>.</li></ol>`],
+      ['Tokyo in 5 days', `<p>The three days above, plus:</p><ol class="adimlar"><li><strong>Day 4, east and the bay:</strong> Ueno Park with its zoo and the Tokyo National Museum, Tokyo Skytree, then the Tsukiji outer market, Ginza and Odaiba at sunset.</li><li><strong>Day 5, the coast:</strong> Yokohama, the Enoden line, the Kamakura-Kokomae crossing and Enoshima island (about an hour from Tokyo Station).</li></ol>`],
+      ['Tokyo in 7 days', `<p>The five days above, plus:</p><ol class="adimlar"><li><strong>Day 6, Ghibli and Pokémon:</strong> the Ghibli Museum in Mitaka by Inokashira Park (tickets go on sale on the 10th of the previous month at 10 am Japan time on Lawson Ticket; none at the door), then Pokémon Center Tokyo DX in Nihonbashi, with the Pokémon Café by reservation, and Character Street at Tokyo Station.</li><li><strong>Day 7, nature in Nikko:</strong> Kegon Falls (about 97 m) and Lake Chuzenji up the Irohazaka road, about 1 h 50 from Asakusa on the Tobu Spacia X. Or a free day for last-minute shopping.</li></ol>`],
+      ['Bookings and where to stay', `<ul class="ozet"><li><strong>Ghibli Museum:</strong> the 10th of the previous month, 10 am Japan time.</li><li><strong>Pokémon Café:</strong> reservation only, slots open at 6 pm Japan time and go fast.</li><li><strong>Where to stay:</strong> near a JR Yamanote Line station. Shinjuku or Shibuya for the west side and departures to Hakone and Fuji; Tokyo Station or Ueno for the east side, Nikko, Narita and the Shinkansen.</li><li><strong>Tax-free:</strong> bring your passport and keep receipts; the tax is refunded after customs at departure.</li></ul>`],
+    ],
+    faq: [
+      ['How many days do I need in Tokyo?', 'At least 3 days for the essentials; 5 days to add east Tokyo and the coast; 7 days for the Ghibli Museum and a nature day.'],
+      ['Can I see Mt. Fuji on a day trip from Tokyo?', 'Yes: about 2 hours from Shinjuku to Lake Kawaguchi on the Fuji Excursion, or 1 h 20 to Hakone on the Romancecar. Pick one of the two.'],
+      ['Can Iheb guide only some of the days?', 'Yes. He guides the days you choose and helps you plan the rest. Price per group on WhatsApp.'],
+    ],
+    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['The otaku guide to Tokyo', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/']],
+    ld: [viajeLd('Tokyo itinerary: 3, 5 or 7 days', 'Anime fans and first-time travelers', ETAPAS_IT)],
+  })
+}
+function arBarnamaj() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/barnamaj-tokyo/', alterna: 'itinerario', kapak: 'shibuya', alt: 'تقاطع شيبويا', etiqueta: 'برامج الرحلة',
+    wa: 'السلام عليكم إيهاب، نخطط لرحلة إلى طوكيو ونريد مساعدتك في البرنامج. التواريخ وعدد الأشخاص: ',
+    titre: 'برنامج طوكيو 3 أو 5 أو 7 أيام: أنمي ومدينة وجبل فوجي | إيهاب',
+    desc: 'برامج يومًا بيوم لطوكيو: 3 أيام (أنمي، مدينة، جبل فوجي)، 5 أيام (شرق طوكيو والبحر)، 7 أيام (متحف جيبلي ونيكّو). القطارات والحجوزات وأين تقيمون، مع مرشد عربي مسلم.',
+    h1: 'طوكيو في 3 أو 5 أو 7 أيام: أي برنامج؟',
+    sub: 'أنمي ومدينة حديثة وجبل فوجي، يومًا بيوم، مع القطارات والحجوزات، ووقت للصلاة وطعام حلال.',
+    cevap: 'في 3 أيام ترون أهم ما في طوكيو في ثلاثة محاور: يوم للأنمي (أكيهابارا، ناكانو برودواي، إيكيبوكورو)، ويوم للمدينة (هاراجوكو، شيبويا، شينجوكو)، ورحلة إلى جبل فوجي أو هاكوني. ومع 5 أيام أضيفوا شرق المدينة والخليج (أوينو، برج طوكيو سكاي تري، تسوكيجي، أوداييبا) وساحل يوكوهاما وإينوشيما. ومع 7 أيام أضيفوا متحف جيبلي (بحجز مسبق) وطبيعة نيكّو. يكيّف إيهاب البرنامج لمجموعتكم ويرافقكم في الأيام التي تختارونها.',
+    secciones: [
+      ['طوكيو في 3 أيام', `<ol class="adimlar"><li><strong>اليوم 1، الأنمي:</strong> أكيهابارا صباحًا (مجسّمات، ألعاب قديمة، بطاقات بوكيمون في Hareruya 2)، ثم ناكانو برودواي عند افتتاح محلات Mandarake ظهرًا، ثم إيكيبوكورو: Animate ومركز بوكيمون ميغا طوكيو.</li><li><strong>اليوم 2، المدينة:</strong> هاراجوكو وشارع تاكيشيتا، أوموتيساندو، تقاطع شيبويا وShibuya PARCO (Nintendo TOKYO ومركز بوكيمون)، حديقة شينجوكو غيوين، ثم المرصد المجاني في مبنى حكومة طوكيو. ويسهل إدخال جامع طوكيو في يويوغي-أويهارا في هذا اليوم.</li><li><strong>اليوم 3، جبل فوجي:</strong> بحيرة كاواغوتشي (نحو ساعتين من شينجوكو بقطار Fuji Excursion) أو هاكوني (نحو ساعة و20 دقيقة بقطار Romancecar).</li></ol>`],
+      ['طوكيو في 5 أيام', `<p>الأيام الثلاثة السابقة، ثم:</p><ol class="adimlar"><li><strong>اليوم 4، الشرق والخليج:</strong> حديقة أوينو مع حديقة الحيوان والمتحف الوطني في طوكيو، ثم برج سكاي تري، ثم سوق تسوكيجي الخارجي وغينزا وأوداييبا عند الغروب.</li><li><strong>اليوم 5، البحر:</strong> يوكوهاما وقطار إينودن وتقاطع كاماكورا-كوكوماي وجزيرة إينوشيما (نحو ساعة من محطة طوكيو).</li></ol>`],
+      ['طوكيو في 7 أيام', `<p>الأيام الخمسة السابقة، ثم:</p><ol class="adimlar"><li><strong>اليوم 6، جيبلي وبوكيمون:</strong> متحف جيبلي في ميتاكا قرب حديقة إينوكاشيرا (تُطرح التذاكر يوم 10 من الشهر السابق الساعة 10 صباحًا بتوقيت اليابان، ولا تُباع عند الباب)، ثم مركز بوكيمون طوكيو DX في نيهونباشي مع مقهى بوكيمون بالحجز، وشارع الشخصيات في محطة طوكيو.</li><li><strong>اليوم 7، طبيعة نيكّو:</strong> شلال كيغون (نحو 97 مترًا) وبحيرة تشوزنجي عبر طريق إيروهازاكا، على بعد نحو ساعة و50 دقيقة من أساكوسا بقطار Tobu Spacia X. أو يوم حرّ للتسوّق.</li></ol>`],
+      ['الحجوزات والإقامة', `<ul class="ozet"><li><strong>متحف جيبلي:</strong> يوم 10 من الشهر السابق، الساعة 10 صباحًا بتوقيت اليابان.</li><li><strong>مقهى بوكيمون:</strong> بالحجز فقط، وتُفتح المواعيد الساعة 6 مساءً بتوقيت اليابان.</li><li><strong>أين تقيمون:</strong> قرب محطة على خط JR Yamanote الدائري: شينجوكو أو شيبويا للغرب وللانطلاق إلى هاكوني وفوجي؛ محطة طوكيو أو أوينو للشرق ونيكّو وناريتا والقطار السريع.</li></ul>`],
+    ],
+    faq: [
+      ['كم يومًا تحتاج طوكيو؟', '3 أيام على الأقل للأساسيات، و5 أيام لإضافة شرق المدينة والبحر، و7 أيام لمتحف جيبلي ويوم في الطبيعة.'],
+      ['هل يمكن زيارة جبل فوجي في يوم واحد من طوكيو؟', 'نعم: نحو ساعتين من شينجوكو إلى بحيرة كاواغوتشي بقطار Fuji Excursion، أو ساعة و20 دقيقة إلى هاكوني بقطار Romancecar. اختاروا واحدة منهما.'],
+      ['هل يرافقنا إيهاب في بعض الأيام فقط؟', 'نعم. يرافقكم في الأيام التي تختارونها ويساعدكم في التخطيط لبقية الأيام. السعر على واتساب حسب المجموعة.'],
+    ],
+    ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['دليل الأنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['من المغرب العربي إلى طوكيو', '/ar/tokyo/maghreb/']],
+    ld: [viajeLd('برنامج طوكيو 3 أو 5 أو 7 أيام', 'Arabic-speaking travelers', ETAPAS_IT)],
+  })
+}
+
+const hechas = [frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)
