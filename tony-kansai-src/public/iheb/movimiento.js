@@ -87,7 +87,7 @@
   const kimg = document.querySelector('.kahraman img')
   if (kimg) g.fromTo(kimg, { scale: 1.12 }, { scale: 1, yPercent: 10, ease: 'none', scrollTrigger: { trigger: '.kahraman', start: 'top top', end: 'bottom top', scrub: true } })
   // Carruseles del móvil: la tarjeta del centro crece y las de los lados se apagan.
-  g.utils.toArray('.izgara').forEach((cz) => {
+  g.utils.toArray('.izgara, ul.opciones').forEach((cz) => {
     if (getComputedStyle(cz).overflowX !== 'auto') return
     const items = [...cz.children]
     const pinta = () => {

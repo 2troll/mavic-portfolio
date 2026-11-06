@@ -180,7 +180,16 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .idiomas [aria-current]{background:var(--sol,#ffd23f);color:#16132a;box-shadow:2px 2px 0 #16132a}
 .idiomas [lang=ar]{font-family:Tajawal,system-ui,sans-serif}
 header .idiomas{margin-inline-start:auto}
-@media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}</style>
+@media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}
+ul.opciones{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+ul.opciones a{display:flex;flex-direction:column;gap:10px;height:100%;padding:16px;border:3px solid var(--cizgi,#16132a);border-radius:18px;background:var(--kart,#fff);color:var(--fg,#16132a);text-decoration:none;box-shadow:5px 5px 0 var(--golge,#16132a);transition:transform .2s,box-shadow .2s}
+ul.opciones li:nth-child(4n+1) a{background:#fff3c4}ul.opciones li:nth-child(4n+2) a{background:#d9f3ff}ul.opciones li:nth-child(4n+3) a{background:#ffe0e8}ul.opciones li:nth-child(4n) a{background:#e6ddff}
+@media (prefers-color-scheme:dark){ul.opciones a{background:var(--kart)!important;color:var(--fg)}}
+ul.opciones a:hover{transform:translate(-2px,-2px) rotate(-1deg);box-shadow:8px 8px 0 var(--golge,#16132a)}
+ul.opciones a:active{transform:scale(.95)}
+ul.opciones .oi{font-size:30px;line-height:1}
+ul.opciones b{font-weight:800;line-height:1.3}
+@media (max-width:640px){ul.opciones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-16px;padding:6px 16px 18px;scrollbar-width:none}ul.opciones li{flex:0 0 46%;scroll-snap-align:start}}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/en/tokyo-anime-guide/">Iheb · Tokyo Anime Guide</a>
@@ -243,6 +252,9 @@ header .idiomas{margin-inline-start:auto}
 <p><a class="btn" href="/en/tokyo-anime-guide/travel-agencies/">Work with Iheb</a></p>
 </div></section>
 <div class="kap">
+<h2>Your trip, your way: options</h2>
+<p>Every day is built around your group. Pick what you like, Iheb handles the rest.</p>
+<ul class="opciones"><li><a href="/en/tokyo-anime-guide/tokyo-itinerary/"><span class="oi" aria-hidden="true">⏱️</span><b>Half day, full day or several days</b></a></li><li><a href="/en/tokyo-anime-guide/day-trips/"><span class="oi" aria-hidden="true">🗻</span><b>Day trips: Fuji, Hakone, the coast</b></a></li><li><a href="/en/tokyo-anime-guide/hakone/"><span class="oi" aria-hidden="true">♨️</span><b>Private family onsen in Hakone</b></a></li><li><a href="/en/tokyo-anime-guide/snow-trips/"><span class="oi" aria-hidden="true">❄️</span><b>Snow trips from Tokyo</b></a></li><li><a href="/en/tokyo-anime-guide/experiences/"><span class="oi" aria-hidden="true">🍣</span><b>Classes, sumo, teamLab</b></a></li><li><a href="/en/tokyo-anime-guide/otaku-guide/"><span class="oi" aria-hidden="true">⚡</span><b>Anime and Pokémon cards</b></a></li><li><a href="/en/muslim-guide-tokyo/"><span class="oi" aria-hidden="true">🕌</span><b>Halal food and prayer breaks</b></a></li><li><a href="/en/tokyo-anime-guide/travel-agencies/"><span class="oi" aria-hidden="true">🚐</span><b>Private car and agencies</b></a></li></ul>
 <h2>FAQ</h2>
 <details><summary>Is there an anime and Pokémon tour guide in Tokyo?</summary><p>Yes. Iheb, who lives in Japan, is a professional in anime, Japanese pop culture and Pokémon card collecting, and runs private tours in English (also French and Arabic) in Tokyo and around. Book on WhatsApp: +81 80 8015 5322.</p></details>
 <details><summary>Where can I buy Pokémon cards in Tokyo?</summary><p>Sealed products (booster packs, boxes, accessories) at the official Pokémon Centers; single cards, new or used, at specialist shops in Akihabara, Nakano and Ikebukuro. Buy in a real shop that gives you a receipt and check every expensive card before paying.</p></details>

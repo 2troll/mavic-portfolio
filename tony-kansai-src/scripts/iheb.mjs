@@ -26,7 +26,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
+import { IHEB_OPCIONES_CSS, ihebOpciones, ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -185,7 +185,7 @@ ${alts}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 ${ANIME_FUENTES}
 ${equipoFuente}
-<style>${CSS_BASE}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}</style>
+<style>${CSS_BASE}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}${IHEB_OPCIONES_CSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="${l.base}">${esc(l.marca)}</a>
@@ -304,6 +304,7 @@ function arPortada() {
 <p><a class="btn" href="/ar/tokyo/wakalat/">التعاون مع الوكالات</a></p>
 </div></section>
 <div class="kap">
+${ihebOpciones('ar')}
 <h2>أسئلة شائعة</h2>
 ${faqHTML(AR_FAQ_PORTADA)}
 <p><a class="btn" href="${L.ar.waGenel}">اكتب لإيهاب على واتساب</a></p>
@@ -486,6 +487,7 @@ ${carte('en', 'shibuya', 'Shibuya crossing', 'Travel agencies', 'Ground partner 
 <p><a class="btn" href="/en/tokyo-anime-guide/travel-agencies/">Work with Iheb</a></p>
 </div></section>
 <div class="kap">
+${ihebOpciones('en')}
 <h2>FAQ</h2>
 ${faqHTML(EN_FAQ)}
 <p>Pokémon is a trademark of Nintendo, Creatures and GAME FREAK. This is an independent private tour, not affiliated with them.</p>

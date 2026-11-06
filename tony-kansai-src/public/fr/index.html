@@ -195,7 +195,16 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .idiomas [aria-current]{background:var(--sol,#ffd23f);color:#16132a;box-shadow:2px 2px 0 #16132a}
 .idiomas [lang=ar]{font-family:Tajawal,system-ui,sans-serif}
 header .idiomas{margin-inline-start:auto}
-@media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}</style>
+@media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}
+ul.opciones{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+ul.opciones a{display:flex;flex-direction:column;gap:10px;height:100%;padding:16px;border:3px solid var(--cizgi,#16132a);border-radius:18px;background:var(--kart,#fff);color:var(--fg,#16132a);text-decoration:none;box-shadow:5px 5px 0 var(--golge,#16132a);transition:transform .2s,box-shadow .2s}
+ul.opciones li:nth-child(4n+1) a{background:#fff3c4}ul.opciones li:nth-child(4n+2) a{background:#d9f3ff}ul.opciones li:nth-child(4n+3) a{background:#ffe0e8}ul.opciones li:nth-child(4n) a{background:#e6ddff}
+@media (prefers-color-scheme:dark){ul.opciones a{background:var(--kart)!important;color:var(--fg)}}
+ul.opciones a:hover{transform:translate(-2px,-2px) rotate(-1deg);box-shadow:8px 8px 0 var(--golge,#16132a)}
+ul.opciones a:active{transform:scale(.95)}
+ul.opciones .oi{font-size:30px;line-height:1}
+ul.opciones b{font-weight:800;line-height:1.3}
+@media (max-width:640px){ul.opciones{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:12px;margin-inline:-16px;padding:6px 16px 18px;scrollbar-width:none}ul.opciones li{flex:0 0 46%;scroll-snap-align:start}}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
@@ -324,6 +333,9 @@ fetch('/api/resenas/publicas?guia=iheb',{cache:'no-cache'}).then(r=>r.ok?r.json(
 <li><a href="/fr/feuilles-automne-tokyo/"><figure class="kf"><img src="/fr/foto/kawaguchiko-fuji-1080.webp" srcset="/fr/foto/kawaguchiko-fuji-3840.webp 3840w, /fr/foto/kawaguchiko-fuji-1920.webp 1920w, /fr/foto/kawaguchiko-fuji-1080.webp 1080w" sizes="(max-width:700px) 100vw, 380px" alt="Feuilles d’automne à Tokyo : quand et où les voir en 2026 ?" loading="lazy" width="5184" height="3456"></figure><div class="ki"><h3>Feuilles d’automne à Tokyo : quand et où les voir en 2026 ?</h3><p>Momiji : les dates 2026 et les meilleurs lieux.</p></div></a><small class="kf-kredi">Photo : <a href="https://commons.wikimedia.org/wiki/File:Mount_Fuji_from_Lake_Kawaguchi_20170206.jpg" rel="nofollow">Suicasmo</a> · CC BY-SA 4.0</small></li>
 <li><a href="/fr/cerisiers-tokyo-2027/"><figure class="kf"><img src="/fr/foto/kawaguchiko-sakura-1080.webp" srcset="/fr/foto/kawaguchiko-sakura-3840.webp 3840w, /fr/foto/kawaguchiko-sakura-1920.webp 1920w, /fr/foto/kawaguchiko-sakura-1080.webp 1080w" sizes="(max-width:700px) 100vw, 380px" alt="Cerisiers en fleurs à Tokyo en 2027 : quelles dates ?" loading="lazy" width="3872" height="2592"></figure><div class="ki"><h3>Cerisiers en fleurs à Tokyo en 2027 : quelles dates ?</h3><p>Sakura : dates moyennes, lieux et réservation.</p></div></a><small class="kf-kredi">Photo : <a href="https://commons.wikimedia.org/wiki/File:Lake_Kawaguchiko_Sakura_Mount_Fuji_4.JPG" rel="nofollow">Midori</a> · CC BY 3.0</small></li>
 </ul>
+<h2>À votre façon : les options</h2>
+<p>Chaque journée se construit pour votre groupe. Choisissez, Iheb s’occupe du reste.</p>
+<ul class="opciones"><li><a href="/fr/itineraire-tokyo-3-5-7-jours/"><span class="oi" aria-hidden="true">⏱️</span><b>Demi-journée, journée ou plusieurs jours</b></a></li><li><a href="/fr/excursions-depuis-tokyo/"><span class="oi" aria-hidden="true">🗻</span><b>Excursions : Fuji, Hakone, la mer</b></a></li><li><a href="/fr/hakone-onsen-prive/"><span class="oi" aria-hidden="true">♨️</span><b>Onsen privé en famille à Hakone</b></a></li><li><a href="/fr/neige-depuis-tokyo/"><span class="oi" aria-hidden="true">❄️</span><b>La neige depuis Tokyo</b></a></li><li><a href="/fr/activites-ateliers-tokyo/"><span class="oi" aria-hidden="true">🍣</span><b>Ateliers, sumo, teamLab</b></a></li><li><a href="/fr/guide-anime-tokyo/"><span class="oi" aria-hidden="true">⚡</span><b>Anime et cartes Pokémon</b></a></li><li><a href="/fr/halal-mosquees-tokyo/"><span class="oi" aria-hidden="true">🕌</span><b>Halal et pauses prière</b></a></li><li><a href="/fr/guide-francophone-agences-voyage/"><span class="oi" aria-hidden="true">🚐</span><b>Véhicule privé et agences</b></a></li></ul>
 <h2>Questions fréquentes</h2>
 <details><summary>Qui est Iheb ?</summary><p>Iheb est un guide francophone tunisien et musulman qui vit au Japon. Il propose des visites privées en français à Tokyo et dans ses environs (Kamakura, Yokohama, Nikko, Hakone et le mont Fuji), ainsi que dans les préfectures de Nagano et de Shizuoka, et parle aussi arabe et anglais. C’est un ami de Tony et le guide francophone de l’équipe Tony Kansai Guide.</p></details>
 <details><summary>Existe-t-il un guide francophone à Tokyo ?</summary><p>Oui. À Tokyo et dans ses environs, Iheb propose des visites privées en français. Réservation sur WhatsApp.</p></details>

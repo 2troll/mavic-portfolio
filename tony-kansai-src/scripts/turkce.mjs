@@ -407,7 +407,31 @@ ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{backg
 @media (prefers-reduced-motion:reduce){.muhur svg,.serit div{animation:none}}
 html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}
 .hz .gir{opacity:0;transform:translateY(28px)}
-@media (max-width:640px){.muhur{display:none}.btn2{margin-left:0}}`
+@media (max-width:640px){.muhur{display:none}.btn2{margin-left:0}}
+/* 7-11-2026: kimlik İznik (turkuaz, kobalt, mercan) ve mobilde kaydırmalı kartlar */
+:root{--bg:#fbf7ef;--kirmizi:#c8402c;--turkuaz:#1b8a8f;--kobalt:#1d3f8f;--cini:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%231b8a8f' stroke-width='1.4' opacity='.55'%3E%3Cpath d='M28 4c6 8 6 16 0 24-6-8-6-16 0-24zM28 52c6-8 6-16 0-24-6 8-6 16 0 24zM4 28c8-6 16-6 24 0-8 6-16 6-24 0zM52 28c-8-6-16-6-24 0 8 6 16 6 24 0z'/%3E%3Ccircle cx='28' cy='28' r='3' fill='%23c8402c' stroke='none'/%3E%3C/g%3E%3C/svg%3E")}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--turkuaz:#3fb8af;--kobalt:#7aa2ff}}
+header{border-bottom:0;background:var(--bg);box-shadow:0 10px 0 -2px transparent}
+header::after{content:"";display:block;height:14px;background:var(--cini) 0 0/28px;opacity:.9;border-top:2px solid var(--turkuaz)}
+footer{border-top:0;background-image:linear-gradient(var(--bg),var(--bg)),var(--cini);background-size:100% calc(100% - 14px),28px;background-repeat:no-repeat,repeat-x}
+.kap h2:not(.kahraman h2){position:relative;padding-left:34px}
+.kap h2::before{content:"";position:absolute;left:0;top:.18em;width:24px;height:24px;background:var(--cini) center/40px;border:2px solid var(--turkuaz);border-radius:6px;transform:rotate(45deg) scale(.8)}
+.btn{background:linear-gradient(135deg,var(--turkuaz),var(--kobalt));box-shadow:0 8px 22px -10px var(--kobalt);transition:transform .2s}
+.btn:active,.wa-sabit:active{transform:scale(.94)}
+.izgara li{border-radius:140px 140px 18px 18px;border:2px solid color-mix(in srgb,var(--turkuaz) 45%,transparent)}
+.izgara .kf{border-radius:140px 140px 0 0}
+.cevap{border-left-color:var(--turkuaz)}
+ul.secenek{list-style:none;padding:0;margin:18px 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px}
+ul.secenek li{position:relative;background:var(--kart);border:1px solid var(--cizgi);border-radius:18px;padding:18px 18px 16px;overflow:hidden}
+ul.secenek li::after{content:"";position:absolute;right:-18px;top:-18px;width:70px;height:70px;background:var(--cini) center/34px;border-radius:50%;opacity:.5}
+ul.secenek .ik{display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:color-mix(in srgb,var(--turkuaz) 16%,transparent);font-size:22px;margin-bottom:8px;color:var(--kobalt)}
+ul.secenek p{margin:4px 0 0;color:var(--soluk);font-size:15px}
+@media (max-width:700px){
+.izgara,ul.secenek{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:14px;margin-inline:-16px;padding:6px 16px 18px;scroll-padding-inline:16px;scrollbar-width:none}
+.izgara>li,ul.secenek>li{flex:0 0 76%;scroll-snap-align:start;transition:transform .25s ease-out,opacity .25s}
+ul.secenek>li{flex-basis:64%}
+.kahraman{min-height:78vh}
+}`
 
 function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
   const url = `${BASE}/tr/${yol ? `${yol}/` : ''}`
@@ -542,6 +566,19 @@ ${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} 
 </ul>
 <h2>Neden Türkçe rehber?</h2>
 <p>Japonya'da İngilizce her yerde konuşulmaz; tabelalar, tren hatları ve menüler ilk gelişte kafa karıştırabilir. Türkçe bir rehberle tarihi ve kültürü kendi dilinizde dinler, sorularınızı rahatça sorarsınız. Ferhat 4 yıldır Japonya'da yaşadığı için trenleri, kalabalık saatleri, nerede ne yeneceğini ve Türk gezginlerin nelere dikkat etmesi gerektiğini bilir.</p>
+<h2 id="secenekler">Size göre tur: seçenekler</h2>
+<p>Her tur sizin grubunuza göre hazırlanır. Aşağıdakilerden seçin, gerisini Ferhat WhatsApp'tan sizinle planlasın.</p>
+<ul class="secenek">
+<li><span class="ik">◐</span><h3>Yarım gün</h3><p>Tek şehirde sakin bir program: Nara'nın geyikleri veya Osaka'nın Dotonbori'si gibi.</p></li>
+<li><span class="ik">●</span><h3>Tam gün</h3><p>Kyoto'nun en önemli yerleri ya da Kyoto + Nara aynı günde, sizin hızınızda.</p></li>
+<li><span class="ik">◎</span><h3>Birkaç gün</h3><p>Kyoto, Osaka, Nara, Kobe ve Himeji'yi günlere bölen Türkçe bir program.</p></li>
+<li><span class="ik">🚆</span><h3>Tren veya özel araç</h3><p>Trenle ekonomik gezi; istenirse lisanslı ortaklarla şoförlü araç (fiyatı ayrıca).</p></li>
+<li><span class="ik">🕌</span><h3>Helal ve namaz</h3><p>Helal veya Müslüman dostu restoranlar, cami ziyareti ve namaz molaları programa eklenir.</p></li>
+<li><span class="ik">👨‍👩‍👧</span><h3>Aile, balayı, yaşlılar</h3><p>Çocuklu ailelere, balayı çiftlerine ve yavaş tempo isteyenlere göre ayarlanır.</p></li>
+<li><span class="ik">🛍️</span><h3>Alışveriş</h3><p>Shinsaibashi, Umeda, elektronik ve hediyelik eşya: nereden alınır, vergi iadesi nasıl olur.</p></li>
+<li><span class="ik">🏯</span><h3>Günübirlik</h3><p>Hiroshima ve Miyajima, Koyasan gibi uzak yerler istek üzerine sorulabilir.</p></li>
+</ul>
+<p><a class="btn" href="${wa('Merhaba Ferhat, şu seçeneklerle bir tur istiyoruz: ')}">Seçeneklerimi WhatsApp'tan yaz</a></p>
 <h2 id="sehirler">Turlar ve şehirler</h2>
 <ul class="izgara">
 ${SEHIRLER.map((s) => kartLink(`/tr/${s.yol}/`, s.kapak, s.ad, s.ad, s.yerler.slice(0, 3).map((y) => y[0]).join(', '))).join('\n')}

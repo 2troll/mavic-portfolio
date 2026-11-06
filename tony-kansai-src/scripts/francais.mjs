@@ -34,7 +34,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
-import { ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
+import { IHEB_OPCIONES_CSS, ihebOpciones, ANIME_CSS, ANIME_FUENTES, ANIME_JS, IHEB_IDIOMAS_CSS, IHEB_PAISES, ihebHreflang, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1085,7 +1085,7 @@ ${ihebHreflang(ruta, lang, BASE)}
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
 ${ANIME_FUENTES}
-<style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}</style>
+<style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}${IHEB_OPCIONES_CSS}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
@@ -1238,6 +1238,7 @@ ${sectionAvis}
 <ul class="izgara">
 ${REPONSES.map((c) => carteLien(`/fr/${c.yol}/`, c.kapak, c.h1, c.h1, c.court)).join('\n')}
 </ul>
+${ihebOpciones('fr')}
 <h2>Questions fréquentes</h2>
 ${FAQ.map(([q, r]) => `<details><summary>${esc(q)}</summary><p>${esc(r)}</p></details>`).join('\n')}
 <h2>Réserver</h2>

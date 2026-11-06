@@ -49,4 +49,25 @@
       b.addEventListener('mouseleave', () => { x(0); y(0) })
     })
   }
+
+  // 7-11-2026: mobil kaydırmalı kartlar — ortadaki büyür, kenardakiler solar.
+  document.querySelectorAll('.izgara, ul.secenek').forEach((cz) => {
+    if (getComputedStyle(cz).overflowX !== 'auto') return
+    const items = [...cz.children]
+    const boya = () => {
+      const c = cz.getBoundingClientRect(), mid = c.left + c.width / 2
+      items.forEach((it) => {
+        const r = it.getBoundingClientRect(), d = Math.min(1, Math.abs(r.left + r.width / 2 - mid) / c.width)
+        it.style.transform = `scale(${1 - d * 0.08})`; it.style.opacity = String(1 - d * 0.4)
+      })
+    }
+    cz.addEventListener('scroll', () => requestAnimationFrame(boya), { passive: true }); boya()
+  })
+  // Seçenek kartları: çini gibi tek tek yerine oturur.
+  if (window.gsap && window.ScrollTrigger) {
+    const sc = document.querySelectorAll('ul.secenek > li')
+    if (sc.length) window.gsap.from(sc, { scale: 0.6, rotate: -8, opacity: 0, duration: 0.6, ease: 'back.out(2)', stagger: 0.07, scrollTrigger: { trigger: 'ul.secenek', start: 'top 88%', once: true } })
+    const fijo = document.querySelector('.wa-sabit')
+    if (fijo && !matchMedia('(prefers-reduced-motion: reduce)').matches) window.gsap.timeline({ repeat: -1, repeatDelay: 5, delay: 3 }).to(fijo, { y: -8, duration: 0.18 }).to(fijo, { y: 0, duration: 0.6, ease: 'bounce.out' })
+  }
 })()
