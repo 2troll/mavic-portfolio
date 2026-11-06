@@ -152,6 +152,11 @@ export const IHEB_EQUIVALENTES = [
   { fr: '/fr/tokyo-maghreb/', ar: '/ar/tokyo/maghreb/', extra: { fr: ['TN', 'MA', 'DZ', 'SN', 'CI'], ar: ['TN', 'MA', 'DZ'] } },
   { fr: '/fr/excursions-depuis-tokyo/', ar: '/ar/tokyo/rihlat-min-tokyo/', en: '/en/tokyo-anime-guide/day-trips/' },
   { fr: '/fr/itineraire-tokyo-3-5-7-jours/', ar: '/ar/tokyo/barnamaj-tokyo/', en: '/en/tokyo-anime-guide/tokyo-itinerary/' },
+  // 7-11-2026: Hakone en familia, la costa (la francesa es /fr/kamakura/), actividades y nieve.
+  { fr: '/fr/hakone-onsen-prive/', ar: '/ar/tokyo/hakone/', en: '/en/tokyo-anime-guide/hakone/' },
+  { fr: '/fr/kamakura/', ar: '/ar/tokyo/enoshima/', en: '/en/tokyo-anime-guide/enoshima-kamakura/' },
+  { fr: '/fr/activites-ateliers-tokyo/', ar: '/ar/tokyo/anshita/', en: '/en/tokyo-anime-guide/experiences/' },
+  { fr: '/fr/neige-depuis-tokyo/', ar: '/ar/tokyo/thalj/', en: '/en/tokyo-anime-guide/snow-trips/' },
 ]
 const rutasDe = (g) => IHEB_IDIOMAS.map((l) => g[l]).filter(Boolean)
 {

@@ -1182,7 +1182,7 @@ function frExcursions() {
       ['Quelle est l’excursion la plus simple depuis Tokyo ?', 'La côte de Yokohama et d’Enoshima : environ une heure de train depuis la gare de Tokyo, sans changement jusqu’à Kamakura.'],
       ['Quand voit-on le mieux le mont Fuji ?', 'Les matins d’hiver sont en général les plus dégagés ; en été, il est souvent dans les nuages.'],
     ],
-    ver: [['Hakone et mont Fuji', '/fr/hakone-mont-fuji/'], ['Yokohama et Enoshima', '/fr/kamakura/'], ['Excursion au mont Fuji depuis Tokyo', '/fr/excursion-mont-fuji-depuis-tokyo/'], ['Itinéraires de 3, 5 et 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/']],
+    ver: [['Hakone et mont Fuji', '/fr/hakone-mont-fuji/'], ['Yokohama et Enoshima', '/fr/kamakura/'], ['Excursion au mont Fuji depuis Tokyo', '/fr/excursion-mont-fuji-depuis-tokyo/'], ['Itinéraires de 3, 5 et 7 jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['Hakone en famille avec un onsen privé', '/fr/hakone-onsen-prive/'], ['La neige depuis Tokyo', '/fr/neige-depuis-tokyo/']],
     ld: [viajeLd('Excursions d’une journée depuis Tokyo', 'Voyageurs francophones', ETAPAS_EXC)],
   })
 }
@@ -1209,7 +1209,7 @@ function enExcursions() {
       ['What is the easiest day trip from Tokyo?', 'The Yokohama and Enoshima coast: about an hour by train from Tokyo Station, with no change to Kamakura.'],
       ['When is Mt. Fuji most visible?', 'Winter mornings are usually the clearest; in summer it is often in the clouds.'],
     ],
-    ver: [['Tokyo itineraries: 3, 5 and 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['The otaku guide to Tokyo', '/en/tokyo-anime-guide/otaku-guide/']],
+    ver: [['Tokyo itineraries: 3, 5 and 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['The otaku guide to Tokyo', '/en/tokyo-anime-guide/otaku-guide/'], ['Hakone with a private onsen', '/en/tokyo-anime-guide/hakone/'], ['Enoshima and the Kamakura coast', '/en/tokyo-anime-guide/enoshima-kamakura/'], ['Snow trips from Tokyo', '/en/tokyo-anime-guide/snow-trips/']],
     ld: [viajeLd('Day trips from Tokyo', 'International travelers', ETAPAS_EXC)],
   })
 }
@@ -1236,7 +1236,7 @@ function arExcursions() {
       ['ما أسهل رحلة يومية من طوكيو؟', 'ساحل يوكوهاما وإينوشيما: نحو ساعة بالقطار من محطة طوكيو، بلا تبديل حتى كاماكورا.'],
       ['متى يظهر جبل فوجي بوضوح؟', 'صباحات الشتاء هي الأصفى عادةً، وفي الصيف يختفي كثيرًا خلف الغيوم.'],
     ],
-    ver: [['برنامج طوكيو 3 و5 و7 أيام', '/ar/tokyo/barnamaj-tokyo/'], ['رحلات خاصة لعائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']],
+    ver: [['برنامج طوكيو 3 و5 و7 أيام', '/ar/tokyo/barnamaj-tokyo/'], ['رحلات خاصة لعائلات الخليج', '/ar/tokyo/fakhira/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/'], ['هاكوني وأونسن خاص', '/ar/tokyo/hakone/'], ['إينوشيما وساحل كاماكورا', '/ar/tokyo/enoshima/'], ['الثلج قرب طوكيو', '/ar/tokyo/thalj/']],
     ld: [viajeLd('رحلات يومية من طوكيو', 'Arabic-speaking travelers', ETAPAS_EXC)],
   })
 }
@@ -1316,5 +1316,281 @@ function arBarnamaj() {
   })
 }
 
-const hechas = [frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ——— 7-11-2026: Hakone en familia, la costa de Enoshima, actividades y nieve ———
+// Sin santuarios ni templos (Iheb es musulmán): solo naturaleza, mar, talleres y nieve.
+const ETAPAS_HAKONE = ['Hakone-Yumoto', 'Hakone Open-Air Museum', 'Owakudani', 'Hakone Ropeway', 'Lake Ashi']
+const ETAPAS_COSTA = ['Yokohama', 'Fujisawa', 'Enoshima', 'Kamakura-Kokomae']
+const ETAPAS_NIEVE = ['Karuizawa', 'Jigokudani (Nagano)', 'Gotemba (Shizuoka)', 'Lake Kawaguchi']
+
+function frHakone() {
+  return generica({
+    lang: 'fr', ruta: '/fr/hakone-onsen-prive/', alterna: 'hakone', kapak: 'owakudani', alt: 'La vallée volcanique d’Owakudani et le téléphérique de Hakone', etiqueta: 'Hakone',
+    wa: 'Bonjour Iheb, nous voulons passer une ou deux journées à Hakone en famille, avec un onsen privé. Dates et nombre de personnes : ',
+    titre: 'Hakone en famille avec un onsen privé : lac Ashi, Owakudani, ryokan | Guide francophone',
+    desc: 'Hakone depuis Tokyo avec un guide francophone : la boucle lac Ashi, téléphérique et Owakudani, le musée en plein air, et le choix d’un onsen privé (kashikiri) pour les familles et la pudeur. Trains, pass, conseils.',
+    h1: 'Hakone en famille : la boucle du lac et un onsen privé',
+    sub: 'Lac, volcan, musée en plein air, et un bain chaud rien que pour vous : la journée la plus douce depuis Tokyo.',
+    cevap: 'Hakone est à environ 1 h 20 de Shinjuku en Romancecar. En une journée, on fait la boucle : le petit train de montagne, le funiculaire, le téléphérique au-dessus de la vallée volcanique d’Owakudani, puis le bateau sur le lac Ashi avec le Fuji par temps clair. Pour le bain, les familles et les voyageurs qui tiennent à la pudeur choisissent un onsen privé (kashikiri) ou une chambre avec bain : personne d’autre n’entre. Iheb organise le parcours, les repas halal ou adaptés et les pauses pour la prière.',
+    secciones: [
+      ['La boucle de Hakone en une journée', `<ol class="adimlar"><li><strong>Hakone-Yumoto :</strong> arrivée en Romancecar depuis Shinjuku (environ 1 h 20, supplément de train express).</li><li><strong>Musée en plein air de Hakone :</strong> des sculptures dans un grand parc, un pavillon Picasso et un bain de pieds chaud. Idéal avec des enfants.</li><li><strong>Téléphérique et Owakudani :</strong> on survole la vallée qui fume ; en bas, les fameux œufs noirs cuits dans la source chaude.</li><li><strong>Lac Ashi :</strong> la traversée en bateau jusqu’au bout du lac, avec le Fuji en face par temps dégagé.</li></ol>
+<p>L’accès à Owakudani peut être restreint selon l’activité volcanique : Iheb vérifie le jour même. Le Hakone Freepass d’Odakyu couvre le train de montagne, le funiculaire, le téléphérique, le bateau et les bus de la boucle ; la Romancecar demande un supplément.</p>`],
+      ['L’onsen privé : la bonne solution pour les familles', `<ul class="ozet"><li><strong>Kashikiri :</strong> un bain réservé pour 40 à 60 minutes pour votre famille seule, dans beaucoup de ryokans et d’hôtels de Hakone.</li><li><strong>Chambre avec bain :</strong> un bain en plein air sur la terrasse de la chambre, sans horaire.</li><li><strong>Pudeur :</strong> dans les bains communs, on se baigne nu et séparés par sexe ; le bain privé évite la question.</li><li><strong>Repas :</strong> le dîner des ryokans contient souvent du saké, du mirin ou du porc : Iheb demande à l’avance un menu halal ou sans alcool, ou propose un restaurant adapté.</li></ul>`],
+      ['Une journée ou une nuit ?', `<table><tr><th></th><th>Journée</th><th>Une nuit en ryokan</th></tr>
+<tr><td>Rythme</td><td>Boucle complète, retour le soir</td><td>Boucle le premier jour, musée et lac le second</td></tr>
+<tr><td>Onsen</td><td>Bain privé à l’heure dans un hôtel</td><td>Chambre avec bain ou kashikiri le soir</td></tr>
+<tr><td>Pour qui</td><td>Séjour court à Tokyo</td><td>Familles, couples, voyage de noces</td></tr></table>
+<p>Sur demande, la journée se fait en véhicule privé avec des partenaires agréés, très pratique avec des enfants ou des bagages.</p>`],
+    ],
+    faq: [
+      ['Peut-on aller aux onsen avec des tatouages ou quand on tient à la pudeur ?', 'Le plus simple est un onsen privé (kashikiri) ou une chambre avec bain : vous êtes entre vous, sans règle de tenue ni regard des autres.'],
+      ['Combien de temps faut-il pour Hakone ?', 'Une journée suffit pour la boucle depuis Tokyo ; une nuit en ryokan permet de profiter du bain et de ne pas courir.'],
+      ['Voit-on le mont Fuji depuis Hakone ?', 'Par temps clair, oui, depuis le lac Ashi et le téléphérique. Les matins d’hiver sont en général les plus dégagés.'],
+    ],
+    ver: [['Hakone et mont Fuji', '/fr/hakone-mont-fuji/'], ['Excursions d’une journée depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['La neige depuis Tokyo', '/fr/neige-depuis-tokyo/'], ['Halal et mosquées à Tokyo', '/fr/halal-mosquees-tokyo/']],
+    ld: [viajeLd('Hakone en famille avec un onsen privé', 'Familles francophones', ETAPAS_HAKONE)],
+  })
+}
+function enHakone() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/hakone/', alterna: 'hakone', kapak: 'owakudani', alt: 'Owakudani volcanic valley and the Hakone Ropeway', etiqueta: 'Hakone',
+    wa: 'Hi Iheb, we would like a private day (or one night) in Hakone with a private onsen. Dates and group size: ',
+    titre: 'Hakone with a Private Guide: Lake Ashi, Owakudani and Private Onsen for Families | Iheb',
+    desc: 'Hakone from Tokyo with a private guide: the Lake Ashi, ropeway and Owakudani loop, the Open-Air Museum, and how to book a private onsen (kashikiri) for families and modesty. Trains, passes and tips.',
+    h1: 'Hakone with your family: the lake loop and a private onsen',
+    sub: 'A lake, a volcano valley, an open-air museum and a hot bath just for you: the gentlest day out from Tokyo.',
+    cevap: 'Hakone is about 1 h 20 from Shinjuku on the Odakyu Romancecar. In one day you ride the loop: the mountain train, the cable car, the ropeway over the steaming Owakudani valley, then a boat across Lake Ashi with Mt. Fuji on clear days. For bathing, families and modest travelers book a private onsen (kashikiri) or a room with its own bath, so nobody else comes in. Iheb plans the route, halal or Muslim-friendly meals and prayer stops.',
+    secciones: [
+      ['The Hakone loop in one day', `<ol class="adimlar"><li><strong>Hakone-Yumoto:</strong> arrive on the Romancecar from Shinjuku (about 1 h 20, limited-express surcharge).</li><li><strong>Hakone Open-Air Museum:</strong> sculptures in a big park, a Picasso pavilion and a warm foot bath. Great with kids.</li><li><strong>Ropeway and Owakudani:</strong> fly over the smoking valley and try the black eggs boiled in the hot spring.</li><li><strong>Lake Ashi:</strong> a boat to the far end of the lake, facing Fuji on clear days.</li></ol>
+<p>Access to Owakudani can be restricted depending on volcanic activity; Iheb checks on the day. Odakyu’s Hakone Freepass covers the mountain train, cable car, ropeway, boat and loop buses; the Romancecar costs extra.</p>`],
+      ['Private onsen: the easy answer for families', `<ul class="ozet"><li><strong>Kashikiri:</strong> a bath reserved for your family alone for 40 to 60 minutes, offered by many Hakone ryokan and hotels.</li><li><strong>Room with a bath:</strong> an open-air tub on your own terrace, any time.</li><li><strong>Modesty:</strong> public baths are nude and separated by gender; a private bath avoids the question, and tattoos are not an issue.</li><li><strong>Dinner:</strong> ryokan meals often use sake, mirin or pork, so Iheb asks ahead for a halal or alcohol-free menu, or books a suitable restaurant.</li></ul>`],
+      ['Day trip or one night?', `<table><tr><th></th><th>Day trip</th><th>One night in a ryokan</th></tr>
+<tr><td>Pace</td><td>Full loop, back in Tokyo at night</td><td>Loop on day one, museum and lake on day two</td></tr>
+<tr><td>Onsen</td><td>A private bath booked by the hour</td><td>Room bath or kashikiri in the evening</td></tr>
+<tr><td>Best for</td><td>Short Tokyo stays</td><td>Families, couples, honeymoons</td></tr></table>
+<p>On request the day runs by private car with licensed partners, which helps a lot with children or luggage.</p>`],
+    ],
+    faq: [
+      ['Can I use an onsen with tattoos or if I prefer privacy?', 'Yes: book a private onsen (kashikiri) or a room with its own bath. It is just your group, with no dress rules and no one watching.'],
+      ['How long do I need in Hakone?', 'One day covers the loop from Tokyo; one night in a ryokan lets you enjoy the bath without rushing.'],
+      ['Can you see Mt. Fuji from Hakone?', 'On clear days, yes, from Lake Ashi and the ropeway. Winter mornings are usually the clearest.'],
+    ],
+    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Snow trips from Tokyo', '/en/tokyo-anime-guide/snow-trips/'], ['Muslim guide in Tokyo', '/en/muslim-guide-tokyo/'], ['Tokyo itinerary: 3, 5 or 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/']],
+    ld: [viajeLd('Hakone with a private onsen', 'Families and couples', ETAPAS_HAKONE)],
+  })
+}
+function arHakone() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/hakone/', alterna: 'hakone', kapak: 'owakudani', alt: 'وادي أواكوداني البركاني وتلفريك هاكوني', etiqueta: 'هاكوني',
+    wa: 'السلام عليكم إيهاب، نريد يومًا أو ليلة في هاكوني مع العائلة وأونسن خاص. التواريخ وعدد الأشخاص: ',
+    titre: 'هاكوني مع العائلة وأونسن خاص: بحيرة آشي ووادي أواكوداني | إيهاب مرشد عربي',
+    desc: 'هاكوني من طوكيو مع مرشد عربي مسلم: جولة بحيرة آشي والتلفريك ووادي أواكوداني، ومتحف الهواء الطلق، وحجز أونسن خاص (كاشيكيري) للعائلات وللستر. القطارات والتذاكر والطعام الحلال.',
+    h1: 'هاكوني مع العائلة: جولة البحيرة وأونسن خاص بكم',
+    sub: 'بحيرة ووادٍ بركاني ومتحف في الهواء الطلق، وحمّام ساخن لعائلتكم وحدها: أهدأ يوم من طوكيو.',
+    cevap: 'تبعد هاكوني نحو ساعة و20 دقيقة عن شينجوكو بقطار Romancecar. في يوم واحد تكتمل الجولة: قطار الجبل، ثم القطار المعلّق، ثم التلفريك فوق وادي أواكوداني البركاني، ثم القارب في بحيرة آشي مع جبل فوجي في الأيام الصافية. وللاستحمام تختار العائلات أونسن خاصًا (كاشيكيري) أو غرفة فيها حمّامها الخاص، فلا يدخل عليكم أحد. يرتّب إيهاب البرنامج والطعام الحلال ووقفات الصلاة.',
+    secciones: [
+      ['جولة هاكوني في يوم واحد', `<ol class="adimlar"><li><strong>هاكوني-يوموتو:</strong> الوصول بقطار Romancecar من شينجوكو (نحو ساعة و20 دقيقة، برسوم إضافية للقطار السريع).</li><li><strong>متحف هاكوني في الهواء الطلق:</strong> منحوتات في حديقة واسعة، وجناح بيكاسو، وحوض دافئ للقدمين. ممتاز للأطفال.</li><li><strong>التلفريك ووادي أواكوداني:</strong> تمرّون فوق الوادي الذي يتصاعد منه البخار، وتتذوقون البيض الأسود المسلوق في الينابيع الحارة.</li><li><strong>بحيرة آشي:</strong> رحلة بالقارب إلى طرف البحيرة، وجبل فوجي أمامكم في الأيام الصافية.</li></ol>
+<p>قد يُقيَّد الوصول إلى أواكوداني بحسب النشاط البركاني، ويتحقق إيهاب من ذلك في اليوم نفسه. تذكرة Hakone Freepass من Odakyu تشمل قطار الجبل والقطار المعلّق والتلفريك والقارب وحافلات الجولة؛ أما Romancecar فبرسوم إضافية.</p>`],
+      ['الأونسن الخاص: الحل الأنسب للعائلة', `<ul class="ozet"><li><strong>كاشيكيري:</strong> حمّام ساخن محجوز لعائلتكم وحدها لمدة 40 إلى 60 دقيقة، متوفّر في كثير من فنادق هاكوني ونُزُل الريوكان.</li><li><strong>غرفة بحمّام خاص:</strong> حوض في الهواء الطلق على شرفة غرفتكم، في أي وقت.</li><li><strong>الستر:</strong> في الحمّامات العامة يستحم الناس عراة مع الفصل بين الرجال والنساء؛ والحمّام الخاص يغنيكم عن ذلك.</li><li><strong>العشاء:</strong> وجبات الريوكان فيها غالبًا ساكي أو ميرين أو لحم خنزير، لذلك يطلب إيهاب مسبقًا وجبة حلال بلا كحول، أو يحجز مطعمًا مناسبًا.</li></ul>`],
+      ['يوم واحد أم ليلة؟', `<table><tr><th></th><th>يوم واحد</th><th>ليلة في ريوكان</th></tr>
+<tr><td>الإيقاع</td><td>الجولة كاملة والعودة مساءً</td><td>الجولة في اليوم الأول، والمتحف والبحيرة في الثاني</td></tr>
+<tr><td>الأونسن</td><td>حمّام خاص بالساعة في فندق</td><td>حمّام الغرفة أو كاشيكيري في المساء</td></tr>
+<tr><td>يناسب</td><td>الإقامات القصيرة في طوكيو</td><td>العائلات والأزواج وشهر العسل</td></tr></table>
+<p>وعند الطلب يكون اليوم بسيارة خاصة مع شركاء مرخّصين، وهذا مريح جدًا مع الأطفال والحقائب.</p>`],
+    ],
+    faq: [
+      ['هل يمكن الاستمتاع بالأونسن مع الحفاظ على الستر؟', 'نعم: احجزوا أونسن خاصًا (كاشيكيري) أو غرفة فيها حمّامها، فتكونون وحدكم بلا أي إحراج.'],
+      ['كم يومًا تحتاج هاكوني؟', 'يوم واحد يكفي للجولة من طوكيو، وليلة في ريوكان تتيح لكم الاستمتاع بالحمّام دون استعجال.'],
+      ['هل يُرى جبل فوجي من هاكوني؟', 'نعم في الأيام الصافية، من بحيرة آشي ومن التلفريك. صباحات الشتاء هي الأصفى عادةً.'],
+    ],
+    ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['الثلج قرب طوكيو', '/ar/tokyo/thalj/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/'], ['طوكيو الفاخرة للعائلات', '/ar/tokyo/fakhira/']],
+    ld: [viajeLd('هاكوني مع العائلة وأونسن خاص', 'Arab families', ETAPAS_HAKONE)],
+  })
+}
+
+function enCosta() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/enoshima-kamakura/', alterna: 'costa', kapak: 'enoshima', alt: 'The harbor of Enoshima Island', etiqueta: 'Enoshima',
+    wa: 'Hi Iheb, we would like a day on the coast: Yokohama, Enoshima and the Kamakura-Kokomae crossing. Dates and group size: ',
+    titre: 'Enoshima and the Kamakura Coast from Tokyo: Enoden, Slam Dunk Crossing, Sea Candle | Iheb',
+    desc: 'A seaside day from Tokyo with a private guide: the Enoden train, the Kamakura-Kokomae crossing from Slam Dunk, Enoshima Island with the Sea Candle and the Iwaya caves, the aquarium and Yokohama on the way back.',
+    h1: 'Enoshima and the Kamakura coast: the seaside day out',
+    sub: 'An old coastal tram, an anime crossing, an island with caves and a lighthouse, and the sea all day.',
+    cevap: 'The coast is the easiest day trip from Tokyo: about an hour by train to Fujisawa or Kamakura, then the small Enoden train that runs along the sea. You stop at the Kamakura-Kokomae crossing made famous by the opening of Slam Dunk, walk across the bridge to Enoshima Island for the Sea Candle observation tower and the Iwaya sea caves, and end at the aquarium or in Yokohama at sunset. A calm day by the sea from start to finish.',
+    secciones: [
+      ['The route', `<ol class="adimlar"><li><strong>Tokyo → Fujisawa:</strong> about an hour on the JR Tokaido line, or the Odakyu line from Shinjuku to Katase-Enoshima.</li><li><strong>Enoden:</strong> the little green-and-cream train between Fujisawa and Kamakura, often a few meters from the waves.</li><li><strong>Kamakura-Kokomae:</strong> the railway crossing by the sea from the anime. It is a residential street: we stay on the sidewalk and keep it quick.</li><li><strong>Enoshima:</strong> the bridge to the island, the Sea Candle tower (Fuji on clear days), the Iwaya caves at the cliff’s edge and fresh seafood.</li><li><strong>Back:</strong> the New Enoshima Aquarium with its dolphin show, or Minato Mirai in Yokohama at night.</li></ol>`],
+      ['Good to know', `<ul class="ozet"><li><strong>Food:</strong> Enoshima is famous for shirasu (tiny white fish) and grilled seafood, a natural fit for a halal-conscious day.</li><li><strong>Prayer:</strong> Iheb plans a quiet stop for the prayer times.</li><li><strong>Crowds:</strong> weekends and summer are busy; a weekday morning is the calmest.</li><li><strong>Stairs:</strong> the island is steep; there are paid outdoor escalators halfway up.</li></ul>`],
+    ],
+    faq: [
+      ['Where is the Slam Dunk crossing?', 'At Kamakura-Kokomae station on the Enoden line, between Fujisawa and Kamakura. Please be quick and polite: people live there.'],
+      ['Is Enoshima good with kids?', 'Yes: the aquarium, the caves and the beach are all close to each other, and the train ride itself is fun.'],
+      ['Can we combine Enoshima and Yokohama?', 'Yes, they are on the same side of Tokyo: the coast in the day, Yokohama in the evening.'],
+    ],
+    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Anime pilgrimage and otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Hakone with a private onsen', '/en/tokyo-anime-guide/hakone/']],
+    ld: [viajeLd('Enoshima and the Kamakura coast', 'Anime fans and families', ETAPAS_COSTA)],
+  })
+}
+function arCosta() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/enoshima/', alterna: 'costa', kapak: 'enoshima', alt: 'ميناء جزيرة إينوشيما', etiqueta: 'إينوشيما',
+    wa: 'السلام عليكم إيهاب، نريد يومًا على البحر: يوكوهاما وإينوشيما ومعبر كاماكورا-كوكوماي. التواريخ وعدد الأشخاص: ',
+    titre: 'إينوشيما وساحل كاماكورا من طوكيو: قطار إينودين ومعبر سلام دانك والكهوف | إيهاب',
+    desc: 'يوم على البحر من طوكيو مع مرشد عربي مسلم: قطار إينودين على الساحل، ومعبر كاماكورا-كوكوماي من أنمي سلام دانك، وجزيرة إينوشيما مع برج Sea Candle وكهوف إيوايا، والأكواريوم ويوكوهاما في المساء.',
+    h1: 'إينوشيما وساحل كاماكورا: يوم كامل على البحر',
+    sub: 'قطار قديم على الشاطئ، ومعبر من الأنمي، وجزيرة فيها كهوف ومنارة، والبحر طوال اليوم.',
+    cevap: 'الساحل هو أسهل رحلة يومية من طوكيو: نحو ساعة بالقطار إلى فوجيساوا أو كاماكورا، ثم قطار إينودين الصغير الذي يسير بمحاذاة البحر. تتوقفون عند معبر كاماكورا-كوكوماي الذي اشتهر في مقدمة أنمي سلام دانك، ثم تعبرون الجسر إلى جزيرة إينوشيما لبرج Sea Candle وكهوف إيوايا البحرية، وتختمون بالأكواريوم أو بيوكوهاما عند الغروب. يوم هادئ على البحر بلا زيارة للمعابد.',
+    secciones: [
+      ['البرنامج', `<ol class="adimlar"><li><strong>طوكيو ← فوجيساوا:</strong> نحو ساعة بخط JR Tokaido، أو بخط Odakyu من شينجوكو إلى كاتاسي-إينوشيما.</li><li><strong>قطار إينودين:</strong> القطار الأخضر الصغير بين فوجيساوا وكاماكورا، وأحيانًا على بعد أمتار من الأمواج.</li><li><strong>كاماكورا-كوكوماي:</strong> معبر السكة الحديدية على البحر من الأنمي. الشارع سكني، فنقف على الرصيف ولا نطيل.</li><li><strong>إينوشيما:</strong> الجسر إلى الجزيرة، وبرج Sea Candle (وفوجي في الأيام الصافية)، وكهوف إيوايا عند حافة الجرف، والمأكولات البحرية الطازجة.</li><li><strong>العودة:</strong> أكواريوم إينوشيما الجديد مع عرض الدلافين، أو ميناتو ميراي في يوكوهاما ليلًا.</li></ol>`],
+      ['معلومات مفيدة', `<ul class="ozet"><li><strong>الطعام:</strong> تشتهر إينوشيما بالشيراسو (سمك أبيض صغير) والمأكولات البحرية المشوية، وهي مناسبة ليوم حلال.</li><li><strong>الصلاة:</strong> يرتّب إيهاب وقفة هادئة في أوقات الصلاة.</li><li><strong>الزحام:</strong> عطلة نهاية الأسبوع والصيف مزدحمة؛ وصباح أيام الأسبوع أهدأ.</li><li><strong>الدرج:</strong> الجزيرة مرتفعة، وفي منتصف الطريق سلالم كهربائية مدفوعة.</li></ul>`],
+    ],
+    faq: [
+      ['أين معبر سلام دانك؟', 'عند محطة كاماكورا-كوكوماي على خط إينودين بين فوجيساوا وكاماكورا. نرجو الهدوء والاحترام، فالناس يسكنون هناك.'],
+      ['هل إينوشيما مناسبة للأطفال؟', 'نعم: الأكواريوم والكهوف والشاطئ قريبة من بعضها، وركوب القطار نفسه ممتع.'],
+      ['هل نجمع إينوشيما ويوكوهاما في يوم واحد؟', 'نعم، فهما في الجهة نفسها من طوكيو: الساحل نهارًا ويوكوهاما مساءً.'],
+    ],
+    ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['دليل الأنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['هاكوني وأونسن خاص', '/ar/tokyo/hakone/']],
+    ld: [viajeLd('إينوشيما وساحل كاماكورا', 'Arab families and anime fans', ETAPAS_COSTA)],
+  })
+}
+
+function frActivites() {
+  return generica({
+    lang: 'fr', ruta: '/fr/activites-ateliers-tokyo/', alterna: 'actividades', kapak: 'odaiba', alt: 'Le Rainbow Bridge et la baie de Tokyo à Odaiba', etiqueta: 'Activités',
+    wa: 'Bonjour Iheb, nous cherchons des activités à Tokyo (atelier, sumo, art numérique, cueillette…). Dates, âges et nombre de personnes : ',
+    titre: 'Activités et ateliers à Tokyo : sushi, ninja, sumo, teamLab, cueillette de fraises | Guide francophone',
+    desc: 'Les activités qui marquent un séjour à Tokyo, choisies par un guide francophone musulman : atelier de sushi sans alcool, initiation ninja, sumo, musées d’art numérique teamLab, kimono adapté au hijab, cueillette de fraises en hiver.',
+    h1: 'Activités à Tokyo : ce qu’on fait de ses mains',
+    sub: 'Ateliers, sport, art numérique et nature : les souvenirs qu’on raconte en rentrant, avec un guide qui parle votre langue.',
+    cevap: 'À Tokyo, les activités qui plaisent le plus aux familles et aux groupes sont : un atelier de sushi ou de pâtisserie japonaise (wagashi), une initiation ninja ou samouraï, un tournoi ou un entraînement de sumo, les musées d’art numérique teamLab, la location de kimono avec un style adapté au hijab et, de janvier à mai, la cueillette de fraises près de Tokyo. Iheb réserve, traduit et vérifie avec chaque atelier les ingrédients (sans porc ni alcool) et les horaires de prière.',
+    secciones: [
+      ['Ateliers et expériences', `<ul class="ozet"><li><strong>Sushi et wagashi :</strong> on apprend à rouler des sushis ou à modeler des pâtisseries japonaises ; Iheb demande une préparation sans mirin ni saké.</li><li><strong>Ninja et samouraï :</strong> une heure d’initiation au sabre, aux shurikens et à la discrétion, très aimée des enfants.</li><li><strong>Kimono :</strong> location à la journée ; certaines boutiques coiffent avec le hijab et proposent des modèles longs.</li><li><strong>Dessin manga :</strong> un cours avec un illustrateur, pour les fans d’anime.</li></ul>`],
+      ['Sumo, art numérique et grands parcs', `<ul class="ozet"><li><strong>Sumo :</strong> les tournois de Tokyo ont lieu au Ryōgoku Kokugikan en janvier, mai et septembre ; hors tournoi, certaines écuries acceptent des visiteurs à l’entraînement du matin.</li><li><strong>teamLab :</strong> Planets à Toyosu (on marche pieds nus dans l’eau, jusqu’aux genoux) et Borderless à Azabudai Hills.</li><li><strong>Parcs :</strong> Tokyo Disneyland et DisneySea à Urayasu, Sanrio Puroland à Tama.</li><li><strong>Vues :</strong> Shibuya Sky au coucher du soleil, le Skytree et la baie d’Odaiba le soir.</li></ul>`],
+      ['Cueillette de fraises (janvier à mai)', `<p>L’ichigo-gari, la cueillette de fraises à volonté dans des serres, est une sortie d’hiver très japonaise et parfaite avec des enfants. On la trouve autour de Tokyo, dans la péninsule d’Izu (Shizuoka) et vers le Fuji. Les créneaux se réservent, surtout le week-end.</p>`],
+    ],
+    faq: [
+      ['Les ateliers de cuisine sont-ils halal ?', 'Pas automatiquement : la cuisine japonaise utilise souvent du mirin et du saké. Iheb choisit des ateliers qui acceptent une préparation sans alcool ni porc, et le confirme à l’avance.'],
+      ['Quand voir le sumo à Tokyo ?', 'Pendant les tournois de janvier, mai et septembre au Ryōgoku Kokugikan. Le reste de l’année, on peut parfois assister à un entraînement du matin.'],
+      ['Quelles activités pour de jeunes enfants ?', 'L’initiation ninja, teamLab, la cueillette de fraises et l’aquarium d’Enoshima sont les favoris des familles.'],
+    ],
+    ver: [['Que faire à Tokyo', '/fr/que-faire-a-tokyo/'], ['Tokyo en famille', '/fr/tokyo-en-famille/'], ['Guide anime et Pokémon', '/fr/guide-anime-tokyo/'], ['La neige depuis Tokyo', '/fr/neige-depuis-tokyo/']],
+  })
+}
+function enActividades() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/experiences/', alterna: 'actividades', kapak: 'odaiba', alt: 'Rainbow Bridge and Tokyo Bay in Odaiba', etiqueta: 'Experiences',
+    wa: 'Hi Iheb, we are looking for experiences in Tokyo (a class, sumo, teamLab, strawberry picking…). Dates, ages and group size: ',
+    titre: 'Things to Do in Tokyo: Sushi Class, Ninja, Sumo, teamLab, Strawberry Picking | Private Guide Iheb',
+    desc: 'Hands-on Tokyo experiences picked by a Muslim private guide: an alcohol-free sushi class, ninja training, sumo, teamLab digital art, hijab-friendly kimono and winter strawberry picking. Booked and translated for you.',
+    h1: 'Tokyo experiences: the things you do, not just see',
+    sub: 'Classes, sport, digital art and the outdoors: the memories people talk about back home.',
+    cevap: 'The Tokyo experiences families and groups love most are a sushi or wagashi (Japanese sweets) class, a ninja or samurai lesson, a sumo tournament or morning practice, the teamLab digital art museums, kimono rental with hijab-friendly styling and, from January to May, strawberry picking near Tokyo. Iheb books them, translates and checks ingredients (no pork, no alcohol) and prayer times with each provider.',
+    secciones: [
+      ['Classes and experiences', `<ul class="ozet"><li><strong>Sushi and wagashi:</strong> roll your own sushi or shape Japanese sweets; Iheb asks for a version without mirin or sake.</li><li><strong>Ninja and samurai:</strong> an hour of sword moves, throwing stars and stealth, a favorite with kids.</li><li><strong>Kimono:</strong> rent one for the day; some shops style it with a hijab and offer longer sleeves.</li><li><strong>Manga drawing:</strong> a lesson with an illustrator, for anime fans.</li></ul>`],
+      ['Sumo, digital art and theme parks', `<ul class="ozet"><li><strong>Sumo:</strong> Tokyo tournaments are held at the Ryogoku Kokugikan in January, May and September; outside them, some stables accept visitors at morning practice.</li><li><strong>teamLab:</strong> Planets in Toyosu (barefoot, knee-deep water) and Borderless at Azabudai Hills.</li><li><strong>Theme parks:</strong> Tokyo Disneyland and DisneySea in Urayasu, Sanrio Puroland in Tama.</li><li><strong>Views:</strong> Shibuya Sky at sunset, the Skytree and Odaiba bay at night.</li></ul>`],
+      ['Strawberry picking (January to May)', `<p>Ichigo-gari, all-you-can-eat strawberry picking in greenhouses, is a very Japanese winter outing and perfect with children. You find it around Tokyo, on the Izu Peninsula (Shizuoka) and near Fuji. Slots need booking, especially on weekends.</p>`],
+    ],
+    faq: [
+      ['Are Tokyo cooking classes halal?', 'Not by default: Japanese cooking often uses mirin and sake. Iheb picks classes that agree to cook without alcohol or pork and confirms it in advance.'],
+      ['When can I see sumo in Tokyo?', 'During the January, May and September tournaments at the Ryogoku Kokugikan; the rest of the year, sometimes at a stable’s morning practice.'],
+      ['What is best for young kids?', 'Ninja lessons, teamLab, strawberry picking and the Enoshima aquarium are family favorites.'],
+    ],
+    ver: [['Otaku guide to Tokyo', '/en/tokyo-anime-guide/otaku-guide/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Snow trips from Tokyo', '/en/tokyo-anime-guide/snow-trips/'], ['Muslim guide in Tokyo', '/en/muslim-guide-tokyo/']],
+  })
+}
+function arActividades() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/anshita/', alterna: 'actividades', kapak: 'odaiba', alt: 'جسر قوس قزح وخليج طوكيو في أوداييبا', etiqueta: 'أنشطة',
+    wa: 'السلام عليكم إيهاب، نبحث عن أنشطة في طوكيو (ورشة، سومو، تيم لاب، قطف الفراولة…). التواريخ وأعمار الأطفال وعدد الأشخاص: ',
+    titre: 'أنشطة طوكيو للعائلات: ورشة سوشي، نينجا، سومو، تيم لاب، قطف الفراولة | إيهاب',
+    desc: 'أنشطة طوكيو التي يختارها مرشد عربي مسلم: ورشة سوشي بلا كحول، تدريب نينجا، السومو، متاحف تيم لاب الرقمية، كيمونو مع الحجاب، وقطف الفراولة في الشتاء. الحجز والترجمة عليه.',
+    h1: 'أنشطة طوكيو: تجارب تعيشونها لا تكتفون بمشاهدتها',
+    sub: 'ورش ورياضة وفن رقمي وطبيعة: الذكريات التي تحكونها عند العودة.',
+    cevap: 'أكثر ما تحبه العائلات والمجموعات في طوكيو: ورشة سوشي أو حلويات يابانية (واغاشي)، ودرس نينجا أو ساموراي، ومباراة سومو أو تدريبه الصباحي، ومتاحف تيم لاب للفن الرقمي، واستئجار الكيمونو بتنسيق يناسب الحجاب، ومن يناير إلى مايو قطف الفراولة قرب طوكيو. يحجز إيهاب ويترجم ويتأكد مع كل جهة من المكونات (بلا خنزير ولا كحول) ومن أوقات الصلاة.',
+    secciones: [
+      ['ورش وتجارب', `<ul class="ozet"><li><strong>السوشي والواغاشي:</strong> تلفّون السوشي بأيديكم أو تشكّلون الحلويات اليابانية، ويطلب إيهاب تحضيرها بلا ميرين ولا ساكي.</li><li><strong>النينجا والساموراي:</strong> ساعة من حركات السيف ونجوم الرمي والتخفّي، يحبها الأطفال كثيرًا.</li><li><strong>الكيمونو:</strong> استئجار ليوم كامل؛ وبعض المحلات تنسّقه مع الحجاب وتوفّر أكمامًا طويلة.</li><li><strong>رسم المانغا:</strong> درس مع رسّام، لعشّاق الأنمي.</li></ul>`],
+      ['السومو والفن الرقمي والمدن الترفيهية', `<ul class="ozet"><li><strong>السومو:</strong> تُقام بطولات طوكيو في قاعة ريوغوكو كوكوغيكان في يناير ومايو وسبتمبر؛ وفي غيرها تستقبل بعض الأندية الزوار في التدريب الصباحي.</li><li><strong>تيم لاب:</strong> Planets في تويوسو (حفاة في ماء يصل إلى الركبة) وBorderless في أزابوداي هيلز.</li><li><strong>المدن الترفيهية:</strong> ديزني لاند وديزني سي في أوراياسو، وسانريو بيورولاند في تاما.</li><li><strong>الإطلالات:</strong> Shibuya Sky عند الغروب، وسكاي تري، وخليج أوداييبا ليلًا.</li></ul>`],
+      ['قطف الفراولة (من يناير إلى مايو)', `<p>«إيتشيغو-غاري»، أي قطف الفراولة والأكل منها بلا حدود داخل البيوت الزراعية، نزهة شتوية يابانية ممتعة جدًا للأطفال. تجدونها حول طوكيو، وفي شبه جزيرة إيزو (شيزوؤكا) وقرب جبل فوجي. المواعيد بالحجز، خاصة في عطلة نهاية الأسبوع.</p>`],
+    ],
+    faq: [
+      ['هل ورش الطبخ في طوكيو حلال؟', 'ليس تلقائيًا، فالمطبخ الياباني يستعمل الميرين والساكي كثيرًا. يختار إيهاب ورشًا تقبل الطبخ بلا كحول ولا خنزير ويتأكد من ذلك مسبقًا.'],
+      ['متى نشاهد السومو في طوكيو؟', 'في بطولات يناير ومايو وسبتمبر في ريوغوكو كوكوغيكان، وفي بقية السنة أحيانًا في التدريب الصباحي لأحد الأندية.'],
+      ['ما الأنسب للأطفال الصغار؟', 'درس النينجا وتيم لاب وقطف الفراولة وأكواريوم إينوشيما هي المفضّلة لدى العائلات.'],
+    ],
+    ver: [['طوكيو الفاخرة للعائلات', '/ar/tokyo/fakhira/'], ['دليل الأنمي وبوكيمون', '/ar/tokyo/anime-pokemon/'], ['الثلج قرب طوكيو', '/ar/tokyo/thalj/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']],
+  })
+}
+
+function frNeige() {
+  return generica({
+    lang: 'fr', ruta: '/fr/neige-depuis-tokyo/', alterna: 'nieve', kapak: 'singes-jigokudani', alt: 'Un singe des neiges dans une source chaude à Jigokudani', etiqueta: 'Neige',
+    wa: 'Bonjour Iheb, nous voulons voir la neige depuis Tokyo (luge, ski ou singes des neiges). Dates, âges et nombre de personnes : ',
+    titre: 'La neige depuis Tokyo : Karuizawa, singes des neiges de Nagano, luge près du Fuji | Guide francophone',
+    desc: 'Voir la neige en hiver depuis Tokyo avec un guide francophone : ski et luge à Karuizawa (environ 1 h en shinkansen), les singes des neiges de Jigokudani à Nagano, la neige près du Fuji. Saisons, trains, vêtements.',
+    h1: 'La neige depuis Tokyo : luge, ski et singes des neiges',
+    sub: 'Il neige rarement à Tokyo, mais la neige est à une heure de train. De décembre à mars, la journée préférée des familles.',
+    cevap: 'Depuis Tokyo, trois sorties neige sont simples : Karuizawa, à environ 1 h 10 en shinkansen, avec une station de ski collée à la gare et un grand centre commercial ; les singes des neiges de Jigokudani, qui se baignent dans les sources chaudes près de Nagano (environ 1 h 20 de shinkansen, puis bus et 30 minutes de marche en forêt) ; et la neige au pied du Fuji, côté Shizuoka ou Kawaguchiko, avec luge pour les enfants. La meilleure période va de janvier à février.',
+    secciones: [
+      ['1. Karuizawa : ski, luge et shopping', `<ul class="ozet"><li><strong>Accès :</strong> shinkansen Hokuriku depuis Tokyo ou Ueno, environ 1 h 10.</li><li><strong>Sur place :</strong> la station de ski du Karuizawa Prince Hotel est juste à côté de la gare, avec des pentes douces pour débuter et un espace pour les enfants.</li><li><strong>Shopping :</strong> le grand centre Karuizawa Prince Shopping Plaza est au même endroit.</li></ul>`],
+      ['2. Les singes des neiges de Nagano', `<ul class="ozet"><li><strong>Accès :</strong> shinkansen jusqu’à Nagano (environ 1 h 20), puis bus et une marche de 30 minutes sur un chemin en forêt, souvent enneigé.</li><li><strong>Le spectacle :</strong> des macaques qui se réchauffent dans une source chaude au milieu de la neige.</li><li><strong>Conseil :</strong> chaussures avec crampons ou bottes de neige ; Iheb vous dit où en louer.</li></ul>`],
+      ['3. La neige au pied du Fuji', `<p>Côté Shizuoka (près de Gotemba) et côté Kawaguchiko, de petites stations ouvrent de la fin de l’automne au début du printemps, avec luge et neige pour les enfants, et le Fuji tout près. On peut le combiner avec Hakone ou les lacs.</p>`],
+      ['S’habiller et prier', `<ul class="ozet"><li><strong>Vêtements :</strong> on loue sur place combinaisons, gants et bottes ; venez avec des sous-vêtements chauds.</li><li><strong>Prière :</strong> Iheb prévoit un endroit chauffé et calme pour les prières de la journée.</li><li><strong>Repas :</strong> plats de poisson, de légumes ou halal, choisis à l’avance.</li></ul>`],
+    ],
+    faq: [
+      ['Neige-t-il à Tokyo ?', 'Rarement, et ça ne tient pas. Pour la vraie neige, il faut aller à Karuizawa, à Nagano ou vers le Fuji, à une ou deux heures de train.'],
+      ['Quand voit-on les singes des neiges ?', 'Toute l’année, mais avec de la neige surtout de janvier à février.'],
+      ['Faut-il savoir skier ?', 'Non : la luge et les jeux dans la neige suffisent aux enfants, et des moniteurs donnent des cours pour débutants.'],
+    ],
+    ver: [['Hakone en famille avec un onsen privé', '/fr/hakone-onsen-prive/'], ['Nagano', '/fr/nagano/'], ['Quand partir au Japon', '/fr/quand-partir-japon/'], ['Activités et ateliers à Tokyo', '/fr/activites-ateliers-tokyo/']],
+    ld: [viajeLd('La neige depuis Tokyo', 'Familles francophones', ETAPAS_NIEVE)],
+  })
+}
+function enNieve() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/snow-trips/', alterna: 'nieve', kapak: 'singes-jigokudani', alt: 'A snow monkey in a hot spring at Jigokudani', etiqueta: 'Snow',
+    wa: 'Hi Iheb, we would like to see snow from Tokyo (sledding, skiing or the snow monkeys). Dates, ages and group size: ',
+    titre: 'Snow Trips from Tokyo: Karuizawa, Nagano Snow Monkeys, Sledding near Mt. Fuji | Private Guide',
+    desc: 'See real snow on a day trip from Tokyo with a private guide: skiing and sledding in Karuizawa (about an hour by shinkansen), the Jigokudani snow monkeys in Nagano and snow at the foot of Mt. Fuji. Seasons, trains and what to wear.',
+    h1: 'Snow from Tokyo: sledding, skiing and snow monkeys',
+    sub: 'Tokyo rarely gets snow, but it is an hour away by train. From December to March, the families’ favorite day.',
+    cevap: 'Three snow days from Tokyo are easy: Karuizawa, about 1 h 10 by shinkansen, with a ski slope next to the station and a big outlet mall; the Jigokudani snow monkeys bathing in hot springs near Nagano (about 1 h 20 by shinkansen, then a bus and a 30-minute forest walk); and snow at the foot of Mt. Fuji on the Shizuoka or Kawaguchiko side, with sledding for kids. January and February are the best months.',
+    secciones: [
+      ['1. Karuizawa: skiing, sledding and shopping', `<ul class="ozet"><li><strong>Getting there:</strong> Hokuriku shinkansen from Tokyo or Ueno, about 1 h 10.</li><li><strong>On site:</strong> the Karuizawa Prince Hotel ski area sits right by the station, with gentle beginner slopes and a kids’ snow area.</li><li><strong>Shopping:</strong> the large Karuizawa Prince Shopping Plaza is in the same place.</li></ul>`],
+      ['2. The Nagano snow monkeys', `<ul class="ozet"><li><strong>Getting there:</strong> shinkansen to Nagano (about 1 h 20), then a bus and a 30-minute walk on a forest trail that is often snowy.</li><li><strong>The scene:</strong> wild macaques warming up in a hot spring surrounded by snow.</li><li><strong>Tip:</strong> boots with grip or snow boots; Iheb tells you where to rent them.</li></ul>`],
+      ['3. Snow at the foot of Mt. Fuji', `<p>On the Shizuoka side (near Gotemba) and the Kawaguchiko side, small snow parks open from late autumn to early spring, with sledding and snow play for kids and Fuji right above you. It pairs well with Hakone or the lakes.</p>`],
+      ['What to wear, where to pray', `<ul class="ozet"><li><strong>Clothes:</strong> snow suits, gloves and boots can be rented on site; bring warm base layers.</li><li><strong>Prayer:</strong> Iheb plans a warm, quiet place for the day’s prayers.</li><li><strong>Meals:</strong> fish, vegetable or halal dishes, chosen in advance.</li></ul>`],
+    ],
+    faq: [
+      ['Does it snow in Tokyo?', 'Rarely, and it melts fast. For real snow go to Karuizawa, Nagano or the Fuji area, one to two hours by train.'],
+      ['When can you see the snow monkeys?', 'All year, but with snow mostly in January and February.'],
+      ['Do we need to know how to ski?', 'No: sledding and snow play are plenty for kids, and instructors teach beginners.'],
+    ],
+    ver: [['Hakone with a private onsen', '/en/tokyo-anime-guide/hakone/'], ['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Arabic-speaking guide for Gulf families', '/en/arabic-speaking-guide-tokyo/'], ['Tokyo experiences', '/en/tokyo-anime-guide/experiences/']],
+    ld: [viajeLd('Snow trips from Tokyo', 'Families', ETAPAS_NIEVE)],
+  })
+}
+function arNieve() {
+  return generica({
+    lang: 'ar', ruta: '/ar/tokyo/thalj/', alterna: 'nieve', kapak: 'singes-jigokudani', alt: 'قرد الثلج في نبع ساخن في جيغوكوداني', etiqueta: 'الثلج',
+    wa: 'السلام عليكم إيهاب، نريد أن نرى الثلج قرب طوكيو مع العائلة (تزلّج أو زلّاجات أو قرود الثلج). التواريخ وأعمار الأطفال وعدد الأشخاص: ',
+    titre: 'الثلج قرب طوكيو للعائلات: كارويزاوا وقرود الثلج في ناغانو والتزلّج عند جبل فوجي | إيهاب',
+    desc: 'شاهدوا الثلج الحقيقي في رحلة يومية من طوكيو مع مرشد عربي مسلم: التزلّج والزلّاجات في كارويزاوا (نحو ساعة بالشينكانسن)، وقرود الثلج في جيغوكوداني بناغانو، والثلج عند سفح جبل فوجي. المواسم والقطارات والملابس والصلاة.',
+    h1: 'الثلج قرب طوكيو: زلّاجات وتزلّج وقرود الثلج',
+    sub: 'نادرًا ما تثلج في طوكيو، لكن الثلج على بعد ساعة بالقطار. من ديسمبر إلى مارس، اليوم المفضّل لدى العائلات الخليجية.',
+    cevap: 'من طوكيو ثلاث رحلات ثلج سهلة: كارويزاوا على بعد نحو ساعة و10 دقائق بالشينكانسن، وفيها منحدر تزلّج بجانب المحطة ومركز تسوّق كبير؛ وقرود الثلج في جيغوكوداني التي تستحم في الينابيع الحارة قرب ناغانو (نحو ساعة و20 دقيقة بالشينكانسن، ثم حافلة ومشي 30 دقيقة في الغابة)؛ والثلج عند سفح جبل فوجي من جهة شيزوؤكا أو كاواغوتشيكو مع الزلّاجات للأطفال. أفضل وقت يناير وفبراير.',
+    secciones: [
+      ['1. كارويزاوا: تزلّج وزلّاجات وتسوّق', `<ul class="ozet"><li><strong>الوصول:</strong> شينكانسن هوكوريكو من طوكيو أو أوينو، نحو ساعة و10 دقائق.</li><li><strong>هناك:</strong> منتجع التزلّج في فندق Karuizawa Prince بجوار المحطة، بمنحدرات سهلة للمبتدئين ومنطقة ثلج للأطفال.</li><li><strong>التسوّق:</strong> مركز Karuizawa Prince Shopping Plaza الكبير في المكان نفسه.</li></ul>`],
+      ['2. قرود الثلج في ناغانو', `<ul class="ozet"><li><strong>الوصول:</strong> الشينكانسن إلى ناغانو (نحو ساعة و20 دقيقة)، ثم حافلة ومشي 30 دقيقة في طريق غابة يغطيه الثلج غالبًا.</li><li><strong>المشهد:</strong> قرود برية تتدفأ في نبع ساخن وسط الثلج.</li><li><strong>نصيحة:</strong> أحذية مانعة للانزلاق أو أحذية ثلج، ويخبركم إيهاب أين تستأجرونها.</li></ul>`],
+      ['3. الثلج عند سفح جبل فوجي', `<p>من جهة شيزوؤكا (قرب غوتيمبا) ومن جهة كاواغوتشيكو، تفتح حدائق ثلج صغيرة من أواخر الخريف إلى بداية الربيع، فيها زلّاجات ولعب بالثلج للأطفال وجبل فوجي فوقكم. ويمكن جمعها مع هاكوني أو البحيرات.</p>`],
+      ['الملابس والصلاة والطعام', `<ul class="ozet"><li><strong>الملابس:</strong> تُستأجر بدلات الثلج والقفازات والأحذية في المكان؛ أحضروا ملابس داخلية دافئة.</li><li><strong>الصلاة:</strong> يرتّب إيهاب مكانًا دافئًا وهادئًا لصلوات اليوم.</li><li><strong>الطعام:</strong> أطباق سمك أو خضار أو حلال، نختارها مسبقًا.</li></ul>`],
+    ],
+    faq: [
+      ['هل تثلج في طوكيو؟', 'نادرًا، ويذوب الثلج بسرعة. للثلج الحقيقي اذهبوا إلى كارويزاوا أو ناغانو أو منطقة فوجي، على بعد ساعة أو ساعتين بالقطار.'],
+      ['متى نرى قرود الثلج؟', 'طوال السنة، لكن مع الثلج غالبًا في يناير وفبراير.'],
+      ['هل يجب أن نعرف التزلّج؟', 'لا: الزلّاجات واللعب بالثلج يكفيان للأطفال، وهناك مدرّبون يعلّمون المبتدئين.'],
+    ],
+    ver: [['هاكوني وأونسن خاص', '/ar/tokyo/hakone/'], ['طوكيو الفاخرة للعائلات', '/ar/tokyo/fakhira/'], ['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['أنشطة طوكيو للعائلات', '/ar/tokyo/anshita/']],
+    ld: [viajeLd('الثلج قرب طوكيو', 'Gulf Arab families', ETAPAS_NIEVE)],
+  })
+}
+
+const hechas = [frHakone(), enHakone(), arHakone(), enCosta(), arCosta(), frActivites(), enActividades(), arActividades(), frNeige(), enNieve(), arNieve(), frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)
