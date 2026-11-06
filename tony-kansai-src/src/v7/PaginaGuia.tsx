@@ -36,7 +36,6 @@ import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
 import { useBilletes } from './Cocina'
-import ShinyText from './reactbits/ShinyText'
 import './kndr-vip.css'
 const KndrVip = lazy(() => import('./KndrVip'))
 import { enlacesHreflang } from '../seo/hreflang'
@@ -829,15 +828,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       <main>
         {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
             otro, a sangre. Sin efectos encima: la foto y el titular bastan. */}
-        {/* Banner de entrada a la extensión VIP de la RPDC, a la vista nada más llegar. */}
-        {(p.id === 'ru' || p.id === 'larion') && (
-          <a href="#kndr" id="kv-banner" className="kv-banner" lang={p.id === 'ru' ? 'ru' : 'en'}>
-            <span className="kv-banner-vip">VIP</span>
-            <strong><ShinyText text={p.id === 'ru' ? 'Новое: VIP-туры в Северную Корею с Ларионом · 2027' : 'New: VIP tours to North Korea with Larion · 2027'} color="#f2ede2" shineColor="#e6c46a" speed={3} /></strong>
-            <span className="kv-banner-ir">{p.id === 'ru' ? 'от $4 900 →' : 'from $4,900 →'}</span>
-          </a>
-        )}
-
         <section className="v9-portada">
           <div className="v9-portada-texto">
             <span className="v9-sello" lang="ja" aria-hidden="true">関西</span>
@@ -891,7 +881,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           <Precios p={p} resenas={resenas} />
         </section>
 
-        {/* Extensión VIP de Larion a la RPDC (KndrVip.tsx, cargada aparte). */}
+        {/* Viajes a la RPDC del equipo, con Max (KndrVip.tsx, cargada aparte). Larion no va: solo tiene pasaporte japonés. */}
         {(p.id === 'ru' || p.id === 'larion') && (
           <Suspense fallback={<div id="kndr" style={{ minHeight: '100svh' }} />}>
             <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} tg={TG_LARION_URL} />
@@ -1152,7 +1142,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <a href="/fr/" lang="fr">Français · Iheb</a>
             <a href="/private/" lang="en">Private guide · Mario</a>
             <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
-            {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Ларион</a>}
+            {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Макс</a>}
             {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
         </div>

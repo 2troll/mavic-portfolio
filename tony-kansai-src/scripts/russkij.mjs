@@ -13,7 +13,8 @@
 // Reglas de contenido (3-11-2026):
 // - De Larion solo lo que dice la web: ruso e inglés; Kioto, Osaka, Nara, Kobe,
 //   Himeji y el oeste (Hiroshima, Miyajima); 201 reseñas reales (public/reviews-larion.json,
-//   se muestran tal cual, nunca se tocan ni se quitan); sección КНДР en /ru/kndr/.
+//   se muestran tal cual, nunca se tocan ni se quitan). La RPDC NO es de Larion
+//   (solo pasaporte japonés): /ru/kndr/ la lleva Max; aquí no se enlaza.
 // - Precios: los mismos de /ru/ (src/v7/contenido.ts, const YEN), por grupo de hasta 6.
 //   Se leen del propio contenido.ts para que nunca se desincronicen.
 // - Contacto: Telegram de Tony como coordinador (TG_LARION en contenido.ts) y
@@ -190,7 +191,7 @@ footer{margin-top:64px;background:var(--tinta);color:#ebe8e1;padding-block:36px 
 const larionLd = {
   '@type': 'Person', '@id': `${BASE}/ru/#larion`, name: 'Ларион', alternateName: 'Larion',
   jobTitle: 'Частный русскоязычный гид в Японии', knowsLanguage: ['ru', 'en'], image: `${BASE}${LARION_FOTO}`,
-  areaServed: ['Киото', 'Осака', 'Нара', 'Кобе', 'Химэдзи', 'Хиросима', 'Миядзима'].map((name) => ({ '@type': 'City', name })),
+  areaServed: [...['Киото', 'Осака', 'Нара', 'Кобе', 'Химэдзи', 'Хиросима', 'Миядзима'].map((name) => ({ '@type': 'City', name })), { '@type': 'Country', name: 'Южная Корея' }],
   worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
   url: `${BASE}/ru/`, sameAs: [`${BASE}/larion/`, `${BASE}${PREF}`], contactPoint: { '@type': 'ContactPoint', contactType: 'бронирование', url: TG_URL, availableLanguage: ['ru', 'en'] },
 }
@@ -233,7 +234,7 @@ ${equipoFuente}
 ${navHTML({ etiqueta: 'Разделы', abrir: 'Открыть меню', variante: 'kndr', grupos: [
   { t: 'Города', enlaces: OTVETY.filter((x) => x.grupo === 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
   { t: 'Поездка', enlaces: OTVETY.filter((x) => x.grupo !== 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
-  { t: 'Ларион', enlaces: [['Все ответы', PREF], ['Ларион: экскурсии и цены', '/ru/'], ['Отзывы гостей', '/ru/#otzyvy'], ['Туры в КНДР', '/ru/kndr/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
+  { t: 'Ларион', enlaces: [['Все ответы', PREF], ['Ларион: экскурсии и цены', '/ru/'], ['Отзывы гостей', '/ru/#otzyvy'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
 ], cta: { t: `${TG_ICONO} Telegram`, h: TG_URL, aria: `Telegram ${TG_VISIBLE}: ${TG_NOTA}` } })}</div></header>
 <main>
 ${cuerpo}
@@ -243,7 +244,7 @@ ${cuerpo}
   columnas: [
     { t: 'Города', enlaces: OTVETY.filter((x) => x.grupo === 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
     { t: 'Вопросы о поездке', enlaces: OTVETY.filter((x) => x.grupo !== 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
-    { t: 'Ларион', enlaces: [['Экскурсии и цены', '/ru/'], ['Маршруты', '/ru/routes/'], ['Из России в Японию', '/ru/from-russia/'], ['Горные маршруты', '/ru/hiking/'], ['Туры в КНДР', '/ru/kndr/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
+    { t: 'Ларион', enlaces: [['Экскурсии и цены', '/ru/'], ['Маршруты', '/ru/routes/'], ['Из России в Японию', '/ru/from-russia/'], ['Горные маршруты', '/ru/hiking/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
     { t: 'Контакт', fija: true, html: `<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a></p><p>${TG_NOTA}</p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` },
   ],
   equipo: equipoHTML({ lang: 'ru', actual: 'larion', variante: 'kndr' }),

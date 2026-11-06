@@ -582,13 +582,13 @@ const ru: Pagina = {
   seo: {
     // Слова, которые реально ищут в Яндексе: «русский гид в Киото», «индивидуальная экскурсия».
     titulo: 'Русский гид в Киото, Осаке и Хиросиме — Ларион | Tony Kansai Guide',
-    descripcion: 'Индивидуальные экскурсии на русском: Киото, Осака, Нара, Хиросима и Миядзима. Частный гид Ларион встречает вас в отеле. Без агентства, цена за всю группу.',
+    descripcion: 'Индивидуальные экскурсии на русском: Киото, Осака, Нара, Хиросима и Миядзима; Южная Корея (Сеул, Пусан) — по запросу. Частный гид Ларион встречает вас в отеле. Цена за всю группу.',
   },
   nav: { como: 'Как это работает', zona: 'Куда едем', precios: 'Цены', contacto: 'Написать', idioma: 'Язык' },
   hero: {
     foto: F + 'miyajima.jpg',
     titulo: 'Частный гид в Японии — на русском.',
-    sub: 'Меня зовут Ларион. Встречаю вас в лобби отеля, и мы едем туда, куда хотите вы: Киото, Осака, Нара, Хиросима, Миядзима. Без агентства и без групп — договариваетесь напрямую со мной.',
+    sub: 'Меня зовут Ларион. Встречаю вас в лобби отеля, и мы едем туда, куда хотите вы: Киото, Осака, Нара, Хиросима, Миядзима. Южная Корея: Сеул, Пусан — по запросу. Без агентства и без групп — договариваетесь напрямую со мной.',
     chips: ['Только ваша компания', 'Цена за группу', 'Встреча в отеле'],
     cta: 'Забронировать тур',
     cta2: 'Рассказать о поездке',
@@ -720,12 +720,12 @@ const larion: Pagina = {
   viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west, as far as Hiroshima.'],
   seo: {
     titulo: 'Larion, private guide in Kansai | Tony Kansai Guide',
-    descripcion: 'Larion, private guide in Russian and English. He meets you at your hotel for Kyoto, Osaka, Nara, Hiroshima or Miyajima. One fixed price per group.',
+    descripcion: 'Larion, private guide in Russian and English. He meets you at your hotel for Kyoto, Osaka, Nara, Hiroshima or Miyajima; South Korea (Seoul, Busan) on request. One fixed price per group.',
   },
   hero: {
     foto: F + 'miyajima.jpg',
     titulo: 'A private guide in Kansai and Hiroshima.',
-    sub: 'I\'m Larion. I meet you in your hotel lobby and we go wherever you\'d like: Kyoto, Osaka, Nara, Hiroshima, Miyajima. No agency, no group: you deal with me directly.',
+    sub: 'I\'m Larion. I meet you in your hotel lobby and we go wherever you\'d like: Kyoto, Osaka, Nara, Hiroshima, Miyajima. South Korea: Seoul and Busan on request. No agency, no group: you deal with me directly.',
     chips: en.hero.chips, cta: en.hero.cta, cta2: en.hero.cta2,
   },
   guiaTxt: {

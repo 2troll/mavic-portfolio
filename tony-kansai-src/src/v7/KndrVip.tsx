@@ -1,5 +1,6 @@
-// Extensión VIP de Larion: tours a la RPDC (1-11-2026). Va dentro de su página
-// (/ru/ y /larion/) como bloque grande, cargado aparte para no engordar la página.
+// Bloque de los viajes a la RPDC (1-11-2026), cargado aparte para no engordar la página.
+// Desde el 6-11-2026 acompaña Max (Макс, pasaporte ruso), no Larion; grupos de 15,
+// precio por consulta (sin dólares) y contacto por el Telegram de Tony. Ver scripts/kndr.mjs.
 //  · Lenis + GSAP ScrollTrigger: la foto de Pionyang se abre al bajar y el titular
 //    sube por líneas (SplitText), como pide la receta de la casa.
 //  · React Bits gratis: CircularText (sello VIP que gira) y Magnet (botón imán).
@@ -24,60 +25,59 @@ type Lang = 'ru' | 'en'
 const quieto = () => typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
 const FOTO = (k: string, w = 1080) => `/ru/kndr/foto/${k}-${w}.webp`
 const TROQUEL = troquel(9, 11, 2.6)
-const usd = (n: number, lang: Lang) => `$${Math.round(n).toLocaleString(lang === 'ru' ? 'ru-RU' : 'en-US').replace(/ /g, ' ')}`
 
-// Mismos precios orientativos que scripts/kndr.mjs: si cambian allí, cambiarlos aquí.
-const DESTINOS: { yol: string; foto: string; precio: number; dias: number; ru: string; en: string; fecha: string }[] = [
-  { yol: 'rozhdestvo-v-phenyane', foto: 'plaza', precio: 4900, dias: 5, ru: 'Новый год в Пхеньяне', en: 'New Year in Pyongyang', fecha: '01.2027' },
-  { yol: 'masikryon', foto: 'masikryong', precio: 6400, dias: 8, ru: 'Лыжи в Масикрёне', en: 'Masikryong ski resort', fecha: '02.2027' },
-  { yol: 'myohyan', foto: 'myohyang', precio: 4900, dias: 6, ru: 'Горы Мёхян', en: 'Mount Myohyang', fecha: '03.2027' },
-  { yol: 'den-solntsa', foto: 'pyongyang', precio: 5400, dias: 5, ru: 'День Солнца', en: 'Day of the Sun', fecha: '04.2027' },
-  { yol: 'pektusan', foto: 'paektu', precio: 7900, dias: 8, ru: 'Гора Пэктусан', en: 'Mount Paektu', fecha: '2027' },
-  { yol: 'vonsan-kalma', foto: 'wonsan', precio: 6900, dias: 7, ru: 'Море в Вонсан-Кальме', en: 'Wonsan-Kalma beach', fecha: 'VII–VIII' },
+// Mismos tours que scripts/kndr.mjs (sin precio: «по запросу»).
+const DESTINOS: { yol: string; foto: string; dias: number; ru: string; en: string; fecha: string }[] = [
+  { yol: 'rozhdestvo-v-phenyane', foto: 'plaza', dias: 5, ru: 'Новый год в Пхеньяне', en: 'New Year in Pyongyang', fecha: '01.2027' },
+  { yol: 'masikryon', foto: 'masikryong', dias: 8, ru: 'Лыжи в Масикрёне', en: 'Masikryong ski resort', fecha: '02.2027' },
+  { yol: 'myohyan', foto: 'myohyang', dias: 6, ru: 'Горы Мёхян', en: 'Mount Myohyang', fecha: '03.2027' },
+  { yol: 'den-solntsa', foto: 'pyongyang', dias: 5, ru: 'День Солнца', en: 'Day of the Sun', fecha: '04.2027' },
+  { yol: 'pektusan', foto: 'paektu', dias: 8, ru: 'Гора Пэктусан', en: 'Mount Paektu', fecha: '2027' },
+  { yol: 'vonsan-kalma', foto: 'wonsan', dias: 7, ru: 'Море в Вонсан-Кальме', en: 'Wonsan-Kalma beach', fecha: 'VII–VIII' },
 ]
 
 const T = {
   ru: {
-    ceja: 'Новое направление Лариона · 2027',
-    titulo: ['Северная Корея.', 'VIP. Без толпы.'],
-    lead: 'Ларион встречает вас во Владивостоке, летит с вами в Пхеньян и отвечает за всё до возвращения. Группа до 6 человек или только ваша семья.',
-    circulo: 'VIP ✦ ПХЕНЬЯН ✦ 2027 ✦ ЛАРИОН ✦ ',
-    pase: 'Посадочный талон', pasajero: 'Пассажир', pasajeroV: 'Вы + Ларион', clase: 'Класс', claseV: 'VIP · бизнес*', vuelo: 'Рейс', grupo: 'Группа', grupoV: 'до 6', desde: 'от, на человека',
-    nota: '* бизнес-класс Air Koryo при наличии мест. Цены ориентировочные, подтверждает туроператор.',
-    ventajasT: 'Что входит в VIP',
+    ceja: 'Группа 15 человек · можно парами · 2027',
+    titulo: ['Северная Корея.', 'Группой, с Максом.'],
+    lead: 'Набираем группу 15 человек — можно парами. Макс, гражданин России с российским паспортом, встречает группу во Владивостоке, летит с вами в Пхеньян и остаётся с группой до возвращения.',
+    circulo: 'ГРУППА ✦ ПХЕНЬЯН ✦ 2027 ✦ МАКС ✦ ',
+    pase: 'Посадочный талон', pasajero: 'Пассажир', pasajeroV: 'Вы + Макс', clase: 'Класс', claseV: 'бизнес*', vuelo: 'Рейс', grupo: 'Цена', grupoV: 'по запросу', desde: 'мест в группе',
+    nota: '* бизнес-класс Air Koryo при наличии мест. Ориентир: базовый тур на 5 дней у российского туроператора — около 85 000 ₽; точная цена по запросу.',
+    ventajasT: 'Как мы едем',
     ventajas: [
-      ['01', 'Своя машина', 'Отдельный автомобиль с водителем вместо автобуса на 40 человек.'],
+      ['01', 'Группа 15 человек', 'Можно парами. Или индивидуальный тур только для вашей семьи.'],
       ['02', 'Лучшие отели', '«Корё» в Пхеньяне, «Масикрён» в горах, номера повышенной категории.'],
-      ['03', 'Ларион 24/7', 'Документы, деньги, вопросы на месте — один русскоязычный человек.'],
+      ['03', 'Макс с вами', 'Свой человек с российским паспортом: документы и вопросы на месте.'],
       ['04', 'Бизнес-класс', 'Air Koryo Владивосток — Пхеньян, при наличии мест.'],
       ['05', 'Банкеты', 'Пхеньянский нэнмён и лучшие рестораны по программе.'],
       ['06', 'Встреча во Владивостоке', 'Трансфер, отель накануне и брифинг о правилах за ужином.'],
     ],
     destinosT: 'Куда летим в 2027', dias: 'дн.',
-    cta: 'Смотреть туры и даты', wa: 'Написать в Telegram', solo: 'Только для граждан РФ: КНДР пока принимает туристов только с российским паспортом.',
+    cta: 'Смотреть туры и даты', wa: 'Записаться в группу', solo: 'Только для граждан РФ: КНДР пока принимает туристов только с российским паспортом.',
     atajos: [['Как добраться', 'kak-dobratsya-do-phenyana'], ['Сколько стоит', 'skolko-stoit-tur-v-kndr'], ['Виза', 'viza-v-kndr-dlya-rossiyan'], ['Когда ехать', 'kogda-luchshe-ehat-v-kndr'], ['С детьми', 'kndr-s-detmi'], ['Медовый месяц', 'svadebnoe-puteshestvie-v-kndr'], ['Для компании', 'korporativnyj-tur-v-kndr']],
-    waTxt: 'Ответит Тони, координатор Лариона. Напишите, например: «Интересует VIP-тур в КНДР, даты и количество человек».', fotos: 'Фото',
+    waTxt: 'Ответит Тони, координатор поездок. Группа формируется — места ограничены. Напишите, например: «Хочу в группу в КНДР, нас двое, даты…».', fotos: 'Фото',
   },
   en: {
-    ceja: "Larion's new destination · 2027",
-    titulo: ['North Korea.', 'VIP. No crowds.'],
-    lead: 'Larion meets you in Vladivostok, flies with you to Pyongyang and takes care of everything until you are home. Groups of up to 6, or just your family.',
-    circulo: 'VIP ✦ PYONGYANG ✦ 2027 ✦ LARION ✦ ',
-    pase: 'Boarding pass', pasajero: 'Passenger', pasajeroV: 'You + Larion', clase: 'Class', claseV: 'VIP · business*', vuelo: 'Flight', grupo: 'Group', grupoV: 'up to 6', desde: 'from, per person',
-    nota: '* Air Koryo business class when available. Indicative prices, confirmed by the tour operator.',
-    ventajasT: "What's included in VIP",
+    ceja: 'Groups of 15 · couples welcome · 2027',
+    titulo: ['North Korea.', 'In a group, with Max.'],
+    lead: 'We are filling a group of 15 — couples welcome. Max, a Russian citizen with a Russian passport, meets the group in Vladivostok, flies with you to Pyongyang and stays with the group until you are back.',
+    circulo: 'GROUP ✦ PYONGYANG ✦ 2027 ✦ MAX ✦ ',
+    pase: 'Boarding pass', pasajero: 'Passenger', pasajeroV: 'You + Max', clase: 'Class', claseV: 'business*', vuelo: 'Flight', grupo: 'Price', grupoV: 'on request', desde: 'seats per group',
+    nota: '* Air Koryo business class when available. Price on request on Telegram.',
+    ventajasT: 'How we travel',
     ventajas: [
-      ['01', 'Private car', 'Your own car and driver instead of a 40-seat bus.'],
+      ['01', 'Group of 15', 'Couples welcome. Or a private tour just for your family.'],
       ['02', 'Best hotels', 'Koryo Hotel in Pyongyang, Masikryong Hotel in the mountains, upgraded rooms.'],
-      ['03', 'Larion 24/7', 'Documents, money, questions on the spot — one person handles it all.'],
+      ['03', 'Max with you', 'One of us with a Russian passport: documents and questions on the spot.'],
       ['04', 'Business class', 'Air Koryo Vladivostok — Pyongyang, when available.'],
       ['05', 'Banquets', 'Pyongyang naengmyeon and the best restaurants on the programme.'],
       ['06', 'Vladivostok welcome', 'Transfer, hotel the night before and a rules briefing over dinner.'],
     ],
     destinosT: 'Where we fly in 2027', dias: 'days',
-    cta: 'See tours and dates (in Russian)', wa: 'Message on Telegram', solo: 'Russian passport holders only: the DPRK currently admits tourists with a Russian passport only.',
+    cta: 'See tours and dates (in Russian)', wa: 'Join the group on Telegram', solo: 'Russian passport holders only: the DPRK currently admits tourists with a Russian passport only.',
     atajos: [] as string[][],
-    waTxt: "Tony, Larion's coordinator, answers here. Say, for example: “VIP tour to North Korea, dates and number of people”.", fotos: 'Photos',
+    waTxt: 'Tony, the trip coordinator, answers here. The group is filling up and seats are limited.', fotos: 'Photos',
   },
 }
 const CREDITOS = 'Jan Engelhardt (CC BY-SA 4.0), SSchlhmr (CC BY-SA 4.0), Mario Micklisch (CC BY 2.0), Clay Gilliland (CC BY-SA 2.0), Mark Fahey (CC BY 2.0) · Wikimedia Commons'
@@ -98,7 +98,7 @@ function useSuave() {
   }, [])
 }
 
-/** `tg`: enlace de Telegram de Larion (t.me no admite texto prellenado; el saludo va como texto visible). */
+/** `tg`: enlace de Telegram de Tony, que coordina (t.me no admite texto prellenado; el saludo va como texto visible). */
 export default function KndrVip({ lang, tg }: { lang: Lang; tg: string }) {
   const t = T[lang]
   const raiz = useRef<HTMLElement>(null)
@@ -183,7 +183,7 @@ export default function KndrVip({ lang, tg }: { lang: Lang; tg: string }) {
           </div>
           <div className="kv-pase-talon ck-foil">
             <small>{t.desde}</small>
-            <strong className="kv-hueco"><Contador valor={4900} formato={(v) => usd(v, lang)} ms={1800} /></strong>
+            <strong className="kv-hueco"><Contador valor={15} formato={(v) => String(Math.round(v))} ms={1200} /></strong>
             <span className="kv-codigo" aria-hidden="true" />
           </div>
         </article>
@@ -203,7 +203,7 @@ export default function KndrVip({ lang, tg }: { lang: Lang; tg: string }) {
               <a className="kv-sello" href={`/ru/kndr/${d.yol}/`}>
                 <span className="kv-sello-papel" style={{ clipPath: TROQUEL }}>
                   <img src={FOTO(d.foto)} alt="" loading="lazy" width={1080} height={608} />
-                  <span className="kv-sello-pie"><b>{d[lang]}</b><small>{d.fecha} · {d.dias} {t.dias} · {lang === 'ru' ? 'от' : 'from'} {usd(d.precio, lang)}</small></span>
+                  <span className="kv-sello-pie"><b>{d[lang]}</b><small>{d.fecha} · {d.dias} {t.dias}</small></span>
                 </span>
               </a>
             </li>
