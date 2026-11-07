@@ -12,7 +12,7 @@ import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, NOTA_TG } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, TG_TONY, NOTA_TG } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -671,12 +671,12 @@ const RAZONES: Record<PaginaId, { titulo: string; lista: [string, string, string
     ['組', 'لمجموعتك وحدها', 'سعر ثابت للمجموعة حتى ٦ أشخاص، وإلغاء مجاني حتى ٧٢ ساعة قبل الموعد.'],
   ] },
   ru: { titulo: 'Почему со мной', lista: [
-    ['直', 'Напрямую', 'Без агентства: в Telegram отвечает Тони, координатор Лариона, а встречает вас сам Ларион.'],
+    ['直', 'Напрямую', 'Без агентства: в Telegram вам отвечает сам Ларион, и он же встречает вас в отеле.'],
     ['語', 'На вашем языке', 'Веду туры на русском и на английском.'],
     ['組', 'Только ваша компания', 'Фиксированная цена за группу до 6 человек и бесплатная отмена не позднее чем за 72 часа.'],
   ] },
   larion: { titulo: 'Why book with me', lista: [
-    ['直', 'Direct contact', "No agency: Tony, Larion's coordinator, answers you on Telegram, and Larion himself meets you."],
+    ['直', 'Direct contact', "No agency: Larion answers you himself on Telegram, and he meets you at your hotel."],
     ['語', 'In your language', 'Russian and English.'],
     ['組', 'Just your party', 'One fixed price per group of up to 6, and free cancellation up to 72 hours before.'],
   ] },
@@ -884,7 +884,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Viajes a la RPDC del equipo, con Max (KndrVip.tsx, cargada aparte). Larion no va: solo tiene pasaporte japonés. */}
         {(p.id === 'ru' || p.id === 'larion') && (
           <Suspense fallback={<div id="kndr" style={{ minHeight: '100svh' }} />}>
-            <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} tg={TG_LARION_URL} />
+            <KndrVip lang={p.id === 'ru' ? 'ru' : 'en'} tg={`https://t.me/${TG_TONY}`} />
           </Suspense>
         )}
 

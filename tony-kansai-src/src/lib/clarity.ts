@@ -70,7 +70,7 @@ function tipoDeClic(el: Element): string | null {
   }
   const href = (el as HTMLAnchorElement).href || ''
   if (href.includes('paypal.me/')) return 'paypal'
-  // Larion atiende por Telegram (t.me/LUiGi19, lo lleva Tony); WhatsApp ya es solo de Tony.
+  // Larion atiende por Telegram (t.me/Larik_Yokota, lo lleva Tony); WhatsApp ya es solo de Tony.
   if (href.includes('t.me/')) return 'telegram_larion'
   if (href.includes('wa.me/')) return 'whatsapp_tony'
   if (href.startsWith('mailto:')) return 'correo'

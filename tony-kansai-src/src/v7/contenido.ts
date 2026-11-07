@@ -82,13 +82,15 @@ export const PAGAR: Record<string, { boton: string; wise: string; nota: string }
  *  WhatsApp). La cuenta es de Tony, que coordina y contesta por Larion; su nombre
  *  de perfil es «Luigi Prince Torres», de ahí la nota NOTA_TG para no despistar.
  *  t.me/<usuario> no admite texto prellenado. */
-export const TG_LARION = 'LUiGi19'
+// 7-11-2026: Telegram PROPIO de Larion (antes el de Tony, @LUiGi19, que sigue en la RPDC).
+export const TG_LARION = 'Larik_Yokota'
+export const TG_TONY = 'LUiGi19'
 export const TG_LARION_URL = `https://t.me/${TG_LARION}`
 export const TG_LARION_VISIBLE = `@${TG_LARION}`
 export const TG_AZUL = '#229ED9'
 export const NOTA_TG: Record<'ru' | 'en', string> = {
-  ru: 'Ответит Тони, координатор Лариона',
-  en: "Tony, Larion's coordinator, answers here",
+  ru: 'Ответит сам Ларион',
+  en: "Larion answers here himself",
 }
 export const BOTON_TG: Record<'ru' | 'en', string> = { ru: 'Написать в Telegram', en: 'Message on Telegram' }
 export const CORREO = 'tony@tonykansaiguide.com'
@@ -696,7 +698,7 @@ const ru: Pagina = {
     paises: ['Россия', 'Казахстан', 'Беларусь', 'Узбекистан', 'Армения', 'Грузия', 'Другая страна'],
     opcionesIntereses: ['Киото', 'Осака', 'Нара', 'Хиросима', 'Миядзима', 'Химэдзи', 'Горы и природа', 'Еда'],
     wa: 'Написать в Telegram', mail: 'Лучше по почте', vista: 'Ваше сообщение',
-    aviso: 'Ответит Тони, координатор Лариона, обычно в тот же день.',
+    aviso: 'Ответит сам Ларион, обычно в тот же день.',
     asuntoMail: 'Частная экскурсия в Японии',
     plantilla: (d) => `Здравствуйте, Ларион! Пишу с сайта.\n\n` + lineas([
       ['Имя', d.nombre], ['Откуда', [d.ciudad, d.pais].filter(Boolean).join(', ')], ['Даты', d.fechas],
@@ -775,7 +777,7 @@ const larion: Pagina = {
     wa: 'Message on Telegram',
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],
     opcionesIntereses: ['Kyoto', 'Osaka', 'Nara', 'Hiroshima', 'Miyajima', 'Himeji', 'Mountains & nature', 'Food'],
-    aviso: "Tony, Larion's coordinator, answers here, usually the same day.",
+    aviso: "Larion answers here himself, usually the same day.",
     plantilla: (d) => `Hi Larion, I'm writing from the website.\n\n` + lineas([
       ['Name', d.nombre], ['Travelling from', [d.ciudad, d.pais].filter(Boolean).join(', ')], ['Dates', d.fechas],
       ['People', d.personas], ['Staying at', d.hotel], ['Interested in', d.intereses.join(', ')], ['Also', d.notas],

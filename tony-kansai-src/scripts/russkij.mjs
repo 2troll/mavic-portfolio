@@ -18,7 +18,7 @@
 // - Precios: los mismos de /ru/ (src/v7/contenido.ts, const YEN), por grupo de hasta 6.
 //   Se leen del propio contenido.ts para que nunca se desincronicen.
 // - Contacto: Telegram de Tony como coordinador (TG_LARION en contenido.ts) y
-//   siempre la nota «Ответит Тони, координатор Лариона».
+//   siempre la nota «Ответит сам Ларион».
 // - Visados, pagos y vuelos cambian: se dice la fecha de comprobación y se remite
 //   a la fuente oficial. Nada de alcohol ni juego.
 import { existsSync, mkdirSync, readFileSync, writeFileSync, rmSync } from 'node:fs'
@@ -38,7 +38,7 @@ const CONTENIDO = readFileSync(join(root, 'src/v7/contenido.ts'), 'utf8')
 const mYen = CONTENIDO.match(/const YEN = \{ medio: (\d+), completo: (\d+), lejos: (\d+) \}/)
 if (!mYen) throw new Error('russkij: no encuentro «const YEN = { medio, completo, lejos }» en src/v7/contenido.ts')
 const mTg = CONTENIDO.match(/export const TG_LARION = '([^']+)'/)
-const mNota = CONTENIDO.match(/ru: '(Ответит Тони, координатор Лариона)'/)
+const mNota = CONTENIDO.match(/ru: '(Ответит сам Ларион)'/)
 if (!mTg || !mNota) throw new Error('russkij: no encuentro TG_LARION o NOTA_TG.ru en src/v7/contenido.ts')
 export const YEN = { medio: +mYen[1], completo: +mYen[2], lejos: +mYen[3] }
 const TG_URL = `https://t.me/${mTg[1]}`
@@ -274,7 +274,7 @@ ${secciones}
 ${o.yol ? `<h2>Как забронировать Лариона</h2>
 <ol class="lista">
 <li>Напишите в Telegram <a href="${TG_URL}">${TG_VISIBLE}</a>: даты, сколько вас, где живёте и что хотите увидеть. Если есть дети, пожилые родители или ограничения в еде — тоже напишите.</li>
-<li>Тони, координатор Лариона, ответит обычно в тот же день и пришлёт простой план с фиксированной ценой за всю группу.</li>
+<li>Ларион ответит сам, обычно в тот же день и пришлёт простой план с фиксированной ценой за всю группу.</li>
 <li>В назначенный день Ларион встречает вас в лобби отеля, и вы сразу едете.</li>
 </ol>
 <p>Япония на 6 часов впереди Москвы: если пишете вечером по московскому времени, ответ придёт утром по японскому. Все ответы для путешественников из России — на странице <a href="${PREF}">«Гид на русском в Японии»</a>.</p>` : ''}
