@@ -368,7 +368,7 @@ function tarjeta(r){
   const photo = r.photo
     ? `<figure><img loading="lazy" src="${esc(r.photo)}"
          alt="${esc(t().fotoDe)} ${esc(r.name)} — ${esc(r.tour || "Kansai")}"
-         data-full="${esc(r.photo)}" data-cap="${esc(r.name)}${r.tour ? " · " + esc(r.tour) : ""}"></figure>`
+         data-full="${esc(r.photoFull || r.photo)}" data-cap="${esc(r.name)}${r.tour ? " · " + esc(r.tour) : ""}"></figure>`
     : "";
   const donde = [r.country, r.date].filter(Boolean).map(esc).join(" · ");
   const tour = r.tour ? `<span class="revtour">${esc(r.tour)}</span>` : "";

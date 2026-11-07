@@ -31,6 +31,7 @@ interface Resena {
   lang?: string
   date?: string
   photo?: string
+  photoFull?: string
 }
 
 // Las dos fuentes traen también `count` y `average`, pero cada una sólo cuenta
@@ -66,12 +67,13 @@ function Tarjeta({ r }: { r: Resena }) {
     // se estira hasta la altura de la más larga y deja un hueco muerto.
     <article className="glass rounded-2xl border border-white/6 overflow-hidden h-full flex flex-col">
       {r.photo && (
-        <img loading="lazy"
-          src={r.photo}
-          alt={`${r.name} — ${r.tour || 'Kansai'}`}
-          className="w-full aspect-[4/3] object-cover"
-         
-        />
+        <a href={r.photoFull || r.photo} target="_blank" rel="noopener" className="cursor-zoom-in">
+          <img loading="lazy"
+            src={r.photo}
+            alt={`${r.name} — ${r.tour || 'Kansai'}`}
+            className="w-full aspect-[4/3] object-cover"
+          />
+        </a>
       )}
       <div className="p-5 flex flex-col flex-1">
         <Estrellas nota={r.stars} />

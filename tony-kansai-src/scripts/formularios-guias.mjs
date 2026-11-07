@@ -17,6 +17,19 @@ import { IHEB_IDIOMAS_CSS, ihebIdiomas } from './iheb-estilo.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
+
+// 7-11-2026: foto en todos los formularios de guías. Se acepta hasta 50 MB del móvil;
+// se reduce allí mismo: una pequeña de 1000 px para la web y una GRANDE de hasta
+// 4096 px que va aparte en binario (Worker /api/resenas/grande).
+const FOTO_T = {
+  es: { foto: 'Una foto de tu viaje (opcional)', elegir: 'Toca para elegir una foto', limite: 'JPG, PNG o HEIC · hasta 50 MB', lista: 'Foto lista: se enviará con tu opinión.', quitar: 'Quitar', grande: 'Esa foto pesa más de 50 MB.', tipo: 'Eso no parece una foto.', leer: 'No pudimos leer esa foto. Prueba con otra.', subiendo: 'Subiendo la foto…' },
+  en: { foto: 'A photo of your trip (optional)', elegir: 'Tap to choose a photo', limite: 'JPG, PNG or HEIC · up to 50 MB', lista: 'Photo ready: it will be sent with your review.', quitar: 'Remove', grande: 'That photo is larger than 50 MB.', tipo: 'That does not look like a photo.', leer: 'We could not read that photo. Try another one.', subiendo: 'Uploading the photo…' },
+  tr: { foto: 'Gezinizden bir fotoğraf (isteğe bağlı)', elegir: 'Fotoğraf seçmek için dokunun', limite: 'JPG, PNG veya HEIC · 50 MB\'a kadar', lista: 'Fotoğraf hazır: yorumunuzla birlikte gönderilecek.', quitar: 'Kaldır', grande: 'Bu fotoğraf 50 MB\'tan büyük.', tipo: 'Bu bir fotoğrafa benzemiyor.', leer: 'Fotoğraf okunamadı. Başka bir tane deneyin.', subiendo: 'Fotoğraf yükleniyor…' },
+  ru: { foto: 'Фото из поездки (по желанию)', elegir: 'Нажмите, чтобы выбрать фото', limite: 'JPG, PNG или HEIC · до 50 МБ', lista: 'Фото готово: отправится вместе с отзывом.', quitar: 'Убрать', grande: 'Это фото больше 50 МБ.', tipo: 'Это не похоже на фото.', leer: 'Не удалось прочитать фото. Попробуйте другое.', subiendo: 'Загружаем фото…' },
+  fr: { foto: 'Une photo de votre voyage (facultatif)', elegir: 'Touchez pour choisir une photo', limite: 'JPG, PNG ou HEIC · jusqu’à 50 Mo', lista: 'Photo prête : elle sera envoyée avec votre avis.', quitar: 'Retirer', grande: 'Cette photo dépasse 50 Mo.', tipo: 'Cela ne ressemble pas à une photo.', leer: 'Impossible de lire cette photo. Essayez-en une autre.', subiendo: 'Envoi de la photo…' },
+  ar: { foto: 'صورة من رحلتكم (اختياري)', elegir: 'اضغطوا لاختيار صورة', limite: 'JPG أو PNG أو HEIC · حتى 50 ميغابايت', lista: 'الصورة جاهزة: ستُرسل مع تقييمكم.', quitar: 'إزالة', grande: 'حجم الصورة أكبر من 50 ميغابايت.', tipo: 'هذا لا يبدو صورة.', leer: 'تعذّرت قراءة الصورة. جرّبوا صورة أخرى.', subiendo: 'جارٍ رفع الصورة…' },
+}
+
 const FORMULARIOS = [
   {
     ruta: 'tr/yorum', lang: 'tr', guia: 'ferhat', pagina: '/tr/', serit: 'Ferhat · Japonya Türkçe Rehber',
@@ -248,6 +261,11 @@ input:focus,textarea:focus,select:focus{outline:2px solid var(--acento2);outline
 .uyari{display:none;margin-top:14px;padding:10px 12px;border-radius:10px;background:color-mix(in srgb,var(--resalte) 12%,transparent);color:var(--resalte);font-size:15px}
 .uyari.on{display:block}
 .tamam{display:none;text-align:center}.tamam.on{display:block}
+.foto-caja{display:grid;place-items:center;gap:4px;text-align:center;border:2px dashed color-mix(in srgb,var(--acento) 55%,transparent);border-radius:14px;padding:18px 12px;cursor:pointer;font-weight:600}
+.foto-caja small{font-weight:400;color:var(--suave);font-size:13px}.foto-caja input{position:absolute;opacity:0;width:1px;height:1px}
+.foto-previa{display:none;position:relative;margin-top:8px}.foto-previa.on{display:block}.foto-previa img{width:100%;max-height:320px;object-fit:cover;border-radius:12px;display:block}
+.foto-previa button{position:absolute;top:8px;inset-inline-end:8px;border:0;border-radius:999px;padding:6px 12px;background:rgba(0,0,0,.65);color:#fff;font:600 14px system-ui;cursor:pointer}
+.foto-nota{font-size:14px;color:var(--suave);margin:6px 0 0}
 .tamam a{display:inline-block;margin-top:14px;color:var(--acento);font-weight:600}
 .gizli{position:absolute;inset-inline-start:0;width:1px!important;height:1px!important;overflow:hidden;clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0;padding:0;opacity:0}${f.css ? '\n' + f.css : ''}${f.idiomas ? IDIOMAS_FORM_CSS : ''}
 </style>
@@ -271,6 +289,10 @@ ${[1, 2, 3, 4, 5].map((n) => `<button type="button" role="radio" aria-checked="f
 <select id="tur"><option value="">${esc(t.turSec)}</option>${f.ciudades.map((x) => `<option>${esc(x)}</option>`).join('')}<option value="">${esc(t.diger)}</option></select>
 <label for="yorum">${esc(t.yorum)}</label>
 <textarea id="yorum" maxlength="1200" placeholder="${esc(t.yorumOrnek)}"></textarea>
+<label>${esc(FOTO_T[f.lang].foto)}</label>
+<label class="foto-caja" id="fotoCaja"><input type="file" id="fotoInput" accept="image/*">📷 ${esc(FOTO_T[f.lang].elegir)}<small>${esc(FOTO_T[f.lang].limite)}</small></label>
+<div class="foto-previa" id="fotoPrevia"><img id="fotoImg" alt=""><button type="button" id="fotoQuitar">${esc(FOTO_T[f.lang].quitar)}</button></div>
+<p class="foto-nota" id="fotoNota" aria-live="polite"></p>
 <input class="gizli" type="text" id="web" tabindex="-1" autocomplete="off" aria-hidden="true">
 <label class="izin"><input type="checkbox" id="izin"> <span>${esc(t.izin)}</span></label>
 <button class="btn" id="gonder" type="submit">${esc(t.gonder)}</button>
@@ -286,6 +308,28 @@ ${[1, 2, 3, 4, 5].map((n) => `<button type="button" role="radio" aria-checked="f
 const T = ${JSON.stringify({ eksik: t.eksik, hata: t.hata, tamam: t.tamam, bekle: t.bekle, gonder: t.gonder, gonderiliyor: t.gonderiliyor })};
 const $ = (id) => document.getElementById(id);
 let puan = 0;
+const F = ${JSON.stringify(FOTO_T[f.lang])};
+let foto = null;
+async function reduce(file) {
+  let img;
+  try { img = await createImageBitmap(file, { imageOrientation: 'from-image' }); }
+  catch { img = await new Promise((ok, mal) => { const i = new Image(); i.onload = () => ok(i); i.onerror = mal; i.src = URL.createObjectURL(file); }); }
+  const w0 = img.width || img.naturalWidth, h0 = img.height || img.naturalHeight;
+  const lienzo = (k) => { const c = document.createElement('canvas'); c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+    const cx = c.getContext('2d'); cx.fillStyle = '#fff'; cx.fillRect(0, 0, c.width, c.height); cx.drawImage(img, 0, 0, c.width, c.height); return c; };
+  const dataUrl = lienzo(Math.min(1, 1000 / Math.max(w0, h0))).toDataURL('image/jpeg', 0.82);
+  let grande = null;
+  try { const kg = Math.min(1, 4096 / Math.max(w0, h0), Math.sqrt(16e6 / (w0 * h0))); grande = await new Promise((ok) => lienzo(kg).toBlob(ok, 'image/jpeg', 0.92)); } catch {}
+  return { dataUrl, grande };
+}
+$('fotoInput').addEventListener('change', async (e) => {
+  const file = e.target.files[0]; $('fotoNota').textContent = ''; if (!file) return;
+  if (!file.type.startsWith('image/') && !/[.](jpe?g|png|webp|heic|heif)$/i.test(file.name)) { $('fotoNota').textContent = F.tipo; return; }
+  if (file.size > 50 * 1024 * 1024) { $('fotoNota').textContent = F.grande; return; }
+  try { foto = await reduce(file); $('fotoImg').src = foto.dataUrl; $('fotoPrevia').classList.add('on'); $('fotoCaja').hidden = true; $('fotoNota').textContent = F.lista; }
+  catch { foto = null; $('fotoNota').textContent = F.leer; }
+});
+$('fotoQuitar').addEventListener('click', () => { foto = null; $('fotoPrevia').classList.remove('on'); $('fotoCaja').hidden = false; $('fotoInput').value = ''; $('fotoNota').textContent = ''; });
 document.querySelectorAll('.yildiz button').forEach((b) => b.addEventListener('click', () => {
   puan = +b.dataset.n;
   document.querySelectorAll('.yildiz button').forEach((x) => {
@@ -304,9 +348,14 @@ $('form').addEventListener('submit', async (e) => {
     const r = await fetch('/api/resenas', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({
       stars: puan, name: ad, country: $('ulke').value.trim(), tour: $('tur').value, text: yorum,
       lang: '${f.lang}', guide: '${f.guia}', consent: true, website: $('web').value, page: location.href,
+      photo: foto ? foto.dataUrl : '', grande: Boolean(foto && foto.grande),
     }) });
     if (!r.ok) throw new Error(r.status);
     const res = await r.json().catch(() => ({}));
+    if (res.subida && foto && foto.grande) {
+      b.textContent = F.subiendo;
+      try { await fetch('/api/resenas/grande?id=' + encodeURIComponent(res.id) + '&k=' + encodeURIComponent(res.subida), { method: 'POST', headers: { 'Content-Type': 'image/jpeg' }, body: foto.grande }); } catch {}
+    }
     $('tamamMetin').textContent = res.publicada ? T.tamam : T.bekle;
     $('form').style.display = 'none'; $('tamam').classList.add('on');
   } catch { uyari(T.hata); b.disabled = false; b.textContent = T.gonder; }

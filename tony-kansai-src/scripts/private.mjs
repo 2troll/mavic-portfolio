@@ -643,6 +643,7 @@ const WA_RESENA = wa('Hello Mario, here is my review of our time together in Jap
 // con guide=mario y sale sola en /private/reviews/. WhatsApp queda de respaldo.
 const FORM_RESENA = '/private/review/'
 const listaResenas = (limite) => `<ul class="yorumlar" id="resenaLista">${(limite ? RESENAS.slice(0, limite) : RESENAS).map(carteResena).join('')}</ul>
+<script src="/resena-foto.js" data-guia="mario" data-lista="resenaLista" defer></script>
 <p class="bos" id="resenaVacia" ${RESENAS.length ? 'hidden' : ''}>Reviews from Mario’s guests are being added here.</p>
 ${RESENA_SCRIPT}`
 

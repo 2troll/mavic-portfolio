@@ -82,7 +82,7 @@ function useAhora(cadaMs = 20000) {
   return ahora
 }
 
-interface Resena { id: string; stars: number; name: string; country: string; tour: string; text: string; photo?: string; date: string
+interface Resena { id: string; stars: number; name: string; country: string; tour: string; text: string; photo?: string; photoFull?: string; date: string
   lang?: string; traducciones?: Record<string, string>
   /** Nombre, procedencia y lugar ya escritos en otro idioma (las de Larion, en inglés). */
   meta?: Record<string, { name: string; country: string; tour: string }> }
@@ -184,7 +184,7 @@ function TarjetaClasica({ r, lang, icono }: { r: Resena; lang: string; icono?: s
         <img className="v7-resena-avatar" src={icono} alt="" loading="lazy" width="52" height="52" />
         <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
       </figcaption>
-      {r.photo && <img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />}
+      {r.photo && <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener"><img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" /></a>}
     </figure>
   )
 }
@@ -933,7 +933,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                   {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
                       natural y la rejilla quedaba como un puzle mal encajado. */}
                   {r.photo
-                    ? <img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" />
+                    ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" /></a>
                     : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
                   <div className="v7-resena-cabeza">
                     <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>

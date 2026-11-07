@@ -1173,6 +1173,7 @@ const sectionAvis = `
 <h2 id="avis">Avis des voyageurs</h2>
 ${RESUME_AVIS ? `<p class="yorum-ozet"><strong>${RESUME_AVIS}</strong> (voyageurs réels, via le formulaire /fr/avis/).</p>` : ''}
 <ul class="yorumlar" id="avisListe">${AVIS.map(carteAvis).join('')}</ul>
+<script src="/resena-foto.js" data-guia="iheb" data-lista="avisListe" defer></script>
 <p id="avisVide" ${AVIS.length ? 'hidden' : ''}>Pas encore d’avis publiés — vous avez fait une visite avec Iheb ? Laissez le vôtre.</p>
 <p><a href="/fr/${AVIS_PAGE}/">Voir tous les avis →</a> · <a href="/fr/avis/">Laisser un avis à Iheb →</a></p>
 ${AVIS_SCRIPT}`
@@ -1364,6 +1365,7 @@ ${hero('skytree', '', `<span class="etiket"><a href="/fr/">Guide francophone</a>
 <p class="cevap">${RESUME_AVIS ? `Iheb, guide privé francophone à Tokyo et dans ses environs, a reçu ${RESUME_AVIS.replace('avis de voyageurs, moyenne', 'avis de voyageurs, avec une moyenne de')}. Chaque avis ci-dessous a été laissé par un voyageur via le formulaire de la page /fr/avis/ et publié tel quel, sans retouche.` : 'Aucun avis n’est encore publié sur cette page. Les avis sont laissés par les voyageurs eux-mêmes via le formulaire de la page /fr/avis/ et publiés tels quels ; ils apparaîtront ici.'}</p>
 <h2 id="avis">Tous les avis</h2>
 <ul class="yorumlar" id="avisListe">${AVIS.map(carteAvis).join('')}</ul>
+<script src="/resena-foto.js" data-guia="iheb" data-lista="avisListe" defer></script>
 <p id="avisVide" ${AVIS.length ? 'hidden' : ''}>Pas encore d’avis publiés. Vous avez fait une visite avec Iheb ? Soyez le premier à laisser le vôtre.</p>
 <p><a class="btn" href="/fr/avis/">Laisser un avis à Iheb</a></p>
 ${AVIS_SCRIPT}

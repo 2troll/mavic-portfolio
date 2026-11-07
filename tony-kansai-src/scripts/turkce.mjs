@@ -518,6 +518,7 @@ const yorumlarBolumu = `
 <h2 id="yorumlar">Misafir yorumları</h2>
 ${OZET_YORUM ? `<p class="yorum-ozet"><strong>${OZET_YORUM}</strong> (gerçek misafirler, /tr/yorum/ formundan).</p>` : ''}
 <ul class="yorumlar" id="yorumListe">${YORUMLAR.map(yorumKarti).join('')}</ul>
+<script src="/resena-foto.js" data-guia="ferhat" data-lista="yorumListe" defer></script>
 <p id="yorumBos" ${YORUMLAR.length ? 'hidden' : ''}>Henüz yorum yok. Ferhat'la tur yaptıysanız ilk yorumu siz yazın.</p>
 <p><a href="/tr/yorum/">Ferhat ile tur yaptınız mı? Yorum yazın →</a></p>
 <script>

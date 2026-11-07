@@ -222,7 +222,7 @@
         <div class="soltar" id="soltar" tabindex="0" role="button" aria-labelledby="soltarT">
           <div class="icono" aria-hidden="true">📷</div>
           <div class="t" id="soltarT" data-t="fotoT">Toca para elegir una foto</div>
-          <div class="s" data-t="fotoS">JPG, PNG o HEIC · hasta 12 MB</div>
+          <div class="s" data-t="fotoS">JPG, PNG o HEIC · hasta 50 MB</div>
         </div>
         <input type="file" id="fichero" accept="image/*" hidden>
         <div class="previa" id="previa">
@@ -295,9 +295,12 @@ const ENDPOINT = "https://tonykansaiguide.com/api/resenas";
 const WHATSAPP = "34634193106";
 const EMAIL    = "tony@tonykansaiguide.com";
 
-const MAX_MB   = 12;      // lo que aceptamos del móvil del cliente
+const MAX_MB   = 50;      // lo que aceptamos del móvil del cliente (7-11-2026: antes 12)
 const MAX_LADO = 1000;    // px: la foto se reduce aquí, en su propio móvil (1600 daba fotos de 1 MB que frenaban la portada)
 const CALIDAD  = 0.82;
+// 7-11-2026: además de la pequeña (para la web) se sube una GRANDE aparte, en
+// binario, hasta 4096 px de lado y como mucho 16 Mpx (el tope de canvas de iOS).
+const GRANDE_LADO = 4096, GRANDE_PX = 16e6, GRANDE_CALIDAD = 0.92;
 
 const SITIOS = ["Osaka", "Kioto", "Minoh", "Nara"];
 
@@ -551,14 +554,22 @@ async function reduce(f){
     });
   }
   const w0 = img.width || img.naturalWidth, h0 = img.height || img.naturalHeight;
-  const k = Math.min(1, MAX_LADO / Math.max(w0, h0));
-  const c = document.createElement("canvas");
-  c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
-  const cx = c.getContext("2d");
-  cx.fillStyle = "#ffffff";                    // por si el PNG es transparente
-  cx.fillRect(0, 0, c.width, c.height);
-  cx.drawImage(img, 0, 0, c.width, c.height);
-  return {dataUrl: c.toDataURL("image/jpeg", CALIDAD)};
+  const lienzo = (k) => {
+    const c = document.createElement("canvas");
+    c.width = Math.round(w0 * k); c.height = Math.round(h0 * k);
+    const cx = c.getContext("2d");
+    cx.fillStyle = "#ffffff";                  // por si el PNG es transparente
+    cx.fillRect(0, 0, c.width, c.height);
+    cx.drawImage(img, 0, 0, c.width, c.height);
+    return c;
+  };
+  const dataUrl = lienzo(Math.min(1, MAX_LADO / Math.max(w0, h0))).toDataURL("image/jpeg", CALIDAD);
+  let grande = null;
+  try {
+    const kg = Math.min(1, GRANDE_LADO / Math.max(w0, h0), Math.sqrt(GRANDE_PX / (w0 * h0)));
+    grande = await new Promise(ok => lienzo(kg).toBlob(ok, "image/jpeg", GRANDE_CALIDAD));
+  } catch { grande = null; }                   // si el móvil no puede, va solo la pequeña
+  return {dataUrl, grande};
 }
 
 function quitaFoto(){
@@ -613,6 +624,7 @@ async function enviar(ev){
     text: texto, lang: idioma, consent: true,
     website: $("web").value,                   // trampa anti-bots
     photo: foto ? foto.dataUrl : "",
+    grande: Boolean(foto && foto.grande),
     page: location.href,
   };
 
@@ -635,6 +647,13 @@ async function enviar(ev){
     // El receptor publica sola la reseña con permiso y sin pinta de spam:
     // entonces se le dice al cliente que ya está en la web.
     const res = await r.json().catch(() => ({}));
+    // La foto grande va aparte y en binario; si falla, la reseña ya está dentro.
+    if (res.subida && foto && foto.grande) {
+      try {
+        await fetch(ENDPOINT + "/grande?id=" + encodeURIComponent(res.id) + "&k=" + encodeURIComponent(res.subida),
+                    {method:"POST", headers:{"Content-Type":"image/jpeg"}, body: foto.grande});
+      } catch {}
+    }
     if (res.publicada) {
       const p = document.querySelector('[data-t="okP"]');
       p.dataset.t = "okPub";

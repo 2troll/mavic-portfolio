@@ -1449,6 +1449,7 @@ ${hero({ k: 'familia', alt: 'Opiniones de clientes de Antonio', sub: true, corps
 <section class="seccion" style="padding-top:clamp(48px,7vw,88px)"><div class="kap">
 <p class="lead" style="color:var(--tinta)">${RESUMEN_OP ? `${esc(NOMBRE)}, coordinador de viajes en Japón del equipo Tony Kansai Guide, tiene ${esc(RESUMEN_OP.replace(', media', ', con una media de'))}. Cada opinión la ha dejado un viajero en el formulario de /familias/opiniones/ y se publica tal cual, sin retoques.` : `Todavía no hay opiniones publicadas. Las dejan los propios viajeros en el formulario de /familias/opiniones/ y se publican tal cual, sin retoques; irán apareciendo aquí.`}</p>
 <ul class="opiniones" id="opLista">${OPINIONES.map(tarjetaOp).join('')}</ul>
+<script src="/resena-foto.js" data-guia="antonio" data-lista="opLista" defer></script>
 <p class="op-vacio" id="opVacio"${OPINIONES.length ? ' hidden' : ''}>¿Has viajado por Japón con ${esc(NOMBRE)}? Tu opinión ayuda a otras familias a decidirse.</p>
 <p><a class="btn" href="${ruta(SLUG_FORM)}">Dejar una opinión</a></p>
 ${script}
