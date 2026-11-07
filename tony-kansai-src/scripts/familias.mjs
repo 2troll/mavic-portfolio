@@ -43,8 +43,9 @@ const BASE = 'https://tonykansaiguide.com'
 const SECCION = '/familias/'
 
 // Número provisional (el de Tony): se cambiará al número de Antonio cuando lo dé.
-const WA_NUMERO = '34634193106'
-const WA_VISIBLE = '+34 634 193 106'
+// 7-11-2026: WhatsApp propio de Antonio (antes iba al de Tony y las familias le escribían a él).
+const WA_NUMERO = '817090508554'
+const WA_VISIBLE = '+81 70-9050-8554'
 const wa = (texto) => `https://wa.me/${WA_NUMERO}?text=${encodeURIComponent(texto)}`
 
 const GSAP_V = '3.15.0'
