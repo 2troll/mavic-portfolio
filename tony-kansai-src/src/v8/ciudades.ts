@@ -159,9 +159,16 @@ function tramosCiudad(id: CiudadId): Tramo[] {
   return [...new Set(ruta ? META[ruta].tramos : (['lejos'] as Tramo[]))]
 }
 
+/** Visita corta de 1-2 horas, solo en Kioto y solo con Tony (7-11-2026: la
+ *  pregunta «guía en Kioto 1 o 2 horas» la ganaban webs con precio por hora).
+ *  Se queda en Kioto, sin recogida en Osaka. Precio por grupo. */
+export const VISITA_CORTA = 20000
+const conVisitaCorta = (id: CiudadId, guia: 'tony' | 'larion' = 'tony') => id === 'kyoto' && guia === 'tony'
+
 /** Precio más bajo de la ciudad, por grupo. */
-export function precioDesde(id: CiudadId): number {
-  return Math.min(...tramosCiudad(id).map((x) => PRECIO[x]))
+export function precioDesde(id: CiudadId, guia: 'tony' | 'larion' = 'tony'): number {
+  const base = Math.min(...tramosCiudad(id).map((x) => PRECIO[x]))
+  return conVisitaCorta(id, guia) ? Math.min(base, VISITA_CORTA) : base
 }
 
 /** Mismo formato de yenes que las tarjetas del mosaico. */
@@ -199,7 +206,7 @@ const zonasEnFrase = (id: CiudadId, lang: Lengua, n: number) => lista(CIUDADES[i
 /** Título para Google: la búsqueda exacta y el precio desde. */
 export function tituloSeo(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): string {
   const donde = EN_LUGAR[id][lang]
-  const desde = yenes(precioDesde(id), lang)
+  const desde = yenes(precioDesde(id, guia), lang)
   const t: Record<Lengua, string> = {
     es: `Guía privado en español ${donde}, desde ${desde}`,
     en: guia === 'larion' ? `Private guide ${donde} (Russian, English), from ${desde}` : `Private guide ${donde}, from ${desde}`,
@@ -231,7 +238,7 @@ export function descripcionSeo(id: CiudadId, lang: Lengua, guia: 'tony' | 'lario
 function descripcionCon(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion', n: number): string {
   const donde = EN_LUGAR[id][lang]
   const zonas = zonasEnFrase(id, lang, n)
-  const desde = yenes(precioDesde(id), lang)
+  const desde = yenes(precioDesde(id, guia), lang)
   if (guia === 'larion') {
     return lang === 'ru'
       ? `Русскоязычный гид ${donde}: ${zonas}. Ларион встретит вас в лобби отеля. Только ваша группа (до 6 человек), от ${desde} за группу.`
@@ -274,6 +281,14 @@ export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): 
       : `${mayus([tr.includes('medio') && `Полдня (4 часа): ${y('medio')}`, tr.includes('completo') && `целый день (8 часов): ${y('completo')}`].filter(Boolean).join('; '))}. Это цена за группу до 6 человек, а не с человека. Поезда, входные билеты и еда оплачиваются отдельно.`,
   }
 
+  // Kioto con Tony: la visita corta va delante, así sale en la ficha y en la 1.ª pregunta.
+  if (conVisitaCorta(id, guia)) {
+    const c = yenes(VISITA_CORTA, lang)
+    precio.es = `Visita corta (1-2 horas): ${c}; ${precio.es.charAt(0).toLowerCase()}${precio.es.slice(1)}`
+    precio.en = `Short visit (1-2 hours): ${c}; ${precio.en.charAt(0).toLowerCase()}${precio.en.slice(1)}`
+    precio.ar = `زيارة قصيرة (${n(1)}-${n(2)} ساعة): ${c}، ${precio.ar}`
+  }
+
   if (guia === 'larion') {
     if (lang === 'ru') return [
       { q: `Сколько стоит частный гид ${donde}?`, a: precio.ru },
@@ -314,7 +329,16 @@ export function faqCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): 
     ],
     ru: [],
   }
-  return tony[lang].length ? tony[lang] : tony.en
+  const preguntas = tony[lang].length ? tony[lang] : tony.en
+  if (!conVisitaCorta(id, guia)) return preguntas
+  const c = yenes(VISITA_CORTA, lang)
+  const corta: PreguntaCiudad = {
+    es: { q: '¿Haces visitas cortas de 1 o 2 horas en Kioto?', a: `Sí. Una visita corta de 1 a 2 horas cuesta ${c} por grupo de hasta 6: por ejemplo Fushimi Inari temprano, Kiyomizu-dera y Gion, o Arashiyama. Quedamos en tu hotel de Kioto o en la estación más cercana al sitio. Entradas y trenes aparte.` },
+    en: { q: 'Do you do short 1-2 hour visits in Kyoto?', a: `Yes. A short visit of 1 to 2 hours is ${c} per group of up to 6: for example Fushimi Inari early, Kiyomizu-dera and Gion, or Arashiyama. We meet at your Kyoto hotel or at the station nearest the site. Tickets and trains are extra.` },
+    ar: { q: 'هل تقدّم زيارات قصيرة لساعة أو ساعتين في كيوتو؟', a: `نعم. الزيارة القصيرة من ساعة إلى ساعتين بسعر ${c} للمجموعة حتى ${n(6)} أشخاص، مثل فوشيمي إيناري في الصباح الباكر، أو كيوميزو-ديرا وغيون، أو أراشيياما. نلتقي في فندقكم في كيوتو أو في أقرب محطة إلى المكان. التذاكر والقطارات على حسابكم.` },
+    ru: { q: '', a: '' },
+  }[lang]
+  return corta.q ? [preguntas[0], corta, ...preguntas.slice(1)] : preguntas
 }
 
 /** Ficha rápida de la ciudad, justo debajo de la portada: quien busca (y la IA
