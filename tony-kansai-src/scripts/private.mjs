@@ -520,6 +520,7 @@ function page({ yol, titre, desc, image, jsonld, corps }) {
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Inter:wght@400;600&display=swap">
 <style>${CSS}${menuCSS}${equipoCSS}${CSS_PIE}${EXPERIENCIAS_CSS}.xp{--xp-acento:#ff2e88}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#ff2e88;--rb-acento2:#00e5ff}</style>
 </head>
 <body>
 <header class="ust"><div class="kap"><a class="marka" href="/private/"><b>MARIO</b><small>PRIVATE GUIDE · JAPAN</small></a>
@@ -551,6 +552,7 @@ ${corps}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js" defer></script>
 ${yol === 'otaku-japan-private-guide' ? '<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/Flip.min.js" defer></script>\n' : ''}<script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
 <script src="/private/movimiento.js" defer></script>
+<script src="/rb/rb.js" defer></script>
 </body>
 </html>
 `

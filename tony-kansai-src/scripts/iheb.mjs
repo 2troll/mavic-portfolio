@@ -187,6 +187,7 @@ ${alts}
 ${ANIME_FUENTES}
 ${equipoFuente}
 <style>${CSS_BASE}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}${IHEB_OPCIONES_CSS}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#ff4f7b;--rb-acento2:#3ec5ff}</style>
 </head>
 <body>
 <header><div class="kap"><a href="${l.base}">${esc(l.marca)}</a>
@@ -201,6 +202,7 @@ ${corps}
 })}</footer>
 <a class="wa-sabit" href="${l.waGenel}">${esc(l.waBoton)}</a>
 ${ANIME_JS}
+<script src="/rb/rb.js" defer></script>
 </body>
 </html>
 `

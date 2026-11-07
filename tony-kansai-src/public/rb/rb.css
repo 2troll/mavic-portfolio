@@ -1,0 +1,26 @@
+/*! Efectos portados a CSS/JS sin React desde React Bits (https://reactbits.dev):
+ *  ShinyText, GradientText, StarBorder, SpotlightCard y ClickSpark.
+ *  Copyright (c) 2026 David Haz. MIT + Commons Clause License Condition v1.0:
+ *  se usan como parte de esta web; no se venden ni redistribuyen los componentes.
+ *  Licencia completa: https://github.com/DavidHDev/react-bits/blob/main/LICENSE.md */
+:root{--rb-acento:#ff2e88;--rb-acento2:#3ec5ff}
+/* ShinyText: un brillo cruza el texto */
+.rb-shiny{background:linear-gradient(110deg,currentColor 35%,#fff 50%,currentColor 65%) 0 0/250% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:rb-shine 3.2s linear infinite}
+@keyframes rb-shine{from{background-position:120% 0}to{background-position:-120% 0}}
+/* GradientText: degradado animado */
+.rb-grad{background:linear-gradient(90deg,var(--rb-acento),var(--rb-acento2),var(--rb-acento)) 0 0/300% 100%;-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;animation:rb-grad 6s ease-in-out infinite alternate}
+@keyframes rb-grad{to{background-position:100% 0}}
+/* StarBorder: dos luces recorren el borde del botón */
+.rb-star{position:relative;isolation:isolate;overflow:hidden}
+.rb-star>.rb-luz{position:absolute;width:300%;height:50%;opacity:.85;border-radius:50%;z-index:-1;pointer-events:none;background:radial-gradient(circle,var(--rb-acento),transparent 12%)}
+.rb-star>.rb-luz.a{bottom:-12px;right:-250%;animation:rb-star-a 5s linear infinite alternate}
+.rb-star>.rb-luz.b{top:-12px;left:-250%;animation:rb-star-b 5s linear infinite alternate;background:radial-gradient(circle,var(--rb-acento2),transparent 12%)}
+@keyframes rb-star-a{0%{transform:translate(0,0);opacity:1}100%{transform:translate(-100%,0);opacity:0}}
+@keyframes rb-star-b{0%{transform:translate(0,0);opacity:1}100%{transform:translate(100%,0);opacity:0}}
+/* SpotlightCard: luz que sigue al dedo o al ratón */
+.rb-spot{position:relative;isolation:isolate}
+.rb-spot::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(240px circle at var(--rb-x,50%) var(--rb-y,50%),color-mix(in srgb,var(--rb-acento) 22%,transparent),transparent 70%);z-index:1}
+.rb-spot.rb-on::after{opacity:1}
+/* ClickSpark: lienzo encima de todo, no bloquea clics */
+.rb-chispas{position:fixed;inset:0;pointer-events:none;z-index:9998}
+@media (prefers-reduced-motion:reduce){.rb-shiny,.rb-grad,.rb-star>.rb-luz{animation:none}.rb-chispas{display:none}}

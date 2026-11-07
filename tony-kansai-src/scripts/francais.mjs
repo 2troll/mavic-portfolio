@@ -1086,6 +1086,7 @@ ${ihebHreflang(ruta, lang, BASE)}
 ${equipoFuente}
 ${ANIME_FUENTES}
 <style>${CSS}${ANIME_CSS}${equipoCSS}${menuCSS}${IHEB_IDIOMAS_CSS}${IHEB_OPCIONES_CSS}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#ff4f7b;--rb-acento2:#3ec5ff}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/fr/">Iheb · Guide francophone à Tokyo</a>
@@ -1111,6 +1112,7 @@ ${corps}
 })}</footer>
 <a class="wa-sabit" href="${WA_GENEL}">WhatsApp : Iheb</a>
 ${ANIME_JS}
+<script src="/rb/rb.js" defer></script>
 </body>
 </html>
 `

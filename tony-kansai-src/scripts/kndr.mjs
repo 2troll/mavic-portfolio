@@ -504,6 +504,7 @@ function pagina({ yol, ruta, titulo, desc, fotoOg, jsonld, cuerpo }) {
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Golos+Text:wght@400;500;600&family=JetBrains+Mono:wght@500&family=Unbounded:wght@500;700&display=swap">
 ${equipoFuente}
 <style>${CSS}${CSS_GRUPO}${CSS_MOV}${equipoCSS}${menuCSS}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#e0574d;--rb-acento2:#2b59c3}</style>
 </head>
 <body>
 <header class="top"><div class="kap"><a class="marca" href="/ru/kndr/">КНДР с Максом</a>
@@ -531,6 +532,7 @@ ${cuerpo}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
 <script src="/ru/kndr/movimiento.js" defer></script>
+<script src="/rb/rb.js" defer></script>
 </body>
 </html>
 `

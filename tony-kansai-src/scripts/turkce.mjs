@@ -461,6 +461,7 @@ ${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(go
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
 <style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.xp{--xp-acento:#1b8a8f;padding:8px 0}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#1b8a8f;--rb-acento2:#c8402c}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/tr/">Ferhat · Japonya Türkçe Rehber</a>
@@ -488,6 +489,7 @@ ${govde}
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/lenis@1.3.27/dist/lenis.min.js" defer></script>
 <script src="/tr/hareket.js" defer></script>
+<script src="/rb/rb.js" defer></script>
 </body>
 </html>
 `
