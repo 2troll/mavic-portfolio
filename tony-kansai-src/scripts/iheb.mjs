@@ -108,6 +108,7 @@ const NORTEAMERICA = ['United States', 'Canada']
 const MAGREB = ['Tunisia', 'Algeria', 'Morocco']
 const pais = (n) => ({ '@type': 'Country', name: n })
 const AUDIENCIA = {
+  india: { audienceType: 'Families, groups and travel agencies from India', paises: ['India'] },
   lujo: { audienceType: 'VIP and affluent Gulf (GCC) and Arab families, and travel agencies serving them', paises: GOLFO },
   primera: { audienceType: 'First-time and senior travelers from the United States and Canada, including French-speaking Québec', paises: NORTEAMERICA },
   otaku: { audienceType: 'Anime, manga and Pokémon fans from the United States and Canada', paises: NORTEAMERICA },
@@ -154,7 +155,7 @@ function page({ lang, ruta, alterna, titre, desc, image, jsonld, corps }) {
         { t: 'Autres langues', enlaces: [{ t: 'English', h: '/en/tokyo-anime-guide/first-time-japan/', lang: 'en', hreflang: 'en' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/']] },
       ]
     : [
-        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['Prices and airport transfers', '/en/tokyo-anime-guide/prices/'], ['Hakone and private onsen', '/en/tokyo-anime-guide/hakone/'], ['Snow trips', '/en/tokyo-anime-guide/snow-trips/'], ['Experiences', '/en/tokyo-anime-guide/experiences/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Akihabara', '/en/tokyo-anime-guide/akihabara/'], ['Nakano Broadway', '/en/tokyo-anime-guide/nakano-broadway/'], ['Ikebukuro', '/en/tokyo-anime-guide/ikebukuro/'], ['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Itineraries: 3, 5, 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
+        { t: 'Iheb', enlaces: [['Home', '/en/tokyo-anime-guide/'], ['Prices and airport transfers', '/en/tokyo-anime-guide/prices/'], ['From India', '/en/tokyo-anime-guide/from-india/'], ['Hakone and private onsen', '/en/tokyo-anime-guide/hakone/'], ['Snow trips', '/en/tokyo-anime-guide/snow-trips/'], ['Experiences', '/en/tokyo-anime-guide/experiences/'], ['The otaku guide', '/en/tokyo-anime-guide/otaku-guide/'], ['Akihabara', '/en/tokyo-anime-guide/akihabara/'], ['Nakano Broadway', '/en/tokyo-anime-guide/nakano-broadway/'], ['Ikebukuro', '/en/tokyo-anime-guide/ikebukuro/'], ['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Itineraries: 3, 5, 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['First time in Japan', '/en/tokyo-anime-guide/first-time-japan/'], ['Gulf / GCC agencies', '/en/arabic-speaking-guide-tokyo/'], ['Muslim-friendly Tokyo', '/en/muslim-guide-tokyo/'], ['For travel agencies', '/en/tokyo-anime-guide/travel-agencies/'], ['Leave a review', '/en/tokyo-anime-guide/review/']] },
         { t: 'Other languages', enlaces: [{ t: 'Français', h: '/fr/', lang: 'fr', hreflang: 'fr' }, { t: 'العربية', h: '/ar/tokyo/', lang: 'ar', hreflang: 'ar' }, ['Tony Kansai Guide', '/en/']] },
       ]
   const intro = lang === 'ar'
@@ -1692,5 +1693,31 @@ function arPrecios() {
     ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['طوكيو الفاخرة للعائلات', '/ar/tokyo/fakhira/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']] })
 }
 
-const hechas = [enPrecios(), frPrecios(), arPrecios(), frHakone(), enHakone(), arHakone(), enCosta(), arCosta(), frActivites(), enActividades(), arActividades(), frNeige(), enNieve(), arNieve(), frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ——— 7-11-2026: India (Iheb busca agencias indias). Sin datos de visado concretos: remitir a la Embajada.
+function enIndia() {
+  return generica({
+    lang: 'en', ruta: '/en/tokyo-anime-guide/from-india/', alterna: 'india', kapak: 'kawaguchiko-fuji', alt: 'Mount Fuji and Lake Kawaguchi', etiqueta: 'From India',
+    wa: 'Hi Iheb, we are travelling from India to Tokyo. Dates, group size and food preferences (veg / Jain / non-veg): ',
+    titre: 'Tokyo Private Guide for Indian Families and Agencies: Veg Food, Mt. Fuji, Prices | Iheb',
+    desc: 'Private English-speaking guide in Tokyo for travellers and travel agencies from India: vegetarian and Jain-friendly food planning, Mt. Fuji and Hakone by private car, airport transfers and clear prices in yen.',
+    h1: 'Tokyo for travellers from India: a private guide who plans everything',
+    sub: 'Vegetarian food, Mt. Fuji, shopping and anime, at your family’s pace, in English.',
+    cevap: `Iheb is a private tour guide who lives in Japan and guides families and groups from India in English around Tokyo, Mt. Fuji, Hakone and Kamakura. He plans each day around your food (vegetarian, Jain-friendly or non-vegetarian), books a private car with a licensed partner when you need one, and keeps the pace easy for parents and children. Prices are in yen and per group: a private guide from ¥${P.g4} for 4 hours, a Mt. Fuji day with car and guide from ¥${P.tour4} for 1 to 4 guests, airport transfers from ¥${P.hanedaIda}.`,
+    secciones: [
+      ['Vegetarian and Jain-friendly food', `<ul class="ozet"><li><strong>Vegetarian:</strong> Tokyo has many vegetarian and Indian restaurants, and Iheb books places on your route in advance.</li><li><strong>Jain-friendly:</strong> no onion, garlic or root vegetables is harder in Japan; Iheb asks restaurants before you go and suggests safe options.</li><li><strong>Watch out for dashi:</strong> many Japanese dishes use fish stock, even when they look vegetarian. Iheb checks for you.</li></ul>`],
+      ['A first trip: 5 days that work', `<ol class="adimlar"><li><strong>Day 1:</strong> Asakusa area, Tokyo Skytree and Ueno.</li><li><strong>Day 2:</strong> Shibuya, Harajuku and Shinjuku, with Shibuya Sky at sunset.</li><li><strong>Day 3:</strong> Mt. Fuji and Lake Kawaguchi by private car.</li><li><strong>Day 4:</strong> Hakone or the Kamakura and Enoshima coast.</li><li><strong>Day 5:</strong> Akihabara and Odaiba, shopping and tax-free.</li></ol>`],
+      ['Visa and arrival', `<ul class="ozet"><li><strong>Visa:</strong> Indian passport holders need a visa for Japan. Check the current rules and how to apply with the Embassy of Japan in India before booking flights.</li><li><strong>Arrival:</strong> private transfer from Narita or Haneda to your hotel, waiting time included (<a href="/en/tokyo-anime-guide/prices/">prices</a>).</li></ul>`],
+      ['For travel agencies in India', `<p>Iheb works under contract with agencies: he guides your clients in English, plans the days and connects you with licensed partners in Japan for cars, hotels and restaurants. Send your group dates and size on WhatsApp and he replies with a programme and a price. More: <a href="/en/tokyo-anime-guide/travel-agencies/">work with Iheb</a>.</p>`],
+    ],
+    faq: [
+      ['Is there an English-speaking private guide in Tokyo for Indian families?', 'Yes: Iheb, a private guide who lives in Japan, guides families and groups from India in English in Tokyo, Mt. Fuji, Hakone and Kamakura.'],
+      ['Can we find vegetarian food in Tokyo?', 'Yes. There are many vegetarian and Indian restaurants; Iheb books them along your route and checks dishes for fish stock (dashi).'],
+      ['How much is a private Mt. Fuji day for a family?', `¥${P.tour4} for 1 to 4 guests and ¥${P.tour8} for 5 to 8, with car, driver and guide for about 10 hours.`],
+    ],
+    ver: [['Prices and airport transfers', '/en/tokyo-anime-guide/prices/'], ['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Tokyo itinerary: 3, 5 or 7 days', '/en/tokyo-anime-guide/tokyo-itinerary/']],
+    ld: [viajeLd('Tokyo and Mt. Fuji for travellers from India', 'Families and travel agencies from India', ['Asakusa', 'Shibuya', 'Mount Fuji', 'Hakone', 'Akihabara'])],
+  })
+}
+
+const hechas = [enIndia(), enPrecios(), frPrecios(), arPrecios(), frHakone(), enHakone(), arHakone(), enCosta(), arCosta(), frActivites(), enActividades(), arActividades(), frNeige(), enNieve(), arNieve(), frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)
