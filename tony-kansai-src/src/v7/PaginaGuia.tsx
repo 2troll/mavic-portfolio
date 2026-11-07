@@ -1145,6 +1145,16 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <a href={p.lang === 'ar' ? '/partners/?lang=ar' : p.lang === 'es' ? '/partners/' : '/partners/?lang=en'}>
               {p.lang === 'ar' ? 'للوكالات · Hanma Travel Partners' : p.lang === 'es' ? 'Agencias · Hanma Travel Partners' : 'Agencies · Hanma Travel Partners'}
             </a>
+            {/* Presupuesto de guía para agencias: formularios de Fillout (plan gratis), uno por idioma. */}
+            {p.guia === 'tony' && (
+              <a
+                href={p.lang === 'ar' ? 'https://forms.fillout.com/t/nbAZrWPhrgus' : p.lang === 'es' ? 'https://forms.fillout.com/t/uT27v5jecous' : 'https://forms.fillout.com/t/shhKbMZeRtus'}
+                target="_blank"
+                rel="noopener"
+              >
+                {p.lang === 'ar' ? 'للوكالات · اطلب عرض سعر' : p.lang === 'es' ? 'Agencias · Pide presupuesto de guía' : 'Agencies · Request a guide quote'}
+              </a>
+            )}
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Макс</a>}
             {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
