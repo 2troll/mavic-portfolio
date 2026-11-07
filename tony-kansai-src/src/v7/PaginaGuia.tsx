@@ -12,7 +12,7 @@ import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, TG_TONY, NOTA_TG } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, TG_TONY, WA_LARION_URL, WA_LARION_VISIBLE, NOTA_TG } from './contenido'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -838,7 +838,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — ${canal(p)}`}><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
               <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>
             </div>
-            {g.tg && <p className="v7-nota-tg">Telegram {TG_LARION_VISIBLE} · {notaTg(p)}</p>}
+            {g.tg && <p className="v7-nota-tg">Telegram {TG_LARION_VISIBLE} · {notaTg(p)} · WhatsApp <a href={WA_LARION_URL} target="_blank" rel="noopener noreferrer"><bdi dir="ltr">{WA_LARION_VISIBLE}</bdi></a></p>}
             {/* La nota sale de las reseñas reales; sin reseñas no se enseña nada. */}
             {resenas.length > 0 && (
               <p className="v7-hero-nota"><a href="#resenas">
@@ -998,7 +998,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               </dl>
             )}
             <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
-            {g.tg && <p className="v7-nota-tg">{notaTg(p)}</p>}
+            {g.tg && <p className="v7-nota-tg">{notaTg(p)} · WhatsApp <a href={WA_LARION_URL} target="_blank" rel="noopener noreferrer"><bdi dir="ltr">{WA_LARION_VISIBLE}</bdi></a></p>}
             {p.guiaTxt.otro && (
               <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
             )}
@@ -1101,7 +1101,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             <strong><Logo /></strong>
             <p>{p.pie.lema}</p>
             <p className="v7-pie-wa"><a href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoCanal tg={!!g.tg} /> <bdi dir="ltr">{g.tg ? `Telegram ${TG_LARION_VISIBLE}` : telefono(g.wa ?? '')}</bdi></a></p>
-            {g.tg && <p className="v7-nota-tg">{notaTg(p)}</p>}
+            {g.tg && <p className="v7-nota-tg">{notaTg(p)} · WhatsApp <a href={WA_LARION_URL} target="_blank" rel="noopener noreferrer"><bdi dir="ltr">{WA_LARION_VISIBLE}</bdi></a></p>}
             <p><a href={`mailto:${CORREO}`}>{CORREO}</a></p>
           </div>
           {/* Columnas cortas con título (patrón de nawatravel.ae): en el móvil son

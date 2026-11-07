@@ -85,6 +85,10 @@ export const PAGAR: Record<string, { boton: string; wise: string; nota: string }
 // 7-11-2026: Telegram PROPIO de Larion (antes el de Tony, @LUiGi19, que sigue en la RPDC).
 export const TG_LARION = 'Larik_Yokota'
 export const TG_TONY = 'LUiGi19'
+// WhatsApp de Larion como canal SECUNDARIO (Telegram es el principal para rusohablantes).
+export const WA_LARION = '818085067586'
+export const WA_LARION_URL = `https://wa.me/${WA_LARION}`
+export const WA_LARION_VISIBLE = '+81 80-8506-7586'
 export const TG_LARION_URL = `https://t.me/${TG_LARION}`
 export const TG_LARION_VISIBLE = `@${TG_LARION}`
 export const TG_AZUL = '#229ED9'

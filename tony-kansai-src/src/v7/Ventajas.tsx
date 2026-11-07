@@ -712,7 +712,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
               <h2 className="vn-h2">{p.finalTitulo}</h2>
               <p>{p.finalTexto}</p>
               <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={id === 'ru'} /> {p.finalBoton}</a>
-              {id === 'ru' && <small className="v7-nota-tg">Telegram @Larik_Yokota · {NOTA_TG.ru}</small>}
+              {id === 'ru' && <small className="v7-nota-tg">Telegram @Larik_Yokota · {NOTA_TG.ru} · WhatsApp +81 80-8506-7586</small>}
               <Link className="vn-enlace" to={inicio}>{p.volver}</Link>
             </div>
             <div className="vn-final-socios vn-sube" id="colaborar">

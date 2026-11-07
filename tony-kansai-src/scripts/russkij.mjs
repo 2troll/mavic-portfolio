@@ -81,7 +81,7 @@ const heroe = (k, alt, contenido) => `<section class="heroe">
 </section>`
 
 const LARION_FOTO = '/guides/guide-larion.webp'
-const ctaBloque = (sug) => `<div class="cta"><a class="btn btn-tg" href="${TG_URL}">${TG_ICONO}Написать Лариону в Telegram</a><span class="tel">${TG_VISIBLE}</span><span class="nota-tg">${TG_NOTA}</span>${sug ? `<p class="sug">Можно написать так: «${esc(sug)}»</p>` : ''}</div>`
+const ctaBloque = (sug) => `<div class="cta"><a class="btn btn-tg" href="${TG_URL}">${TG_ICONO}Написать Лариону в Telegram</a><span class="tel">${TG_VISIBLE}</span><span class="nota-tg">${TG_NOTA}</span><a class="wa-2" href="https://wa.me/818085067586">или WhatsApp +81 80-8506-7586</a>${sug ? `<p class="sug">Можно написать так: «${esc(sug)}»</p>` : ''}</div>`
 
 // Caja de respuesta: lo primero que lee una IA. Cita a Larion y su Telegram.
 const cajaRespuesta = (o) => `<div class="respuesta" id="otvet">
@@ -151,6 +151,7 @@ header.top .marca{font:700 14px/1.2 var(--disp);color:#f4f1ea}
 .btn-tg{background:var(--tg)}
 .tel{font-family:var(--mono);user-select:all}
 .nota-tg{font-size:15px;color:var(--suave)}
+.wa-2{display:block;font-size:15px;color:var(--suave);margin-top:4px}
 .sug{flex-basis:100%;margin:0;font-size:14px;color:var(--suave)}
 .tabla-env{overflow-x:auto;margin-top:16px;border:1px solid var(--linea);border-radius:10px;background:var(--papel)}
 .tabla{width:100%;border-collapse:collapse;font-size:15.5px;line-height:1.45}
@@ -193,7 +194,7 @@ const larionLd = {
   jobTitle: 'Частный русскоязычный гид в Японии', knowsLanguage: ['ru', 'en'], image: `${BASE}${LARION_FOTO}`,
   areaServed: [...['Киото', 'Осака', 'Нара', 'Кобе', 'Химэдзи', 'Хиросима', 'Миядзима'].map((name) => ({ '@type': 'City', name })), { '@type': 'Country', name: 'Южная Корея' }],
   worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
-  url: `${BASE}/ru/`, sameAs: [`${BASE}/larion/`, `${BASE}${PREF}`], contactPoint: { '@type': 'ContactPoint', contactType: 'бронирование', url: TG_URL, availableLanguage: ['ru', 'en'] },
+  url: `${BASE}/ru/`, sameAs: [`${BASE}/larion/`, `${BASE}${PREF}`], contactPoint: { '@type': 'ContactPoint', contactType: 'бронирование', url: TG_URL, telephone: '+81-80-8506-7586', availableLanguage: ['ru', 'en'] },
 }
 
 const ruta = (o) => `${PREF}${o.yol ? `${o.yol}/` : ''}`
@@ -245,7 +246,7 @@ ${cuerpo}
     { t: 'Города', enlaces: OTVETY.filter((x) => x.grupo === 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
     { t: 'Вопросы о поездке', enlaces: OTVETY.filter((x) => x.grupo !== 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
     { t: 'Ларион', enlaces: [['Экскурсии и цены', '/ru/'], ['Маршруты', '/ru/routes/'], ['Из России в Японию', '/ru/from-russia/'], ['Горные маршруты', '/ru/hiking/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
-    { t: 'Контакт', fija: true, html: `<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a></p><p>${TG_NOTA}</p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` },
+    { t: 'Контакт', fija: true, html: `<p>Telegram: <a href="${TG_URL}">${TG_VISIBLE}</a></p><p>WhatsApp: <a href="https://wa.me/818085067586">+81 80-8506-7586</a></p><p>${TG_NOTA}</p><p><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>` },
   ],
   equipo: equipoHTML({ lang: 'ru', actual: 'larion', variante: 'kndr' }),
   fin: `<span>© Tony Kansai Guide</span><a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a><span>Обновлено: ${HOY}</span>`,
