@@ -185,6 +185,15 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 .idiomas [lang=ar]{font-family:Tajawal,system-ui,sans-serif}
 header .idiomas{margin-inline-start:auto}
 @media (max-width:640px){header .idiomas{order:3;width:100%;justify-content:center;margin:0}}
+/* 7-11-2026 limpieza móvil: botón de agencias legible, WhatsApp fijo compacto en la esquina,
+   sin la fila de pegatinas repetida (los idiomas ya están arriba). */
+.bant a.btn{color:#16132a!important}
+@media (max-width:640px){
+.wa-sabit{left:auto!important;right:14px!important;bottom:14px!important;width:auto!important;padding:11px 18px!important;font-size:15px!important;border-radius:999px!important}
+[dir=rtl] .wa-sabit{right:auto!important;left:14px!important}
+body{padding-bottom:0!important}
+.rozetler{display:none!important}
+}
 .iheb-masjid{margin:18px 0 24px;max-width:520px}.iheb-masjid img{width:100%;height:auto;display:block;border:3px solid var(--cizgi,#16132a);border-radius:22px;box-shadow:6px 6px 0 var(--golge,#16132a)}.iheb-masjid figcaption{font-size:14px;color:var(--soluk,#555);margin-top:8px}
 ul.opciones{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 ul.opciones a{display:flex;flex-direction:column;gap:10px;height:100%;padding:16px;border:3px solid var(--cizgi,#16132a);border-radius:18px;background:var(--kart,#fff);color:var(--fg,#16132a);text-decoration:none;box-shadow:5px 5px 0 var(--golge,#16132a);transition:transform .2s,box-shadow .2s}

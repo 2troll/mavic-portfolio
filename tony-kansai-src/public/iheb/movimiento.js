@@ -78,11 +78,6 @@
   })
 
   // 7-11-2026: más vida, sobre todo en el móvil.
-  // Títulos: el subrayado de rotulador se pinta de izquierda a derecha.
-  g.utils.toArray('main h2').forEach((h) => {
-    if (getComputedStyle(h).backgroundImage === 'none') return
-    g.fromTo(h, { backgroundSize: '0% 100%' }, { backgroundSize: '100% 100%', backgroundRepeat: 'no-repeat', backgroundPosition: rtl ? '100% 0' : '0 0', duration: 0.9, ease: 'power2.out', scrollTrigger: { trigger: h, start: 'top 88%', once: true } })
-  })
   // Foto de portada: zoom lento y paralaje al bajar.
   const kimg = document.querySelector('.kahraman img')
   if (kimg) g.fromTo(kimg, { scale: 1.12 }, { scale: 1, yPercent: 10, ease: 'none', scrollTrigger: { trigger: '.kahraman', start: 'top top', end: 'bottom top', scrub: true } })

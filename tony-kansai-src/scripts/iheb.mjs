@@ -263,7 +263,7 @@ const AR_FAQ_PORTADA = [
   ['هل يوجد مرشد سياحي عربي في طوكيو؟', `نعم. إيهاب مرشد تونسي مسلم يعيش في اليابان، ويقدّم جولات خاصة بالعربية (وبالفرنسية والإنجليزية) في طوكيو وحولها. الحجز عبر واتساب: <span dir="ltr">${WA_VISIBLE}</span>.`],
   ['هل الجولة مناسبة للعائلات المسلمة؟', 'نعم. الجولة خاصة بعائلتك فقط، والوجبات في مطاعم حلال أو مناسبة للمسلمين، ونتوقف لأوقات الصلاة، ولا ندخل معابد أو أماكن عبادة غير إسلامية.'],
   ['هل تشمل الجولة زيارة المعابد؟', 'لا. برنامج إيهاب يركّز على المدينة الحديثة، والأنمي والتسوّق، والطبيعة وجبل فوجي، والمساجد. لا معابد ولا تماثيل بوذا.'],
-  ['كم سعر الجولة؟', 'يختلف السعر حسب عدد الأشخاص ومدة الجولة والأماكن. يرسله لك إيهاب على واتساب بعد معرفة برنامجك.'],
+  ['كم سعر الجولة؟', 'المرشد الخاص: 36,000 ين لـ4 ساعات، و55,000 ين لـ8 ساعات، و67,000 ين لـ10 ساعات، للمجموعة. والرحلة بسيارة ومرشد (فوجي، هاكوني، كاماكورا): 150,000 ين من 1 إلى 4 أشخاص. والاستقبال من المطار: من 20,000 ين. التفاصيل: <a href="/ar/tokyo/asaar/">الأسعار</a>.'],
   ['أين يرشد إيهاب؟', 'في طوكيو ومنطقة كانتو (يوكوهاما، إينوشيما، نيكّو، هاكوني)، وحول جبل فوجي (بحيرات فوجي وشيزوكا)، وفي محافظة ناغانو. كيوتو وأوساكا يرشد فيهما توني من الفريق نفسه.'],
   ['هل يتعامل إيهاب مع وكالات السفر؟', 'نعم. يرشد عملاء الوكالات، ويتعاقد معها، ويصلها بشركاء محليين للنقل وغيره. <a href="/ar/tokyo/wakalat/">التفاصيل للوكالات</a>.'],
 ]
@@ -424,7 +424,7 @@ const EN_FAQ = [
   ['Can I use Japanese Pokémon cards in tournaments back home?', 'Usually not: Japanese-language cards are generally not allowed in official tournaments outside Japan. For collecting, they are hugely popular. Check the current rules before you buy for play.'],
   ['How do I get into the Pokémon Café?', 'Reservation only, on the official website. Slots open at 6 pm Japan time and sell out very fast.'],
   ['How do I get Ghibli Museum tickets?', 'They are not sold at the museum. Tickets for each month go on sale on the 10th of the previous month at 10 am Japan time on Lawson Ticket.'],
-  ['How much does the tour cost?', 'It depends on group size, length and places. Iheb sends you a price on WhatsApp once he knows your plan.'],
+  ['How much does the tour cost?', 'Private guide: ¥36,000 for 4 hours, ¥55,000 for 8 hours, ¥67,000 for 10 hours, per group. Day tour with vehicle and guide (Mt. Fuji, Hakone, Kamakura): ¥150,000 for 1 to 4 guests. Airport transfer: from ¥20,000. Details: <a href="/en/tokyo-anime-guide/prices/">prices</a>.'],
   ['Is it family friendly?', 'Yes. It is a private tour just for your family, at your pace. Halal-friendly meals and prayer breaks can be added for Muslim travelers.'],
 ]
 
@@ -446,7 +446,7 @@ function enPortada() {
 <div class="kap">
 <div class="serit" aria-hidden="true"><div><span><i>★</i>Akihabara</span><span><i>★</i>Pokémon cards</span><span><i>★</i>Nakano Broadway</span><span><i>★</i>Retro games</span><span><i>★</i>Ikebukuro</span><span><i>★</i>Nintendo TOKYO</span><span><i>★</i>Gundam</span><span><i>★</i>Mt. Fuji</span><span><i>★</i>Akihabara</span><span><i>★</i>Pokémon cards</span><span><i>★</i>Nakano Broadway</span><span><i>★</i>Retro games</span><span><i>★</i>Ikebukuro</span><span><i>★</i>Nintendo TOKYO</span><span><i>★</i>Gundam</span><span><i>★</i>Mt. Fuji</span></div></div>
 <ul class="rozetler"><li>English</li><li>Français</li><li>العربية</li><li>Pokémon cards</li><li>Anime</li><li>Retro games</li><li>Families</li><li>Halal-friendly</li></ul>
-<p class="cevap">Yes, you can explore Tokyo’s anime and Pokémon world with a specialist guide: Iheb, who lives in Japan, is a professional in anime, Japanese pop culture and Pokémon card collecting. A typical day links three neighborhoods by train: Akihabara (cards, figures, video games), Nakano Broadway (the collectors’ mall, with Mandarake) and Ikebukuro (Animate and Pokémon Center Mega Tokyo). Ghibli Museum, the Pokémon Café and real anime locations can be added with reservations or as a day trip. Private tour; price per group on WhatsApp: ${WA_VISIBLE}.</p>
+<p class="cevap">Yes, you can explore Tokyo’s anime and Pokémon world with a specialist guide: Iheb, who lives in Japan, is a professional in anime, Japanese pop culture and Pokémon card collecting. A typical day links three neighborhoods by train: Akihabara (cards, figures, video games), Nakano Broadway (the collectors’ mall, with Mandarake) and Ikebukuro (Animate and Pokémon Center Mega Tokyo). Ghibli Museum, the Pokémon Café and real anime locations can be added with reservations or as a day trip. Private tour from ¥36,000 for 4 hours per group (<a href="/en/tokyo-anime-guide/prices/">all prices</a>).</p>
 <section class="guide"><div>${cartaIheb('en')}</div><div>
 <h2>Why go with Iheb?</h2>
 <ul class="ozet">
@@ -669,7 +669,7 @@ const FR_FAQ_QC = [
   ['Quel est le décalage horaire avec le Québec ?', 'Le Japon a 14 heures d’avance sur Montréal et Québec en hiver, et 13 heures en été.'],
   ['Laisse-t-on un pourboire au Japon ?', 'Non. Le pourboire ne fait pas partie de la culture, ni au restaurant, ni en taxi, ni à l’hôtel.'],
   ['Peut-on voyager en voiture privée ?', 'Oui. Pour plus de confort, Iheb peut organiser un véhicule privé avec chauffeur auprès de partenaires locaux licenciés. Prix sur demande.'],
-  ['Combien coûte la visite ?', 'Cela dépend du nombre de personnes, de la durée et des lieux. Iheb vous envoie un prix sur WhatsApp une fois votre projet connu.'],
+  ['Combien coûte la visite ?', 'Guide privé : 36 000 ¥ pour 4 heures, 55 000 ¥ pour 8 heures, 67 000 ¥ pour 10 heures, par groupe. Excursion avec véhicule et guide (Fuji, Hakone, Kamakura) : 150 000 ¥ pour 1 à 4 personnes. Transfert aéroport : dès 20 000 ¥. Tous les tarifs : tonykansaiguide.com/fr/tarifs-transferts-excursions/'],
 ]
 
 function frQuebec() {
@@ -728,7 +728,7 @@ const AR_FAQ_FAKHIRA = [
   ['هل يوجد مرشد عربي مسلم في طوكيو للعائلات الخليجية؟', `نعم. إيهاب مرشد تونسي مسلم يعيش في اليابان ويتكلّم العربية والفرنسية والإنجليزية. يرافق عائلتكم وحدها في طوكيو وحول جبل فوجي وشيزوكا وناغانو. للتواصل عبر واتساب: <span dir="ltr">${WA_VISIBLE}</span>.`],
   ['هل يمكن التنقّل بسيارة خاصة مع سائق؟', 'نعم، عبر شركاء نقل مرخّصين في اليابان: سيارات خاصة، أو حافلات صغيرة للعائلات الكبيرة. السعر عند الطلب عبر واتساب.'],
   ['هل الطعام الحلال متوفّر في طوكيو؟', 'نعم، في طوكيو مطاعم حلال كثيرة، منها مطاعم لحم واغيو حلال. يختار إيهاب ما يناسب عائلتكم ويرتّب الحجز.'],
-  ['كم السعر؟', 'يعتمد على عدد الأشخاص وعدد الأيام ونوع السيارة. يرسل إيهاب الأسعار مباشرة عبر واتساب بعد معرفة برنامجكم.'],
+  ['كم السعر؟', 'المرشد الخاص: 36,000 ين لـ4 ساعات، و55,000 ين لـ8 ساعات، و67,000 ين لـ10 ساعات، للمجموعة. والرحلة بسيارة ومرشد (فوجي، هاكوني، كاماكورا): 150,000 ين من 1 إلى 4 أشخاص. والاستقبال من المطار: من 20,000 ين. التفاصيل: <a href="/ar/tokyo/asaar/">الأسعار</a>.'],
   ['هل يرافقنا في كيوتو وأوساكا؟', 'في كيوتو وأوساكا يستقبلكم توني من الفريق نفسه، وهو يتكلّم العربية أيضًا، فتبقى الرحلة كلها مع فريق واحد.'],
 ]
 
