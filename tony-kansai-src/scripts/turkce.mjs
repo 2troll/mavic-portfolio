@@ -17,6 +17,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
+import { experienciasHTML, EXPERIENCIAS_CSS } from './experiencias-estatico.mjs'
 import { yeniCevaplar } from './turkce-cevaplar-yeni.mjs'
 import { musulmanCevaplar } from './turkce-cevaplar-musluman.mjs'
 
@@ -459,7 +460,7 @@ ${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(go
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
-<style>${CSS}${equipoCSS}${menuCSS}</style>
+<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.xp{--xp-acento:#1b8a8f;padding:8px 0}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/tr/">Ferhat · Japonya Türkçe Rehber</a>
@@ -584,6 +585,7 @@ ${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} 
 <ul class="izgara">
 ${SEHIRLER.map((s) => kartLink(`/tr/${s.yol}/`, s.kapak, s.ad, s.ad, s.yerler.slice(0, 3).map((y) => y[0]).join(', '))).join('\n')}
 </ul>
+</div>${experienciasHTML('tr')}<div class="kap">
 <h2>Nasıl çalışır?</h2>
 <ol>
 <li>WhatsApp'tan yazın: tarihler, kişi sayısı, kaldığınız şehir veya otel.</li>

@@ -37,6 +37,7 @@ import { join, dirname, resolve } from 'node:path'
 import { fileURLToPath, pathToFileURL } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
+import { experienciasHTML, EXPERIENCIAS_CSS } from './experiencias-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1082,7 +1083,7 @@ ${HEAD_JS}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 ${equipoFuente}
-<style>${CSS}${equipoCSS}${menuCSS}</style>
+<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.indice{border-bottom:1px solid var(--linea);padding:12px 0}.indice summary{cursor:pointer;font-weight:600;font-size:18px;display:flex;justify-content:space-between}.indice summary span{opacity:.6;font-size:14px}.indice ul{margin:10px 0 4px;padding-left:18px;columns:2 260px;gap:24px}.indice li{margin:4px 0}.xp{--xp-acento:#2f5d50}</style>
 </head>
 <body>
 <header class="cab"><div class="kap">
@@ -1263,6 +1264,15 @@ ${ganchos.length ? `<p class="gancho"><span class="g-rot">${ganchos.map((g) => `
 ${fichaRapida('es')}
 </div>
 
+<section class="seccion alt" id="servicios" aria-labelledby="t-servicios"><div class="kap">
+<h2 id="t-servicios">Qué hace ${esc(NOMBRE)} por su viaje</h2>
+<p class="lead">Coordinación y guía en Japón para que el grupo solo tenga que disfrutar.</p>
+<ul class="servicios">${servicios.map((s) => `<li><span class="ico-c">${icono(s.icono)}</span><h3>${rico(s.titulo)}</h3><p>${rico(s.texto)}</p></li>`).join('')}</ul>
+</div></section>
+
+${experienciasHTML('es')}
+
+
 ${configuradorHtml()}
 
 <section class="mapa-s seccion" id="mapa" aria-labelledby="t-mapa"><div class="kap mapa-c">
@@ -1274,30 +1284,10 @@ ${configuradorHtml()}
 </div></section>
 
 <section class="seccion" id="guias" aria-labelledby="t-guias"><div class="kap">
-<p class="ceja-o">Índice</p>
-<h2 id="t-guias">Todas las guías, por tema</h2>
-<p class="lead">${PAGINAS.length} páginas para preparar el viaje: destinos, itinerarios, temporadas, ocasiones especiales, logística y receptivo para agencias.</p>
-<nav class="cats" aria-label="Temas">${cats.map((c) => `<a href="#cat-${c.id}">${esc(c.es)}<span>${c.ps.length}</span></a>`).join('')}</nav>
-${cats.map((c) => `<div class="cat-b" id="cat-${c.id}">
-<div class="fila-cab" data-fila="fila-${c.id}"><div><h3>${esc(c.es)}<span class="cnt">${String(c.ps.length).padStart(2, '0')}</span></h3><p>${esc(c.lead)}</p></div></div>
-<ul class="fila" id="fila-${c.id}">${c.ps.map((p) => tarjetaDe(p, { sizes: SIZES_FILA, sinCat: true })).join('\n')}</ul>
-</div>`).join('\n')}
+<h2 id="t-guias">Guías para preparar el viaje</h2>
+<p class="lead">${PAGINAS.length} páginas, sin rodeos: elige un tema.</p>
+${cats.map((c) => `<details class="indice"><summary>${esc(c.es)} <span>${c.ps.length}</span></summary><ul>${c.ps.map((p) => `<li><a href="${ruta(p.slug)}">${esc(p.h1)}</a></li>`).join('')}</ul></details>`).join('\n')}
 </div></section>
-
-<section class="seccion alt" id="servicios" aria-labelledby="t-servicios"><div class="kap">
-<h2 id="t-servicios">Qué hace ${esc(NOMBRE)} por su viaje</h2>
-<p class="lead">Coordinación y guía en Japón para que el grupo solo tenga que disfrutar.</p>
-<ul class="servicios">${servicios.map((s) => `<li><span class="ico-c">${icono(s.icono)}</span><h3>${rico(s.titulo)}</h3><p>${rico(s.texto)}</p></li>`).join('')}</ul>
-</div></section>
-
-${problemas.length ? `<section class="seccion" id="problemas" aria-labelledby="t-problemas"><div class="kap">
-<h2 id="t-problemas">Problemas que resolvemos</h2>
-<p class="lead">Lo que suele complicar un viaje en grupo por Japón, y cómo se evita.</p>
-<ul class="billetes">${problemas.map((x, i) => {
-    const d = x.enlace ? destino(x.enlace, 'PORTADA.problemas') : null
-    return `<li class="billete"><div><span class="b-num">Nº ${String(i + 1).padStart(2, '0')}</span><h3>${rico(x.titulo)}</h3><span class="etq">El problema</span><p>${rico(x.problema)}</p></div><div class="talon"><span class="etq">La solución</span><p>${rico(x.solucion)}</p>${d ? `<a class="enl" href="${d.href}">Leer la guía ${FLECHA}</a>` : ''}<span class="sello" aria-hidden="true">Resuelto</span></div></li>`
-  }).join('\n')}</ul>
-</div></section>` : ''}
 
 <section class="seccion alt" id="gestiona" aria-labelledby="t-gestiona"><div class="kap">
 <h2 id="t-gestiona">Lo que sí y lo que no</h2>
@@ -1311,11 +1301,7 @@ ${pasos.length ? `<section class="seccion" id="como" aria-labelledby="t-como"><d
 <ol class="pasos"><span class="p-linea" aria-hidden="true"><span></span></span>${pasos.map((p) => `<li><h3>${rico(p.titulo)}</h3><p>${rico(p.texto)}</p></li>`).join('')}</ol>
 </div></section>` : ''}
 
-<section class="corea" aria-labelledby="t-corea"><span class="kanji" aria-hidden="true" lang="ko">대한민국</span><div class="kap">
-<span class="pildora">Próximamente</span>
-<h2 id="t-corea">Corea del Sur</h2>
-<p>${rico(P.coreaProximamente ?? '')}</p>
-</div></section>
+
 
 <section class="seccion alt" id="antonio" aria-labelledby="t-antonio"><div class="kap"><div class="persona">
 ${retratoGrande()}
