@@ -327,6 +327,7 @@ function arHalal() {
 <h1>طعام حلال ومساجد في طوكيو</h1>
 <p class="alt">أين تصلّي، وأين تأكل حلال، وكيف نبني اليوم حول أوقات الصلاة.</p>`)}
 <div class="kap">
+<figure class="iheb-masjid"><img src="/fr/foto/iheb-masjid-1200.webp" srcset="/fr/foto/iheb-masjid-600.webp 600w, /fr/foto/iheb-masjid-1200.webp 1200w" sizes="(max-width:700px) 100vw, 520px" alt="إيهاب في مسجد في طوكيو" width="1200" height="1600" loading="lazy"><figcaption>إيهاب، مرشدكم المسلم في طوكيو، في المسجد.</figcaption></figure>
 <p class="cevap">أشهر مسجد في طوكيو هو جامع طوكيو (Tokyo Camii) على الطراز العثماني، على بعد خمس دقائق مشيًا تقريبًا من محطة يويوغي-أويهارا (خطّا أوداكيو وتشيودا). ومسجد أوتسوكا، مقرّ Japan Islamic Trust، على بعد خمس دقائق تقريبًا من محطة أوتسوكا على خط JR ياماناتي. وفي مطاري ناريتا وهانيدا غرف للصلاة، وفي طوكيو مطاعم حلال كثيرة.</p>
 <h2>المساجد</h2>
 <table><tr><th>المسجد</th><th>الوصول</th><th>معلومة</th></tr>
@@ -850,6 +851,7 @@ function enMuslim() {
 <p class="alt">For families and friends from Malaysia, Singapore, Brunei, Indonesia, the UK and beyond: halal food, prayer times and Mt. Fuji, planned by a Muslim guide who lives in Japan.</p>
 <p><a class="btn" href="${WA_MUSULMAN}">Message Iheb on WhatsApp</a></p>`)}
 <div class="kap">
+<figure class="iheb-masjid"><img src="/fr/foto/iheb-masjid-1200.webp" srcset="/fr/foto/iheb-masjid-600.webp 600w, /fr/foto/iheb-masjid-1200.webp 1200w" sizes="(max-width:700px) 100vw, 520px" alt="Iheb, a Muslim tour guide, in a mosque in Tokyo" width="1200" height="1600" loading="lazy"><figcaption>Iheb, your Muslim guide in Tokyo, at the mosque.</figcaption></figure>
 <ul class="rozetler"><li>Halal food</li><li>Prayer times</li><li>Private</li><li>Families</li><li>Mt. Fuji</li><li>Anime &amp; Pokémon</li><li>English · العربية</li></ul>
 <p class="cevap">Yes, there is a Muslim tour guide in Tokyo: Iheb, from Tunisia, lives in Japan and guides private groups in English, Arabic and French. He plans every day around halal meals and prayer times, from Tokyo Camii and halal ramen to Mt. Fuji by private car (through licensed partners) and the anime and Pokémon shops kids love. Price on WhatsApp: ${WA_VISIBLE}.</p>
 <h2>What a Muslim-friendly day looks like</h2>
@@ -1594,5 +1596,101 @@ function arNieve() {
   })
 }
 
-const hechas = [frHakone(), enHakone(), arHakone(), enCosta(), arCosta(), frActivites(), enActividades(), arActividades(), frNeige(), enNieve(), arNieve(), frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
+// ——— 7-11-2026: precios de Iheb (los dio él por WhatsApp; Tony: «en yenes») ———
+// Cambio de referencia 150 ¥/$ (el mismo de su PDF: 1.000 $ = 150.000 ¥). Precio por VEHÍCULO o servicio.
+const P = { naritaIda: '30,000', naritaIV: '57,000', hanedaIda: '20,000', hanedaIV: '39,000', noche: '3,000', espera: '3,000', grandeN: '6,000', grandeH: '3,000', tour4: '150,000', tour8: '180,000', g4: '36,000', g8: '55,000', g10: '67,000' }
+const tablaPrecios = (t) => [
+  [t.hAero, `<table><tr><th>${t.servicio}</th><th>Narita</th><th>Haneda</th></tr>
+<tr><td>${t.ida}</td><td>¥${P.naritaIda}</td><td>¥${P.hanedaIda}</td></tr>
+<tr><td>${t.vuelta}</td><td>¥${P.naritaIda}</td><td>¥${P.hanedaIda}</td></tr>
+<tr><td>${t.iv}</td><td>¥${P.naritaIV}</td><td>¥${P.hanedaIV}</td></tr></table>
+<ul class="ozet">${t.condAero.map((x) => `<li>${x}</li>`).join('')}</ul>`],
+  [t.hTour, `<p>${t.destinos}</p>
+<table><tr><th>${t.grupo}</th><th>${t.cocheGuia}</th></tr>
+<tr><td>${t.g14}</td><td>¥${P.tour4}</td></tr>
+<tr><td>${t.g58}</td><td>¥${P.tour8}</td></tr></table>
+<ul class="ozet">${t.condTour.map((x) => `<li>${x}</li>`).join('')}</ul>`],
+  [t.hGuia, `<table><tr><th>${t.duracion}</th><th>${t.precio}</th></tr>
+<tr><td>${t.h4}</td><td>¥${P.g4}</td></tr><tr><td>${t.h8}</td><td>¥${P.g8}</td></tr><tr><td>${t.h10}</td><td>¥${P.g10}</td></tr></table>
+<p>${t.notaGuia}</p>`],
+  [t.hReserva, `<ol class="adimlar">${t.pasos.map((x) => `<li>${x}</li>`).join('')}</ol>`],
+]
+const ETAPAS_PRECIOS = ['Narita Airport', 'Haneda Airport', 'Mount Fuji', 'Hakone', 'Kamakura', 'Enoshima', 'Yokohama']
+const ofertaLd = (lang, nombre) => ({ '@type': 'OfferCatalog', name: nombre, itemListElement: [
+  ['Narita Airport transfer (one way, per vehicle)', 30000], ['Haneda Airport transfer (one way, per vehicle)', 20000],
+  ['Private day tour with vehicle and guide, 1-4 guests', 150000], ['Private day tour with vehicle and guide, 5-8 guests', 180000],
+  ['Private guide, 4 hours', 36000], ['Private guide, 8 hours', 55000], ['Private guide, 10 hours', 67000],
+].map(([n, p]) => ({ '@type': 'Offer', name: n, price: p, priceCurrency: 'JPY', seller: { '@id': `${BASE}/fr/#iheb` } })) })
+
+const PRECIOS_T = {
+  en: { hAero: 'Airport transfers to and from your Tokyo hotel', servicio: 'Service (per vehicle)', ida: 'One way: airport → hotel (arrival)', vuelta: 'One way: hotel → airport (departure)', iv: 'Round trip', 
+    condAero: ['Price per vehicle, not per person: 1 to 4 guests with normal luggage.', 'Night (22:00 to 06:00): + ¥3,000 per one-way trip.', 'Waiting at the airport: the first 90 minutes are free, then ¥3,000 per 30 minutes.', '5 to 8 guests or a lot of luggage: larger vehicle, + ¥6,000 (Narita) or + ¥3,000 (Haneda) per trip.', 'Hotels in central Tokyo; other addresses on request.'],
+    hTour: 'Private day tours: vehicle with driver + guide', destinos: 'Mount Fuji, Hakone, or Kamakura and Enoshima with Yokohama. Pick-up at your Tokyo hotel.', grupo: 'Group size', cocheGuia: 'Vehicle + guide', g14: '1 to 4 guests', g58: '5 to 8 guests',
+    condTour: ['About 10 hours. Includes the vehicle and driver, fuel, tolls, parking and Iheb as your guide.', 'Not included: entry tickets and meals.', 'Prayer breaks and halal or Muslim-friendly meals are planned into the day.'],
+    hGuia: 'Private guide only (by train or on foot)', duracion: 'Duration', precio: 'Price', h4: '4 hours', h8: '8 hours', h10: '10 hours', notaGuia: 'Price per group. Train tickets, entry tickets and meals are not included.',
+    hReserva: 'How to book', pasos: ['Message Iheb on WhatsApp: dates, flight, number of guests and hotel.', 'He confirms availability, the vehicle and the final price.', 'Payment and cancellation terms are confirmed in writing when you book.'] },
+  fr: { hAero: 'Transferts aéroport ↔ hôtel à Tokyo', servicio: 'Service (par véhicule)', ida: 'Aller : aéroport → hôtel (arrivée)', vuelta: 'Aller : hôtel → aéroport (départ)', iv: 'Aller-retour',
+    condAero: ['Prix par véhicule, pas par personne : 1 à 4 voyageurs avec des bagages normaux.', 'Nuit (22 h à 6 h) : + 3 000 ¥ par trajet.', 'Attente à l’aéroport : les 90 premières minutes sont gratuites, puis 3 000 ¥ par demi-heure.', '5 à 8 voyageurs ou beaucoup de bagages : véhicule plus grand, + 6 000 ¥ (Narita) ou + 3 000 ¥ (Haneda) par trajet.', 'Hôtels du centre de Tokyo ; autres adresses sur demande.'],
+    hTour: 'Excursions privées à la journée : véhicule avec chauffeur + guide', destinos: 'Mont Fuji, Hakone, ou Kamakura et Enoshima avec Yokohama. Départ de votre hôtel à Tokyo.', grupo: 'Groupe', cocheGuia: 'Véhicule + guide', g14: '1 à 4 voyageurs', g58: '5 à 8 voyageurs',
+    condTour: ['Environ 10 heures. Comprend le véhicule et le chauffeur, l’essence, les péages, le parking et Iheb comme guide.', 'Non compris : les entrées et les repas.', 'Pauses prière et repas halal ou adaptés prévus dans la journée.'],
+    hGuia: 'Guide privé seul (en train ou à pied)', duracion: 'Durée', precio: 'Prix', h4: '4 heures', h8: '8 heures', h10: '10 heures', notaGuia: 'Prix par groupe. Billets de train, entrées et repas non compris.',
+    hReserva: 'Réserver', pasos: ['Écrivez à Iheb sur WhatsApp : dates, vol, nombre de voyageurs et hôtel.', 'Il confirme la disponibilité, le véhicule et le prix final.', 'Le paiement et les conditions d’annulation sont confirmés par écrit à la réservation.'] },
+  ar: { hAero: 'الاستقبال من المطار والتوصيل إلى فندقكم في طوكيو', servicio: 'الخدمة (السعر للسيارة)', ida: 'اتجاه واحد: المطار ← الفندق (الوصول)', vuelta: 'اتجاه واحد: الفندق ← المطار (المغادرة)', iv: 'ذهاب وعودة',
+    condAero: ['السعر للسيارة وليس للشخص: من 1 إلى 4 أشخاص مع حقائب عادية.', 'في الليل (من 10 مساءً إلى 6 صباحًا): + 3,000 ين لكل اتجاه.', 'الانتظار في المطار: أول 90 دقيقة مجانًا، ثم 3,000 ين لكل نصف ساعة.', 'من 5 إلى 8 أشخاص أو حقائب كثيرة: سيارة أكبر، + 6,000 ين (ناريتا) أو + 3,000 ين (هانيدا) لكل اتجاه.', 'فنادق وسط طوكيو، والعناوين الأخرى عند الطلب.'],
+    hTour: 'رحلات يومية خاصة: سيارة مع سائق + مرشد', destinos: 'جبل فوجي أو هاكوني أو كاماكورا وإينوشيما مع يوكوهاما. الانطلاق من فندقكم في طوكيو.', grupo: 'عدد الأشخاص', cocheGuia: 'السيارة + المرشد', g14: 'من 1 إلى 4', g58: 'من 5 إلى 8',
+    condTour: ['نحو 10 ساعات. يشمل السيارة والسائق والوقود ورسوم الطرق والمواقف وإيهاب مرشدًا لكم.', 'لا يشمل: تذاكر الدخول والوجبات.', 'وقفات الصلاة والطعام الحلال ضمن برنامج اليوم.'],
+    hGuia: 'مرشد خاص فقط (بالقطار أو مشيًا)', duracion: 'المدة', precio: 'السعر', h4: '4 ساعات', h8: '8 ساعات', h10: '10 ساعات', notaGuia: 'السعر للمجموعة. لا يشمل تذاكر القطار والدخول والوجبات.',
+    hReserva: 'كيف تحجزون؟', pasos: ['اكتبوا لإيهاب على واتساب: التواريخ ورقم الرحلة وعدد الأشخاص والفندق.', 'يؤكد لكم التوفر ونوع السيارة والسعر النهائي.', 'تُؤكَّد طريقة الدفع وشروط الإلغاء كتابيًا عند الحجز.'] },
+}
+const paginaPrecios = ({ lang, ruta, etiqueta, alt, wa, titre, desc, h1, sub, cevap, faq, ver }) => generica({
+  lang, ruta, alterna: 'precios', kapak: 'kawaguchiko-fuji', alt, etiqueta, wa, titre, desc, h1, sub, cevap,
+  secciones: tablaPrecios(PRECIOS_T[lang]), faq, ver, ld: [ofertaLd(lang, titre)],
+})
+function enPrecios() {
+  return paginaPrecios({ lang: 'en', ruta: '/en/tokyo-anime-guide/prices/', etiqueta: 'Prices', alt: 'Mount Fuji and Lake Kawaguchi',
+    wa: 'Hi Iheb, we would like to book (airport transfer / day tour / guide). Dates, flight and group size: ',
+    titre: 'Tokyo Airport Transfer and Private Tour Prices: Narita, Haneda, Mt. Fuji | Iheb',
+    desc: 'Clear prices in yen: Narita and Haneda airport transfers to your Tokyo hotel, private day tours to Mt. Fuji, Hakone or Kamakura with vehicle and guide, and a private guide by the hour.',
+    h1: 'Prices: airport transfers, private tours and guide',
+    sub: 'Per vehicle or per group, in yen, with everything that is and is not included.',
+    cevap: `A private airport transfer to a hotel in central Tokyo costs ¥${P.naritaIda} from Narita and ¥${P.hanedaIda} from Haneda, per vehicle for 1 to 4 guests. A private day tour to Mount Fuji, Hakone or the Kamakura coast with vehicle, driver and Iheb as guide costs ¥${P.tour4} for 1 to 4 guests and ¥${P.tour8} for 5 to 8. A private guide alone costs ¥${P.g4} for 4 hours, ¥${P.g8} for 8 hours and ¥${P.g10} for 10 hours.`,
+    faq: [
+      ['How much is a private transfer from Narita to Tokyo?', `¥${P.naritaIda} one way per vehicle for 1 to 4 guests to a hotel in central Tokyo, ¥${P.naritaIV} round trip. At night (22:00 to 06:00) add ¥${P.noche} per trip.`],
+      ['How much is a private transfer from Haneda?', `¥${P.hanedaIda} one way per vehicle for 1 to 4 guests, ¥${P.hanedaIV} round trip.`],
+      ['How much is a private Mt. Fuji day tour from Tokyo with a car and guide?', `¥${P.tour4} for 1 to 4 guests and ¥${P.tour8} for 5 to 8, about 10 hours, with vehicle, driver, fuel, tolls, parking and guide.`],
+    ],
+    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Arabic-speaking guide for Gulf families', '/en/arabic-speaking-guide-tokyo/'], ['Muslim guide in Tokyo', '/en/muslim-guide-tokyo/']] })
+}
+function frPrecios() {
+  return paginaPrecios({ lang: 'fr', ruta: '/fr/tarifs-transferts-excursions/', etiqueta: 'Tarifs', alt: 'Le mont Fuji et le lac Kawaguchi',
+    wa: 'Bonjour Iheb, nous voudrions réserver (transfert aéroport / excursion / guide). Dates, vol et nombre de personnes : ',
+    titre: 'Tarifs : transfert aéroport Narita, Haneda et excursion au mont Fuji | Iheb',
+    desc: 'Tarifs clairs en yens : transferts privés Narita et Haneda vers votre hôtel à Tokyo, excursions au mont Fuji, à Hakone ou à Kamakura avec véhicule et guide francophone, et guide privé à l’heure.',
+    h1: 'Tarifs : transferts aéroport, excursions privées et guide',
+    sub: 'Par véhicule ou par groupe, en yens, avec ce qui est compris et ce qui ne l’est pas.',
+    cevap: `Un transfert privé de l’aéroport vers un hôtel du centre de Tokyo coûte ${P.naritaIda} ¥ depuis Narita et ${P.hanedaIda} ¥ depuis Haneda, par véhicule pour 1 à 4 voyageurs. Une excursion privée au mont Fuji, à Hakone ou sur la côte de Kamakura avec véhicule, chauffeur et Iheb comme guide coûte ${P.tour4} ¥ pour 1 à 4 voyageurs et ${P.tour8} ¥ pour 5 à 8. Le guide seul coûte ${P.g4} ¥ pour 4 heures, ${P.g8} ¥ pour 8 heures et ${P.g10} ¥ pour 10 heures.`,
+    faq: [
+      ['Combien coûte un transfert privé de Narita à Tokyo ?', `${P.naritaIda} ¥ l’aller par véhicule pour 1 à 4 voyageurs vers un hôtel du centre de Tokyo, ${P.naritaIV} ¥ l’aller-retour. La nuit (22 h à 6 h), + ${P.noche} ¥ par trajet.`],
+      ['Et depuis Haneda ?', `${P.hanedaIda} ¥ l’aller par véhicule pour 1 à 4 voyageurs, ${P.hanedaIV} ¥ l’aller-retour.`],
+      ['Combien coûte une excursion privée au mont Fuji avec voiture et guide ?', `${P.tour4} ¥ pour 1 à 4 voyageurs et ${P.tour8} ¥ pour 5 à 8, environ 10 heures, véhicule, chauffeur, essence, péages, parking et guide compris.`],
+    ],
+    ver: [['Excursions depuis Tokyo', '/fr/excursions-depuis-tokyo/'], ['Aéroports Narita et Haneda', '/fr/aeroport-narita-haneda-tokyo/'], ['Halal et mosquées à Tokyo', '/fr/halal-mosquees-tokyo/']] })
+}
+function arPrecios() {
+  return paginaPrecios({ lang: 'ar', ruta: '/ar/tokyo/asaar/', etiqueta: 'الأسعار', alt: 'جبل فوجي وبحيرة كاواغوتشي',
+    wa: 'السلام عليكم إيهاب، نريد الحجز (استقبال من المطار / رحلة يومية / مرشد). التواريخ ورقم الرحلة وعدد الأشخاص: ',
+    titre: 'أسعار الاستقبال من مطار ناريتا وهانيدا ورحلة جبل فوجي الخاصة | إيهاب',
+    desc: 'أسعار واضحة بالين: الاستقبال الخاص من مطار ناريتا وهانيدا إلى فندقكم في طوكيو، ورحلات يومية إلى جبل فوجي وهاكوني وكاماكورا بسيارة ومرشد عربي، ومرشد خاص بالساعة.',
+    h1: 'الأسعار: الاستقبال من المطار والرحلات الخاصة والمرشد',
+    sub: 'السعر للسيارة أو للمجموعة، بالين، مع ما يشمله وما لا يشمله.',
+    cevap: `التوصيل الخاص من المطار إلى فندق في وسط طوكيو سعره ${P.naritaIda} ين من ناريتا و${P.hanedaIda} ين من هانيدا، للسيارة من 1 إلى 4 أشخاص. والرحلة اليومية الخاصة إلى جبل فوجي أو هاكوني أو ساحل كاماكورا بسيارة وسائق وإيهاب مرشدًا سعرها ${P.tour4} ين من 1 إلى 4 أشخاص و${P.tour8} ين من 5 إلى 8. والمرشد وحده ${P.g4} ين لـ4 ساعات و${P.g8} ين لـ8 ساعات و${P.g10} ين لـ10 ساعات.`,
+    faq: [
+      ['كم سعر التوصيل الخاص من مطار ناريتا إلى طوكيو؟', `${P.naritaIda} ين للاتجاه الواحد للسيارة من 1 إلى 4 أشخاص إلى فندق في وسط طوكيو، و${P.naritaIV} ين ذهابًا وعودة. وفي الليل (من 10 مساءً إلى 6 صباحًا) + ${P.noche} ين لكل اتجاه.`],
+      ['وكم من مطار هانيدا؟', `${P.hanedaIda} ين للاتجاه الواحد للسيارة من 1 إلى 4 أشخاص، و${P.hanedaIV} ين ذهابًا وعودة.`],
+      ['كم سعر رحلة جبل فوجي الخاصة بسيارة ومرشد؟', `${P.tour4} ين من 1 إلى 4 أشخاص و${P.tour8} ين من 5 إلى 8، نحو 10 ساعات، تشمل السيارة والسائق والوقود ورسوم الطرق والمواقف والمرشد.`],
+    ],
+    ver: [['رحلات يومية من طوكيو', '/ar/tokyo/rihlat-min-tokyo/'], ['طوكيو الفاخرة للعائلات', '/ar/tokyo/fakhira/'], ['حلال ومساجد طوكيو', '/ar/tokyo/halal-masajid/']] })
+}
+
+const hechas = [enPrecios(), frPrecios(), arPrecios(), frHakone(), enHakone(), arHakone(), enCosta(), arCosta(), frActivites(), enActividades(), arActividades(), frNeige(), enNieve(), arNieve(), frMaghreb(), arMaghreb(), frExcursions(), enExcursions(), arExcursions(), frItineraire(), enItinerary(), arBarnamaj(), enAkihabara(), enNakano(), enIkebukuro(), enMuslim(), arFakhira(), enGcc(), arPortada(), arHalal(), arAnime(), arWakalat(), enPortada(), enAgencias(), enOtaku(), enPrimera(), frQuebec()]
 console.log(`iheb: ${hechas.length} páginas → ${hechas.map((r) => `/${r}/`).join(' ')}`)

@@ -130,12 +130,12 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 export const IHEB_IDIOMAS = ['fr', 'ar', 'en']
 const NOMBRE_IDIOMA = { fr: 'Français', ar: 'العربية', en: 'English' }
 export const IHEB_INICIO = { fr: '/fr/', ar: '/ar/tokyo/', en: '/en/tokyo-anime-guide/' }
-export const IHEB_REGIONES = { fr: ['FR', 'BE', 'LU', 'CH', 'CA'], ar: ['QA', 'AE', 'SA', 'BH', 'OM', 'KW'], en: ['US', 'CA', 'GB', 'IN', 'CH', 'NL'] }
+export const IHEB_REGIONES = { fr: ['FR', 'BE', 'LU', 'CH', 'CA'], ar: ['QA', 'AE', 'SA', 'BH', 'OM', 'KW'], en: ['US', 'CA', 'GB', 'IN', 'CH', 'NL', 'SG', 'MY'] }
 // Los mismos mercados con nombre, para schema.org (audience.geographicArea).
 export const IHEB_PAISES = {
   fr: ['France', 'Belgium', 'Luxembourg', 'Switzerland', 'Canada'],
   ar: ['Qatar', 'United Arab Emirates', 'Saudi Arabia', 'Bahrain', 'Oman', 'Kuwait'],
-  en: ['United States', 'Canada', 'United Kingdom', 'India', 'Switzerland', 'Netherlands'],
+  en: ['United States', 'Canada', 'United Kingdom', 'India', 'Switzerland', 'Netherlands', 'Singapore', 'Malaysia'],
 }
 
 // Páginas equivalentes (una por idioma como mucho). Una página que no está aquí
@@ -161,6 +161,7 @@ export const IHEB_EQUIVALENTES = [
   { fr: '/fr/kamakura/', ar: '/ar/tokyo/enoshima/', en: '/en/tokyo-anime-guide/enoshima-kamakura/' },
   { fr: '/fr/activites-ateliers-tokyo/', ar: '/ar/tokyo/anshita/', en: '/en/tokyo-anime-guide/experiences/' },
   { fr: '/fr/neige-depuis-tokyo/', ar: '/ar/tokyo/thalj/', en: '/en/tokyo-anime-guide/snow-trips/' },
+  { fr: '/fr/tarifs-transferts-excursions/', ar: '/ar/tokyo/asaar/', en: '/en/tokyo-anime-guide/prices/' },
 ]
 const rutasDe = (g) => IHEB_IDIOMAS.map((l) => g[l]).filter(Boolean)
 {
@@ -211,17 +212,17 @@ const OPC = {
     ['⏱️', 'Demi-journée, journée ou plusieurs jours', '/fr/itineraire-tokyo-3-5-7-jours/'], ['🗻', 'Excursions : Fuji, Hakone, la mer', '/fr/excursions-depuis-tokyo/'],
     ['♨️', 'Onsen privé en famille à Hakone', '/fr/hakone-onsen-prive/'], ['❄️', 'La neige depuis Tokyo', '/fr/neige-depuis-tokyo/'],
     ['🍣', 'Ateliers, sumo, teamLab', '/fr/activites-ateliers-tokyo/'], ['⚡', 'Anime et cartes Pokémon', '/fr/guide-anime-tokyo/'],
-    ['🕌', 'Halal et pauses prière', '/fr/halal-mosquees-tokyo/'], ['🚐', 'Véhicule privé et agences', '/fr/guide-francophone-agences-voyage/']] },
+    ['🕌', 'Halal et pauses prière', '/fr/halal-mosquees-tokyo/'], ['🚐', 'Transferts aéroport et tarifs', '/fr/tarifs-transferts-excursions/']] },
   en: { h: 'Your trip, your way: options', p: 'Every day is built around your group. Pick what you like, Iheb handles the rest.', items: [
     ['⏱️', 'Half day, full day or several days', '/en/tokyo-anime-guide/tokyo-itinerary/'], ['🗻', 'Day trips: Fuji, Hakone, the coast', '/en/tokyo-anime-guide/day-trips/'],
     ['♨️', 'Private family onsen in Hakone', '/en/tokyo-anime-guide/hakone/'], ['❄️', 'Snow trips from Tokyo', '/en/tokyo-anime-guide/snow-trips/'],
     ['🍣', 'Classes, sumo, teamLab', '/en/tokyo-anime-guide/experiences/'], ['⚡', 'Anime and Pokémon cards', '/en/tokyo-anime-guide/otaku-guide/'],
-    ['🕌', 'Halal food and prayer breaks', '/en/muslim-guide-tokyo/'], ['🚐', 'Private car and agencies', '/en/tokyo-anime-guide/travel-agencies/']] },
+    ['🕌', 'Halal food and prayer breaks', '/en/muslim-guide-tokyo/'], ['🚐', 'Airport transfers and prices', '/en/tokyo-anime-guide/prices/']] },
   ar: { h: 'رحلتكم كما تريدون: الخيارات', p: 'كل يوم يُصمَّم لمجموعتكم. اختاروا ما يعجبكم، والباقي على إيهاب.', items: [
     ['⏱️', 'نصف يوم أو يوم كامل أو عدة أيام', '/ar/tokyo/barnamaj-tokyo/'], ['🗻', 'رحلات يومية: فوجي وهاكوني والبحر', '/ar/tokyo/rihlat-min-tokyo/'],
     ['♨️', 'أونسن خاص للعائلة في هاكوني', '/ar/tokyo/hakone/'], ['❄️', 'الثلج قرب طوكيو', '/ar/tokyo/thalj/'],
     ['🍣', 'ورش وسومو وتيم لاب', '/ar/tokyo/anshita/'], ['⚡', 'الأنمي وبطاقات بوكيمون', '/ar/tokyo/anime-pokemon/'],
-    ['🕌', 'طعام حلال ووقت للصلاة', '/ar/tokyo/halal-masajid/'], ['🚐', 'سيارة خاصة وللعائلات الفاخرة', '/ar/tokyo/fakhira/']] },
+    ['🕌', 'طعام حلال ووقت للصلاة', '/ar/tokyo/halal-masajid/'], ['🚐', 'الاستقبال من المطار والأسعار', '/ar/tokyo/asaar/']] },
 }
 export const ihebOpciones = (lang) => {
   const o = OPC[lang]
@@ -230,6 +231,7 @@ export const ihebOpciones = (lang) => {
 <ul class="opciones">${o.items.map(([i, t, h]) => `<li><a href="${h}"><span class="oi" aria-hidden="true">${i}</span><b>${t}</b></a></li>`).join('')}</ul>`
 }
 export const IHEB_OPCIONES_CSS = `
+.iheb-masjid{margin:18px 0 24px;max-width:520px}.iheb-masjid img{width:100%;height:auto;display:block;border:3px solid var(--cizgi,#16132a);border-radius:22px;box-shadow:6px 6px 0 var(--golge,#16132a)}.iheb-masjid figcaption{font-size:14px;color:var(--soluk,#555);margin-top:8px}
 ul.opciones{list-style:none;padding:0;margin:18px 0 8px;display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
 ul.opciones a{display:flex;flex-direction:column;gap:10px;height:100%;padding:16px;border:3px solid var(--cizgi,#16132a);border-radius:18px;background:var(--kart,#fff);color:var(--fg,#16132a);text-decoration:none;box-shadow:5px 5px 0 var(--golge,#16132a);transition:transform .2s,box-shadow .2s}
 ul.opciones li:nth-child(4n+1) a{background:#fff3c4}ul.opciones li:nth-child(4n+2) a{background:#d9f3ff}ul.opciones li:nth-child(4n+3) a{background:#ffe0e8}ul.opciones li:nth-child(4n) a{background:#e6ddff}
