@@ -409,6 +409,7 @@ const maks = {
   knowsLanguage: ['ru'],
   worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
   url: `${BASE}/ru/maks/`,
+  ...(existsSync(join(root, 'public/ru/maks/foto/maks-640.webp')) ? { image: `${BASE}/ru/maks/foto/maks-640.webp` } : {}),
 }
 const ORG = { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/`, contactPoint: { '@type': 'ContactPoint', contactType: 'reservations', url: TG_URL, availableLanguage: ['ru'] } }
 const miga = (...pasos) => ({ '@type': 'BreadcrumbList', itemListElement: [['Туры в КНДР', '/ru/kndr/'], ...pasos].map(([name, r], i) => ({ '@type': 'ListItem', position: i + 1, name, item: `${BASE}${r}` })) })
