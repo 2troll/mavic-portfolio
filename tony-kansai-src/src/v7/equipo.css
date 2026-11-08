@@ -161,3 +161,49 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
 @media (prefers-color-scheme: dark) {
   .eq.eq--fr, .eq.eq--filipp, .eq.eq--kndr, .eq.eq--familias, .eq.eq--tr { --eq-boton-texto: var(--bg); --eq-boton-sombra: transparent; }
 }
+
+/* ── 8-11-2026: estructura nueva (Tony: «todo seguido, que ninguno colapse ni
+   se quede uno solo debajo», móvil y ordenador). El guía de la página (o Tony
+   si la página no es de nadie) va primero y en GRANDE a lo ancho; los demás en
+   una rejilla par: 2 columnas en el móvil, 3 en tablet y 6 en el ordenador.
+   Ya no hay carrusel: se ven todos sin deslizar. */
+.eq .eq-fila { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; margin: 0; padding: 0; }
+.eq .eq-fila > .eq-tarjeta { flex: none; max-width: none; }
+@media (min-width: 720px) { .eq .eq-fila { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } }
+@media (min-width: 1180px) { .eq .eq-fila { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
+
+/* Destacado: la primera tarjeta ocupa toda la fila. */
+.eq .eq-fila > .eq-tarjeta:first-child { grid-column: 1 / -1; }
+.eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { aspect-ratio: 16 / 10; }
+.eq .eq-fila > .eq-tarjeta:first-child .eq-nombre { font-size: 26px !important; }
+.eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: 4; line-clamp: 4; font-size: 14px; }
+@media (min-width: 720px) {
+  .eq .eq-fila > .eq-tarjeta:first-child { display: grid; grid-template-columns: minmax(220px, 320px) 1fr; grid-template-rows: auto auto 1fr; column-gap: 8px; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { grid-row: 1 / 4; aspect-ratio: 4 / 5; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-linea { padding: 24px 24px 0; font-size: 18px; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { margin: 10px 24px 0 !important; font-size: 15px; -webkit-line-clamp: 5; line-clamp: 5; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-acciones { padding: 20px 24px 24px; flex-direction: row; flex-wrap: wrap; align-items: center; align-self: end; }
+  .eq .eq-fila > .eq-tarjeta:first-child a.eq-boton { padding-inline: 26px; }
+}
+@media (min-width: 1180px) { .eq .eq-fila > .eq-tarjeta:first-child { grid-template-columns: 300px 1fr; } }
+
+/* Móvil: tarjetas pequeñas y legibles en 2 columnas. */
+@media (max-width: 719px) {
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) { border-radius: 18px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-cabeza { aspect-ratio: 1 / 1; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-cabeza > div { inset-inline: 10px; bottom: 8px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-nombre { font-size: 17px !important; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-idiomas li { font-size: 9.5px; padding: 4px 6px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-emblema span { font-size: 56px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-linea { padding: 10px 10px 0; font-size: 13px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-desc { margin: 6px 10px 0 !important; font-size: 12px; -webkit-line-clamp: 2; line-clamp: 2; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-acciones { padding: 10px; }
+  .eq .eq-fila > .eq-tarjeta:not(:first-child) a.eq-boton { min-height: 40px; font-size: 13px; padding: 8px 10px; }
+  .eq .eq-sello { top: 8px; inset-inline-start: 8px; }
+}
+/* Destacado en ordenador: foto cuadrada más baja para que no quede hueco vacío. */
+@media (min-width: 720px) {
+  .eq .eq-fila > .eq-tarjeta:first-child { grid-template-columns: 240px 1fr !important; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { aspect-ratio: 1 / 1; }
+  .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: unset; line-clamp: unset; display: block; max-width: 70ch; }
+}

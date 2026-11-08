@@ -69,7 +69,8 @@ export function Equipo() {
         <h2 className="eq-titulo" id="eq-titulo">{UI_EQUIPO.titulo[lang]}</h2>
         <p className="eq-sub">{UI_EQUIPO.sub[lang]}</p>
         <ul className="eq-fila">
-          {EQUIPO.map((g) => <Tarjeta key={g.id} g={g} langPagina={lang} aqui={g.id === actual} />)}
+          {/* El guía de la página primero: sale en grande (equipo.css). */}
+          {[...EQUIPO.filter((g) => g.id === actual), ...EQUIPO.filter((g) => g.id !== actual)].map((g) => <Tarjeta key={g.id} g={g} langPagina={lang} aqui={g.id === actual} />)}
         </ul>
         {/* Línea final fina, la última cosa de la página (como en nawatravel.ae). */}
         <p className="eq-fin"><span>© Tony Kansai Guide</span> <a href={`mailto:${CORREO}`}>{CORREO}</a></p>

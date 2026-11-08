@@ -52,6 +52,9 @@ function tarjeta(g, langPagina, aqui) {
     + '</div></li>'
 }
 
+/** El guía de la página va primero (sale en grande); los demás, en su orden. */
+const ordenEquipo = (guias, actual) => [...guias.filter((g) => g.id === actual), ...guias.filter((g) => g.id !== actual)]
+
 /** Marca de la franja. Falla en voz alta con un idioma, guía o variante que no existen. */
 export function equipoHTML({ lang, actual = null, variante = null } = {}) {
   if (!IDIOMAS_UI.includes(lang)) throw new Error(`equipoHTML: idioma «${lang}» no está en scripts/equipo.json (hay: ${IDIOMAS_UI.join(', ')})`)
@@ -62,6 +65,6 @@ export function equipoHTML({ lang, actual = null, variante = null } = {}) {
     + `<p class="eq-ante"><span aria-hidden="true">案内人</span> ${esc(DATOS.ui.equipo[lang])}</p>`
     + `<h2 class="eq-titulo" id="${id}">${esc(DATOS.ui.titulo[lang])}</h2>`
     + `<p class="eq-sub">${esc(DATOS.ui.sub[lang])}</p>`
-    + `<ul class="eq-fila">${DATOS.guias.map((g) => tarjeta(g, lang, g.id === actual)).join('')}</ul>`
+    + `<ul class="eq-fila">${ordenEquipo(DATOS.guias, actual).map((g) => tarjeta(g, lang, g.id === actual)).join('')}</ul>`
     + '</div></section>'
 }
