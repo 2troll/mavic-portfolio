@@ -16,7 +16,7 @@ import { readFileSync } from 'node:fs'
 const DATOS = JSON.parse(readFileSync(new URL('./equipo.json', import.meta.url), 'utf8'))
 const IDIOMAS_UI = Object.keys(DATOS.ui.titulo)
 const IDS = DATOS.guias.map((g) => g.id)
-const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private']
+const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private', 'filipp']
 
 /** La hoja de src/v7/equipo.css, sin comentarios ni saltos (va dentro de un <style>). */
 export const equipoCSS = readFileSync(new URL('../src/v7/equipo.css', import.meta.url), 'utf8')

@@ -113,6 +113,29 @@
       }
     },
     {
+      "id": "filipp",
+      "ld": "/ru/filipp/#filipp",
+      "idiomas": [
+        "ru"
+      ],
+      "zona": "Kansai: Kyoto, Osaka, Nara, Kobe",
+      "emblema": "Ф",
+      "contacto": {
+        "tg": "LUiGi19"
+      },
+      "versiones": {
+        "ru": {
+          "ruta": "/ru/filipp/",
+          "nombre": "Филипп",
+          "linea": "Гид на русском в Кансае · рок и музыка",
+          "boton": "Открыть",
+          "oculto": " страницу Филиппа",
+          "alt": "Филипп",
+          "desc": "Филипп, брат Лариона, русскоязычный гид команды. Киото, Осака и Нара в спокойном темпе, а для любителей рока: музыкальная Осака: винил, гитары и история «Made in Japan»."
+        }
+      }
+    },
+    {
       "id": "ferhat",
       "ld": "/tr/#ferhat",
       "idiomas": [

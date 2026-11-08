@@ -150,6 +150,7 @@
 
 /* Variantes de las secciones estáticas: fondo, tarjeta y acento de la página. */
 .eq.eq--tr, .eq.eq--fr { --eq-fondo: var(--bg); --eq-shoji: var(--cizgi); --eq-tarjeta: var(--kart); --eq-texto: var(--fg); --eq-tenue: var(--soluk); --eq-torii: var(--kirmizi); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
+.eq.eq--filipp { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--papel); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--chip); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
 .eq.eq--kndr { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--papel); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--chip); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
 .eq.eq--familias { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--kart); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--bg2); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
 /* /private/ (Mario): modo FAN de neón (por defecto) y modo EASY claro, según la clase de <html>.
@@ -158,5 +159,5 @@
 html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarjeta: #ffffff; --eq-borde: #15131a; --eq-sombra: #15131a; --eq-matcha: #006c80; --eq-torii: #b8321a; --eq-torii-osc: #7a1f0e; --eq-torii-claro: #e0705a; --eq-texto: #15131a; --eq-tenue: #3b3846; --eq-chip: #f3ecdc; --eq-boton-texto: #ffffff; --eq-boton-sombra: rgba(0, 0, 0, .25); color-scheme: light; }
 /* En oscuro esos acentos son claros: el texto del botón pasa a oscuro para leerse. */
 @media (prefers-color-scheme: dark) {
-  .eq.eq--fr, .eq.eq--kndr, .eq.eq--familias, .eq.eq--tr { --eq-boton-texto: var(--bg); --eq-boton-sombra: transparent; }
+  .eq.eq--fr, .eq.eq--filipp, .eq.eq--kndr, .eq.eq--familias, .eq.eq--tr { --eq-boton-texto: var(--bg); --eq-boton-sombra: transparent; }
 }

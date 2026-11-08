@@ -61,6 +61,8 @@ const paginas = [
   ...['gid-v-kioto-na-russkom', 'gid-v-osake-na-russkom', 'nara-s-gidom-na-russkom', 'hirosima-i-miyadzima-s-gidom', 'viza-v-yaponiyu-dlya-rossiyan-2026', 'kak-platit-v-yaponii-rossiyaninu', 'kak-dobratsya-iz-rossii-v-yaponiyu', 'marshrut-po-yaponii-na-10-dnej', 'kogda-luchshe-ehat-v-yaponiyu', 'yaponiya-s-detmi-gid', 'eda-v-yaponii-chto-poprobovat', 'shopping-v-yaponii-tax-free', 'gid-po-yaponii-cena'].map((c) => ({ loc: `/ru/otvety/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'russkij' })),
   { loc: '/ru/kndr', priority: '0.9', changefreq: 'weekly', v7: 'kndr' },
   { loc: '/ru/maks', priority: '0.85', changefreq: 'monthly', v7: 'kndr' },
+  // Filipp, hermano de Larion: guía en ruso con estilo rock (8-11-2026), scripts/filipp.mjs.
+  { loc: '/ru/filipp', priority: '0.85', changefreq: 'monthly', v7: 'kndr' },
   ...['rozhdestvo-v-phenyane', 'masikryon', 'myohyan', 'den-solntsa', 'pektusan', 'vonsan-kalma', 'individualnyj', 'kak-poehat-v-severnuyu-koreyu', 'skolko-stoit-tur-v-kndr', 'pravila-dlya-turistov-v-kndr', 'vonsan-kalma-kurort', 'viza-v-kndr-dlya-rossiyan', 'vip-tur-v-kndr', 'kak-dobratsya-do-phenyana', 'kndr-s-detmi', 'otzyvy-turistov-o-kndr', 'svadebnoe-puteshestvie-v-kndr', 'kogda-luchshe-ehat-v-kndr', 'chto-posmotret-v-phenyane', 'kuhnya-kndr', 'korporativnyj-tur-v-kndr'].map((c) => ({ loc: `/ru/kndr/${c}`, priority: '0.8', changefreq: 'monthly', v7: 'kndr' })),
   // Ferhat, guía turco: HTML estático de scripts/turkce.mjs, sin traducciones (sin hreflang).
   { loc: '/tr', priority: '1.0', changefreq: 'weekly', v7: 'turkce' },

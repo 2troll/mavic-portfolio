@@ -15,7 +15,7 @@
 // variante: 'tr' | 'fr' | 'kndr' | 'familias' | 'private' toma los colores de esa página
 // (/private/ tiene dos juegos: modo FAN de neón y modo EASY claro, por clase en <html>).
 
-const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private']
+const VARIANTES = ['tr', 'fr', 'kndr', 'familias', 'private', 'filipp']
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
 
 function norm(e) {
@@ -85,6 +85,7 @@ if(matchMedia('(max-width:719px)').matches)[].forEach.call(d.querySelectorAll('.
 
 export const menuCSS = `
 .mn--tr,.mn--fr{--mn-tarjeta:var(--kart);--mn-texto:var(--fg);--mn-linea:var(--cizgi);--mn-suave:var(--bg);--mn-acento:var(--yesil)}
+.mn--filipp{--mn-tarjeta:var(--papel);--mn-texto:var(--tinta);--mn-linea:var(--linea);--mn-suave:var(--chip);--mn-acento:var(--acento)}
 .mn--kndr{--mn-tarjeta:var(--papel);--mn-texto:var(--tinta);--mn-linea:var(--linea);--mn-suave:var(--chip);--mn-acento:#229ED9}
 .mn--private{--mn-tarjeta:#15152e;--mn-texto:#f4f4ff;--mn-linea:#ffffff;--mn-suave:#1e1e40;--mn-acento:#128c4a}
 html.easy .mn--private{--mn-tarjeta:#ffffff;--mn-texto:#15131a;--mn-linea:#15131a;--mn-suave:#f3ecdc;--mn-acento:#128c4a}
