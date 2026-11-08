@@ -38,6 +38,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { experienciasHTML, EXPERIENCIAS_CSS } from './experiencias-estatico.mjs'
+import { planesBloque, planesCSS } from './planes-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -1083,7 +1084,7 @@ ${HEAD_JS}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
 ${equipoFuente}
-<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.indice{border-bottom:1px solid var(--linea);padding:12px 0}.indice summary{cursor:pointer;font-weight:600;font-size:18px;display:flex;justify-content:space-between}.indice summary span{opacity:.6;font-size:14px}.indice ul{margin:10px 0 4px;padding-left:18px;columns:2 260px;gap:24px}.indice li{margin:4px 0}.xp{--xp-acento:#2f5d50}</style>
+<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.indice{border-bottom:1px solid var(--linea);padding:12px 0}.indice summary{cursor:pointer;font-weight:600;font-size:18px;display:flex;justify-content:space-between}.indice summary span{opacity:.6;font-size:14px}.indice ul{margin:10px 0 4px;padding-left:18px;columns:2 260px;gap:24px}.indice li{margin:4px 0}.xp{--xp-acento:#2f5d50}${planesCSS}.pl{--pl-acento:#2f5d50}</style>
 <link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#c9a227;--rb-acento2:#2f5d50}</style>
 </head>
 <body>
@@ -1272,7 +1273,7 @@ ${fichaRapida('es')}
 <ul class="servicios">${servicios.map((s) => `<li><span class="ico-c">${icono(s.icono)}</span><h3>${rico(s.titulo)}</h3><p>${rico(s.texto)}</p></li>`).join('')}</ul>
 </div></section>
 
-${experienciasHTML('es')}
+${planesBloque('es', 'antonio', 'https://tonykansaiguide.com/familias/')}${experienciasHTML('es')}
 
 
 ${configuradorHtml()}

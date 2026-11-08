@@ -30,6 +30,7 @@ import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
 import { pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 import { experienciasHTML, EXPERIENCIAS_CSS } from './experiencias-estatico.mjs'
+import { planesBloque, planesCSS } from './planes-estatico.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -519,7 +520,7 @@ function page({ yol, titre, desc, image, jsonld, corps }) {
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dela+Gothic+One&family=DotGothic16&family=Inter:wght@400;600&display=swap">
-<style>${CSS}${menuCSS}${equipoCSS}${CSS_PIE}${EXPERIENCIAS_CSS}.xp{--xp-acento:#ff2e88}</style>
+<style>${CSS}${menuCSS}${equipoCSS}${CSS_PIE}${EXPERIENCIAS_CSS}.xp{--xp-acento:#ff2e88}${planesCSS}.pl{--pl-acento:#ff2e88}</style>
 <link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#ff2e88;--rb-acento2:#00e5ff}</style>
 </head>
 <body>
@@ -2191,7 +2192,7 @@ ${INTERESES.map((x, i) => satir(i, `/private/${x.yol}/`, esc(x.titre), esc(x.tex
 </ol>
 <div class="dugmeler"><a class="btn2" href="/private/otaku-japan-private-guide/">Explore Otaku Japan</a></div>
 </div></section>
-${experienciasHTML('en')}
+${planesBloque('en', 'mario', 'https://tonykansaiguide.com/private/')}${experienciasHTML('en')}
 <section class="blok" id="prices"><div class="kap">
 <div class="bas"><p class="etiket">Prices</p><h2>Clear rates, for the whole private group</h2><p>Prices are in Japanese yen for your whole party, not per person.</p></div>
 <div class="win shop"><ul class="mallar">

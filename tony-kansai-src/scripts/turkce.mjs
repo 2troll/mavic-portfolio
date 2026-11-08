@@ -18,6 +18,7 @@ import { fileURLToPath } from 'node:url'
 import { equipoHTML, equipoCSS, equipoFuente } from './equipo-estatico.mjs'
 import { navHTML, pieHTML, tarjetasHTML, menuCSS } from './menu-estatico.mjs'
 import { experienciasHTML, EXPERIENCIAS_CSS } from './experiencias-estatico.mjs'
+import { planesBloque, planesCSS } from './planes-estatico.mjs'
 import { yeniCevaplar } from './turkce-cevaplar-yeni.mjs'
 import { musulmanCevaplar } from './turkce-cevaplar-musluman.mjs'
 
@@ -460,7 +461,7 @@ ${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(go
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
 ${equipoFuente}
-<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.xp{--xp-acento:#1b8a8f;padding:8px 0}</style>
+<style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.xp{--xp-acento:#1b8a8f;padding:8px 0}${planesCSS}.pl{--pl-acento:#1b8a8f}</style>
 <link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#1b8a8f;--rb-acento2:#c8402c}</style>
 </head>
 <body>
@@ -587,7 +588,7 @@ ${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} 
 <ul class="izgara">
 ${SEHIRLER.map((s) => kartLink(`/tr/${s.yol}/`, s.kapak, s.ad, s.ad, s.yerler.slice(0, 3).map((y) => y[0]).join(', '))).join('\n')}
 </ul>
-</div>${experienciasHTML('tr')}<div class="kap">
+</div>${planesBloque('tr', 'ferhat', 'https://tonykansaiguide.com/tr/')}${experienciasHTML('tr')}<div class="kap">
 <h2>Nasıl çalışır?</h2>
 <ol>
 <li>WhatsApp'tan yazın: tarihler, kişi sayısı, kaldığınız şehir veya otel.</li>

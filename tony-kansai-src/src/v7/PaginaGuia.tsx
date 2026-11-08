@@ -8,6 +8,7 @@ import type { ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { APPS } from './datosVentajas'
 import { FranjaVentajas } from './FranjaVentajas'
+import { PlanesVenta } from './PlanesVenta'
 import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
@@ -1083,6 +1084,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </section>
 
         <LibroSellos lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
+
+        {/* Planes de venta: guía + experiencias de los socios (datosPlanes.ts) */}
+        <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />
 
         {/* Contacto */}
         <section id="contacto" className="v7-seccion">

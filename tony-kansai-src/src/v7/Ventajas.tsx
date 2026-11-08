@@ -5,6 +5,7 @@
 // Movimiento: Lenis + GSAP (SplitText, ScrollTrigger) cargados en el cliente;
 // con «reducir movimiento» la página queda quieta y entera.
 // Las fichas de cada app (/es/ventajas/airalo/) siguen en FichaVentaja.tsx con ventajas.css.
+import { PlanesVenta } from './PlanesVenta'
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
@@ -578,6 +579,9 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             {[...marquesina, ...marquesina].map((a, n) => <img key={`${a.clave}-${n}`} src={`/v7/apps/${a.clave}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" />)}
           </div>
         </div>
+
+        {/* Planes: guía + experiencias, con las ventajas aplicadas (datosPlanes.ts) */}
+        <div style={{ ['--pl-acento' as string]: '#e8452c' }}><PlanesVenta lang={id} guia={id === 'ru' ? 'larion' : 'tony'} url={`${BASE}${RUTA[id]}`} /></div>
 
         <Experiencias id={id} ruta={RUTA[id]} />
 
