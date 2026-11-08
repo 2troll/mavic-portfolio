@@ -273,9 +273,9 @@ const LISTA: App[] = [
     clave: 'intui', cat: 'moverse', nombre: 'intui.travel', enlace: 'https://intui.tpk.ro/iLD1b8ME',
     marca: { fondo: '#E3262B', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#E3262B', palabra: 'intui' },
     t: {
-      es: { que: 'Traslados privados desde el aeropuerto o entre ciudades: coche, monovolumen o minibús para grupos.', ventaja: 'Con mi enlace, 5 % de descuento en traslados (promoción hasta el 31 de octubre de 2026).' },
-      en: { que: 'Private transfers from the airport or between cities: car, minivan or minibus for groups.', ventaja: 'My link gives you 5% off transfers (offer until 31 October 2026).' },
-      ar: { que: 'توصيل خاص من المطار أو بين المدن: سيارة أو فان أو حافلة صغيرة للمجموعات.', ventaja: 'برابطي خصم 5٪ على التوصيل (العرض حتى 31 أكتوبر 2026).' },
+      es: { que: 'Traslados privados desde el aeropuerto o entre ciudades: coche, monovolumen o minibús para grupos.', ventaja: 'Precio cerrado por vehículo antes de pagar; el conductor te espera en llegadas.' },
+      en: { que: 'Private transfers from the airport or between cities: car, minivan or minibus for groups.', ventaja: 'Fixed price per vehicle before you pay; the driver waits for you at arrivals.' },
+      ar: { que: 'توصيل خاص من المطار أو بين المدن: سيارة أو فان أو حافلة صغيرة للمجموعات.', ventaja: 'سعر ثابت للمركبة قبل الدفع، والسائق ينتظرك في صالة الوصول.' },
     },
   },
   {
