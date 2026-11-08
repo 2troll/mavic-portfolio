@@ -577,7 +577,8 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         {/* Una sola marquesina en la página: los iconos reales de las apps que recomiendo. */}
         <div className="vn-marquesina" aria-hidden="true">
           <div className="vn-marquesina-pista">
-            {[...marquesina, ...marquesina].map((a, n) => <img key={`${a.clave}-${n}`} src={`/v7/apps/${a.clave}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" />)}
+            {/* 8-11-2026: Clarity marcaba clics muertos aquí (la gente toca el icono): cada uno abre su ficha. */}
+            {[...marquesina, ...marquesina].map((a, n) => <Link key={`${a.clave}-${n}`} to={`${RUTA[id]}${a.clave}/`} tabIndex={-1} title={a.nombre}><img src={`/v7/apps/${a.clave}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" /></Link>)}
           </div>
         </div>
 

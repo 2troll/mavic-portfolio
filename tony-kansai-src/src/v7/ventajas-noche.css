@@ -84,6 +84,9 @@
 .vn-marquesina { overflow: hidden; padding: 18px 0; border-block: 1px solid var(--vn-linea); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
 .vn-marquesina-pista { display: flex; gap: 22px; width: max-content; }
 .vn-marquesina img { width: 52px; height: 52px; border-radius: 23%; display: block; }
+.vn-marquesina a { display: block; border-radius: 23%; transition: transform .2s; }
+.vn-marquesina a:active { transform: scale(.92); }
+.vn-marquesina:hover .vn-marquesina-pista, .vn-marquesina:active .vn-marquesina-pista { animation-play-state: paused; }
 @media (prefers-reduced-motion: no-preference) {
   .vn-marquesina-pista { animation: vn-marquesina 48s linear infinite; }
   .vn[dir='rtl'] .vn-marquesina-pista { animation-direction: reverse; }
