@@ -14,7 +14,7 @@ export const UI = {
     titulo: 'Kansai de TikTok: los sitios virales de Kioto, Osaka y Nara por temporada',
     desc: 'Los sitios de Kioto, Osaka y Nara que más se ven en TikTok, temporada a temporada: qué grabar, a qué hora ir sin gente y una ruta con guía en español a precio especial.',
     eti: 'Guías por temporada · Kioto · Osaka · Nara',
-    h1: 'El Kansai que ves en TikTok, <em>sin colas</em> y con guía.',
+    h1: 'El Kansai que ves en TikTok, sin colas y con guía.',
     intro: 'Los sitios que se hacen virales en TikTok son preciosos… y a las once de la mañana están llenos. Te llevo a la hora buena, te enseño el ángulo y te ayudo a grabar las tomas en las que sales tú.',
     temporadas: 'Elige temporada',
     oferta_eti: 'Precio especial TikTok',
@@ -43,7 +43,7 @@ export const UI = {
     titulo: 'TikTok Kansai: viral spots in Kyoto, Osaka and Nara by season',
     desc: 'The Kyoto, Osaka and Nara spots you keep seeing on TikTok, season by season: what to film, when to go without crowds, and a guided route at a special price.',
     eti: 'Seasonal guides · Kyoto · Osaka · Nara',
-    h1: 'The Kansai you see on TikTok, <em>without the queues</em>.',
+    h1: 'The Kansai you see on TikTok, without the queues.',
     intro: 'The spots that go viral on TikTok are beautiful… and packed by 11 a.m. I take you at the right time, show you the angle and help you film the shots you are in.',
     temporadas: 'Choose a season',
     oferta_eti: 'TikTok special price',
@@ -72,7 +72,7 @@ export const UI = {
     titulo: 'كانساي تيك توك: الأماكن الأكثر انتشاراً في كيوتو وأوساكا ونارا حسب الموسم',
     desc: 'أماكن كيوتو وأوساكا ونارا التي تراها دائماً على تيك توك، موسماً بموسم: ماذا تصوّر، ومتى تذهب دون زحام، وجولة مع مرشد بسعر خاص.',
     eti: 'أدلة حسب الموسم · كيوتو · أوساكا · نارا',
-    h1: 'كانساي الذي تراه على تيك توك، <em>بلا طوابير</em> ومع مرشد.',
+    h1: 'كانساي الذي تراه على تيك توك، بلا طوابير ومع مرشد.',
     intro: 'الأماكن التي تنتشر على تيك توك جميلة… لكنها تمتلئ بحلول الحادية عشرة صباحاً. آخذك في الوقت المناسب، وأريك الزاوية، وأساعدك في تصوير اللقطات التي تظهر فيها.',
     temporadas: 'اختر الموسم',
     oferta_eti: 'سعر خاص لتيك توك',
@@ -102,9 +102,9 @@ export const TEMPORADAS = [
   {
     id: 'otono', slug: { es: 'otono', en: 'autumn', ar: 'autumn' }, foto: 'momiji', hasta: '2026-12-07',
     t: {
-      es: { nombre: 'Otoño', meses: 'Noviembre · principios de diciembre', h1: 'Arces rojos de TikTok: el <em>otoño</em> de Kioto', intro: 'El momiji es el momento estrella del año en Kioto. Los arces se encienden de rojo de mediados de noviembre a principios de diciembre, y en TikTok no se habla de otra cosa.' },
-      en: { nombre: 'Autumn', meses: 'November · early December', h1: 'TikTok’s red maples: Kyoto in <em>autumn</em>', intro: 'Momiji is Kyoto’s headline season. Maples turn red from mid-November to early December, and it is all over TikTok.' },
-      ar: { nombre: 'الخريف', meses: 'نوفمبر · أوائل ديسمبر', h1: 'أشجار القيقب الحمراء على تيك توك: <em>خريف</em> كيوتو', intro: 'موسم المومِجي هو نجم العام في كيوتو. تحمرّ أشجار القيقب من منتصف نوفمبر إلى أوائل ديسمبر، ويمتلئ تيك توك بصورها.' },
+      es: { nombre: 'Otoño', meses: 'Noviembre · principios de diciembre', h1: 'Arces rojos de TikTok: el otoño de Kioto', intro: 'El momiji es el momento estrella del año en Kioto. Los arces se encienden de rojo de mediados de noviembre a principios de diciembre, y en TikTok no se habla de otra cosa.' },
+      en: { nombre: 'Autumn', meses: 'November · early December', h1: 'TikTok’s red maples: Kyoto in autumn', intro: 'Momiji is Kyoto’s headline season. Maples turn red from mid-November to early December, and it is all over TikTok.' },
+      ar: { nombre: 'الخريف', meses: 'نوفمبر · أوائل ديسمبر', h1: 'أشجار القيقب الحمراء على تيك توك: خريف كيوتو', intro: 'موسم المومِجي هو نجم العام في كيوتو. تحمرّ أشجار القيقب من منتصف نوفمبر إلى أوائل ديسمبر، ويمتلئ تيك توك بصورها.' },
     },
     sitios: [
       { foto: 'momiji', es: ['Eikan-dō de noche', 'El estanque que refleja los arces iluminados: el plano espejo.', 'Iluminación nocturna de otoño; entra nada más abrir.', 'Graba el reflejo agachado, con el móvil casi tocando el agua.'], en: ['Eikan-dō at night', 'The pond reflecting the lit-up maples: the mirror shot.', 'Autumn night illumination; go right at opening.', 'Crouch and film the reflection with your phone almost touching the water.'], ar: ['إيكان-دو ليلاً', 'البركة التي تعكس أشجار القيقب المضاءة: لقطة المرآة.', 'إضاءة الخريف الليلية؛ ادخل فور الافتتاح.', 'انحنِ وصوّر الانعكاس والهاتف يكاد يلامس الماء.'] },
@@ -118,9 +118,9 @@ export const TEMPORADAS = [
   {
     id: 'invierno', slug: { es: 'invierno', en: 'winter', ar: 'winter' }, foto: 'fushimi', hasta: '2027-02-28',
     t: {
-      es: { nombre: 'Invierno', meses: 'Diciembre · enero · febrero', h1: 'Luces, nieve y matcha: el <em>invierno</em> de TikTok', intro: 'El invierno es la temporada secreta de Kansai: menos gente, iluminaciones por la noche y, si hay suerte, Kioto nevado. Los vídeos de templos con nieve son de lo más buscado.' },
-      en: { nombre: 'Winter', meses: 'December · January · February', h1: 'Lights, snow and matcha: TikTok’s <em>winter</em>', intro: 'Winter is Kansai’s secret season: fewer people, night illuminations and, with luck, snowy Kyoto. Snowy temple videos are among the most searched.' },
-      ar: { nombre: 'الشتاء', meses: 'ديسمبر · يناير · فبراير', h1: 'أضواء وثلج وماتشا: <em>شتاء</em> تيك توك', intro: 'الشتاء هو الموسم السري في كانساي: زحام أقل، وإضاءات ليلية، ومع بعض الحظ كيوتو تحت الثلج. فيديوهات المعابد المغطاة بالثلج من أكثر ما يُبحث عنه.' },
+      es: { nombre: 'Invierno', meses: 'Diciembre · enero · febrero', h1: 'Luces, nieve y matcha: el invierno de TikTok', intro: 'El invierno es la temporada secreta de Kansai: menos gente, iluminaciones por la noche y, si hay suerte, Kioto nevado. Los vídeos de templos con nieve son de lo más buscado.' },
+      en: { nombre: 'Winter', meses: 'December · January · February', h1: 'Lights, snow and matcha: TikTok’s winter', intro: 'Winter is Kansai’s secret season: fewer people, night illuminations and, with luck, snowy Kyoto. Snowy temple videos are among the most searched.' },
+      ar: { nombre: 'الشتاء', meses: 'ديسمبر · يناير · فبراير', h1: 'أضواء وثلج وماتشا: شتاء تيك توك', intro: 'الشتاء هو الموسم السري في كانساي: زحام أقل، وإضاءات ليلية، ومع بعض الحظ كيوتو تحت الثلج. فيديوهات المعابد المغطاة بالثلج من أكثر ما يُبحث عنه.' },
     },
     sitios: [
       { foto: null, tono: 'nieve', es: ['Kioto nevado', 'El Pabellón Dorado o Kiyomizu con nieve: la toma más buscada del invierno.', 'La mañana después de una nevada; no nieva todos los años.', 'Sigo el pronóstico contigo y, si nieva, cambiamos la ruta esa misma mañana.'], en: ['Snowy Kyoto', 'The Golden Pavilion or Kiyomizu under snow: winter’s most wanted shot.', 'The morning after snowfall; it does not snow every year.', 'I watch the forecast with you and, if it snows, we switch the route that morning.'], ar: ['كيوتو تحت الثلج', 'الجناح الذهبي أو كيوميزو مغطّى بالثلج: أكثر لقطة مطلوبة في الشتاء.', 'صباح اليوم التالي لتساقط الثلج؛ لا يتساقط كل عام.', 'أتابع معك التوقعات، وإن نزل الثلج نغيّر الجولة في الصباح نفسه.'] },
@@ -134,9 +134,9 @@ export const TEMPORADAS = [
   {
     id: 'primavera', slug: { es: 'primavera', en: 'spring', ar: 'spring' }, foto: 'sakura', hasta: '2027-04-15',
     t: {
-      es: { nombre: 'Primavera', meses: 'Finales de marzo · principios de abril', h1: 'Sakura de TikTok: la <em>primavera</em> de Kioto y Osaka', intro: 'La floración del cerezo dura apenas dos semanas y es el momento más grabado del año en Japón. Hay que saber dónde ir y a qué hora para no salir rodeado de gente.' },
-      en: { nombre: 'Spring', meses: 'Late March · early April', h1: 'TikTok’s sakura: Kyoto and Osaka in <em>spring</em>', intro: 'Cherry blossom lasts barely two weeks and is the most filmed moment of the year in Japan. You need to know where and when to go to avoid crowds.' },
-      ar: { nombre: 'الربيع', meses: 'أواخر مارس · أوائل أبريل', h1: 'ساكورا تيك توك: <em>ربيع</em> كيوتو وأوساكا', intro: 'يدوم تفتّح أزهار الكرز أسبوعين بالكاد، وهو أكثر لحظة تُصوَّر في اليابان. عليك أن تعرف أين ومتى تذهب لتتجنّب الزحام.' },
+      es: { nombre: 'Primavera', meses: 'Finales de marzo · principios de abril', h1: 'Sakura de TikTok: la primavera de Kioto y Osaka', intro: 'La floración del cerezo dura apenas dos semanas y es el momento más grabado del año en Japón. Hay que saber dónde ir y a qué hora para no salir rodeado de gente.' },
+      en: { nombre: 'Spring', meses: 'Late March · early April', h1: 'TikTok’s sakura: Kyoto and Osaka in spring', intro: 'Cherry blossom lasts barely two weeks and is the most filmed moment of the year in Japan. You need to know where and when to go to avoid crowds.' },
+      ar: { nombre: 'الربيع', meses: 'أواخر مارس · أوائل أبريل', h1: 'ساكورا تيك توك: ربيع كيوتو وأوساكا', intro: 'يدوم تفتّح أزهار الكرز أسبوعين بالكاد، وهو أكثر لحظة تُصوَّر في اليابان. عليك أن تعرف أين ومتى تذهب لتتجنّب الزحام.' },
     },
     sitios: [
       { foto: 'sakura', es: ['Canal de Okazaki', 'Los cerezos sobre el agua del canal, a veces con barcas.', 'Primera hora de la mañana en plena floración.', 'Desde el puente se graba el túnel de flores sobre el agua.'], en: ['Okazaki Canal', 'Cherry trees over the canal, sometimes with boats.', 'Early morning at full bloom.', 'From the bridge you can film the tunnel of blossom over the water.'], ar: ['قناة أوكازاكي', 'أشجار الكرز فوق مياه القناة، وأحياناً مع القوارب.', 'الصباح الباكر في ذروة التفتّح.', 'من الجسر يمكنك تصوير نفق الأزهار فوق الماء.'] },
