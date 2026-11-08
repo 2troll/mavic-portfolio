@@ -1,79 +1,76 @@
-// Traducciones de los planes (datosPlanes.ts) a ar / ru / tr / fr.
-// Marcas de los socios tal cual; nada de alcohol.
-type T = { nombre: string; gancho: string; ruta: string[] }
-export interface UiTrad {
-  ceja: string; h: string; p: string; medio: string; completo: string; guia: string; porGrupo: string
-  socio: string; precioMsj: string; extra: string; quiero: string; msj: string
-  kitH: string; kitP: string; todas: string; halal: string; codigo: string
-}
+// Traducciones de los planes de guía (datosPlanes.ts) a ar / ru / tr / fr.
+// Marcas de los socios tal cual; nada de alcohol. {p} = nombre del plan.
+import type { UiPlan } from './datosPlanes.ts'
 
-export const TRAD: Record<'ar' | 'ru' | 'tr' | 'fr', { ui: UiTrad; planes: Record<string, T> }> = {
+type T = { nombre: string; gancho: string; puntos: string[] }
+
+export const TRAD: Record<'ar' | 'ru' | 'tr' | 'fr', { ui: UiPlan; planes: Record<string, T> }> = {
   ar: {
     ui: {
-      ceja: 'برامج مع مرشد', h: 'مرشد + تجارب، كلها في برنامج واحد', p: 'جهة اتصال واحدة تنظّم يومك كاملًا: المرشد والحجوزات وخصومات شركائنا. المزايا لكل ضيوف الفريق، مع أي مرشد تسافرون.',
-      medio: 'نصف يوم · 4 ساعات', completo: 'يوم كامل · 8 ساعات', guia: 'المرشد', porGrupo: 'للمجموعة', socio: 'التجارب بسعر الشريك مع تطبيق الميزة', precioMsj: 'سعر المرشد عبر {c}',
-      extra: 'ميزة إضافية معنا', quiero: 'أريد هذا البرنامج', msj: 'السلام عليكم، أنا مهتم ببرنامج «{p}». عددنا … أشخاص، والتواريخ: …',
-      kitH: 'حزمة الوصول، مجانًا مع أي برنامج', kitP: 'الرموز التي يستخدمها ضيوفنا قبل السفر: الإنترنت وحفظ الأمتعة.', todas: 'كل المزايا', halal: 'مناسب للعائلات المسلمة', codigo: 'رمز',
+      ceja: 'برامج المرشد', h: 'اختر كيف تريد يومك', p: 'كل برنامج هو خدمة إرشاد. التجارب والتذاكر والمواصلات والوجبات غير مشمولة: تُدفع على حدة، وإن رغبتم ننسّقها ونرافقكم.',
+      pagaGuiaT: 'للمرشد تدفع', pagaGuia: 'الإرشاد فقط: سعر نصف اليوم أو اليوم الكامل.', apartT: 'على حدة، مباشرة', aparte: 'التذاكر والقطارات والوجبات والتجارب. مع شركائنا وبخصم.',
+      extrasT: 'إضافات ننسّقها · تُدفع على حدة', pedir: 'اطلب هذا البرنامج', msj: 'السلام عليكم، أنا مهتم ببرنامج «{p}». عددنا … أشخاص، والتواريخ: …',
+      kitH: 'خصومات لرحلتك', kitP: 'رموز للإنترنت وحفظ الأمتعة. منفصلة عن المرشد.', todas: 'كل المزايا', halal: 'مناسب للعائلات المسلمة',
     },
     planes: {
-      'te-kioto': { nombre: 'كيوتو الكلاسيكية + حفل الشاي', gancho: 'أهم معالم كيوتو سيرًا على الأقدام وحفل شاي حقيقي، دون أن تبحثوا أو تحجزوا شيئًا.', ruta: ['فوشيمي إيناري قبل الزحام', 'شموع مرسومة يدويًا في Nakamura Rosoku على بعد دقائق من البوابات (اختياري)', 'معبد كيوميزو ومنحدرات هيغاشياما', 'حفل الشاي في MAIKOYA أو Camellia بخصم 10 %'] },
-      'kimono-gion': { nombre: 'غيون بالكيمونو + صور', gancho: 'ارتدوا الكيمونو وتجوّلوا في أجمل أركان كيوتو، ومع مصوّر إن شئتم.', ruta: ['الكيمونو في Wargo (خصم 10 %) أو Okamoto', 'غيون وهانامي كوجي وضريح ياساكا', 'جلسة تصوير مع SnapKyoto (اختياري)', 'مع Okamoto يمكن إعادة الكيمونو في فرع آخر أو في اليوم التالي'] },
-      samurai: { nombre: 'يوم الساموراي في كيوتو', gancho: 'أراشيياما، وارتداء درع ساموراي حقيقي، ومتحف يحبه الأطفال.', ruta: ['غابة الخيزران ونهر أراشيياما', 'درع الساموراي في Shogun Studio ضمن المسار', 'Samurai & Ninja Museum بخصم 10 %', 'سوار كوميهيمو تصنعه بيدك في DOMYO (اختياري)'] },
-      'osaka-bici': { nombre: 'أوساكا بالدراجة وأطايب الشارع', gancho: 'القلعة، وأحياء لا يصلها السياح، وأكل الشارع، مع خصم على جولة الدراجات.', ruta: ['قلعة أوساكا وحديقتها', 'جولة Cycle & Eat في الأحياء المحلية، أرخص بـ 15 % معنا', 'Tower Knives في شينسيكاي: عرض خاص عن سكاكين ساكاي', 'دوتونبوري عند الغروب'] },
-      'familia-musulmana': { nombre: 'العائلة المسلمة: كيوتو وأوساكا براحة بال', gancho: 'كيمونو مع الحجاب، ومكان للصلاة، وطبخ بلا كحول، وتسوّق حلال: كل شيء مرتّب مسبقًا.', ruta: ['كيمونو مع الحجاب في Miyabi-yuki، والطاقم نسائي', 'Yumeyakata في كيوتو، وفيه مصلّى', 'درس طبخ في Cooking Sun بقائمة نباتية بلا كحول', 'تسوّق في JAPANeid بأوساكا: منتجات بشهادة حلال'] },
-      artesania: { nombre: 'أيادٍ يابانية: ورش حِرَف في كيوتو', gancho: 'خذوا معكم شيئًا صنعتموه بأيديكم: خيزران أو شموع أو كوميهيمو. اختاروا ورشة أو اثنتين.', ruta: ['سلة خيزران مع TAKENOKO (مجموعة واحدة في كل مرة، حتى 15)', 'شموع يابانية مرسومة يدويًا في Nakamura Rosoku', 'سوار كوميهيمو في DOMYO دون خبرة سابقة', 'المرشد يترجم لكم الورشة'] },
-      'nara-sumi': { nombre: 'نارا + ورشة حبر السومي', gancho: 'الغزلان وتمثال بوذا الكبير، ثم قطعة حبر تصنعونها بأنفسكم في ورشة عمرها قرون.', ruta: ['حديقة نارا وغزلانها', 'معبد تودايجي وبوذا الكبير', 'جولة في ناراماتشي', 'ورشة Kobaien: نحجزها باليابانية ونترجمها دون تكلفة إضافية'] },
+      'primer-dia': { nombre: 'يوم أول بلا توتر', gancho: 'نلتقيكم في الفندق ونعلّمكم التنقل في اليابان من اللحظة الأولى.', puntos: ['الاستقبال من فندقكم', 'بطاقة ICOCA والقطارات والتطبيقات المفيدة', 'كيف تدفعون وتطلبون في المطاعم', 'أول جولة في المدينة'] },
+      tematico: { nombre: 'يوم بموضوع: الشاي أو الكيمونو أو الساموراي', gancho: 'تختارون الموضوع ويرتّب المرشد اليوم حوله: يحجز التجربة ويرافقكم.', puntos: ['نختار الموضوع معًا', 'المرشد يحجز وينسّق المواعيد', 'يرافقكم ويترجم لكم', 'جولة في المنطقة قبلها أو بعدها'] },
+      'familia-musulmana': { nombre: 'العائلة المسلمة', gancho: 'طعام حلال، ووقت للصلاة، وأنشطة مناسبة، وكل شيء مرتّب مسبقًا.', puntos: ['مطاعم حلال أو بلا خنزير ولا كحول', 'استراحات للصلاة', 'مسار مصمّم للعائلة', 'أنشطة مناسبة مثل الكيمونو مع الحجاب'] },
+      'ritmo-tranquilo': { nombre: 'إيقاع هادئ', gancho: 'لكبار السن أو لمن يفضّل عدم الاستعجال: درج أقل واستراحات أكثر.', puntos: ['مسار بدرج قليل', 'استراحات ومقاهٍ', 'تاكسي بين المحطات عند الحاجة', 'مواعيد مرنة'] },
+      artesania: { nombre: 'اليابان الحِرَفية', gancho: 'ورش تصنعون فيها شيئًا تأخذونه معكم؛ المرشد يحجزها باليابانية ويترجم.', puntos: ['نختار الورشة التي تعجبكم', 'الحجز باليابانية', 'ترجمة أثناء الورشة', 'أحياء تقليدية حولها'] },
+      'comer-comprar': { nombre: 'أوساكا للأكل والتسوّق', gancho: 'أسواق وأكل الشارع ومتاجر: المرشد يأخذكم إلى الأماكن الجيدة ويترجم.', puntos: ['أسواق مثل كورومون', 'أكل الشارع في دوتونبوري', 'سكاكين وحِرَف أو إلكترونيات', 'التسوّق المعفى من الضريبة وكيف تطلبون'] },
+      'varios-dias': { nombre: 'عدة أيام مع المرشد نفسه', gancho: 'مرشد واحد للرحلة كلها: يخطّط وينسّق ويرافقكم كل يوم.', puntos: ['خطة رحلة على مقاسكم', 'تنسيق القطارات والحجوزات', 'المرشد نفسه كل يوم', 'كانساي والرحلات الطويلة'] },
     },
   },
   ru: {
     ui: {
-      ceja: 'Программы с гидом', h: 'Гид + впечатления в одной программе', p: 'Один контакт организует весь день: гид, бронирования и скидки наших партнёров. Привилегии действуют для всех гостей команды, с каким бы гидом вы ни путешествовали.',
-      medio: 'Полдня · 4 ч', completo: 'Весь день · 8 ч', guia: 'Гид', porGrupo: 'за группу', socio: 'Впечатления по цене партнёра, со скидкой или бонусом', precioMsj: 'Цена гида — в {c}',
-      extra: 'Бонус с нами', quiero: 'Хочу эту программу', msj: 'Здравствуйте! Меня интересует программа «{p}». Нас … человек, даты: …',
-      kitH: 'Набор к прилёту — бесплатно к любой программе', kitP: 'Промокоды, которыми наши гости пользуются ещё до вылета: интернет и хранение багажа.', todas: 'Все привилегии', halal: 'Подходит мусульманским семьям', codigo: 'код',
+      ceja: 'Программы с гидом', h: 'Выберите, каким будет ваш день', p: 'Каждая программа — это услуги гида. Впечатления, входные билеты, транспорт и еда не включены: они оплачиваются отдельно, а мы по желанию всё организуем и пойдём с вами.',
+      pagaGuiaT: 'Гиду вы платите', pagaGuia: 'Только за работу гида: его тариф за полдня или за весь день.', apartT: 'Отдельно, напрямую', aparte: 'Билеты, поезда, еда и впечатления. У наших партнёров — со скидкой.',
+      extrasT: 'Организуем дополнительно · оплата отдельно', pedir: 'Запросить программу', msj: 'Здравствуйте! Меня интересует программа «{p}». Нас … человек, даты: …',
+      kitH: 'Скидки для поездки', kitP: 'Промокоды на интернет и хранение багажа. Отдельно от гида.', todas: 'Все привилегии', halal: 'Подходит мусульманским семьям',
     },
     planes: {
-      'te-kioto': { nombre: 'Классический Киото + чайная церемония', gancho: 'Главное в Киото пешком и настоящая чайная церемония — ничего не нужно искать и бронировать самим.', ruta: ['Фусими Инари до наплыва туристов', 'Расписные свечи в Nakamura Rosoku, в паре минут от ворот тории (по желанию)', 'Киёмидзу-дэра и улочки Хигасиямы', 'Чайная церемония в MAIKOYA или Camellia со скидкой 10 %'] },
-      'kimono-gion': { nombre: 'Гион в кимоно + фотосессия', gancho: 'Наденьте кимоно и прогуляйтесь по самым красивым уголкам Киото, по желанию — с фотографом.', ruta: ['Кимоно в Wargo (скидка 10 %) или Okamoto', 'Гион, Ханамикодзи и святилище Ясака', 'Фотосессия со SnapKyoto (по желанию)', 'В Okamoto кимоно можно сдать в другом салоне или на следующий день'] },
-      samurai: { nombre: 'День самурая в Киото', gancho: 'Арасияма, настоящие самурайские доспехи и музей, от которого в восторге и дети, и взрослые.', ruta: ['Бамбуковая роща и река Арасиямы', 'Самурайские доспехи в Shogun Studio прямо по маршруту', 'Samurai & Ninja Museum со скидкой 10 %', 'Браслет кумихимо своими руками в DOMYO (по желанию)'] },
-      'osaka-bici': { nombre: 'Осака на велосипеде и с уличной едой', gancho: 'Замок, кварталы, куда не доходят туристы, и уличная еда — со скидкой на велотур.', ruta: ['Замок Осаки и парк вокруг', 'Маршрут Cycle & Eat по местным кварталам, с нами на 15 % дешевле', 'Tower Knives в Синсэкай: частный рассказ о ножах Сакаи', 'Дотонбори на закате'] },
-      'familia-musulmana': { nombre: 'Мусульманская семья: спокойные Киото и Осака', gancho: 'Кимоно с хиджабом, место для молитвы, кулинария без алкоголя и халяльные покупки — всё продумано заранее.', ruta: ['Кимоно с хиджабом в Miyabi-yuki, работают только женщины', 'Yumeyakata в Киото, с молитвенной комнатой', 'Кулинарный класс в Cooking Sun с вегетарианским меню без алкоголя', 'Покупки в JAPANeid (Осака): товары с халяль-сертификатом'] },
-      artesania: { nombre: 'Японские ремёсла: мастер-классы в Киото', gancho: 'Увезите домой вещь, сделанную своими руками: бамбук, свечи или кумихимо. Выберите одно или два.', ruta: ['Корзина из бамбука в TAKENOKO (одна группа за раз, до 15 человек)', 'Японские свечи ручной росписи в Nakamura Rosoku', 'Браслет кумихимо в DOMYO, опыт не нужен', 'Гид переводит мастер-класс'] },
-      'nara-sumi': { nombre: 'Нара + мастерская туши суми', gancho: 'Олени и Великий Будда, а потом — собственная палочка туши в мастерской с многовековой историей.', ruta: ['Парк Нары и его олени', 'Тодай-дзи и Великий Будда', 'Прогулка по Нарамати', 'Мастерская Kobaien: бронируем по-японски и переводим без доплаты'] },
+      'primer-dia': { nombre: 'Первый день без стресса', gancho: 'Встретим вас в отеле и с первого дня научим свободно передвигаться по Японии.', puntos: ['Встреча в вашем отеле', 'Карта ICOCA, поезда и полезные приложения', 'Как платить и заказывать в ресторанах', 'Первая прогулка по городу'] },
+      tematico: { nombre: 'Тематический день: чай, кимоно или самураи', gancho: 'Вы выбираете тему, а гид строит вокруг неё день: бронирует и идёт с вами.', puntos: ['Вместе выбираем тему', 'Гид бронирует и согласует время', 'Сопровождает и переводит', 'Прогулка по району до или после'] },
+      'familia-musulmana': { nombre: 'Мусульманская семья', gancho: 'Халяльная еда, время для молитвы и подходящие занятия — всё продумано заранее.', puntos: ['Халяльные рестораны или без свинины и алкоголя', 'Перерывы на молитву', 'Маршрут под семью', 'Подходящие занятия, например кимоно с хиджабом'] },
+      'ritmo-tranquilo': { nombre: 'Спокойный темп', gancho: 'Для старшего поколения и всех, кто не любит спешить: меньше лестниц, больше пауз.', puntos: ['Маршрут с минимумом лестниц', 'Паузы и кафе', 'Такси между точками при необходимости', 'Гибкое расписание'] },
+      artesania: { nombre: 'Япония ремёсел', gancho: 'Мастер-классы, где вы делаете вещь на память; гид бронирует их по-японски и переводит.', puntos: ['Выбираем мастер-класс по душе', 'Бронирование по-японски', 'Перевод на мастер-классе', 'Старые кварталы вокруг'] },
+      'comer-comprar': { nombre: 'Осака: еда и покупки', gancho: 'Рынки, уличная еда и магазины: гид приведёт в хорошие места и поможет объясниться.', puntos: ['Рынки вроде Куромон', 'Уличная еда на Дотонбори', 'Ножи, ремёсла или электроника', 'Tax-free и как заказывать'] },
+      'varios-dias': { nombre: 'Несколько дней с одним гидом', gancho: 'Один гид на всю поездку: планирует, координирует и сопровождает каждый день.', puntos: ['План поездки под вас', 'Поезда и бронирования согласованы', 'Один и тот же гид каждый день', 'Кансай и дальние поездки'] },
     },
   },
   tr: {
     ui: {
-      ceja: 'Rehberli planlar', h: 'Rehber + deneyimler, hepsi tek planda', p: 'Tek bir kişi bütün günü ayarlar: rehber, rezervasyonlar ve ortaklarımızın indirimleri. Avantajlar, hangi rehberle gelirseniz gelin ekibin tüm misafirleri için geçerli.',
-      medio: 'Yarım gün · 4 saat', completo: 'Tam gün · 8 saat', guia: 'Rehber', porGrupo: 'grup başına', socio: 'Deneyimler ortağın fiyatından, avantaj uygulanmış olarak', precioMsj: 'Rehber fiyatı {c} üzerinden',
-      extra: 'Bizimle ekstra', quiero: 'Bu planı istiyorum', msj: 'Merhaba, «{p}» planıyla ilgileniyorum. … kişiyiz, tarihler: …',
-      kitH: 'Varış paketi, her planla ücretsiz', kitP: 'Misafirlerimizin uçmadan önce kullandığı kodlar: mobil internet ve bavul emaneti.', todas: 'Tüm avantajlar', halal: 'Müslüman ailelere uygun', codigo: 'kod',
+      ceja: 'Rehber planları', h: 'Gününüzü nasıl istediğinizi seçin', p: 'Her plan bir rehberlik hizmetidir. Deneyimler, giriş biletleri, ulaşım ve yemekler dahil değildir: ayrıca ödenir; isterseniz biz ayarlarız ve sizinle geliriz.',
+      pagaGuiaT: 'Rehbere ödediğiniz', pagaGuia: 'Sadece rehberlik: yarım gün veya tam gün ücreti.', apartT: 'Ayrıca, doğrudan', aparte: 'Biletler, trenler, yemekler ve deneyimler. Ortaklarımızda indirimli.',
+      extrasT: 'Ayarladığımız ekstralar · ayrıca ödenir', pedir: 'Bu planı iste', msj: 'Merhaba, «{p}» planıyla ilgileniyorum. … kişiyiz, tarihler: …',
+      kitH: 'Geziniz için indirimler', kitP: 'Mobil internet ve bavul emaneti kodları. Rehberden ayrı.', todas: 'Tüm avantajlar', halal: 'Müslüman ailelere uygun',
     },
     planes: {
-      'te-kioto': { nombre: 'Klasik Kyoto + çay seremonisi', gancho: 'Kyoto’nun olmazsa olmazları yürüyerek ve gerçek bir çay seremonisi; hiçbir şey aramanıza ya da ayırtmanıza gerek yok.', ruta: ['Kalabalıktan önce Fushimi Inari', 'Toriilere birkaç dakika mesafede Nakamura Rosoku’da el boyaması mumlar (isteğe bağlı)', 'Kiyomizu-dera ve Higashiyama yokuşları', 'MAIKOYA veya Camellia’da %10 indirimli çay seremonisi'] },
-      'kimono-gion': { nombre: 'Kimonoyla Gion + fotoğraf', gancho: 'Kimononuzu giyin ve Kyoto’nun en güzel köşelerini gezin; isterseniz fotoğrafçıyla.', ruta: ['Wargo’da (%10 indirim) veya Okamoto’da kimono', 'Gion, Hanamikoji ve Yasaka Tapınağı', 'SnapKyoto ile fotoğraf çekimi (isteğe bağlı)', 'Okamoto’da kimonoyu başka bir şubede veya ertesi gün iade edebilirsiniz'] },
-      samurai: { nombre: 'Kyoto’da samuray günü', gancho: 'Arashiyama, gerçek bir samuray zırhı ve çocukların bayılacağı bir müze.', ruta: ['Arashiyama bambu ormanı ve nehri', 'Rotaya yerleştirilmiş Shogun Studio’da samuray zırhı', '%10 indirimli Samurai & Ninja Museum', 'DOMYO’da kendi kumihimo bilekliğiniz (isteğe bağlı)'] },
-      'osaka-bici': { nombre: 'Bisikletle ve lezzetlerle Osaka', gancho: 'Kale, turistlerin gitmediği mahalleler ve sokak lezzetleri; bisiklet turunda indirimle.', ruta: ['Osaka Kalesi ve parkı', 'Yerel mahallelerde Cycle & Eat rotası, bizimle %15 daha ucuz', 'Shinsekai’de Tower Knives: Sakai bıçakları üzerine özel sunum', 'Akşamüstü Dotonbori'] },
-      'familia-musulmana': { nombre: 'Müslüman aile: huzurla Kyoto ve Osaka', gancho: 'Başörtüsüyle kimono, namaz için yer, alkolsüz yemek kursu ve helal alışveriş: her şey önceden düşünülmüş.', ruta: ['Miyabi-yuki’de başörtüsüyle kimono, tamamı kadın personel', 'Kyoto’da namaz odalı Yumeyakata', 'Cooking Sun’da alkolsüz vejetaryen menüyle yemek kursu', 'Osaka’da JAPANeid: helal sertifikalı ürünler'] },
-      artesania: { nombre: 'Japon elleri: Kyoto’da zanaat atölyeleri', gancho: 'Kendi yaptığınız bir şeyi eve götürün: bambu, mum veya kumihimo. Bir ya da iki tane seçin.', ruta: ['TAKENOKO ile bambu sepet (her seferinde tek grup, 15 kişiye kadar)', 'Nakamura Rosoku’da el boyaması Japon mumları', 'DOMYO’da kumihimo bileklik, deneyim gerekmez', 'Rehberiniz atölyeyi tercüme eder'] },
-      'nara-sumi': { nombre: 'Nara + sumi mürekkep atölyesi', gancho: 'Geyikler ve Büyük Buda, ardından asırlık bir atölyede kendi mürekkep çubuğunuz.', ruta: ['Nara Parkı ve geyikleri', 'Todai-ji ve Büyük Buda', 'Naramachi’de yürüyüş', 'Kobaien atölyesi: Japonca rezervasyon ve ücretsiz tercüme'] },
+      'primer-dia': { nombre: 'Stressiz ilk gün', gancho: 'Sizi otelinizden alır, ilk günden Japonya’da nasıl dolaşılacağını gösteririz.', puntos: ['Otelinizden karşılama', 'ICOCA kart, trenler ve faydalı uygulamalar', 'Restoranlarda ödeme ve sipariş', 'Şehirde ilk yürüyüş'] },
+      tematico: { nombre: 'Temalı gün: çay, kimono veya samuray', gancho: 'Temayı siz seçersiniz, rehber günü ona göre kurar: rezervasyonu yapar ve sizinle gelir.', puntos: ['Temayı birlikte seçeriz', 'Rehber rezervasyonu ve saatleri ayarlar', 'Size eşlik eder ve tercüme eder', 'Öncesinde veya sonrasında bölgede gezinti'] },
+      'familia-musulmana': { nombre: 'Müslüman aile', gancho: 'Helal yemek, namaz vakti ve uygun etkinlikler; hepsi önceden düşünülmüş.', puntos: ['Helal ya da domuz ve alkol içermeyen restoranlar', 'Namaz molaları', 'Aileye göre rota', 'Başörtüsüyle kimono gibi uygun etkinlikler'] },
+      'ritmo-tranquilo': { nombre: 'Sakin tempo', gancho: 'Yaşlılar ya da acele etmek istemeyenler için: daha az merdiven, daha çok mola.', puntos: ['Az merdivenli rota', 'Molalar ve kafeler', 'Gerekirse duraklar arası taksi', 'Esnek saatler'] },
+      artesania: { nombre: 'Zanaat Japonyası', gancho: 'Kendi yaptığınızı götürdüğünüz atölyeler; rehber Japonca rezervasyon yapar ve tercüme eder.', puntos: ['Sevdiğiniz atölyeyi seçeriz', 'Japonca rezervasyon', 'Atölyede tercüme', 'Çevredeki eski sokaklar'] },
+      'comer-comprar': { nombre: 'Yemek ve alışveriş için Osaka', gancho: 'Pazarlar, sokak lezzetleri ve dükkanlar: rehber sizi iyi yerlere götürür ve tercüme eder.', puntos: ['Kuromon gibi pazarlar', 'Dotonbori’de sokak lezzetleri', 'Bıçak, el sanatı veya elektronik', 'Tax-free alışveriş ve sipariş'] },
+      'varios-dias': { nombre: 'Aynı rehberle birkaç gün', gancho: 'Tüm gezi için tek rehber: planlar, koordine eder ve her gün sizinle olur.', puntos: ['Size özel gezi planı', 'Trenler ve rezervasyonlar ayarlanır', 'Her gün aynı rehber', 'Kansai ve uzun günübirlik geziler'] },
     },
   },
   fr: {
     ui: {
-      ceja: 'Formules avec guide', h: 'Guide + expériences, tout en une formule', p: 'Un seul contact organise toute la journée : le guide, les réservations et les remises de nos partenaires. Les avantages valent pour tous les clients de l’équipe, quel que soit votre guide.',
-      medio: 'Demi-journée · 4 h', completo: 'Journée · 8 h', guia: 'Guide', porGrupo: 'par groupe', socio: 'Expériences au prix du partenaire, avantage appliqué', precioMsj: 'Prix du guide sur {c}',
-      extra: 'Petit plus avec nous', quiero: 'Je veux cette formule', msj: 'Bonjour, la formule « {p} » m’intéresse. Nous sommes … personnes, dates : …',
-      kitH: 'Kit d’arrivée, offert avec toute formule', kitP: 'Les codes que nos clients utilisent avant le départ : internet mobile et consigne à bagages.', todas: 'Tous les avantages', halal: 'Adapté aux familles musulmanes', codigo: 'code',
+      ceja: 'Formules de guide', h: 'Choisissez votre journée', p: 'Chaque formule est un service de guide. Les expériences, entrées, transports et repas ne sont pas inclus : ils se paient à part, et si vous le souhaitez nous les organisons et vous accompagnons.',
+      pagaGuiaT: 'Au guide, vous payez', pagaGuia: 'Seulement le guidage : son tarif demi-journée ou journée.', apartT: 'À part, directement', aparte: 'Entrées, trains, repas et expériences. Chez nos partenaires, avec remise.',
+      extrasT: 'Extras que nous organisons · payés à part', pedir: 'Demander cette formule', msj: 'Bonjour, la formule « {p} » m’intéresse. Nous sommes … personnes, dates : …',
+      kitH: 'Remises pour votre voyage', kitP: 'Codes pour internet mobile et consigne à bagages. À part du guide.', todas: 'Tous les avantages', halal: 'Adapté aux familles musulmanes',
     },
     planes: {
-      'te-kioto': { nombre: 'Kyoto classique + cérémonie du thé', gancho: 'L’essentiel de Kyoto à pied et une vraie cérémonie du thé, sans rien chercher ni réserver vous-même.', ruta: ['Fushimi Inari avant la foule', 'Bougies peintes à la main chez Nakamura Rosoku, à quelques minutes des torii (en option)', 'Kiyomizu-dera et les ruelles d’Higashiyama', 'Cérémonie du thé chez MAIKOYA ou Camellia, 10 % de remise'] },
-      'kimono-gion': { nombre: 'Gion en kimono + photos', gancho: 'Habillez-vous en kimono et flânez dans les plus beaux coins de Kyoto, avec un photographe si vous le souhaitez.', ruta: ['Kimono chez Wargo (10 % de remise) ou Okamoto', 'Gion, Hanamikoji et le sanctuaire Yasaka', 'Séance photo avec SnapKyoto (en option)', 'Chez Okamoto, rendez le kimono dans une autre boutique ou le lendemain'] },
-      samurai: { nombre: 'Journée samouraï à Kyoto', gancho: 'Arashiyama, une vraie armure de samouraï et un musée que les enfants adorent.', ruta: ['Bambouseraie et rivière d’Arashiyama', 'Armure de samouraï au Shogun Studio, intégrée au parcours', 'Samurai & Ninja Museum, 10 % de remise', 'Bracelet kumihimo fait main chez DOMYO (en option)'] },
-      'osaka-bici': { nombre: 'Osaka à vélo et en bouchées', gancho: 'Le château, des quartiers où les touristes ne vont pas et la street food, avec une remise sur le tour à vélo.', ruta: ['Château d’Osaka et son parc', 'Parcours Cycle & Eat dans les quartiers locaux, 15 % moins cher avec nous', 'Tower Knives à Shinsekai : présentation privée sur les couteaux de Sakai', 'Dotonbori à la tombée du jour'] },
-      'familia-musulmana': { nombre: 'Famille musulmane : Kyoto et Osaka en toute sérénité', gancho: 'Kimono avec hijab, lieu de prière, cuisine sans alcool et achats halal : tout est prévu à l’avance.', ruta: ['Kimono avec hijab chez Miyabi-yuki, personnel féminin', 'Yumeyakata (Kyoto), avec salle de prière', 'Cours chez Cooking Sun avec menu végétarien sans alcool', 'Achats chez JAPANeid (Osaka) : produits certifiés halal'] },
-      artesania: { nombre: 'Mains japonaises : ateliers d’artisanat à Kyoto', gancho: 'Repartez avec un objet fait de vos mains : bambou, bougies ou kumihimo. Choisissez-en un ou deux.', ruta: ['Panier en bambou avec TAKENOKO (un seul groupe à la fois, jusqu’à 15)', 'Bougies japonaises peintes à la main chez Nakamura Rosoku', 'Bracelet kumihimo chez DOMYO, sans expérience', 'Votre guide traduit l’atelier'] },
-      'nara-sumi': { nombre: 'Nara + atelier d’encre sumi', gancho: 'Les daims et le Grand Bouddha, puis votre propre bâton d’encre dans un atelier séculaire.', ruta: ['Parc de Nara et ses daims', 'Todai-ji et le Grand Bouddha', 'Promenade dans Naramachi', 'Atelier Kobaien : réservé en japonais et traduit sans supplément'] },
+      'primer-dia': { nombre: 'Premier jour sans stress', gancho: 'Nous venons vous chercher à l’hôtel et vous apprenons à circuler au Japon dès le premier jour.', puntos: ['Prise en charge à votre hôtel', 'Carte ICOCA, trains et applis utiles', 'Payer et commander au restaurant', 'Une première balade en ville'] },
+      tematico: { nombre: 'Journée à thème : thé, kimono ou samouraïs', gancho: 'Vous choisissez le thème et le guide organise la journée autour : il réserve et vous accompagne.', puntos: ['On choisit le thème ensemble', 'Le guide réserve et cale les horaires', 'Il vous accompagne et traduit', 'Balade dans le quartier avant ou après'] },
+      'familia-musulmana': { nombre: 'Famille musulmane', gancho: 'Repas halal, temps pour la prière et activités adaptées, tout prévu à l’avance.', puntos: ['Restaurants halal, ou sans porc ni alcool', 'Pauses pour la prière', 'Itinéraire pensé pour la famille', 'Activités adaptées, comme le kimono avec hijab'] },
+      'ritmo-tranquilo': { nombre: 'Rythme tranquille', gancho: 'Pour les seniors ou ceux qui préfèrent prendre leur temps : moins d’escaliers, plus de pauses.', puntos: ['Itinéraire avec peu d’escaliers', 'Pauses et cafés', 'Taxi entre les étapes si besoin', 'Horaires souples'] },
+      artesania: { nombre: 'Japon artisan', gancho: 'Des ateliers où vous fabriquez un objet à emporter ; le guide réserve en japonais et traduit.', puntos: ['On choisit l’atelier qui vous plaît', 'Réservation en japonais', 'Traduction pendant l’atelier', 'Ruelles traditionnelles autour'] },
+      'comer-comprar': { nombre: 'Osaka pour manger et shopper', gancho: 'Marchés, street food et boutiques : le guide vous emmène aux bonnes adresses et traduit.', puntos: ['Marchés comme Kuromon', 'Street food à Dotonbori', 'Couteaux, artisanat ou électronique', 'Détaxe et comment commander'] },
+      'varios-dias': { nombre: 'Plusieurs jours, même guide', gancho: 'Un seul guide pour tout le voyage : il planifie, coordonne et vous accompagne chaque jour.', puntos: ['Un voyage sur mesure', 'Trains et réservations coordonnés', 'Le même guide chaque jour', 'Kansai et longues excursions'] },
     },
   },
 }

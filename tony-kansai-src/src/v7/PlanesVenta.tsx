@@ -4,11 +4,11 @@
 import { planesHTML, planesLD, type LangPlan } from './datosPlanes'
 import './planes.css'
 
-export function PlanesVenta({ lang, guia, url, titulo = true }: { lang: LangPlan; guia: string; url: string; titulo?: boolean }) {
+export function PlanesVenta({ lang, guia, url }: { lang: LangPlan; guia: string; url: string }) {
   const ld = JSON.stringify({ '@context': 'https://schema.org', ...planesLD(lang, guia, url) }).replace(/</g, '\\u003c')
   return (
     <>
-      <div style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: planesHTML(lang, guia, { titulo }) }} />
+      <div style={{ display: 'contents' }} dangerouslySetInnerHTML={{ __html: planesHTML(lang, guia) }} />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: ld }} />
     </>
   )
