@@ -10,12 +10,12 @@ export const WHATSAPP = '34634193106'
 export const UI = {
   es: {
     lang: 'es', dir: 'ltr', base: '/tiktok/',
-    marca: 'Kansai de TikTok',
-    titulo: 'Kansai de TikTok: los sitios virales de Kioto, Osaka y Nara por temporada',
-    desc: 'Los sitios de Kioto, Osaka y Nara que más se ven en TikTok, temporada a temporada: qué grabar, a qué hora ir sin gente y una ruta con guía en español a precio especial.',
-    eti: 'Guías por temporada · Kioto · Osaka · Nara',
-    h1: 'El Kansai que ves en TikTok, sin colas y con guía.',
-    intro: 'Los sitios que se hacen virales en TikTok son preciosos… y a las once de la mañana están llenos. Te llevo a la hora buena, te enseño el ángulo y te ayudo a grabar las tomas en las que sales tú.',
+    marca: 'Japón de TikTok',
+    titulo: 'Japón de TikTok: sitios virales y joyas escondidas por temporada',
+    desc: 'Los sitios de Japón que más se ven y se guardan en TikTok, temporada a temporada: los clásicos de Kioto, Osaka y Nara a la hora sin gente, y jardines, flores y paisajes de todo Japón que casi nadie visita. Ruta con guía a precio especial.',
+    eti: 'Guías por temporada · Kansai y todo Japón',
+    h1: 'El Japón que ves en TikTok, sin colas y con guía.',
+    intro: 'Los sitios que se hacen virales son preciosos… y a las once de la mañana están llenos. Te llevo a la hora buena y te ayudo a grabar. Y además, los rincones de todo Japón que la gente guarda y casi nadie visita.',
     temporadas: 'Elige temporada',
     oferta_eti: 'Precio especial TikTok',
     oferta_t: 'Ruta TikTok con guía',
@@ -39,12 +39,12 @@ export const UI = {
   },
   en: {
     lang: 'en', dir: 'ltr', base: '/tiktok/en/',
-    marca: 'TikTok Kansai',
-    titulo: 'TikTok Kansai: viral spots in Kyoto, Osaka and Nara by season',
-    desc: 'The Kyoto, Osaka and Nara spots you keep seeing on TikTok, season by season: what to film, when to go without crowds, and a guided route at a special price.',
-    eti: 'Seasonal guides · Kyoto · Osaka · Nara',
-    h1: 'The Kansai you see on TikTok, without the queues.',
-    intro: 'The spots that go viral on TikTok are beautiful… and packed by 11 a.m. I take you at the right time, show you the angle and help you film the shots you are in.',
+    marca: 'TikTok Japan',
+    titulo: 'TikTok Japan: viral spots and hidden gems by season',
+    desc: 'The Japan spots people watch and save on TikTok, season by season: Kyoto, Osaka and Nara classics without the crowds, plus gardens, flowers and landscapes across Japan that almost nobody visits. Guided route at a special price.',
+    eti: 'Seasonal guides · Kansai and all of Japan',
+    h1: 'The Japan you see on TikTok, without the queues.',
+    intro: 'Viral spots are beautiful… and packed by 11 a.m. I take you at the right time and help you film. Plus the corners of Japan people save and almost nobody visits.',
     temporadas: 'Choose a season',
     oferta_eti: 'TikTok special price',
     oferta_t: 'Guided TikTok route',
@@ -68,11 +68,11 @@ export const UI = {
   },
   ar: {
     lang: 'ar', dir: 'rtl', base: '/tiktok/ar/',
-    marca: 'كانساي تيك توك',
-    titulo: 'كانساي تيك توك: الأماكن الأكثر انتشاراً في كيوتو وأوساكا ونارا حسب الموسم',
+    marca: 'يابان تيك توك',
+    titulo: 'يابان تيك توك: الأماكن الأكثر انتشاراً والجواهر المخفية حسب الموسم',
     desc: 'أماكن كيوتو وأوساكا ونارا التي تراها دائماً على تيك توك، موسماً بموسم: ماذا تصوّر، ومتى تذهب دون زحام، وجولة مع مرشد بسعر خاص.',
-    eti: 'أدلة حسب الموسم · كيوتو · أوساكا · نارا',
-    h1: 'كانساي الذي تراه على تيك توك، بلا طوابير ومع مرشد.',
+    eti: 'أدلة حسب الموسم · كانساي وكل اليابان',
+    h1: 'اليابان الذي تراه على تيك توك، بلا طوابير ومع مرشد.',
     intro: 'الأماكن التي تنتشر على تيك توك جميلة… لكنها تمتلئ بحلول الحادية عشرة صباحاً. آخذك في الوقت المناسب، وأريك الزاوية، وأساعدك في تصوير اللقطات التي تظهر فيها.',
     temporadas: 'اختر الموسم',
     oferta_eti: 'سعر خاص لتيك توك',
@@ -148,3 +148,38 @@ export const TEMPORADAS = [
     ],
   },
 ]
+
+// «Joyas de todo Japón»: rincones fotogénicos poco conocidos, fuera del circuito típico.
+// Cada joya: [nombre, dónde · cuándo, por qué se guarda, cómo ir / truco]. Fechas = las habituales; varían cada año.
+export const JOYAS_UI = {
+  es: { eti: 'Joyas de todo Japón', titulo: 'Lo que la gente guarda… y casi nadie visita', intro: 'Jardines, flores y paisajes de todo Japón que salen en los vídeos guardados y no en los circuitos de siempre.', donde: 'Dónde y cuándo', porque: 'Por qué se guarda', ir: 'Cómo ir', cta: 'Te ayudo a meterlo en tu ruta', cta_d: 'En Kansai te guío yo; fuera de Kansai te ayudo con el plan y te pongo en contacto con guías del equipo.' },
+  en: { eti: 'Hidden gems across Japan', titulo: 'What people save… and almost nobody visits', intro: 'Gardens, flowers and landscapes from all over Japan that show up in saved videos, not on the usual tours.', donde: 'Where and when', porque: 'Why people save it', ir: 'Getting there', cta: 'I’ll help you fit it into your trip', cta_d: 'In Kansai I guide you myself; elsewhere I help with the plan and connect you with guides from our team.' },
+  ar: { eti: 'جواهر من كل اليابان', titulo: 'ما يحفظه الناس… ولا يزوره أحد تقريباً', intro: 'حدائق وزهور ومناظر من كل أنحاء اليابان تظهر في الفيديوهات المحفوظة، لا في الجولات المعتادة.', donde: 'أين ومتى', porque: 'لماذا يحفظه الناس', ir: 'كيف تصل', cta: 'أساعدك على إدخاله في رحلتك', cta_d: 'في كانساي أرشدك بنفسي؛ وخارجها أساعدك في الخطة وأصلك بمرشدين من فريقنا.' },
+}
+
+export const JOYAS = {
+  otono: [
+    { es: ['Rurikō-in', 'Kioto (Yase) · solo abre en temporadas especiales, el otoño es la más buscada', 'El reflejo de los arces rojos sobre una mesa lacada negra: parece un cuadro.', 'Tren Eizan desde Demachiyanagi. Hay que reservar turno: se agotan.'], en: ['Rurikō-in', 'Kyoto (Yase) · opens only in special seasons; autumn is the most wanted', 'Red maples reflected on a black lacquered desk: it looks like a painting.', 'Eizan line from Demachiyanagi. Timed tickets sell out — book ahead.'], ar: ['روريكو-إن', 'كيوتو (ياسيه) · يفتح في مواسم خاصة فقط، والخريف أكثرها طلباً', 'انعكاس القيقب الأحمر على طاولة مطليّة سوداء: كأنها لوحة.', 'قطار إيزان من ديماتشيياناغي. التذاكر بمواعيد وتنفد سريعاً: احجز مسبقاً.'] },
+    { es: ['Kōrankei', 'Aichi (Toyota) · segunda quincena de noviembre', 'Un valle entero de arces junto a un puente rojo, iluminado por la noche.', 'Bus desde Nagoya; a primera hora para evitar los atascos del fin de semana.'], en: ['Kōrankei', 'Aichi (Toyota) · second half of November', 'A whole valley of maples beside a red bridge, lit up at night.', 'Bus from Nagoya; go early to avoid weekend traffic jams.'], ar: ['كورانكي', 'آيتشي (تويوتا) · النصف الثاني من نوفمبر', 'وادٍ كامل من القيقب بجانب جسر أحمر، مضاء ليلاً.', 'حافلة من ناغويا؛ اذهب مبكراً لتجنّب زحام نهاية الأسبوع.'] },
+    { es: ['Kenroku-en con yukitsuri', 'Kanazawa (Ishikawa) · desde noviembre', 'Las cuerdas en forma de paraguas que protegen los pinos de la nieve: una imagen única.', 'Shinkansen o tren Thunderbird desde Osaka; combínalo con el barrio de geishas Higashi Chaya.'], en: ['Kenroku-en with yukitsuri', 'Kanazawa (Ishikawa) · from November', 'Umbrella-shaped ropes protecting the pines from snow: a one-of-a-kind image.', 'Train from Osaka; pair it with the Higashi Chaya geisha district.'], ar: ['كينروكو-إن مع يوكيتسوري', 'كانازاوا (إيشيكاوا) · من نوفمبر', 'حبال على شكل مظلّة تحمي أشجار الصنوبر من الثلج: مشهد فريد.', 'قطار من أوساكا؛ واجمعها مع حي الغيشا هيغاشي تشايا.'] },
+    { es: ['Daigo-ji y su puente Bentendō', 'Kioto (Fushimi) · mediados y finales de noviembre', 'El puente rojo y el pabellón reflejados en un estanque rodeado de arces.', 'Metro Tōzai hasta Daigo. Mucha menos gente que en el centro de Kioto.'], en: ['Daigo-ji and the Bentendō bridge', 'Kyoto (Fushimi) · mid to late November', 'The red bridge and hall reflected in a pond ringed with maples.', 'Tōzai subway to Daigo. Far fewer people than central Kyoto.'], ar: ['دايغو-جي وجسر بنتندو', 'كيوتو (فوشيمي) · منتصف وأواخر نوفمبر', 'الجسر الأحمر والجناح ينعكسان في بركة تحيط بها أشجار القيقب.', 'مترو توزاي حتى دايغو. زحام أقل بكثير من وسط كيوتو.'] },
+    { es: ['Hōkyō-in', 'Kioto (Arashiyama) · noviembre', 'Una alfombra de hojas rojas en un jardín pequeño y silencioso, a pocos minutos del bambú.', 'Desde la estación de Saga-Arashiyama, a pie. Ideal después del bosque de bambú.'], en: ['Hōkyō-in', 'Kyoto (Arashiyama) · November', 'A carpet of red leaves in a small, silent garden, minutes from the bamboo.', 'Walk from Saga-Arashiyama station. Perfect after the bamboo grove.'], ar: ['هوكيو-إن', 'كيوتو (أراشيياما) · نوفمبر', 'سجادة من الأوراق الحمراء في حديقة صغيرة هادئة، على بعد دقائق من الخيزران.', 'سيراً من محطة ساغا-أراشيياما. مثالية بعد غابة الخيزران.'] },
+    { es: ['Momijidani en Miyajima', 'Hiroshima · mediados y finales de noviembre', 'El valle de arces detrás del torii flotante, con ciervos paseando.', 'Ferry desde Miyajimaguchi. Hazlo en el mismo día que Hiroshima: museo por la mañana, isla por la tarde.'], en: ['Momijidani on Miyajima', 'Hiroshima · mid to late November', 'The maple valley behind the floating torii, with deer wandering around.', 'Ferry from Miyajimaguchi. Same day as Hiroshima: museum in the morning, island in the afternoon.'], ar: ['موميجيداني في مياجيما', 'هيروشيما · منتصف وأواخر نوفمبر', 'وادي القيقب خلف بوابة التوري العائمة، والغزلان تتجول.', 'عبّارة من مياجيماغوتشي. في اليوم نفسه مع هيروشيما: المتحف صباحاً والجزيرة بعد الظهر.'] },
+  ],
+  invierno: [
+    { es: ['Ginzan Onsen', 'Yamagata · diciembre a febrero', 'Ryokan de madera, nieve y farolas de gas a lo largo de un río: el pueblo de los vídeos de invierno.', 'Por la tarde-noche el acceso para quien no se aloja suele estar limitado: duerme allí o ve de día. Compruébalo antes.'], en: ['Ginzan Onsen', 'Yamagata · December to February', 'Wooden ryokan, snow and gas lamps along a river: the village from all the winter videos.', 'Evening access for non-guests is usually restricted: stay overnight or go by day. Check before going.'], ar: ['غينزان أونسن', 'ياماغاتا · من ديسمبر إلى فبراير', 'نُزُل خشبية وثلج ومصابيح غاز على ضفّة نهر: قرية فيديوهات الشتاء.', 'الدخول مساءً لغير النزلاء محدود عادةً: ابقَ فيها ليلة أو اذهب نهاراً. تحقّق قبل الذهاب.'] },
+    { es: ['Nabana no Sato', 'Mie (Kuwana) · iluminación de otoño a primavera', 'Un túnel de luces de 200 metros y paisajes enteros hechos con LED.', 'Unas 2 horas desde Osaka por Nagoya. Ve al anochecer para ver el cambio de luz.'], en: ['Nabana no Sato', 'Mie (Kuwana) · illumination from autumn to spring', 'A 200-metre tunnel of lights and whole landscapes made of LEDs.', 'About 2 hours from Osaka via Nagoya. Go at dusk to see the light change.'], ar: ['نابانا نو ساتو', 'مييه (كوانا) · إضاءة من الخريف إلى الربيع', 'نفق أضواء بطول 200 متر ومناظر كاملة مصنوعة من الأضواء.', 'نحو ساعتين من أوساكا عبر ناغويا. اذهب عند الغروب لترى تبدّل الضوء.'] },
+    { es: ['Shirakawa-go iluminado', 'Gifu · algunos días de enero y febrero', 'Las casas de tejado de paja bajo la nieve, iluminadas de noche.', 'Solo unas pocas noches al año y con reserva previa: hay que organizarlo con meses.'], en: ['Shirakawa-go lit up', 'Gifu · a few days in January and February', 'Thatched-roof houses under snow, lit up at night.', 'Only a few nights a year and by prior reservation: plan months ahead.'], ar: ['شيراكاوا-غو المضاءة', 'غيفو · بضعة أيام في يناير وفبراير', 'بيوت بأسقف من القش تحت الثلج، مضاءة ليلاً.', 'بضع ليالٍ فقط في السنة وبحجز مسبق: خطّط قبلها بأشهر.'] },
+    { es: ['Los «monstruos de nieve» de Zaō', 'Yamagata · enero y febrero', 'Árboles cubiertos de hielo que parecen criaturas: el juhyō.', 'Teleférico desde Zaō Onsen; abrígate mucho, arriba hace muchísimo frío.'], en: ['Zaō’s “snow monsters”', 'Yamagata · January and February', 'Ice-covered trees that look like creatures: the juhyō.', 'Ropeway from Zaō Onsen; dress very warmly, it is bitterly cold at the top.'], ar: ['«وحوش الثلج» في زاو', 'ياماغاتا · يناير وفبراير', 'أشجار يغطيها الجليد فتبدو كالمخلوقات: الجوهيو.', 'تلفريك من زاو أونسن؛ البس ملابس دافئة جداً، فالبرد قارس في الأعلى.'] },
+    { es: ['Kawazu-zakura', 'Shizuoka (península de Izu) · febrero y principios de marzo', 'Los primeros cerezos del año, rosa intenso, junto a un río con flores amarillas de colza.', 'Tren desde Atami. Es sakura en febrero: perfecto si no puedes venir en abril.'], en: ['Kawazu-zakura', 'Shizuoka (Izu Peninsula) · February and early March', 'The year’s first cherry blossoms, deep pink, by a river lined with yellow rapeseed.', 'Train from Atami. Sakura in February: perfect if you can’t come in April.'], ar: ['كاوازو-زاكورا', 'شيزوكا (شبه جزيرة إيزو) · فبراير وأوائل مارس', 'أولى أزهار الكرز في العام، وردية داكنة، بجانب نهر تحفّه أزهار اللفت الصفراء.', 'قطار من أتامي. ساكورا في فبراير: مثالية إن لم تستطع المجيء في أبريل.'] },
+    { es: ['Ciruelos de Kitano Tenmangū', 'Kioto · febrero y marzo', 'Unos 1.500 ciruelos en flor alrededor de un santuario, antes que los cerezos.', 'Bus desde la estación de Kioto. Combínalo con el Pabellón Dorado, que está cerca.'], en: ['Kitano Tenmangū plum blossoms', 'Kyoto · February and March', 'Around 1,500 plum trees in bloom around a shrine, before the cherries.', 'Bus from Kyoto Station. Pair it with the nearby Golden Pavilion.'], ar: ['أزهار البرقوق في كيتانو تينمانغو', 'كيوتو · فبراير ومارس', 'نحو 1500 شجرة برقوق مزهرة حول ضريح، قبل أزهار الكرز.', 'حافلة من محطة كيوتو. واجمعها مع الجناح الذهبي القريب.'] },
+  ],
+  primavera: [
+    { es: ['Pagoda Chūreitō y el Fuji', 'Yamanashi · principios y mediados de abril', 'La pagoda roja, los cerezos y el monte Fuji en la misma foto.', 'Sube los casi 400 escalones al amanecer: el Fuji se ve más despejado por la mañana.'], en: ['Chūreitō Pagoda and Mt Fuji', 'Yamanashi · early to mid April', 'The red pagoda, cherry blossoms and Mount Fuji in one shot.', 'Climb the nearly 400 steps at sunrise: Fuji is usually clearest in the morning.'], ar: ['باغودا تشوريتو وجبل فوجي', 'ياماناشي · أوائل ومنتصف أبريل', 'الباغودا الحمراء وأزهار الكرز وجبل فوجي في صورة واحدة.', 'اصعد نحو 400 درجة عند الشروق: يكون فوجي أوضح عادةً في الصباح.'] },
+    { es: ['Monte Yoshino', 'Nara · principios y mediados de abril', 'Miles de cerezos que florecen montaña arriba en varias capas.', 'Tren Kintetsu desde Osaka. Llega pronto: las flores suben de abajo a arriba en dos semanas.'], en: ['Mount Yoshino', 'Nara · early to mid April', 'Thousands of cherry trees blooming up the mountain in layers.', 'Kintetsu train from Osaka. Arrive early: blossoms climb from bottom to top over two weeks.'], ar: ['جبل يوشينو', 'نارا · أوائل ومنتصف أبريل', 'آلاف أشجار الكرز تتفتّح صعوداً في الجبل على طبقات.', 'قطار كينتيتسو من أوساكا. تعال مبكراً: تصعد الأزهار من الأسفل إلى الأعلى خلال أسبوعين.'] },
+    { es: ['Torii en el lago de Shirahige', 'Shiga (lago Biwa) · todo el año, mejor al amanecer', 'Un torii rojo dentro del agua del lago más grande de Japón.', 'Tren JR Kosei desde Kioto. No cruces la carretera para la foto: hay mirador seguro.'], en: ['Shirahige’s lake torii', 'Shiga (Lake Biwa) · all year, best at sunrise', 'A red torii standing in the water of Japan’s largest lake.', 'JR Kosei line from Kyoto. Don’t cross the road for the photo: there is a safe viewpoint.'], ar: ['بوابة توري شيراهيغه في البحيرة', 'شيغا (بحيرة بيوا) · طوال العام، والأفضل عند الشروق', 'بوابة توري حمراء وسط مياه أكبر بحيرة في اليابان.', 'خط JR كوسي من كيوتو. لا تعبر الطريق من أجل الصورة: هناك نقطة مشاهدة آمنة.'] },
+    { es: ['Motonosumi Inari', 'Yamaguchi · todo el año', 'Más de cien torii rojos que bajan hasta acantilados sobre el mar.', 'Mejor en coche; está lejos de todo, por eso casi no hay gente.'], en: ['Motonosumi Inari', 'Yamaguchi · all year', 'Over a hundred red torii running down to cliffs above the sea.', 'Best by car; it is far from everything, which is why it is nearly empty.'], ar: ['موتونوسومي إيناري', 'ياماغوتشي · طوال العام', 'أكثر من مئة بوابة توري حمراء تنحدر حتى منحدرات فوق البحر.', 'الأفضل بالسيارة؛ بعيدة عن كل شيء، ولهذا تكاد تخلو من الناس.'] },
+    { es: ['Garganta de Takachiho', 'Miyazaki · todo el año', 'Una cascada que cae a un río verde esmeralda entre paredes de roca, vista desde una barca.', 'Las barcas se reservan y se llenan pronto; reserva en cuanto sepas la fecha.'], en: ['Takachiho Gorge', 'Miyazaki · all year', 'A waterfall dropping into an emerald river between rock walls, seen from a rowing boat.', 'Boats are booked and fill up fast; reserve as soon as you know your date.'], ar: ['وادي تاكاتشيهو', 'ميازاكي · طوال العام', 'شلال يسقط في نهر زمردي بين جدران صخرية، تراه من قارب تجديف.', 'القوارب بالحجز وتمتلئ سريعاً؛ احجز فور معرفة موعدك.'] },
+    { es: ['Ine no funaya', 'Kioto (norte) · todo el año', 'Casas de madera construidas sobre el agua, con las barcas debajo.', 'Ve con Amanohashidate en el mismo día; desde Kioto son unas 2-3 horas.'], en: ['Ine no Funaya', 'Northern Kyoto · all year', 'Wooden boathouses built over the water, with boats parked underneath.', 'Pair it with Amanohashidate on the same day; about 2–3 hours from Kyoto.'], ar: ['إينه نو فونايا', 'شمال كيوتو · طوال العام', 'بيوت خشبية مبنية فوق الماء، تحتها القوارب.', 'اجمعها مع أمانوهاشيداته في اليوم نفسه؛ نحو 2-3 ساعات من كيوتو.'] },
+  ],
+}

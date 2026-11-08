@@ -1127,7 +1127,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {/* Sitios virales de TikTok por temporada + Ruta TikTok (HTML estático, scripts/tiktok.mjs). */}
             {p.guia === 'tony' && (p.lang === 'es' || p.lang === 'en' || p.lang === 'ar') && (
               <a href={p.lang === 'es' ? '/tiktok/' : `/tiktok/${p.lang}/`}>
-                {p.lang === 'ar' ? 'كانساي تيك توك · سعر خاص' : p.lang === 'es' ? 'Kansai de TikTok · precio especial' : 'TikTok Kansai · special price'}
+                {p.lang === 'ar' ? 'يابان تيك توك · سعر خاص' : p.lang === 'es' ? 'Japón de TikTok · precio especial' : 'TikTok Japan · special price'}
               </a>
             )}
           </PieColumna>

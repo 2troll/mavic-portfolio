@@ -14,7 +14,7 @@
 import { mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { UI, TEMPORADAS, PRECIO, WHATSAPP } from './tiktok-datos.mjs'
+import { UI, TEMPORADAS, PRECIO, WHATSAPP, JOYAS, JOYAS_UI } from './tiktok-datos.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -105,6 +105,18 @@ function reel(s, lang, i) {
 </article>`
 }
 
+
+function joyas(lang, temp, cuantas = 6) {
+  const J = JOYAS_UI[lang]
+  const lista = (JOYAS[temp.id] ?? []).slice(0, cuantas)
+  if (!lista.length) return ''
+  return `<section class="w joyas"><p class="eti">${esc(J.eti)} · ${esc(temp.t[lang].nombre)}</p>
+<h2>${esc(J.titulo)}</h2><p class="lead">${esc(J.intro)}</p>
+<ol class="joyas-l">${lista.map((j) => { const [n, donde, porque, ir] = j[lang]; return `<li data-r><h3>${esc(n)}</h3><p class="donde">${esc(donde)}</p><dl><dt>${esc(J.porque)}</dt><dd>${esc(porque)}</dd><dt>${esc(J.ir)}</dt><dd>${esc(ir)}</dd></dl></li>` }).join('')}</ol>
+<div class="joyas-cta"><div><b>${esc(J.cta)}</b><p>${esc(J.cta_d)}</p></div><a class="btn" href="${wa(lang, temp)}" target="_blank" rel="noopener">WhatsApp</a></div>
+</section>`
+}
+
 function tarjetaTemporada(t, lang) {
   return `<a class="temp" href="${ruta(lang, t)}" data-r>
   <img src="${foto(t.foto, 720)}" alt="" loading="lazy" decoding="async">
@@ -129,11 +141,13 @@ function pagina(lang, temp) {
   const t = temp ?? actual()
   const cuerpo = temp
     ? `<section class="w"><p class="eti">${esc(temp.t[lang].meses)}</p><div class="reels">${temp.sitios.map((s, i) => reel(s, lang, i)).join('')}</div></section>
+${joyas(lang, temp)}
 <section class="w">${oferta(lang, temp)}</section>
 <section class="w"><p class="eti">${esc(u.otras)}</p><div class="temps">${TEMPORADAS.filter((x) => x !== temp).map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>`
     : `<section class="w"><p class="eti">${esc(u.temporadas)}</p><div class="temps">${TEMPORADAS.map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>
 <section class="w">${oferta(lang, t)}</section>
-<section class="w"><p class="eti">${esc(t.t[lang].nombre)} · ${esc(t.t[lang].meses)}</p><div class="reels">${t.sitios.slice(0, 3).map((s, i) => reel(s, lang, i)).join('')}</div><p class="mas"><a href="${ruta(lang, t)}">${esc(t.t[lang].nombre)} →</a></p></section>`
+<section class="w"><p class="eti">${esc(t.t[lang].nombre)} · ${esc(t.t[lang].meses)}</p><div class="reels">${t.sitios.slice(0, 3).map((s, i) => reel(s, lang, i)).join('')}</div><p class="mas"><a href="${ruta(lang, t)}">${esc(t.t[lang].nombre)} →</a></p></section>
+${joyas(lang, t, 3)}`
   const fotosUsadas = temp ? [temp.foto, ...temp.sitios.map((s) => s.foto)] : ['fushimi', ...TEMPORADAS.map((x) => x.foto), ...t.sitios.slice(0, 3).map((s) => s.foto)]
   return `<!doctype html>
 <html lang="${lang}" dir="${u.dir}" data-estatica="tiktok">
@@ -266,6 +280,20 @@ section.w{padding:70px 0}
 .creditos{margin-top:12px}.creditos ul{padding-inline-start:18px;margin-top:8px;font-size:12px}
 @media (max-width:900px){.reels,.temps{grid-template-columns:1fr 1fr}.oferta{grid-template-columns:1fr}}
 @media (max-width:600px){.reels,.temps{grid-template-columns:1fr}.idiomas{display:none}.pantalla{aspect-ratio:4/5}}
+.joyas h2{font-size:clamp(30px,4vw,52px);margin:0 0 12px}
+.joyas .lead{margin-bottom:30px}
+.joyas-l{list-style:none;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:16px;counter-reset:j}
+.joyas-l li{counter-increment:j;background:var(--f2);border:1px solid var(--b);border-radius:20px;padding:22px}
+.joyas-l li::before{content:counter(j,decimal-leading-zero);display:block;font:700 13px/1 Inter,sans-serif;color:var(--rosa);margin-bottom:12px;font-variant-numeric:tabular-nums}
+.joyas-l h3{font-size:24px;margin-bottom:6px}
+.joyas-l .donde{color:var(--cian);font-size:14px;margin-bottom:10px}
+.joyas-l dt{font:600 11px/1 Inter,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:var(--g);margin-top:10px}
+[dir=rtl] .joyas-l dt{letter-spacing:0;font-size:13px}
+.joyas-l dd{color:#d6d6de;font-size:15px}
+.joyas-cta{display:flex;gap:20px;align-items:center;justify-content:space-between;margin-top:22px;padding:22px;border:1px solid var(--b);border-radius:20px}
+.joyas-cta p{color:var(--g);font-size:14px}
+@media (max-width:900px){.joyas-l{grid-template-columns:1fr 1fr}}
+@media (max-width:600px){.joyas-l{grid-template-columns:1fr}.joyas-cta{flex-direction:column;align-items:flex-start}}
 h1,h2,h3{text-wrap:balance}
 p,dd{text-wrap:pretty}
 .precio,.pill,.temp-p{font-variant-numeric:tabular-nums}
