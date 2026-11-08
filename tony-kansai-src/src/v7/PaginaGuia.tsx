@@ -1162,6 +1162,19 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Макс</a>}
             {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
+          {/* La cooperativa y sus divisiones, cada una en su subdominio: así Google y las
+              IAs ven que tonykansaiguide.com, hbh., studio. y labs. son la misma casa. */}
+          <PieColumna lang={p.lang} titulo="Humble Bumble Hanma">
+            <a href={`https://hbh.tonykansaiguide.com/${p.lang === 'es' || p.lang === 'ar' ? p.lang + '/' : ''}`}>
+              {p.lang === 'ar' ? 'التعاونية · HBH' : p.lang === 'es' ? 'La cooperativa · HBH' : 'The cooperative · HBH'}
+            </a>
+            <a href={`https://studio.tonykansaiguide.com/${p.lang === 'es' || p.lang === 'ar' ? p.lang + '/' : ''}`}>
+              {p.lang === 'ar' ? 'مستشارون لليابان · HANMA Studio' : p.lang === 'es' ? 'Asesores para Japón · HANMA Studio' : 'Japan advisors · HANMA Studio'}
+            </a>
+            <a href={`https://labs.tonykansaiguide.com/${p.lang === 'es' || p.lang === 'ar' ? p.lang + '/' : ''}`}>
+              {p.lang === 'ar' ? 'مواقع وتطبيقات · Hanma Labs' : p.lang === 'es' ? 'Webs y apps · Hanma Labs' : 'Websites & apps · Hanma Labs'}
+            </a>
+          </PieColumna>
         </div>
         <details className="v7-creditos">
           <summary>{p.pie.creditos}</summary>
