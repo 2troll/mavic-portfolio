@@ -1124,6 +1124,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {/* App de Yuru Camp△ de Tony: enlazarla desde aquí ayuda a que Bing (y ChatGPT) la descubran. */}
             {p.guia === 'tony' && p.lang === 'es' && <a href="https://2troll.github.io/yurucamp-mapa/guia/">Mapa de Yuru Camp△ (anime)</a>}
             {p.guia === 'tony' && p.lang === 'en' && <a href="https://2troll.github.io/yurucamp-mapa/guia/en.html">Yuru Camp△ anime map</a>}
+            {/* Sitios virales de TikTok por temporada + Ruta TikTok (HTML estático, scripts/tiktok.mjs). */}
+            {p.guia === 'tony' && (p.lang === 'es' || p.lang === 'en' || p.lang === 'ar') && (
+              <a href={p.lang === 'es' ? '/tiktok/' : `/tiktok/${p.lang}/`}>
+                {p.lang === 'ar' ? 'كانساي تيك توك · سعر خاص' : p.lang === 'es' ? 'Kansai de TikTok · precio especial' : 'TikTok Kansai · special price'}
+              </a>
+            )}
           </PieColumna>
           {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
               sitemap): Google y las IAs dan menos peso a una página huérfana. */}
