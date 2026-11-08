@@ -152,7 +152,7 @@ const APPS_T: Record<VentajasId, { titulo: string; sub: string }> = {
 
 function IndiceFijo({ id }: { id: VentajasId }) {
   const t = INDICE[id]
-  const secciones = [['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
+  const secciones = [['planes', PLANES_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
   const [activa, setActiva] = useState('')
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
@@ -167,6 +167,7 @@ function IndiceFijo({ id }: { id: VentajasId }) {
   )
 }
 
+const PLANES_IDX: Record<VentajasId, string> = { es: 'Planes', en: 'Plans', ar: 'البرامج', ru: 'Программы' }
 const TODAS: Record<VentajasId, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
 const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح', ru: 'Открыть' }
 
@@ -327,7 +328,7 @@ function Pie({ id }: { id: VentajasId }) {
 // Índice bajo la barra: marca la sección que se está leyendo.
 function Indice({ id }: { id: VentajasId }) {
   const t = INDICE[id]
-  const secciones = [['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
+  const secciones = [['planes', PLANES_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
   const [activa, setActiva] = useState('')
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
