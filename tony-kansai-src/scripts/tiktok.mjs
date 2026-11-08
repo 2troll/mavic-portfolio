@@ -14,7 +14,7 @@
 import { mkdirSync, writeFileSync, readFileSync, rmSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
-import { UI, TEMPORADAS, PRECIO, WHATSAPP, JOYAS, JOYAS_UI } from './tiktok-datos.mjs'
+import { UI, TEMPORADAS, PRECIO, WHATSAPP, JOYAS, JOYAS_UI, JOYAS_KANTO } from './tiktok-datos.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -108,7 +108,8 @@ function reel(s, lang, i) {
 
 function joyas(lang, temp, cuantas = 6) {
   const J = JOYAS_UI[lang]
-  const lista = (JOYAS[temp.id] ?? []).slice(0, cuantas)
+  // Kanto primero en la portada: son los «trends chiquitos» que más piden
+  const lista = [...(JOYAS_KANTO[temp.id] ?? []), ...(JOYAS[temp.id] ?? [])].slice(0, cuantas)
   if (!lista.length) return ''
   return `<section class="w joyas"><p class="eti">${esc(J.eti)} · ${esc(temp.t[lang].nombre)}</p>
 <h2>${esc(J.titulo)}</h2><p class="lead">${esc(J.intro)}</p>
@@ -141,7 +142,7 @@ function pagina(lang, temp) {
   const t = temp ?? actual()
   const cuerpo = temp
     ? `<section class="w"><p class="eti">${esc(temp.t[lang].meses)}</p><div class="reels">${temp.sitios.map((s, i) => reel(s, lang, i)).join('')}</div></section>
-${joyas(lang, temp)}
+${joyas(lang, temp, 12)}
 <section class="w">${oferta(lang, temp)}</section>
 <section class="w"><p class="eti">${esc(u.otras)}</p><div class="temps">${TEMPORADAS.filter((x) => x !== temp).map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>`
     : `<section class="w"><p class="eti">${esc(u.temporadas)}</p><div class="temps">${TEMPORADAS.map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>
