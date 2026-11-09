@@ -381,6 +381,8 @@ h1{font-size:clamp(28px,5vw,40px);line-height:1.2;margin:28px 0 8px}h2{font-size
 .btn{display:inline-block;background:var(--yesil);color:#fff;text-decoration:none;font-weight:600;padding:13px 22px;border-radius:999px;margin:8px 0}
 .etiket{display:block;margin-top:20px;font-size:13px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:var(--kirmizi)}
 ul.ozet{padding-left:20px}ul.ozet li{margin:4px 0}
+.portre{float:right;width:220px;margin:8px 0 16px 24px;text-align:center}.portre img{width:100%;height:auto;aspect-ratio:1;object-fit:cover;border-radius:50%;border:4px solid var(--kart);box-shadow:0 0 0 2px var(--kirmizi),0 12px 30px rgba(0,0,0,.18)}.portre figcaption{margin-top:10px;font-size:14px;color:var(--soluk)}.portre figcaption strong{display:block;font-size:18px;color:var(--fg)}
+@media (max-width:700px){.portre{float:none;width:160px;margin:8px auto 12px}}
 .izgara{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px;padding:0;list-style:none}
 .izgara li{position:relative}.kf-kredi{display:block;padding:0 16px 12px;margin-top:-6px;font-size:10px;color:var(--soluk);opacity:.75}.kf-kredi a{color:inherit}
 .izgara li{background:var(--kart);border:1px solid var(--cizgi);border-radius:16px;overflow:hidden;box-shadow:0 1px 2px rgba(0,0,0,.04),0 12px 32px -18px rgba(0,0,0,.35)}
@@ -502,7 +504,7 @@ const rehber = {
   knowsLanguage: [{ '@type': 'Language', name: 'Türkçe', alternateName: 'tr' }],
   homeLocation: { '@type': 'Place', name: 'Kansai, Japonya' },
   worksFor: { '@type': 'Organization', '@id': `${BASE}/#organization`, name: 'Tony Kansai Guide', url: `${BASE}/` },
-  url: `${BASE}/tr/`, description: "4 yıldır Japonya'da yaşayan Türk tur rehberi. Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar.",
+  image: `${BASE}/tr/foto/ferhat-640.webp`, url: `${BASE}/tr/`, description: "4 yıldır Japonya'da yaşayan Türk tur rehberi. Kyoto, Osaka, Nara, Kobe ve Himeji'de Türkçe özel turlar.",
 }
 const hizmet = (sehir) => ({
   '@type': 'Service', name: sehir ? `${sehir.ad} Türkçe özel tur` : "Japonya'da Türkçe özel rehberli tur (Kansai)",
@@ -558,6 +560,7 @@ ${YORUMLAR.length ? `<li><strong>${ORTALAMA}/5</strong><span>${YORUMLAR.length} 
 </ul></div></section>
 <div class="serit" aria-hidden="true"><div>${Array(4).fill('<span><i>京都</i>Kyoto</span><span><i>大阪</i>Osaka</span><span><i>奈良</i>Nara</span><span><i>神戸</i>Kobe</span><span><i>姫路</i>Himeji</span>').join('')}</div></div>
 <div class="kap">
+<figure class="portre"><img src="/tr/foto/ferhat-640.webp" srcset="/tr/foto/ferhat-320.webp 320w, /tr/foto/ferhat-640.webp 640w, /tr/foto/ferhat-1080.webp 1080w" sizes="(max-width:700px) 160px, 220px" alt="Ferhat, Japonya'da Türkçe tur rehberi" width="640" height="640" loading="lazy" decoding="async"><figcaption><strong>Ferhat</strong>Türkçe rehber · Kansai</figcaption></figure>
 <h2>Kısaca</h2>
 <ul class="ozet">
 <li><strong>Kim:</strong> Ferhat, Türk tur rehberi; 4 yıldır Japonya'da yaşıyor.</li>
