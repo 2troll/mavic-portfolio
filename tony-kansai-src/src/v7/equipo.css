@@ -262,3 +262,7 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
   .eq-react .vt-caras { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; margin-inline: -16px; padding: 4px 16px 10px; scrollbar-width: none; }
   .eq-react .vt-cara { flex: 0 0 auto; }
 }
+/* Los estilos globales de la v7 pintan los <a> oscuros y los <ul> como píldora gris: aquí mandan los de la vitrina. */
+.eq.eq-react a.vt-boton, .eq.eq-react a.vt-boton:visited { color: var(--eq-fondo) !important; }
+.eq.eq-react a.vt-boton:hover { color: #fff !important; }
+.eq.eq-react ul.vt-idiomas { background: none !important; width: auto !important; border-radius: 0 !important; padding: 0 !important; box-shadow: none !important; }
