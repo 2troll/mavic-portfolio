@@ -208,44 +208,57 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
   .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: unset; line-clamp: unset; display: block; max-width: 70ch; }
 }
 
-/* --- Carrusel circular (AnilloEquipo.tsx): cilindro 3D que gira solo. --- */
-.eq-react .eq-anillo-caja { --eq-ancho: 300px; margin-top: 8px; }
-.eq-react .eq-anillo-escena {
-  position: relative; height: 560px; perspective: 1600px; perspective-origin: 50% 40%;
-  touch-action: pan-y; cursor: grab; user-select: none; overflow: hidden;
-  /* Bordes difuminados: las tarjetas entran y salen del cilindro sin corte. */
-  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
-  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+
+/* --- Vitrina de guías (VitrinaEquipo.tsx): foto que gira en 2D + línea de progreso. --- */
+.eq-react .vt { --vt-color: #d1342f; margin-top: 8px; }
+.eq-react .vt-escena {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 4px minmax(0, 1fr); gap: clamp(24px, 4vw, 56px);
+  align-items: center; min-height: 520px;
 }
-.eq-react .eq-anillo-escena:active { cursor: grabbing; }
-.eq-react .eq-anillo { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
-.eq-react .eq-anillo-hueco {
-  position: absolute; top: 24px; left: 50%; width: var(--eq-ancho); margin-left: calc(var(--eq-ancho) / -2);
-  transform-style: preserve-3d; backface-visibility: hidden; transition: opacity .25s linear;
+.eq-react .vt-textos { position: relative; display: grid; }
+.eq-react .vt-texto { grid-area: 1 / 1; visibility: hidden; opacity: 0; }
+.eq-react .vt-texto:first-child { visibility: visible; opacity: 1; }
+.eq-react .vt-sello { display: inline-block; font: 600 12px/1 var(--eq-cuerpo); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--vt-color); padding: 7px 10px; border-radius: 999px; margin-bottom: 14px; }
+.eq-react .vt-nombre { font: 700 clamp(44px, 6.4vw, 96px)/.98 var(--eq-cuerpo) !important; letter-spacing: -.035em; color: var(--eq-texto); }
+.eq-react .vt-linea { font: 600 clamp(24px, 3vw, 44px)/1.08 var(--eq-cuerpo); letter-spacing: -.02em; color: var(--eq-tenue); margin-top: 6px !important; max-width: 16ch; }
+.eq-react .vt-idiomas { display: flex; gap: 6px; margin-top: 22px !important; }
+.eq-react .vt-idiomas li { font: 700 12px/1 var(--eq-cuerpo); padding: 7px 10px; border-radius: 999px; border: 1px solid var(--eq-borde); color: var(--eq-texto); }
+.eq-react .vt-desc { color: var(--eq-tenue); font-size: 16px; line-height: 1.55; max-width: 48ch; margin-top: 16px !important; }
+.eq-react .vt-boton {
+  display: inline-flex; align-items: center; gap: 10px; margin-top: 26px; padding: 15px 26px; border-radius: 999px;
+  background: var(--eq-texto); color: var(--eq-fondo); font: 700 16px/1 var(--eq-cuerpo); text-decoration: none;
+  transition: transform .25s ease, background .25s ease;
 }
-.eq-react .eq-anillo-hueco .eq-tarjeta { height: 500px; transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s ease; }
-.eq-react .eq-anillo-hueco .eq-foto { width: 100%; height: 230px; object-fit: cover; border-radius: 0; }
-.eq-react .eq-anillo-hueco .eq-cabeza { display: block; }
-.eq-react .eq-anillo-hueco .eq-cabeza > div { padding: 14px 18px 0; }
-.eq-react .eq-anillo-hueco .eq-emblema { display: grid; place-items: center; width: 100%; height: 230px; border-radius: 0; font-size: 72px; }
-.eq-react .eq-anillo-hueco :is(.eq-linea, .eq-desc, .eq-acciones) { padding-inline: 18px; }
-.eq-react .eq-anillo-hueco .eq-desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.eq-react .eq-anillo-hueco .eq-acciones { margin-top: auto; padding-bottom: 18px; }
-/* La de delante, más grande y con sombra de color. */
-.eq-react .eq-anillo-hueco.eq-frente .eq-tarjeta { transform: scale(1.06); box-shadow: 0 30px 60px -28px var(--eq-torii), 0 0 0 2px var(--eq-torii); }
-.eq-react .eq-anillo-mandos { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 4px; }
-.eq-react .eq-flecha {
-  width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--eq-borde); background: var(--eq-tarjeta);
-  color: var(--eq-texto); font-size: 20px; cursor: pointer; transition: transform .2s ease, background .2s ease;
+.eq-react .vt-boton:hover { transform: translateY(-2px); background: var(--vt-color); color: #fff; }
+.eq-react .vt-tramos { display: flex; flex-direction: column; gap: 10px; align-self: stretch; padding-block: 40px; }
+.eq-react .vt-tramo { flex: 1; width: 4px; border: 0; padding: 0; border-radius: 2px; background: var(--eq-shoji); cursor: pointer; overflow: hidden; }
+.eq-react .vt-tramo i { display: block; width: 100%; height: 100%; background: var(--vt-color); transform-origin: top; transform: scaleY(0); }
+.eq-react .vt-marco { position: relative; aspect-ratio: 1 / 1; max-height: 520px; justify-self: center; width: 100%; max-width: 520px; display: grid; }
+.eq-react .vt-brillo {
+  position: absolute; inset: -18%; z-index: 0; border-radius: 50%; pointer-events: none;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--vt-color) 55%, transparent), transparent 72%);
+  filter: blur(30px); transition: background .8s ease;
 }
-.eq-react .eq-flecha:hover { transform: scale(1.08); background: var(--eq-torii); color: #fff; }
-.eq-react .eq-puntos { display: flex; gap: 6px; }
-.eq-react .eq-puntos i { width: 8px; height: 8px; border-radius: 50%; background: var(--eq-shoji); transition: width .3s ease, background .3s ease; }
-.eq-react .eq-puntos i.on { width: 24px; border-radius: 4px; background: var(--eq-torii); }
-.eq-react[dir="rtl"] .eq-flecha { transform: scaleX(-1); }
+.eq-react .vt-foto { grid-area: 1 / 1; position: relative; z-index: 1; visibility: hidden; opacity: 0; border-radius: 26px; overflow: hidden; box-shadow: 0 40px 80px -40px rgba(0, 0, 0, .55); transform-origin: 50% 60%; }
+.eq-react .vt-foto:first-of-type { visibility: visible; opacity: 1; }
+.eq-react .vt-foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.eq-react .vt-emblema { display: grid; place-items: center; width: 100%; height: 100%; background: var(--vt-color); color: #fff; font: 700 160px/1 var(--eq-cuerpo); }
+.eq-react .vt-caras { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 40px; }
+.eq-react .vt-cara {
+  display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px 6px 6px; border-radius: 999px; cursor: pointer;
+  border: 1px solid var(--eq-shoji); background: var(--eq-tarjeta); color: var(--eq-texto); font: 600 14px/1 var(--eq-cuerpo);
+  transition: border-color .25s ease, transform .25s ease, box-shadow .25s ease;
+}
+.eq-react .vt-cara img, .eq-react .vt-cara span { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: grid; place-items: center; background: var(--vt-c); color: #fff; font-weight: 700; }
+.eq-react .vt-cara:hover { transform: translateY(-2px); }
+.eq-react .vt-cara.on { border-color: var(--vt-c); box-shadow: 0 0 0 2px var(--vt-c), 0 12px 26px -14px var(--vt-c); }
+.eq-react .vt-cara b { font-weight: 700; }
 @media (max-width: 719px) {
-  .eq-react .eq-anillo-caja { --eq-ancho: 230px; }
-  .eq-react .eq-anillo-escena { height: 500px; perspective: 1000px; }
-  .eq-react .eq-anillo-hueco .eq-tarjeta { height: 450px; }
-  .eq-react .eq-anillo-hueco .eq-foto, .eq-react .eq-anillo-hueco .eq-emblema { height: 190px; }
+  .eq-react .vt-escena { grid-template-columns: 1fr; gap: 22px; min-height: 0; }
+  .eq-react .vt-marco { order: -1; max-width: 340px; }
+  .eq-react .vt-tramos { order: 0; flex-direction: row; padding: 0; height: 4px; }
+  .eq-react .vt-tramo { width: auto; height: 4px; }
+  .eq-react .vt-tramo i { transform-origin: left; }
+  .eq-react .vt-caras { flex-wrap: nowrap; overflow-x: auto; justify-content: flex-start; margin-inline: -16px; padding: 4px 16px 10px; scrollbar-width: none; }
+  .eq-react .vt-cara { flex: 0 0 auto; }
 }

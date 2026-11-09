@@ -7,17 +7,11 @@
 import { Link, useLocation } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { useLanguage } from '../contexts/LanguageContext'
-import { EQUIPO, NOMBRE_IDIOMA, UI_EQUIPO, versionGuia } from './datosEquipo'
+import { EQUIPO, UI_EQUIPO } from './datosEquipo'
 import { CORREO } from './contenido'
-import type { GuiaEquipo, GuiaEquipoId, IdiomaEquipo } from './datosEquipo'
-import { AnilloEquipo } from './AnilloEquipo'
+import type { GuiaEquipoId, IdiomaEquipo } from './datosEquipo'
+import { VitrinaEquipo } from './VitrinaEquipo'
 import './equipo.css'
-
-const FLECHAS: Record<IdiomaEquipo, { ant: string; sig: string }> = {
-  es: { ant: 'Guía anterior', sig: 'Guía siguiente' }, en: { ant: 'Previous guide', sig: 'Next guide' },
-  ar: { ant: 'المرشد السابق', sig: 'المرشد التالي' }, ru: { ant: 'Предыдущий гид', sig: 'Следующий гид' },
-  tr: { ant: 'Önceki rehber', sig: 'Sonraki rehber' }, fr: { ant: 'Guide précédent', sig: 'Guide suivant' },
-}
 
 /** Rutas que son de la app (enlace con <Link>); /tr/, /fr/, /familias/ y /private/ son HTML estático. */
 const DE_LA_APP = /^\/(es|en|ar|ru|larion)\//
@@ -34,35 +28,6 @@ function Enlace({ to, children, ...resto }: { to: string; children: ReactNode; c
   return DE_LA_APP.test(to) ? <Link to={to} {...resto}>{children}</Link> : <a href={to} {...resto}>{children}</a>
 }
 
-function Tarjeta({ g, langPagina, aqui }: { g: GuiaEquipo; langPagina: IdiomaEquipo; aqui: boolean }) {
-  const { lang, v } = versionGuia(g, langPagina)
-  const rtl = lang === 'ar'
-  return (
-    <div className={`eq-tarjeta${aqui ? ' eq-aqui' : ''}`} lang={lang} dir={rtl ? 'rtl' : 'ltr'}>
-      {aqui && <span className="eq-sello" lang={langPagina} dir={langPagina === 'ar' ? 'rtl' : 'ltr'}>{UI_EQUIPO.aqui[langPagina]}</span>}
-      <div className="eq-cabeza">
-        {g.foto
-          ? <img className="eq-foto" src={g.foto} alt={v.alt ?? v.nombre} width={320} height={400} loading="lazy" decoding="async" />
-          : <span className="eq-emblema" aria-hidden="true"><span>{g.emblema}</span></span>}
-        <div>
-          <h3 className="eq-nombre">{v.nombre}</h3>
-          <ul className="eq-idiomas" aria-label={g.idiomas.map((i) => NOMBRE_IDIOMA[i]).join(', ')}>
-            {g.idiomas.map((i) => <li key={i} title={NOMBRE_IDIOMA[i]} aria-hidden="true">{i.toUpperCase()}</li>)}
-          </ul>
-        </div>
-      </div>
-      <p className="eq-linea">{v.linea}</p>
-      <p className="eq-desc">{v.desc}</p>
-      <div className="eq-acciones">
-        <Enlace to={v.ruta} className="eq-boton" hrefLang={lang} aria-current={aqui ? 'page' : undefined}>
-          {v.boton}<span className="eq-oculto">{v.oculto}</span> <span aria-hidden="true">{rtl ? '←' : '→'}</span>
-        </Enlace>
-        {g.extra && <Enlace to={g.extra.ruta} className="eq-extra" hrefLang={g.extra.lang} lang={g.extra.lang}>{g.extra.texto}</Enlace>}
-      </div>
-    </div>
-  )
-}
-
 export function Equipo() {
   const { pathname } = useLocation()
   const { lang: elegido } = useLanguage()
@@ -75,8 +40,8 @@ export function Equipo() {
         <p className="eq-ante"><span aria-hidden="true">案内人</span> {UI_EQUIPO.equipo[lang]}</p>
         <h2 className="eq-titulo" id="eq-titulo">{UI_EQUIPO.titulo[lang]}</h2>
         <p className="eq-sub">{UI_EQUIPO.sub[lang]}</p>
-        {/* Carrusel circular: el guía de la página empieza delante. */}
-        <AnilloEquipo etiquetas={FLECHAS[lang]} hijos={[...EQUIPO.filter((g) => g.id === actual), ...EQUIPO.filter((g) => g.id !== actual)].map((g) => <Tarjeta key={g.id} g={g} langPagina={lang} aqui={g.id === actual} />)} />
+        {/* Vitrina: el guía de la página empieza primero. */}
+        <VitrinaEquipo guias={[...EQUIPO.filter((g) => g.id === actual), ...EQUIPO.filter((g) => g.id !== actual)]} langPagina={lang} actual={actual} Enlace={Enlace} />
         {/* Línea final fina, la última cosa de la página (como en nawatravel.ae). */}
         <p className="eq-fin"><span>© Tony Kansai Guide</span> <a href={`mailto:${CORREO}`}>{CORREO}</a></p>
       </div>
