@@ -10,7 +10,14 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { EQUIPO, NOMBRE_IDIOMA, UI_EQUIPO, versionGuia } from './datosEquipo'
 import { CORREO } from './contenido'
 import type { GuiaEquipo, GuiaEquipoId, IdiomaEquipo } from './datosEquipo'
+import { AnilloEquipo } from './AnilloEquipo'
 import './equipo.css'
+
+const FLECHAS: Record<IdiomaEquipo, { ant: string; sig: string }> = {
+  es: { ant: 'Guía anterior', sig: 'Guía siguiente' }, en: { ant: 'Previous guide', sig: 'Next guide' },
+  ar: { ant: 'المرشد السابق', sig: 'المرشد التالي' }, ru: { ant: 'Предыдущий гид', sig: 'Следующий гид' },
+  tr: { ant: 'Önceki rehber', sig: 'Sonraki rehber' }, fr: { ant: 'Guide précédent', sig: 'Guide suivant' },
+}
 
 /** Rutas que son de la app (enlace con <Link>); /tr/, /fr/, /familias/ y /private/ son HTML estático. */
 const DE_LA_APP = /^\/(es|en|ar|ru|larion)\//
@@ -31,7 +38,7 @@ function Tarjeta({ g, langPagina, aqui }: { g: GuiaEquipo; langPagina: IdiomaEqu
   const { lang, v } = versionGuia(g, langPagina)
   const rtl = lang === 'ar'
   return (
-    <li className={`eq-tarjeta${aqui ? ' eq-aqui' : ''}`} lang={lang} dir={rtl ? 'rtl' : 'ltr'}>
+    <div className={`eq-tarjeta${aqui ? ' eq-aqui' : ''}`} lang={lang} dir={rtl ? 'rtl' : 'ltr'}>
       {aqui && <span className="eq-sello" lang={langPagina} dir={langPagina === 'ar' ? 'rtl' : 'ltr'}>{UI_EQUIPO.aqui[langPagina]}</span>}
       <div className="eq-cabeza">
         {g.foto
@@ -52,7 +59,7 @@ function Tarjeta({ g, langPagina, aqui }: { g: GuiaEquipo; langPagina: IdiomaEqu
         </Enlace>
         {g.extra && <Enlace to={g.extra.ruta} className="eq-extra" hrefLang={g.extra.lang} lang={g.extra.lang}>{g.extra.texto}</Enlace>}
       </div>
-    </li>
+    </div>
   )
 }
 
@@ -68,10 +75,8 @@ export function Equipo() {
         <p className="eq-ante"><span aria-hidden="true">案内人</span> {UI_EQUIPO.equipo[lang]}</p>
         <h2 className="eq-titulo" id="eq-titulo">{UI_EQUIPO.titulo[lang]}</h2>
         <p className="eq-sub">{UI_EQUIPO.sub[lang]}</p>
-        <ul className="eq-fila">
-          {/* El guía de la página primero: sale en grande (equipo.css). */}
-          {[...EQUIPO.filter((g) => g.id === actual), ...EQUIPO.filter((g) => g.id !== actual)].map((g) => <Tarjeta key={g.id} g={g} langPagina={lang} aqui={g.id === actual} />)}
-        </ul>
+        {/* Carrusel circular: el guía de la página empieza delante. */}
+        <AnilloEquipo etiquetas={FLECHAS[lang]} hijos={[...EQUIPO.filter((g) => g.id === actual), ...EQUIPO.filter((g) => g.id !== actual)].map((g) => <Tarjeta key={g.id} g={g} langPagina={lang} aqui={g.id === actual} />)} />
         {/* Línea final fina, la última cosa de la página (como en nawatravel.ae). */}
         <p className="eq-fin"><span>© Tony Kansai Guide</span> <a href={`mailto:${CORREO}`}>{CORREO}</a></p>
       </div>

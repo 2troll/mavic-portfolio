@@ -6,7 +6,7 @@ import datos from '../../scripts/equipo.json'
 import { TG_LARION, WA_TONY } from './contenido'
 
 export type IdiomaEquipo = 'es' | 'en' | 'ar' | 'ru' | 'tr' | 'fr'
-export type GuiaEquipoId = 'tony' | 'larion' | 'ferhat' | 'iheb' | 'antonio' | 'mario'
+export type GuiaEquipoId = 'tony' | 'larion' | 'maks' | 'filipp' | 'ferhat' | 'iheb' | 'antonio' | 'mario'
 
 export interface VersionGuia { ruta: string; nombre: string; linea: string; boton: string; oculto: string; alt?: string; desc: string }
 export interface GuiaEquipo {

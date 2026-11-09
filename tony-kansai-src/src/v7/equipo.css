@@ -207,3 +207,45 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
   .eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { aspect-ratio: 1 / 1; }
   .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: unset; line-clamp: unset; display: block; max-width: 70ch; }
 }
+
+/* --- Carrusel circular (AnilloEquipo.tsx): cilindro 3D que gira solo. --- */
+.eq-react .eq-anillo-caja { --eq-ancho: 300px; margin-top: 8px; }
+.eq-react .eq-anillo-escena {
+  position: relative; height: 560px; perspective: 1600px; perspective-origin: 50% 40%;
+  touch-action: pan-y; cursor: grab; user-select: none; overflow: hidden;
+  /* Bordes difuminados: las tarjetas entran y salen del cilindro sin corte. */
+  mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 12%, #000 88%, transparent);
+}
+.eq-react .eq-anillo-escena:active { cursor: grabbing; }
+.eq-react .eq-anillo { position: absolute; inset: 0; transform-style: preserve-3d; will-change: transform; }
+.eq-react .eq-anillo-hueco {
+  position: absolute; top: 24px; left: 50%; width: var(--eq-ancho); margin-left: calc(var(--eq-ancho) / -2);
+  transform-style: preserve-3d; backface-visibility: hidden; transition: opacity .25s linear;
+}
+.eq-react .eq-anillo-hueco .eq-tarjeta { height: 500px; transition: transform .5s cubic-bezier(.2, .8, .2, 1), box-shadow .5s ease; }
+.eq-react .eq-anillo-hueco .eq-foto { width: 100%; height: 230px; object-fit: cover; border-radius: 0; }
+.eq-react .eq-anillo-hueco .eq-cabeza { display: block; }
+.eq-react .eq-anillo-hueco .eq-cabeza > div { padding: 14px 18px 0; }
+.eq-react .eq-anillo-hueco .eq-emblema { display: grid; place-items: center; width: 100%; height: 230px; border-radius: 0; font-size: 72px; }
+.eq-react .eq-anillo-hueco :is(.eq-linea, .eq-desc, .eq-acciones) { padding-inline: 18px; }
+.eq-react .eq-anillo-hueco .eq-desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+.eq-react .eq-anillo-hueco .eq-acciones { margin-top: auto; padding-bottom: 18px; }
+/* La de delante, más grande y con sombra de color. */
+.eq-react .eq-anillo-hueco.eq-frente .eq-tarjeta { transform: scale(1.06); box-shadow: 0 30px 60px -28px var(--eq-torii), 0 0 0 2px var(--eq-torii); }
+.eq-react .eq-anillo-mandos { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 4px; }
+.eq-react .eq-flecha {
+  width: 48px; height: 48px; border-radius: 50%; border: 1px solid var(--eq-borde); background: var(--eq-tarjeta);
+  color: var(--eq-texto); font-size: 20px; cursor: pointer; transition: transform .2s ease, background .2s ease;
+}
+.eq-react .eq-flecha:hover { transform: scale(1.08); background: var(--eq-torii); color: #fff; }
+.eq-react .eq-puntos { display: flex; gap: 6px; }
+.eq-react .eq-puntos i { width: 8px; height: 8px; border-radius: 50%; background: var(--eq-shoji); transition: width .3s ease, background .3s ease; }
+.eq-react .eq-puntos i.on { width: 24px; border-radius: 4px; background: var(--eq-torii); }
+.eq-react[dir="rtl"] .eq-flecha { transform: scaleX(-1); }
+@media (max-width: 719px) {
+  .eq-react .eq-anillo-caja { --eq-ancho: 230px; }
+  .eq-react .eq-anillo-escena { height: 500px; perspective: 1000px; }
+  .eq-react .eq-anillo-hueco .eq-tarjeta { height: 450px; }
+  .eq-react .eq-anillo-hueco .eq-foto, .eq-react .eq-anillo-hueco .eq-emblema { height: 190px; }
+}

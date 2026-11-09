@@ -113,6 +113,29 @@
       }
     },
     {
+      "id": "maks",
+      "ld": "/ru/maks/#maks",
+      "idiomas": [
+        "ru"
+      ],
+      "zona": "North Korea (DPRK): group tours from Vladivostok to Pyongyang",
+      "foto": "/ru/maks/foto/maks-640.webp",
+      "contacto": {
+        "tg": "LUiGi19"
+      },
+      "versiones": {
+        "ru": {
+          "ruta": "/ru/maks/",
+          "nombre": "Макс",
+          "linea": "Сопровождающий туров в КНДР",
+          "boton": "Открыть",
+          "oculto": " страницу Макса",
+          "alt": "Фото Макса",
+          "desc": "Макс, гражданин России с российским паспортом, сопровождает наши группы в Северную Корею: из Владивостока в Пхеньян и обратно. Набираем группу 15 человек, можно парами. Запись в Telegram @LUiGi19."
+        }
+      }
+    },
+    {
       "id": "filipp",
       "ld": "/ru/filipp/#filipp",
       "idiomas": [
