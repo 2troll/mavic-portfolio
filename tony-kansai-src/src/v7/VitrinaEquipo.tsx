@@ -1,29 +1,26 @@
-// Vitrina de guías: a la izquierda el nombre en grande y lo que hace; a la derecha
-// su foto, que gira en 2D al pasar al siguiente; entre las dos, una línea de
-// progreso por tramos (uno por guía) que avanza sola. Debajo, una fila de caras
-// para elegir guía directamente.
-// Inspirado en el bloque «Hero 6» de React Bits Pro (de pago, no copiado):
-// rehecho a mano con GSAP. Todos los guías están en el HTML (los inactivos solo
-// se ocultan a la vista) para que Google y las IAs lean a todos.
+// Abanico de guías, al estilo del bloque «Hero 8» de React Bits Pro (de pago, no
+// copiado; rehecho a mano): título enorme en mayúsculas con las caras de los guías
+// metidas entre las palabras, que cambian y se ensanchan; debajo, una fila de
+// fotos altas en la que la del guía elegido se abre y enseña nombre, idiomas y
+// botón. Se elige pasando el ratón, tocando o con el teclado; sin tocar nada,
+// avanza sola cada pocos segundos. Todos los guías están en el HTML para que
+// Google y las IAs lean a todos.
 
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { ReactNode } from 'react'
-import { gsap } from 'gsap'
 import { NOMBRE_IDIOMA, UI_EQUIPO, versionGuia } from './datosEquipo'
 import type { GuiaEquipo, IdiomaEquipo } from './datosEquipo'
 
-const DURACION = 6 // segundos por guía
+const PASO_MS = 4500
 
-/** Texto de las flechas para lectores de pantalla (inglés si falta el idioma). */
-const FLECHAS: Record<string, [string, string]> = {
-  es: ['Guía anterior', 'Siguiente guía'], en: ['Previous guide', 'Next guide'], ar: ['المرشد السابق', 'المرشد التالي'],
-  ru: ['Предыдущий гид', 'Следующий гид'], tr: ['Önceki rehber', 'Sonraki rehber'], fr: ['Guide précédent', 'Guide suivant'],
-}
-
-/** Color del brillo de cada guía (detrás de la foto y en la línea). */
-const COLOR: Record<string, string> = {
-  tony: '#d1342f', larion: '#3b6fd8', maks: '#c9a227', filipp: '#a23bd8',
-  ferhat: '#1f8fb8', iheb: '#e2557a', antonio: '#2f8f5b', mario: '#00b3a4',
+/** Título partido en dos líneas con huecos para las caras (por idioma de la página). */
+const TITULO: Record<IdiomaEquipo, [string, string, string]> = {
+  es: ['Elige', 'tu guía', 'en tu idioma'],
+  en: ['Pick', 'your guide', 'in your language'],
+  ar: ['اختر', 'مرشدك', 'بلغتك'],
+  ru: ['Выберите', 'своего гида', 'на своём языке'],
+  tr: ['Rehberini', 'kendi dilinde', 'seç'],
+  fr: ['Choisissez', 'votre guide', 'dans votre langue'],
 }
 
 export function VitrinaEquipo({ guias, langPagina, actual, Enlace }: {
@@ -33,104 +30,65 @@ export function VitrinaEquipo({ guias, langPagina, actual, Enlace }: {
   Enlace: (p: { to: string; children: ReactNode; className?: string; hrefLang?: string; 'aria-current'?: 'page' }) => ReactNode
 }) {
   const [i, setI] = useState(0)
-  const caja = useRef<HTMLDivElement>(null)
-  const barra = useRef<gsap.core.Tween | null>(null)
   const pausa = useRef(false)
   const n = guias.length
+  const conFoto = guias.filter((g) => g.foto)
 
-  // Transición: la foto saliente gira y se aleja; la entrante entra girando desde el otro lado.
-  const ir = useCallback((sig: number) => setI(((sig % n) + n) % n), [n])
-
+  // Avanza sola; se para mientras el visitante está encima o con el foco dentro.
   useEffect(() => {
-    const el = caja.current
-    if (!el) return
-    const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const fotos = el.querySelectorAll<HTMLElement>('.eqv-foto')
-    const textos = el.querySelectorAll<HTMLElement>('.eqv-texto')
-    fotos.forEach((f, k) => {
-      if (k === i) gsap.fromTo(f, { rotate: quieto ? 0 : -9, scale: quieto ? 1 : 0.86, autoAlpha: 0 }, { rotate: 0, scale: 1, autoAlpha: 1, duration: quieto ? 0.2 : 1.1, ease: 'expo.out', overwrite: true })
-      else if (gsap.getProperty(f, 'autoAlpha') !== 0) gsap.to(f, { rotate: quieto ? 0 : 9, scale: quieto ? 1 : 0.86, autoAlpha: 0, duration: quieto ? 0.2 : 0.7, ease: 'power3.in', overwrite: true })
-    })
-    textos.forEach((t, k) => {
-      const lineas = t.querySelectorAll('.eqv-sube')
-      if (k === i) {
-        gsap.set(t, { autoAlpha: 1 })
-        gsap.fromTo(lineas, { yPercent: quieto ? 0 : 60, autoAlpha: 0 }, { yPercent: 0, autoAlpha: 1, duration: 0.8, ease: 'power3.out', stagger: 0.07, delay: 0.15, overwrite: true })
-      } else gsap.set(t, { autoAlpha: 0 })
-    })
-    // Tramo de la línea: se llena en DURACION segundos y pasa al siguiente guía.
-    const tramo = el.querySelectorAll<HTMLElement>('.eqv-tramo i')[i]
-    el.querySelectorAll<HTMLElement>('.eqv-tramo i').forEach((b, k) => gsap.set(b, { scaleY: k < i ? 1 : 0 }))
-    barra.current?.kill()
-    barra.current = quieto ? null : gsap.fromTo(tramo, { scaleY: 0 }, { scaleY: 1, duration: DURACION, ease: 'none', paused: pausa.current, onComplete: () => ir(i + 1) })
-    return () => { barra.current?.kill() }
-  }, [i, ir])
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    const t = window.setInterval(() => { if (!pausa.current) setI((x) => (x + 1) % n) }, PASO_MS)
+    return () => window.clearInterval(t)
+  }, [n])
 
-  const parar = (si: boolean) => { pausa.current = si; if (si) barra.current?.pause(); else barra.current?.resume() }
-  const color = COLOR[guias[i]?.id] ?? '#d1342f'
+  const [t1, t2, t3] = TITULO[langPagina]
+  // Las dos caras del título: el guía elegido (o el siguiente con foto) y el que viene después.
+  const cara = (k: number) => conFoto.length ? conFoto[((k % conFoto.length) + conFoto.length) % conFoto.length] : null
+  const idxFoto = Math.max(0, conFoto.findIndex((g) => g.id === guias[i].id))
+  const a = cara(idxFoto), b = cara(idxFoto + 1)
 
   return (
-    <div className="eqv" ref={caja} style={{ ['--eqv-color' as string]: color }}
-      onMouseEnter={() => parar(true)} onMouseLeave={() => parar(false)} onFocus={() => parar(true)} onBlur={() => parar(false)}>
-      <div className="eqv-escena">
-        <div className="eqv-textos">
-          {guias.map((g, k) => {
-            const { lang, v } = versionGuia(g, langPagina)
-            const rtl = lang === 'ar'
-            return (
-              <article key={g.id} className="eqv-texto" lang={lang} dir={rtl ? 'rtl' : 'ltr'} aria-hidden={k !== i}>
-                {g.id === actual && <span className="eqv-sello eqv-sube" lang={langPagina}>{UI_EQUIPO.aqui[langPagina]}</span>}
-                <h3 className="eqv-nombre eqv-sube">{v.nombre}.</h3>
-                <p className="eqv-linea eqv-sube">{v.linea}</p>
-                <ul className="eqv-idiomas eqv-sube" aria-label={g.idiomas.map((x) => NOMBRE_IDIOMA[x]).join(', ')}>
+    <div className="eqv" onMouseEnter={() => { pausa.current = true }} onMouseLeave={() => { pausa.current = false }}
+      onFocus={() => { pausa.current = true }} onBlur={() => { pausa.current = false }}>
+      <p className="eqv-grande" aria-hidden="true">
+        <span>{t1}</span>
+        <span className="eqv-pildora">{a && <img key={a.id} src={a.foto} alt="" width={160} height={90} />}</span>
+        <span>{t2}</span>
+        <br />
+        <span className="eqv-pildora eqv-pildora-b">{b && <img key={b.id} src={b.foto} alt="" width={120} height={90} />}</span>
+        <span>{t3}</span>
+      </p>
+
+      <ul className="eqv-abanico" role="tablist" aria-label={UI_EQUIPO.titulo[langPagina]}>
+        {guias.map((g, k) => {
+          const { lang, v } = versionGuia(g, langPagina)
+          const rtl = lang === 'ar'
+          const abierto = k === i
+          return (
+            <li key={g.id} className={`eqv-hoja${abierto ? ' on' : ''}`} lang={lang} dir={rtl ? 'rtl' : 'ltr'}
+              onMouseEnter={() => setI(k)} onClick={() => setI(k)}>
+              {g.foto
+                ? <img className="eqv-img" src={g.foto} alt={v.alt ?? v.nombre} width={640} height={800} loading="lazy" decoding="async" />
+                : <span className="eqv-emblema" aria-hidden="true">{g.emblema}</span>}
+              <span className="eqv-velo" aria-hidden="true" />
+              {/* Cerrada: solo el nombre en vertical. Abierta: toda la ficha. */}
+              <button type="button" role="tab" aria-selected={abierto} className="eqv-pestana" onFocus={() => setI(k)}>{v.nombre}</button>
+              <div className="eqv-ficha" aria-hidden={!abierto}>
+                {g.id === actual && <span className="eqv-sello" lang={langPagina}>{UI_EQUIPO.aqui[langPagina]}</span>}
+                <h3 className="eqv-nombre">{v.nombre}</h3>
+                <p className="eqv-linea">{v.linea}</p>
+                <ul className="eqv-idiomas" aria-label={g.idiomas.map((x) => NOMBRE_IDIOMA[x]).join(', ')}>
                   {g.idiomas.map((x) => <li key={x} title={NOMBRE_IDIOMA[x]}>{x.toUpperCase()}</li>)}
                 </ul>
-                <p className="eqv-desc eqv-sube">{v.desc}</p>
-                <div className="eqv-sube">
-                  <Enlace to={v.ruta} className="eqv-boton" hrefLang={lang} aria-current={g.id === actual ? 'page' : undefined}>
-                    {v.boton}<span className="eq-oculto">{v.oculto}</span> <span aria-hidden="true">{rtl ? '←' : '→'}</span>
-                  </Enlace>
-                </div>
-              </article>
-            )
-          })}
-          {/* Contador y flechas: saber cuántos guías hay y pasar sin esperar. */}
-          <div className="eqv-nav">
-            <span className="eqv-cuenta" aria-live="polite"><b>{String(i + 1).padStart(2, '0')}</b> / {String(n).padStart(2, '0')}</span>
-            <button type="button" className="eqv-flecha" aria-label={(FLECHAS[langPagina] ?? FLECHAS.en)[0]} onClick={() => ir(i - 1)}><span aria-hidden="true">←</span></button>
-            <button type="button" className="eqv-flecha" aria-label={(FLECHAS[langPagina] ?? FLECHAS.en)[1]} onClick={() => ir(i + 1)}><span aria-hidden="true">→</span></button>
-          </div>
-        </div>
-        <div className="eqv-tramos" aria-hidden="true">
-          {guias.map((g, k) => <button key={g.id} type="button" tabIndex={-1} className={`eqv-tramo${k === i ? ' on' : ''}`} onClick={() => ir(k)}><i /></button>)}
-        </div>
-        <div className="eqv-marco">
-          <div className="eqv-brillo" aria-hidden="true" />
-          {guias.map((g, k) => {
-            const { v } = versionGuia(g, langPagina)
-            return (
-              <div key={g.id} className="eqv-foto" aria-hidden={k !== i}>
-                {g.foto
-                  ? <img src={g.foto} alt={v.alt ?? v.nombre} width={640} height={640} loading="lazy" decoding="async" />
-                  : <span className="eqv-emblema">{g.emblema}</span>}
+                <p className="eqv-desc">{v.desc}</p>
+                <Enlace to={v.ruta} className="eqv-boton" hrefLang={lang} aria-current={g.id === actual ? 'page' : undefined}>
+                  {v.boton}<span className="eq-oculto">{v.oculto}</span> <span aria-hidden="true">{rtl ? '←' : '→'}</span>
+                </Enlace>
               </div>
-            )
-          })}
-        </div>
-      </div>
-      {/* Elegir guía directamente: una cara por guía. */}
-      <div className="eqv-caras" role="tablist">
-        {guias.map((g, k) => {
-          const { v } = versionGuia(g, langPagina)
-          return (
-            <button key={g.id} type="button" role="tab" aria-selected={k === i} className={`eqv-cara${k === i ? ' on' : ''}`}
-              style={{ ['--eqv-c' as string]: COLOR[g.id] ?? '#d1342f' }} onClick={() => ir(k)}>
-              {g.foto ? <img src={g.foto} alt="" width={56} height={56} loading="lazy" /> : <span>{g.emblema}</span>}
-              <b>{v.nombre}</b>
-            </button>
+            </li>
           )
         })}
-      </div>
+      </ul>
     </div>
   )
 }
