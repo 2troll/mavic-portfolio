@@ -626,6 +626,8 @@ async function enviar(ev){
     photo: foto ? foto.dataUrl : "",
     grande: Boolean(foto && foto.grande),
     page: location.href,
+    // ?guia=larion (o ferhat) apunta la reseña a la página de ese guía; sin él, es de Tony.
+    guide: ["larion","ferhat"].includes(new URLSearchParams(location.search).get("guia")) ? new URLSearchParams(location.search).get("guia") : "tony",
   };
 
   if (!ENDPOINT){
