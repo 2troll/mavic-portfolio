@@ -9,7 +9,7 @@
 // rutas-estaticas.mjs no la pisa (data-estatica en <html>).
 //
 // Lo que consta de Filipp (no inventar más): hermano de Larion, ruso, guía en
-// ruso, le encanta el rock. Sin foto, sin reseñas propias, sin precio fijo.
+// ruso, le encanta el rock. Foto real (la mandó Larion, 9-11), sin reseñas propias, sin precio fijo.
 // Zonas: las de Larion en Kansai (supuesto del 8-11, a confirmar con Tony).
 // Contacto: aún no ha dado Telegram ni WhatsApp → coordina Tony (@LUiGi19).
 // Cuando lleguen, cambiar TG_USUARIO (y WA si hace falta) y el contacto de
@@ -111,6 +111,7 @@ h1,h2,h3{font-family:'Russo One',Impact,sans-serif;font-weight:400;line-height:1
 .vinilo{position:absolute;inset:0;border-radius:50%;background:radial-gradient(circle,var(--acento) 0 17%,#111 17.4% 18%,transparent 18.4%),repeating-radial-gradient(circle,#161616 0 2px,#0c0c0c 2px 4px);box-shadow:0 30px 60px rgba(0,0,0,.6),inset 0 0 0 6px #070707;animation:gira 6s linear infinite}
 .vinilo::before{content:'';position:absolute;inset:0;border-radius:50%;background:conic-gradient(from 30deg,transparent 0 40deg,rgba(255,255,255,.14) 60deg,transparent 80deg 220deg,rgba(255,255,255,.1) 240deg,transparent 260deg)}
 .vinilo::after{content:'';position:absolute;left:50%;top:50%;width:3%;height:3%;margin:-1.5%;border-radius:50%;background:var(--bg)}
+.cara{position:absolute;left:21%;top:21%;width:58%;height:58%;border-radius:50%;object-fit:cover;object-position:50% 35%;box-shadow:0 0 0 6px var(--acento),0 0 0 9px #070707,0 18px 40px rgba(0,0,0,.55)}
 .etiqueta-disco{position:absolute;inset:0;display:grid;place-items:center;text-align:center;font:400 13px/1.15 'Russo One',sans-serif;color:#fff;pointer-events:none}
 .etiqueta-disco b{display:block;font-size:22px}
 @keyframes gira{to{transform:rotate(360deg)}}
@@ -190,10 +191,10 @@ ${img('dotonbori', 'Неоновая Осака вечером', { prioridad: tr
 <p class="lead">Филипп — брат Лариона и русскоязычный гид нашей команды. Он живёт рок-музыкой и показывает Японию так, как её чувствуют музыканты: с драйвом, но в вашем темпе, с комфортом и на родном языке.</p>
 ${cta()}
 </div>
-<div class="disco" aria-hidden="true">
-<div class="vinilo"></div>
-<div class="etiqueta-disco"><span><b>ФИЛИПП</b>Kansai Tour</span></div>
-<div class="boleto">Admit one<b>Филипп · гид</b>Киото · Осака · Нара</div>
+<div class="disco">
+<div class="vinilo" aria-hidden="true"></div>
+<img class="cara" src="/ru/filipp/foto/filipp-640.webp" srcset="/ru/filipp/foto/filipp-320.webp 320w, /ru/filipp/foto/filipp-640.webp 640w, /ru/filipp/foto/filipp-1080.webp 1080w" sizes="(max-width:860px) 200px, 220px" alt="Филипп, русскоязычный гид в Японии" width="640" height="640" fetchpriority="high">
+<div class="boleto" aria-hidden="true">Admit one<b>Филипп · гид</b>Киото · Осака · Нара</div>
 </div>
 </div>
 <small class="credito">Фото: ${credito('dotonbori')}</small>
@@ -255,7 +256,7 @@ const PERSONA = {
   '@type': 'Person', '@id': `${URL_PAG}#filipp`, name: 'Филипп', alternateName: ['Filipp', 'Philips'],
   jobTitle: 'Русскоязычный частный гид в Японии', knowsLanguage: ['ru'], url: URL_PAG,
   knowsAbout: ['Киото', 'Осака', 'Нара', 'рок-музыка', 'виниловые пластинки', 'Deep Purple Made in Japan'],
-  worksFor: { '@id': `${BASE}/#organization` }, sibling: { '@id': `${BASE}/#larion` },
+  image: `${BASE}/ru/filipp/foto/filipp-640.webp`, worksFor: { '@id': `${BASE}/#organization` }, sibling: { '@id': `${BASE}/#larion` },
   areaServed: ['Kyoto', 'Osaka', 'Nara', 'Kobe', 'Hiroshima', 'Miyajima'],
 }
 const jsonld = { '@context': 'https://schema.org', '@graph': [
