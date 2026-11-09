@@ -274,3 +274,33 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
   .eq-react .eqv-hoja, .eq-react .eqv-pildora, .eq-react .eqv-img, .eq-react .eqv-ficha { transition: none; }
   .eq-react .eqv-pildora img { animation: none; }
 }
+/* Versión simple y más pequeña (Tony, 9-11): fotos más bajas, sin gris ni zoom, menos texto. */
+.eq-react .eqv-grande { font-size: clamp(26px, 4.2vw, 56px) !important; margin: 4px 0 28px !important; }
+.eq-react .eqv-abanico { height: 360px; gap: 8px; max-width: 1040px; margin-inline: auto; }
+.eq-react .eqv-hoja { border-radius: 16px; }
+.eq-react .eqv-hoja.on { flex-grow: 4; }
+.eq-react .eqv-img { object-position: 50% 22%; }
+.eq-react .eqv-hoja:not(.on) .eqv-img { filter: none; transform: none; }
+.eq-react .eqv-velo { background: linear-gradient(180deg, transparent 50%, rgba(10, 8, 6, .75)); }
+.eq-react .eqv-pestana { font-size: 14px; bottom: 16px; }
+.eq-react .eqv-ficha { padding: 18px 20px 20px; }
+.eq-react .eqv-nombre { font-size: clamp(24px, 2.4vw, 34px) !important; text-transform: none; letter-spacing: -.02em; }
+.eq-react .eqv-linea { font-size: 15px; margin-top: 4px !important; }
+.eq.eq-react ul.eqv-idiomas { margin-top: 10px !important; }
+/* La descripción sigue en el HTML para Google, pero no se pinta. */
+.eq-react .eqv-desc { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0 !important; }
+.eq.eq-react a.eqv-boton, .eq.eq-react a.eqv-boton:visited { margin-top: 12px; padding: 10px 18px; font-size: 14px; }
+@media (max-width: 719px) {
+  .eq-react .eqv-abanico { height: auto; }
+  .eq-react .eqv-hoja { height: 52px; }
+  .eq-react .eqv-hoja.on { height: 320px; }
+  .eq-react .eqv-pestana { font-size: 16px; }
+}
+@media (max-width: 719px) {
+  /* Cerradas: sin foto (salían frentes recortadas), solo el nombre sobre la tarjeta. */
+  .eq-react .eqv-hoja:not(.on) { background: var(--eq-tarjeta); border: 1px solid var(--eq-shoji); }
+  .eq-react .eqv-hoja:not(.on) :is(.eqv-img, .eqv-emblema, .eqv-velo) { opacity: 0; }
+  .eq-react .eqv-hoja:not(.on) .eqv-pestana { color: var(--eq-texto); }
+  .eq-react .eqv-hoja:not(.on)::after { content: "+"; position: absolute; right: 20px; top: 50%; translate: 0 -50%; color: var(--eq-tenue); font: 600 22px/1 var(--eq-cuerpo); }
+}
+@media (max-width: 719px) { .eq-react .eqv-pestana { top: 50%; bottom: auto; translate: 0 -50%; line-height: 1; } }
