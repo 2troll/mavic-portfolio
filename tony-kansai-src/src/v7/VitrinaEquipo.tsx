@@ -14,6 +14,12 @@ import type { GuiaEquipo, IdiomaEquipo } from './datosEquipo'
 
 const DURACION = 6 // segundos por guía
 
+/** Texto de las flechas para lectores de pantalla (inglés si falta el idioma). */
+const FLECHAS: Record<string, [string, string]> = {
+  es: ['Guía anterior', 'Siguiente guía'], en: ['Previous guide', 'Next guide'], ar: ['المرشد السابق', 'المرشد التالي'],
+  ru: ['Предыдущий гид', 'Следующий гид'], tr: ['Önceki rehber', 'Sonraki rehber'], fr: ['Guide précédent', 'Guide suivant'],
+}
+
 /** Color del brillo de cada guía (detrás de la foto y en la línea). */
 const COLOR: Record<string, string> = {
   tony: '#d1342f', larion: '#3b6fd8', maks: '#c9a227', filipp: '#a23bd8',
@@ -88,6 +94,12 @@ export function VitrinaEquipo({ guias, langPagina, actual, Enlace }: {
               </article>
             )
           })}
+          {/* Contador y flechas: saber cuántos guías hay y pasar sin esperar. */}
+          <div className="eqv-nav">
+            <span className="eqv-cuenta" aria-live="polite"><b>{String(i + 1).padStart(2, '0')}</b> / {String(n).padStart(2, '0')}</span>
+            <button type="button" className="eqv-flecha" aria-label={(FLECHAS[langPagina] ?? FLECHAS.en)[0]} onClick={() => ir(i - 1)}><span aria-hidden="true">←</span></button>
+            <button type="button" className="eqv-flecha" aria-label={(FLECHAS[langPagina] ?? FLECHAS.en)[1]} onClick={() => ir(i + 1)}><span aria-hidden="true">→</span></button>
+          </div>
         </div>
         <div className="eqv-tramos" aria-hidden="true">
           {guias.map((g, k) => <button key={g.id} type="button" tabIndex={-1} className={`eqv-tramo${k === i ? ' on' : ''}`} onClick={() => ir(k)}><i /></button>)}

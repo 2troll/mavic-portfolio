@@ -215,8 +215,15 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
   position: relative; display: grid; grid-template-columns: minmax(0, 1fr) 4px minmax(0, 1fr); gap: clamp(24px, 4vw, 56px);
   align-items: center; min-height: 520px;
 }
-.eq-react .eqv-textos { position: relative; display: grid; }
-.eq-react .eqv-texto { grid-area: 1 / 1; visibility: hidden; opacity: 0; }
+.eq-react .eqv-textos { position: relative; display: grid; grid-template-rows: 1fr auto; }
+.eq-react .eqv-nav { grid-row: 2; display: flex; align-items: center; gap: 10px; margin-top: 30px; }
+.eq-react .eqv-cuenta { font: 600 14px/1 var(--eq-cuerpo); font-variant-numeric: tabular-nums; color: var(--eq-tenue); margin-inline-end: 8px; }
+.eq-react .eqv-cuenta b { color: var(--eq-texto); font-size: 20px; }
+.eq-react .eqv-flecha { width: 44px; height: 44px; border-radius: 50%; border: 1px solid var(--eq-borde); background: var(--eq-tarjeta); color: var(--eq-texto); font: 600 18px/1 var(--eq-cuerpo); cursor: pointer; display: grid; place-items: center; transition: background .25s ease, color .25s ease, border-color .25s ease; }
+.eq-react .eqv-flecha:hover { background: var(--eqv-color); border-color: var(--eqv-color); color: #fff; }
+.eq-react .eqv-flecha:active { transform: scale(.94); }
+.eq-react[dir="rtl"] .eqv-flecha span { display: inline-block; transform: scaleX(-1); }
+.eq-react .eqv-texto { grid-area: 1 / 1; align-self: center; visibility: hidden; opacity: 0; }
 .eq-react .eqv-texto:first-child { visibility: visible; opacity: 1; }
 .eq-react .eqv-sello { display: inline-block; font: 600 12px/1 var(--eq-cuerpo); letter-spacing: .08em; text-transform: uppercase; color: #fff; background: var(--eqv-color); padding: 7px 10px; border-radius: 999px; margin-bottom: 14px; }
 .eq-react .eqv-nombre { font: 700 clamp(44px, 6.4vw, 96px)/.98 var(--eq-cuerpo) !important; letter-spacing: -.035em; color: var(--eq-texto); }
@@ -255,7 +262,10 @@ html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarje
 .eq-react .eqv-cara b { font-weight: 700; }
 @media (max-width: 719px) {
   .eq-react .eqv-escena { grid-template-columns: 1fr; gap: 22px; min-height: 0; }
-  .eq-react .eqv-marco { order: -1; max-width: 340px; }
+  .eq-react .eqv-marco { order: -1; max-width: 280px; aspect-ratio: 4 / 5; }
+  .eq-react .eqv-nombre { font-size: clamp(38px, 11vw, 52px) !important; }
+  .eq-react .eqv-linea { font-size: 22px; }
+  .eq-react .eqv-nav { margin-top: 22px; }
   .eq-react .eqv-tramos { order: 0; flex-direction: row; padding: 0; height: 4px; }
   .eq-react .eqv-tramo { width: auto; height: 4px; }
   .eq-react .eqv-tramo i { transform-origin: left; }
