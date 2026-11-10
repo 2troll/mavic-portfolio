@@ -87,6 +87,10 @@ jobs:
         working-directory: tony-kansai-src
         run: node scripts/textos-ia.mjs ../deploy
 
+      - name: Correo visible para Google y las IAs (sin ofuscar por Cloudflare)
+        working-directory: tony-kansai-src
+        run: node scripts/correo-visible.mjs ../deploy
+
       # ── Deploy to GitHub Pages ─────────────────────────────
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
