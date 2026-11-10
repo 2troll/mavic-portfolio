@@ -210,7 +210,7 @@ export function GuiaTienda({ clave, nombre, id, wa }: { clave: string; nombre: s
           <h3 className="gt-sub">{l.contacto}</h3>
           <ul>
             {c.web && <li><a href={c.web} target="_blank" rel="noopener noreferrer">{l.web} ↗</a></li>}
-            {c.tel && <li><a href={`tel:+81${c.tel.replace(/^0/, '').replace(/-/g, '')}`} dir="ltr">{c.tel}</a></li>}
+            {c.tel && <li><a href={`tel:${c.tel.startsWith('+') ? c.tel.replace(/[\s-]/g, '') : '+81' + c.tel.replace(/^0/, '').replace(/[\s-]/g, '')}`} dir="ltr">{c.tel}</a></li>}
             {c.correo && <li><a href={`mailto:${c.correo}`} dir="ltr">{c.correo}</a></li>}
           </ul>
         </div>

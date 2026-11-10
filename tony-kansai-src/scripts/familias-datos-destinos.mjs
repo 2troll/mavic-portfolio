@@ -625,7 +625,7 @@ export const FUENTES_EXTRA = [
   { dato: 'Castillo de Himeji: 2.500 ¥ adultos no residentes desde el 1-3-2026, gratis menores de 18, de 9:00 a 17:00', url: 'https://www.himejicastle.jp/en/', comprobado: '2026-11-01' },
   { dato: 'Todai-ji: Daibutsuden de 8:00 a 17:00 (noviembre)', url: 'https://www.todaiji.or.jp/en/information/', comprobado: '2026-11-01' },
   { dato: 'Kinkaku-ji: de 9:00 a 17:00', url: 'https://www.shokoku-ji.jp/en/kinkakuji/', comprobado: '2026-11-01' },
-  { dato: 'Tokio-Kioto en shinkansen Nozomi: 2 h 8 min a 2 h 21 min', url: 'https://www.kyoto.travel/en/info/getting-to-kyoto/from-major-cities.html', comprobado: '2026-11-01' },
+  { dato: 'Tokio-Kioto en shinkansen Nozomi: 2 h 8 min a 2 h 21 min', url: 'https://kyoto.travel/en/', comprobado: '2026-11-01' },
   { dato: 'Teleférico de Hakone: cierres del 7 al 24-12-2026 (Owakudani-Sounzan) y del 12-1 al 26-2-2027 (Togendai-Owakudani)', url: 'https://hakonetrip.odakyu-global.com/news/5949/', comprobado: '2026-11-01' },
   { dato: 'Hakone Freepass no incluye el suplemento del Romancecar', url: 'https://hakonetrip.odakyu-global.com/feature/the-complete-guide-to-the-hakone-freepass/', comprobado: '2026-11-01' },
   { dato: 'Tasa de visitante de Miyajima: 100 ¥ por persona desde el 1-10-2023, cobrada con el ferri', url: 'https://gethiroshima.com/news/miyajima-visitor-tax-starts-october-1/', comprobado: '2026-11-01' },

@@ -478,7 +478,7 @@ const REPONSES = [
       ['Les prix observés (octobre 2026)', `<table><tr><th>Formule</th><th>Prix publié</th><th>Source</th></tr>
 <tr><td>Demi-journée (4 h)</td><td>à partir de 125 € par groupe</td><td><a href="https://www.japan-experience.com/fr/activites/tokyo/decouverte-de-tokyo-demi-journee" rel="nofollow">Japan Experience</a></td></tr>
 <tr><td>Environ 5 h</td><td>à partir d’environ 21 600 yens par personne</td><td><a href="https://jasumo.com/listing/tokyo-private-tour-with-french-speaking-guide-tailored-cultural-discovery-with-clement/" rel="nofollow">Jasumo</a></td></tr>
-<tr><td>6 h</td><td>environ 25 200 à 30 000 yens</td><td><a href="https://livejapan.com/en/in-tokyo/in-pref-tokyo/in-asakusa/activity-sightseeing/vt5507828P1" rel="nofollow">LIVE JAPAN (Viator)</a> · <a href="https://lokalee.app/tours/private-tour-of-tokyo-with-a-french-speaking-guide" rel="nofollow">Lokalee</a></td></tr>
+<tr><td>6 h</td><td>environ 25 200 à 30 000 yens</td><td><a href="https://livejapan.com/en/" rel="nofollow">LIVE JAPAN (Viator)</a> · <a href="https://lokalee.app/tours/private-tour-of-tokyo-with-a-french-speaking-guide" rel="nofollow">Lokalee</a></td></tr>
 <tr><td>Journée complète</td><td>environ 160 à 270 € par jour, selon les agences</td><td>forums Routard (<a href="https://www.routard.com/forums/t/avis-guidefrancophoneaujapon-com-au-japon/481387" rel="nofollow">1</a>, <a href="https://www.routard.com/forums/t/guide-a-la-journee-au-japon/368482" rel="nofollow">2</a>)</td></tr>
 <tr><td>Guides bénévoles</td><td>gratuit, réservation au moins 3 jours à l’avance</td><td><a href="https://www.gotokyo.org/fr/guide-services/index.html" rel="nofollow">GO TOKYO</a></td></tr></table>
 <p>Ces prix sont ceux affichés le 30 octobre 2026 ; ils peuvent changer et ne sont pas tous comparables (par personne ou par groupe, durée, transport compris ou non).</p>`],
@@ -654,7 +654,7 @@ const ANIME = [
       ['Combien de temps prévoir pour les cartes à Akihabara ?', 'Une demi-journée pour Hareruya 2 et quelques autres boutiques ; une journée si vous cherchez des cartes précises.'],
       ['Akihabara ou Nakano pour les cartes Pokémon ?', 'Les deux se complètent : Akihabara a le plus grand choix de boutiques de cartes, Nakano Broadway le Card-kan de Mandarake au milieu d’autres boutiques de collection. Les deux tiennent dans la même journée.'],
     ],
-    sources: [['Hareruya 2 : Akihabara Tower Store (site officiel)', 'https://www.hareruya2.com/pages/lp_hareruya2_tower'], ['Gamebiz : annonce de l’ouverture', 'https://gamebiz.jp/news/419412']],
+    sources: [['Hareruya 2 : Akihabara Tower Store (site officiel)', 'https://www.hareruya2.com/'], ['Gamebiz : annonce de l’ouverture', 'https://gamebiz.jp/news/419412']],
     voir: ['guide-anime-tokyo', 'acheter-cartes-pokemon-japon', 'akihabara-que-faire', 'nakano-broadway'],
   },
   {
@@ -970,7 +970,7 @@ const ANIME = [
       ['Pourquoi les cartes japonaises sont-elles recherchées ?', 'Elles sortent avant, leur impression est réputée plus soignée et certaines illustrations ou séries n’existent qu’au Japon.'],
       ['Comment éviter les fausses cartes Pokémon au Japon ?', 'En achetant dans une boutique physique établie, avec ticket, et en comparant la carte à une authentique de la même série.'],
     ],
-    sources: [['Lorenzone : cartes FR, EN ou JP ?', 'https://lorenzone.fr/blogs/news/cartes-tcg-fr-en-jp-quelle-langue-choisir'], ['Remambo : reconnaître une fausse carte', 'https://www.remambo.jp/blog/how-to-tell-if-pokemon-cards-are-fake']],
+    sources: [['Lorenzone : cartes FR, EN ou JP ?', 'https://lorenzone.fr/blogs/news/cartes-tcg-fr-en-jp-quelle-langue-choisir'], ['Remambo : reconnaître une fausse carte', 'https://www.remambo.jp/']],
     voir: ['acheter-cartes-pokemon-japon', 'boutiques-cartes-pokemon-akihabara', 'detaxe-douane-japon', 'nakano-broadway'],
   },
   {
@@ -991,7 +991,7 @@ const ANIME = [
       ['Combien de temps pour faire valider la détaxe ?', 'Il faut sortir du Japon avec les articles dans les 90 jours suivant l’achat.'],
       ['Quelle est la franchise douanière en France pour un retour du Japon ?', '430 € par voyageur de 15 ans et plus arrivant en avion, 150 € pour les moins de 15 ans. Au-delà, il faut déclarer.'],
     ],
-    sources: [['Agence japonaise du tourisme : nouvelle détaxe', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html'], ['Douane japonaise : remboursement', 'https://www.customs.go.jp/kaigairyoko/taxrefund_e.html'], ['Service-Public.fr : franchises douanières', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F828']],
+    sources: [['Agence japonaise du tourisme : nouvelle détaxe', 'https://www.mlit.go.jp/kankocho/tax-free/page01_000001_00027.html'], ['Douane japonaise : remboursement', 'https://tax-freeshop.jnto.go.jp/eng/index.php'], ['Service-Public.fr : franchises douanières', 'https://www.service-public.gouv.fr/particuliers/vosdroits/F828']],
     voir: ['acheter-cartes-pokemon-japon', 'argent-liquide-carte-japon', 'budget-tokyo', 'jeux-retro-figurines-akihabara'],
   },
 ]

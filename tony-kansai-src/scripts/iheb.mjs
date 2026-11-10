@@ -966,7 +966,7 @@ function enAkihabara() {
       ['Will Japanese retro games work in the US?', 'Not always: Famicom and Super Famicom games are not directly compatible with American consoles. Buying the Japanese console with the games is the safest choice.'],
       ['Can I book an Akihabara tour with an English-speaking guide?', `Yes. Iheb guides private anime and Pokémon tours in Akihabara and Tokyo’s other otaku districts in English. Message him on WhatsApp: ${WA_VISIBLE}.`],
     ],
-    fuentes: [['Hareruya 2: Akihabara Tower Store (official)', 'https://www.hareruya2.com/pages/lp_hareruya2_tower'], ['Super Potato Akihabara (official)', 'https://superpotatoakiba.jp/'], ['Mandarake (official)', 'https://www.mandarake.co.jp/']],
+    fuentes: [['Hareruya 2: Akihabara Tower Store (official)', 'https://www.hareruya2.com/'], ['Super Potato Akihabara (official)', 'https://superpotatoakiba.jp/'], ['Mandarake (official)', 'https://www.mandarake.co.jp/']],
   })
 }
 

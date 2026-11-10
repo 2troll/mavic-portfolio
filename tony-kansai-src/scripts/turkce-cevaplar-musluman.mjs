@@ -237,7 +237,7 @@ export function musulmanCevaplar({ WA_GENEL, WA_VISIBLE }) {
         ["Kyoto'ya gitmek için hangi havalimanına inmeliyim?", "Kansai Havalimanı'na (KIX). Kyoto'ya Haruka ekspresiyle yaklaşık 75-80 dakikadır."],
         ["Ankara'dan Japonya'ya direkt uçuş var mı?", "Hayır, Ankara, İzmir ve diğer şehirlerden İstanbul aktarmalı uçulur."],
       ],
-      kaynaklar: [['Türk Hava Yolları: Osaka uçuşları', 'https://www.turkishairlines.com/zh/flights-from-osaka'], ['Flightmapper: TK IST-KIX', 'https://info.flightmapper.net/route/Turkish_Airlines_TK_IST_KIX'], ['Japonya Dışişleri Bakanlığı: vize muafiyeti', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://services.digital.go.jp/en/visit-japan-web/']],
+      kaynaklar: [['Türk Hava Yolları: Osaka uçuşları', 'https://www.turkishairlines.com/'], ['Flightmapper: TK IST-KIX', 'https://info.flightmapper.net/route/Turkish_Airlines_TK_IST_KIX'], ['Japonya Dışişleri Bakanlığı: vize muafiyeti', 'https://www.mofa.go.jp/j_info/visit/visa/short/novisa.html'], ['Visit Japan Web', 'https://services.digital.go.jp/en/visit-japan-web/']],
     },
     {
       yol: 'japonya-butce-hesabi',

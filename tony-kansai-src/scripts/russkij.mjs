@@ -62,7 +62,7 @@ const resenasBloque = (filtro) => `<section class="bloque" id="otzyvy" data-sin-
 <p class="ceja">${otzyvov(RESENAS_TOTAL)} о Ларионе</p>
 <h2>Что пишут гости Лариона</h2>
 <ul class="otzyvy">${resenas(filtro).map((r) => `<li><span class="est" aria-label="${r.stars} из 5">${'★'.repeat(r.stars)}</span><p>${esc(r.text)}</p><span class="de">${esc(r.name)}${r.country ? ` · ${esc(r.country)}` : ''}${r.tour ? ` · ${esc(r.tour)}` : ''}</span></li>`).join('')}</ul>
-<p class="nota">Отзывы, которые гости присылали Лариону в WhatsApp, — без правок. <a href="/ru/#otzyvy">Все ${otzyvov(RESENAS_TOTAL)} →</a></p>
+<p class="nota">Отзывы, которые гости присылали Лариону в WhatsApp, — без правок. <a href="/ru/otzyv/">Все ${otzyvov(RESENAS_TOTAL)} →</a></p>
 </section>`
 
 // --- Fotos ya licenciadas de /tr/, /fr/ y /private/ (Wikimedia Commons) ---
@@ -235,7 +235,7 @@ ${equipoFuente}
 ${navHTML({ etiqueta: 'Разделы', abrir: 'Открыть меню', variante: 'kndr', grupos: [
   { t: 'Города', enlaces: OTVETY.filter((x) => x.grupo === 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
   { t: 'Поездка', enlaces: OTVETY.filter((x) => x.grupo !== 'ciudad').map((x) => [esc(x.corto), ruta(x)]) },
-  { t: 'Ларион', enlaces: [['Все ответы', PREF], ['Ларион: экскурсии и цены', '/ru/'], ['Отзывы гостей', '/ru/#otzyvy'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
+  { t: 'Ларион', enlaces: [['Все ответы', PREF], ['Ларион: экскурсии и цены', '/ru/'], ['Отзывы гостей', '/ru/otzyv/'], { t: 'Larion (English)', h: '/larion/', lang: 'en', hreflang: 'en' }] },
 ], cta: { t: `${TG_ICONO} Telegram`, h: TG_URL, aria: `Telegram ${TG_VISIBLE}: ${TG_NOTA}` } })}</div></header>
 <main>
 ${cuerpo}
@@ -301,7 +301,7 @@ ${resenasBloque(o.resenas)}
 // --- Validación: si algo falla, no se escribe nada ---
 const PAGINAS = new Map(TODAS.map((o) => [ruta(o), construir(o)]))
 // Rutas internas fuera de /ru/otvety/ que se pueden enlazar (todas existen en la web).
-const PERMITIDAS = new Set(['/ru/', '/ru/kyoto/', '/ru/osaka/', '/ru/nara/', '/ru/hiroshima/', '/ru/himeji/', '/ru/kyoto-autumn/', '/ru/kyoto-sakura/', '/ru/routes/', '/ru/from-russia/', '/ru/hiking/', '/ru/perks/', '/ru/kndr/', '/larion/'])
+const PERMITIDAS = new Set(['/ru/', '/ru/kyoto/', '/ru/osaka/', '/ru/nara/', '/ru/hiroshima/', '/ru/himeji/', '/ru/kyoto-autumn/', '/ru/kyoto-sakura/', '/ru/routes/', '/ru/from-russia/', '/ru/hiking/', '/ru/perks/', '/ru/kndr/', '/ru/otzyv/', '/larion/'])
 for (const m of equipoHTML({ lang: 'ru', actual: 'larion', variante: 'kndr' }).matchAll(/href="(\/[^"#?]*)/g)) PERMITIDAS.add(m[1])
 const errores = []
 const texto = (h) => h.replace(/<script[\s\S]*?<\/script>/g, ' ').replace(/<[^>]+>/g, ' ').replace(/&[a-z#0-9]+;/g, ' ')
