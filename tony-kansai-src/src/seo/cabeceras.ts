@@ -10,6 +10,7 @@ import { OTONO } from '../v7/datosOtono'
 import { GUIAS_TRANSPORTE } from '../v7/datosGuias'
 import { MERCADOS_TODOS as MERCADOS } from '../v7/datosViajeros'
 import { APPS, SEO_VENTAJAS, RUTA_VENTAJAS, type Lang } from '../v7/datosVentajas'
+import { T_RU } from '../v7/datosVentajasDetalle'
 import { PAGINAS_ITIN, SEO_ITIN } from '../v7/seoItin'
 import type { ItinPaginaId } from '../v7/seoItin'
 import { CIUDADES_LARION, CIUDADES_TONY, descripcionSeo, tituloSeo } from '../v8/ciudades'
@@ -105,7 +106,8 @@ export function cabeceras(): Record<string, Cabecera> {
       alternos: idiomasV.map((x) => [x, RUTA_VENTAJAS[x]]),
     }
     for (const a of APPS) {
-      const t = (a.t as Record<string, { que: string } | undefined>)[l] ?? a.t.en
+      // El ruso de las fichas vive en T_RU (datosVentajasDetalle.ts), igual que en FichaVentaja.textoApp.
+      const t = (a.t as Record<string, { que: string } | undefined>)[l] ?? (l === 'ru' ? T_RU[a.clave] : undefined) ?? a.t.en
       todas[sinBarras(`${RUTA_VENTAJAS[l]}${a.clave}`)] = {
         titulo: `${a.nombre} · ${SEO_VENTAJAS[l].titulo}`, descripcion: t.que, imagen: `/v8/og/${l}.jpg`, lang: l, dir: dirDe(l),
         alternos: idiomasV.map((x) => [x, `${RUTA_VENTAJAS[x]}${a.clave}/`]),
