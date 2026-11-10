@@ -50,6 +50,7 @@ const paginas = [
   ...['kyoto', 'tokyo', 'osaka-nara', 'mount-fuji-hakone', 'nikko-kamakura', 'himeji-kobe', 'hiroshima-miyajima', 'luxury-private-tour-guide-japan', 'private-tour-guide-japan-cost', 'japan-itinerary-two-weeks', 'kyoto-private-tour-car-driver', 'japan-honeymoon-private-guide', 'japan-family-trip-private-guide', 'multi-day-private-guide-japan', 'best-time-to-visit-japan', 'first-time-japan-tips', 'reviews', 'about-mario', 'anime-tour-tokyo-akihabara', 'camera-shopping-japan-guide', 'electronics-retro-games-osaka-den-den-town', 'getting-around-japan-without-stress', 'japan-history-private-tour', 'japan-train-enthusiast-tour', 'japan-trip-for-seniors-private-guide', 'otaku-japan-private-guide', 'pokemon-cards-japan-where-to-buy', 'shopping-in-japan-with-a-guide'].map((c) => ({ loc: `/private/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'private' })),
   // Calculadora «¿te compensa un guía privado?» (scripts/calculadora.mjs).
   { loc: '/es/calculadora-guia', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
+  { loc: '/es/leyendas', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
   { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/ar/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
@@ -166,6 +167,7 @@ const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
+  leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html'],
   francais: ['scripts/francais.mjs'],
   iheb: ['scripts/iheb.mjs', 'scripts/iheb-estilo.mjs'],
   private: ['scripts/private.mjs'],

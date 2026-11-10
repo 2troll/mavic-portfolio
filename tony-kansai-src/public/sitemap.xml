@@ -7,7 +7,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -17,7 +17,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -27,7 +27,7 @@
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/en/"/>
     <xhtml:link rel="alternate" hreflang="ar" href="https://tonykansaiguide.com/ar/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/en/"/>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -36,7 +36,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/larion/"/>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -45,7 +45,7 @@
     <xhtml:link rel="alternate" hreflang="ru" href="https://tonykansaiguide.com/ru/"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://tonykansaiguide.com/larion/"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://tonykansaiguide.com/larion/"/>
-    <lastmod>2026-11-09</lastmod>
+    <lastmod>2026-11-10</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
@@ -1973,6 +1973,12 @@
   </url>
   <url>
     <loc>https://tonykansaiguide.com/es/calculadora-guia/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/es/leyendas/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.85</priority>
