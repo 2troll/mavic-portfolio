@@ -60,7 +60,7 @@ function jsonLd(lang, temp, desc) {
       '@type': 'TouristTrip', name: `${u.oferta_t} · ${t.t[lang].nombre}`, description: sinHtml(desc), inLanguage: lang,
       touristType: 'TikTok and social media travellers',
       itinerary: { '@type': 'ItemList', itemListElement: t.sitios.map((s, i) => ({ '@type': 'ListItem', position: i + 1, name: s[lang][0] })) },
-      provider: { '@type': 'Person', name: 'Tony Hanma', url: `${BASE}/` },
+      provider: { '@type': 'Person', name: 'Tony Hanma', url: `${BASE}/`, sameAs: ['https://www.instagram.com/tonykansaiguide/'] },
       offers: { '@type': 'Offer', price: PRECIO.tiktok, priceCurrency: 'JPY', validThrough: t.hasta, url: `${BASE}${ruta(lang, t)}`, availability: 'https://schema.org/InStock' },
     })
   }
@@ -134,6 +134,39 @@ function creditos(ids, lang) {
   }).join('')}</ul></details>`
 }
 
+
+// Kit para grabar: consejos de TikTok/Reels 2026 (vertical, audio en tendencia, etiqueta de
+// lugar para TikTok GO, hashtags de temporada) + descuento por compartir el vídeo del tour.
+const HASHTAGS = {
+  otono: ['#京都紅葉', '#紅葉', '#momiji', '#kyotoautumn', '#japanautumn', '#tonykansaiguide'],
+  invierno: ['#京都雪景色', '#イルミネーション', '#kyotowinter', '#snowyjapan', '#japanwinter', '#tonykansaiguide'],
+  primavera: ['#桜', '#お花見', '#sakura', '#kyotosakura', '#cherryblossom', '#tonykansaiguide'],
+}
+const INSTAGRAM = 'https://www.instagram.com/tonykansaiguide/'
+const KIT = {
+  es: { eti: 'Tu vídeo, listo para TikTok', t: 'Cómo sacar el vídeo que se guarda',
+    pasos: [['Vertical 9:16', 'Graba en vertical y a la hora buena: luz suave y sin gente detrás.'], ['Los 3 primeros segundos', 'Empieza por el plano más bonito; la explicación, después.'], ['Audio en tendencia', 'Elígelo dentro de TikTok al subirlo: da mucha más visibilidad.'], ['Etiqueta el lugar', 'Con la etiqueta de ubicación, quien vea tu vídeo puede encontrar el sitio y reservar desde TikTok (TikTok GO).']],
+    tags: 'Hashtags de esta temporada', reels: 'Para Instagram Reels, súbelo sin la marca de agua de TikTok: así no lo esconde.',
+    premio: 'Comparte el vídeo de tu tour y menciónanos en Instagram: 10 % menos en tu próximo tour.', ig: 'Instagram de Tony' },
+  en: { eti: 'Your video, TikTok-ready', t: 'How to get the video people save',
+    pasos: [['Vertical 9:16', 'Film vertically at the right hour: soft light and nobody behind you.'], ['The first 3 seconds', 'Open with the best shot; explain afterwards.'], ['Trending audio', 'Pick it inside TikTok when you upload: it gives far more reach.'], ['Tag the place', 'With a location tag, viewers can find the spot and book from TikTok (TikTok GO).']],
+    tags: 'This season’s hashtags', reels: 'For Instagram Reels, upload it without the TikTok watermark so it is not hidden.',
+    premio: 'Share your tour video and mention us on Instagram: 10% off your next tour.', ig: 'Tony on Instagram' },
+  ar: { eti: 'فيديوك جاهز لتيك توك', t: 'كيف تصوّر الفيديو الذي يحفظه الناس',
+    pasos: [['عمودي 9:16', 'صوّر بشكل عمودي وفي الوقت المناسب: ضوء ناعم ولا أحد خلفك.'], ['أول 3 ثوانٍ', 'ابدأ بأجمل لقطة، والشرح بعد ذلك.'], ['صوت رائج', 'اختره داخل تيك توك عند الرفع: يمنحك انتشارًا أكبر بكثير.'], ['أضف الموقع', 'مع وسم الموقع يستطيع من يشاهد الفيديو العثور على المكان والحجز من تيك توك (TikTok GO).']],
+    tags: 'وسوم هذا الموسم', reels: 'لإنستغرام ريلز، ارفعه بدون علامة تيك توك المائية حتى لا يُخفى.',
+    premio: 'شارك فيديو جولتك واذكرنا على إنستغرام: خصم 10٪ على جولتك القادمة.', ig: 'توني على إنستغرام' },
+}
+function kit(lang, temp) {
+  const k = KIT[lang]
+  return `<section class="w kit"><p class="eti">${esc(k.eti)}</p><h2>${esc(k.t)}</h2>
+<ol class="kit-pasos">${k.pasos.map(([a, b], i) => `<li><span class="kit-n">${i + 1}</span><b>${esc(a)}</b><p>${esc(b)}</p></li>`).join('')}</ol>
+<p class="kit-st">${esc(k.tags)}</p><p class="kit-tags" lang="ja" dir="ltr">${(HASHTAGS[temp.id] ?? []).map((h) => `<span>${esc(h)}</span>`).join(' ')}</p>
+<p class="kit-nota">${esc(k.reels)}</p>
+<p class="kit-premio">${esc(k.premio)} <a href="${INSTAGRAM}" target="_blank" rel="noopener">${esc(k.ig)} ${lang === 'ar' ? '←' : '→'}</a></p>
+</section>`
+}
+
 function pagina(lang, temp) {
   const u = UI[lang]
   const titulo = temp ? `${sinHtml(temp.t[lang].h1)} · ${u.marca}` : u.titulo
@@ -143,10 +176,12 @@ function pagina(lang, temp) {
   const cuerpo = temp
     ? `<section class="w"><p class="eti">${esc(temp.t[lang].meses)}</p><div class="reels">${temp.sitios.map((s, i) => reel(s, lang, i)).join('')}</div></section>
 ${joyas(lang, temp, 12)}
+${kit(lang, temp)}
 <section class="w">${oferta(lang, temp)}</section>
 <section class="w"><p class="eti">${esc(u.otras)}</p><div class="temps">${TEMPORADAS.filter((x) => x !== temp).map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>`
     : `<section class="w"><p class="eti">${esc(u.temporadas)}</p><div class="temps">${TEMPORADAS.map((x) => tarjetaTemporada(x, lang)).join('')}</div></section>
 <section class="w">${oferta(lang, t)}</section>
+${kit(lang, t)}
 <section class="w"><p class="eti">${esc(t.t[lang].nombre)} · ${esc(t.t[lang].meses)}</p><div class="reels">${t.sitios.slice(0, 3).map((s, i) => reel(s, lang, i)).join('')}</div><p class="mas"><a href="${ruta(lang, t)}">${esc(t.t[lang].nombre)} →</a></p></section>
 ${joyas(lang, t, 3)}`
   const fotosUsadas = temp ? [temp.foto, ...temp.sitios.map((s) => s.foto)] : ['fushimi', ...TEMPORADAS.map((x) => x.foto), ...t.sitios.slice(0, 3).map((s) => s.foto)]
@@ -193,7 +228,7 @@ ${cuerpo}
 <section class="w faq"><p class="eti">${esc(u.faq_t)}</p>${u.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>
 </main>
 <footer class="w pie">
-  <p><a href="/${lang === 'es' ? 'es/' : lang === 'ar' ? 'ar/' : 'en/'}">${esc(u.inicio)}</a> · <a href="https://hbh.tonykansaiguide.com/">Humble Bumble Hanma</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+  <p><a href="/${lang === 'es' ? 'es/' : lang === 'ar' ? 'ar/' : 'en/'}">${esc(u.inicio)}</a> · <a href="https://hbh.tonykansaiguide.com/">Humble Bumble Hanma</a> · <a href="${INSTAGRAM}" target="_blank" rel="noopener">Instagram</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
   ${creditos(fotosUsadas, lang)}
 </footer>
 <script src="/tiktok/tiktok.js" defer></script>
@@ -269,6 +304,15 @@ section.w{padding:70px 0}
 .precio{display:grid;gap:4px;justify-items:start;background:var(--f);border:1px solid var(--b);border-radius:22px;padding:26px}
 .precio b{font:900 clamp(40px,5vw,60px)/1 Archivo,sans-serif;letter-spacing:-.03em}
 .precio span{color:#d6d6de}.precio small{color:var(--g);margin-bottom:14px}
+.kit h2{font:900 clamp(26px,4vw,40px)/1.05 Archivo,Inter,sans-serif;margin:6px 0 22px;text-wrap:balance}
+.kit-pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr));gap:12px}
+.kit-pasos li{background:var(--f2);border:1px solid var(--b);border-radius:16px;padding:18px}
+.kit-pasos b{display:block;font-size:17px;margin:8px 0 4px}.kit-pasos p{margin:0;color:var(--g);line-height:1.5}
+.kit-n{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--rosa);color:#fff;font:700 14px/1 Inter,sans-serif;font-variant-numeric:tabular-nums}
+.kit-st{margin:26px 0 8px;color:var(--g);font-size:14px}
+.kit-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0}[dir=rtl] .kit-tags{justify-content:flex-end}.kit-tags span{padding:7px 12px;border-radius:999px;border:1px solid var(--b);font-size:14px;user-select:all}
+.kit-nota{color:var(--g);margin:18px 0 0}
+.kit-premio{margin:18px 0 0;padding:16px 18px;border-radius:14px;border:1px solid var(--rosa);font-weight:600}.kit-premio a{color:var(--cian);white-space:nowrap}
 .faq details{border-bottom:1px solid var(--b)}
 .faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:16px;padding:20px 0;font:700 clamp(18px,2vw,22px)/1.3 Archivo,sans-serif}
 [dir=rtl] .faq summary{font-family:"Noto Kufi Arabic",sans-serif}
