@@ -51,6 +51,7 @@ const paginas = [
   // Calculadora «¿te compensa un guía privado?» (scripts/calculadora.mjs).
   { loc: '/es/calculadora-guia', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
+  { loc: '/ar/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
   { loc: '/partners', priority: '0.9', changefreq: 'monthly', v7: 'partners' },
   // «Kansai de TikTok»: sitios virales por temporada + Ruta TikTok (scripts/tiktok.mjs).

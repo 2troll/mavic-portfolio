@@ -10,7 +10,7 @@ import { join } from 'node:path'
 const BASE = 'https://tonykansaiguide.com'
 const WA = '34634193106'
 const PRECIO = { medio: 38000, dia: 58000, max: 6 }
-const RUTA = { es: '/es/calculadora-guia/', en: '/en/private-guide-calculator/' }
+const RUTA = { es: '/es/calculadora-guia/', en: '/en/private-guide-calculator/', ar: '/ar/private-guide-calculator/' }
 
 const T = {
   es: {
@@ -73,13 +73,44 @@ const T = {
     ],
     inicio: 'Tony Kansai Guide',
   },
+  ar: {
+    title: 'هل يستحق المرشد الخاص في كيوتو؟ حاسبة بالسعر لكل شخص',
+    desc: 'أجب عن 4 أسئلة لتعرف إن كان المرشد الخاص في كيوتو وأوساكا ونارا مناسبًا لك، وكم يكلّف للشخص، وأي مسار أقترحه. مرشد بالعربية، وطعام حلال وأوقات صلاة.',
+    eti: 'حاسبة · 30 ثانية',
+    h1: 'هل يستحق المرشد الخاص في كيوتو؟',
+    lead: 'أربعة أسئلة. جواب صادق، حتى لو كان «اذهب وحدك».',
+    q1: 'كم يومًا لديك في كيوتو؟', d: ['يوم واحد', 'يومان', '3 أيام أو أكثر'],
+    q2: 'كم عددكم؟', q3: 'هل تسافرون مع…؟', who: ['أطفال', 'كبار في السن أو حركة محدودة', 'إنها أول مرة لنا في اليابان'],
+    q4: 'ماذا تريدون أن تروا أكثر؟', want: ['المعابد الشهيرة بدون زحام', 'نارا والغزلان', 'الطعام والأحياء', 'الصور وتيك توك', 'حلال وأماكن الصلاة'],
+    res: 'اقتراحي', per: 'للشخص', grupo: 'للمجموعة', wa: 'اطلب هذا المسار عبر واتساب',
+    medio: 'نصف يوم مع مرشد (4 ساعات)', dia: 'يوم كامل مع مرشد (8 ساعات)', solo: 'يمكنك الذهاب وحدك',
+    porque: {
+      corto: 'مع وقت قصير في كيوتو، يوفّر عليك المرشد ساعات في الحافلات المزدحمة والطوابير: ترى الأهم في الوقت المناسب.',
+      ninos: 'مع الأطفال أو كبار السن، يتكيّف الإيقاع وتتجنّب حافلات كيوتو المزدحمة جدًا.',
+      primera: 'في أول رحلة، يوم واحد مع مرشد يجعلك مستعدًا للتنقل وحدك بقية الرحلة.',
+      largo: 'مع 3 أيام أو أكثر ودون احتياجات خاصة، يمكنك الذهاب وحدك. أستطيع أن أرسل لك دليلي المجاني «اذهب وحدك».',
+      nara: 'كيوتو ونارا في يوم واحد لا تنجح إلا مع مرشد: القطارات والمواعيد تأخذ نصف اليوم.',
+    },
+    grande: 'أكثر من 6 أشخاص: السعر عند الطلب (مرشد ثانٍ أو مبلغ إضافي).',
+    nota: 'أجر المرشد فقط. التذاكر والمواصلات والوجبات على حسابكم.',
+    msg: 'مرحبًا توني، أتيت من صفحة الحاسبة.',
+    labels: { dias: 'الأيام', personas: 'الأشخاص', con: 'مع', ver: 'نريد أن نرى', ruta: 'الاقتراح' },
+    gratis: 'دليل مجاني «اذهب وحدك»', faq_t: 'أسئلة',
+    faq: [
+      ['كم يكلّف المرشد الخاص في كيوتو؟', '38,000 ين لنصف يوم (4 ساعات) و58,000 ين لليوم الكامل (8 ساعات)، للمجموعة حتى 6 أشخاص. التذاكر والمواصلات والوجبات منفصلة.'],
+      ['متى يستحق المرشد الخاص؟', 'عندما يكون لديك يوم أو يومان في كيوتو، أو تسافر مع أطفال أو كبار في السن، أو إنها أول مرة في اليابان، أو تريد كيوتو ونارا في يوم واحد.'],
+      ['ومتى لا يستحق؟', 'مع 3 أيام أو أكثر، بدون استعجال ولا احتياجات خاصة، يمكنك الذهاب وحدك مع دليل جيد.'],
+    ],
+    inicio: 'Tony Kansai Guide',
+  },
 }
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 const CSS = `:root{--f:#fbfaf7;--t:#17151a;--g:#5d5a63;--b:#e4e0d8;--c:#ffffff;--a:#c8402c;--ok:#1d7a4f}
 @media (prefers-color-scheme:dark){:root{--f:#111014;--t:#f2f0ee;--g:#a9a5ad;--b:#2a2830;--c:#1a191e;--a:#ff6a52;--ok:#3cc488}}
-*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI",sans-serif}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
+.res ul{padding-inline-start:20px}
 a{color:inherit}.w{width:min(760px,100% - 32px);margin-inline:auto}
 header{padding:18px 0;border-bottom:1px solid var(--b)}header a{font-weight:700;text-decoration:none}
 .eti{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--a);margin:40px 0 8px}
@@ -99,13 +130,12 @@ fieldset{border:0;padding:0;margin:0 0 26px}legend{font-weight:700;font-size:18p
 .precio b{font-size:40px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.precio span{color:var(--g)}
 .res ul{margin:10px 0 0;padding-left:20px;color:var(--g)}.res .nota{font-size:14px;color:var(--g);margin:14px 0 0}
 .btn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:15px 22px;border-radius:999px;background:var(--ok);color:#fff;font-weight:700;text-decoration:none}
-.btn:active{transform:scale(.97)}.sec{margin-left:12px;color:var(--g)}
+.btn:active{transform:scale(.97)}.sec{margin-inline-start:12px;color:var(--g)}
 .faq details{border-top:1px solid var(--b);padding:14px 0}.faq summary{font-weight:600;cursor:pointer}.faq p{color:var(--g);margin:8px 0 0}
 footer{padding:30px 0 50px;color:var(--g);font-size:14px}`
 
 function pagina(lang) {
   const t = T[lang]
-  const otra = lang === 'es' ? 'en' : 'es'
   const ld = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -117,20 +147,20 @@ function pagina(lang) {
   const radios = (name, ops, sel) => `<div class="ops">${ops.map((o, i) => `<label><input type="radio" name="${name}" value="${i}"${i === sel ? ' checked' : ''}><span>${esc(o)}</span></label>`).join('')}</div>`
   const checks = (name, ops) => `<div class="ops">${ops.map((o, i) => `<label><input type="checkbox" name="${name}" value="${i}"><span>${esc(o)}</span></label>`).join('')}</div>`
   return `<!doctype html>
-<html lang="${lang}" data-estatica="calculadora">
+<html lang="${lang}" dir="${lang === 'ar' ? 'rtl' : 'ltr'}" data-estatica="calculadora">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(t.desc)}">
 <link rel="canonical" href="${BASE}${RUTA[lang]}">
-<link rel="alternate" hreflang="${lang}" href="${BASE}${RUTA[lang]}"><link rel="alternate" hreflang="${otra}" href="${BASE}${RUTA[otra]}"><link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
+${Object.keys(RUTA).map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]}">`).join('')}<link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
 <meta property="og:title" content="${esc(t.title)}"><meta property="og:description" content="${esc(t.desc)}"><meta property="og:url" content="${BASE}${RUTA[lang]}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <style>${CSS}</style>
 </head>
 <body>
-<header><div class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · <a href="${RUTA[otra]}" hreflang="${otra}" lang="${otra}">${otra.toUpperCase()}</a></div></header>
+<header><div class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · ${Object.keys(RUTA).filter((l) => l !== lang).map((l) => `<a href="${RUTA[l]}" hreflang="${l}" lang="${l}">${l === 'ar' ? 'عربي' : l.toUpperCase()}</a>`).join(' · ')}</div></header>
 <main class="w">
 <p class="eti">${esc(t.eti)}</p>
 <h1>${esc(t.h1)}</h1>
@@ -148,7 +178,7 @@ function pagina(lang) {
 <ul id="r-why"></ul>
 <p class="nota" id="r-nota">${esc(t.nota)}</p>
 <a class="btn" id="r-wa" href="https://wa.me/${WA}" target="_blank" rel="noopener">${esc(t.wa)}</a>
-<a class="sec" id="r-solo" href="/${lang === 'es' ? 'es/ventajas' : 'en/perks'}/" hidden>${esc(t.gratis)} →</a>
+<a class="sec" id="r-solo" href="/${lang === 'es' ? 'es/ventajas' : lang === 'ar' ? 'ar/perks' : 'en/perks'}/" hidden>${esc(t.gratis)} →</a>
 </section>
 <section class="faq"><p class="eti">${esc(t.faq_t)}</p>${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>
 </main>
@@ -158,7 +188,7 @@ function pagina(lang) {
 var T=${JSON.stringify({ medio: t.medio, dia: t.dia, solo: t.solo, porque: t.porque, per: t.per, grupo: t.grupo, grande: t.grande, msg: t.msg, labels: t.labels, d: t.d, who: t.who, want: t.want })};
 var P=${JSON.stringify(PRECIO)},WA="${WA}",lang="${lang}";
 var f=document.getElementById('calc'),pers=document.getElementById('pers'),n=2;
-var yen=function(v){return '¥'+Math.round(v).toLocaleString(lang==='es'?'es-ES':'en-US')};
+var yen=function(v){return '<bdi dir="ltr">¥'+Math.round(v).toLocaleString(lang==='es'?'es-ES':'en-US')+'</bdi>'};
 document.querySelectorAll('[data-n]').forEach(function(b){b.addEventListener('click',function(){n=Math.max(1,Math.min(20,n+Number(b.dataset.n)));pers.textContent=n;calc()})});
 f.addEventListener('change',calc);
 function marcados(name){return Array.prototype.map.call(f.querySelectorAll('input[name='+name+']:checked'),function(i){return Number(i.value)})}
