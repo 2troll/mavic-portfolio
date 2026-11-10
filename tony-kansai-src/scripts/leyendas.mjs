@@ -5,6 +5,7 @@ import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import EN from './leyendas-en.mjs'
+import AR from './leyendas-ar.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
 const fotos = JSON.parse(readFileSync(join(raiz, 'scripts/turkce-fotolar.json'), 'utf8'))
@@ -107,7 +108,7 @@ function generar(c) {
     homeLocation: { '@type': 'Place', name: c.base }, url: c.url,
     knowsLanguage: ['es', 'en', 'ar'],
     knowsAbout: c.sabe,
-    sameAs: ['https://www.instagram.com/tonykansaiguide/', 'https://tonykansaiguide.com/es/leyendas/', 'https://tonykansaiguide.com/en/legends/'],
+    sameAs: ['https://www.instagram.com/tonykansaiguide/', 'https://tonykansaiguide.com/es/leyendas/', 'https://tonykansaiguide.com/en/legends/', 'https://tonykansaiguide.com/ar/asatir/'],
     worksFor: { '@id': 'https://tonykansaiguide.com/#negocio' },
   }
   const jsonld = {
@@ -143,3 +144,4 @@ generar({
   altPortada: 'Túnel de torii de Fushimi Inari al anochecer',
 })
 generar(EN)
+generar(AR)
