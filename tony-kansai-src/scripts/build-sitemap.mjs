@@ -48,6 +48,9 @@ const paginas = [
   // Mario, guía privado premium en inglés (todo Japón): HTML estático de scripts/private.mjs.
   { loc: '/private', priority: '1.0', changefreq: 'weekly', v7: 'private' },
   ...['kyoto', 'tokyo', 'osaka-nara', 'mount-fuji-hakone', 'nikko-kamakura', 'himeji-kobe', 'hiroshima-miyajima', 'luxury-private-tour-guide-japan', 'private-tour-guide-japan-cost', 'japan-itinerary-two-weeks', 'kyoto-private-tour-car-driver', 'japan-honeymoon-private-guide', 'japan-family-trip-private-guide', 'multi-day-private-guide-japan', 'best-time-to-visit-japan', 'first-time-japan-tips', 'reviews', 'about-mario', 'anime-tour-tokyo-akihabara', 'camera-shopping-japan-guide', 'electronics-retro-games-osaka-den-den-town', 'getting-around-japan-without-stress', 'japan-history-private-tour', 'japan-train-enthusiast-tour', 'japan-trip-for-seniors-private-guide', 'otaku-japan-private-guide', 'pokemon-cards-japan-where-to-buy', 'shopping-in-japan-with-a-guide'].map((c) => ({ loc: `/private/${c}`, priority: '0.85', changefreq: 'monthly', v7: 'private' })),
+  // Calculadora «¿te compensa un guía privado?» (scripts/calculadora.mjs).
+  { loc: '/es/calculadora-guia', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
+  { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
   { loc: '/partners', priority: '0.9', changefreq: 'monthly', v7: 'partners' },
   // «Kansai de TikTok»: sitios virales por temporada + Ruta TikTok (scripts/tiktok.mjs).

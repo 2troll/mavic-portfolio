@@ -1972,6 +1972,18 @@
     <priority>0.85</priority>
   </url>
   <url>
+    <loc>https://tonykansaiguide.com/es/calculadora-guia/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://tonykansaiguide.com/en/private-guide-calculator/</loc>
+    <lastmod>2026-11-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
     <loc>https://tonykansaiguide.com/partners/</loc>
     <lastmod>2026-11-10</lastmod>
     <changefreq>monthly</changefreq>
