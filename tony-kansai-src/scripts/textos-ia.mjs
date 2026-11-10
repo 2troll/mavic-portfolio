@@ -85,11 +85,21 @@ if (paginas.length === 0) {
 }
 
 // Primero las páginas de Tony y Larion y las de respuesta; el resto, por ruta.
-const peso = (r) => (/^\/(es|en|ar|ru|larion|tr)\/$/.test(r) ? 0 : 1)
+const peso = (r) => (/^\/(es|en|ar|ru|larion|tr|fr|private|familias|ru\/filipp)\/$/.test(r) ? 0 : /calculadora|calculator|tiktok\/$|partners|precios|prices|resenas|reviews|avis|otzyv/.test(r) ? 1 : 2)
 paginas.sort((a, b) => peso(a.ruta) - peso(b.ruta) || a.ruta.localeCompare(b.ruta))
 
 const llms = existsSync(join(dest, 'llms.txt')) ? readFileSync(join(dest, 'llms.txt'), 'utf8').trim() : '# Tony Kansai Guide'
 const hoy = new Date().toISOString().slice(0, 10)
-const completo = `${llms}\n\n---\n\n# Contenido completo de tonykansaiguide.com (${hoy})\n\nTodas las páginas públicas en texto, con reseñas y precios tal como salen en la web.\n\n${paginas.map((p) => p.md).join('\n---\n\n')}`
+// Con 500 páginas el archivo pasaba de 3 MB y los asistentes lo recortaban o no lo leían.
+// Entra el texto completo hasta ~450 KB (portadas de cada guía primero); del resto se da
+// la lista de URL, y cada página tiene además su propio index.md.
+const LIMITE = 450 * 1024
+const dentro = [], fuera = []
+let usado = llms.length
+for (const p of paginas) {
+  if (usado + p.md.length < LIMITE) { dentro.push(p); usado += p.md.length } else fuera.push(p)
+}
+const resto = fuera.length ? `\n---\n\n# Más páginas (${fuera.length}), cada una con su versión en texto (index.md)\n\n${fuera.map((p) => `- ${BASE}${p.ruta} · ${BASE}${p.ruta}index.md`).join('\n')}\n` : ''
+const completo = `${llms}\n\n---\n\n# Contenido completo de tonykansaiguide.com (${hoy})\n\nLas páginas principales en texto, con reseñas y precios tal como salen en la web.\n\n${dentro.map((p) => p.md).join('\n---\n\n')}${resto}`
 writeFileSync(join(dest, 'llms-full.txt'), completo)
 console.log(`✓ textos-ia: ${paginas.length} páginas en .md · llms-full.txt ${Math.round(completo.length / 1024)} KB`)
