@@ -1,0 +1,61 @@
+// English version of the legends page (/en/legends/). Same structure as the Spanish data in leyendas.mjs.
+const LEYENDAS = [
+  { t: 'The foxes who hold the key to the rice store', l: 'Fushimi Inari Taisha, Kyoto', f: 'fushimi-orman', alt: 'Tunnel of red torii gates at Fushimi Inari',
+    p: 'The fox statues (kitsune) at Fushimi Inari are not the god: they are its messengers. Many hold a key in their mouth, the key to the rice granary, or a jewel that grants wishes. In Japanese folklore a fox lives for centuries, grows a new tail every hundred years and can take human form.',
+    y: 'What I tell guests there: why companies pay for the torii, and what is written on the back of each one.' },
+  { t: "Okiku's well: the servant who counts plates", l: 'Himeji Castle', f: 'himeji', alt: 'Himeji Castle',
+    p: 'Inside the grounds of Himeji Castle there is a well with its own name: the Okiku-ido. The legend of Banchō Sarayashiki says that a servant, Okiku, was accused of losing one of ten precious plates and was thrown into this well. Since then, at night, she can be heard counting: "one, two… nine", and she screams when she cannot find the tenth.',
+    y: "What I tell guests there: how this story shaped the long-haired ghosts of Japanese horror films." },
+  { t: 'Yoshitsune and the king of the tengu', l: 'Mount Kurama, north of Kyoto', f: 'arashiyama', alt: 'Bamboo forest near Kyoto',
+    p: "As a boy, Minamoto no Yoshitsune, Japan's most famous samurai, lived hidden at Kurama temple. According to legend, at night he went down into the forest, where Sōjōbō, the king of the tengu (long-nosed, winged mountain spirits), taught him to fight with the sword.",
+    y: 'What I tell guests there: where to find the tree roots said to have been his training ground.' },
+  { t: 'The official who worked nights in the underworld', l: 'Rokudō Chinnō-ji, Kyoto', f: 'gion', alt: 'Wooden street in Gion, Kyoto',
+    p: 'Ono no Takamura (802-853) was a poet and court official. Legend says that every night he went down the well of this small temple into the world of the dead to help King Enma judge souls, and came back by morning for his job at the palace. The well is still there.',
+    y: 'What I tell guests there: why this neighbourhood was called "the border between the two worlds".' },
+  { t: 'The bridge where the dead came back', l: 'Ichijō Modoribashi, Kyoto', f: 'kiyomizu-gece', alt: 'Kyoto at night',
+    p: 'According to tradition, in 918 the scholar Miyoshi Kiyoyuki briefly came back to life on this bridge as his father\'s funeral procession crossed it. Since then it has been called Modoribashi, "the bridge of return". Many brides still avoid crossing it, so they never "return" to their parents\' home.',
+    y: 'What I tell guests there: the demon who, in another legend, lost an arm next to this bridge.' },
+  { t: 'The court diviner whose mother was a fox', l: 'Seimei Shrine (Kyoto) and Shinoda forest (Izumi, Osaka)', f: 'osaka-kale-gece', alt: 'Osaka Castle at night',
+    p: 'Abe no Seimei was the most famous onmyōji (court astrologer and diviner) of old Japan. Legend says his mother was Kuzunoha, a white fox from the Shinoda forest in Osaka, who took the form of a woman and fled when her son discovered who she really was.',
+    y: 'What I tell guests there: the five-pointed star you will see all over the shrine.' },
+  { t: 'The deer who brought a god', l: 'Kasuga Taisha and Nara Park', f: 'nara-fener-geyik', alt: 'Deer among stone lanterns at Kasuga Taisha',
+    p: 'When Kasuga shrine was founded in the 8th century, the god Takemikazuchi arrived in Nara riding a white deer. That is why Nara\'s deer are considered sacred messengers. For centuries, killing one was punishable by death.',
+    y: 'What I tell guests there: why the deer "bow", and what happens if you show them empty hands.' },
+  { t: "Jumping from Kiyomizu's stage", l: 'Kiyomizu-dera, Kyoto', f: 'kiyomizu-sonbahar', alt: 'Kiyomizu temple in autumn',
+    p: 'In Japanese, "to jump from the stage of Kiyomizu" means to take a big risk. It is not just a saying: in the Edo period people believed that whoever jumped the 13 metres and survived would have their wish granted. Temple records list 234 jumps between 1694 and 1864, and most survived. It was banned in 1872.',
+    y: 'What I tell guests there: where they landed, and why the slope was full of trees.' },
+  { t: 'The Curse of the Colonel', l: 'Dōtonbori, Osaka', f: 'dotonbori', alt: 'Dōtonbori canal in Osaka',
+    p: 'In 1985 the Hanshin Tigers won the league, and fans celebrating on Ebisu bridge threw a Colonel Sanders statue into the canal. The team went decades without another Japan Series title and Osaka called it "the Curse of the Colonel". The statue was found at the bottom of the canal in 2009; the Tigers won the Japan Series again in 2023.',
+    y: "What I tell guests there: Japan's most modern urban legend, on the exact spot where it was born." },
+  { t: 'Shuten-dōji, king of the demons', l: 'Mount Ōe, north of Kyoto', f: 'kasuga', alt: 'Stone lanterns',
+    p: 'Shuten-dōji was the leader of the oni (demons) who kidnapped people in Kyoto around the year 1000. The warrior Minamoto no Raikō climbed Mount Ōe disguised as a monk with his four retainers and defeated him. One of them, Watanabe no Tsuna, had already cut off the arm of the demon Ibaraki-dōji, who gives his name to the city of Ibaraki in Osaka.',
+    y: 'What I tell guests there: why the Japanese throw beans at demons every February.' },
+]
+
+const RELATOS = [
+  { k: '五', t: 'The fox who charged five-yen coins', d: 'Fushimi Inari, Kyoto',
+    p: 'In Japanese, five yen is go-en, the same sound as "a good bond". On the mountain they say a fox with no statue waits for those who climb alone after sunset. It asks for nothing but a five-yen coin. To whoever gives it, it returns the shortest way down. To whoever does not, it returns the long way… and, at the foot of the mountain, a stranger who will become their friend. That is why Tony always climbs with two coins.' },
+  { k: '灯', t: 'The lantern that lights itself', d: 'Kasuga Taisha, Nara',
+    p: 'Kasuga has about three thousand lanterns, and almost all of them carry the name of whoever donated them. One has no name. In Tony\'s story, it lights itself on the night someone in Nara finds something they had lost: a letter, a ring, a person. The deer know before anyone else, and gather around it in silence.' },
+  { k: '面', t: 'The mask on the last train', d: 'Keihan line, between Osaka and Kyoto',
+    p: 'On the last train of the night there is always a woman wearing a Noh mask. She does not sleep or look at her phone. Tony wrote that she is the keeper of all the faces people leave behind at work: the kind boss\'s face, the smiling employee\'s face. When you reach your station, she gives you back your own. If you get off without looking at her, you go home wearing the face of the day.' },
+  { k: '竹', t: 'The bamboo that counts footsteps', d: 'Arashiyama bamboo grove, Kyoto',
+    p: 'Bamboo can grow a metre in a day and, in this story, it also listens. It counts every visitor\'s steps, and as you leave the grove the wind knocks the stalks together a certain number of times. Whoever matches their own steps will return to Kyoto. Tony says nobody has ever counted right, because everyone forgets to count the moment they walk in.' },
+]
+
+const PREGUNTAS = [
+  ['What is the most famous Japanese legend?', 'Among the best known are the Tale of the Bamboo Cutter (Princess Kaguya), Urashima Tarō, Momotarō and the kitsune (fox) legends. In Kansai, the ones you can actually visit are the foxes of Fushimi Inari, Okiku\'s well at Himeji Castle and the sacred deer of Nara.'],
+  ['What are yokai?', 'Yokai are the supernatural beings of Japanese folklore: shape-shifting foxes (kitsune), mountain tengu, river kappa, oni (demons) and ghosts (yūrei). Many are tied to a specific place, and in Kyoto whole streets are linked to them, such as Ichijō street.'],
+  ['Where can I see Japanese legends in Kyoto?', 'Fushimi Inari (foxes), Rokudō Chinnō-ji (the well to the underworld), Ichijō Modoribashi bridge, Seimei Shrine, Kiyomizu-dera and Mount Kurama (tengu). They can be combined in one day by train and on foot.'],
+  ['Who is Tony Hanma?', 'Tony Hanma is a Spanish private tour guide based in Osaka since April 2026. He guides in Spanish, English and Arabic in Kyoto, Osaka, Nara, Kobe and Himeji, is the author of the Spanish book "Detrás del Rostro", and has written original stories set in Kansai places, such as "The fox who charged five-yen coins" and "The mask on the last train".'],
+  ['Is there a legends and mysteries tour of Kyoto in English?', 'Yes. Tony Hanma runs a private legends tour of Kyoto (or Kyoto and Nara) in English, Spanish or Arabic, with hotel pick-up: half day ¥38,000 and full day ¥58,000 per group of up to 6 people. Book on WhatsApp at +34 634 193 106.'],
+  ['Did people really jump from Kiyomizu-dera?', 'Yes. In the Edo period people believed that surviving a jump from the stage of Kiyomizu would grant a wish. Temple records list 234 jumps between 1694 and 1864, and most survived. The government banned it in 1872.'],
+]
+
+export default {
+  lang: 'en', url: 'https://tonykansaiguide.com/en/legends/', ruta: 'en/legends', plantilla: 'legends.src.html', LEYENDAS, RELATOS, PREGUNTAS,
+  credito: 'Photo', firmaRelato: 'Original story by Tony Hanma, 2026', cargo: 'Private tour guide and writer', pais: 'Spain', base: 'Osaka, Japan',
+  sabe: ['Japanese legends', 'Japanese folklore', 'Yokai', 'Kyoto', 'Osaka', 'Nara', 'Himeji'],
+  titulo: 'Tony Hanma, the guide to the legends of Japan', genero: 'Original legend', lista: 'Real legends of Kansai',
+  altPortada: 'Fushimi Inari torii tunnel at dusk',
+}

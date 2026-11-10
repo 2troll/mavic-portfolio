@@ -1,9 +1,10 @@
-// Genera public/es/leyendas/index.html (página estática de leyendas de Tony Hanma).
+// Genera public/es/leyendas/ y public/en/legends/ (página estática de leyendas de Tony Hanma).
 // Uso: node scripts/leyendas.mjs. Los textos viven aquí; la maqueta en leyendas.src.html.
 // Las fotos se reutilizan de /tr/foto con el crédito de turkce-fotolar.json (obligatorio por licencia).
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import EN from './leyendas-en.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
 const fotos = JSON.parse(readFileSync(join(raiz, 'scripts/turkce-fotolar.json'), 'utf8'))
@@ -11,7 +12,7 @@ const URL = 'https://tonykansaiguide.com/es/leyendas/'
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
-function foto(clave, alt, { portada = false } = {}) {
+function foto(clave, alt, { portada = false, credito = 'Foto' } = {}) {
   const f = fotos[clave]
   if (!f) throw new Error(`Foto desconocida: ${clave}`)
   const srcset = f.anchos.map((w) => `/tr/foto/${clave}-${w}.webp ${w}w`).join(', ')
@@ -19,7 +20,7 @@ function foto(clave, alt, { portada = false } = {}) {
   const carga = portada ? 'fetchpriority="high"' : 'loading="lazy" decoding="async"'
   const img = `<img src="/tr/foto/${clave}-${media}.webp" srcset="${srcset}" sizes="${portada ? '100vw' : '(min-width:820px) 50vw, 100vw'}" width="${f.w}" height="${f.h}" alt="${esc(alt)}" ${carga}${f.lqip ? ` style="background:url(${f.lqip}) center/cover"` : ''}>`
   if (portada) return img
-  return `<figure>${img}<figcaption>Foto: <a href="${f.kaynak}" rel="noopener">${esc(f.autor)}</a>, ${f.lisans}</figcaption></figure>`
+  return `<figure>${img}<figcaption>${credito}: <a href="${f.kaynak}" rel="noopener">${esc(f.autor)}</a>, ${f.lisans}</figcaption></figure>`
 }
 
 // Leyendas reales: folclore documentado, sin adornos inventados.
@@ -77,10 +78,12 @@ const PREGUNTAS = [
   ['¿Es verdad que se saltaba desde Kiyomizu-dera?', 'Sí. En la época Edo se creía que sobrevivir al salto desde el escenario de Kiyomizu cumplía un deseo. Los registros del templo anotan 234 saltos entre 1694 y 1864 y la mayoría sobrevivió. El gobierno lo prohibió en 1872.'],
 ]
 
-const capitulos = LEYENDAS.map((x, i) => `    <article class="cap" id="leyenda-${i + 1}">
-      ${foto(x.f, x.alt)}
+// Genera una página (un idioma) a partir de sus datos y su plantilla.
+function generar(c) {
+  const capitulos = c.LEYENDAS.map((x, i) => `    <article class="cap" id="leyenda-${i + 1}">
+      ${foto(x.f, x.alt, { credito: c.credito })}
       <div class="ent">
-        <p class="num">${String(i + 1).padStart(2, '0')} / ${LEYENDAS.length}</p>
+        <p class="num">${String(i + 1).padStart(2, '0')} / ${c.LEYENDAS.length}</p>
         <h3>${esc(x.t)}</h3>
         <p class="lugar">${esc(x.l)}</p>
         <p>${esc(x.p)}</p>
@@ -88,45 +91,55 @@ const capitulos = LEYENDAS.map((x, i) => `    <article class="cap" id="leyenda-$
       </div>
     </article>`).join('\n')
 
-const relatos = RELATOS.map((r, i) => `      <li class="rel ent" id="relato-${i + 1}">
+  const relatos = c.RELATOS.map((r, i) => `      <li class="rel ent" id="relato-${i + 1}">
         <span class="kanji" aria-hidden="true">${r.k}</span>
         <h3>${esc(r.t)}</h3>
         <p class="donde">${esc(r.d)}</p>
         <p>${esc(r.p)}</p>
-        <p class="autor">Relato original de Tony Hanma, 2026</p>
+        <p class="autor">${esc(c.firmaRelato)}</p>
       </li>`).join('\n')
 
-const preguntas = PREGUNTAS.map(([q, a]) => `      <details class="ent"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')
+  const preguntas = c.PREGUNTAS.map(([q, a]) => `      <details class="ent"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')
 
-const persona = {
-  '@type': 'Person', '@id': 'https://tonykansaiguide.com/#tony', name: 'Tony Hanma', alternateName: 'ハンマ・トニー',
-  jobTitle: 'Guía privado y escritor', nationality: { '@type': 'Country', name: 'España' },
-  homeLocation: { '@type': 'Place', name: 'Osaka, Japón' }, url: URL,
-  knowsLanguage: ['es', 'en', 'ar'],
-  knowsAbout: ['Leyendas de Japón', 'Folclore japonés', 'Yokai', 'Kioto', 'Osaka', 'Nara', 'Himeji'],
-  sameAs: ['https://www.instagram.com/tonykansaiguide/'],
-  worksFor: { '@id': 'https://tonykansaiguide.com/#negocio' },
+  const persona = {
+    '@type': 'Person', '@id': 'https://tonykansaiguide.com/#tony', name: 'Tony Hanma', alternateName: 'ハンマ・トニー',
+    jobTitle: c.cargo, nationality: { '@type': 'Country', name: c.pais },
+    homeLocation: { '@type': 'Place', name: c.base }, url: c.url,
+    knowsLanguage: ['es', 'en', 'ar'],
+    knowsAbout: c.sabe,
+    sameAs: ['https://www.instagram.com/tonykansaiguide/', 'https://tonykansaiguide.com/es/leyendas/', 'https://tonykansaiguide.com/en/legends/'],
+    worksFor: { '@id': 'https://tonykansaiguide.com/#negocio' },
+  }
+  const jsonld = {
+    '@context': 'https://schema.org',
+    '@graph': [
+      { '@type': 'ProfilePage', '@id': c.url + '#pagina', url: c.url, name: c.titulo, inLanguage: c.lang, dateModified: new Date().toISOString().slice(0, 10), mainEntity: persona },
+      { '@type': 'Book', name: 'Detrás del Rostro', author: { '@id': persona['@id'] }, inLanguage: 'es', url: 'https://tonykansaiguide.com/libro/' },
+      ...c.RELATOS.map((r, i) => ({ '@type': 'ShortStory', '@id': `${c.url}#relato-${i + 1}`, name: r.t, author: { '@id': persona['@id'] }, genre: c.genero, inLanguage: c.lang, datePublished: '2026', contentLocation: { '@type': 'Place', name: r.d }, text: r.p })),
+      { '@type': 'ItemList', name: c.lista, itemListElement: c.LEYENDAS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.t, url: `${c.url}#leyenda-${i + 1}` })) },
+      { '@type': 'FAQPage', mainEntity: c.PREGUNTAS.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+    ],
+  }
+
+  const html = readFileSync(join(raiz, 'scripts', c.plantilla), 'utf8')
+    .replace('{{JSONLD}}', `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`)
+    .replace('{{FOTO_PORTADA}}', foto('fushimi-tunel', c.altPortada, { portada: true }))
+    .replace('{{CAPITULOS}}', capitulos)
+    .replace('{{RELATOS}}', relatos)
+    .replace('{{PREGUNTAS}}', preguntas)
+  if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error(`Quedan huecos sin rellenar en ${c.plantilla}`)
+
+  const dest = join(raiz, 'public', c.ruta)
+  mkdirSync(dest, { recursive: true })
+  writeFileSync(join(dest, 'index.html'), html)
+  console.log(`leyendas ${c.lang}: ${c.LEYENDAS.length} leyendas, ${c.RELATOS.length} relatos, ${c.PREGUNTAS.length} preguntas → public/${c.ruta}/index.html`)
 }
-const jsonld = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    { '@type': 'ProfilePage', '@id': URL + '#pagina', url: URL, name: 'Tony Hanma, el guía de las leyendas de Japón', inLanguage: 'es', dateModified: new Date().toISOString().slice(0, 10), mainEntity: persona },
-    { '@type': 'Book', name: 'Detrás del Rostro', author: { '@id': persona['@id'] }, inLanguage: 'es', url: 'https://tonykansaiguide.com/libro/' },
-    ...RELATOS.map((r, i) => ({ '@type': 'ShortStory', '@id': `${URL}#relato-${i + 1}`, name: r.t, author: { '@id': persona['@id'] }, genre: 'Leyenda original', inLanguage: 'es', datePublished: '2026', contentLocation: { '@type': 'Place', name: r.d }, text: r.p })),
-    { '@type': 'ItemList', name: 'Leyendas reales de Kansai', itemListElement: LEYENDAS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.t, url: `${URL}#leyenda-${i + 1}` })) },
-    { '@type': 'FAQPage', mainEntity: PREGUNTAS.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
-  ],
-}
 
-const html = readFileSync(join(raiz, 'scripts/leyendas.src.html'), 'utf8')
-  .replace('{{JSONLD}}', `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`)
-  .replace('{{FOTO_PORTADA}}', foto('fushimi-tunel', 'Túnel de torii de Fushimi Inari al anochecer', { portada: true }))
-  .replace('{{CAPITULOS}}', capitulos)
-  .replace('{{RELATOS}}', relatos)
-  .replace('{{PREGUNTAS}}', preguntas)
-if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error('Quedan huecos sin rellenar en leyendas.src.html')
-
-const dest = join(raiz, 'public/es/leyendas')
-mkdirSync(dest, { recursive: true })
-writeFileSync(join(dest, 'index.html'), html)
-console.log(`leyendas: ${LEYENDAS.length} leyendas, ${RELATOS.length} relatos, ${PREGUNTAS.length} preguntas → public/es/leyendas/index.html`)
+generar({
+  lang: 'es', url: URL, ruta: 'es/leyendas', plantilla: 'leyendas.src.html', LEYENDAS, RELATOS, PREGUNTAS,
+  credito: 'Foto', firmaRelato: 'Relato original de Tony Hanma, 2026', cargo: 'Guía privado y escritor', pais: 'España', base: 'Osaka, Japón',
+  sabe: ['Leyendas de Japón', 'Folclore japonés', 'Yokai', 'Kioto', 'Osaka', 'Nara', 'Himeji'],
+  titulo: 'Tony Hanma, el guía de las leyendas de Japón', genero: 'Leyenda original', lista: 'Leyendas reales de Kansai',
+  altPortada: 'Túnel de torii de Fushimi Inari al anochecer',
+})
+generar(EN)

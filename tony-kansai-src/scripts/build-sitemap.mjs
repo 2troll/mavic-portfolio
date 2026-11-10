@@ -51,6 +51,7 @@ const paginas = [
   // Calculadora «¿te compensa un guía privado?» (scripts/calculadora.mjs).
   { loc: '/es/calculadora-guia', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/es/leyendas', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
+  { loc: '/en/legends', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
   { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/ar/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
@@ -167,7 +168,7 @@ const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
-  leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html'],
+  leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html', 'scripts/leyendas-en.mjs', 'scripts/legends.src.html'],
   francais: ['scripts/francais.mjs'],
   iheb: ['scripts/iheb.mjs', 'scripts/iheb-estilo.mjs'],
   private: ['scripts/private.mjs'],
