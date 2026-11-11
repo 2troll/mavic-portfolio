@@ -41,6 +41,8 @@ import './kndr-vip.css'
 const KndrVip = lazy(() => import('./KndrVip'))
 import { enlacesHreflang } from '../seo/hreflang'
 import { RESPUESTAS_PROPIAS } from './datosRespuestas'
+import { PRECIO_CORTO } from './datosRespuestasNuevas'
+import { yenLocal } from './formato'
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -338,6 +340,12 @@ const RESERVAR_PLAN: Record<string, string> = { es: 'Reservar por WhatsApp', en:
 const RESERVAR_PLAN_TG: Record<string, string> = { en: 'Book on Telegram', ru: 'Забронировать в Telegram' }
 const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con PayPal', en: 'or pay in advance with PayPal', ar: 'أو ادفع مسبقاً عبر PayPal', ru: 'или оплатить заранее через PayPal' }
 
+// Tour corto de 2 horas en Kioto (precio en datosRespuestasNuevas.ts).
+const CORTO_TXT: Record<string, { texto: string; ruta: string }> = {
+  es: { texto: `¿Solo un rato? Tour privado de 2 horas en Kioto: ${yenLocal(PRECIO_CORTO, 'es')} por grupo`, ruta: '/es/guia-privado-kioto-2-horas/' },
+  en: { texto: `Only have a couple of hours? 2-hour private tour in Kyoto: ${yenLocal(PRECIO_CORTO, 'en')} per group`, ruta: '/en/kyoto-private-guide-2-hours/' },
+  ar: { texto: `وقتكم قصير؟ جولة خاصة لمدة ساعتين في كيوتو: ${yenLocal(PRECIO_CORTO, 'ar')} للمجموعة`, ruta: '/ar/kyoto-private-guide-2-hours/' },
+}
 const RECOMENDADO: Record<string, string> = { es: 'Recomendado', en: 'Recommended', ar: 'ننصح به', ru: 'Рекомендуем' }
 
 /** Ficha fija bajo las tarifas: lo que comparan las plataformas (Civitatis,
@@ -437,6 +445,10 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
           </article>
         ))}
       </div>
+      {/* Tour corto de 2 h (11-11-2026): línea aparte para no mover la tarjeta destacada. */}
+      {p.guia === 'tony' && CORTO_TXT[p.lang] && (
+        <p className="v7-entradilla v7-corto"><Link to={CORTO_TXT[p.lang].ruta}>{CORTO_TXT[p.lang].texto} →</Link></p>
+      )}
       {/* El aviso de otoño, después de los precios: antes los tapaba en el móvil. */}
       {otono && p.precios.temporada && (
         <aside className="v7-temporada tarjeta">
