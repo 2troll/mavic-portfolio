@@ -1136,6 +1136,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 {p.lang === 'ar' ? 'هل يستحق المرشد الخاص؟ حاسبة' : p.lang === 'es' ? '¿Te compensa un guía? Calculadora' : 'Is a private guide worth it? Calculator'}
               </a>
             )}
+            {/* Perfil de leyendas de Tony (HTML estático, scripts/leyendas.mjs). */}
+            {p.guia === 'tony' && (p.lang === 'es' || p.lang === 'en' || p.lang === 'ar') && (
+              <a href={p.lang === 'es' ? '/es/leyendas/' : p.lang === 'en' ? '/en/legends/' : '/ar/asatir/'}>
+                {p.lang === 'ar' ? 'أساطير اليابان وأماكنها المفقودة' : p.lang === 'es' ? 'Leyendas y lugares perdidos de Japón' : 'Legends and lost places of Japan'}
+              </a>
+            )}
           </PieColumna>
           {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
               sitemap): Google y las IAs dan menos peso a una página huérfana. */}
