@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Tony Kansai Guide</title>
+<script>
+// QR de la tarjeta de metal: SIEMPRE la página de Tony, salvo que el idioma del
+// teléfono lo hable otro guía (ruso → Larion, francés → Iheb, turco → Ferhat).
+// A propósito ignora la página guardada de visitas anteriores (v7-pagina), que
+// mandaba a quien había visto la de Larion a la rusa.
+(function () {
+  var MAPA = { es: '/es/', en: '/en/', ar: '/ar/', fr: '/fr/', tr: '/tr/',
+               ru: '/ru/', uk: '/ru/', be: '/ru/', kk: '/ru/', uz: '/ru/', hy: '/ru/', ka: '/ru/' };
+  var destino = '/en/';
+  try {
+    var tags = navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || 'en'];
+    for (var i = 0; i < tags.length; i++) {
+      var b = String(tags[i]).split('-')[0].toLowerCase();
+      if (MAPA[b]) { destino = MAPA[b]; break; }
+    }
+  } catch (e) {}
+  location.replace(destino);
+})();
+</script>
+</head>
+<body style="font-family:system-ui,sans-serif;background:#111;color:#eee;text-align:center;padding:40px 16px">
+<p><a style="color:#ff4d6d" href="/en/">Tony Kansai Guide</a> · <a style="color:#ff4d6d" href="/es/">Español</a> · <a style="color:#ff4d6d" href="/ar/">العربية</a></p>
+</body>
+</html>
