@@ -60,6 +60,14 @@ const RELATOS = [
     p: 'In Japan it is said that an object that reaches a hundred years old gains a soul; there is even an umbrella yokai, the kasa-obake. In Tony\'s story, in Gion there is a paper umbrella nobody ever bought. It appears at the door of whoever forgot theirs on a day it will rain, and vanishes when the rain stops. It asks for just one thing: that you leave it open for a moment before giving it back, so it can see the street.' },
   { k: '駅', t: 'The station that is not on the map', d: 'JR Osaka Loop Line',
     p: 'The Osaka Loop Line has nineteen stations. Tony wrote that, for whoever falls asleep on the last loop of the night, there is a twentieth. There it is always the hour you were happiest in Osaka, and the platform smells of what you ate that day. You can get off, but the train only waits as long as a song lasts. Whoever gets back on in time returns to Osaka within a year.' },
+  { k: '鹿', t: 'The deer who charged commission', d: 'Nara Park',
+    p: 'Everyone knows Nara\'s deer bow to ask for crackers. What nobody tells you, according to Tony, is that there is one, old and with a folded ear, who bows to no one. He stands in front of the cracker stall and waits. Every tourist who buys a pack, without knowing why, gives the first cracker to him. Tony has been trying not to do it for months. He still has not managed.' },
+  { k: '蛸', t: 'Takoyaki number nine', d: 'Dōtonbori, Osaka',
+    p: 'Takoyaki trays come with eight balls. Tony swears that, every so often, at a Dōtonbori stall whose name he refuses to give, a tray comes out with nine. Whoever eats the ninth says exactly what they think for one hour, and cannot stop. That is why, Tony says, nobody in Osaka accepts takoyaki from a stranger before an important meeting.' },
+  { k: '鐘', t: 'The hundred and ninth bell', d: 'Kyoto temples on New Year\'s Eve',
+    p: 'On New Year\'s Eve, Kyoto\'s temples ring their bells 108 times, once for each earthly desire to leave behind. Tony wrote that if you stay alone after everyone has gone, sometimes there is one more. The 109th toll is not for forgetting: it is for remembering something you lost. Nobody knows who rings it. The next morning, the bell\'s wooden striker is always wet, as if it had rained on it alone.' },
+  { k: '影', t: 'The shadow that arrived late', d: 'Osaka Castle',
+    p: 'A traveller took a photo in front of Osaka Castle and, looking at it, saw that his shadow was missing. He came back the next day: in the new photo there were two. Tony says the shadows of people in a hurry stay behind, strolling around the castle gardens, and come back when their owner finally sits down to look. That is why his tours always include ten minutes sitting by the moat. "It is to wait for the shadows," he says.' },
 ]
 
 const PREGUNTAS = [

@@ -88,6 +88,14 @@ const RELATOS = [
     p: 'En Japón se dice que un objeto que cumple cien años gana alma; hay hasta un yokai paraguas, el kasa-obake. En el relato de Tony, en Gion hay un paraguas de papel que nadie compró nunca. Aparece en la puerta de quien se ha olvidado el suyo el día que va a llover, y desaparece cuando escampa. Solo pide una cosa: que lo dejes abierto un momento antes de devolverlo, para que vea la calle.' },
   { k: '駅', t: 'La estación que no está en el mapa', d: 'Línea circular JR de Osaka',
     p: 'La línea circular de Osaka tiene diecinueve estaciones. Tony escribió que, para quien se queda dormido en la última vuelta de la noche, hay una vigésima. Allí siempre es la hora en que más feliz fuiste en Osaka, y el andén huele a lo que comiste ese día. Puedes bajar, pero el tren solo espera lo que dura una canción. Quien vuelve a subir a tiempo, regresa a Osaka antes de un año.' },
+  { k: '鹿', t: 'El ciervo que cobraba comisión', d: 'Parque de Nara',
+    p: 'Todo el mundo sabe que los ciervos de Nara hacen reverencias para pedir galletas. Lo que nadie cuenta, según Tony, es que hay uno, viejo y con una oreja doblada, que no se inclina ante nadie. Se planta delante del puesto de galletas y espera. Cada turista que compra un paquete, sin saber por qué, le da la primera galleta a él. Tony lleva meses intentando no hacerlo. Todavía no lo ha conseguido.' },
+  { k: '蛸', t: 'El takoyaki número nueve', d: 'Dōtonbori, Osaka',
+    p: 'Las bandejas de takoyaki traen ocho bolas. Tony asegura que, muy de vez en cuando, en un puesto de Dōtonbori cuyo nombre se niega a decir, sale una bandeja con nueve. Quien se come la novena dice exactamente lo que piensa durante una hora, sin poder evitarlo. Por eso, cuenta Tony, en Osaka nadie acepta takoyaki de un desconocido antes de una reunión importante.' },
+  { k: '鐘', t: 'La campanada ciento nueve', d: 'Templos de Kioto en Nochevieja',
+    p: 'En Nochevieja, los templos de Kioto tocan la campana 108 veces, una por cada deseo terrenal que hay que dejar atrás. Tony escribió que, si te quedas solo cuando se van todos, a veces suena una más. La campanada 109 no es para olvidar: es para recordar algo que perdiste. Nadie sabe quién la toca. A la mañana siguiente, el mazo de la campana siempre está húmedo, como si hubiera llovido solo sobre él.' },
+  { k: '影', t: 'La sombra que llegó tarde', d: 'Castillo de Osaka',
+    p: 'Un viajero se hizo una foto delante del castillo de Osaka y, al mirarla, vio que su sombra no estaba. Volvió al día siguiente: en la foto nueva había dos. Tony dice que las sombras de quienes llegan con prisa se quedan atrás, paseando por los jardines del castillo, y vuelven cuando su dueño por fin se sienta a mirar. Por eso, en sus tours, siempre hay diez minutos sentados frente al foso. «Es para esperar a las sombras», dice.' },
 ]
 
 const PREGUNTAS = [
