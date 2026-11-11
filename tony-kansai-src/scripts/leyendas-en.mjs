@@ -30,6 +30,21 @@ const LEYENDAS = [
   { t: 'Shuten-dōji, king of the demons', l: 'Mount Ōe, north of Kyoto', f: 'kasuga', alt: 'Stone lanterns',
     p: 'Shuten-dōji was the leader of the oni (demons) who kidnapped people in Kyoto around the year 1000. The warrior Minamoto no Raikō climbed Mount Ōe disguised as a monk with his four retainers and defeated him. One of them, Watanabe no Tsuna, had already cut off the arm of the demon Ibaraki-dōji, who gives his name to the city of Ibaraki in Osaka.',
     y: 'What I tell guests there: why the Japanese throw beans at demons every February.' },
+  { t: 'Kiyohime, the woman who became a serpent', l: 'Dōjō-ji, Wakayama', f: 'gion', alt: 'Wooden street in Kyoto',
+    p: 'A young monk, Anchin, promised to come back for Kiyohime and broke his word. She chased him to the Hidaka river, threw herself into the water and came out as a great serpent. The monk hid under the bell of Dōjō-ji temple; the serpent coiled around the bell and heated it with her rage until he died inside. The temple still tells the story with illustrated scrolls.',
+    y: 'What I tell guests there: why this story ended up in Noh and kabuki, and what happened to the bell.' },
+  { t: 'Hashihime, the princess of Uji bridge', l: 'Uji Bridge and Hashihime Shrine, Uji', f: 'kinkakuji', alt: 'Temple by the water in Kyoto',
+    p: 'In one of the oldest versions, a woman driven mad by jealousy immersed herself in the Uji river for twenty-one days to become a demon and take revenge. Since then the bridge princess is said to guard the crossing and to resent other people\'s love: that is why many couples avoid walking across Uji Bridge together.',
+    y: 'What I tell guests there: the tiny Hashihime shrine, two minutes from the bridge, that almost nobody visits.' },
+  { t: 'Uneme and the shrine that turned its back on the pond', l: 'Sarusawa Pond, Nara', f: 'todaiji', alt: 'Tōdai-ji temple in Nara',
+    p: 'A court lady, Uneme, lost the emperor\'s favour and drowned herself in Sarusawa Pond. It is said her spirit could not bear to look at the water where she died, so the small Uneme shrine by the pond turned around in a single night to face away from it. It still faces the other way today.',
+    y: 'What I tell guests there: how to find the turned shrine without anyone pointing it out.' },
+  { t: 'Osakabe-hime, the princess of the top floor', l: 'Main keep of Himeji Castle', f: 'himeji-yakin', alt: 'Himeji Castle seen from afar',
+    p: 'At the very top of Himeji Castle\'s keep lives, according to legend, Osakabe-hime, a yokai princess who shows herself to the lord of the castle only once a year. Whoever climbs to her floor without permission loses the way back. A small shrine on the top floor of the keep still remembers her.',
+    y: 'What I tell guests there: the story of the samurai who climbed up at night to see her.' },
+  { t: 'Urashima Tarō and the three hundred years', l: 'Urashima Shrine, Ine (northern Kyoto prefecture)', f: 'rokko-gece', alt: 'The sea at night',
+    p: 'A fisherman saved a turtle and was invited to the palace of the sea god. He spent what he thought were three days there. When he returned, three hundred years had passed and nobody knew him. He opened the box he had been told never to open and aged in an instant. Urashima Shrine on Ine Bay keeps the box that tradition says is the original.',
+    y: 'What I tell guests there: why this is one of the oldest time-travel stories in the world.' },
 ]
 
 const RELATOS = [
@@ -41,6 +56,10 @@ const RELATOS = [
     p: 'On the last train of the night there is always a woman wearing a Noh mask. She does not sleep or look at her phone. Tony wrote that she is the keeper of all the faces people leave behind at work: the kind boss\'s face, the smiling employee\'s face. When you reach your station, she gives you back your own. If you get off without looking at her, you go home wearing the face of the day.' },
   { k: '竹', t: 'The bamboo that counts footsteps', d: 'Arashiyama bamboo grove, Kyoto',
     p: 'Bamboo can grow a metre in a day and, in this story, it also listens. It counts every visitor\'s steps, and as you leave the grove the wind knocks the stalks together a certain number of times. Whoever matches their own steps will return to Kyoto. Tony says nobody has ever counted right, because everyone forgets to count the moment they walk in.' },
+  { k: '傘', t: 'The umbrella that came back on its own', d: 'Streets of Gion, Kyoto',
+    p: 'In Japan it is said that an object that reaches a hundred years old gains a soul; there is even an umbrella yokai, the kasa-obake. In Tony\'s story, in Gion there is a paper umbrella nobody ever bought. It appears at the door of whoever forgot theirs on a day it will rain, and vanishes when the rain stops. It asks for just one thing: that you leave it open for a moment before giving it back, so it can see the street.' },
+  { k: '駅', t: 'The station that is not on the map', d: 'JR Osaka Loop Line',
+    p: 'The Osaka Loop Line has nineteen stations. Tony wrote that, for whoever falls asleep on the last loop of the night, there is a twentieth. There it is always the hour you were happiest in Osaka, and the platform smells of what you ate that day. You can get off, but the train only waits as long as a song lasts. Whoever gets back on in time returns to Osaka within a year.' },
 ]
 
 const PREGUNTAS = [

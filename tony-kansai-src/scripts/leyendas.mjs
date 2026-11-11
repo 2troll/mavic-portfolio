@@ -56,6 +56,21 @@ const LEYENDAS = [
   { t: 'Shuten-dōji, el rey de los demonios', l: 'Monte Ōe, norte de Kioto', f: 'kasuga', alt: 'Linternas de piedra',
     p: 'Shuten-dōji era el jefe de los oni (demonios) que secuestraban gente en Kioto hacia el año 1000. El guerrero Minamoto no Raikō subió al monte Ōe disfrazado de monje con sus cuatro guardianes y lo venció. Uno de ellos, Watanabe no Tsuna, ya había cortado el brazo al demonio Ibaraki-dōji, que da nombre a la ciudad de Ibaraki, en Osaka.',
     y: 'Lo que cuento allí: por qué en Japón se tiran judías a los demonios cada febrero.' },
+  { t: 'Kiyohime, la mujer que se convirtió en serpiente', l: 'Dōjō-ji, Wakayama', f: 'gion', alt: 'Calle de madera en Kioto',
+    p: 'Un joven monje, Anchin, prometió volver a por Kiyohime y la engañó. Ella lo persiguió hasta el río Hidaka, se lanzó al agua y salió convertida en una gran serpiente. El monje se escondió bajo la campana del templo Dōjō-ji; la serpiente se enroscó a la campana y la calentó con su furia hasta que el monje murió dentro. El templo sigue contando la historia con rollos ilustrados.',
+    y: 'Lo que cuento allí: por qué esta historia acabó en el teatro nō y el kabuki, y qué pasó con la campana.' },
+  { t: 'Hashihime, la princesa del puente de Uji', l: 'Puente de Uji y santuario Hashihime, Uji', f: 'kinkakuji', alt: 'Templo junto al agua en Kioto',
+    p: 'Según una de las versiones más antiguas, una mujer enloquecida por los celos se sumergió veintiún días en el río Uji para convertirse en demonio y vengarse. Desde entonces se dice que la princesa del puente protege el cruce y no soporta los amores ajenos: por eso muchas parejas evitan pasear juntas por el puente de Uji.',
+    y: 'Lo que cuento allí: el pequeño santuario de Hashihime, a dos minutos del puente, que casi nadie visita.' },
+  { t: 'Uneme y el santuario que da la espalda al estanque', l: 'Estanque Sarusawa, Nara', f: 'todaiji', alt: 'Templo Tōdai-ji en Nara',
+    p: 'Una dama de la corte, Uneme, perdió el favor del emperador y se ahogó en el estanque Sarusawa. Cuentan que su espíritu no soportaba ver el agua donde murió, y el pequeño santuario Uneme, junto al estanque, se giró en una sola noche para darle la espalda. Hoy sigue mirando hacia el lado contrario.',
+    y: 'Lo que cuento allí: cómo encontrar el santuario girado sin que nadie te lo señale.' },
+  { t: 'Osakabe-hime, la princesa del último piso', l: 'Torre del castillo de Himeji', f: 'himeji-yakin', alt: 'Castillo de Himeji visto desde lejos',
+    p: 'En lo más alto de la torre del castillo de Himeji vive, según la leyenda, Osakabe-hime, una princesa yokai que solo se deja ver por el señor del castillo una vez al año. Quien sube sin permiso a su piso pierde el camino de vuelta. En el último piso de la torre hay un pequeño santuario que la recuerda.',
+    y: 'Lo que cuento allí: la historia del samurái que subió de noche a verla.' },
+  { t: 'Urashima Tarō y los trescientos años', l: 'Santuario Urashima, Ine (norte de Kioto)', f: 'rokko-gece', alt: 'El mar de noche',
+    p: 'Un pescador salvó a una tortuga y fue invitado al palacio del dios del mar. Pasó allí lo que creyó que eran tres días. Al volver, habían pasado trescientos años y nadie lo conocía. Abrió la caja que le habían prohibido abrir y envejeció de golpe. El santuario Urashima, en la bahía de Ine, guarda la caja que según la tradición es la original.',
+    y: 'Lo que cuento allí: por qué es una de las historias de viajes en el tiempo más antiguas del mundo.' },
 ]
 
 // Relatos ORIGINALES de Tony Hanma: ficción declarada como tal.
@@ -68,6 +83,10 @@ const RELATOS = [
     p: 'En el último tren de la noche siempre viaja una mujer con máscara de teatro nō. No duerme ni mira el móvil. Tony escribió que es la dueña de todas las caras que la gente deja olvidadas en el trabajo: la cara del jefe amable, la del empleado sonriente. Cuando llegas a tu estación, te devuelve la tuya. Si te bajas sin mirarla, vuelves a casa con la cara del día.' },
   { k: '竹', t: 'El bambú que cuenta pasos', d: 'Bosque de bambú de Arashiyama, Kioto',
     p: 'El bambú crece hasta un metro al día y, según este relato, también escucha. Cuenta los pasos de cada visitante y, al salir del bosque, el viento suena en un número de golpes. Quien coincide con sus propios pasos volverá a Kioto. Tony dice que nadie ha contado bien jamás, porque al entrar todos se olvidan de contar.' },
+  { k: '傘', t: 'El paraguas que volvía solo', d: 'Calles de Gion, Kioto',
+    p: 'En Japón se dice que un objeto que cumple cien años gana alma; hay hasta un yokai paraguas, el kasa-obake. En el relato de Tony, en Gion hay un paraguas de papel que nadie compró nunca. Aparece en la puerta de quien se ha olvidado el suyo el día que va a llover, y desaparece cuando escampa. Solo pide una cosa: que lo dejes abierto un momento antes de devolverlo, para que vea la calle.' },
+  { k: '駅', t: 'La estación que no está en el mapa', d: 'Línea circular JR de Osaka',
+    p: 'La línea circular de Osaka tiene diecinueve estaciones. Tony escribió que, para quien se queda dormido en la última vuelta de la noche, hay una vigésima. Allí siempre es la hora en que más feliz fuiste en Osaka, y el andén huele a lo que comiste ese día. Puedes bajar, pero el tren solo espera lo que dura una canción. Quien vuelve a subir a tiempo, regresa a Osaka antes de un año.' },
 ]
 
 const PREGUNTAS = [
