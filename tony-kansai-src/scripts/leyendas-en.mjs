@@ -67,7 +67,7 @@ const RELATOS = [
   { k: '鐘', t: 'The hundred and ninth bell', d: 'Kyoto temples on New Year\'s Eve',
     p: 'On New Year\'s Eve, Kyoto\'s temples ring their bells 108 times, once for each earthly desire to leave behind. Tony wrote that if you stay alone after everyone has gone, sometimes there is one more. The 109th toll is not for forgetting: it is for remembering something you lost. Nobody knows who rings it. The next morning, the bell\'s wooden striker is always wet, as if it had rained on it alone.' },
   { k: '影', t: 'The shadow that arrived late', d: 'Osaka Castle',
-    p: 'A traveller took a photo in front of Osaka Castle and, looking at it, saw that his shadow was missing. He came back the next day: in the new photo there were two. Tony says the shadows of people in a hurry stay behind, strolling around the castle gardens, and come back when their owner finally sits down to look. That is why his tours always include ten minutes sitting by the moat. "It is to wait for the shadows," he says.' },
+    p: 'A traveller took a photo in front of Osaka Castle and, looking at it, saw that his shadow was missing. He came back the next day: in the new photo there were two. Tony says the shadows of people in a hurry stay behind, strolling around the castle gardens, and come back when their owner finally sits down to look. So if you ever go, sit by the moat for a while before you leave. Just in case your shadow is still out walking.' },
 ]
 
 const PREGUNTAS = [

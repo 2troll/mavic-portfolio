@@ -95,7 +95,7 @@ const RELATOS = [
   { k: '鐘', t: 'La campanada ciento nueve', d: 'Templos de Kioto en Nochevieja',
     p: 'En Nochevieja, los templos de Kioto tocan la campana 108 veces, una por cada deseo terrenal que hay que dejar atrás. Tony escribió que, si te quedas solo cuando se van todos, a veces suena una más. La campanada 109 no es para olvidar: es para recordar algo que perdiste. Nadie sabe quién la toca. A la mañana siguiente, el mazo de la campana siempre está húmedo, como si hubiera llovido solo sobre él.' },
   { k: '影', t: 'La sombra que llegó tarde', d: 'Castillo de Osaka',
-    p: 'Un viajero se hizo una foto delante del castillo de Osaka y, al mirarla, vio que su sombra no estaba. Volvió al día siguiente: en la foto nueva había dos. Tony dice que las sombras de quienes llegan con prisa se quedan atrás, paseando por los jardines del castillo, y vuelven cuando su dueño por fin se sienta a mirar. Por eso, en sus tours, siempre hay diez minutos sentados frente al foso. «Es para esperar a las sombras», dice.' },
+    p: 'Un viajero se hizo una foto delante del castillo de Osaka y, al mirarla, vio que su sombra no estaba. Volvió al día siguiente: en la foto nueva había dos. Tony dice que las sombras de quienes llegan con prisa se quedan atrás, paseando por los jardines del castillo, y vuelven cuando su dueño por fin se sienta a mirar. Así que, si alguna vez vas, siéntate un rato frente al foso antes de irte. Por si acaso tu sombra todavía está paseando.' },
 ]
 
 const PREGUNTAS = [
