@@ -75,6 +75,6 @@ export default {
   lang: 'ar', url: 'https://tonykansaiguide.com/ar/asatir/', ruta: 'ar/asatir', plantilla: 'asatir.src.html', LEYENDAS, RELATOS, PREGUNTAS,
   credito: 'صورة', firmaRelato: 'حكاية أصلية بقلم توني هانما، 2026', cargo: 'مرشد سياحي خاص وكاتب', pais: 'إسبانيا', base: 'أوساكا، اليابان',
   sabe: ['الأساطير اليابانية', 'الحكايات الشعبية اليابانية', 'يوكاي', 'كيوتو', 'أوساكا', 'نارا', 'هيميجي'],
-  titulo: 'توني هانما، مرشد أساطير اليابان', genero: 'أسطورة أصلية', lista: 'أساطير حقيقية من كانساي',
+  titulo: 'توني هانما، مرشد أساطير اليابان', genero: 'أسطورة أصلية', lista: 'أساطير حقيقية من كانساي', listaLugares: 'أماكن مفقودة في اليابان',
   altPortada: 'ممر بوابات فوشيمي إيناري عند الغروب',
 }

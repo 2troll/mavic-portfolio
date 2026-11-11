@@ -75,6 +75,6 @@ export default {
   lang: 'en', url: 'https://tonykansaiguide.com/en/legends/', ruta: 'en/legends', plantilla: 'legends.src.html', LEYENDAS, RELATOS, PREGUNTAS,
   credito: 'Photo', firmaRelato: 'Original story by Tony Hanma, 2026', cargo: 'Private tour guide and writer', pais: 'Spain', base: 'Osaka, Japan',
   sabe: ['Japanese legends', 'Japanese folklore', 'Yokai', 'Kyoto', 'Osaka', 'Nara', 'Himeji'],
-  titulo: 'Tony Hanma, the guide to the legends of Japan', genero: 'Original legend', lista: 'Real legends of Kansai',
+  titulo: 'Tony Hanma, the guide to the legends of Japan', genero: 'Original legend', lista: 'Real legends of Kansai', listaLugares: 'Lost places of Japan',
   altPortada: 'Fushimi Inari torii tunnel at dusk',
 }

@@ -6,6 +6,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import EN from './leyendas-en.mjs'
 import AR from './leyendas-ar.mjs'
+import { LUGARES } from './leyendas-lugares.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
 const fotos = JSON.parse(readFileSync(join(raiz, 'scripts/turkce-fotolar.json'), 'utf8'))
@@ -119,6 +120,18 @@ function generar(c) {
         <p class="autor">${esc(c.firmaRelato)}</p>
       </li>`).join('\n')
 
+  const lugares = LUGARES.map((x, i) => {
+    const t = x[c.lang]
+    return `      <li class="lugar-perdido ent" id="lugar-${i + 1}">
+        <span class="kanji" aria-hidden="true">${x.k}</span>
+        <p class="estado">${esc(t.e)}</p>
+        <h3>${esc(t.t)}</h3>
+        <p class="donde">${esc(t.l)}</p>
+        <p>${esc(t.p)}</p>
+        <p class="visita">${esc(t.v)}</p>
+      </li>`
+  }).join('\n')
+
   const preguntas = c.PREGUNTAS.map(([q, a]) => `      <details class="ent"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')
 
   const persona = {
@@ -137,6 +150,7 @@ function generar(c) {
       { '@type': 'Book', name: 'Detrás del Rostro', author: { '@id': persona['@id'] }, inLanguage: 'es', url: 'https://tonykansaiguide.com/libro/' },
       ...c.RELATOS.map((r, i) => ({ '@type': 'ShortStory', '@id': `${c.url}#relato-${i + 1}`, name: r.t, author: { '@id': persona['@id'] }, genre: c.genero, inLanguage: c.lang, datePublished: '2026', contentLocation: { '@type': 'Place', name: r.d }, text: r.p })),
       { '@type': 'ItemList', name: c.lista, itemListElement: c.LEYENDAS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.t, url: `${c.url}#leyenda-${i + 1}` })) },
+      { '@type': 'ItemList', name: c.listaLugares, itemListElement: LUGARES.map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'TouristAttraction', name: x[c.lang].t, description: x[c.lang].p, address: x[c.lang].l, url: `${c.url}#lugar-${i + 1}` } })) },
       { '@type': 'FAQPage', mainEntity: c.PREGUNTAS.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ],
   }
@@ -147,19 +161,20 @@ function generar(c) {
     .replace('{{CAPITULOS}}', capitulos)
     .replace('{{RELATOS}}', relatos)
     .replace('{{PREGUNTAS}}', preguntas)
+    .replace('{{LUGARES}}', lugares)
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error(`Quedan huecos sin rellenar en ${c.plantilla}`)
 
   const dest = join(raiz, 'public', c.ruta)
   mkdirSync(dest, { recursive: true })
   writeFileSync(join(dest, 'index.html'), html)
-  console.log(`leyendas ${c.lang}: ${c.LEYENDAS.length} leyendas, ${c.RELATOS.length} relatos, ${c.PREGUNTAS.length} preguntas → public/${c.ruta}/index.html`)
+  console.log(`leyendas ${c.lang}: ${c.LEYENDAS.length} leyendas, ${LUGARES.length} lugares, ${c.RELATOS.length} relatos, ${c.PREGUNTAS.length} preguntas → public/${c.ruta}/index.html`)
 }
 
 generar({
   lang: 'es', url: URL, ruta: 'es/leyendas', plantilla: 'leyendas.src.html', LEYENDAS, RELATOS, PREGUNTAS,
   credito: 'Foto', firmaRelato: 'Relato original de Tony Hanma, 2026', cargo: 'Guía privado y escritor', pais: 'España', base: 'Osaka, Japón',
   sabe: ['Leyendas de Japón', 'Folclore japonés', 'Yokai', 'Kioto', 'Osaka', 'Nara', 'Himeji'],
-  titulo: 'Tony Hanma, el guía de las leyendas de Japón', genero: 'Leyenda original', lista: 'Leyendas reales de Kansai',
+  titulo: 'Tony Hanma, el guía de las leyendas de Japón', genero: 'Leyenda original', lista: 'Leyendas reales de Kansai', listaLugares: 'Lugares perdidos de Japón',
   altPortada: 'Túnel de torii de Fushimi Inari al anochecer',
 })
 generar(EN)
