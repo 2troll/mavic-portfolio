@@ -109,6 +109,8 @@ const paginas = [
   { loc: '/en/kyoto-private-guide-2-hours', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
   { loc: '/es/tour-privado-bici-kioto', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
   { loc: '/en/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
+  { loc: '/ar/kyoto-private-guide-2-hours', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
+  { loc: '/ar/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
@@ -163,8 +165,8 @@ const V7 = {
   ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/'], ['ru', '/ru/perks/']],
   mezquitas: [['ar', '/ar/mosques-kansai/']],
   halal: [['ar', '/ar/halal-kyoto-osaka/']],
-  corto: [['es', '/es/guia-privado-kioto-2-horas/'], ['en', '/en/kyoto-private-guide-2-hours/']],
-  bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/']],
+  corto: [['es', '/es/guia-privado-kioto-2-horas/'], ['en', '/en/kyoto-private-guide-2-hours/'], ['ar', '/ar/kyoto-private-guide-2-hours/']],
+  bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/'], ['ar', '/ar/kyoto-private-bike-tour/']],
 }
 
 // <lastmod>: la fecha real del último cambio del archivo del que sale cada
