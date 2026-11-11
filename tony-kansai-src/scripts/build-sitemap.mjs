@@ -104,6 +104,11 @@ const paginas = [
   { loc: '/es/guia-espanol-arabe-japon', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
   { loc: '/en/spanish-speaking-guide-japan', priority: '0.8', changefreq: 'monthly', v7: 'kansai' },
   { loc: '/en/arabic-speaking-guide-japan', priority: '0.8', changefreq: 'monthly', v7: 'arabe' },
+  // Tour de 2 horas y tour en bici por Kioto (11-11-2026).
+  { loc: '/es/guia-privado-kioto-2-horas', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
+  { loc: '/en/kyoto-private-guide-2-hours', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
+  { loc: '/es/tour-privado-bici-kioto', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
+  { loc: '/en/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
@@ -158,6 +163,8 @@ const V7 = {
   ventajas: [['es', '/es/ventajas/'], ['en', '/en/perks/'], ['ar', '/ar/perks/'], ['ru', '/ru/perks/']],
   mezquitas: [['ar', '/ar/mosques-kansai/']],
   halal: [['ar', '/ar/halal-kyoto-osaka/']],
+  corto: [['es', '/es/guia-privado-kioto-2-horas/'], ['en', '/en/kyoto-private-guide-2-hours/']],
+  bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/']],
 }
 
 // <lastmod>: la fecha real del último cambio del archivo del que sale cada
@@ -184,6 +191,7 @@ const FUENTE = {
   ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
   coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
   ...Object.fromEntries(['kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
+  ...Object.fromEntries(['corto', 'bici'].map((g) => [g, ['src/v7/datosRespuestasNuevas.ts', 'src/v7/PaginaRespuesta.tsx']])),
   ...Object.fromEntries(['mexico', 'uk', 'espana', 'golfo', 'usa', 'argentina', 'rusia', 'hispano', 'anglo'].map((m) => [m, ['src/v7/datosViajeros.ts', 'src/v7/Viajeros.tsx']])),
 }
 const FUENTE_RUTA = {

@@ -53,11 +53,13 @@
 
 import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
+import { NUEVAS_RESPUESTAS } from './datosRespuestasNuevas'
 
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
   | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en' | 'mezquitas-en'
+  | 'corto-es' | 'corto-en' | 'bici-es' | 'bici-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
-export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe'
+export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe' | 'corto' | 'bici'
 export type LangRespuesta = 'es' | 'en' | 'ar'
 
 /** Fecha de la última revisión: la ven el visitante, el JSON-LD y el sitemap. */
@@ -799,6 +801,8 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     altFoto: 'Kobe Mosque', saludo: 'Hi Tony, I saw your Arabic-speaking guide page and would like to ask about a tour.',
     volver: '← Back to Tony’s page',
   },
+  // Tour de 2 horas y tour en bici por Kioto (11-11-2026): datosRespuestasNuevas.ts
+  ...NUEVAS_RESPUESTAS,
 }
 
 /** Respuestas que viven dentro de la página de su ciudad (19-10-2026): competían

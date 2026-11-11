@@ -77,9 +77,9 @@ const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, 
 const SEHIRLER = [
   {
     yol: 'kyoto', ad: 'Kyoto', kapak: 'fushimi-tunel',
-    baslik: "Kyoto'da Türkçe Rehber Ferhat | Özel Kyoto Turu",
+    baslik: "Kyoto'da Türkçe Rehber Var mı? Evet: Ferhat | Özel Kyoto Turu",
     aciklama: "Kyoto'da Türkçe konuşan özel rehber: Fushimi Inari, Kiyomizu-dera, Gion ve Arashiyama. Sadece sizin grubunuz için, otel lobisinde buluşma. Fiyat WhatsApp'tan.",
-    giris: "Kyoto, Japonya'nın bin yılı aşkın süre başkenti olmuş şehri. Tapınakları, geyşa sokakları ve bambu ormanıyla çoğu gezginin Japonya'daki en önemli günü. Ferhat bu günü sizin hızınıza göre, Türkçe anlatarak planlar.",
+    giris: "Evet, Kyoto'da Türkçe rehber var: Ferhat, 4 yıldır Japonya'da yaşayan Türk rehber, Kyoto'da yalnızca sizin grubunuza Türkçe özel tur yapar. Kyoto, Japonya'nın bin yılı aşkın süre başkenti olmuş şehri. Tapınakları, geyşa sokakları ve bambu ormanıyla çoğu gezginin Japonya'daki en önemli günü. Ferhat bu günü sizin hızınıza göre, Türkçe anlatarak planlar.",
     yerler: [
       ['Fushimi Inari Taisha', 'Binlerce turuncu torii kapısıyla dağa tırmanan yol. Kalabalıktan kaçmak için sabah erken gitmek en iyisi.', 'fushimi-orman'],
       ['Kiyomizu-dera', 'Ahşap terasıyla şehre bakan tapınak ve önündeki eski taş sokaklar: Ninenzaka ve Sannenzaka.', 'kiyomizu-gece'],

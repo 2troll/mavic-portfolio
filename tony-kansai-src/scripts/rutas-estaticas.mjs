@@ -41,7 +41,7 @@ const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'n
 import { execSync } from 'node:child_process'
 execSync('npx vite build --ssr scripts/ssr-entrada.tsx --outDir .ssr --emptyOutDir --logLevel error', { stdio: 'inherit' })
 const { pinta } = await import(new URL('../.ssr/ssr-entrada.js', import.meta.url).href)
-const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|viajar-a-japon-desde-espana-y-latinoamerica|travel-to-japan-from-uk-and-usa|from-gulf|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks|guia-privado-espanol-kioto|guia-espanol-kansai|tour-privado-o-en-grupo-japon|guia-espanol-arabe-japon|spanish-speaking-guide-japan|arabic-speaking-guide-japan|kyoto-private-guide-cost|mosques-kansai|halal-kyoto-osaka))?$/
+const PRERENDER = /^(es|en|ar|ru|larion)(\/(osaka|kyoto|nara|kobe|himeji|hiroshima|beyond|rutas|routes|montana|hiking|otono-kioto|kyoto-autumn|sakura-kioto|kyoto-cherry-blossom|kyoto-sakura|viajar-a-japon-desde-espana-y-latinoamerica|travel-to-japan-from-uk-and-usa|from-gulf|from-russia|osaka-kioto|osaka-to-kyoto|aeropuerto-kansai|kansai-airport|ventajas|perks|guia-privado-espanol-kioto|guia-espanol-kansai|tour-privado-o-en-grupo-japon|guia-espanol-arabe-japon|spanish-speaking-guide-japan|arabic-speaking-guide-japan|kyoto-private-guide-cost|mosques-kansai|halal-kyoto-osaka|guia-privado-kioto-2-horas|kyoto-private-guide-2-hours|tour-privado-bici-kioto|kyoto-private-bike-tour))?$/
 
 // Nombres con hash de los trozos de página, sacados del build.
 import { readdirSync } from 'node:fs'

@@ -75,8 +75,8 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
   'm-en': {
     id: 'm-en', lang: 'en', dir: 'ltr', ruta: '/en/hiking/', guias: ['tony', 'larion'],
     seo: {
-      titulo: 'Challenging guided hikes in Kansai, Japan: 18 routes | Tony Kansai Guide',
-      descripcion: 'Serious hiking in Japan: 18 guided routes near Osaka and Kyoto. Hakkyōgadake (1,915 m, roof of Kansai), the Hira traverse, Bunagatake, Kumano Kodō, Kōyasan, Rokkō. Route data from AllTrails.',
+      titulo: 'Private hiking guide near Kyoto & Osaka: 18 guided routes | Tony Kansai Guide',
+      descripcion: 'Private hiking guide near Kyoto and Osaka: 18 guided routes. Hakkyōgadake (1,915 m, roof of Kansai), the Hira traverse, Bunagatake, Kumano Kodō, Kōyasan, Rokkō. Route data from AllTrails.',
     },
     intro: {
       antetitulo: 'For hikers looking for something new in Japan',
