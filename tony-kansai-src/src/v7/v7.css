@@ -563,6 +563,9 @@ body.v7-cuerpo-oscuro { background: #05070d; }
 .v7-puerta-montana strong { display: block; font-size: 1.3rem; letter-spacing: -0.01em; }
 .v7-puerta-montana small { display: block; color: rgba(239, 232, 219, 0.7); font-size: 15px; margin-top: 4px; }
 .v7-puerta-montana > span:last-child { margin-inline-start: auto; font-size: 1.4rem; }
+/* Tarjetas a los tours de 2 h y en bici por Kioto (ToursNuevos.tsx): la misma pieza, en rejilla. */
+.v7-tours-nuevos-rejilla { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr)); }
+.v7-tours-nuevos-rejilla .v7-puerta-montana small { font-variant-numeric: tabular-nums; }
 
 /* ══ Página de montaña ═══════════════════════════════════════════════════════ */
 .v7-montes { position: relative; }

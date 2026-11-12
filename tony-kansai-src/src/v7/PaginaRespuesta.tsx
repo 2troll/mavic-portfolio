@@ -23,6 +23,7 @@ import './v7.css'
 import './estilo-pixel.css'
 import './respuesta.css'
 import { FranjaVentajas } from './FranjaVentajas'
+import { ToursNuevos, viajeTourNuevo } from './ToursNuevos'
 
 const BASE = 'https://tonykansaiguide.com'
 const CREDITOS = creditosZonas as Record<string, { autor: string; licencia: string; url: string }>
@@ -77,6 +78,8 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
         '@type': 'FAQPage', '@id': `${url}#faq`, inLanguage: p.lang,
         mainEntity: p.faq.map((f) => ({ '@type': 'Question', name: f.p, acceptedAnswer: { '@type': 'Answer', text: f.r } })),
       },
+      // Tour de 2 h y tour en bici (11-11-2026): el tour con sus precios reales.
+      ...[viajeTourNuevo(id)].filter((v) => v !== null),
     ],
   }
 
@@ -161,6 +164,8 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
             {p.fuentes.map((f) => <li key={f.url}><a href={f.url} target="_blank" rel="noopener noreferrer"><bdi>{f.texto}</bdi></a></li>)}
           </ul>
         </section>
+
+        <ToursNuevos lang={p.lang} sin={p.ruta} />
 
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>
