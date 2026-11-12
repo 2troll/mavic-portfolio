@@ -457,6 +457,14 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
       {p.guia === 'tony' && CORTO_TXT[p.lang] && (
         <p className="v7-entradilla v7-corto"><Link to={CORTO_TXT[p.lang].ruta}>{CORTO_TXT[p.lang].texto} →</Link></p>
       )}
+      {/* Página de todos los precios (HTML estático de scripts/precios.mjs): <a>, no <Link>, para salir del SPA. */}
+      {p.guia === 'tony' && (p.lang === 'es' || p.lang === 'en' || p.lang === 'ar') && (
+        <p className="v7-entradilla v7-corto">
+          <a href={{ es: '/es/precios/', en: '/en/prices/', ar: '/ar/prices/' }[p.lang]}>
+            {{ es: 'Todos los precios: montaña, planes y experiencias', en: 'All prices: hiking, plans and experiences', ar: 'كل الأسعار: الجبال والخطط والتجارب' }[p.lang]} {p.lang === 'ar' ? '←' : '→'}
+          </a>
+        </p>
+      )}
       {/* El aviso de otoño, después de los precios: antes los tapaba en el móvil. */}
       {otono && p.precios.temporada && (
         <aside className="v7-temporada tarjeta">
