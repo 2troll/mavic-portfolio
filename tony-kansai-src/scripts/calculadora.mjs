@@ -40,7 +40,15 @@ const T = {
       ['¿Cuánto cuesta un guía privado en español en Kioto?', '38.000 ¥ medio día (4 h) y 58.000 ¥ el día completo (8 h), por grupo de hasta 6 personas. Entradas, transporte y comidas aparte.'],
       ['¿Cuándo compensa un guía privado?', 'Cuando tienes 1 o 2 días en Kioto, viajas con niños o personas mayores, es tu primera vez en Japón o quieres hacer Kioto y Nara en un día.'],
       ['¿Y cuándo no?', 'Con 3 días o más, sin prisas y sin necesidades especiales, puedes ir por tu cuenta con una buena guía.'],
+      ['¿Hay algo más corto que medio día?', 'Sí: el tour de 2 horas cuesta 25.000 ¥ por grupo de hasta 6. Va bien para Gion al atardecer, Fushimi Inari temprano o Kiyomizu.'],
+      ['¿Dónde empieza el tour?', 'Te recojo en el vestíbulo de tu hotel en Kioto u Osaka, y el día es solo para tu grupo.'],
+      ['¿Cómo se paga?', 'En efectivo el mismo día, o por adelantado con PayPal o Wise.'],
+      ['¿Y si tengo que cancelar?', 'Cancelar hasta 72 horas antes no cuesta nada; si tu vuelo se retrasa, buscamos otro día.'],
+      ['¿Y si somos más de 6?', 'Hasta 14 personas, bajo consulta (con un segundo guía o un suplemento).'],
+      ['¿Y las excursiones largas?', 'Kōyasan, Amanohashidate o Kumano, desde 70.000 ¥ por grupo.'],
     ],
+    tabla_t: 'Precio por persona según cuántos seáis', tabla_c: ['Personas', 'Medio día (4 h)', 'Día completo (8 h)'],
+    rel_t: 'Para seguir planeando', rel: [['/es/kyoto/', 'Guía privado en Kioto: precios y rutas'], ['/es/guia-privado-kioto-2-horas/', 'Tour de 2 horas en Kioto'], ['/es/tour-privado-bici-kioto/', 'Tour privado en bici por Kioto'], ['/es/rutas/', 'Planes de un día, hora a hora']],
     inicio: 'Tony Kansai Guide',
   },
   en: {
@@ -70,7 +78,15 @@ const T = {
       ['How much is a private guide in Kyoto?', '¥38,000 for a half day (4 h) and ¥58,000 for a full day (8 h), per group of up to 6. Tickets, transport and meals extra.'],
       ['When is a private guide worth it?', 'When you have 1-2 days in Kyoto, travel with children or older relatives, it is your first time in Japan, or you want Kyoto and Nara in one day.'],
       ['And when is it not?', 'With 3+ days, no rush and no special needs, you can go on your own with a good guidebook.'],
+      ['Is there anything shorter than a half day?', 'Yes: the 2-hour tour is ¥25,000 per group of up to 6. Good for Gion at sunset, Fushimi Inari early or Kiyomizu.'],
+      ['Where does the tour start?', 'I meet you in your hotel lobby in Kyoto or Osaka, and the day is for your group only.'],
+      ['How do I pay?', 'Cash on the day, or in advance with PayPal or Wise.'],
+      ['What if I need to cancel?', 'Free cancellation up to 72 hours before; if your flight is delayed, we find another day.'],
+      ['What if we are more than 6?', 'Up to 14 people on request (with a second guide or a supplement).'],
+      ['And long day trips?', 'Kōyasan, Amanohashidate or Kumano, from ¥70,000 per group.'],
     ],
+    tabla_t: 'Price per person by group size', tabla_c: ['People', 'Half day (4 h)', 'Full day (8 h)'],
+    rel_t: 'Keep planning', rel: [['/en/kyoto/', 'Private guide in Kyoto: prices and routes'], ['/en/kyoto-private-guide-2-hours/', '2-hour tour in Kyoto'], ['/en/kyoto-private-bike-tour/', 'Private bike tour in Kyoto'], ['/en/routes/', 'Day plans, hour by hour']],
     inicio: 'Tony Kansai Guide',
   },
   ar: {
@@ -100,11 +116,21 @@ const T = {
       ['كم يكلّف المرشد الخاص في كيوتو؟', '38,000 ين لنصف يوم (4 ساعات) و58,000 ين لليوم الكامل (8 ساعات)، للمجموعة حتى 6 أشخاص. التذاكر والمواصلات والوجبات منفصلة.'],
       ['متى يستحق المرشد الخاص؟', 'عندما يكون لديك يوم أو يومان في كيوتو، أو تسافر مع أطفال أو كبار في السن، أو إنها أول مرة في اليابان، أو تريد كيوتو ونارا في يوم واحد.'],
       ['ومتى لا يستحق؟', 'مع 3 أيام أو أكثر، بدون استعجال ولا احتياجات خاصة، يمكنك الذهاب وحدك مع دليل جيد.'],
+      ['هل يوجد ما هو أقصر من نصف يوم؟', 'نعم: جولة الساعتين بـ25,000 ين للمجموعة حتى 6 أشخاص. مناسبة لحيّ غيون عند الغروب أو فوشيمي إيناري في الصباح الباكر أو كيوميزو.'],
+      ['من أين تبدأ الجولة؟', 'ألتقي بكم في بهو الفندق في كيوتو أو أوساكا، واليوم مخصّص لمجموعتكم فقط.'],
+      ['كيف يكون الدفع؟', 'نقدًا في يوم الجولة، أو مسبقًا عبر PayPal أو Wise.'],
+      ['وإذا اضطررت إلى الإلغاء؟', 'الإلغاء مجاني حتى 72 ساعة قبل الموعد، وإذا تأخرت رحلتكم نختار يومًا آخر.'],
+      ['وإذا كنا أكثر من 6؟', 'حتى 14 شخصًا عند الطلب (بمرشد ثانٍ أو برسوم إضافية).'],
+      ['والرحلات الطويلة؟', 'كوياسان أو أمانوهاشيداته أو كومانو، ابتداءً من 70,000 ين للمجموعة.'],
     ],
+    tabla_t: 'السعر للشخص حسب عدد أفراد المجموعة', tabla_c: ['الأشخاص', 'نصف يوم (4 ساعات)', 'يوم كامل (8 ساعات)'],
+    rel_t: 'لمتابعة التخطيط', rel: [['/ar/kyoto/', 'مرشد خاص في كيوتو: الأسعار والمسارات'], ['/ar/kyoto-private-guide-2-hours/', 'جولة الساعتين في كيوتو'], ['/ar/kyoto-private-bike-tour/', 'جولة خاصة بالدراجة في كيوتو'], ['/ar/routes/', 'خطط اليوم ساعة بساعة']],
     inicio: 'Tony Kansai Guide',
   },
 }
 
+// Precio redondeado a 100 ¥ con el separador de cada idioma (38.000 ¥ / ¥38,000 / 38,000 ين).
+const yen = (n, lang) => { const v = (Math.round(n / 100) * 100).toLocaleString(lang === 'es' ? 'es-ES' : 'en-US', { useGrouping: 'always' }); return lang === 'es' ? `${v} ¥` : lang === 'ar' ? `${v} ين` : `¥${v}` }
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 const CSS = `:root{--f:#fbfaf7;--t:#17151a;--g:#5d5a63;--b:#e4e0d8;--c:#ffffff;--a:#c8402c;--ok:#1d7a4f}
@@ -132,6 +158,8 @@ fieldset{border:0;padding:0;margin:0 0 26px}legend{font-weight:700;font-size:18p
 .btn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:15px 22px;border-radius:999px;background:var(--ok);color:#fff;font-weight:700;text-decoration:none}
 .btn:active{transform:scale(.97)}.sec{margin-inline-start:12px;color:var(--g)}
 .faq details{border-top:1px solid var(--b);padding:14px 0}.faq summary{font-weight:600;cursor:pointer}.faq p{color:var(--g);margin:8px 0 0}
+.tabla table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.tabla th,.tabla td{padding:10px 8px;border-bottom:1px solid var(--b);text-align:start}.tabla th{font-size:14px;color:var(--g);font-weight:600}
+.rel ul{list-style:none;padding:0;margin:0}.rel li{border-top:1px solid var(--b)}.rel a{display:block;padding:14px 0;text-decoration:none;font-weight:600}.rel a::after{content:' →'}[dir=rtl] .rel a::after{content:' ←'}
 footer{padding:30px 0 50px;color:var(--g);font-size:14px}`
 
 function pagina(lang) {
@@ -180,7 +208,9 @@ ${Object.keys(RUTA).map((l) => `<link rel="alternate" hreflang="${l}" href="${BA
 <a class="btn" id="r-wa" href="https://wa.me/${WA}" target="_blank" rel="noopener">${esc(t.wa)}</a>
 <a class="sec" id="r-solo" href="/${lang === 'es' ? 'es/ventajas' : lang === 'ar' ? 'ar/perks' : 'en/perks'}/" hidden>${esc(t.gratis)} →</a>
 </section>
+<section class="tabla"><p class="eti">${esc(t.tabla_t)}</p><table><thead><tr>${t.tabla_c.map((c) => `<th>${esc(c)}</th>`).join('')}</tr></thead><tbody>${[1, 2, 3, 4, 5, 6].map((n) => `<tr><td>${n}</td><td>${yen(PRECIO.medio / n, lang)}</td><td>${yen(PRECIO.dia / n, lang)}</td></tr>`).join('')}</tbody></table><p class="nota">${esc(t.nota)}</p></section>
 <section class="faq"><p class="eti">${esc(t.faq_t)}</p>${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>
+<nav class="rel" aria-label="${esc(t.rel_t)}"><p class="eti">${esc(t.rel_t)}</p><ul>${t.rel.map(([h, x]) => `<li><a href="${h}">${esc(x)}</a></li>`).join('')}</ul></nav>
 </main>
 <footer class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · <a href="https://www.instagram.com/tonykansaiguide/">Instagram</a> · tony@tonykansaiguide.com</footer>
 <script>
