@@ -39,6 +39,7 @@ import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE, nombreMonte } from '../v7/formato'
 import { respuestaDeCiudad } from '../v7/datosRespuestas'
 import { SeccionesRespuesta } from '../v7/PaginaRespuesta'
+import { ToursNuevos } from '../v7/ToursNuevos'
 
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
@@ -242,6 +243,9 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             </div>
           </section>
         )}
+
+        {/* Tour de 2 h y tour en bici por Kioto (11-11-2026), solo en las páginas de Kioto de Tony. */}
+        {c.id === 'kyoto' && guia === 'tony' && <ToursNuevos lang={lang} />}
 
         {/* 5. Montañas cerca */}
         {c.montes.length > 0 && (

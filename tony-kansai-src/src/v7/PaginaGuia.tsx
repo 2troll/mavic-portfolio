@@ -43,6 +43,14 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 import { PRECIO_CORTO } from './datosRespuestasNuevas'
 import { yenLocal } from './formato'
+import { ToursNuevos, viajesToursNuevos } from './ToursNuevos'
+
+/** Añade al final de la lista de tours de Tony el de 2 h y el de bici por Kioto. */
+function conToursNuevos(lista: ReturnType<typeof listaTours>, p: { guia: string; lang: string }) {
+  if (p.guia !== 'tony') return lista
+  const extra = viajesToursNuevos(p.lang).map((item, i) => ({ '@type': 'ListItem', position: lista.itemListElement.length + i + 1, item }))
+  return { ...lista, itemListElement: [...lista.itemListElement, ...extra] }
+}
 
 // El 3D (three.js) llega después de pintar la foto de portada.
 
@@ -711,6 +719,8 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['Idiomas', 'Español (nativo), inglés y árabe'],
     ['Dónde', 'Kioto, Osaka, Nara, Kobe y Himeji; también el resto de Japón'],
     ['Precio', 'Medio día (4 h) ¥38.000 · día completo (8 h) ¥58.000, por grupo de hasta 6'],
+    ['Tour corto', `2 horas en Kioto, ${yenLocal(PRECIO_CORTO, 'es')} por grupo de hasta 6`],
+    ['En bici', 'Kioto en bici con el guía, al precio de medio día o día completo; las bicis se alquilan aparte'],
     ['Grupos', 'Solo tu grupo; hasta 14 personas, precio a consultar'],
     ['Recogida', 'En el vestíbulo de tu hotel'],
     ['Pago', 'Efectivo el día del tour, o PayPal o Wise por adelantado'],
@@ -723,6 +733,8 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['Languages', 'Spanish (native), English and Arabic'],
     ['Where', 'Kyoto, Osaka, Nara, Kobe and Himeji; the rest of Japan too'],
     ['Price', 'Half day (4 h) ¥38,000 · full day (8 h) ¥58,000, per group of up to 6'],
+    ['Short tour', `2 hours in Kyoto, ${yenLocal(PRECIO_CORTO, 'en')} per group of up to 6`],
+    ['By bike', 'Kyoto by bike with your guide, at the half-day or full-day price; bikes are rented separately'],
     ['Groups', 'Your group only; up to 14 people, price on request'],
     ['Pick-up', 'In your hotel lobby'],
     ['Payment', 'Cash on the day, or PayPal or Wise in advance'],
@@ -735,6 +747,8 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['اللغات', 'العربية والإسبانية والإنجليزية'],
     ['الأماكن', 'كيوتو وأوساكا ونارا وكوبي وهيميجي، وبقية اليابان أيضاً'],
     ['السعر', 'نصف يوم (٤ ساعات) ٣٨٬٠٠٠ ين · يوم كامل (٨ ساعات) ٥٨٬٠٠٠ ين، للمجموعة حتى ٦ أشخاص'],
+    ['جولة قصيرة', `ساعتان في كيوتو، ${new Intl.NumberFormat('ar-EG').format(PRECIO_CORTO)} ين للمجموعة حتى ٦ أشخاص`],
+    ['بالدراجة', 'كيوتو بالدراجة مع المرشد، بسعر نصف اليوم أو اليوم الكامل؛ والدراجات تُستأجر على حدة'],
     ['المجموعات', 'مجموعتك وحدها؛ حتى ١٤ شخصاً بسعر حسب الطلب'],
     ['الاستقبال', 'في بهو فندقك'],
     ['الدفع', 'نقداً يوم الجولة، أو مسبقاً عبر PayPal أو Wise'],
@@ -832,7 +846,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: p.lang,
           mainEntity: p.faq.items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
         })}</script>
-        <script type="application/ld+json">{JSON.stringify(listaTours(p.guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY, p.lang, p.guia, p.ruta.replace(/\/$/, '')))}</script>
+        <script type="application/ld+json">{JSON.stringify(conToursNuevos(listaTours(p.guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY, p.lang, p.guia, p.ruta.replace(/\/$/, '')), p))}</script>
       </Helmet>
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
@@ -886,6 +900,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Cómo funciona */}
         {/* Las ciudades, cada una con su página (v8) */}
         <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
+
+        {/* Tour de 2 h y tour en bici por Kioto (11-11-2026), junto a los tours por ciudad. */}
+        {p.guia === 'tony' && <ToursNuevos lang={p.lang} />}
 
         {/* Precios justo después de los tours: es lo primero que busca quien
             llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas. */}

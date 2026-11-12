@@ -31,6 +31,7 @@ import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE } from './formato'
 import { FranjaVentajas } from './FranjaVentajas'
+import { ToursNuevos } from './ToursNuevos'
 
 export type { ItinPaginaId } from './seoItin'
 type Lengua = 'es' | 'en' | 'ar' | 'ru'
@@ -173,6 +174,9 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
             </article>
           )
         })}
+
+        {/* Tour de 2 h y tour en bici por Kioto (11-11-2026): no son días hora a hora, van aparte. */}
+        {guia === 'tony' && <ToursNuevos lang={lang} />}
 
         <section className="v7-seccion">
           <p className="v7-entradilla">{et.nota}</p>
