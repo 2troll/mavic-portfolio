@@ -111,6 +111,10 @@ const paginas = [
   { loc: '/en/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
   { loc: '/ar/kyoto-private-guide-2-hours', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
   { loc: '/ar/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
+  // Página de precios con todas las tarifas (scripts/precios.mjs, 12-11-2026).
+  { loc: '/es/precios', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
+  { loc: '/en/prices', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
+  { loc: '/ar/prices', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
   // Ventajas para el viajero.
   { loc: '/es/ventajas', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
   { loc: '/en/perks', priority: '0.6', changefreq: 'monthly', v7: 'ventajas' },
@@ -167,6 +171,7 @@ const V7 = {
   halal: [['ar', '/ar/halal-kyoto-osaka/']],
   corto: [['es', '/es/guia-privado-kioto-2-horas/'], ['en', '/en/kyoto-private-guide-2-hours/'], ['ar', '/ar/kyoto-private-guide-2-hours/']],
   bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/'], ['ar', '/ar/kyoto-private-bike-tour/']],
+  precios: [['es', '/es/precios/'], ['en', '/en/prices/'], ['ar', '/ar/prices/']],
 }
 
 // <lastmod>: la fecha real del último cambio del archivo del que sale cada
@@ -180,6 +185,7 @@ const FUENTE = {
   turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
   leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html', 'scripts/leyendas-en.mjs', 'scripts/legends.src.html', 'scripts/leyendas-ar.mjs', 'scripts/asatir.src.html'],
   francais: ['scripts/francais.mjs'],
+  precios: ['scripts/precios.mjs', 'src/v7/contenido.ts'],
   iheb: ['scripts/iheb.mjs', 'scripts/iheb-estilo.mjs'],
   private: ['scripts/private.mjs'],
   kndr: ['scripts/kndr.mjs'],
