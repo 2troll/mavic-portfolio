@@ -218,7 +218,7 @@ function hreflangs(grupo) {
   if (!grupo || grupo.length < 2) return ''
   const en = grupo.find(([l]) => l === 'en')
   return grupo.map(([l, r]) => `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${BASE}${r}"/>`).join('')
-    + (en ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${en[1]}"/>` : '')
+    + (en ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${en[1] === '/en/' ? '/' : en[1]}"/>` : '')
 }
 
 const url = ({ loc, priority, changefreq, v7 }) => {

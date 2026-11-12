@@ -11,7 +11,9 @@ import { indexable } from './noindex'
 export function enlacesHreflang(todas: { lang: string; href: string }[]) {
   const alternas = todas.filter((a) => indexable(a.href))
   if (alternas.length < 2) return []
-  const porDefecto = alternas.find((a) => a.lang === 'en')?.href ?? alternas[0]?.href
+  const enIngles = alternas.find((a) => a.lang === 'en')?.href
+  // La portada inglesa (/en/) no es la x-default: lo es la raíz, que elige idioma.
+  const porDefecto = enIngles && /^https:\/\/tonykansaiguide\.com\/en\/$/.test(enIngles) ? 'https://tonykansaiguide.com/' : enIngles ?? alternas[0]?.href
   return [
     ...alternas.map(({ lang, href }) => <link key={lang + href} rel="alternate" hrefLang={lang} href={href} />),
     ...(porDefecto ? [<link key="x-default" rel="alternate" hrefLang="x-default" href={porDefecto} />] : []),

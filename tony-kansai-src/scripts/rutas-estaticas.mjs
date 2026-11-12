@@ -125,7 +125,9 @@ for (const ruta of rutas) {
     if (alt.length > 1) {
       const en = alt.find(([l]) => l === 'en')
       const alternos = alt.map(([l, r]) => `    <link data-rh="true" rel="alternate" hreflang="${l}" href="${BASE}${r}" />`)
-      if (en) alternos.push(`    <link data-rh="true" rel="alternate" hreflang="x-default" href="${BASE}${en[1]}" />`)
+      // Portada de Tony (/es/, /en/, /ar/): la x-default es la raíz «/», que elige
+      // idioma. Con x-default en /en/, Google juntaba /en/ y / y no indexaba /en/.
+      if (en) alternos.push(`    <link data-rh="true" rel="alternate" hreflang="x-default" href="${BASE}${en[1] === '/en/' ? '/' : en[1]}" />`)
       html = html.replace('</head>', `${alternos.join('\n')}\n  </head>`)
     }
     // og:locale del idioma de la página (antes todas decían en_US) y, como
