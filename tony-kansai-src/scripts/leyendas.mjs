@@ -154,7 +154,7 @@ function generar(c) {
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'ProfilePage', '@id': c.url + '#pagina', url: c.url, name: c.titulo, inLanguage: c.lang, dateModified: new Date().toISOString().slice(0, 10), mainEntity: persona },
+      { '@type': 'ProfilePage', '@id': c.url + '#pagina', url: c.url, name: c.titulo, inLanguage: c.lang, dateModified: new Date().toISOString().slice(0, 19) + 'Z', mainEntity: persona },
       { '@type': 'Book', name: 'Detrás del Rostro', author: { '@id': persona['@id'] }, inLanguage: 'es', url: 'https://tonykansaiguide.com/libro/' },
       ...c.RELATOS.map((r, i) => ({ '@type': 'ShortStory', '@id': `${c.url}#relato-${i + 1}`, name: r.t, author: { '@id': persona['@id'] }, genre: c.genero, inLanguage: c.lang, datePublished: '2026', contentLocation: { '@type': 'Place', name: r.d }, text: r.p })),
       { '@type': 'ItemList', name: c.lista, itemListElement: c.LEYENDAS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.t, url: `${c.url}#leyenda-${i + 1}` })) },

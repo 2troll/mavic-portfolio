@@ -2453,7 +2453,7 @@ ${bant(WA_GENEL)}`
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'ProfilePage', url: `${BASE}/private/about-mario/`, inLanguage: 'en', name: 'About Mario, private guide in Japan', dateModified: HOY, mainEntity: { '@id': MARIO_ID } },
+      { '@type': 'ProfilePage', url: `${BASE}/private/about-mario/`, inLanguage: 'en', name: 'About Mario, private guide in Japan', dateModified: `${HOY}T09:00:00+09:00`, mainEntity: { '@id': MARIO_ID } },
       marioLd, NEGOCIO_LD, faqLd(FAQ_MARIO),
       migas([['About Mario', `${BASE}/private/about-mario/`]]),
     ],
