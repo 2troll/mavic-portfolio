@@ -612,6 +612,26 @@ const LISTA: App[] = [
     },
   },
   {
+    clave: 'cookingsun', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cooking Sun Osaka (Namba)', enlace: 'https://www.cooking-sun.com/osaka-cooking-class/',
+    marca: { fondo: '#f28c28', tinta: '#2b1500', boton: '#2b1500', botonTinta: '#f28c28', palabra: '料理' },
+    t: {
+      es: { que: 'Clase de cocina japonesa en inglés junto a Namba, Osaka. Clase compartida hasta 8 personas, privada de 1 a 8 y privada de grupo hasta 12. Opción vegetariana si se pide antes.', ventaja: 'Sin cerdo ni alcohol (ni sake ni mirin) si lo pides con antelación; los ingredientes no tienen certificado halal. La compartida se reserva en su web; la privada, por correo. Si quieres que entre a traducir, se lo pido yo en cada reserva.' },
+      en: { que: 'Japanese cooking class in English near Namba, Osaka. Shared class up to 8 people, private class for 1 to 8, private group class up to 12. Vegetarian option on request.', ventaja: 'No pork and no alcohol (no sake or mirin) if you ask in advance; ingredients are not halal-certified. Shared classes are booked on their website, private ones by email. If you want me inside to translate, I ask them for each booking.' },
+      ar: { que: 'درس طبخ ياباني بالإنجليزية قرب نامبا في أوساكا. درس مشترك حتى 8 أشخاص، وخاص من 1 إلى 8، وخاص للمجموعات حتى 12. خيار نباتي عند الطلب.', ventaja: 'بلا لحم خنزير وبلا كحول (لا ساكي ولا ميرين) إذا طلبت مسبقًا؛ المكونات غير معتمدة حلال. الدرس المشترك يُحجز في موقعهم، والخاص بالبريد. إن أردت أن أدخل لأترجم أطلب ذلك منهم في كل حجز.' },
+      ru: { que: 'Урок японской кухни на английском у Намбы (Осака): общий до 8 человек, частный 1–8, групповой до 12.', ventaja: 'Без свинины и алкоголя по запросу заранее (ингредиенты без халяль-сертификата).' },
+    },
+  },
+  {
+    clave: 'kozushima', cat: 'experiencias', ciudad: 'tokio', conTony: true, nombre: 'Isla de Kozushima: estrellas y paseo', enlace: 'https://kozushima.com/',
+    marca: { fondo: '#0b1d3a', tinta: '#e8f0ff', boton: '#e8f0ff', botonTinta: '#0b1d3a', palabra: '星' },
+    t: {
+      es: { que: 'Observación de estrellas y paseo guiado por Kozushima, isla volcánica de Tokio con cielo de reserva oscura. Para visitantes extranjeros se hace en privado: 30.000 ¥ el grupo de 1 a 10 personas.', ventaja: 'Te lo reservo yo por correo con al menos 3 días de antelación (depende de que haya guía libre) y voy contigo a traducir.' },
+      en: { que: 'Stargazing and a guided island walk on Kozushima, a volcanic Tokyo island with dark-sky nights. For overseas visitors it runs as a private tour: ¥30,000 for a group of 1 to 10.', ventaja: 'I book it for you by email at least 3 days ahead (subject to guide availability) and come along to translate.' },
+      ar: { que: 'مراقبة النجوم وجولة مشي في جزيرة كوزوشيما البركانية التابعة لطوكيو، بسماء مظلمة صافية. للزوار الأجانب تكون جولة خاصة: 30,000 ين للمجموعة من 1 إلى 10.', ventaja: 'أحجزها لك بالبريد قبل 3 أيام على الأقل (حسب توفر المرشد) وأرافقك للترجمة.' },
+      ru: { que: 'Звёзды и прогулка по вулканическому острову Кодзусима (Токио): частный тур 30 000 ¥ на группу 1–10.', ventaja: 'Бронирую сам минимум за 3 дня.' },
+    },
+  },
+  {
     // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código.
     clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/', codigo: 'HANMA', descuento: '15 %',
     marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
