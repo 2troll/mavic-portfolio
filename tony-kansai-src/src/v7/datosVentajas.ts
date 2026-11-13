@@ -38,12 +38,19 @@ export const SEO_VENTAJAS: Record<Lang, { titulo: string; descripcion: string }>
 
 export const RUTA_VENTAJAS: Record<Lang, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
-export type Ciudad = 'osaka' | 'kioto' | 'nara' | 'kumano'
+export type Ciudad = 'osaka' | 'kioto' | 'nara' | 'kumano' | 'tokio' | 'hiroshima' | 'ishikawa' | 'gifu' | 'nagasaki' | 'amakusa' | 'hokkaido'
 export const CIUDADES: Record<Ciudad, Record<Lang, string>> = {
   osaka: { es: 'Osaka', en: 'Osaka', ar: 'أوساكا', ru: 'Осака' },
   kioto: { es: 'Kioto', en: 'Kyoto', ar: 'كيوتو', ru: 'Киото' },
   nara: { es: 'Nara', en: 'Nara', ar: 'نارا', ru: 'Нара' },
   kumano: { es: 'Kumano (Wakayama)', en: 'Kumano (Wakayama)', ar: 'كومانو (واكاياما)', ru: 'Кумано (Вакаяма)' },
+  tokio: { es: 'Tokio', en: 'Tokyo', ar: 'طوكيو', ru: 'Токио' },
+  hiroshima: { es: 'Hiroshima', en: 'Hiroshima', ar: 'هيروشيما', ru: 'Хиросима' },
+  ishikawa: { es: 'Kanazawa y Hakusan (Ishikawa)', en: 'Kanazawa & Hakusan (Ishikawa)', ar: 'كانازاوا وهاكوسان (إيشيكاوا)', ru: 'Канадзава и Хакусан (Исикава)' },
+  gifu: { es: 'Seki (Gifu)', en: 'Seki (Gifu)', ar: 'سيكي (غيفو)', ru: 'Сэки (Гифу)' },
+  nagasaki: { es: 'Shimabara (Nagasaki)', en: 'Shimabara (Nagasaki)', ar: 'شيمابارا (ناغازاكي)', ru: 'Симабара (Нагасаки)' },
+  amakusa: { es: 'Amakusa (Kumamoto)', en: 'Amakusa (Kumamoto)', ar: 'أماكوسا (كوماموتو)', ru: 'Амакуса (Кумамото)' },
+  hokkaido: { es: 'Shiretoko (Hokkaido)', en: 'Shiretoko (Hokkaido)', ar: 'شيريتوكو (هوكايدو)', ru: 'Сиретоко (Хоккайдо)' },
 }
 
 export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
@@ -512,6 +519,96 @@ const LISTA: App[] = [
       en: { que: 'Home-style cooking class in Osaka, next to Tenmangu: okonomiyaki, ramen or gyoza with Yuka, up to 8 guests.', ventaja: 'For 5 to 8 people the class is private at no extra charge. For Muslim families she makes okonomiyaki or ramen with no pork and no alcohol (no mirin or sake); ask first about the dashi stock. I join free to translate.' },
       ar: { que: 'درس طبخ منزلي في أوساكا قرب تينمانغو: أوكونومياكي أو رامن أو غيوزا مع يوكا، حتى 8 أشخاص.', ventaja: 'من 5 إلى 8 أشخاص يكون الدرس خاصًا دون تكلفة إضافية. للعائلات المسلمة تحضّر أوكونومياكي أو رامن بلا خنزير ولا كحول (بلا ميرين ولا ساكي)؛ اسأل أولًا عن مرق الداشي. أدخل مجانًا لأترجم.' },
       ru: { que: 'Домашний кулинарный класс в Осаке у Тэммангу: окономияки, рамен или гёдза с Юкой, до 8 человек.', ventaja: 'Для 5–8 человек класс частный без доплаты. Без свинины и алкоголя по запросу; про бульон даси уточните заранее.' },
+    },
+  },
+  {
+    clave: 'unplugged', cat: 'experiencias', ciudad: 'amakusa', nombre: 'Unplugged (kayak en Amakusa)', enlace: 'https://e-unplugged.jp/',
+    marca: { fondo: '#0f6b78', tinta: '#eafcff', boton: '#eafcff', botonTinta: '#0f6b78', palabra: 'SEA' },
+    t: {
+      es: { que: 'Kayak de mar entre las islas deshabitadas de Amakusa, en el Parque Nacional Unzen-Amakusa, con un guía local. Se acaba en una isla de arena blanca de conchas donde puedes bañarte. Tarde Premium (13:00): 10.000 ¥ por persona entre semana y 11.000 ¥ en fin de semana, con fotos y vídeo del día. Mañana Simple (9:00, desde marzo): 8.000 / 9.000 ¥.', ventaja: '500 ¥ menos por persona: reserva en su formulario al menos 3 días antes y escribe «Tony Kansai Guide\u3000Tony Hanma» en observaciones. A 1 h 30 en coche de Kumamoto; se paga el día (efectivo, PayPay o tarjeta).' },
+      en: { que: 'Paddle a sea kayak through the island-dotted waters of Amakusa, weaving between uninhabited islands in Unzen-Amakusa National Park with a local guide, and land on a white shell-sand island to swim and relax. Afternoon Premium (13:00): ¥10,000 per person on weekdays, ¥11,000 at weekends, with same-day photos and video. Morning Simple (9:00, from March): ¥8,000 / ¥9,000.', ventaja: '¥500 off per person: book on their form at least 3 days ahead and write “Tony Kansai Guide\u3000Tony Hanma” in the remarks. About 1.5 h by car from Kumamoto; pay on the day (cash, PayPay or card).' },
+      ar: { que: 'تجديف بقوارب الكاياك البحرية بين الجزر غير المأهولة في أماكوسا، داخل منتزه أونزن-أماكوسا الوطني مع مرشد محلي، والنزول على جزيرة رملها من الأصداف البيضاء للسباحة والاسترخاء. برنامج الظهيرة (13:00): 10,000 ين للشخص في أيام الأسبوع و11,000 ين في العطلات، مع صور وفيديو في اليوم نفسه. برنامج الصباح (9:00، من مارس): 8,000 / 9,000 ين.', ventaja: 'خصم 500 ين للشخص: احجز في نموذجهم قبل 3 أيام على الأقل واكتب «Tony Kansai Guide\u3000Tony Hanma» في الملاحظات. على بعد ساعة ونصف بالسيارة من كوماموتو؛ الدفع في اليوم نفسه.' },
+      ru: { que: 'Морской каяк между необитаемыми островами Амакусы (нацпарк Унзэн-Амакуса) с местным гидом и высадка на остров с белым ракушечным песком. После обеда: 10 000 ¥ в будни, 11 000 ¥ в выходные, с фото и видео. Утро (с марта): 8000 / 9000 ¥.', ventaja: '−500 ¥ с человека: бронь на их сайте минимум за 3 дня, в примечаниях «Tony Kansai Guide Tony Hanma».' },
+    },
+  },
+  {
+    clave: 'hakusan', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Máscara de león de Kaga (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/',
+    marca: { fondo: '#9b1c1c', tinta: '#fff1e0', boton: '#fff1e0', botonTinta: '#9b1c1c', palabra: '獅子' },
+    t: {
+      es: { que: 'Pinta tu propia cabeza de león de Kaga (shishi-gashira), la artesanía de madera de Hakusan, cerca de Kanazawa. 6.600 ¥ por persona, hasta 20 personas.', ventaja: 'Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com). Si vienes conmigo, traduzco al español o al árabe sin coste.' },
+      en: { que: 'Paint your own Kaga lion head (shishi-gashira), the wooden craft of Hakusan near Kanazawa. ¥6,600 per person, up to 20 people.', ventaja: 'Book at least one month ahead by email (hakusan@urara-hakusanbito.com). Coming with me? I translate into Spanish or Arabic at no extra cost.' },
+      ar: { que: 'لوّن بنفسك رأس أسد كاغا الخشبي (شيشي-غاشيرا)، حرفة مدينة هاكوسان قرب كانازاوا. 6,600 ين للشخص، حتى 20 شخصًا.', ventaja: 'الحجز قبل شهر على الأقل عبر البريد (hakusan@urara-hakusanbito.com). إن جئت معي أترجم إلى العربية أو الإسبانية دون تكلفة.' },
+      ru: { que: 'Роспись деревянной головы льва Кага (сиси-гасира) в Хакусане у Канадзавы. 6600 ¥ с человека, до 20 человек.', ventaja: 'Бронь минимум за месяц по почте hakusan@urara-hakusanbito.com.' },
+    },
+  },
+  {
+    clave: 'foodsample', cat: 'experiencias', ciudad: 'tokio', nombre: 'Food Sample Making Cafe (Asakusa)', enlace: 'https://foodsamplecafe.com/',
+    marca: { fondo: '#ffd23f', tinta: '#2a2100', boton: '#2a2100', botonTinta: '#ffd23f', palabra: 'FOOD' },
+    t: {
+      es: { que: 'Haz tus propias réplicas de comida japonesa de plástico (como las de los escaparates) en Asakusa, Tokio. Un recuerdo que te llevas a casa.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»). La comida que sirven no es halal: las familias musulmanas eligen el plan sin comida.' },
+      en: { que: 'Make your own Japanese plastic food replicas, like the ones in restaurant windows, in Asakusa, Tokyo. A souvenir you take home.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field). Their meals are not halal: Muslim families choose the plan without a meal.' },
+      ar: { que: 'اصنع بنفسك نماذج الطعام الياباني البلاستيكية، مثل التي في واجهات المطاعم، في أساكوسا بطوكيو. تذكار تأخذه معك.', ventaja: 'الرمز TONY10: خصم 10% عند الحجز في TableCheck (خانة «PROMO CODE»). وجباتهم ليست حلالًا: العائلات المسلمة تختار البرنامج بلا وجبة.' },
+      ru: { que: 'Сделайте свои муляжи японской еды, как в витринах ресторанов, в Асакусе (Токио).', ventaja: 'Код TONY10: −10 % при брони в TableCheck.' },
+    },
+  },
+  {
+    clave: 'koto', cat: 'experiencias', ciudad: 'hiroshima', codigo: 'kotodaisuki', descuento: '15 %', nombre: 'Koto Workshop Hiroshima', enlace: 'https://kotoworkshop.com/',
+    marca: { fondo: '#3b2a5a', tinta: '#f5eefc', boton: '#f5eefc', botonTinta: '#3b2a5a', palabra: '琴' },
+    t: {
+      es: { que: 'Descubre el alma de Japón con el sonido del koto, el arpa tradicional, a un minuto de la Cúpula de la Bomba Atómica de Hiroshima. Hasta 10 personas.', ventaja: 'Código kotodaisuki: 15 % menos al reservar en su web. Si vienes conmigo, entro gratis a traducir.' },
+      en: { que: 'Discover the soul of Japan through the timeless sound of the koto, just one minute from Hiroshima’s Atomic Bomb Dome. Up to 10 people.', ventaja: 'Code kotodaisuki: 15% off when you book on their website. Coming with me? I join free to translate.' },
+      ar: { que: 'اكتشف روح اليابان عبر صوت آلة الكوتو التقليدية، على بعد دقيقة من قبة القنبلة الذرية في هيروشيما. حتى 10 أشخاص.', ventaja: 'الرمز kotodaisuki: خصم 15% عند الحجز في موقعهم. إن جئت معي أدخل مجانًا لأترجم.' },
+      ru: { que: 'Звук японского кото в минуте от Купола атомной бомбы в Хиросиме. До 10 человек.', ventaja: 'Код kotodaisuki: −15 % на их сайте.' },
+    },
+  },
+  {
+    clave: 'teaosaka', cat: 'experiencias', ciudad: 'osaka', musulman: true, conTony: true, nombre: 'Tea Ceremony Osaka (Dotonbori)', enlace: 'https://teaceremonyosaka.com/',
+    marca: { fondo: '#4d6b3c', tinta: '#f1f5e8', boton: '#f1f5e8', botonTinta: '#4d6b3c', palabra: '茶道' },
+    t: {
+      es: { que: 'Ceremonia del té de 45 minutos en Dotonbori, en el centro de Osaka. 7.480 ¥ por adulto y 4.980 ¥ de 8 a 11 años; sesiones a las 10, 11, 12, 14, 15 y 16 h, hasta 10 personas.', ventaja: 'Los dulces son halal y nada lleva alcohol. Si vienes conmigo, entro a traducir.' },
+      en: { que: '45-minute tea ceremony in Dotonbori, central Osaka. ¥7,480 per adult and ¥4,980 for ages 8 to 11; sessions at 10, 11, 12, 14, 15 and 16 h, up to 10 people.', ventaja: 'The sweets are halal and nothing contains alcohol. Coming with me? I come in to translate.' },
+      ar: { que: 'حفل شاي مدته 45 دقيقة في دوتونبوري وسط أوساكا. 7,480 ين للبالغ و4,980 ين من 8 إلى 11 سنة؛ جلسات في 10 و11 و12 و14 و15 و16، حتى 10 أشخاص.', ventaja: 'الحلويات حلال ولا شيء فيها كحول. إن جئت معي أدخل لأترجم.' },
+      ru: { que: 'Чайная церемония 45 минут в Дотонбори (Осака). 7480 ¥ взрослый, 4980 ¥ дети 8–11 лет.', ventaja: 'Сладости халяльные, без алкоголя.' },
+    },
+  },
+  {
+    clave: 'shaquda', cat: 'experiencias', ciudad: 'hiroshima', conTony: true, descuento: '10 %', nombre: 'SHAQUDA (pinceles de Kumano)', enlace: 'https://shaquda.jp/en/pages/workshop',
+    marca: { fondo: '#1d1d1f', tinta: '#f4e4c1', boton: '#f4e4c1', botonTinta: '#1d1d1f', palabra: '筆' },
+    t: {
+      es: { que: 'Taller de pinceles de maquillaje en Kumano (Hiroshima), el pueblo de los pinceles: montas el tuyo y te lo envían terminado en unas dos semanas (envío aparte).', ventaja: 'Reservando conmigo, 10 % menos y sin los 10.000 ¥ de intérprete, porque traduzco yo. Grupos de 6 se parten en dos de 3.' },
+      en: { que: 'Make-up brush workshop in Kumano (Hiroshima), Japan’s brush town: you assemble your own and they ship it finished in about two weeks (shipping extra).', ventaja: 'Booked through me: 10% off and no ¥10,000 interpreter fee, because I translate. Groups of 6 are split into two groups of 3.' },
+      ar: { que: 'ورشة فرش المكياج في كومانو (هيروشيما)، بلدة الفرش في اليابان: تركّب فرشاتك ويرسلونها إليك جاهزة خلال أسبوعين تقريبًا (الشحن منفصل).', ventaja: 'بالحجز عن طريقي: خصم 10% وبلا رسوم المترجم (10,000 ين) لأنني أترجم. مجموعات الـ6 تُقسم إلى مجموعتين من 3.' },
+      ru: { que: 'Мастер-класс кистей для макияжа в Кумано (Хиросима): собираете свою, её присылают готовой примерно через две недели.', ventaja: 'Через меня: −10 % и без платы за переводчика 10 000 ¥.' },
+    },
+  },
+  {
+    clave: 'kuchinotsu', cat: 'experiencias', ciudad: 'nagasaki', nombre: 'Delfines de Kuchinotsu', enlace: 'https://dolwatch.jp/',
+    marca: { fondo: '#1565c0', tinta: '#e8f4ff', boton: '#e8f4ff', botonTinta: '#1565c0', palabra: 'IRUKA' },
+    t: {
+      es: { que: 'Salida en barco para ver delfines salvajes en Kuchinotsu (península de Shimabara, Nagasaki). Adultos 4.000 ¥, de 7 a 12 años 2.000 ¥, de 4 a 6 años 1.000 ¥, menores de 3 gratis.', ventaja: 'Grupos de 10 o más adultos: 10 % menos; de 30 o más: 20 % menos. Se sale de su oficina, a 700 m del puerto, frente al 7-Eleven.' },
+      en: { que: 'Boat trip to see wild dolphins at Kuchinotsu (Shimabara Peninsula, Nagasaki). Adults ¥4,000, ages 7–12 ¥2,000, ages 4–6 ¥1,000, 3 and under free.', ventaja: 'Groups of 10+ adults: 10% off; 30+: 20% off. Boarding at their office, 700 m from the port, opposite the 7-Eleven.' },
+      ar: { que: 'رحلة بالقارب لمشاهدة الدلافين البرية في كوتشينوتسو (شبه جزيرة شيمابارا، ناغازاكي). البالغون 4,000 ين، من 7 إلى 12 سنة 2,000 ين، من 4 إلى 6 سنوات 1,000 ين، وما دون 3 مجانًا.', ventaja: 'مجموعات من 10 بالغين فأكثر: خصم 10%؛ من 30 فأكثر: خصم 20%. الانطلاق من مكتبهم على بعد 700 م من الميناء، مقابل 7-Eleven.' },
+      ru: { que: 'Морская прогулка к диким дельфинам в Кутиноцу (Нагасаки). Взрослые 4000 ¥, 7–12 лет 2000 ¥, 4–6 лет 1000 ¥.', ventaja: 'Группы от 10 взрослых −10 %, от 30 — −20 %.' },
+    },
+  },
+  {
+    clave: 'shiretoko', cat: 'experiencias', ciudad: 'hokkaido', nombre: 'Shiretoko: hielo y cruceros (Gojiraiwa)', enlace: 'https://kamuiwakka.jp/utoro/',
+    marca: { fondo: '#dfeefa', tinta: '#123247', boton: '#123247', botonTinta: '#dfeefa', palabra: '流氷' },
+    t: {
+      es: { que: 'Caminata sobre el hielo marino (drift ice) de Shiretoko, del 1 de febrero a mediados de marzo, y cruceros por la costa del Patrimonio Mundial desde Utoro y Rausu.', ventaja: 'Grupos privados de hasta unas 42 personas en el hielo; en los cruceros, 10 % menos desde 15 personas. Hielo: desde primaria hasta 74 años, mínimo 130 cm. Las reservas de hielo abren hacia noviembre.' },
+      en: { que: 'Drift ice walk in Shiretoko, 1 February to mid-March, and cruises along the World Heritage coast from Utoro and Rausu.', ventaja: 'Private groups of up to about 42 on the ice; cruises 10% off from 15 people. Ice walk: primary-school age to 74, at least 130 cm. Ice bookings open around November.' },
+      ar: { que: 'المشي على الجليد البحري العائم في شيريتوكو من 1 فبراير حتى منتصف مارس، ورحلات بحرية على ساحل التراث العالمي من أوتورو وراوسو.', ventaja: 'مجموعات خاصة حتى نحو 42 شخصًا على الجليد؛ وفي الرحلات البحرية خصم 10% من 15 شخصًا. المشي على الجليد: من سن المرحلة الابتدائية حتى 74 سنة، وطول 130 سم على الأقل.' },
+      ru: { que: 'Прогулка по дрейфующему льду в Сиретоко (1 февраля — середина марта) и круизы вдоль побережья всемирного наследия.', ventaja: 'Круизы −10 % от 15 человек.' },
+    },
+  },
+  {
+    clave: 'kanemasa', cat: 'experiencias', ciudad: 'gifu', conTony: true, nombre: 'Kanemasa, forjador de katanas (Seki)', enlace: 'https://thekatana.jp/',
+    marca: { fondo: '#2b2b2b', tinta: '#e9e4d8', boton: '#b8932e', botonTinta: '#141414', palabra: '刀' },
+    t: {
+      es: { que: 'Forja tu propio cuchillo con el maestro Kanemasa en Seki (Gifu), la ciudad de las espadas. De 4 a 10 horas, desde 60.000 ¥ por persona.', ventaja: 'Se reserva con 1 o 2 semanas de antelación. Si vienes conmigo, traduzco al español o al árabe y no pago entrada.' },
+      en: { que: 'Forge your own knife with Master Kanemasa in Seki (Gifu), Japan’s sword town. 4 to 10 hours, from ¥60,000 per person.', ventaja: 'Book 1 to 2 weeks ahead. Coming with me? I translate into Spanish or Arabic at no extra cost.' },
+      ar: { que: 'اصنع سكينك بنفسك مع المعلّم كانيماسا في سيكي (غيفو)، مدينة السيوف في اليابان. من 4 إلى 10 ساعات، ابتداءً من 60,000 ين للشخص.', ventaja: 'الحجز قبل أسبوع أو أسبوعين. إن جئت معي أترجم إلى العربية أو الإسبانية دون تكلفة إضافية.' },
+      ru: { que: 'Выкуйте свой нож с мастером Канэмасой в Сэки (Гифу). 4–10 часов, от 60 000 ¥ с человека.', ventaja: 'Бронь за 1–2 недели.' },
     },
   },
   {
