@@ -94,12 +94,12 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', codigo: 'ag-special', descuento: '10 %',
+    clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', descuento: '10 %',
     marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
     t: {
-      es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Una hora divertida y a cubierto en pleno Kioto. Ideal con niños.' },
-      en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'A fun indoor hour in central Kyoto. Great with kids.' },
-      ar: { que: 'متحف الساموراي والنينجا في كيوتو: دروع وسيوف كاتانا ورمي الشوريكن، مع مرشد بالإنجليزية.', ventaja: 'ساعة ممتعة في مكان مغلق وسط كيوتو. رائع مع الأطفال.' },
+      es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Te lo reservo yo con un 10 % menos (escríbeme por WhatsApp). Una hora divertida y a cubierto, ideal con niños.' },
+      en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'I book it for you with 10% off (message me on WhatsApp). A fun indoor hour, great with kids.' },
+      ar: { que: 'متحف الساموراي والنينجا في كيوتو: دروع وسيوف كاتانا ورمي الشوريكن، مع مرشد بالإنجليزية.', ventaja: 'أحجزه لك بخصم 10% (راسلني عبر واتساب). ساعة ممتعة في مكان مغلق، رائع مع الأطفال.' },
     },
   },
   {
@@ -338,9 +338,9 @@ const LISTA: App[] = [
     clave: 'camellia', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/', codigo: 'CAMAGENT67', descuento: '10 %',
     marca: { fondo: '#2f4a32', tinta: '#f3ead7', boton: '#f3ead7', botonTinta: '#2f4a32', palabra: '茶' },
     t: {
-      es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Reserva en su web con el código CAMAGENT67 y di que vienes de parte de Tony Hanma. Si vienes de tour conmigo, te la traduzco al español o al árabe.' },
-      en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Book on their website with code CAMAGENT67 and say Tony Hanma sent you. Touring with me? I translate it into Spanish or Arabic.' },
-      ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'احجز في موقعهم بالرمز CAMAGENT67 وقل إنك من طرف Tony Hanma. وإن كنت في جولة معي أترجمه لك إلى العربية أو الإسبانية.' },
+      es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Código CAMAGENT67: 10 % menos en todas sus casas de té, también en el alquiler de kimono. Se reserva solo en su web, hasta 24 h antes. Si quieres que te traduzca al español o al árabe, reserva una ceremonia privada y entro contigo.' },
+      en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Code CAMAGENT67: 10% off at all their teahouses, kimono rental included. Online booking only, up to 24 h before. Want me to translate into Spanish or Arabic? Book a private ceremony and I come in with you.' },
+      ar: { que: 'حفل الشاي في بيت شاي في هيغاشياما بكيوتو: هادئ ومناسب للعائلات.', ventaja: 'الرمز CAMAGENT67: خصم 10% في كل بيوت الشاي لديهم، ويشمل تأجير الكيمونو. الحجز عبر موقعهم فقط وحتى 24 ساعة قبل الموعد. إن أردت أن أترجم لك إلى العربية أو الإسبانية، احجز حفلًا خاصًا وأدخل معك.' },
     },
   },
   {
@@ -495,12 +495,23 @@ const LISTA: App[] = [
   },
   {
     // MAIKOYA (Keigo/Shoko): 10 % de agencia con código que NO se publica; en plan privado el guía entra gratis, sin té (correo 28-10-2026).
-    clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/what-to-do-in-japan/for-agencies-kyoto/', codigo: 'ag-special', descuento: '10 %',
+    clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/', descuento: '10 %',
     marca: { fondo: '#7a1f2b', tinta: '#f6e9dc', boton: '#f6e9dc', botonTinta: '#7a1f2b', palabra: '舞' },
     t: {
-      es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Reserva en su web en inglés con el código ag-special (10 % menos). Nombre: «AG», apellido: «Tony Kansai Guide», y en notas tu nombre, correo y teléfono. En la privada entro contigo a traducir.' },
-      en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Book on their English website with code ag-special (10% off). First name “AG”, last name “Tony Kansai Guide”, and your name, email and phone in the remarks. For a private one I come in to translate.' },
-      ar: { que: 'حفل الشاي في كيوتو، جماعي أو خاص، مع شرح بالإنجليزية.', ventaja: 'احجز في موقعهم الإنجليزي بالرمز ag-special (خصم 10%). الاسم الأول «AG» واسم العائلة «Tony Kansai Guide»، واكتب في الملاحظات اسمك وبريدك وهاتفك. في الحفل الخاص أدخل معك لأترجم.' },
+      es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Escríbeme por WhatsApp con la fecha y cuántos sois: te la reservo yo con un 10 % menos. En la privada entro contigo a traducir.' },
+      en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Send me the date and group size on WhatsApp: I book it for you with 10% off. For a private one I come in to translate.' },
+      ar: { que: 'حفل الشاي في كيوتو، جماعي أو خاص، مع شرح بالإنجليزية.', ventaja: 'أرسل لي التاريخ وعددكم عبر واتساب: أحجزه لك بخصم 10%. في الحفل الخاص أدخل معك لأترجم.' },
+    },
+  },
+  {
+    // Osaka Cooking Base (Yuka, junto a Tenmangu): mismo precio para todos, sin código; máx. 8, de 5 a 8 privada sin extra; guía gratis si no cocina; sin cerdo ni alcohol bajo petición, usa dashi (correo 11-11-2026, acepta salir en ventajas).
+    clave: 'osakacookingbase', cat: 'experiencias', ciudad: 'osaka', musulman: true, nombre: 'Osaka Cooking Base', enlace: 'https://osakacookingbase.com/',
+    marca: { fondo: '#c8442e', tinta: '#fff4e6', boton: '#fff4e6', botonTinta: '#c8442e', palabra: '台所' },
+    t: {
+      es: { que: 'Clase de cocina casera en Osaka, junto a Tenmangu: okonomiyaki, ramen o gyoza con Yuka, en grupos de hasta 8.', ventaja: 'De 5 a 8 personas la clase es privada sin coste extra. Para familias musulmanas prepara okonomiyaki o ramen sin cerdo ni alcohol (sin mirin ni sake); pregunta antes por el caldo dashi. Yo entro gratis a traducir.' },
+      en: { que: 'Home-style cooking class in Osaka, next to Tenmangu: okonomiyaki, ramen or gyoza with Yuka, up to 8 guests.', ventaja: 'For 5 to 8 people the class is private at no extra charge. For Muslim families she makes okonomiyaki or ramen with no pork and no alcohol (no mirin or sake); ask first about the dashi stock. I join free to translate.' },
+      ar: { que: 'درس طبخ منزلي في أوساكا قرب تينمانغو: أوكونومياكي أو رامن أو غيوزا مع يوكا، حتى 8 أشخاص.', ventaja: 'من 5 إلى 8 أشخاص يكون الدرس خاصًا دون تكلفة إضافية. للعائلات المسلمة تحضّر أوكونومياكي أو رامن بلا خنزير ولا كحول (بلا ميرين ولا ساكي)؛ اسأل أولًا عن مرق الداشي. أدخل مجانًا لأترجم.' },
+      ru: { que: 'Домашний кулинарный класс в Осаке у Тэммангу: окономияки, рамен или гёдза с Юкой, до 8 человек.', ventaja: 'Для 5–8 человек класс частный без доплаты. Без свинины и алкоголя по запросу; про бульон даси уточните заранее.' },
     },
   },
   {
