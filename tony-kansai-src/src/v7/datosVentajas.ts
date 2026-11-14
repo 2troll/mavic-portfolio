@@ -622,16 +622,6 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'kozushima', cat: 'experiencias', ciudad: 'tokio', conTony: true, nombre: 'Isla de Kozushima: estrellas y paseo', enlace: 'https://kozushima.com/',
-    marca: { fondo: '#0b1d3a', tinta: '#e8f0ff', boton: '#e8f0ff', botonTinta: '#0b1d3a', palabra: '星' },
-    t: {
-      es: { que: 'Observación de estrellas y paseo guiado por Kozushima, isla volcánica de Tokio con cielo de reserva oscura. Para visitantes extranjeros se hace en privado: 30.000 ¥ el grupo de 1 a 10 personas.', ventaja: 'Te lo reservo yo por correo con al menos 3 días de antelación (depende de que haya guía libre) y voy contigo a traducir.' },
-      en: { que: 'Stargazing and a guided island walk on Kozushima, a volcanic Tokyo island with dark-sky nights. For overseas visitors it runs as a private tour: ¥30,000 for a group of 1 to 10.', ventaja: 'I book it for you by email at least 3 days ahead (subject to guide availability) and come along to translate.' },
-      ar: { que: 'مراقبة النجوم وجولة مشي في جزيرة كوزوشيما البركانية التابعة لطوكيو، بسماء مظلمة صافية. للزوار الأجانب تكون جولة خاصة: 30,000 ين للمجموعة من 1 إلى 10.', ventaja: 'أحجزها لك بالبريد قبل 3 أيام على الأقل (حسب توفر المرشد) وأرافقك للترجمة.' },
-      ru: { que: 'Звёзды и прогулка по вулканическому острову Кодзусима (Токио): частный тур 30 000 ¥ на группу 1–10.', ventaja: 'Бронирую сам минимум за 3 дня.' },
-    },
-  },
-  {
     // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código.
     clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/', codigo: 'HANMA', descuento: '15 %',
     marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
