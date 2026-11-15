@@ -542,13 +542,23 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'foodsample', cat: 'experiencias', ciudad: 'tokio', nombre: 'Food Sample Making Cafe (Asakusa)', enlace: 'https://foodsamplecafe.com/',
+    clave: 'foodsample', cat: 'experiencias', ciudad: 'tokio', nombre: 'Food Sample Making Cafe (Asakusa)', enlace: 'https://foodsamplecafe.com/en/', codigo: 'TONY10', descuento: '10 %',
     marca: { fondo: '#ffd23f', tinta: '#2a2100', boton: '#2a2100', botonTinta: '#ffd23f', palabra: 'FOOD' },
     t: {
       es: { que: 'Haz tus propias réplicas de comida japonesa de plástico (como las de los escaparates) en Asakusa, Tokio. Un recuerdo que te llevas a casa.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»). La comida que sirven no es halal: las familias musulmanas eligen el plan sin comida.' },
       en: { que: 'Make your own Japanese plastic food replicas, like the ones in restaurant windows, in Asakusa, Tokyo. A souvenir you take home.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field). Their meals are not halal: Muslim families choose the plan without a meal.' },
       ar: { que: 'اصنع بنفسك نماذج الطعام الياباني البلاستيكية، مثل التي في واجهات المطاعم، في أساكوسا بطوكيو. تذكار تأخذه معك.', ventaja: 'الرمز TONY10: خصم 10% عند الحجز في TableCheck (خانة «PROMO CODE»). وجباتهم ليست حلالًا: العائلات المسلمة تختار البرنامج بلا وجبة.' },
       ru: { que: 'Сделайте свои муляжи японской еды, как в витринах ресторанов, в Асакусе (Токио).', ventaja: 'Код TONY10: −10 % при брони в TableCheck.' },
+    },
+  },
+  {
+    clave: 'ninjacafe', cat: 'experiencias', ciudad: 'osaka', nombre: 'Ninja Experience Cafe (Osaka · Kioto · Tokio)', enlace: 'https://ninja-cafe.com/en/', codigo: 'TONY10', descuento: '10 %',
+    marca: { fondo: '#141414', tinta: '#f2f2f2', boton: '#c8102e', botonTinta: '#ffffff', palabra: '忍' },
+    t: {
+      es: { que: 'Vístete de ninja y aprende a usar sus armas (shuriken, cerbatana) en un café-taller en Dotonbori (Osaka), Gion (Kioto), Harajuku y Asakusa (Tokio). Grupos privados de 15 a 20 personas.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»). Tienen curry ninja con salsa halal certificada, aunque el café no es halal. Si vienes conmigo, entro gratis a traducir al español o al árabe.' },
+      en: { que: 'Dress as a ninja and learn their weapons (shuriken, blowgun) at a café-workshop in Dotonbori (Osaka), Gion (Kyoto), Harajuku and Asakusa (Tokyo). Private groups of 15 to 20.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field). Their Ninja Curry uses a halal-certified sauce, though the café itself is not halal-certified. Coming with me? I join free to translate into Spanish or Arabic.' },
+      ar: { que: 'ارتدِ زي النينجا وتعلّم استخدام أسلحته (الشوريكن وأنبوب النفخ) في مقهى-ورشة في دوتونبوري (أوساكا) وغيون (كيوتو) وهاراجوكو وأساكوسا (طوكيو). مجموعات خاصة من 15 إلى 20 شخصًا.', ventaja: 'الرمز TONY10: خصم 10% عند الحجز في TableCheck (خانة «PROMO CODE»). لديهم كاري النينجا بصلصة حلال معتمدة، لكن المقهى نفسه غير معتمد حلال. إن جئت معي أدخل مجانًا لأترجم إلى العربية أو الإسبانية.' },
+      ru: { que: 'Переоденьтесь в ниндзя и освойте сюрикены и духовую трубку в кафе в Осаке (Дотонбори), Киото (Гион) и Токио.', ventaja: 'Код TONY10: −10 % при брони в TableCheck. Есть карри с халяльным соусом.' },
     },
   },
   {
