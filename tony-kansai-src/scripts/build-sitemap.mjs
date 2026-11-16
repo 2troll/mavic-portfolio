@@ -19,6 +19,15 @@ const LANGS = ['en', 'es', 'ar', 'ru']
 const data = readFileSync(join(root, 'src/lib/data.ts'), 'utf8')
 // Las apps de la página de ventajas (cada una tiene su ficha: /es/ventajas/<clave>/).
 const APPS_VENTAJAS = [...readFileSync(join(root, 'src/v7/datosVentajas.ts'), 'utf8').matchAll(/clave: '([a-z0-9-]+)'/g)].map((m) => m[1])
+// Herramientas gratis (16-11-2026): hub, tarjetas en japonés, trenes y planificador.
+// Las mismas rutas que escriben scripts/herramientas.mjs y herramientas-viaje.mjs (y KitGuia.tsx).
+const HERR_RUTAS = {
+  herrHub: [['es', '/es/herramientas/'], ['en', '/en/tools/'], ['ar', '/ar/tools/']],
+  herrComida: [['es', '/es/herramientas/tarjeta-comida-japones/'], ['en', '/en/tools/japanese-food-card/'], ['ar', '/ar/tools/halal-food-card/']],
+  herrTaxi: [['es', '/es/herramientas/tarjeta-taxi-japones/'], ['en', '/en/tools/japanese-taxi-card/'], ['ar', '/ar/tools/taxi-card-japanese/']],
+  herrTrenes: [['es', '/es/herramientas/transporte-kansai/'], ['en', '/en/tools/kansai-train-times-fares/'], ['ar', '/ar/tools/kansai-trains/']],
+  herrPlan: [['es', '/es/herramientas/planificador-kansai/'], ['en', '/en/tools/kansai-itinerary-planner/'], ['ar', '/ar/tools/kansai-itinerary-planner/']],
+}
 
 /** Los ids de un bloque `export const X = [ … ]` de data.ts. */
 function ids(constName) {
@@ -55,6 +64,8 @@ const paginas = [
   { loc: '/ar/asatir', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
   { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/ar/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
+  // Herramientas gratis (scripts/herramientas.mjs y herramientas-viaje.mjs).
+  ...Object.entries(HERR_RUTAS).flatMap(([tipo, grupo]) => grupo.map(([, r]) => ({ loc: r.replace(/\/$/, ''), priority: tipo === 'herrHub' ? '0.9' : '0.85', changefreq: 'monthly', v7: tipo }))),
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
   { loc: '/partners', priority: '0.9', changefreq: 'monthly', v7: 'partners' },
   // «Kansai de TikTok»: sitios virales por temporada + Ruta TikTok (scripts/tiktok.mjs).
@@ -177,6 +188,7 @@ const V7 = {
   bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/'], ['ar', '/ar/kyoto-private-bike-tour/']],
   precios: [['es', '/es/precios/'], ['en', '/en/prices/'], ['ar', '/ar/prices/']],
   destinos: [['es', '/es/destinos/'], ['en', '/en/destinations/'], ['ar', '/ar/destinations/']],
+  ...HERR_RUTAS,
 }
 
 // <lastmod>: la fecha real del último cambio del archivo del que sale cada
@@ -192,6 +204,8 @@ const FUENTE = {
   francais: ['scripts/francais.mjs'],
   precios: ['scripts/precios.mjs', 'src/v7/contenido.ts'],
   destinos: ['scripts/destinos.mjs'],
+  herrHub: ['scripts/herramientas.mjs'], herrComida: ['scripts/herramientas.mjs'], herrTaxi: ['scripts/herramientas.mjs'],
+  herrTrenes: ['scripts/herramientas-viaje.mjs'], herrPlan: ['scripts/herramientas-viaje.mjs'],
   iheb: ['scripts/iheb.mjs', 'scripts/iheb-estilo.mjs'],
   private: ['scripts/private.mjs'],
   kndr: ['scripts/kndr.mjs'],

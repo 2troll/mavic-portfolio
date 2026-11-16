@@ -85,7 +85,7 @@ if (paginas.length === 0) {
 }
 
 // Primero las páginas de Tony y Larion y las de respuesta; el resto, por ruta.
-const peso = (r) => (/^\/(es|en|ar|ru|larion|tr|fr|private|familias|ru\/filipp)\/$/.test(r) ? 0 : /calculadora|calculator|tiktok\/$|partners|precios|prices|resenas|reviews|avis|otzyv/.test(r) ? 1 : 2)
+const peso = (r) => (/^\/(es|en|ar|ru|larion|tr|fr|private|familias|ru\/filipp)\/$/.test(r) ? 0 : /calculadora|calculator|herramientas\/$|tools\/$|tiktok\/$|partners|precios|prices|resenas|reviews|avis|otzyv/.test(r) ? 1 : 2)
 paginas.sort((a, b) => peso(a.ruta) - peso(b.ruta) || a.ruta.localeCompare(b.ruta))
 
 const llms = existsSync(join(dest, 'llms.txt')) ? readFileSync(join(dest, 'llms.txt'), 'utf8').trim() : '# Tony Kansai Guide'
