@@ -157,7 +157,7 @@ const es: Pagina = {
   id: 'es', lang: 'es', viaje: ['Sales de Madrid o de Cancún.', 'Aterrizas en Kansai.', 'Te recojo en el vestíbulo de tu hotel.', 'Y pasamos el día donde quieras.'], dir: 'ltr', ruta: '/es/', guia: 'tony',
   seo: {
     titulo: 'Guía en español en Kioto, Osaka y Nara | Tony Kansai Guide',
-    descripcion: 'Tony, guía privado en español. Te recoge en el hotel y pasáis el día en Kioto, Osaka, Nara o Kobe. Sin agencia y con precio cerrado por grupo.',
+    descripcion: 'Tony, guía privado en español. Te recoge en el hotel y pasáis el día en Kioto, Osaka, Nara o Kobe, con precio cerrado por grupo.',
   },
   nav: { como: 'Cómo funciona', zona: 'Dónde vamos', precios: 'Precios', contacto: 'Escríbeme', idioma: 'Idioma' },
   hero: {
@@ -299,7 +299,7 @@ const en: Pagina = {
   id: 'en', lang: 'en', viaje: ['You fly in from London.', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we spend the day wherever you like.'], dir: 'ltr', ruta: '/en/', guia: 'tony',
   seo: {
     titulo: 'Private guide in Kyoto, Osaka & Nara | Tony Kansai Guide',
-    descripcion: 'Tony is a private guide in Kansai. He meets you at your hotel for a day in Kyoto, Osaka, Nara or Kobe. No agency, one fixed price per group.',
+    descripcion: 'Tony is a private guide in Kansai. He meets you at your hotel for a day in Kyoto, Osaka, Nara or Kobe, with one fixed price per group.',
   },
   nav: { como: 'How it works', zona: 'Where we go', precios: 'Prices', contacto: 'Message me', idioma: 'Language' },
   hero: {
