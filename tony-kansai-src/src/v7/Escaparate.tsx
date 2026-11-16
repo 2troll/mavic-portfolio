@@ -5,7 +5,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { APPS, CIUDADES, cuponDe, enlaceDe, type Ciudad } from './datosVentajas'
+import { APPS, CIUDADES, ciudadesDe, cuponDe, enlaceDe, type Ciudad } from './datosVentajas'
 import { ICONOS_APP } from './logosMarcas'
 import { ICONO_EXP } from './iconosExperiencia'
 import { textoApp, MAS } from './FichaVentaja'
@@ -39,13 +39,14 @@ export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
   const [filtro, setFiltro] = useState<Filtro>('')
   // La versión rusa es de Larion: va por Telegram (sin texto prellenado).
   const guia = id === 'ru' ? 'larion' : 'tony'
-  const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => a.ciudad === c))
-  const pasa = (a: (typeof APPS)[number]) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : a.ciudad === filtro)
+  const enCiudad = (a: (typeof APPS)[number], c: Ciudad) => ciudadesDe(a).includes(c)
+  const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => enCiudad(a, c)))
+  const pasa = (a: (typeof APPS)[number]) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : enCiudad(a, filtro))
   const chips: { k: Filtro; txt: string; n: number }[] = [
     { k: '', txt: t.todas, n: EXPERIENCIAS.length },
     { k: 'musulman', txt: t.musulman, n: EXPERIENCIAS.filter((a) => a.musulman).length },
     { k: 'conTony', txt: t.conTony, n: EXPERIENCIAS.filter((a) => a.conTony).length },
-    ...ciudades.map((c) => ({ k: c as Filtro, txt: CIUDADES[c][id], n: EXPERIENCIAS.filter((a) => a.ciudad === c).length })),
+    ...ciudades.map((c) => ({ k: c as Filtro, txt: CIUDADES[c][id], n: EXPERIENCIAS.filter((a) => enCiudad(a, c)).length })),
   ]
   const flecha = id === 'ar' ? '←' : '→'
 
@@ -83,7 +84,7 @@ export default function Escaparate({ id, ruta }: { id: Id; ruta: string }) {
                     {Ico
                       ? <span className="vt-exp-icono" aria-hidden="true"><Ico size={46} strokeWidth={1.5} /></span>
                       : ICONOS_APP.has(a.clave) && <img className="vt-exp-logo" src={`/v7/apps/${a.clave}.webp`} alt="" width="96" height="96" loading="lazy" decoding="async" />}
-                    {a.ciudad && <span className="vt-exp-ciudad">{CIUDADES[a.ciudad][id]}</span>}
+                    {a.ciudad && <span className="vt-exp-ciudad">{ciudadesDe(a).map((c) => CIUDADES[c][id]).join(' · ')}</span>}
                   </div>
                   <div className="vt-exp-cuerpo">
                     {(a.musulman || a.conTony) && (

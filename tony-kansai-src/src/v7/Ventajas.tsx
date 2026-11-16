@@ -16,13 +16,13 @@ import { Logo } from './Logo'
 import { IconoWa, IconoCanal } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
-import { APPS, CATEGORIAS, CIUDADES, SEO_VENTAJAS, cuponDe, esAfiliado, enlaceDe, type Categoria, type Ciudad } from './datosVentajas'
+import { APPS, CATEGORIAS, CIUDADES, KANSAI, REGIONES, SEO_VENTAJAS, ciudadesDe, cuponDe, enKansai, esAfiliado, enlaceDe, type Categoria, type Ciudad } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { CodigoCifrado } from './Cocina'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
-import { GUIA, FOTO_EXP } from './datosVentajasGuia'
-import { FotoZona } from './FotoZona'
+import { GUIA, FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
+import { FotoSocio, FotoZona } from './FotoZona'
 const Pagina404 = lazy(() => import('./Pagina404'))
 import { ICONO_EXP } from './iconosExperiencia'
 import './v7.css'
@@ -248,6 +248,14 @@ const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; 
 
 /** Botón «mándatela a tu WhatsApp»: el cliente se envía a sí mismo los códigos y el
  *  enlace, y así los tiene en su chat durante todo el viaje sin buscar la web. */
+// «Cómo usar tu código», en tres pasos, encima de los billetes.
+const PASOS_CODIGO: Record<VentajasId, { titulo: string; pasos: [string, string][] }> = {
+  es: { titulo: 'Cómo usar tu código', pasos: [['Cópialo', 'con el botón de copiar de su tarjeta.'], ['Abre su web', 'con «Ir a la web» y elige día, hora y personas.'], ['Pégalo antes de pagar', 'en el campo de código promocional o cupón (en TableCheck, «PROMO CODE»). ¿No lo ves? Escríbeme por WhatsApp.']] },
+  en: { titulo: 'How to use your code', pasos: [['Copy it', 'with the copy button on its card.'], ['Open their website', 'with “Go to website” and pick the day, time and people.'], ['Paste it before paying', 'in the promo code or coupon field (on TableCheck, “PROMO CODE”). Can’t find it? Message me on WhatsApp.']] },
+  ar: { titulo: 'كيف تستخدم الرمز', pasos: [['انسخه', 'بزر النسخ في بطاقته.'], ['افتح موقعهم', 'بزر «افتح الموقع» واختر اليوم والساعة وعدد الأشخاص.'], ['الصقه قبل الدفع', 'في خانة الرمز الترويجي أو القسيمة (في TableCheck اسمها «PROMO CODE»). لا تجدها؟ راسلني على واتساب.']] },
+  ru: { titulo: 'Как использовать код', pasos: [['Скопируйте', 'кнопкой копирования на карточке.'], ['Откройте их сайт', 'кнопкой «Открыть сайт» и выберите день, время и число людей.'], ['Вставьте перед оплатой', 'в поле промокода или купона (в TableCheck — «PROMO CODE»). Не нашли? Напишите нам.']] },
+}
+
 const GUARDA: Record<VentajasId, { boton: string; nota: string; msg: string; todo: string }> = {
   es: { boton: 'Mándatelos a tu WhatsApp', nota: 'Así los tienes a mano durante todo el viaje por Japón.', msg: 'Mis descuentos para Japón (Tony Kansai Guide):', todo: 'Todo aquí:' },
   en: { boton: 'Send them to your WhatsApp', nota: 'Keep them at hand for your whole trip in Japan.', msg: 'My discounts for Japan (Tony Kansai Guide):', todo: 'Everything here:' },
@@ -286,8 +294,10 @@ const EXP_T: Record<VentajasId, { titulo: string; sub: string; todas: string; mu
 const FOTO_KIT = ['/v8/zonas/kioto-kiyomizu-900.webp', '', '/v8/zonas/osaka-dotonbori-900.webp']
 
 const EXPERIENCIAS = APPS.filter((a) => a.cat === 'experiencias')
-// Las de ventaja propia y las aptas para musulmanes, primero: es lo que más vende.
-const ORDENADAS = [...EXPERIENCIAS].sort((a, b) => Number(!!b.conTony) + Number(!!b.musulman) - (Number(!!a.conTony) + Number(!!a.musulman)))
+// Kansai primero (es donde guiamos) y, dentro de cada zona, las de ventaja propia
+// y las aptas para musulmanes delante: es lo que más vende.
+const peso = (a: App) => (enKansai(a) ? 10 : 0) + Number(!!a.conTony) + Number(!!a.musulman)
+const ORDENADAS = [...EXPERIENCIAS].sort((a, b) => peso(b) - peso(a))
 const APPS_REJILLA = APPS.filter((a) => a.cat !== 'experiencias')
 
 type App = (typeof APPS)[number]
@@ -360,13 +370,14 @@ function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
   const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', t.msg.replace('{n}', a.nombre))
   return (
     <div className="vn-det" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
-      <div className={`vn-det-cara${FOTO_EXP[a.clave] ? ' con-foto' : ''}`}>
-        {FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />}
+      <div className={`vn-det-cara${FOTO_SOCIO[a.clave] || FOTO_EXP[a.clave] ? ' con-foto' : ''}`}>
+        {FOTO_SOCIO[a.clave] ? <FotoSocio {...FOTO_SOCIO[a.clave]} alt={FOTO_SOCIO[a.clave].alt[id]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />
+          : FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />}
         {a.marca.palabra && <span className="vn-det-kanji" aria-hidden="true">{a.marca.palabra}</span>}
         <IconoExp a={a} grande />
       </div>
       <div className="vn-det-cuerpo">
-        <p className="vn-det-lugar">{a.ciudad ? CIUDADES[a.ciudad][id] : 'Kansai'}</p>
+        <p className="vn-det-lugar">{a.ciudad ? ciudadesDe(a).map((c) => CIUDADES[c][id]).join(' · ') : 'Kansai'}</p>
         <h3><bdi dir="ltr">{a.nombre}</bdi></h3>
         <p className="vn-det-que">{tx.que}</p>
         <p className="vn-det-ventaja">{tx.ventaja}</p>
@@ -393,8 +404,10 @@ function Experiencias({ id, ruta }: { id: VentajasId; ruta: string }) {
   const t = EXP_T[id]
   const [filtro, setFiltro] = useState<FiltroExp>('')
   const [sel, setSel] = useState(ORDENADAS[0]?.clave ?? '')
-  const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => a.ciudad === c))
-  const pasa = (a: App) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : a.ciudad === filtro)
+  // Una experiencia con locales en varias ciudades (Ninja Cafe, Wargo) sale en el filtro de cada una.
+  const enCiudad = (a: App, c: Ciudad) => ciudadesDe(a).includes(c)
+  const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => enCiudad(a, c)))
+  const pasa = (a: App) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : enCiudad(a, filtro))
   const lista = ORDENADAS.filter(pasa)
   const actual = lista.find((a) => a.clave === sel) ?? lista[0]
   // Llegar con #clave (desde el kit, otra página o WhatsApp) abre esa experiencia.
@@ -404,24 +417,37 @@ function Experiencias({ id, ruta }: { id: VentajasId; ruta: string }) {
     window.addEventListener('hashchange', abrir)
     return () => window.removeEventListener('hashchange', abrir)
   }, [])
+  const chip = (c: Ciudad) => ({ k: c as FiltroExp, txt: CIUDADES[c][id], n: EXPERIENCIAS.filter((a) => enCiudad(a, c)).length })
   const chips: { k: FiltroExp; txt: string; n: number }[] = [
     { k: '', txt: t.todas, n: EXPERIENCIAS.length },
     { k: 'musulman', txt: t.musulman, n: EXPERIENCIAS.filter((a) => a.musulman).length },
     { k: 'conTony', txt: t.conTony, n: EXPERIENCIAS.filter((a) => a.conTony).length },
-    ...ciudades.map((c) => ({ k: c as FiltroExp, txt: CIUDADES[c][id], n: EXPERIENCIAS.filter((a) => a.ciudad === c).length })),
   ]
+  // Ciudades en dos grupos: Kansai primero y luego el resto de Japón.
+  const grupos = [
+    { k: 'kansai', txt: REGIONES.kansai[id], chips: ciudades.filter((c) => KANSAI.includes(c)).map(chip) },
+    { k: 'japon', txt: REGIONES.japon[id], chips: ciudades.filter((c) => !KANSAI.includes(c)).map(chip) },
+  ].filter((g) => g.chips.length)
+  // Función, no componente: así el botón no se vuelve a montar al pulsarlo y no pierde el foco.
+  const chipBoton = (c: { k: FiltroExp; txt: string; n: number }) => (
+    <button key={c.k || 'todas'} type="button" aria-pressed={filtro === c.k} onClick={() => setFiltro(c.k)}>
+      {c.txt} <small>{c.n}</small>
+    </button>
+  )
   return (
     <section className="vn-exp" id="experiencias" aria-labelledby="vn-exp-t">
       <div className="vn-ancho">
         <h2 id="vn-exp-t" className="vn-h2 vn-sube">{t.titulo}</h2>
         <p className="vn-lead vn-sube">{t.sub}</p>
         <div className="vn-chips" role="group" aria-label={t.titulo}>
-          {chips.map((c) => (
-            <button key={c.k || 'todas'} type="button" aria-pressed={filtro === c.k} onClick={() => setFiltro(c.k)}>
-              {c.txt} <small>{c.n}</small>
-            </button>
-          ))}
+          {chips.map(chipBoton)}
         </div>
+        {grupos.map((g) => (
+          <div key={g.k} className="vn-chips vn-chips-region" role="group" aria-label={g.txt}>
+            <span className="vn-chips-titulo">{g.txt}</span>
+            {g.chips.map(chipBoton)}
+          </div>
+        ))}
         <div className="vn-exp-grid">
           <ol className="vn-exp-lista">
             {lista.map((a) => {
@@ -592,6 +618,10 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             <div className="vn-ancho">
               <h2 id="vn-cod-t" className="vn-h2 vn-sube">{CODIGOS[id].titulo}</h2>
               <p className="vn-lead vn-sube">{CODIGOS[id].sub}</p>
+              <h3 className="vn-cod-como" id="vn-cod-como">{PASOS_CODIGO[id].titulo}</h3>
+              <ol className="vn-cod-pasos" aria-labelledby="vn-cod-como">
+                {PASOS_CODIGO[id].pasos.map(([b, txt]) => <li key={b}><span><b>{b}</b> {txt}</span></li>)}
+              </ol>
             </div>
             <div className="vn-billetes">
               {conCodigo.map((a) => (

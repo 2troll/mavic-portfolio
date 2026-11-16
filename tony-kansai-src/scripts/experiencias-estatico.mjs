@@ -33,7 +33,7 @@ export function experienciasHTML(lang = 'es', { max = 12 } = {}) {
   const rutaV = RUTA_VENTAJAS[lang] ?? RUTA_VENTAJAS.en
   const items = EXPERIENCIAS.slice(0, max).map((a) => {
     const tx = a.t[t.base] ?? a.t.en
-    const ciudad = a.ciudad ? (CIUDADES[a.ciudad][lang] ?? CIUDADES[a.ciudad].en) : ''
+    const ciudad = a.ciudad ? [a.ciudad, ...(a.otrasCiudades ?? [])].map((c) => CIUDADES[c][lang] ?? CIUDADES[c].en).join(' · ') : ''
     const extra = a.descuento ? `${t.badge} · ${esc(a.descuento)}` : t.badge
     const halal = a.musulman ? '<span class="xp-h">Halal ✓</span>' : ''
     return `<li><a href="${rutaV}"><span class="xp-i" aria-hidden="true">${icono(a)}</span><span class="xp-t"><b>${esc(a.nombre)}</b>${ciudad ? `<small>${esc(ciudad)}</small>` : ''}<span class="xp-q">${esc(tx.que)}</span><span class="xp-b">${extra}</span>${halal}</span></a></li>`

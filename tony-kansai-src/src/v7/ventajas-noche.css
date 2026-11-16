@@ -102,6 +102,14 @@
 .vn-chips button:hover { color: var(--vn-tinta); border-color: rgba(255, 255, 255, .25); }
 .vn-chips button[aria-pressed='true'] { background: var(--vn-tinta); color: var(--vn-fondo); border-color: var(--vn-tinta); }
 .vn-chips small { opacity: .6; margin-inline-start: 4px; font-size: .78em; }
+.vn-chips-region { margin-top: 12px; align-items: center; }
+.vn-chips-titulo { font-size: .74rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--vn-suave); min-width: 8.5em; }
+/* «Cómo usar tu código» */
+.vn-cod-como { margin: 28px 0 0; font-size: 1.05rem; font-weight: 700; color: var(--vn-tinta); }
+.vn-cod-pasos { list-style: none; counter-reset: paso; display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px; margin: 24px 0 0; padding: 0; }
+.vn-cod-pasos li { counter-increment: paso; display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border: 1px solid var(--vn-linea); border-radius: 14px; color: var(--vn-suave); line-height: 1.45; }
+.vn-cod-pasos li::before { content: counter(paso); flex: none; display: grid; place-items: center; width: 28px; height: 28px; border-radius: 50%; background: var(--vn-tinta); color: var(--vn-fondo); font-weight: 700; font-size: .9rem; }
+.vn-cod-pasos b { color: var(--vn-tinta); }
 
 /* Experiencias: lista + vista previa */
 .vn-exp { padding: clamp(64px, 9vw, 120px) 0; }
