@@ -22,6 +22,7 @@ import { CodigoCifrado } from './Cocina'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import { GUIA, FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
+import { HerramientasEnGuia } from './KitGuia'
 import { FotoSocio, FotoZona } from './FotoZona'
 const Pagina404 = lazy(() => import('./Pagina404'))
 import { ICONO_EXP } from './iconosExperiencia'
@@ -723,6 +724,10 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
             </ul>
           </div>
         </section>
+
+        {/* Herramientas gratis (tarjetas en japonés, trenes, planificador): ventajas y
+            herramientas, juntas en la misma página (16-11-2026). */}
+        <HerramientasEnGuia lang={id} />
 
         <section className="vn-faq" id="preguntas" aria-labelledby="vn-faq-t">
           <div className="vn-ancho vn-faq-grid">

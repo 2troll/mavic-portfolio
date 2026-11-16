@@ -137,3 +137,14 @@
   .kg-exp, .kg-herr-tarjeta, .kg-herr-flecha { transition: none; }
   .kg-exp:hover, .kg-herr-tarjeta:hover { transform: none; }
 }
+
+/* Dentro de la página de ventajas (tema de noche .vn): mismas tarjetas, con sus colores. */
+.vn .kg-herr {
+  --superficie: var(--vn-capa); --superficie-2: var(--vn-capa2); --tinta: var(--vn-tinta); --tenue: var(--vn-suave); --linea: var(--vn-linea);
+  --acento: var(--vn-acento); --inverso: var(--vn-tinta); --inverso-tinta: var(--vn-fondo); --radio: var(--vn-radio);
+  --mincho: 'Hiragino Mincho ProN', 'Yu Mincho', 'Noto Serif JP', serif;
+  width: min(100% - 32px, var(--vn-ancho)); margin-inline: auto; padding: 96px 0 0;
+}
+.vn .kg-herr .kg-cab h2 { letter-spacing: -0.035em; }
+.vn .kg-herr-tarjeta { border-width: 1px; box-shadow: none; }
+.vn .kg-herr-tarjeta:hover { box-shadow: none; border-color: var(--vn-acento); }
