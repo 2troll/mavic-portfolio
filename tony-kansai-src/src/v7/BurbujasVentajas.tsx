@@ -49,14 +49,21 @@ const sello = (a: App) => (a.descuento ? (a.descuento.startsWith('−') ? a.desc
 export function BurbujasVentajas({ lang }: { lang: Idioma }) {
   const t = TEXTO[lang]
   const [activo, setActivo] = useState(false)
-  const [oculto, setOculto] = useState(() => { try { return sessionStorage.getItem(CLAVE_OCULTAS) === '1' } catch { return false } })
+  // Ocultas o «reducir movimiento»: se mira DESPUÉS de montar. Leído al pintar,
+  // el cliente devolvía null donde el HTML pregenerado traía la capa, React daba
+  // el error #418 y repintaba la página entera (iPhone con «Reducir movimiento»).
+  const [oculto, setOculto] = useState(false)
+  const [quieto, setQuieto] = useState(false)
+  useEffect(() => {
+    try { if (sessionStorage.getItem(CLAVE_OCULTAS) === '1') setOculto(true) } catch { /* sin almacenamiento */ }
+    if (typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches) setQuieto(true)
+  }, [])
   const [vivas, setVivas] = useState<Burbuja[]>([])
   const [abierta, setAbierta] = useState<App | null>(null)
   const [copiado, setCopiado] = useState(false)
   const hoja = useRef<HTMLDivElement>(null)
   const cola = useRef<App[]>(baraja(true))
   const contador = useRef(0)
-  const quieto = typeof matchMedia !== 'undefined' && matchMedia('(prefers-reduced-motion: reduce)').matches
 
   // Empiezan cuando el cliente ya ha bajado un poco: no tapan la portada al entrar.
   useEffect(() => {
