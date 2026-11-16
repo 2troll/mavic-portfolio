@@ -418,9 +418,9 @@ const LISTA: App[] = [
     clave: 'cookingsun', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Cooking Sun', enlace: 'https://cookingsun.co.jp/',
     marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
     t: {
-      es: { que: 'Clase de cocina casera japonesa en Kioto y en Osaka: cocinas tú y luego coméis juntos.', ventaja: 'Al reservar pide el menú vegetariano sin alcohol (sin sake ni mirin). No es halal certificado, pero no lleva carne ni alcohol.' },
-      en: { que: 'Japanese home-cooking class in Kyoto and Osaka: you cook, then you eat together.', ventaja: 'When booking, ask for the vegetarian menu without alcohol (no sake or mirin). Not halal-certified, but no meat and no alcohol.' },
-      ar: { que: 'درس طبخ ياباني منزلي في كيوتو وأوساكا: تطبخ بنفسك ثم تأكلون معًا.', ventaja: 'عند الحجز اطلب القائمة النباتية بلا كحول (بلا ساكي ولا ميرين). ليست حلالًا موثقة، لكنها بلا لحم ولا كحول.' },
+      es: { que: 'Clase de cocina casera japonesa en Kioto: cocinas tú y luego coméis juntos.', ventaja: 'Al reservar pide el menú vegetariano sin alcohol (sin sake ni mirin). No es halal certificado, pero no lleva carne ni alcohol.' },
+      en: { que: 'Japanese home-cooking class in Kyoto: you cook, then you eat together.', ventaja: 'When booking, ask for the vegetarian menu without alcohol (no sake or mirin). Not halal-certified, but no meat and no alcohol.' },
+      ar: { que: 'درس طبخ ياباني منزلي في كيوتو: تطبخ بنفسك ثم تأكلون معًا.', ventaja: 'عند الحجز اطلب القائمة النباتية بلا كحول (بلا ساكي ولا ميرين). ليست حلالًا موثقة، لكنها بلا لحم ولا كحول.' },
     },
   },
   {
@@ -666,13 +666,14 @@ const LISTA: App[] = [
     },
   },
   {
-    // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código.
-    clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/', codigo: 'HANMA', descuento: '15 %',
+    // InKansai (Sam): HANMA = 15 % de agente en cycleosaka/cyclekyoto/cyclehiroshima y eatosaka/eatkyoto; el cliente paga precio web (correo 24-10-2026). NO publicar el código:
+    // es descuento de agente, no del cliente, así que la ficha va sin código ni sello de ventaja. «Non-pork» en las clases de cocina: mismo correo.
+    clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/',
     marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
     t: {
-      es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Reserva en su web con el código HANMA: 15 % menos. Si quieres, te lo reservo yo y pregunto antes por opciones sin cerdo ni alcohol.' },
-      en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'Book on their website with code HANMA: 15% off. Or I book it for you and check no-pork, no-alcohol options first.' },
-      ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'احجز في موقعهم بالرمز HANMA: خصم 15%. أو أحجزها لك وأسأل أولًا عن خيارات بلا لحم خنزير ولا كحول.' },
+      es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Se reserva en su web, o te lo reservo yo si quieres. En sus clases de cocina (Eat Osaka / Eat Kyoto) pueden preparar la comida sin cerdo; si necesitas halal o sin alcohol, pregúntame antes y lo consulto con ellos.' },
+      en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'Book on their website, or I can book it for you. Their cooking classes (Eat Osaka / Eat Kyoto) can make the food without pork; if you need halal or no alcohol, ask me first and I will check with them.' },
+      ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'يُحجز من موقعهم، أو أحجزه لك إن أردت. في دروس الطبخ لديهم (Eat Osaka / Eat Kyoto) يمكنهم تحضير الطعام بلا لحم خنزير؛ إن كنت تحتاج حلالًا أو بلا كحول فاسألني أولًا وأستفسر منهم.' },
     },
   },
 ]
