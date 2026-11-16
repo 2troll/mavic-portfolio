@@ -22,6 +22,7 @@ import type { GuiaId } from './datosGuias'
 import './v7.css'
 import './estilo-pixel.css'
 import { FranjaVentajas } from './FranjaVentajas'
+import { HerramientasEnGuia } from './KitGuia'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = GUIAS_TRANSPORTE
@@ -148,6 +149,8 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
             ))}
           </div>
         </section>
+
+        <HerramientasEnGuia lang={p.lang} />
 
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>

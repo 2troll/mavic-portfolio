@@ -1,0 +1,139 @@
+/* Ventajas y herramientas dentro de las guías (KitGuia.tsx, 16-11-2026).
+   Mismo lenguaje que el resto de la web: bloques con borde y sombra dura del
+   estilo píxel (si no está, una línea fina), kanji grande y un solo acento. */
+
+.kg-cab { max-width: 760px; margin-bottom: var(--e-4, 32px); }
+.kg-eti {
+  display: inline-flex; align-items: center; gap: 10px; margin: 0 0 12px;
+  font-size: var(--t--1, .8125rem); font-weight: 600; letter-spacing: .12em; text-transform: uppercase; color: var(--acento);
+}
+.kg-eti span { letter-spacing: 0; font-size: 1.1em; }
+.kg-cab h2 { font-size: clamp(2rem, 5vw, 3.4rem); line-height: 1.08; margin: 0 0 14px; text-wrap: balance; }
+.kg-entra { margin: 0; color: var(--tenue); font-size: var(--t-0, 1.0625rem); max-width: 62ch; }
+
+/* ── Experiencias: rejilla en escritorio, carrusel con imán en el móvil ── */
+.kg-exps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
+.kg-exp {
+  position: relative; display: flex; flex-direction: column; overflow: hidden;
+  background: var(--px-tarjeta, var(--superficie));
+  border: 3px solid var(--px-borde, var(--linea)); border-radius: var(--radio);
+  box-shadow: 5px 5px 0 var(--px-sombra, transparent);
+  transition: transform .25s var(--curva, ease), box-shadow .25s var(--curva, ease);
+}
+.kg-exp:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--px-sombra, transparent); }
+.kg-exp:focus-within { outline: 3px solid var(--acento); outline-offset: 3px; }
+.kg-exp-foto { position: relative; aspect-ratio: 16 / 10; overflow: hidden; display: grid; place-items: center; background: var(--superficie-2, #eee); }
+.kg-exp-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.kg-exp-palabra { font-family: var(--mincho); font-size: clamp(2.6rem, 6vw, 4rem); line-height: 1; opacity: .92; }
+/* El logo pisa el borde de la foto, como un sello. */
+.kg-exp-foto .kg-logo { position: absolute; inset-inline-start: 14px; bottom: 12px; z-index: 2; box-shadow: 0 0 0 3px var(--px-tarjeta, var(--superficie)); }
+.kg-exp .vz-credito {
+  position: absolute; inset-inline-end: 6px; top: 6px; z-index: 2; max-width: calc(100% - 12px);
+  padding: 2px 6px; border-radius: 4px; background: rgba(0, 0, 0, .55); color: rgba(255, 255, 255, .85) !important;
+  font-size: 10px; line-height: 1.3; text-decoration: none; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.kg-exp-cuerpo { display: flex; flex-direction: column; gap: 8px; padding: 16px 18px 18px; flex: 1; }
+.kg-exp h3 { margin: 0; font-size: var(--t-1, 1.33rem); line-height: 1.2; }
+.kg-exp-enlace { color: inherit; text-decoration: none; }
+/* Toda la tarjeta es el enlace; el crédito de la foto queda por encima (z-index 2). */
+.kg-exp-enlace::after { content: ''; position: absolute; inset: 0; z-index: 1; }
+.kg-exp-enlace:focus-visible { outline: none; }
+.kg-exp p { margin: 0; color: var(--tenue); font-size: .95rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+.kg-logo { width: 44px; height: 44px; border-radius: 12px; flex: none; object-fit: cover; background: #fff; }
+.kg-logo-palabra { display: grid; place-items: center; font-family: var(--mincho); font-size: 20px; line-height: 1; }
+
+.kg-sellos { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 4px; }
+.kg-sello {
+  display: inline-flex; align-items: center; gap: 4px; padding: 4px 9px; border-radius: 999px;
+  font-size: 12.5px; font-weight: 600; line-height: 1.2; font-variant-numeric: tabular-nums;
+  background: color-mix(in srgb, var(--tinta) 7%, transparent); color: var(--tinta);
+}
+.kg-sello-desc { background: var(--acento); color: var(--acento-tinta, #fff); }
+.kg-sello-cod { background: transparent; box-shadow: inset 0 0 0 1.5px currentColor; letter-spacing: .02em; }
+.kg-sello-mus { background: color-mix(in srgb, #1d7a4f 16%, transparent); color: #17663f; }
+:root[data-tema='oscuro'] .kg-sello-mus { color: #5fd39a; }
+@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .kg-sello-mus { color: #5fd39a; } }
+
+.kg-resto { margin: 20px 0 0; color: var(--tenue); line-height: 1.9; }
+.kg-resto a { color: var(--tinta); font-weight: 600; text-underline-offset: 3px; }
+.kg-nota { margin: 14px 0 0; font-size: var(--t--1, .8125rem); color: var(--tenue); }
+
+/* ── El kit de cada día ── */
+.kg-kit { margin-top: var(--e-6, 48px); }
+.kg-kit h3 { font-size: clamp(1.4rem, 3vw, 2rem); margin: 0 0 8px; }
+.kg-kit-entra { margin: 0 0 18px; color: var(--tenue); max-width: 62ch; }
+.kg-kit ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.kg-kit-fila {
+  display: grid; grid-template-columns: 44px minmax(0, 1fr); grid-template-areas: 'logo texto' 'logo sellos'; column-gap: 12px; row-gap: 4px; align-items: center;
+  padding: 12px 14px; min-height: 76px; color: inherit; text-decoration: none;
+  background: var(--px-tarjeta, var(--superficie)); border: 2px solid var(--px-borde, var(--linea)); border-radius: var(--radio);
+  transition: border-color .2s;
+}
+.kg-kit-fila:hover { border-color: var(--acento); }
+.kg-kit-fila .kg-logo { grid-area: logo; align-self: center; }
+.kg-kit-texto { grid-area: texto; display: flex; flex-direction: column; min-width: 0; }
+.kg-kit-texto strong { font-size: 1rem; line-height: 1.2; }
+.kg-kit-texto small { color: var(--tenue); font-size: 12.5px; }
+.kg-kit-fila .kg-sellos { grid-area: sellos; margin: 0; padding: 0; }
+.kg-kit-fila .kg-sellos:empty { display: none; }
+.kg-todas { margin-top: 22px; }
+
+/* ── Herramientas: bento con kanji grande ── */
+.kg-herr-rejilla { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; }
+.kg-herr-grande { grid-column: span 2; grid-row: span 2; }
+.kg-herr-tarjeta {
+  position: relative; height: 100%; display: flex; flex-direction: column; gap: 8px; padding: 22px 22px 54px; overflow: hidden;
+  color: inherit; text-decoration: none;
+  background: var(--px-tarjeta, var(--superficie)); border: 3px solid var(--px-borde, var(--linea)); border-radius: var(--radio);
+  box-shadow: 5px 5px 0 var(--px-sombra, transparent);
+  transition: transform .25s var(--curva, ease), box-shadow .25s var(--curva, ease);
+}
+.kg-herr-tarjeta:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 var(--px-sombra, transparent); }
+.kg-herr-tarjeta:focus-visible { outline: 3px solid var(--acento); outline-offset: 3px; }
+.kg-herr-kanji { font-family: var(--mincho); font-size: 3.2rem; line-height: 1; color: var(--acento); margin-bottom: 6px; }
+.kg-herr-tarjeta strong { font-size: var(--t-1, 1.33rem); line-height: 1.2; text-wrap: balance; }
+.kg-herr-tarjeta small { color: var(--tenue); font-size: .95rem; line-height: 1.45; }
+.kg-herr-flecha { position: absolute; inset-inline-end: 20px; bottom: 16px; font-size: 1.4rem; color: var(--acento); transition: transform .25s var(--curva, ease); }
+.kg-herr-tarjeta:hover .kg-herr-flecha { transform: translateX(4px); }
+[dir='rtl'] .kg-herr-tarjeta:hover .kg-herr-flecha { transform: translateX(-4px); }
+/* La grande: invertida (tinta sobre papel al revés) y con el kanji enorme. */
+.kg-herr-grande .kg-herr-tarjeta { background: var(--inverso, #121212); color: var(--inverso-tinta, #fff); padding: 30px 30px 64px; justify-content: flex-end; min-height: 320px; }
+.kg-herr-grande .kg-herr-tarjeta small { color: color-mix(in srgb, var(--inverso-tinta, #fff) 72%, transparent); font-size: 1.05rem; max-width: 40ch; }
+.kg-herr-grande .kg-herr-tarjeta strong { font-size: clamp(1.7rem, 3.4vw, 2.6rem); }
+.kg-herr-grande .kg-herr-kanji { position: absolute; inset-inline-end: 18px; top: 8px; font-size: clamp(7rem, 14vw, 11rem); opacity: .9; margin: 0; }
+.kg-herr-todas { display: inline-block; margin-top: 22px; font-weight: 700; color: var(--tinta); text-underline-offset: 4px; }
+
+@media (max-width: 980px) {
+  .kg-herr-rejilla { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .kg-kit ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 700px) {
+  /* Carrusel con imán: se ve que hay más a la derecha (82 % de ancho). */
+  .kg-exps {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: 82%;
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
+    margin-inline: -16px; padding: 4px 16px 14px; scroll-padding-inline: 16px; scrollbar-width: none;
+  }
+  .kg-exps::-webkit-scrollbar { display: none; }
+  .kg-exp { scroll-snap-align: start; }
+  .kg-exp:hover { transform: none; }
+  .kg-kit ul { grid-template-columns: minmax(0, 1fr); }
+  .kg-herr-rejilla { grid-template-columns: minmax(0, 1fr); gap: 14px; }
+  .kg-herr-grande { grid-column: auto; grid-row: auto; }
+  /* En el móvil, fila compacta: kanji a un lado, texto al otro y la flecha al centro. */
+  .kg-herr-tarjeta {
+    display: grid; grid-template-columns: 52px minmax(0, 1fr); column-gap: 14px; row-gap: 4px; align-items: start;
+    padding-block: 16px; padding-inline: 16px 44px;
+  }
+  .kg-herr-kanji { grid-row: span 2; font-size: 2.5rem; margin: 0; }
+  .kg-herr-flecha { top: 50%; bottom: auto; margin-top: -.7em; }
+  .kg-herr-grande .kg-herr-tarjeta { min-height: 0; padding-block: 20px; padding-inline: 18px 44px; }
+  .kg-herr-grande .kg-herr-kanji { position: static; font-size: 2.9rem; }
+  .kg-herr-grande .kg-herr-tarjeta strong { font-size: 1.45rem; }
+  .kg-herr-grande .kg-herr-tarjeta small { font-size: .95rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .kg-exp, .kg-herr-tarjeta, .kg-herr-flecha { transition: none; }
+  .kg-exp:hover, .kg-herr-tarjeta:hover { transform: none; }
+}

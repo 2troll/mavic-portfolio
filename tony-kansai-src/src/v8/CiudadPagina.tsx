@@ -40,6 +40,7 @@ import {yenLocal, PIE, nombreMonte } from '../v7/formato'
 import { respuestaDeCiudad } from '../v7/datosRespuestas'
 import { SeccionesRespuesta } from '../v7/PaginaRespuesta'
 import { ToursNuevos } from '../v7/ToursNuevos'
+import { VentajasEnGuia, HerramientasEnGuia } from '../v7/KitGuia'
 
 const BASE = 'https://tonykansaiguide.com'
 // Orden de los capítulos de la historia (el mismo que el menú de Tony).
@@ -246,6 +247,11 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
 
         {/* Tour de 2 h y tour en bici por Kioto (11-11-2026), solo en las páginas de Kioto de Tony. */}
         {c.id === 'kyoto' && guia === 'tony' && <ToursNuevos lang={lang} />}
+
+        {/* Ventajas de los socios en esta ciudad + el kit diario, y las herramientas
+            gratis (16-11-2026): antes solo vivían en /es/ventajas/ y en el pie. */}
+        {guia === 'tony' && <VentajasEnGuia lang={lang} ciudad={c.id} />}
+        {guia === 'tony' && <HerramientasEnGuia lang={lang} ciudad={c.id} nombreCiudad={c.id === 'beyond' ? undefined : c.nombre[lang]} />}
 
         {/* 5. Montañas cerca */}
         {c.montes.length > 0 && (

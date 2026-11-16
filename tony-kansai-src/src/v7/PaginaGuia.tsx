@@ -44,6 +44,7 @@ import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 import { PRECIO_CORTO } from './datosRespuestasNuevas'
 import { yenLocal } from './formato'
 import { ToursNuevos, viajesToursNuevos } from './ToursNuevos'
+import { VentajasEnGuia, HerramientasEnGuia, HERRAMIENTAS, esLenguaKit } from './KitGuia'
 
 /** Añade al final de la lista de tours de Tony el de 2 h y el de bici por Kioto. */
 function conToursNuevos(lista: ReturnType<typeof listaTours>, p: { guia: string; lang: string }) {
@@ -1095,6 +1096,11 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </Link>
         </section>
 
+        {/* Herramientas gratis y ventajas de los socios de todo Kansai (16-11-2026), ya
+            dentro de la página: antes solo se llegaba a ellas desde el pie. */}
+        {p.guia === 'tony' && <HerramientasEnGuia lang={p.lang} />}
+        {p.guia === 'tony' && <VentajasEnGuia lang={p.lang} />}
+
         {/* El mercado: husos, divisas y lo que le importa a ese público */}
         <section className="v7-seccion v7-mercado tarjeta">
           <div>
@@ -1165,6 +1171,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.guia === 'tony' && (p.lang === 'es' || p.lang === 'en' || p.lang === 'ar') && (
               <a href={p.lang === 'es' ? '/tiktok/' : `/tiktok/${p.lang}/`}>
                 {p.lang === 'ar' ? 'يابان تيك توك · سعر خاص' : p.lang === 'es' ? 'Japón de TikTok · precio especial' : 'TikTok Japan · special price'}
+              </a>
+            )}
+            {/* Herramientas gratis (HTML estático, scripts/herramientas*.mjs). */}
+            {p.guia === 'tony' && esLenguaKit(p.lang) && (
+              <a href={HERRAMIENTAS[p.lang].hub}>
+                {p.lang === 'ar' ? 'أدوات مجانية للسفر في كانساي' : p.lang === 'es' ? 'Herramientas gratis para Kansai' : 'Free Kansai travel tools'}
               </a>
             )}
             {/* Calculadora «¿te compensa un guía privado?» (HTML estático, scripts/calculadora.mjs). */}

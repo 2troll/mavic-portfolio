@@ -24,6 +24,7 @@ import './estilo-pixel.css'
 import './respuesta.css'
 import { FranjaVentajas } from './FranjaVentajas'
 import { ToursNuevos, viajeTourNuevo } from './ToursNuevos'
+import { HerramientasEnGuia } from './KitGuia'
 
 const BASE = 'https://tonykansaiguide.com'
 const CREDITOS = creditosZonas as Record<string, { autor: string; licencia: string; url: string }>
@@ -166,6 +167,7 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
         </section>
 
         <ToursNuevos lang={p.lang} sin={p.ruta} />
+        <HerramientasEnGuia lang={p.lang} />
 
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>
