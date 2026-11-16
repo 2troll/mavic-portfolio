@@ -606,13 +606,15 @@ const LISTA: App[] = [
     },
   },
   {
+    // Tea Ceremony Osaka (Yohsuke, correo 16-11-2026): 20 % para Tony tanto si reserva él como si el cliente reserva solo y pone «Tony Kansai Guide»
+    // en el comentario. Es comisión, no descuento: la ficha no lleva código ni promete rebaja.
     clave: 'teaosaka', cat: 'experiencias', ciudad: 'osaka', musulman: true, conTony: true, nombre: 'Tea Ceremony Osaka (Dotonbori)', enlace: 'https://teaceremonyosaka.com/',
     marca: { fondo: '#4d6b3c', tinta: '#f1f5e8', boton: '#f1f5e8', botonTinta: '#4d6b3c', palabra: '茶道' },
     t: {
-      es: { que: 'Ceremonia del té de 45 minutos en Dotonbori, en el centro de Osaka. 7.480 ¥ por adulto y 4.980 ¥ de 8 a 11 años; sesiones a las 10, 11, 12, 14, 15 y 16 h, hasta 10 personas.', ventaja: 'Los dulces son halal y nada lleva alcohol. Si vienes conmigo, entro a traducir.' },
-      en: { que: '45-minute tea ceremony in Dotonbori, central Osaka. ¥7,480 per adult and ¥4,980 for ages 8 to 11; sessions at 10, 11, 12, 14, 15 and 16 h, up to 10 people.', ventaja: 'The sweets are halal and nothing contains alcohol. Coming with me? I come in to translate.' },
-      ar: { que: 'حفل شاي مدته 45 دقيقة في دوتونبوري وسط أوساكا. 7,480 ين للبالغ و4,980 ين من 8 إلى 11 سنة؛ جلسات في 10 و11 و12 و14 و15 و16، حتى 10 أشخاص.', ventaja: 'الحلويات حلال ولا شيء فيها كحول. إن جئت معي أدخل لأترجم.' },
-      ru: { que: 'Чайная церемония 45 минут в Дотонбори (Осака). 7480 ¥ взрослый, 4980 ¥ дети 8–11 лет.', ventaja: 'Сладости халяльные, без алкоголя.' },
+      es: { que: 'Ceremonia del té de 45 minutos en Dotonbori, en el centro de Osaka. 7.480 ¥ por adulto y 4.980 ¥ de 8 a 11 años; sesiones a las 10, 11, 12, 14, 15 y 16 h, hasta 10 personas.', ventaja: 'Reserva en su web y escribe «Tony Kansai Guide» en el comentario, para que sepan que vienes de mi parte. Los dulces son halal y nada lleva alcohol. Si vienes conmigo, entro a traducir.' },
+      en: { que: '45-minute tea ceremony in Dotonbori, central Osaka. ¥7,480 per adult and ¥4,980 for ages 8 to 11; sessions at 10, 11, 12, 14, 15 and 16 h, up to 10 people.', ventaja: 'Book on their website and write “Tony Kansai Guide” in the booking comment so they know I sent you. The sweets are halal and nothing contains alcohol. Coming with me? I come in to translate.' },
+      ar: { que: 'حفل شاي مدته 45 دقيقة في دوتونبوري وسط أوساكا. 7,480 ين للبالغ و4,980 ين من 8 إلى 11 سنة؛ جلسات في 10 و11 و12 و14 و15 و16، حتى 10 أشخاص.', ventaja: 'احجز من موقعهم واكتب «Tony Kansai Guide» في خانة الملاحظات ليعرفوا أنك من طرفي. الحلويات حلال ولا شيء فيها كحول. إن جئت معي أدخل لأترجم.' },
+      ru: { que: 'Чайная церемония 45 минут в Дотонбори (Осака). 7480 ¥ взрослый, 4980 ¥ дети 8–11 лет.', ventaja: 'Бронируйте на их сайте и укажите в комментарии «Tony Kansai Guide». Сладости халяльные, без алкоголя.' },
     },
   },
   {
@@ -626,13 +628,14 @@ const LISTA: App[] = [
     },
   },
   {
+    // Kuchinotsu (Fukuda, correo 14-11-2026): quien va sin guía enseña el logo de Tony Kansai Guide en recepción; sin comisión en ese caso.
     clave: 'kuchinotsu', cat: 'experiencias', ciudad: 'nagasaki', nombre: 'Delfines de Kuchinotsu', enlace: 'https://dolwatch.jp/',
     marca: { fondo: '#1565c0', tinta: '#e8f4ff', boton: '#e8f4ff', botonTinta: '#1565c0', palabra: 'IRUKA' },
     t: {
-      es: { que: 'Salida en barco para ver delfines salvajes en Kuchinotsu (península de Shimabara, Nagasaki). Adultos 4.000 ¥, de 7 a 12 años 2.000 ¥, de 4 a 6 años 1.000 ¥, menores de 3 gratis.', ventaja: 'Grupos de 10 o más adultos: 10 % menos; de 30 o más: 20 % menos. Se sale de su oficina, a 700 m del puerto, frente al 7-Eleven.' },
-      en: { que: 'Boat trip to see wild dolphins at Kuchinotsu (Shimabara Peninsula, Nagasaki). Adults ¥4,000, ages 7–12 ¥2,000, ages 4–6 ¥1,000, 3 and under free.', ventaja: 'Groups of 10+ adults: 10% off; 30+: 20% off. Boarding at their office, 700 m from the port, opposite the 7-Eleven.' },
-      ar: { que: 'رحلة بالقارب لمشاهدة الدلافين البرية في كوتشينوتسو (شبه جزيرة شيمابارا، ناغازاكي). البالغون 4,000 ين، من 7 إلى 12 سنة 2,000 ين، من 4 إلى 6 سنوات 1,000 ين، وما دون 3 مجانًا.', ventaja: 'مجموعات من 10 بالغين فأكثر: خصم 10%؛ من 30 فأكثر: خصم 20%. الانطلاق من مكتبهم على بعد 700 م من الميناء، مقابل 7-Eleven.' },
-      ru: { que: 'Морская прогулка к диким дельфинам в Кутиноцу (Нагасаки). Взрослые 4000 ¥, 7–12 лет 2000 ¥, 4–6 лет 1000 ¥.', ventaja: 'Группы от 10 взрослых −10 %, от 30 — −20 %.' },
+      es: { que: 'Salida en barco para ver delfines salvajes en Kuchinotsu (península de Shimabara, Nagasaki). Adultos 4.000 ¥, de 7 a 12 años 2.000 ¥, de 4 a 6 años 1.000 ¥, menores de 3 gratis.', ventaja: 'Grupos de 10 o más adultos: 10 % menos; de 30 o más: 20 % menos. Se sale de su oficina, a 700 m del puerto, frente al 7-Eleven. Si vas por tu cuenta, enseña en la recepción el logo de Tony Kansai Guide de esta web.' },
+      en: { que: 'Boat trip to see wild dolphins at Kuchinotsu (Shimabara Peninsula, Nagasaki). Adults ¥4,000, ages 7–12 ¥2,000, ages 4–6 ¥1,000, 3 and under free.', ventaja: 'Groups of 10+ adults: 10% off; 30+: 20% off. Boarding at their office, 700 m from the port, opposite the 7-Eleven. Going on your own? Show the Tony Kansai Guide logo from this website at reception.' },
+      ar: { que: 'رحلة بالقارب لمشاهدة الدلافين البرية في كوتشينوتسو (شبه جزيرة شيمابارا، ناغازاكي). البالغون 4,000 ين، من 7 إلى 12 سنة 2,000 ين، من 4 إلى 6 سنوات 1,000 ين، وما دون 3 مجانًا.', ventaja: 'مجموعات من 10 بالغين فأكثر: خصم 10%؛ من 30 فأكثر: خصم 20%. الانطلاق من مكتبهم على بعد 700 م من الميناء، مقابل 7-Eleven. إن ذهبت وحدك فأظهر شعار Tony Kansai Guide من هذا الموقع في الاستقبال.' },
+      ru: { que: 'Морская прогулка к диким дельфинам в Кутиноцу (Нагасаки). Взрослые 4000 ¥, 7–12 лет 2000 ¥, 4–6 лет 1000 ¥.', ventaja: 'Группы от 10 взрослых −10 %, от 30 — −20 %. Если едете сами, покажите на стойке логотип Tony Kansai Guide с этого сайта.' },
     },
   },
   {
