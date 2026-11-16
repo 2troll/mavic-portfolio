@@ -19,6 +19,8 @@ export interface App {
   caduca?: string
   /** Experiencias: ciudad (se escribe igual en todos los idiomas salvo ar/ru, ver CIUDADES). */
   ciudad?: Ciudad
+  /** Más locales en otras ciudades (Ninja Cafe, Wargo…): la ficha sale también en el filtro de esas ciudades. */
+  otrasCiudades?: Ciudad[]
   /** Apto para familias musulmanas (hiyab, sin alcohol, sala de oración…): sale con sello y filtro propio. */
   musulman?: boolean
   /** Ventaja que solo tienes viniendo conmigo o diciendo mi nombre (no la ve cualquiera en su web). */
@@ -52,6 +54,17 @@ export const CIUDADES: Record<Ciudad, Record<Lang, string>> = {
   amakusa: { es: 'Amakusa (Kumamoto)', en: 'Amakusa (Kumamoto)', ar: 'أماكوسا (كوماموتو)', ru: 'Амакуса (Кумамото)' },
   hokkaido: { es: 'Shiretoko (Hokkaido)', en: 'Shiretoko (Hokkaido)', ar: 'شيريتوكو (هوكايدو)', ru: 'Сиретоко (Хоккайдо)' },
 }
+
+/** Kansai va primero en la página (es donde guiamos); el resto de Japón, después. */
+export const KANSAI: Ciudad[] = ['osaka', 'kioto', 'nara', 'kumano']
+export const REGIONES: Record<'kansai' | 'japon', Record<Lang, string>> = {
+  kansai: { es: 'Kansai', en: 'Kansai', ar: 'كانساي', ru: 'Кансай' },
+  japon: { es: 'Resto de Japón', en: 'Rest of Japan', ar: 'بقية اليابان', ru: 'Другие регионы Японии' },
+}
+/** Todas las ciudades donde está una experiencia (la principal primero). */
+export const ciudadesDe = (a: Pick<App, 'ciudad' | 'otrasCiudades'>): Ciudad[] => (a.ciudad ? [a.ciudad, ...(a.otrasCiudades ?? [])] : [])
+/** Sin ciudad = Kansai (las apps y lo que vale en toda la zona). */
+export const enKansai = (a: Pick<App, 'ciudad' | 'otrasCiudades'>) => !a.ciudad || ciudadesDe(a).some((c) => KANSAI.includes(c))
 
 export const CATEGORIAS: Record<Categoria, Record<Lang, string>> = {
   experiencias: { es: 'Experiencias', en: 'Experiences', ar: 'تجارب', ru: 'Впечатления' },
@@ -333,12 +346,12 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'wargo', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
+    clave: 'wargo', cat: 'experiencias', ciudad: 'kioto', otrasCiudades: ['osaka'], conTony: true, nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
     marca: { fondo: '#b5274a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#b5274a', palabra: '着物' },
     t: {
-      es: { que: 'Alquiler de kimono y yukata en Kioto: te lo ponen en la tienda y sales a pasear por Higashiyama o Gion.', ventaja: 'Con el código 261013_wgtn, 10 % de descuento al reservar en su web (hasta el 31-12-2026).' },
-      en: { que: 'Kimono and yukata rental in Kyoto: they dress you in the shop and you walk out into Higashiyama or Gion.', ventaja: 'Code 261013_wgtn gives 10% off when you book on their website (until 31 Dec 2026).' },
-      ar: { que: 'استئجار الكيمونو واليوكاتا في كيوتو: يُلبسونك في المتجر وتخرج للتنزه في هيغاشياما أو غيون.', ventaja: 'بالرمز 261013_wgtn خصم 10% عند الحجز من موقعهم (حتى 31-12-2026).' },
+      es: { que: 'Alquiler de kimono y yukata en Kioto (te lo ponen en la tienda y sales a pasear por Higashiyama o Gion) y también en Osaka, en Shinsaibashi.', ventaja: 'Con el código 261013_wgtn, 10 % de descuento al reservar en su web (hasta el 31-12-2026). Vale en todas sus tiendas, también en la de Osaka Shinsaibashi.' },
+      en: { que: 'Kimono and yukata rental in Kyoto (they dress you in the shop and you walk out into Higashiyama or Gion) and also in Osaka, at Shinsaibashi.', ventaja: 'Code 261013_wgtn gives 10% off when you book on their website (until 31 Dec 2026). It works at all their stores, Osaka Shinsaibashi included.' },
+      ar: { que: 'استئجار الكيمونو واليوكاتا في كيوتو (يُلبسونك في المتجر وتخرج للتنزه في هيغاشياما أو غيون)، وأيضًا في أوساكا بفرع شينسايباشي.', ventaja: 'بالرمز 261013_wgtn خصم 10% عند الحجز من موقعهم (حتى 31-12-2026). يصلح في جميع فروعهم، ومنها فرع أوساكا شينسايباشي.' },
     },
   },
   {
@@ -535,10 +548,31 @@ const LISTA: App[] = [
     clave: 'hakusan', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Máscara de león de Kaga (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/',
     marca: { fondo: '#9b1c1c', tinta: '#fff1e0', boton: '#fff1e0', botonTinta: '#9b1c1c', palabra: '獅子' },
     t: {
-      es: { que: 'Pinta tu propia cabeza de león de Kaga (shishi-gashira), la artesanía de madera de Hakusan, cerca de Kanazawa. 6.600 ¥ por persona, hasta 20 personas.', ventaja: 'Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com). Si vienes conmigo, traduzco al español o al árabe sin coste.' },
-      en: { que: 'Paint your own Kaga lion head (shishi-gashira), the wooden craft of Hakusan near Kanazawa. ¥6,600 per person, up to 20 people.', ventaja: 'Book at least one month ahead by email (hakusan@urara-hakusanbito.com). Coming with me? I translate into Spanish or Arabic at no extra cost.' },
-      ar: { que: 'لوّن بنفسك رأس أسد كاغا الخشبي (شيشي-غاشيرا)، حرفة مدينة هاكوسان قرب كانازاوا. 6,600 ين للشخص، حتى 20 شخصًا.', ventaja: 'الحجز قبل شهر على الأقل عبر البريد (hakusan@urara-hakusanbito.com). إن جئت معي أترجم إلى العربية أو الإسبانية دون تكلفة.' },
-      ru: { que: 'Роспись деревянной головы льва Кага (сиси-гасира) в Хакусане у Канадзавы. 6600 ¥ с человека, до 20 человек.', ventaja: 'Бронь минимум за месяц по почте hakusan@urara-hakusanbito.com.' },
+      es: { que: 'Haz y pinta tu propia cabeza de león de Kaga (shishi-gashira) en miniatura, guiado por un artesano de una tradición de 400 años, en Hakusan, cerca de Kanazawa. Es pequeña y te la puedes llevar colgada (netsuke). 6.600 ¥ por persona, hasta 20 personas.', ventaja: 'Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com). Si vienes conmigo, traduzco al español o al árabe sin coste.' },
+      en: { que: 'Make and paint your own small Kaga lion head (shishi-gashira), guided by a craftsperson from a 400-year-old tradition, in Hakusan near Kanazawa. It is small enough to carry with you (netsuke). ¥6,600 per person, up to 20 people.', ventaja: 'Book at least one month ahead by email (hakusan@urara-hakusanbito.com). Coming with me? I translate into Spanish or Arabic at no extra cost.' },
+      ar: { que: 'اصنع ولوّن بنفسك رأس أسد كاغا الخشبي الصغير (شيشي-غاشيرا) بإرشاد حرفي من تقليد عمره 400 عام، في هاكوسان قرب كانازاوا. صغير يمكنك حمله معك (نيتسوكي). 6,600 ين للشخص، حتى 20 شخصًا.', ventaja: 'الحجز قبل شهر على الأقل عبر البريد (hakusan@urara-hakusanbito.com). إن جئت معي أترجم إلى العربية أو الإسبانية دون تكلفة.' },
+      ru: { que: 'Сделайте и распишите маленькую деревянную голову льва Кага (сиси-гасира) под руководством мастера с 400-летней традицией, в Хакусане у Канадзавы. Её можно носить с собой (нэцкэ). 6600 ¥ с человека, до 20 человек.', ventaja: 'Бронь минимум за месяц по почте hakusan@urara-hakusanbito.com.' },
+    },
+  },
+  {
+    // Hakusan City Tourism League (correo 14-11-2026): precios para visitantes extranjeros, reserva con 1 mes, fotos suyas.
+    clave: 'hakusansanpai', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Shirayama Hime: guided visit (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/spot/detail_1415.html',
+    marca: { fondo: '#7a2331', tinta: '#fbeee6', boton: '#fbeee6', botonTinta: '#7a2331', palabra: '参拝' },
+    t: {
+      es: { que: 'Visita guiada de 1 hora al santuario Shirayama Hime, en Hakusan (cerca de Kanazawa), con más de 2.000 años de historia: entras en el pabellón principal y ves la danza tradicional de una miko (doncella del santuario).', ventaja: 'Hasta 4 personas: 18.150 ¥ por grupo; desde 5: 3.630 ¥ por persona. Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com).' },
+      en: { que: 'A 1-hour guided visit to Shirayama Hime Shrine in Hakusan, near Kanazawa, with over 2,000 years of history: you enter the main hall and watch a traditional dance by a shrine maiden (miko).', ventaja: 'Groups of up to 4: ¥18,150 per group; 5 or more: ¥3,630 per person. Book at least one month ahead by email (hakusan@urara-hakusanbito.com).' },
+      ar: { que: 'زيارة بمرشد مدتها ساعة إلى مزار شيراياما هيمي في هاكوسان قرب كانازاوا، وعمره أكثر من 2,000 عام: تدخل القاعة الرئيسية وتشاهد رقصة تقليدية تؤديها إحدى فتيات المزار (ميكو).', ventaja: 'حتى 4 أشخاص: 18,150 ين للمجموعة؛ من 5 أشخاص: 3,630 ين للشخص. الحجز قبل شهر على الأقل عبر البريد (hakusan@urara-hakusanbito.com).' },
+      ru: { que: 'Часовая экскурсия с гидом по святилищу Сираяма-химэ в Хакусане у Канадзавы (более 2000 лет истории): вход в главный зал и традиционный танец мико.', ventaja: 'До 4 человек: 18 150 ¥ за группу; от 5: 3630 ¥ с человека. Бронь минимум за месяц по почте hakusan@urara-hakusanbito.com.' },
+    },
+  },
+  {
+    clave: 'hakusanmisogi', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Shirayama Hime: private misogi (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/program/detail_1668.html',
+    marca: { fondo: '#dfe8ee', tinta: '#1d3a5c', boton: '#1d3a5c', botonTinta: '#ffffff', palabra: '禊' },
+    t: {
+      es: { que: 'El misogi, el ritual sintoísta de purificación con agua, en privado en el santuario Shirayama Hime de Hakusan (cerca de Kanazawa): un sacerdote te explica la tradición y luego lo vives tú. Dura 2 h 30 min.', ventaja: '57.750 ¥ hasta 5 personas y 11.550 ¥ por cada persona más, con guía, ropa, seguro e impuestos incluidos. Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com).' },
+      en: { que: 'Misogi, the Shinto purification ritual with water, held privately at Shirayama Hime Shrine in Hakusan near Kanazawa: a Shinto priest explains the tradition and then you take part yourself. Lasts 2 h 30 min.', ventaja: '¥57,750 for up to 5 people and ¥11,550 for each extra person, including guide, clothing, insurance and taxes. Book at least one month ahead by email (hakusan@urara-hakusanbito.com).' },
+      ar: { que: 'ميسوغي، طقس التطهّر الشنتوي بالماء، بشكل خاص في مزار شيراياما هيمي في هاكوسان قرب كانازاوا: يشرح لك كاهن شنتوي هذا التقليد ثم تخوضه بنفسك. المدة ساعتان ونصف.', ventaja: '57,750 ين حتى 5 أشخاص و11,550 ين لكل شخص إضافي، شاملًا المرشد والملابس والتأمين والضرائب. الحجز قبل شهر على الأقل عبر البريد (hakusan@urara-hakusanbito.com).' },
+      ru: { que: 'Мисоги — синтоистский обряд очищения водой, индивидуально в святилище Сираяма-химэ (Хакусан, у Канадзавы): священник рассказывает о традиции, затем вы проходите обряд сами. 2 ч 30 мин.', ventaja: '57 750 ¥ до 5 человек и 11 550 ¥ за каждого следующего (гид, одежда, страховка и налоги включены). Бронь минимум за месяц по почте hakusan@urara-hakusanbito.com.' },
     },
   },
   {
@@ -552,13 +586,13 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'ninjacafe', cat: 'experiencias', ciudad: 'osaka', nombre: 'Ninja Experience Cafe (Osaka · Kioto · Tokio)', enlace: 'https://ninja-cafe.com/en/', codigo: 'TONY10', descuento: '10 %',
+    clave: 'ninjacafe', cat: 'experiencias', ciudad: 'osaka', otrasCiudades: ['kioto', 'tokio'], nombre: 'Ninja Experience Cafe', enlace: 'https://ninja-cafe.com/en/', codigo: 'TONY10', descuento: '10 %',
     marca: { fondo: '#141414', tinta: '#f2f2f2', boton: '#c8102e', botonTinta: '#ffffff', palabra: '忍' },
     t: {
-      es: { que: 'Vístete de ninja y aprende a usar sus armas (shuriken, cerbatana) en un café-taller en Dotonbori (Osaka), Gion (Kioto), Harajuku y Asakusa (Tokio). Grupos privados de 15 a 20 personas.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»). Tienen curry ninja con salsa halal certificada, aunque el café no es halal. Si vienes conmigo, entro gratis a traducir al español o al árabe.' },
-      en: { que: 'Dress as a ninja and learn their weapons (shuriken, blowgun) at a café-workshop in Dotonbori (Osaka), Gion (Kyoto), Harajuku and Asakusa (Tokyo). Private groups of 15 to 20.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field). Their Ninja Curry uses a halal-certified sauce, though the café itself is not halal-certified. Coming with me? I join free to translate into Spanish or Arabic.' },
-      ar: { que: 'ارتدِ زي النينجا وتعلّم استخدام أسلحته (الشوريكن وأنبوب النفخ) في مقهى-ورشة في دوتونبوري (أوساكا) وغيون (كيوتو) وهاراجوكو وأساكوسا (طوكيو). مجموعات خاصة من 15 إلى 20 شخصًا.', ventaja: 'الرمز TONY10: خصم 10% عند الحجز في TableCheck (خانة «PROMO CODE»). لديهم كاري النينجا بصلصة حلال معتمدة، لكن المقهى نفسه غير معتمد حلال. إن جئت معي أدخل مجانًا لأترجم إلى العربية أو الإسبانية.' },
-      ru: { que: 'Переоденьтесь в ниндзя и освойте сюрикены и духовую трубку в кафе в Осаке (Дотонбори), Киото (Гион) и Токио.', ventaja: 'Код TONY10: −10 % при брони в TableCheck. Есть карри с халяльным соусом.' },
+      es: { que: 'Vístete de ninja y aprende a usar sus armas (shuriken, cerbatana) en un café-taller en Dotonbori (Osaka), Gion (Kioto), Harajuku y Asakusa (Tokio). Grupos privados de 15 a 20 personas.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»), en todas sus tiendas. Tienen curry ninja con salsa halal certificada, aunque el café no es halal. Si vienes conmigo, entro gratis a traducir al español o al árabe.' },
+      en: { que: 'Dress as a ninja and learn their weapons (shuriken, blowgun) at a café-workshop in Dotonbori (Osaka), Gion (Kyoto), Harajuku and Asakusa (Tokyo). Private groups of 15 to 20.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field), at all their stores. Their Ninja Curry uses a halal-certified sauce, though the café itself is not halal-certified. Coming with me? I join free to translate into Spanish or Arabic.' },
+      ar: { que: 'ارتدِ زي النينجا وتعلّم استخدام أسلحته (الشوريكن وأنبوب النفخ) في مقهى-ورشة في دوتونبوري (أوساكا) وغيون (كيوتو) وهاراجوكو وأساكوسا (طوكيو). مجموعات خاصة من 15 إلى 20 شخصًا.', ventaja: 'الرمز TONY10: خصم 10% عند الحجز في TableCheck (خانة «PROMO CODE») في جميع فروعهم. لديهم كاري النينجا بصلصة حلال معتمدة، لكن المقهى نفسه غير معتمد حلال. إن جئت معي أدخل مجانًا لأترجم إلى العربية أو الإسبانية.' },
+      ru: { que: 'Переоденьтесь в ниндзя и освойте сюрикены и духовую трубку в кафе в Осаке (Дотонбори), Киото (Гион) и Токио (Харадзюку и Асакуса).', ventaja: 'Код TONY10: −10 % при брони в TableCheck, во всех их кафе. Есть карри с халяльным соусом, но само кафе не имеет халяль-сертификата.' },
     },
   },
   {
@@ -622,7 +656,7 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'cookingsun', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cooking Sun Osaka (Namba)', enlace: 'https://www.cooking-sun.com/osaka-cooking-class/',
+    clave: 'cookingsunosaka', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cooking Sun Osaka (Namba)', enlace: 'https://www.cooking-sun.com/osaka-cooking-class/',
     marca: { fondo: '#f28c28', tinta: '#2b1500', boton: '#2b1500', botonTinta: '#f28c28', palabra: '料理' },
     t: {
       es: { que: 'Clase de cocina japonesa en inglés junto a Namba, Osaka. Clase compartida hasta 8 personas, privada de 1 a 8 y privada de grupo hasta 12. Opción vegetariana si se pide antes.', ventaja: 'Sin cerdo ni alcohol (ni sake ni mirin) si lo pides con antelación; los ingredientes no tienen certificado halal. La compartida se reserva en su web; la privada, por correo. Si quieres que entre a traducir, se lo pido yo en cada reserva.' },

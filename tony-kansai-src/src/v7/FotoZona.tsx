@@ -19,3 +19,14 @@ export function FotoZona({ zona, className, sizes }: { zona: string; className?:
     </>
   )
 }
+
+/** Foto propia de un socio (FOTO_SOCIO), con el mismo marco y crédito que las de zona. */
+export function FotoSocio({ foto, ancho, credito, web, alt, className, sizes }: { foto: string; ancho: number; credito: string; web: string; alt: string; className?: string; sizes: string }) {
+  const base = `/v7/socios/${foto}`
+  return (
+    <>
+      <img className={className} src={`${base}-900.webp`} srcSet={`${base}-600.webp 600w, ${base}-900.webp 900w, ${base}.webp ${ancho}w`} sizes={sizes} alt={alt} loading="lazy" decoding="async" />
+      <a className="vz-credito" href={web} target="_blank" rel="noopener noreferrer" dir="ltr">© {credito}</a>
+    </>
+  )
+}

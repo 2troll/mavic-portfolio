@@ -4,6 +4,6 @@ import { Swords, Shield, Camera, Aperture, Shirt, Flower2, Crown, Leaf, Slice, C
 
 export const ICONO_EXP: Record<string, LucideIcon> = {
   samurai: Swords, shogun: Shield, flytographer: Camera, snapkyoto: Aperture, wargo: Shirt, yumeyakata: Flower2,
-  miyabi: Crown, camellia: Leaf, towerknives: Slice, cookingsun: ChefHat, hamanasu: Hammer, japanwireless: Wifi, yokotake: Sprout, domyo: Ribbon,
+  miyabi: Crown, camellia: Leaf, towerknives: Slice, cookingsun: ChefHat, cookingsunosaka: ChefHat, hamanasu: Hammer, japanwireless: Wifi, yokotake: Sprout, domyo: Ribbon,
   okamoto: Shirt, nakamura: Flame, japaneid: Gift, japanwirelessesim: Smartphone,
 }

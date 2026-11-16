@@ -9,8 +9,8 @@ import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoCanal } from './IconoWa'
 import { GuiaTienda } from './GuiaTienda'
-import { FOTO_EXP } from './datosVentajasGuia'
-import { FotoZona } from './FotoZona'
+import { FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
+import { FotoSocio, FotoZona } from './FotoZona'
 import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
@@ -120,7 +120,12 @@ export function FichaApp({ a, id, lista, wa, final }: {
             )}
             <div className="vt-acciones"><Boton />{colabora && <small className="vt-nota-colab">{l.nota}</small>}</div>
           </div>
-          {FOTO_EXP[a.clave] ? (
+          {FOTO_SOCIO[a.clave] ? (
+            <div className="vt-escaparate con-foto">
+              <FotoSocio {...FOTO_SOCIO[a.clave]} alt={FOTO_SOCIO[a.clave].alt[id]} className="vt-escaparate-foto" sizes="(max-width: 800px) 100vw, 480px" />
+              <Logo a={a} className="vt-ico vt-ico-escaparate" />
+            </div>
+          ) : FOTO_EXP[a.clave] ? (
             <div className="vt-escaparate con-foto">
               <FotoZona zona={FOTO_EXP[a.clave]} className="vt-escaparate-foto" sizes="(max-width: 800px) 100vw, 480px" />
               <Logo a={a} className="vt-ico vt-ico-escaparate" />

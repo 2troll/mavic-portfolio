@@ -228,3 +228,11 @@ export const FOTO_EXP: Record<string, string> = {
   okamoto: 'kioto-kiyomizu', nakamura: 'kioto-fushimi', japaneid: 'osaka-dotonbori', flytographer: 'kioto-gion',
   kobaien: 'nara-naramachi', maikoyate: 'kioto-gion', inkansai: 'osaka-castillo',
 }
+
+/** Fotos que nos manda el propio socio (public/v7/socios/<clave>-600|-900|.webp).
+ *  Van antes que la foto de zona; el crédito es del socio. */
+export const FOTO_SOCIO: Record<string, { foto: string; ancho: number; credito: string; web: string; alt: Record<IdG, string> }> = {
+  hakusan: { foto: 'hakusan-shishi', ancho: 1280, credito: 'Hakusan City Tourism League', web: 'https://www.urara-hakusanbito.com/', alt: { es: 'Dos pequeñas cabezas de león de Kaga talladas y pintadas', en: 'Two small carved and painted Kaga lion heads', ar: 'رأسا أسد كاغا صغيران منحوتان وملوّنان', ru: 'Две маленькие резные расписные головы льва Кага' } },
+  hakusansanpai: { foto: 'hakusan-sanpai', ancho: 1800, credito: 'Hakusan City Tourism League', web: 'https://www.urara-hakusanbito.com/', alt: { es: 'Danza de una miko en el pabellón del santuario Shirayama Hime', en: 'A shrine maiden dancing in the hall of Shirayama Hime Shrine', ar: 'رقصة إحدى فتيات المزار داخل قاعة مزار شيراياما هيمي', ru: 'Танец мико в зале святилища Сираяма-химэ' } },
+  hakusanmisogi: { foto: 'hakusan-misogi', ancho: 1800, credito: 'Hakusan City Tourism League', web: 'https://www.urara-hakusanbito.com/', alt: { es: 'Grupo vestido de blanco durante el misogi en el agua', en: 'A group dressed in white during misogi in the water', ar: 'مجموعة بملابس بيضاء أثناء طقس ميسوغي في الماء', ru: 'Группа в белом во время мисоги в воде' } },
+}
