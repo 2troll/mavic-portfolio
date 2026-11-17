@@ -415,7 +415,7 @@ const LISTA: App[] = [
   },
   {
     // Cooking Sun: menú vegetariano sin alcohol a petición, NO halal certificado; sin comisión (correo 16-10-2026).
-    clave: 'cookingsun', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Cooking Sun', enlace: 'https://cookingsun.co.jp/',
+    clave: 'cookingsun', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Cooking Sun', enlace: 'https://www.cooking-sun.com/kyoto-cooking-class/',
     marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
     t: {
       es: { que: 'Clase de cocina casera japonesa en Kioto: cocinas tú y luego coméis juntos.', ventaja: 'Al reservar pide el menú vegetariano sin alcohol (sin sake ni mirin). No es halal certificado, pero no lleva carne ni alcohol.' },
@@ -659,8 +659,9 @@ const LISTA: App[] = [
     },
   },
   {
+    // Misma empresa que Cooking Sun Kioto (correo del 16-11-2026): mismo logo y colores. Dirección: la que dieron ellos.
     clave: 'cookingsunosaka', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cooking Sun Osaka (Namba)', enlace: 'https://www.cooking-sun.com/osaka-cooking-class/',
-    marca: { fondo: '#f28c28', tinta: '#2b1500', boton: '#2b1500', botonTinta: '#f28c28', palabra: '料理' },
+    marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
     t: {
       es: { que: 'Clase de cocina japonesa en inglés junto a Namba, Osaka. Clase compartida hasta 8 personas, privada de 1 a 8 y privada de grupo hasta 12. Opción vegetariana si se pide antes.', ventaja: 'Sin cerdo ni alcohol (ni sake ni mirin) si lo pides con antelación; los ingredientes no tienen certificado halal. La compartida se reserva en su web; la privada, por correo. Si quieres que entre a traducir, se lo pido yo en cada reserva.' },
       en: { que: 'Japanese cooking class in English near Namba, Osaka. Shared class up to 8 people, private class for 1 to 8, private group class up to 12. Vegetarian option on request.', ventaja: 'No pork and no alcohol (no sake or mirin) if you ask in advance; ingredients are not halal-certified. Shared classes are booked on their website, private ones by email. If you want me inside to translate, I ask them for each booking.' },

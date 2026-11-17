@@ -155,7 +155,7 @@ export const GUIA: Record<string, Guia> = {
   },
   cookingsun: {
     lugares: [],
-    contacto: { web: 'https://cookingsun.co.jp/' },
+    contacto: { web: 'https://www.cooking-sun.com/kyoto-cooking-class/' },
     tarjeta: [DE_TONY, f('ベジタリアンメニューで、お酒（酒・みりん）を使わないでください。', 'Bejitarian menyū de, osake (sake, mirin) o tsukawanaide kudasai.', 'Menú vegetariano y sin alcohol (sin sake ni mirin), por favor.', 'Vegetarian menu with no alcohol (no sake or mirin), please.', 'قائمة نباتية وبدون كحول (بدون ساكي أو ميرين) من فضلك.', 'Вегетарианское меню без алкоголя (без сакэ и мирина), пожалуйста.')],
     frases: [f('豚肉とお酒は食べられません。', 'Butaniku to osake wa taberaremasen.', 'No puedo tomar cerdo ni alcohol.', 'I cannot eat pork or alcohol.', 'لا أستطيع تناول لحم الخنزير أو الكحول.', 'Мне нельзя свинину и алкоголь.')],
   },
