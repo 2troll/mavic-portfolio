@@ -25,7 +25,7 @@ const Pagina404 = lazy(() => import('./v7/Pagina404'))
 const Admin = lazy(() => import('./pages/Admin'))
 // Web v7: portada con globo y una página por idioma. Van fuera del Navbar y
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
-import Redirige from './v7/Redirige'
+import Redirige, { PortadaRaiz } from './v7/Redirige'
 import AvisoRuso from './v7/AvisoRuso'
 import type { Destino } from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
@@ -220,7 +220,7 @@ export function Layout() {
     return (
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
-        {v7 === 'portada' ? <Redirige /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
+        {v7 === 'portada' ? <PortadaRaiz /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
         <Equipo /><CookieTardio compacto /><AvisoRuso />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />

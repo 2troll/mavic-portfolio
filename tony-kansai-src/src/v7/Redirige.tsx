@@ -36,3 +36,21 @@ export default function Redirige({ destino = 'inicio' }: { destino?: Destino }) 
     : destino === 'precios' ? `${PAGINAS[id].ruta}#precios` : PAGINAS[id].ruta
   return <Navigate to={to} replace />
 }
+
+/**
+ * La raíz «/» es la x-default: Google pide que sea una página para elegir idioma
+ * y que no se redirija por el idioma del navegador. Redirigiendo siempre, Google
+ * veía «/» y /en/ como la misma página y no indexaba /en/ (Search Console, 17-11-2026:
+ * «Duplicada: Google ha elegido una versión canónica diferente», canónica = «/»).
+ * Ahora solo se salta la portada quien ya eligió idioma (o llega con ?lang=);
+ * los demás ven el equipo y los idiomas, que vienen pintados en el HTML
+ * (main#portada-texto, fuera de #root: lo pone scripts/rutas-estaticas.mjs).
+ */
+export function PortadaRaiz() {
+  const { search } = useLocation()
+  const pedido = new URLSearchParams(search).get('lang')
+  let guardado: string | null = null
+  try { guardado = localStorage.getItem('v7-pagina') } catch { /* bloqueado */ }
+  if ((pedido && pedido in PAGINAS) || (guardado && guardado in PAGINAS)) return <Redirige />
+  return null
+}

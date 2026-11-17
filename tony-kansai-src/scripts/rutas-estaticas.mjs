@@ -217,35 +217,68 @@ writeFileSync(mapa, readFileSync(mapa, 'utf8')
 const yen = (n) => '¥' + n.toLocaleString('en-US')
 const P = { medio: 38000, completo: 58000, lejos: 70000 } // = YEN de src/v7/contenido.ts
 const WA = (n) => `https://wa.me/${n}`
+// 17-11-2026: la raíz deja de redirigir siempre (ver PortadaRaiz en src/v7/Redirige.tsx).
+// Google la veía igual que /en/ y elegía «/» como canónica de /en/. Ahora es la
+// página del equipo y de los idiomas: solo se quita (y la app redirige) si el
+// visitante ya eligió idioma antes o llega con ?lang=. Los datos de cada guía
+// son los mismos de public/llms.txt: si cambian allí, cambiarlos aquí.
 const portada = `
-    <main id="portada-texto">
-      <h1>Tony Kansai Guide: private tour guides in Kyoto, Osaka, Nara and Kansai</h1>
-      <p>Private day tours in Kyoto, Osaka, Nara, Kobe, Himeji, Hiroshima and Miyajima. Your guide meets you in your hotel lobby and the day is for your group only.</p>
-      <ul>
-        <li><a href="/en/">Tony Hanma</a>: Spanish, lives in Osaka; guides in Spanish, English and Arabic. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</li>
-        <li><a href="/larion/">Larion</a>: guides in Russian and English. Telegram <a href="https://t.me/Larik_Yokota">@Larik_Yokota</a> (Larion answers here himself).</li>
-        <li><a href="/tr/">Ferhat</a>: Turkish guide, 4 years in Japan; guides in Turkish only.</li>
-        <li><a href="/fr/">Iheb</a>: guides in French in Tokyo and the Kanto region, Nagano and Shizuoka; also speaks Arabic and English. WhatsApp <a href="${WA('818080155322')}">+81 80 8015 5322</a>.</li>
-        <li><a href="/private/">Mario</a>: premium private guide in English anywhere in Japan, multi-day trips possible; also speaks Spanish. WhatsApp <a href="${WA('817089968582')}">+81 70 8996 8582</a>.</li>
+    <main id="portada-texto" lang="en">
+      <style>
+        #portada-texto{--t:#16161a;--s:#55555f;--l:#e3e3e8;--f:#fff;--a:#b4232c;max-width:68rem;margin:0 auto;padding:clamp(1.5rem,5vw,4rem) 16px 4rem;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t);background:var(--f)}
+        @media (prefers-color-scheme:dark){#portada-texto{--t:#f2f2f5;--s:#a9a9b3;--l:#2c2c33;--f:#111114;--a:#ff6b6b}}
+        html:has(#portada-texto),body:has(#portada-texto){background:var(--f,#fff)}
+        #portada-texto h1{font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem;max-width:22ch}
+        #portada-texto h2{font-size:1.15rem;margin:2.4rem 0 .9rem}
+        #portada-texto p{color:var(--s);max-width:62ch;margin:.4rem 0}
+        #portada-texto a{color:inherit}
+        #portada-texto .eq{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr));padding:0;margin:0;list-style:none}
+        #portada-texto .eq li{border:1px solid var(--l);border-radius:14px;padding:1rem 1.1rem}
+        #portada-texto .eq b{display:block;font-size:1.05rem}
+        #portada-texto .eq small{display:block;color:var(--a);font-weight:600;margin:.1rem 0 .4rem}
+        #portada-texto .eq span{display:block;color:var(--s);font-size:.95rem}
+        #portada-texto .eq a.ir{display:inline-block;margin-top:.55rem;font-weight:600;text-decoration:none;border-bottom:2px solid var(--a)}
+        #portada-texto .idi{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
+        #portada-texto .idi a{display:inline-block;padding:.5rem .95rem;border:1px solid var(--l);border-radius:999px;text-decoration:none;font-weight:600}
+        #portada-texto .pie{margin-top:2.4rem;font-size:.95rem}
+      </style>
+      <h1>Tony Kansai Guide: private guides in Japan, in six languages</h1>
+      <p>A small team of private guides who live in Japan. Tours are for your group only: your guide meets you at your hotel and the day goes at your pace. Choose your guide and your language.</p>
+
+      <h2>The team</h2>
+      <ul class="eq">
+        <li><b>Tony Hanma</b><small>Spanish · English · Arabic — Kyoto, Osaka, Nara, Kobe, Himeji</small><span>Spanish guide who lives in Osaka. Half day (4 h) ${yen(P.medio)}, full day (8 h) ${yen(P.completo)}, long day trips from ${yen(P.lejos)}, per group of up to 6. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</span><a class="ir" href="/es/" lang="es">Español</a> · <a class="ir" href="/en/">English</a> · <a class="ir" href="/ar/" lang="ar">العربية</a></li>
+        <li><b>Larion</b><small>Russian · English — Kyoto, Osaka, Hiroshima</small><span>Private tours in Russian across Kansai and beyond. Telegram <a href="https://t.me/Larik_Yokota">@Larik_Yokota</a> (Larion answers himself).</span><a class="ir" href="/ru/" lang="ru">Русский</a></li>
+        <li><b>Mario</b><small>Premium English — anywhere in Japan</small><span>Professional private guide for English-speaking travellers, multi-day trips possible; also speaks Spanish. WhatsApp <a href="${WA('817089968582')}">+81 70 8996 8582</a>.</span><a class="ir" href="/private/">Mario, all of Japan</a></li>
+        <li><b>Iheb</b><small>French · Arabic · English — Tokyo, Kanto, Hakone, Nagano</small><span>French-speaking guide in Tokyo; also anime and Pokémon tours and Muslim-friendly days. WhatsApp <a href="${WA('818080155322')}">+81 80 8015 5322</a>.</span><a class="ir" href="/fr/" lang="fr">Français</a> · <a class="ir" href="/ar/tokyo/" lang="ar">طوكيو بالعربية</a> · <a class="ir" href="/en/tokyo-anime-guide/">Tokyo anime guide</a></li>
+        <li><b>Ferhat</b><small>Turkish — Kyoto, Osaka, Nara, Kobe, Himeji</small><span>Turkish guide who has lived in Japan for 4 years; private tours in Turkish, halal food tips and honeymoon plans.</span><a class="ir" href="/tr/" lang="tr">Türkçe</a></li>
+        <li><b>Antonio</b><small>Spanish — family and group trips, all of Japan</small><span>Trip coordinator who designs whole Japan trips for families and groups of 6 to 10. WhatsApp <a href="${WA('817090508554')}">+81 70 9050 8554</a>.</span><a class="ir" href="/familias/" lang="es">Viajes en familia</a></li>
       </ul>
-      <p>Prices per group of up to 6 people: half day (4 hours) ${yen(P.medio)}, full day (8 hours) ${yen(P.completo)}, long day trips (Kōyasan, Amanohashidate, Kumano) from ${yen(P.lejos)}. Larger groups up to 14 people on request. Trains, entry fees and meals are not included. Pay cash on the day, or in advance with PayPal or Wise. Free cancellation up to 72 hours before.</p>
-      <p>Choose your language:</p>
-      <ul>
-        <li lang="es"><a href="/es/">Español</a>: guía privado en español en Kioto, Osaka y Nara, con Tony.</li>
-        <li lang="en"><a href="/en/">English</a>: private guide in Kyoto, Osaka and Nara, with Tony.</li>
-        <li lang="ar" dir="rtl"><a href="/ar/">العربية</a>: مرشد خاص بالعربية في كيوتو وأوساكا ونارا، مع طوني.</li>
-        <li lang="ru"><a href="/ru/">Русский</a>: частный гид на русском в Киото, Осаке и Хиросиме, с Ларионом.</li>
-        <li lang="tr"><a href="/tr/">Türkçe</a>: Kyoto, Osaka ve Nara'da Türkçe özel rehber, Ferhat ile.</li>
-        <li lang="fr"><a href="/fr/">Français</a> : guide privé francophone à Tokyo et dans le Kanto, avec Iheb.</li>
-        <li lang="en"><a href="/private/">English, all of Japan</a>: premium private guide anywhere in Japan, with Mario.</li>
+
+      <h2>Choose your language</h2>
+      <ul class="idi">
+        <li lang="es"><a href="/es/">Español</a></li>
+        <li><a href="/en/">English</a></li>
+        <li lang="ar" dir="rtl"><a href="/ar/">العربية</a></li>
+        <li lang="ru"><a href="/ru/">Русский</a></li>
+        <li lang="tr"><a href="/tr/">Türkçe</a></li>
+        <li lang="fr"><a href="/fr/">Français</a></li>
       </ul>
-      <p>Guides: <a href="/en/kyoto/">Private guide in Kyoto: prices</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport to Osaka and Kyoto</a> · <a href="/en/routes/">Day plans hour by hour</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
+
+      <p class="pie">Useful: <a href="/en/prices/">Prices</a> · <a href="/en/kyoto/">Private guide in Kyoto</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport</a> · <a href="/en/tools/">Free travel tools</a> · <a href="/en/perks/">Partner perks</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
     </main>
-    <script>document.getElementById('portada-texto').remove()</script>`
+    <script>try{if(localStorage.getItem('v7-pagina')||/[?&]lang=/.test(location.search))document.getElementById('portada-texto').remove()}catch(e){}</script>`
 const indice = readFileSync(join(dest, 'index.html'), 'utf8')
 if (!indice.includes('id="portada-texto"')) {
   if (!indice.includes('<div id="root"></div>')) throw new Error('index.html sin <div id="root"></div>: no se puede poner el texto de la portada')
-  writeFileSync(join(dest, 'index.html'), indice.replace('<div id="root"></div>', `<div id="root"></div>${portada}`))
+  const TITULO = 'Tony Kansai Guide — private guides in Japan in 6 languages'
+  const DESC = 'Choose your guide and language: Tony (Spanish, English, Arabic) in Kyoto, Osaka and Nara; Larion (Russian); Mario (premium English, all Japan); Iheb (French, Tokyo); Ferhat (Turkish); Antonio (family trips in Spanish).'
+  writeFileSync(join(dest, 'index.html'), indice
+    .replace('<div id="root"></div>', `<div id="root"></div>${portada}`)
+    .replace(/<title>[^<]*<\/title>/, `<title>${TITULO}</title>`)
+    .replace(/(<meta name="description" content=")[^"]*/, `$1${DESC}`)
+    .replace(/(<meta property="og:title" content=")[^"]*/, `$1${TITULO}`)
+    .replace(/(<meta name="twitter:title" content=")[^"]*/, `$1${TITULO}`))
 }
 
 console.log(`${rutas.length} rutas; ${propias} con cabecera propia; ${pintadas} ya pintadas; ${Object.keys(ANTIGUAS).length} antiguas con noindex; ${fichasAfiliado} con noindex (afiliado y Larion en inglés)`)
