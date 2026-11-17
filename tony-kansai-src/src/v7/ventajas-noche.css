@@ -60,38 +60,75 @@
 .vn-indice a:hover { color: var(--vn-tinta); }
 .vn-indice a[aria-current='true'] { background: var(--vn-capa2); color: var(--vn-tinta); }
 
-/* Portada: texto a un lado, foto real al otro, y el billete del mejor código */
-.vn-portada { padding: clamp(40px, 7vw, 88px) 0 clamp(48px, 6vw, 72px); overflow: hidden; }
-.vn-portada-grid { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(32px, 5vw, 72px); align-items: center; }
-.vn-portada h1 { font-size: clamp(2.5rem, 4.4vw, 4.2rem); letter-spacing: -0.045em; line-height: 1.04; max-width: 20ch; text-wrap: balance; padding-bottom: .06em; }
-.vn-portada .vn-lead { font-size: 1.15rem; max-width: 44ch; margin-top: 22px; }
-.vn-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 30px; }
-.vn-portada-foto { position: relative; margin: 0; }
-.vn-portada-marco { border-radius: var(--vn-radio); overflow: hidden; aspect-ratio: 4 / 5; max-height: 76dvh; margin-inline-start: auto; background: var(--vn-capa); box-shadow: 0 40px 80px -40px rgba(229, 83, 61, .35); }
-.vn-portada-marco img { width: 100%; height: 115%; object-fit: cover; display: block; will-change: transform; }
-.vn-portada-billete {
-  position: absolute; inset-inline-start: -28px; bottom: 32px; display: flex; align-items: center; gap: 14px;
+/* Portada (17-11-2026): foto de Fushimi Inari a sangre, titular enorme, cifras huecas
+   (solo contorno, el estilo que le gustó a Tony) y dos cintas de socios y apps abajo. */
+.vn-heroe { position: relative; isolation: isolate; overflow: hidden; min-height: calc(100svh - var(--vt-barra-alto) - 52px); display: flex; flex-direction: column; justify-content: flex-end; }
+.vn-heroe-fondo { position: absolute; inset: 0; z-index: -1; }
+.vn-heroe-fondo img { width: 100%; height: 118%; object-fit: cover; object-position: 50% 35%; display: block; will-change: transform; }
+.vn-heroe-fondo::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(12, 15, 21, .55) 0%, rgba(12, 15, 21, .35) 28%, rgba(12, 15, 21, .78) 62%, var(--vn-fondo) 100%),
+              linear-gradient(90deg, rgba(12, 15, 21, .7) 0%, rgba(12, 15, 21, .1) 70%);
+}
+.vn[dir='rtl'] .vn-heroe-fondo::after {
+  background: linear-gradient(180deg, rgba(12, 15, 21, .55) 0%, rgba(12, 15, 21, .35) 28%, rgba(12, 15, 21, .78) 62%, var(--vn-fondo) 100%),
+              linear-gradient(270deg, rgba(12, 15, 21, .7) 0%, rgba(12, 15, 21, .1) 70%);
+}
+.vn-heroe-dentro { display: grid; grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: 'txt billete' 'cifras cifras'; align-items: end; gap: clamp(28px, 4vw, 48px) 32px; padding: clamp(40px, 7vh, 96px) 0 clamp(24px, 3vw, 36px); }
+.vn-heroe-txt { grid-area: txt; }
+.vn-heroe h1 {
+  font-size: clamp(3rem, 7.4vw, 7.4rem); line-height: .94; letter-spacing: -0.055em; font-weight: 750;
+  max-width: 15ch; text-wrap: balance; padding-bottom: .05em; color: #fff; text-shadow: 0 2px 40px rgba(0, 0, 0, .35);
+}
+.lang-ar .vn-heroe h1 { letter-spacing: 0; line-height: 1.2; max-width: 14ch; font-size: clamp(2.8rem, 6.6vw, 6.4rem); }
+.lang-ru .vn-heroe h1 { font-size: clamp(2.6rem, 6.4vw, 6.4rem); max-width: 14ch; }
+.vn-heroe .vn-lead { color: rgba(238, 241, 245, .88); font-size: clamp(1.05rem, 1.35vw, 1.22rem); max-width: 58ch; margin-top: 22px; }
+.vn-heroe .vn-ctas { margin-top: 26px; }
+.vn-heroe .vn-boton-linea { background: rgba(12, 15, 21, .35); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+
+/* Cifras huecas: número enorme con solo el contorno; debajo, qué cuenta */
+.vn-hueco { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.04em; line-height: .9; color: var(--vn-tinta); }
+@supports (-webkit-text-stroke: 1px #fff) {
+  .vn-hueco { color: transparent; -webkit-text-stroke: 1.6px rgba(238, 241, 245, .92); }
+}
+.vn-cifras { grid-area: cifras; list-style: none; margin: 0; padding: 18px 0 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; border-top: 1px solid rgba(255, 255, 255, .16); }
+.vn-cifras a { display: flex; flex-direction: column; gap: 10px; text-decoration: none; }
+.vn-cifra-n { font-size: clamp(2.8rem, 5.6vw, 5.4rem); transition: -webkit-text-stroke-color .2s ease, color .2s ease; }
+.vn-cifras a:hover .vn-cifra-n { color: var(--vn-acento); -webkit-text-stroke-color: var(--vn-acento); }
+.vn-cifra-t { color: rgba(238, 241, 245, .8); font-size: .95rem; font-weight: 600; }
+
+.vn-heroe-billete {
+  grid-area: billete; justify-self: end; display: flex; align-items: center; gap: 14px;
   padding: 14px 20px 14px 14px; border-radius: 16px; text-decoration: none;
-  background: rgba(20, 25, 34, .82); border: 1px solid rgba(255, 255, 255, .14);
+  background: rgba(20, 25, 34, .72); border: 1px solid rgba(255, 255, 255, .16);
   backdrop-filter: blur(16px) saturate(160%); -webkit-backdrop-filter: blur(16px) saturate(160%);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, .1), 0 24px 48px -20px rgba(0, 0, 0, .7);
+  transition: transform .25s cubic-bezier(.16, 1, .3, 1);
 }
-.vn-portada-billete .vt-ico { width: 46px; height: 46px; position: relative; }
-.vn-portada-billete b { display: block; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--vn-tinta); }
-.vn-portada-billete small { color: var(--vn-suave); font-size: .85rem; }
+.vn-heroe-billete:hover { transform: translateY(-3px); }
+.vn-heroe-billete .vt-ico { width: 46px; height: 46px; position: relative; }
+.vn-heroe-billete b { display: block; font-size: 1.5rem; letter-spacing: -0.03em; color: var(--vn-tinta); font-variant-numeric: tabular-nums; }
+.vn-heroe-billete small { color: var(--vn-suave); font-size: .85rem; }
 
-/* Marquesina de iconos (la única de la página) */
-.vn-marquesina { overflow: hidden; padding: 18px 0; border-block: 1px solid var(--vn-linea); mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent); }
-.vn-marquesina-pista { display: flex; gap: 22px; width: max-content; }
-.vn-marquesina img { width: 52px; height: 52px; border-radius: 23%; display: block; }
-.vn-marquesina a { display: block; border-radius: 23%; transition: transform .2s; }
-.vn-marquesina a:active { transform: scale(.92); }
-.vn-marquesina:hover .vn-marquesina-pista, .vn-marquesina:active .vn-marquesina-pista { animation-play-state: paused; }
-@media (prefers-reduced-motion: no-preference) {
-  .vn-marquesina-pista { animation: vn-marquesina 48s linear infinite; }
-  .vn[dir='rtl'] .vn-marquesina-pista { animation-direction: reverse; }
+/* Cintas de socios y apps (GSAP las mueve en Ventajas.tsx; sin movimiento, se deslizan con el dedo) */
+.vn-cinta { position: relative; display: grid; gap: 12px; padding: 18px 0 22px; border-top: 1px solid var(--vn-linea); background: color-mix(in srgb, var(--vn-fondo) 80%, transparent); }
+.vn-cinta-fila { overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+.vn-cinta-pista { display: flex; gap: 12px; width: max-content; will-change: transform; }
+.vn-cinta-socio {
+  display: inline-flex; align-items: center; gap: 10px; padding: 6px 16px 6px 6px; border-radius: 999px; text-decoration: none; white-space: nowrap;
+  background: var(--vn-capa); border: 1px solid var(--vn-linea); font-weight: 600; font-size: .95rem; transition: border-color .2s ease;
 }
-@keyframes vn-marquesina { to { transform: translateX(-50%); } }
+.vn-cinta-socio:hover { border-color: rgba(255, 255, 255, .3); }
+.vn-cinta-socio .vn-ico-exp { width: 34px; height: 34px; border-radius: 50%; }
+.vn-cinta-socio .vn-ico-exp svg { width: 17px; height: 17px; }
+.vn-cinta-fila.es-apps .vn-cinta-pista { gap: 18px; }
+.vn-cinta img { width: 48px; height: 48px; border-radius: 23%; display: block; }
+.vn-cinta-fila.es-apps a { display: block; border-radius: 23%; transition: transform .2s; }
+.vn-cinta-fila.es-apps a:active { transform: scale(.92); }
+@media (prefers-reduced-motion: reduce) {
+  .vn-cinta-fila { overflow-x: auto; scrollbar-width: none; }
+  .vn-cinta-fila::-webkit-scrollbar { display: none; }
+}
 
 /* Filtros */
 .vn-chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 28px 0 0; }
@@ -117,18 +154,23 @@
 .vn-exp-lista { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--vn-linea); }
 .vn-exp-lista > li { border-bottom: 1px solid var(--vn-linea); }
 .vn-exp-fila {
-  all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr) auto;
-  align-items: center; gap: 16px; padding: 14px 12px; border-radius: 14px; transition: background-color .2s ease;
+  all: unset; box-sizing: border-box; width: 100%; cursor: pointer; display: grid; grid-template-columns: auto minmax(0, 1fr);
+  align-items: start; gap: 16px; padding: 16px 12px; border-radius: 14px; transition: background-color .2s ease;
 }
 .vn-exp-fila:hover, .es-sel > .vn-exp-fila { background: var(--vn-capa); }
 .vn-exp-fila:focus-visible { outline: 2px solid var(--vn-acento); }
 .vn-exp-txt { min-width: 0; }
 .vn-exp-txt b { display: block; font-size: 1.08rem; letter-spacing: -0.01em; }
 .vn-exp-txt small { display: block; color: var(--vn-suave); font-size: .9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.vn-exp-marcas { display: flex; gap: 6px; }
-.vn-exp-marcas i { width: 9px; height: 9px; border-radius: 50%; }
-.vn-exp-marcas .es-musulman { background: #3fbf8a; }
-.vn-exp-marcas .es-tony { background: var(--vn-acento); }
+.vn-exp-linea { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin-top: 9px; }
+.vn-exp-linea:empty { display: none; }
+.vn-exp-mus { display: inline-flex; align-items: center; gap: 6px; font-size: .8rem; font-weight: 600; color: #7fdcb3; }
+.vn-exp-mus::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #3fbf8a; }
+/* Cabecera de experiencias con la cifra hueca al lado del título */
+.vn-exp-cab { display: flex; align-items: flex-end; gap: clamp(18px, 3vw, 40px); }
+.vn-exp-num { font-size: clamp(4.5rem, 12vw, 10rem); flex: none; margin-bottom: -.06em; }
+.vn-det-cab { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 12px; margin-bottom: 6px; }
+.vn-det-cab .vn-det-lugar { margin: 0; }
 .vn-ico-exp { width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center; flex: none; background: var(--marca); color: var(--marca-tinta); overflow: hidden; }
 .vn-ico-exp img { width: 100%; height: 100%; object-fit: cover; }
 .vn-ico-exp.es-grande { width: 88px; height: 88px; border-radius: 24px; background: rgba(255, 255, 255, .16); color: var(--marca-tinta); border: 1px solid rgba(255, 255, 255, .28); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
@@ -254,11 +296,11 @@
 
 /* Móvil y tableta: una columna; la ficha de la experiencia se abre bajo su fila */
 @media (max-width: 899px) {
-  .vn-portada-grid, .vn-exp-grid, .vn-cod-pie, .vn-faq-grid, .vn-final-grid { grid-template-columns: 1fr; }
-  .vn-portada h1 { max-width: 14ch; }
-  .vn-portada-marco { aspect-ratio: 4 / 3; max-height: none; }
-  .vn-portada-billete { inset-inline-start: 12px; bottom: -22px; }
-  .vn-portada-foto { margin-bottom: 22px; }
+  .vn-exp-grid, .vn-cod-pie, .vn-faq-grid, .vn-final-grid { grid-template-columns: 1fr; }
+  .vn-heroe-dentro { grid-template-columns: 1fr; grid-template-areas: 'txt' 'cifras' 'billete'; padding-top: 56px; }
+  .vn-heroe-billete { justify-self: start; }
+  .vn-cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 16px; }
+  .vn-exp-cab { flex-direction: column; align-items: flex-start; gap: 4px; }
   .vn-exp-panel { display: none; }
   .vn-exp-movil { display: block; padding: 4px 0 16px; }
   .vn-det-cara { height: 150px; }
@@ -275,7 +317,7 @@
   .vn-billete-dto { font-size: 2.5rem; }
 }
 @media (prefers-reduced-transparency: reduce) {
-  .vn-portada-billete, .vn .vt-barra, .vn-indice { background: var(--vn-capa); backdrop-filter: none; -webkit-backdrop-filter: none; }
+  .vn-heroe-billete, .vn .vt-barra, .vn-indice { background: var(--vn-capa); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }
 @media (max-width: 680px) {
   .vn .vt-solo-ancho { display: none; }
