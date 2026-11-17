@@ -20,6 +20,8 @@ type Id = 'es' | 'en' | 'ar' | 'ru'
 /** Texto corto de la tarjeta en cualquier idioma (el ruso vive en T_RU). */
 export const textoApp = (a: App, id: Id) => (id === 'ru' ? a.t.ru ?? T_RU[a.clave] ?? a.t.en : a.t[id])
 
+// Desde la ficha de un socio se vuelve a sus experiencias, no a «todas las apps».
+const TODAS_EXP: Record<Id, string> = { es: 'Todas las experiencias', en: 'All experiences', ar: 'كل التجارب', ru: 'Все впечатления' }
 const COMO: Record<Id, string> = { es: 'Cómo reservar', en: 'How to book', ar: 'كيف تحجز', ru: 'Как забронировать' }
 
 export const MAS: Record<Id, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
@@ -107,7 +109,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
       <section className="vt-ficha-portada" style={marca}>
         <div className="vt-ficha-dentro">
           <div className="vt-ficha-texto">
-            <Link to={lista} className="vt-ficha-volver"><span aria-hidden="true">{id === 'ar' ? '→' : '←'}</span> {l.todas}</Link>
+            <Link to={a.cat === 'experiencias' ? `${lista}#experiencias` : lista} className="vt-ficha-volver"><span aria-hidden="true">{id === 'ar' ? '→' : '←'}</span> {a.cat === 'experiencias' ? TODAS_EXP[id] : l.todas}</Link>
             <div className="vt-ficha-marca">
               <Logo a={a} className="vt-ico vt-ico-grande" />
               <span className="vt-cat">{a.ciudad ? CIUDADES[a.ciudad][id] : CATEGORIAS[a.cat][id]}</span>
