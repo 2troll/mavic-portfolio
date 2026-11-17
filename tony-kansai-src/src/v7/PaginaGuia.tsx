@@ -1155,10 +1155,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               acordeones cerrados (PieColumna los cierra tras montar); el HTML las
               trae abiertas, así Google y las IAs leen todos los enlaces. */}
           <PieColumna lang={p.lang} titulo={p.pie.legal}>
-            <Link to={`/legal?lang=${p.lang}`}>{p.pie.legal}</Link>
-            <Link to={`/privacy?lang=${p.lang}`}>{p.pie.privacidad}</Link>
-            <Link to={`/terms?lang=${p.lang}`}>{p.pie.condiciones}</Link>
-            <Link to={`/cookies?lang=${p.lang}`}>{p.pie.cookies}</Link>
+            <Link to={`/legal/?lang=${p.lang}`}>{p.pie.legal}</Link>
+            <Link to={`/privacy/?lang=${p.lang}`}>{p.pie.privacidad}</Link>
+            <Link to={`/terms/?lang=${p.lang}`}>{p.pie.condiciones}</Link>
+            <Link to={`/cookies/?lang=${p.lang}`}>{p.pie.cookies}</Link>
             {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta}>{VENTAJAS[p.id].corto}</Link>}
             {/* La guía halal vive fuera de la web; enlazarla aquí ayuda a que Google la descubra. */}
             {p.lang === 'ar' && <a href="https://2troll.github.io/yubisashi/dalil/">دليل الحلال في كانساي</a>}

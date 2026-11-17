@@ -326,9 +326,9 @@ function Pie({ id }: { id: VentajasId }) {
       <span><Logo /></span>
       <a href={`mailto:${CORREO}`}>{CORREO}</a>
       <nav>
-        <Link to={`/legal?lang=${id}`}>{pie.legal}</Link>
-        <Link to={`/terms?lang=${id}`}>{pie.condiciones}</Link>
-        <Link to={`/privacy?lang=${id}`}>{pie.privacidad}</Link>
+        <Link to={`/legal/?lang=${id}`}>{pie.legal}</Link>
+        <Link to={`/terms/?lang=${id}`}>{pie.condiciones}</Link>
+        <Link to={`/privacy/?lang=${id}`}>{pie.privacidad}</Link>
       </nav>
     </footer>
   )

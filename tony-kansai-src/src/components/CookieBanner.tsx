@@ -66,7 +66,7 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
       <div className="v7-cookies" role="region" aria-label={t.cookie.title}>
         <p>
           {t.cookie.title}.{' '}
-          <Link to="/privacy" onClick={decline}>{t.cookie.learn}</Link>
+          <Link to="/privacy/" onClick={decline}>{t.cookie.learn}</Link>
         </p>
         <div>
           <button type="button" onClick={decline}>{t.cookie.decline}</button>
@@ -92,7 +92,7 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
           <p className="text-xs text-white/55 leading-relaxed mb-4">
             {t.cookie.body}{' '}
             <Link
-              to="/privacy"
+              to="/privacy/"
               className="text-japan-red underline underline-offset-2 hover:text-japan-orange transition-colors"
               onClick={decline}
             >

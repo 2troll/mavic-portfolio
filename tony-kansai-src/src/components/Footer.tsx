@@ -7,11 +7,11 @@ export function Footer() {
   const { t, tc } = useLanguage()
 
   const LEGAL_LINKS = [
-    { to: '/terms', label: tc('Terms and Conditions') },
-    { to: '/privacy', label: t.footer.privacy },
-    { to: '/cookies', label: tc('Cookie Policy') },
-    { to: '/safety', label: tc('Safety & Insurance') },
-    { to: '/legal', label: tc('Legal Notice') },
+    { to: '/terms/', label: tc('Terms and Conditions') },
+    { to: '/privacy/', label: t.footer.privacy },
+    { to: '/cookies/', label: tc('Cookie Policy') },
+    { to: '/safety/', label: tc('Safety & Insurance') },
+    { to: '/legal/', label: tc('Legal Notice') },
     { to: '/accessibility', label: tc('Accessibility') },
   ]
 

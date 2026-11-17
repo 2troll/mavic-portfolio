@@ -190,9 +190,9 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
-            <Link to={`/legal?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
-            <Link to={`/terms?lang=${lang}`}>{(PIE[lang] ?? PIE.en).condiciones}</Link>
-            <Link to={`/privacy?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
+            <Link to={`/legal/?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
+            <Link to={`/terms/?lang=${lang}`}>{(PIE[lang] ?? PIE.en).condiciones}</Link>
+            <Link to={`/privacy/?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
           </nav>
         </div>
         <details className="v7-creditos">

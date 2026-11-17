@@ -497,9 +497,9 @@ export default function Home() {
         <div className="max-w-6xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-white/45">
           <span>🔒 {tc('Secure payments · No personal data stored · Contact only via WhatsApp')}</span>
           <div className="flex flex-wrap items-center justify-center gap-x-5 gap-y-2">
-            <Link to="/terms" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>
-            <Link to="/privacy" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
-            <Link to="/safety" className="hover:text-white/55 transition-colors">{tc('Safety & Insurance')}</Link>
+            <Link to="/terms/" className="hover:text-white/55 transition-colors">{tc('Terms and Conditions')}</Link>
+            <Link to="/privacy/" className="hover:text-white/55 transition-colors">{tc('Privacy Policy')}</Link>
+            <Link to="/safety/" className="hover:text-white/55 transition-colors">{tc('Safety & Insurance')}</Link>
           </div>
         </div>
       </section>

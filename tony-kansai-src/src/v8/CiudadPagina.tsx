@@ -311,8 +311,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
             <Link to={`${prefijo}/`}>{et.volver}</Link>
-            <Link to={`/legal?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
-            <Link to={`/privacy?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
+            <Link to={`/legal/?lang=${lang}`}>{(PIE[lang] ?? PIE.en).legal}</Link>
+            <Link to={`/privacy/?lang=${lang}`}>{(PIE[lang] ?? PIE.en).privacidad}</Link>
           </nav>
         </div>
         <details className="v7-creditos">

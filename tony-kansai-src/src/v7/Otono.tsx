@@ -176,9 +176,9 @@ export default function Otono({ id }: { id: OtonoId }) {
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
             <Link to={p.inicio}>Tony Kansai Guide</Link>
-            <Link to={`/legal?lang=${p.lang}`}>{pie.legal}</Link>
-            <Link to={`/terms?lang=${p.lang}`}>{pie.condiciones}</Link>
-            <Link to={`/privacy?lang=${p.lang}`}>{pie.privacidad}</Link>
+            <Link to={`/legal/?lang=${p.lang}`}>{pie.legal}</Link>
+            <Link to={`/terms/?lang=${p.lang}`}>{pie.condiciones}</Link>
+            <Link to={`/privacy/?lang=${p.lang}`}>{pie.privacidad}</Link>
           </nav>
         </div>
         <details className="v7-creditos">

@@ -72,13 +72,13 @@ export function LegalPage({ title, description, path, icon, updated, intro, chil
 export function LegalFooterLinks({ current }: { current: string }) {
   const { tc } = useLanguage()
   const paginas = [
-    { to: '/terms', label: tc('Terms and Conditions') },
-    { to: '/privacy', label: tc('Privacy Policy') },
-    { to: '/cookies', label: tc('Cookie Policy') },
-    { to: '/safety', label: tc('Safety & Insurance') },
-    { to: '/legal', label: tc('Legal Notice') },
+    { to: '/terms/', label: tc('Terms and Conditions') },
+    { to: '/privacy/', label: tc('Privacy Policy') },
+    { to: '/cookies/', label: tc('Cookie Policy') },
+    { to: '/safety/', label: tc('Safety & Insurance') },
+    { to: '/legal/', label: tc('Legal Notice') },
     { to: '/accessibility', label: tc('Accessibility') },
-  ].filter((p) => p.to !== current)
+  ].filter((p) => p.to.replace(/\/$/, "") !== current.replace(/\/$/, ""))
 
   return (
     <div className="pt-4 border-t border-white/6 space-y-4">

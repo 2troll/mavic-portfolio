@@ -170,9 +170,9 @@ export default function Viajeros({ id }: { id: MercadoId }) {
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
             <Link to={m.inicio}>Tony Kansai Guide</Link>
-            <Link to={`/legal?lang=${m.lang}`}>{pie.legal}</Link>
-            <Link to={`/terms?lang=${m.lang}`}>{pie.condiciones}</Link>
-            <Link to={`/privacy?lang=${m.lang}`}>{pie.privacidad}</Link>
+            <Link to={`/legal/?lang=${m.lang}`}>{pie.legal}</Link>
+            <Link to={`/terms/?lang=${m.lang}`}>{pie.condiciones}</Link>
+            <Link to={`/privacy/?lang=${m.lang}`}>{pie.privacidad}</Link>
           </nav>
         </div>
         {credito && (

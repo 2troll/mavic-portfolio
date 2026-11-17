@@ -246,9 +246,9 @@ export default function Montana({ id }: { id: MontanaId }) {
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
-            <Link to={`/legal?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).legal}</Link>
-            <Link to={`/terms?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).condiciones}</Link>
-            <Link to={`/safety?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).seguridad}</Link>
+            <Link to={`/legal/?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).legal}</Link>
+            <Link to={`/terms/?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).condiciones}</Link>
+            <Link to={`/safety/?lang=${p.lang}`}>{(PIE[p.lang] ?? PIE.en).seguridad}</Link>
           </nav>
           <p className="v7-fuente-gsi">{p.et.fuente}</p>
         </div>
