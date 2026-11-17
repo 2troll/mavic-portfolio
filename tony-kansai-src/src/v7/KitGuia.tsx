@@ -110,8 +110,8 @@ const ORDEN_HERR: Record<Lengua, HerrId[]> = {
 /** El kit de todos los días: eSIM, tarjeta IC, taxi, pagos y seguro (el de España para ES). */
 const KIT: Record<Lengua, string[]> = {
   es: ['japanwirelessesim', 'nomad', 'icoca', 'go', 'wise', 'iati'],
-  en: ['japanwirelessesim', 'nomad', 'icoca', 'go', 'wise', 'ekta'],
-  ar: ['japanwirelessesim', 'nomad', 'icoca', 'go', 'wise', 'ekta'],
+  en: ['japanwirelessesim', 'nomad', 'icoca', 'go', 'wise'],
+  ar: ['japanwirelessesim', 'nomad', 'icoca', 'go', 'wise'],
 }
 
 const porClave = new Map(APPS.map((a) => [a.clave, a]))

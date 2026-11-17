@@ -336,15 +336,6 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'ekta', cat: 'utiles', nombre: 'EKTA', enlace: 'https://ektatraveling.tpk.ro/PDbp3NoD',
-    marca: { fondo: '#FF5A1F', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#d9430e', palabra: 'EKTA' },
-    t: {
-      es: { que: 'Seguro de viaje online: lo contratas en unos minutos y recibes la póliza por correo.', ventaja: 'En Japón la sanidad es excelente pero cara para el turista: mejor ir cubierto.' },
-      en: { que: 'Online travel insurance: buy it in a few minutes and get the policy by email.', ventaja: 'Healthcare in Japan is excellent but expensive for visitors: better to be covered.' },
-      ar: { que: 'تأمين سفر عبر الإنترنت: تشتريه في دقائق وتصلك الوثيقة بالبريد.', ventaja: 'الرعاية الصحية في اليابان ممتازة لكنها مكلفة للزائر: الأفضل أن تكون مؤمَّنًا.' },
-    },
-  },
-  {
     // Afiliado de IATI Seguros (panel myiati.com): ?r=28859190572940.
     clave: 'iati', cat: 'utiles', nombre: 'IATI Seguros', enlace: 'https://www.iatiseguros.com?r=28859190572940',
     marca: { fondo: '#F28C00', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#c96f00', palabra: 'iati' },
@@ -704,7 +695,9 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'kanemasa', cat: 'experiencias', ciudad: 'gifu', conTony: true, nombre: 'Kanemasa, forjador de katanas (Seki)', enlace: 'https://thekatana.jp/',
+    // thekatana.jp sirve por https un certificado de *.gmoserver.jp (17-11-2026): el navegador avisa de
+    // «conexión no privada». Por http abre bien; volver a https cuando lo arreglen.
+    clave: 'kanemasa', cat: 'experiencias', ciudad: 'gifu', conTony: true, nombre: 'Kanemasa, forjador de katanas (Seki)', enlace: 'http://thekatana.jp/',
     marca: { fondo: '#2b2b2b', tinta: '#e9e4d8', boton: '#b8932e', botonTinta: '#141414', palabra: '刀' },
     vistazo: { duracion: [240, 600], desde: { yen: 60000, por: 'persona' }, antelacion: 7 },
     t: {

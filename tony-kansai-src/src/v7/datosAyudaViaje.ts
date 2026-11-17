@@ -76,7 +76,7 @@ export const AYUDA: Record<Lang, Bloque> = {
         enlaces: [{ texto: 'Osaka → Kyoto guide', guia: '/en/osaka-to-kyoto/' }, { texto: 'Keihan Railway', href: 'https://www.keihan.co.jp/travel/en/' }, { texto: 'Hankyu Railway', href: 'https://www.hankyu.co.jp/global/en/' }] },
       { icono: 'phone', q: 'What if I have an emergency?',
         a: 'Police: 110. Ambulance and fire: 119. The Japan Visitor Hotline (050-3816-2787) answers in English, Chinese and Korean 24 hours a day, every day. If you are on a tour with me, call me first.',
-        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }, { texto: 'Travel insurance', app: 'ekta' }] },
+        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }] },
     ],
   },
   ar: {
@@ -106,7 +106,7 @@ export const AYUDA: Record<Lang, Bloque> = {
         enlaces: [{ texto: 'دليل أوساكا ← كيوتو', guia: '/en/osaka-to-kyoto/' }, { texto: 'قطار كيهان', href: 'https://www.keihan.co.jp/travel/en/' }, { texto: 'قطار هانكيو', href: 'https://www.hankyu.co.jp/global/en/' }] },
       { icono: 'phone', q: 'وماذا لو حدث طارئ؟',
         a: 'الشرطة: 110. الإسعاف والإطفاء: 119. خط Japan Visitor Hotline (050-3816-2787) يجيب بالإنجليزية والصينية والكورية على مدار 24 ساعة كل يوم. وإن كنت في جولة معي، اتصل بي أولًا.',
-        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }, { texto: 'تأمين السفر', app: 'ekta' }] },
+        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }] },
     ],
   },
   ru: {
@@ -136,7 +136,7 @@ export const AYUDA: Record<Lang, Bloque> = {
         enlaces: [{ texto: 'Осака → Киото (англ.)', guia: '/en/osaka-to-kyoto/' }, { texto: 'Keihan', href: 'https://www.keihan.co.jp/travel/en/' }, { texto: 'Hankyu', href: 'https://www.hankyu.co.jp/global/en/' }] },
       { icono: 'phone', q: 'А если что-то случится?',
         a: 'Полиция: 110. Скорая и пожарные: 119. Japan Visitor Hotline (050-3816-2787) отвечает на английском, китайском и корейском круглосуточно и без выходных. Если вы на экскурсии с нами — сначала звоните гиду.',
-        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }, { texto: 'Страховка', app: 'ekta' }] },
+        enlaces: [{ texto: 'Japan Visitor Hotline', href: JNTO }] },
     ],
   },
 }
