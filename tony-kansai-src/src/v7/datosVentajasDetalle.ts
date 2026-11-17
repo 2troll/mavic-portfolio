@@ -1629,9 +1629,180 @@ export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
     ar: { intro: 'Cycle Osaka وCycle Kyoto وEat Osaka / Eat Kyoto جولات بالدراجة وجولات طعام بمجموعات صغيرة وبالإنجليزية، وفي هيروشيما أيضًا.', para: ['رؤية أحياء لا يصلها المترو، بسرعة الدراجة.', 'تذوق طعام الشارع مع من يعرف كل كشك.', 'خطة لنصف يوم حين لا تكون مع مرشد.'], pasos: ['راسلني عبر واتساب بالتاريخ والمدينة وعددكم.', 'أحجزها لك.', 'قبل التأكيد أسأل عن خيارات بلا لحم خنزير ولا كحول.'], consejos: ['إن كنت تحتاج حلالًا أو بلا كحول فاسألني قبل الحجز.', 'على الدراجة البس حذاءً مغلقًا.', 'مع المطر الغزير قد يغيّرون الموعد.'], precio: 'سعر موقعهم.' },
     ru: { intro: 'Cycle Osaka, Cycle Kyoto и Eat Osaka / Eat Kyoto — велотуры и гастрономические туры в малых группах на английском, есть и в Хиросиме.', para: ['Увидеть районы, куда не доходит метро.', 'Попробовать уличную еду с тем, кто знает каждый ларёк.', 'План на полдня без гида.'], pasos: ['Напишите мне в WhatsApp дату, город и сколько вас.', 'Я забронирую.', 'Перед подтверждением уточню варианты без свинины и алкоголя.'], consejos: ['Если нужен халяль или без алкоголя — спросите заранее.', 'Для велосипеда — закрытая обувь.', 'В сильный дождь дату могут перенести.'], precio: 'Цена с их сайта.' },
   },
+  // Fuji Mountain Outdoor Museum y tenchan surfing club: solo lo que mandaron por correo (16 y 17-11-2026).
+  fujioutdoor: {
+    es: {
+      intro: 'El Fuji Mountain Outdoor Museum es una ONG de Funatsu, en Fujikawaguchiko (Yamanashi), que enseña la naturaleza y la historia del Fuji en grupos privados. Su representante, Hiroaki Funatsu, ganó el premio a la excelencia de los JAPAN OUTDOOR LEADERS AWARD 2026.',
+      para: [
+        'Moldes de lava de árboles de Funatsu Tainai (Patrimonio Mundial): entras en los huecos que dejó una erupción de hace unos 1.000 años; en la era Edo, los peregrinos visitaban este lugar sagrado el día antes de subir al Fuji. 1 h, 3.800 ¥ por persona con la entrada, o 38.000 ¥ el grupo de hasta 15.',
+        'Bosque primigenio de Aokigahara (Jukai), sobre la meseta de lava: unas 1 h, 3.800 ¥ por persona y hora o 38.000 ¥ el grupo de hasta 15; 2 h o más si lo pides. No se hace con mucha nieve.',
+        'Paseo por Fujiyoshida con el santuario Fuji Sengen y las dulcerías del barrio: 1 h, 6.600 ¥ por persona.',
+        'Taller de palillos con cepillo de carpintero: de 30 a 60 min, 3.500 ¥ por persona. Se puede hacer en tu alojamiento (si hace falta una sala, puede costar aparte).',
+      ],
+      pasos: [
+        'Escríbeme por WhatsApp con la fecha, cuántos sois y qué actividad os apetece.',
+        'Lo coordino con ellos y te confirmo el precio y la hora.',
+        'El día de la actividad interpreto yo; el guía-intérprete entra gratis (solo se paga la entrada de una cueva, si la hay).',
+      ],
+      consejos: [
+        'Son grupos privados de hasta unas 15 personas: un monitor por cada 15.',
+        'Sus guías pueden usar un traductor electrónico para el inglés; conmigo tienes la explicación en español o en árabe.',
+        'En invierno hay programas cuando no hay mucha nieve.',
+        'Reserva lo antes posible.',
+      ],
+      precio: 'Desde 3.500 ¥ por persona (palillos). Moldes de lava y bosque: 3.800 ¥ por persona o 38.000 ¥ el grupo de hasta 15. Paseo por Fujiyoshida: 6.600 ¥ por persona.',
+    },
+    en: {
+      intro: 'Fuji Mountain Outdoor Museum is a non-profit in Funatsu, Fujikawaguchiko (Yamanashi), that shows you the nature and history of Mt Fuji in private groups. Its representative, Hiroaki Funatsu, won the excellence prize of the JAPAN OUTDOOR LEADERS AWARD 2026.',
+      para: [
+        'Funatsu Tainai lava tree molds (World Heritage): you go inside the hollows left by an eruption about 1,000 years ago; in the Edo period, pilgrims visited this sacred site the day before climbing Fuji. 1 h, ¥3,800 per person including entry, or ¥38,000 for a group of up to 15.',
+        'Aokigahara (Jukai) primeval-forest trek on the lava plateau: about 1 h, ¥3,800 per person per hour or ¥38,000 for a group of up to 15; 2 h or more on request. Not in heavy snow.',
+        'Fujiyoshida town walk with Fuji Sengen Shrine and local sweet shops: 1 h, ¥6,600 per person.',
+        'Chopstick-making with a hand plane: 30 to 60 min, ¥3,500 per person. It can be done at your accommodation (a venue may cost extra).',
+      ],
+      pasos: [
+        'Message me on WhatsApp with the date, group size and the activity you like.',
+        'I coordinate it with them and confirm the price and time.',
+        'On the day I interpret; the interpreter-guide joins free (only a cave entry is paid, if there is one).',
+      ],
+      consejos: [
+        'Private groups of up to about 15 people: one staff member per 15.',
+        'Their guides may use a translation device for English; with me you get it in Spanish, Arabic or English.',
+        'Winter programs run when there is not much snow.',
+        'Book as early as possible.',
+      ],
+      precio: 'From ¥3,500 per person (chopsticks). Lava molds and forest: ¥3,800 per person or ¥38,000 for a group of up to 15. Fujiyoshida walk: ¥6,600 per person.',
+    },
+    ar: {
+      intro: 'Fuji Mountain Outdoor Museum منظمة غير ربحية في فوناتسو بفوجيكاواغوتشيكو (ياماناشي)، تعرّفك بطبيعة جبل فوجي وتاريخه في مجموعات خاصة. فاز ممثلها هيروأكي فوناتسو بجائزة التميّز في JAPAN OUTDOOR LEADERS AWARD 2026.',
+      para: [
+        'قوالب الحمم لجذوع الأشجار في فوناتسو تايناي (تراث عالمي): تدخل إلى التجاويف التي تركها ثوران بركاني قبل نحو 1,000 عام، وكان الزوّار في عصر إيدو يقصدون هذا الموقع في اليوم السابق لصعود فوجي. ساعة واحدة، 3,800 ين للشخص شاملًا الدخول، أو 38,000 ين للمجموعة حتى 15 شخصًا.',
+        'مشي في غابة أوكيغاهارا (جوكاي) البكر فوق هضبة الحمم: نحو ساعة، 3,800 ين للشخص في الساعة أو 38,000 ين للمجموعة حتى 15 شخصًا؛ ساعتان أو أكثر عند الطلب. لا يُقام مع الثلوج الكثيفة.',
+        'جولة في بلدة فوجيوشيدا مع مزار فوجي سينغين ومحلات الحلويات المحلية: ساعة واحدة، 6,600 ين للشخص.',
+        'ورشة صنع عيدان الأكل بالمسحج اليدوي: من 30 إلى 60 دقيقة، 3,500 ين للشخص. يمكن إقامتها في مكان إقامتك (قد تُدفع قاعة إن لزم).',
+      ],
+      pasos: [
+        'راسلني على واتساب بالتاريخ وعددكم والنشاط الذي تفضّلونه.',
+        'أنسّق معهم وأؤكد لك السعر والموعد.',
+        'في يوم النشاط أترجم بنفسي، والمرشد المترجم يدخل مجانًا (تُدفع فقط رسوم دخول الكهف إن وُجد).',
+      ],
+      consejos: [
+        'مجموعات خاصة حتى نحو 15 شخصًا: مرافق واحد لكل 15.',
+        'قد يستخدم مرشدوهم جهاز ترجمة للإنجليزية؛ ومعي تحصل على الشرح بالعربية.',
+        'في الشتاء توجد برامج حين لا يكون الثلج كثيرًا.',
+        'احجز في أقرب وقت ممكن.',
+      ],
+      precio: 'من 3,500 ين للشخص (عيدان الأكل). قوالب الحمم والغابة: 3,800 ين للشخص أو 38,000 ين للمجموعة حتى 15 شخصًا. جولة فوجيوشيدا: 6,600 ين للشخص.',
+    },
+    ru: {
+      intro: 'Fuji Mountain Outdoor Museum — некоммерческая организация из Фунацу (Фудзикавагутико, Яманаси): природа и история Фудзи в частных группах. Её руководитель Хироаки Фунацу получил премию за отличие JAPAN OUTDOOR LEADERS AWARD 2026.',
+      para: [
+        'Лавовые слепки деревьев Фунацу-Тайнай (всемирное наследие): вы заходите в пустоты, оставленные извержением около 1000 лет назад; в эпоху Эдо паломники приходили в это священное место накануне восхождения на Фудзи. 1 ч, 3800 ¥ с человека со входом или 38 000 ¥ за группу до 15 человек.',
+        'Первобытный лес Аокигахара (Дзюкай) на лавовом плато: около 1 ч, 3800 ¥ с человека в час или 38 000 ¥ за группу до 15 человек; 2 ч и больше по запросу. Не в сильный снег.',
+        'Прогулка по Фудзиёсиде со святилищем Фудзи Сэнгэн и местными кондитерскими: 1 ч, 6600 ¥ с человека.',
+        'Палочки для еды своими руками с рубанком: 30–60 мин, 3500 ¥ с человека. Можно провести у вас в отеле (зал может стоить отдельно).',
+      ],
+      pasos: [
+        'Напишите нам в Telegram: дата, сколько вас и какая программа.',
+        'Мы согласуем всё с ними и подтвердим цену и время.',
+        'Гид-переводчик проходит бесплатно (оплачивается только вход в пещеру, если он есть).',
+      ],
+      consejos: [
+        'Частные группы примерно до 15 человек: один сотрудник на 15 гостей.',
+        'Их гиды могут пользоваться электронным переводчиком для английского.',
+        'Зимой программы проходят, когда снега немного.',
+        'Бронируйте как можно раньше.',
+      ],
+      precio: 'От 3500 ¥ с человека (палочки). Лавовые слепки и лес: 3800 ¥ с человека или 38 000 ¥ за группу до 15 человек. Прогулка по Фудзиёсиде: 6600 ¥ с человека.',
+    },
+  },
+  tenchan: {
+    es: {
+      intro: 'tenchan surfing club (Andmores) organiza días de surf, SUP y snowboard en Hiroshima, Shimane y Tottori. El día son 8 h desde el encuentro hasta que te dejan, con cerca de 1 h de traslado en cada sentido. Precios de 2027.',
+      para: [
+        'Surf o SUP: 88.000 ¥ el grupo de hasta 4, con tabla (traje: 2.200 ¥ por persona; cada participante más: 7.700 ¥). Temporada de surf: de junio a noviembre.',
+        'Snowboard en Daisen, de finales de diciembre a principios de marzo: 88.000 ¥ el grupo de hasta 5; alquiler, unos 8.000 ¥ por persona, y forfait de un día, unos 6.000 ¥ por persona.',
+        'Planes a medida: SUP en un lago + santuario de pueblo + caminata, o surf + barbacoa + SUP.',
+      ],
+      pasos: [
+        'Escríbeles por correo desde su web con las fechas, cuántos sois y qué queréis hacer. Planifícalo con tiempo.',
+        'Elige el punto de encuentro: estación o aeropuerto de Hiroshima, un hotel del centro, Matsue/Izumo o Yonago.',
+        'El día de la salida te recogen, hacéis la actividad y te dejan de vuelta.',
+      ],
+      consejos: [
+        'Desde Hiroshima: SUP en el mar Interior o en un lago, a 1-1,5 h; surf en el mar de Japón, a 2-3 h; Daisen, a 4-5 h.',
+        'En un día normal te guían gratis hasta 2 h de turismo durante los traslados.',
+        'El mismo grupo, 2 días seguidos o más: descuento o servicio ampliado.',
+        'No incluye gasolina, peajes, transporte, comidas, alojamiento ni entradas. Cada hora más: 11.000 ¥.',
+      ],
+      precio: 'Surf o SUP: 88.000 ¥ el grupo de hasta 4. Snowboard: 88.000 ¥ el grupo de hasta 5, más alquiler y forfait. Precios de 2027 por un día de 8 h.',
+    },
+    en: {
+      intro: 'tenchan surfing club (Andmores) runs surf, SUP and snowboard days in Hiroshima, Shimane and Tottori. A day is 8 hours from meeting to drop-off, including about 1 hour of transfer each way. 2027 prices.',
+      para: [
+        'Surfing or SUP: ¥88,000 per group of up to 4, board included (wetsuit ¥2,200 per person; each extra participant ¥7,700). Surf season: June to November.',
+        'Snowboarding at Daisen, late December to early March: ¥88,000 per group of up to 5; rental about ¥8,000 per person and a 1-day lift pass about ¥6,000 per person.',
+        'Custom plans: lake SUP + village shrine + hike, or surf + BBQ + SUP.',
+      ],
+      pasos: [
+        'Email them from their website with your dates, group size and what you want to do. Plan early.',
+        'Choose the meeting point: Hiroshima Station or Airport, a city hotel, Matsue/Izumo or Yonago.',
+        'On the day they pick you up, you do the activity and they drop you back.',
+      ],
+      consejos: [
+        'From Hiroshima: Inland Sea or lake SUP 1–1.5 h away; Sea of Japan surf 2–3 h; Daisen 4–5 h.',
+        'On a standard day they guide you free for up to 2 h of sightseeing during the transfers.',
+        'Same group on 2 or more consecutive days: a discount or extended service.',
+        'Not included: fuel, tolls, transport, food, lodging and admissions. Each extra hour: ¥11,000.',
+      ],
+      precio: 'Surfing or SUP: ¥88,000 per group of up to 4. Snowboarding: ¥88,000 per group of up to 5, plus rental and lift pass. 2027 prices for an 8-hour day.',
+    },
+    ar: {
+      intro: 'tenchan surfing club (Andmores) ينظّم أيامًا لركوب الأمواج والتجديف وقوفًا (SUP) والتزلج على الثلج في هيروشيما وشيماني وتوتوري. اليوم 8 ساعات من اللقاء حتى العودة، منها نحو ساعة تنقّل في كل اتجاه. أسعار 2027.',
+      para: [
+        'ركوب الأمواج أو SUP: 88,000 ين للمجموعة حتى 4 أشخاص مع اللوح (بدلة الغوص 2,200 ين للشخص، وكل مشارك إضافي 7,700 ين). موسم الأمواج من يونيو إلى نوفمبر.',
+        'التزلج في دايسن من أواخر ديسمبر إلى أوائل مارس: 88,000 ين للمجموعة حتى 5 أشخاص؛ الاستئجار نحو 8,000 ين للشخص وتذكرة المصاعد ليوم نحو 6,000 ين للشخص.',
+        'برامج خاصة: SUP في بحيرة + مزار قروي + مشي، أو أمواج + شواء + SUP.',
+      ],
+      pasos: [
+        'راسلهم بالبريد من موقعهم بالتواريخ وعددكم وما تريدون فعله. خطّط مبكرًا.',
+        'اختر مكان اللقاء: محطة هيروشيما أو مطارها، أو فندق في المدينة، أو ماتسوي/إيزومو أو يوناغو.',
+        'في اليوم نفسه يأخذونك، وتمارس النشاط، ثم يعيدونك.',
+      ],
+      consejos: [
+        'من هيروشيما: SUP في البحر الداخلي أو في بحيرة على بعد ساعة إلى ساعة ونصف؛ الأمواج في بحر اليابان على بعد 2-3 ساعات؛ دايسن على بعد 4-5 ساعات.',
+        'في اليوم العادي يرشدونك مجانًا في جولة سياحية حتى ساعتين أثناء التنقلات.',
+        'المجموعة نفسها يومين متتاليين أو أكثر: خصم أو خدمة أوسع.',
+        'لا يشمل الوقود ولا رسوم الطرق ولا المواصلات ولا الطعام ولا السكن ولا التذاكر. كل ساعة إضافية: 11,000 ين.',
+      ],
+      precio: 'ركوب الأمواج أو SUP: 88,000 ين للمجموعة حتى 4 أشخاص. التزلج: 88,000 ين للمجموعة حتى 5 أشخاص، مع الاستئجار والتذكرة. أسعار 2027 ليوم من 8 ساعات.',
+    },
+    ru: {
+      intro: 'tenchan surfing club (Andmores) проводит дни сёрфинга, SUP и сноуборда в Хиросиме, Симанэ и Тоттори. День — 8 часов от встречи до возвращения, включая около часа дороги в каждую сторону. Цены 2027 года.',
+      para: [
+        'Сёрфинг или SUP: 88 000 ¥ за группу до 4 человек, доска включена (гидрокостюм 2200 ¥ с человека, каждый дополнительный участник 7700 ¥). Сезон сёрфинга: с июня по ноябрь.',
+        'Сноуборд в Дайсэне, с конца декабря до начала марта: 88 000 ¥ за группу до 5 человек; прокат около 8000 ¥ и ски-пасс на день около 6000 ¥ с человека.',
+        'Планы под заказ: SUP на озере + деревенское святилище + поход или сёрфинг + барбекю + SUP.',
+      ],
+      pasos: [
+        'Напишите им на почту с их сайта: даты, сколько вас и что хотите. Планируйте заранее.',
+        'Выберите место встречи: вокзал или аэропорт Хиросимы, отель в центре, Мацуэ/Идзумо или Ёнаго.',
+        'В день выезда вас забирают, вы катаетесь, и вас привозят обратно.',
+      ],
+      consejos: [
+        'От Хиросимы: SUP во Внутреннем море или на озере — 1–1,5 ч, сёрфинг в Японском море — 2–3 ч, Дайсэн — 4–5 ч.',
+        'В обычный день до 2 часов экскурсии по пути — бесплатно.',
+        'Та же группа на 2 дня подряд и больше: скидка или больше услуг.',
+        'Не включены бензин, платные дороги, транспорт, еда, жильё и входные билеты. Каждый лишний час — 11 000 ¥.',
+      ],
+      precio: 'Сёрфинг или SUP: 88 000 ¥ за группу до 4 человек. Сноуборд: 88 000 ¥ за группу до 5 человек, плюс прокат и ски-пасс. Цены 2027 года за день 8 часов.',
+    },
+  },
 }
 
 export const T_RU: Record<string, { que: string; ventaja: string }> = {
+  fujioutdoor: { que: 'Лавовые слепки деревьев Фунацу-Тайнай у подножия Фудзи (всемирное наследие): их оставило извержение около 1000 лет назад, а паломники эпохи Эдо приходили сюда накануне восхождения на Фудзи. Также прогулка по первобытному лесу Аокигахара, по Фудзиёсиде со святилищем Фудзи Сэнгэн и мастер-класс палочек для еды с рубанком.', ventaja: 'Бронируйте через нас: мы всё согласуем и переводим, гид-переводчик проходит бесплатно. Лавовые слепки или лес: 3800 ¥ с человека (1 ч) или 38 000 ¥ за группу до 15 человек.' },
+  tenchan: { que: 'Сёрфинг или SUP в Японском море, во Внутреннем море Сэто или на озере и сноуборд в Дайсэне, с выездом из Хиросимы (вокзал, аэропорт или отель), Мацуэ/Идзумо или Ёнаго. День 8 часов с дорогой: 88 000 ¥ за группу до 4 человек (доска включена, гидрокостюм 2200 ¥), сноуборд — до 5 человек. Сёрфинг с июня по ноябрь, Дайсэн — с конца декабря до начала марта.', ventaja: 'В обычный день до 2 часов экскурсии по пути бесплатно; для той же группы на 2 дня подряд и больше — скидка или больше услуг. Есть планы под заказ. Бронь по почте, заранее.' },
   kobaien: { que: 'Старейший мастер туши сумí в Наре (с 1577): вы руками лепите свой брусок туши. Только с октября до середины апреля.', ventaja: 'Я забронирую по-японски и пойду с вами переводить, без доплаты.' },
   maikoyate: { que: 'Чайная церемония в Киото, групповая или частная, с объяснением на английском.', ventaja: 'Напишите мне в WhatsApp — забронирую со скидкой 10 %.' },
   inkansai: { que: 'Велотуры и гастротуры по Осаке, Киото и Хиросиме в малых группах на английском.', ventaja: 'Бронь на их сайте или через нас. На кулинарных курсах (Eat Osaka / Eat Kyoto) могут готовить без свинины; про халяль и алкоголь спросите заранее.' },

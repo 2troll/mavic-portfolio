@@ -40,13 +40,14 @@ export const SEO_VENTAJAS: Record<Lang, { titulo: string; descripcion: string }>
 
 export const RUTA_VENTAJAS: Record<Lang, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
-export type Ciudad = 'osaka' | 'kioto' | 'nara' | 'kumano' | 'tokio' | 'hiroshima' | 'ishikawa' | 'gifu' | 'nagasaki' | 'amakusa' | 'hokkaido'
+export type Ciudad = 'osaka' | 'kioto' | 'nara' | 'kumano' | 'tokio' | 'fuji' | 'hiroshima' | 'ishikawa' | 'gifu' | 'nagasaki' | 'amakusa' | 'hokkaido'
 export const CIUDADES: Record<Ciudad, Record<Lang, string>> = {
   osaka: { es: 'Osaka', en: 'Osaka', ar: 'أوساكا', ru: 'Осака' },
   kioto: { es: 'Kioto', en: 'Kyoto', ar: 'كيوتو', ru: 'Киото' },
   nara: { es: 'Nara', en: 'Nara', ar: 'نارا', ru: 'Нара' },
   kumano: { es: 'Kumano (Wakayama)', en: 'Kumano (Wakayama)', ar: 'كومانو (واكاياما)', ru: 'Кумано (Вакаяма)' },
   tokio: { es: 'Tokio', en: 'Tokyo', ar: 'طوكيو', ru: 'Токио' },
+  fuji: { es: 'Monte Fuji (Yamanashi)', en: 'Mt Fuji (Yamanashi)', ar: 'جبل فوجي (ياماناشي)', ru: 'Фудзи (Яманаси)' },
   hiroshima: { es: 'Hiroshima', en: 'Hiroshima', ar: 'هيروشيما', ru: 'Хиросима' },
   ishikawa: { es: 'Kanazawa y Hakusan (Ishikawa)', en: 'Kanazawa & Hakusan (Ishikawa)', ar: 'كانازاوا وهاكوسان (إيشيكاوا)', ru: 'Канадзава и Хакусан (Исикава)' },
   gifu: { es: 'Seki (Gifu)', en: 'Seki (Gifu)', ar: 'سيكي (غيفو)', ru: 'Сэки (Гифу)' },
@@ -678,6 +679,28 @@ const LISTA: App[] = [
       es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Se reserva en su web, o te lo reservo yo si quieres. En sus clases de cocina (Eat Osaka / Eat Kyoto) pueden preparar la comida sin cerdo; si necesitas halal o sin alcohol, pregúntame antes y lo consulto con ellos.' },
       en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'Book on their website, or I can book it for you. Their cooking classes (Eat Osaka / Eat Kyoto) can make the food without pork; if you need halal or no alcohol, ask me first and I will check with them.' },
       ar: { que: 'جولات بالدراجة وجولات طعام في أوساكا وكيوتو وهيروشيما، بمجموعات صغيرة وبالإنجليزية.', ventaja: 'يُحجز من موقعهم، أو أحجزه لك إن أردت. في دروس الطبخ لديهم (Eat Osaka / Eat Kyoto) يمكنهم تحضير الطعام بلا لحم خنزير؛ إن كنت تحتاج حلالًا أو بلا كحول فاسألني أولًا وأستفسر منهم.' },
+    },
+  },
+  {
+    // NPO 富士山アウトドアミュージアム (Funatsu, Fujikawaguchiko; correos del 16 y 17-11-2026). El 10 % que dan es comisión de
+    // agencia para Tony, NO descuento para el cliente: no se enseña ningún porcentaje. Se reserva conmigo (coordino e interpreto).
+    clave: 'fujioutdoor', cat: 'experiencias', ciudad: 'fuji', conTony: true, nombre: 'Fuji Mountain Outdoor Museum', enlace: 'https://www.fom3776.com',
+    marca: { fondo: '#24463a', tinta: '#eef3ea', boton: '#eef3ea', botonTinta: '#24463a', palabra: '富士' },
+    t: {
+      es: { que: 'Entra en los moldes de lava de árboles de Funatsu Tainai, Patrimonio Mundial al pie del Fuji: los dejó una erupción de hace unos 1.000 años, y en la era Edo los peregrinos visitaban este lugar sagrado el día antes de subir al Fuji. También caminata por el bosque primigenio de Aokigahara, paseo por Fujiyoshida con el santuario Fuji Sengen y taller de palillos con cepillo de carpintero.', ventaja: 'Resérvalo conmigo: coordino con ellos e interpreto, y el guía-intérprete entra gratis. Moldes de lava o bosque: 3.800 ¥ por persona (1 h) o 38.000 ¥ el grupo de hasta 15. Reserva cuanto antes.' },
+      en: { que: 'Step inside the Funatsu Tainai lava tree molds, a World Heritage site at the foot of Mt Fuji: an eruption about 1,000 years ago left them, and in the Edo period pilgrims visited this sacred site the day before climbing Fuji. Also an Aokigahara primeval-forest trek, a Fujiyoshida town walk with Fuji Sengen Shrine and a chopstick-making workshop with a hand plane.', ventaja: 'Book it through me: I coordinate with them and interpret, and the interpreter-guide joins free. Lava molds or forest: ¥3,800 per person (1 h) or ¥38,000 for a group of up to 15. Book as early as you can.' },
+      ar: { que: 'ادخل إلى قوالب الحمم لجذوع الأشجار في فوناتسو تايناي، وهي من التراث العالمي عند سفح جبل فوجي: تركها ثوران بركاني قبل نحو 1,000 عام، وكان الزوّار في عصر إيدو يقصدون هذا الموقع في اليوم السابق لصعود فوجي. وهناك أيضًا مشي في غابة أوكيغاهارا البكر، وجولة في فوجيوشيدا مع مزار فوجي سينغين، وورشة لصنع عيدان الأكل بالمسحج اليدوي.', ventaja: 'احجزه عن طريقي: أنسّق معهم وأترجم، والمرشد المترجم يدخل مجانًا. قوالب الحمم أو الغابة: 3,800 ين للشخص (ساعة) أو 38,000 ين للمجموعة حتى 15 شخصًا. احجز في أقرب وقت.' },
+    },
+  },
+  {
+    // tenchan surfing club (Andmores; correo del 17-11-2026): precios de 2027, día de 8 h desde el encuentro hasta la vuelta
+    // (con ~1 h de traslado por trayecto). Sin código ni comisión publicada; no es halal ni se marca como tal.
+    clave: 'tenchan', cat: 'experiencias', ciudad: 'hiroshima', nombre: 'tenchan surfing club', enlace: 'https://tenchanss.com/',
+    marca: { fondo: '#0f5c7a', tinta: '#e9f7fb', boton: '#e9f7fb', botonTinta: '#0f5c7a', palabra: '波' },
+    t: {
+      es: { que: 'Surf o SUP en el mar de Japón, el mar Interior de Seto o un lago, y snowboard en Daisen, saliendo de Hiroshima (estación, aeropuerto u hotel), Matsue/Izumo o Yonago. Día de 8 h con traslados: 88.000 ¥ el grupo de hasta 4 en surf o SUP (tabla incluida; traje 2.200 ¥ por persona) y de hasta 5 en snowboard. Surf de junio a noviembre; Daisen, de finales de diciembre a principios de marzo.', ventaja: 'En un día normal te guían gratis hasta 2 h de turismo durante los traslados, y el mismo grupo tiene descuento o más servicio si repite 2 días seguidos o más. Hacen planes a medida (SUP en un lago con santuario de pueblo y caminata, o surf con barbacoa y SUP). Se reserva por correo, con tiempo.' },
+      en: { que: 'Surfing or SUP on the Sea of Japan, the Seto Inland Sea or a lake, and snowboarding at Daisen, starting from Hiroshima (station, airport or hotel), Matsue/Izumo or Yonago. An 8-hour day with transfers: ¥88,000 for a group of up to 4 for surf or SUP (board included; wetsuit ¥2,200 per person) and up to 5 for snowboarding. Surf June to November; Daisen late December to early March.', ventaja: 'On a standard day they guide you free for up to 2 h of sightseeing during the transfers, and the same group gets a discount or extended service on 2 or more consecutive days. Custom plans too (lake SUP with a village shrine and a hike, or surf with a BBQ and SUP). Book by email, and plan early.' },
+      ar: { que: 'ركوب الأمواج أو التجديف وقوفًا (SUP) في بحر اليابان أو بحر سيتو الداخلي أو في بحيرة، والتزلج على الثلج في دايسن، انطلاقًا من هيروشيما (المحطة أو المطار أو الفندق) أو ماتسوي/إيزومو أو يوناغو. يوم من 8 ساعات مع التنقلات: 88,000 ين للمجموعة حتى 4 أشخاص في ركوب الأمواج أو SUP (اللوح مشمول، وبدلة الغوص 2,200 ين للشخص) وحتى 5 في التزلج. الأمواج من يونيو إلى نوفمبر، ودايسن من أواخر ديسمبر إلى أوائل مارس.', ventaja: 'في اليوم العادي يرشدونك مجانًا في جولة سياحية حتى ساعتين أثناء التنقلات، وللمجموعة نفسها خصم أو خدمة أوسع إن حجزت يومين متتاليين أو أكثر. ويصممون برامج خاصة (SUP في بحيرة مع مزار قروي ومشي، أو أمواج مع شواء وSUP). الحجز بالبريد ومبكرًا.' },
     },
   },
 ]
