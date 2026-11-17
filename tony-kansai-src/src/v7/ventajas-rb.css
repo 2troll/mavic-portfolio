@@ -1,0 +1,223 @@
+/* Bloques nuevos de la página de ventajas (17-11-2026, VentajasRB.tsx).
+   Mismo tema de noche (.vn) y un solo acento, el bermellón del torii.
+   Escalas grandes a propósito: titular de portada enorme, cifras huecas,
+   tarjetas con foto. Propiedades lógicas para que el árabe (RTL) salga bien. */
+
+/* ── Portada a sangre ───────────────────────────────────────────────── */
+.vn .rb-portada { position: relative; isolation: isolate; min-height: min(92svh, 980px); display: flex; align-items: flex-end; padding: clamp(120px, 18vh, 200px) 0 clamp(36px, 6vh, 64px); overflow: hidden; }
+.vn .rb-portada-foto { position: absolute; inset: 0; z-index: -2; margin: 0; }
+.vn .rb-portada-foto img { width: 100%; height: 118%; object-fit: cover; object-position: 50% 40%; display: block; will-change: transform; }
+.vn .rb-portada::before { content: ''; position: absolute; inset: 0; z-index: -1; background:
+  linear-gradient(180deg, rgba(12, 15, 21, .55) 0%, rgba(12, 15, 21, .25) 30%, rgba(12, 15, 21, .82) 68%, var(--vn-fondo) 100%),
+  radial-gradient(80% 60% at 0% 100%, rgba(229, 83, 61, .28), transparent 70%); }
+.vn .rb-portada-txt { position: relative; }
+.vn .rb-portada h1 { font-size: clamp(3rem, 8.4vw, 8rem); line-height: .94; letter-spacing: -0.055em; max-width: 13ch; font-weight: 800; text-wrap: balance; text-shadow: 0 10px 40px rgba(0, 0, 0, .35); }
+.vn.lang-ar .rb-portada h1 { letter-spacing: 0; line-height: 1.15; }
+.vn.lang-ru .rb-portada h1 { font-size: clamp(2.6rem, 7vw, 6.6rem); }
+.rb-ojo { display: inline-flex; align-items: center; gap: 10px; margin: 0 0 18px; font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #ffb4a6; }
+.vn.lang-ar .rb-ojo { letter-spacing: 0; font-size: .95rem; }
+.rb-ojo-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--vn-acento); box-shadow: 0 0 0 5px rgba(229, 83, 61, .25); }
+.rb-rota { display: flex; flex-wrap: wrap; align-items: center; gap: .35em; margin: 22px 0 0; font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; color: var(--vn-tinta); }
+.vn.lang-ar .rb-rota { letter-spacing: 0; }
+.rb-rota-caja { display: inline-flex; white-space: nowrap; padding: .08em .45em .14em; border-radius: .38em; background: var(--vn-acento); color: #fff; overflow: hidden; }
+.vn .rb-portada-sub { font-size: clamp(1.05rem, 1.4vw, 1.25rem); max-width: 52ch; margin-top: 22px; color: #d5dae3; }
+.rb-ctas { align-items: center; }
+.vn .rb-cta { font-weight: 700; font-size: 1.05rem; padding: 16px 30px; text-decoration: none; }
+.rb-cifras { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; margin: clamp(36px, 6vh, 64px) 0 0; border-top: 1px solid rgba(255, 255, 255, .16); }
+.rb-cifras > div { display: flex; flex-direction: column-reverse; gap: 4px; padding: 18px 18px 0 0; border-inline-end: 1px solid rgba(255, 255, 255, .1); }
+.rb-cifras > div:last-child { border-inline-end: 0; }
+.vn.lang-ar .rb-cifras > div { padding: 18px 0 0 18px; }
+.rb-cifras dt { color: var(--vn-suave); font-size: .92rem; }
+.rb-cifras dd { margin: 0; }
+.rb-cifra { display: block; font-size: clamp(2.8rem, 6vw, 5.4rem); font-weight: 800; line-height: 1; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.5px var(--vn-tinta); font-variant-numeric: tabular-nums; }
+.rb-cifras > div:nth-child(2) .rb-cifra { -webkit-text-stroke-color: #ff8a75; }
+
+/* ── Cómo funciona: cinco formas de conseguir la ventaja ─────────────── */
+.rb-como { padding: clamp(72px, 10vw, 130px) 0 clamp(24px, 4vw, 48px); }
+.rb-como-grid { list-style: none; margin: 40px 0 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 14px; }
+.rb-como-grid > li { display: flex; }
+.vn .rb-como-tarjeta { flex: 1; display: flex; flex-direction: column; gap: 10px; padding: 26px 22px 22px; border-radius: var(--vn-radio); --spotlight-card-surface: var(--vn-capa) !important; background-color: var(--vn-capa); }
+.rb-como-n { font-size: 3.2rem; font-weight: 800; line-height: .9; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .28); }
+.rb-como-ico { color: #ff8a75; margin-top: 6px; }
+.rb-como-tarjeta h3 { margin: 4px 0 0; font-size: 1.15rem; letter-spacing: -0.02em; }
+.rb-como-tarjeta p { margin: 0; color: var(--vn-suave); font-size: .94rem; line-height: 1.5; }
+.rb-como-socios { display: flex; margin-top: auto; padding-top: 12px; }
+.rb-como-socios .rb-ico { width: 30px; height: 30px; border-radius: 9px; border: 2px solid var(--vn-capa); margin-inline-end: -8px; }
+.rb-como-acciones { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 8px; position: relative; z-index: 2; }
+.rb-como-ver, .rb-como-pase { display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; font: inherit; font-size: .88rem; font-weight: 650; cursor: pointer; border: 1px solid var(--vn-linea); background: transparent; color: var(--vn-tinta); transition: background-color .18s ease, border-color .18s ease; }
+.rb-como-ver:hover { border-color: rgba(255, 255, 255, .35); }
+.rb-como-pase { background: var(--vn-acento); border-color: var(--vn-acento); color: #fff; }
+.vn.lang-ar .rb-como-ver svg { transform: scaleX(-1); }
+
+/* ── Iconos de socio ────────────────────────────────────────────────── */
+.rb-ico { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--marca); color: var(--marca-tinta); overflow: hidden; box-shadow: 0 6px 18px -8px rgba(0, 0, 0, .6); }
+.rb-ico img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.rb-ico b { font-size: 1.1rem; }
+
+/* ── Experiencias: rejilla de tarjetas ──────────────────────────────── */
+.vn .rb-exp { padding-top: clamp(48px, 7vw, 90px); }
+.rb-chips button { display: inline-flex; align-items: center; }
+.rb-exp-grid { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 16px; }
+.rb-exp-grid > li { display: flex; scroll-margin-top: 140px; }
+.rb-exp-grid > li.es-plegada { display: none; }
+.vn .rb-exp-tarjeta { flex: 1; padding: 0; border-radius: var(--vn-radio); --spotlight-card-surface: var(--vn-capa) !important; background-color: var(--vn-capa); transition: transform .3s cubic-bezier(.16, 1, .3, 1); }
+.vn .rb-exp-tarjeta:hover { transform: translateY(-4px); }
+.rb-exp-boton { all: unset; box-sizing: border-box; display: flex; flex-direction: column; width: 100%; height: 100%; cursor: pointer; border-radius: inherit; }
+.rb-exp-boton:focus-visible { outline: 2px solid var(--vn-acento); outline-offset: 3px; }
+.rb-exp-foto { position: relative; display: block; aspect-ratio: 16 / 10; background: radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--marca) 70%, #fff 10%), var(--marca)); overflow: hidden; border-radius: var(--vn-radio) var(--vn-radio) 0 0; }
+.rb-exp-foto img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform .6s cubic-bezier(.16, 1, .3, 1); }
+.rb-exp-foto::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 45%, rgba(12, 15, 21, .7)); }
+.rb-exp-tarjeta:hover .rb-exp-foto img { transform: scale(1.06); }
+.rb-exp-kanji { position: absolute; inset-inline-end: 12px; top: 6px; z-index: 1; font-size: 3.4rem; font-weight: 800; line-height: 1; color: var(--marca-tinta); opacity: .22; font-family: 'Hiragino Mincho ProN', 'Yu Mincho', serif; pointer-events: none; }
+.rb-exp-foto img ~ .rb-exp-kanji { color: #fff; opacity: .5; text-shadow: 0 2px 16px rgba(0, 0, 0, .5); }
+.rb-exp-foto .rb-ico { position: absolute; inset-inline-start: 14px; bottom: 12px; z-index: 2; width: 52px; height: 52px; border-radius: 14px; border: 2px solid rgba(255, 255, 255, .85); }
+.rb-exp-foto:not(:has(img)) .rb-ico { transform: none; top: 50%; inset-inline-start: 50%; translate: -50% -50%; width: 72px; height: 72px; border-radius: 20px; border: 0; }
+.vn.lang-ar .rb-exp-foto:not(:has(img)) .rb-ico { translate: 50% -50%; }
+.rb-exp-foto:not(:has(img))::after { display: none; }
+.rb-exp-cuerpo { display: flex; flex-direction: column; gap: 8px; padding: 18px 18px 18px; flex: 1; }
+.rb-exp-lugar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; font-size: .76rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--vn-suave); }
+.vn.lang-ar .rb-exp-lugar { letter-spacing: 0; font-size: .85rem; }
+.rb-sello-musulman { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; background: rgba(52, 199, 123, .14); color: #6fe0a5; font-size: .72rem; letter-spacing: 0; text-transform: none; font-weight: 650; }
+.rb-exp-nombre { font-size: 1.15rem; line-height: 1.25; letter-spacing: -0.02em; color: var(--vn-tinta); }
+.rb-exp-que { color: var(--vn-suave); font-size: .9rem; line-height: 1.5; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.rb-canje { align-self: flex-start; display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px; margin-top: 4px; padding: 7px 12px; border-radius: 12px; font-size: .86rem; font-weight: 650; background: rgba(255, 255, 255, .06); color: var(--vn-tinta); border: 1px solid var(--vn-linea); }
+.rb-canje code { font-family: 'Geist Mono Variable', ui-monospace, monospace; font-size: .84em; padding: 2px 7px; border-radius: 6px; background: rgba(255, 255, 255, .1); }
+.rb-canje em { font-style: normal; color: #ff8a75; font-weight: 800; }
+.rb-canje.es-codigo { background: rgba(229, 83, 61, .14); border-color: rgba(229, 83, 61, .45); }
+.rb-canje.es-codigo svg, .rb-canje.es-comentario svg, .rb-canje.es-nombre svg, .rb-canje.es-logo svg { color: #ff8a75; }
+.rb-canje.es-comentario, .rb-canje.es-nombre, .rb-canje.es-logo { background: rgba(255, 180, 166, .08); border-color: rgba(255, 180, 166, .3); }
+.rb-canje.es-conmigo { background: rgba(255, 255, 255, .08); }
+.rb-canje.es-directo { color: var(--vn-suave); background: transparent; }
+.rb-exp-reglas { display: flex; flex-wrap: wrap; gap: 6px; margin-top: auto; padding-top: 8px; }
+.rb-exp-reglas span { font-size: .78rem; color: var(--vn-suave); padding: 4px 9px; border-radius: 999px; border: 1px dashed rgba(255, 255, 255, .16); }
+.rb-exp-meta { margin-top: auto; padding-top: 8px; font-size: .84rem; color: var(--vn-suave); }
+.rb-modal-vistazo, .rb-modal-pasos { margin-top: 22px; }
+.rb-mas { display: flex; justify-content: center; margin: 32px 0 0; }
+.rb-vacio { margin: 32px 0 0; color: var(--vn-suave); }
+
+/* ── Ficha emergente ────────────────────────────────────────────────── */
+html.rb-sin-scroll { overflow: hidden; }
+.rb-modal-fondo { position: fixed; inset: 0; z-index: 200; display: grid; place-items: center; padding: 20px; background: rgba(6, 8, 12, .72); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.rb-modal { position: relative; width: min(100%, 720px); max-height: calc(100dvh - 40px); overflow-y: auto; overscroll-behavior: contain; border-radius: 24px; background: var(--vn-capa); color: var(--vn-tinta); border: 1px solid var(--vn-linea); box-shadow: 0 50px 120px -30px rgba(0, 0, 0, .8); }
+.rb-modal-cerrar { position: absolute; top: 14px; inset-inline-end: 14px; z-index: 3; display: grid; place-items: center; width: 42px; height: 42px; border-radius: 50%; border: 0; cursor: pointer; background: rgba(12, 15, 21, .7); color: #fff; backdrop-filter: blur(8px); }
+.rb-modal-cara { position: relative; aspect-ratio: 16 / 8; background: radial-gradient(120% 120% at 100% 0%, color-mix(in srgb, var(--marca) 70%, #fff 10%), var(--marca)); overflow: hidden; }
+.rb-modal-foto { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.rb-modal-cara .vz-credito { position: absolute; inset-inline-end: 10px; bottom: 10px; max-width: 60%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; z-index: 2; font-size: .68rem; color: #fff; opacity: .8; background: rgba(0, 0, 0, .4); padding: 2px 6px; border-radius: 4px; text-decoration: none; }
+.rb-modal-cara .rb-exp-kanji { font-size: 5rem; }
+.rb-modal-cara .rb-ico { position: absolute; inset-inline-start: 24px; bottom: 20px; width: 72px; height: 72px; border-radius: 20px; border: 3px solid var(--vn-capa); z-index: 2; }
+.rb-modal-cuerpo { padding: 24px clamp(20px, 4vw, 36px) 32px; }
+.rb-modal-lugar { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin: 0; font-size: .8rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--vn-suave); }
+.rb-modal-cuerpo h3 { margin: 8px 0 0; font-size: clamp(1.6rem, 3.6vw, 2.2rem); letter-spacing: -0.03em; line-height: 1.1; }
+.rb-modal-que { margin: 12px 0 0; color: #cdd3dd; line-height: 1.6; }
+.rb-paso { margin: 22px 0 0; padding: 18px; border-radius: 16px; background: rgba(229, 83, 61, .1); border: 1px solid rgba(229, 83, 61, .4); }
+.rb-paso.es-conmigo { background: rgba(255, 255, 255, .05); border-color: var(--vn-linea); }
+.rb-paso.es-directo { background: transparent; border-style: dashed; border-color: var(--vn-linea); }
+.rb-paso-titulo { display: flex; align-items: center; gap: 8px; margin: 0; font-size: .95rem; color: var(--vn-suave); }
+.rb-paso-titulo svg { color: #ff8a75; flex: none; }
+.rb-paso-titulo b { color: var(--vn-tinta); }
+.rb-paso-d { margin: 8px 0 0; line-height: 1.5; }
+.rb-copiable { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-top: 14px; padding: 12px 12px 12px 16px; border-radius: 12px; border: 1.5px dashed rgba(255, 255, 255, .35); background: rgba(12, 15, 21, .55); color: var(--vn-tinta); font: inherit; cursor: pointer; text-align: start; }
+.rb-copiable-txt { font-family: 'Geist Mono Variable', ui-monospace, monospace; font-size: 1.15rem; font-weight: 600; letter-spacing: .02em; overflow-wrap: anywhere; }
+.rb-copiable-accion { flex: none; display: inline-flex; align-items: center; gap: 6px; padding: 8px 14px; border-radius: 999px; background: var(--vn-tinta); color: var(--vn-fondo); font-size: .85rem; font-weight: 700; }
+.rb-copiable.es-hecho { border-color: #6fe0a5; }
+.rb-copiable.es-hecho .rb-copiable-accion { background: #6fe0a5; }
+.rb-boton-pase { display: inline-flex; align-items: center; gap: 8px; margin-top: 12px; padding: 12px 18px; border-radius: 999px; border: 0; cursor: pointer; font: inherit; font-weight: 700; background: var(--vn-acento); color: #fff; }
+.rb-modal-h4 { margin: 26px 0 0; font-size: .78rem; letter-spacing: .1em; text-transform: uppercase; color: var(--vn-suave); }
+.rb-reglas { list-style: none; margin: 10px 0 0; padding: 0; display: grid; gap: 8px; }
+.rb-reglas li { display: flex; gap: 8px; align-items: flex-start; line-height: 1.45; }
+.rb-reglas svg { flex: none; margin-top: 3px; color: #6fe0a5; }
+.rb-modal-ventaja { margin: 14px 0 0; color: var(--vn-suave); line-height: 1.6; font-size: .95rem; }
+.rb-modal-acciones { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 24px; }
+.rb-modal-ficha { display: inline-block; margin-top: 16px; }
+
+/* ── Pase para recepción: claro, grande y legible ───────────────────── */
+.rb-pase-fondo { position: fixed; inset: 0; z-index: 300; display: grid; place-items: center; padding: 16px; background: rgba(6, 8, 12, .86); perspective: 1200px; }
+.rb-pase { position: relative; width: min(100%, 440px); padding: 34px 26px 26px; border-radius: 28px; text-align: center; background: #fbf8f3; color: #16181d; box-shadow: 0 40px 100px -20px rgba(229, 83, 61, .5); overflow: hidden; }
+.rb-pase::before { content: ''; position: absolute; inset: 0 0 auto; height: 10px; background: repeating-linear-gradient(90deg, #e5533d 0 22px, #c9402c 22px 44px); }
+.rb-pase-cerrar { position: absolute; top: 16px; inset-inline-end: 14px; display: grid; place-items: center; width: 40px; height: 40px; border: 0; border-radius: 50%; background: #ece6dc; color: #16181d; cursor: pointer; }
+.rb-pase-ojo { margin: 6px 0 0; font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: #c9402c; }
+.rb-pase-torii { width: 108px; height: 108px; margin: 16px auto 0; color: #e5533d; display: block; }
+.rb-pase-marca { margin: 6px 0 0; font-size: 2rem; font-weight: 800; letter-spacing: -0.03em; }
+.rb-pase-ja { margin: 16px 0 0; font-size: clamp(1rem, 4.6vw, 1.3rem); line-height: 1.55; font-weight: 700; font-family: 'Hiragino Sans', 'Yu Gothic', 'Noto Sans JP', sans-serif; }
+.rb-pase-local { margin: 10px 0 0; color: #4a4f59; line-height: 1.5; }
+.rb-pase-socio { margin: 14px auto 0; display: inline-block; padding: 6px 14px; border-radius: 999px; background: #16181d; color: #fff; font-weight: 700; font-size: .92rem; }
+.rb-pase-fecha { margin: 18px 0 0; padding-top: 14px; border-top: 2px dashed #e2dacd; color: #6b707b; font-size: .85rem; }
+.rb-pase-brillo { margin: 8px 0 0; color: #9a9ea6; font-size: .78rem; }
+
+/* ── Códigos: billetes en rejilla ───────────────────────────────────── */
+.rb-billetes { list-style: none; margin: 36px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 16px; }
+.rb-billete { position: relative; display: flex; flex-direction: column; border-radius: 20px; background: linear-gradient(160deg, color-mix(in srgb, var(--marca) 34%, var(--vn-capa)), var(--vn-capa) 62%); border: 1px solid var(--vn-linea); overflow: hidden; }
+.rb-billete-cab { display: flex; align-items: center; gap: 12px; padding: 18px 18px 0; }
+.rb-billete-cab b { display: block; font-size: 1rem; }
+.rb-billete-cab small { color: var(--vn-suave); font-size: .8rem; }
+.rb-billete-dto { margin: 14px 18px 0; font-size: clamp(2.6rem, 4vw, 3.4rem); font-weight: 800; letter-spacing: -0.05em; line-height: 1; color: var(--vn-tinta); }
+.rb-billete-corte { position: relative; height: 22px; margin-top: 14px; }
+.rb-billete-corte::before { content: ''; position: absolute; inset-inline: 16px; top: 50%; border-top: 2px dashed rgba(255, 255, 255, .2); }
+.rb-billete-corte::after { content: ''; position: absolute; inset-inline: -11px; top: 0; height: 22px; background: radial-gradient(circle at 0 50%, var(--vn-fondo) 10px, transparent 11px), radial-gradient(circle at 100% 50%, var(--vn-fondo) 10px, transparent 11px); }
+.rb-billete-cod { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 4px 14px 0; padding: 12px 12px 12px 14px; border-radius: 12px; border: 1.5px dashed rgba(255, 255, 255, .3); background: rgba(12, 15, 21, .5); color: var(--vn-tinta); font: inherit; cursor: pointer; text-align: start; }
+.rb-billete-txt { font-family: 'Geist Mono Variable', ui-monospace, monospace; font-size: 1.05rem; font-weight: 700; letter-spacing: .03em; direction: ltr; unicode-bidi: isolate; word-break: break-all; }
+.rb-billete-cifrado { color: #ff8a75; }
+.rb-billete-copiar { flex: none; display: inline-flex; align-items: center; gap: 5px; padding: 6px 11px; border-radius: 999px; background: var(--vn-tinta); color: var(--vn-fondo); font-size: .8rem; font-weight: 700; }
+.rb-billete-cod .rb-si-hecho { display: none; }
+.rb-billete-cod[data-hecho] { border-color: #6fe0a5; }
+.rb-billete-cod[data-hecho] .rb-billete-copiar { background: #6fe0a5; }
+.rb-billete-cod[data-hecho] .rb-si-hecho { display: inline; }
+.rb-billete-cod[data-hecho] .rb-no-hecho { display: none; }
+.rb-billete-pie { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 14px; margin: 0; padding: 14px 18px 18px; font-size: .85rem; color: var(--vn-suave); }
+.rb-billete-pie small { flex: 1 1 100%; }
+.rb-billete-pie a { color: var(--vn-tinta); font-weight: 650; }
+.rb-cod-pie { margin-top: 40px; }
+
+/* ── Te lo digo claro ───────────────────────────────────────────────── */
+.rb-claro { padding: clamp(60px, 9vw, 120px) 0; border-block: 1px solid var(--vn-linea); background: radial-gradient(60% 80% at 50% 0%, rgba(229, 83, 61, .12), transparent 70%); }
+.vn .rb-claro-caja { margin: 0; max-width: none; }
+.vn .rb-claro-txt { font-size: clamp(1.7rem, 4.2vw, 3.6rem); line-height: 1.2; letter-spacing: -0.035em; font-weight: 700; color: var(--vn-tinta); }
+.vn.lang-ar .rb-claro-txt { letter-spacing: 0; line-height: 1.5; }
+.vn .rb-claro-txt { max-width: 26ch; }
+
+/* ── Móvil ──────────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .rb-como-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rb-como-grid > li:last-child { grid-column: 1 / -1; }
+}
+@media (max-width: 720px) {
+  .vn .rb-portada { min-height: 88svh; padding-top: 110px; }
+  .vn .rb-portada h1 { font-size: clamp(2.7rem, 13vw, 4rem); }
+  .rb-cifras { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rb-cifras > div:nth-child(2) { border-inline-end: 0; }
+  .rb-cifra { font-size: 2.9rem; }
+  /* Cómo funciona y códigos: carrusel que se desliza con el dedo (la página ya es larga). */
+  .rb-como-grid, .rb-billetes { display: flex; gap: 12px; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: -16px; padding: 4px 16px 14px; scrollbar-width: none; }
+  .rb-como-grid::-webkit-scrollbar, .rb-billetes::-webkit-scrollbar { display: none; }
+  .rb-como-grid > li, .rb-billetes > li { flex: 0 0 80%; scroll-snap-align: start; }
+  .rb-como-grid > li:last-child { grid-column: auto; }
+  .vn .rb-como-tarjeta { padding: 20px 18px; }
+  .rb-como-n { font-size: 2.4rem; }
+  /* Filtros en una fila que se desliza: antes ocupaban media pantalla. */
+  .vn .rb-chips { flex-wrap: nowrap; overflow-x: auto; margin-inline: -16px; padding: 2px 16px 4px; margin-top: 16px; scrollbar-width: none; }
+  .vn .rb-chips::-webkit-scrollbar { display: none; }
+  .vn .rb-chips button, .vn .rb-chips .vn-chips-titulo { flex: none; white-space: nowrap; }
+  .vn .rb-chips .vn-chips-titulo { min-width: 0; margin-inline-end: 4px; }
+  /* En el móvil, tarjeta horizontal: foto pequeña a un lado; la lista ocupa la mitad. */
+  .rb-exp-grid { gap: 10px; }
+  .rb-exp-boton { flex-direction: row; align-items: stretch; }
+  .rb-exp-foto { flex: none; width: 112px; aspect-ratio: auto; border-radius: var(--vn-radio) 0 0 var(--vn-radio); }
+  .vn.lang-ar .rb-exp-foto { border-radius: 0 var(--vn-radio) var(--vn-radio) 0; }
+  .rb-exp-foto .rb-ico, .rb-exp-foto:not(:has(img)) .rb-ico { top: auto; bottom: 10px; inset-inline-start: 10px; translate: none; transform: none; width: 40px; height: 40px; border-radius: 11px; border-width: 2px; }
+  .rb-exp-kanji { font-size: 2.4rem; }
+  .rb-exp-cuerpo { padding: 14px 14px 14px; gap: 6px; min-width: 0; }
+  .rb-exp-nombre { font-size: 1.02rem; }
+  .rb-exp-que { font-size: .84rem; }
+  .rb-exp-reglas { display: none; }
+  .rb-exp-meta { padding-top: 2px; font-size: .78rem; }
+  .rb-canje { font-size: .8rem; padding: 6px 10px; }
+  .rb-modal-fondo { padding: 0; place-items: end stretch; }
+  .rb-modal { width: 100%; max-height: 92dvh; border-radius: 24px 24px 0 0; }
+  .rb-modal-acciones .vn-boton { flex: 1 1 auto; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vn .rb-exp-tarjeta, .rb-exp-foto img { transition: none; }
+  .vn .rb-exp-tarjeta:hover { transform: none; }
+  .rb-exp-tarjeta:hover .rb-exp-foto img { transform: none; }
+}
+.rb-pase-ja span { display: block; }

@@ -227,6 +227,9 @@ export const FOTO_EXP: Record<string, string> = {
   cookingsun: 'kioto-nishiki', hamanasu: 'lejos-kumano', yokotake: 'kioto-arashiyama', domyo: 'kioto-kinkakuji',
   okamoto: 'kioto-kiyomizu', nakamura: 'kioto-fushimi', japaneid: 'osaka-dotonbori', flytographer: 'kioto-gion',
   kobaien: 'nara-naramachi', maikoyate: 'kioto-gion', inkansai: 'osaka-castillo',
+  // 17-11-2026: foto de su ciudad para los que no tenían (la página de ventajas va ahora en tarjetas con foto).
+  teaosaka: 'osaka-dotonbori', ninjacafe: 'osaka-castillo', osakacookingbase: 'osaka-kuromon',
+  cookingsunosaka: 'osaka-kuromon', koto: 'hiroshima-miyajima', shaquda: 'hiroshima-misen',
 }
 
 /** Fotos que nos manda el propio socio (public/v7/socios/<clave>-600|-900|.webp).

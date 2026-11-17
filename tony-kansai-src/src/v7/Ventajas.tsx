@@ -5,6 +5,11 @@
 // Movimiento: Lenis + GSAP (SplitText, ScrollTrigger) cargados en el cliente;
 // con «reducir movimiento» la página queda quieta y entera.
 // Las fichas de cada app (/es/ventajas/airalo/) siguen en FichaVentaja.tsx con ventajas.css.
+// 17-11-2026: portada, «cómo se consigue cada ventaja», experiencias en tarjetas con ficha
+// emergente, pase para recepción, códigos y «te lo digo claro» pasan a VentajasRB.tsx
+// (componentes de React Bits) con las condiciones que pidió cada socio (datosCanje.ts).
+// Se juntó con el rediseño paralelo del mismo día: sus cintas de socios y apps, y sus
+// datos de un vistazo (Vistazo.tsx: desde, duración, grupo) van dentro de las tarjetas.
 import { PlanesVenta } from './PlanesVenta'
 import { lazy, Suspense, useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
@@ -18,7 +23,8 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
 import { APPS, CATEGORIAS, CIUDADES, KANSAI, REGIONES, SEO_VENTAJAS, ciudadesDe, cuponDe, enKansai, esAfiliado, enlaceDe, type Categoria, type Ciudad } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
-import { CodigoCifrado } from './Cocina'
+import { PortadaRB, ComoFunciona, ExperienciasRB, CodigosRB, ClaroRB, PaseTony } from './VentajasRB'
+import type { Canje } from './datosCanje'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
 import { GUIA, FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
@@ -359,10 +365,11 @@ function Pie({ id }: { id: VentajasId }) {
   )
 }
 
+const COMO_IDX: Record<VentajasId, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
 // Índice bajo la barra: marca la sección que se está leyendo.
 function Indice({ id }: { id: VentajasId }) {
   const t = INDICE[id]
-  const secciones = [['planes', PLANES_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
+  const secciones = [['como', COMO_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['planes', PLANES_IDX[id]], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
   const [activa, setActiva] = useState('')
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
@@ -387,136 +394,6 @@ function IconoExp({ a, grande }: { a: App; grande?: boolean }) {
   )
 }
 
-function DetalleExp({ a, id, ruta }: { a: App; id: VentajasId; ruta: string }) {
-  const t = EXP_T[id]
-  const tx = textoApp(a, id)
-  const cupon = cuponDe(a)
-  const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', t.msg.replace('{n}', a.nombre))
-  return (
-    <div className="vn-det" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
-      <div className={`vn-det-cara${FOTO_SOCIO[a.clave] || FOTO_EXP[a.clave] ? ' con-foto' : ''}`}>
-        {FOTO_SOCIO[a.clave] ? <FotoSocio {...FOTO_SOCIO[a.clave]} alt={FOTO_SOCIO[a.clave].alt[id]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />
-          : FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} className="vn-det-foto" sizes="(max-width: 900px) 100vw, 600px" />}
-        {a.marca.palabra && <span className="vn-det-kanji" aria-hidden="true">{a.marca.palabra}</span>}
-        <IconoExp a={a} grande />
-      </div>
-      <div className="vn-det-cuerpo">
-        <div className="vn-det-cab">
-          <p className="vn-det-lugar">{a.ciudad ? ciudadesDe(a).map((c) => CIUDADES[c][id]).join(' · ') : 'Kansai'}</p>
-          <SelloVentaja a={a} id={id} grande />
-        </div>
-        <h3><bdi dir="ltr">{a.nombre}</bdi></h3>
-        <p className="vn-det-que">{tx.que}</p>
-        <Vistazo a={a} id={id} />
-        <p className="vn-det-ventaja">{tx.ventaja}</p>
-        {a.musulman && <p className="vn-sellos"><span className="es-musulman">{t.musulman}</span></p>}
-        <PasosReserva a={a} id={id} />
-        {/* Código que no es descuento (el nº de guía de Yumeyakata): se enseña tal cual. */}
-        {cupon && !a.descuento && <p className="vn-det-cupon"><bdi dir="ltr"><code>{cupon}</code></bdi></p>}
-        <div className="vn-det-acciones">
-          <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={id === 'ru'} /> {t.reservar}</a>
-          <a className="vn-boton vn-boton-linea" href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">{t.abrir}</a>
-          <Link className={`vn-enlace${GUIA[a.clave] ? ' vn-enlace-solo' : ''}`} to={`${ruta}${a.clave}/`}>{GUIA[a.clave] ? t.solo : MAS[id]}</Link>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// Experiencias: lista a la izquierda y vista previa fija a la derecha (en el móvil,
-// la ficha se abre bajo su fila). Sustituye a las 16 tarjetas iguales.
-function Experiencias({ id, ruta }: { id: VentajasId; ruta: string }) {
-  const t = EXP_T[id]
-  const [filtro, setFiltro] = useState<FiltroExp>('')
-  const [sel, setSel] = useState(ORDENADAS[0]?.clave ?? '')
-  // Una experiencia con locales en varias ciudades (Ninja Cafe, Wargo) sale en el filtro de cada una.
-  const enCiudad = (a: App, c: Ciudad) => ciudadesDe(a).includes(c)
-  const ciudades = (Object.keys(CIUDADES) as Ciudad[]).filter((c) => EXPERIENCIAS.some((a) => enCiudad(a, c)))
-  const pasa = (a: App) => !filtro || (filtro === 'musulman' ? a.musulman : filtro === 'conTony' ? a.conTony : enCiudad(a, filtro))
-  const lista = ORDENADAS.filter(pasa)
-  const actual = lista.find((a) => a.clave === sel) ?? lista[0]
-  // Llegar con #clave (desde el kit, otra página o WhatsApp) abre esa experiencia.
-  useEffect(() => {
-    const abrir = () => { const k = location.hash.slice(1); if (EXPERIENCIAS.some((a) => a.clave === k)) { setFiltro(''); setSel(k) } }
-    abrir()
-    window.addEventListener('hashchange', abrir)
-    return () => window.removeEventListener('hashchange', abrir)
-  }, [])
-  const chip = (c: Ciudad) => ({ k: c as FiltroExp, txt: CIUDADES[c][id], n: EXPERIENCIAS.filter((a) => enCiudad(a, c)).length })
-  const chips: { k: FiltroExp; txt: string; n: number }[] = [
-    { k: '', txt: t.todas, n: EXPERIENCIAS.length },
-    { k: 'musulman', txt: t.musulman, n: EXPERIENCIAS.filter((a) => a.musulman).length },
-    { k: 'conTony', txt: t.conTony, n: EXPERIENCIAS.filter((a) => a.conTony).length },
-  ]
-  // Ciudades en dos grupos: Kansai primero y luego el resto de Japón.
-  const grupos = [
-    { k: 'kansai', txt: REGIONES.kansai[id], chips: ciudades.filter((c) => KANSAI.includes(c)).map(chip) },
-    { k: 'japon', txt: REGIONES.japon[id], chips: ciudades.filter((c) => !KANSAI.includes(c)).map(chip) },
-  ].filter((g) => g.chips.length)
-  // Función, no componente: así el botón no se vuelve a montar al pulsarlo y no pierde el foco.
-  const chipBoton = (c: { k: FiltroExp; txt: string; n: number }) => (
-    <button key={c.k || 'todas'} type="button" aria-pressed={filtro === c.k} onClick={() => setFiltro(c.k)}>
-      {c.txt} <small>{c.n}</small>
-    </button>
-  )
-  return (
-    <section className="vn-exp" id="experiencias" aria-labelledby="vn-exp-t">
-      <div className="vn-ancho">
-        <div className="vn-exp-cab">
-          <span className="vn-hueco vn-exp-num" aria-hidden="true">{EXPERIENCIAS.length}</span>
-          <div>
-            <h2 id="vn-exp-t" className="vn-h2 vn-sube">{t.titulo}</h2>
-            <p className="vn-lead vn-sube">{t.sub}</p>
-          </div>
-        </div>
-        <div className="vn-chips" role="group" aria-label={t.titulo}>
-          {chips.map(chipBoton)}
-        </div>
-        {grupos.map((g) => (
-          <div key={g.k} className="vn-chips vn-chips-region" role="group" aria-label={g.txt}>
-            <span className="vn-chips-titulo">{g.txt}</span>
-            {g.chips.map(chipBoton)}
-          </div>
-        ))}
-        <div className="vn-exp-grid">
-          <ol className="vn-exp-lista">
-            {lista.map((a) => {
-              const abierta = a === actual
-              return (
-                <li key={a.clave} id={a.clave} className={abierta ? 'es-sel' : undefined}>
-                  <button type="button" className="vn-exp-fila" aria-expanded={abierta}
-                    onMouseEnter={() => setSel(a.clave)} onFocus={() => setSel(a.clave)} onClick={() => setSel(a.clave)}>
-                    <IconoExp a={a} />
-                    <span className="vn-exp-txt">
-                      <b><bdi dir="ltr">{a.nombre}</bdi></b>
-                      <small>{textoApp(a, id).que}</small>
-                      <span className="vn-exp-linea">
-                        <SelloVentaja a={a} id={id} />
-                        <MetaFila a={a} id={id} />
-                        {a.musulman && <span className="vn-exp-mus">{t.musulman}</span>}
-                      </span>
-                    </span>
-                  </button>
-                  {abierta && <div className="vn-exp-movil"><DetalleExp a={a} id={id} ruta={ruta} /></div>}
-                </li>
-              )
-            })}
-          </ol>
-          <div className="vn-exp-panel">
-            <AnimatePresence mode="wait" initial={false}>
-              {actual && (
-                <motion.div key={actual.clave} initial={{ opacity: 0, y: 14 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} transition={{ duration: 0.28, ease: [0.16, 1, 0.3, 1] }}>
-                  <DetalleExp a={actual} id={id} ruta={ruta} />
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </div>
-        </div>
-      </div>
-    </section>
-  )
-}
-
 export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) {
   const p = T[id]
   // Ficha propia de una app (/es/ventajas/airalo/); si la clave no existe, 404.
@@ -531,7 +408,13 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', p.saludo)
   const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}${sufijo}` }))
   const raiz = useRef<HTMLDivElement>(null)
-  const H = HERO[id]
+  // «Cómo funciona» filtra las experiencias por forma de canje; el pase se abre desde cualquier sitio.
+  const [filtroExp, setFiltroExp] = useState<{ canje: Canje | ''; n: number }>({ canje: '', n: 0 })
+  const [pase, setPase] = useState<{ abierto: boolean; socio?: (typeof APPS)[number] }>({ abierto: false })
+  const elegirCanje = (c: Canje) => {
+    setFiltroExp((f) => ({ canje: c, n: f.n + 1 }))
+    document.getElementById('experiencias')?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS_REJILLA.some((a) => a.cat === c))
   const [filtro, setFiltro] = useState<Categoria | ''>('')
@@ -571,6 +454,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       if (cancelado) return
       gsap.registerPlugin(ScrollTrigger, SplitText)
       const lenis = new Lenis({ anchors: { offset: -120 } })
+      ;(window as unknown as { __vnLenis?: unknown }).__vnLenis = lenis
       lenis.on('scroll', ScrollTrigger.update)
       const tic = (t: number) => lenis.raf(t * 1000)
       gsap.ticker.add(tic)
@@ -578,22 +462,16 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       const rtl = nodo.dir === 'rtl'
       const quitar: (() => void)[] = []
       const ctx = gsap.context(() => {
-        const titular = nodo.querySelector('.vn-heroe h1')
+        const titular = nodo.querySelector('.rb-portada h1')
         if (titular) {
           const partido = SplitText.create(titular, { type: 'words', mask: 'words' })
           gsap.from(partido.words, { yPercent: 110, duration: 1.1, ease: 'expo.out', stagger: 0.08 })
         }
-        gsap.from('.vn-heroe .vn-lead, .vn-heroe .vn-ctas, .vn-heroe-billete', { y: 22, opacity: 0, duration: 0.9, ease: 'expo.out', delay: 0.35, stagger: 0.1 })
-        gsap.from('.vn-heroe-fondo img', { scale: 1.15, duration: 2.2, ease: 'expo.out' })
+        gsap.from('.rb-portada .vn-lead, .rb-portada .vn-ctas, .rb-ojo, .rb-rota', { y: 22, opacity: 0, duration: 0.9, ease: 'expo.out', delay: 0.35, stagger: 0.1 })
+        gsap.from('.rb-portada-foto img', { scale: 1.15, duration: 2.2, ease: 'expo.out' })
         // La foto se queda atrás al bajar: separa la portada del resto sin cortar en seco.
-        gsap.to('.vn-heroe-fondo img', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.vn-heroe', start: 'top top', end: 'bottom top', scrub: true } })
-        // Cifras: cuentan hasta el valor que ya trae el HTML (el número final no cambia).
-        gsap.utils.toArray<HTMLElement>('.vn-cifra-n').forEach((el, n) => {
-          const fin = Number(el.dataset.n)
-          const o = { v: 0 }
-          gsap.to(o, { v: fin, duration: 1.8, delay: 0.5 + n * 0.12, ease: 'power3.out', onUpdate: () => { el.textContent = String(Math.round(o.v)) }, onComplete: () => { el.textContent = String(fin) } })
-        })
-        gsap.from('.vn-cifras li', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', delay: 0.45, stagger: 0.1 })
+        gsap.to('.rb-portada-foto img', { yPercent: 14, ease: 'none', scrollTrigger: { trigger: '.rb-portada', start: 'top top', end: 'bottom top', scrub: true } })
+        gsap.from('.rb-cifras > div', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', delay: 0.45, stagger: 0.1 })
         // Cintas: la de socios hacia un lado y la de apps hacia el otro; en árabe, al revés.
         gsap.utils.toArray<HTMLElement>('.vn-cinta-pista').forEach((pista, n) => {
           const haciaFuera = (n % 2 === 0) !== rtl
@@ -608,7 +486,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         gsap.set('.vn-sube', { y: 28, opacity: 0 })
         ScrollTrigger.batch('.vn-sube', { once: true, start: 'top 88%', onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.07 }) })
       }, nodo)
-      limpiar = () => { quitar.forEach((f) => f()); ctx.revert(); gsap.ticker.remove(tic); lenis.destroy() }
+      limpiar = () => { quitar.forEach((f) => f()); ctx.revert(); gsap.ticker.remove(tic); lenis.destroy(); delete (window as unknown as { __vnLenis?: unknown }).__vnLenis }
     })()
     return () => { cancelado = true; limpiar() }
   }, [id, appSel])
@@ -635,114 +513,54 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       {appSel ? <FichaApp a={appSel} id={id} lista={RUTA[id]} wa={wa} final={p} /> : <main>
         <Indice id={id} />
 
-        <section className="vn-heroe" aria-labelledby="vn-heroe-t">
-          {/* Sin la de 4K (1,2 MB): bajo el velo oscuro no se nota y la portada pinta antes. */}
-          <div className="vn-heroe-fondo" aria-hidden="true">
-            <img src="/v8/zonas/kioto-fushimi-900.webp" srcSet="/v8/zonas/kioto-fushimi-600.webp 600w, /v8/zonas/kioto-fushimi-900.webp 900w, /v8/zonas/kioto-fushimi.webp 1800w"
-              sizes="100vw" alt="" width="1800" height="1200" fetchPriority="high" decoding="async" />
-          </div>
-          <div className="vn-ancho vn-heroe-dentro">
-            <div className="vn-heroe-txt">
-              <h1 id="vn-heroe-t">{H.h1}</h1>
-              <p className="vn-lead">{H.sub}</p>
-              <div className="vn-ctas">
-                <a className="vn-boton vn-boton-acento" href="#experiencias">{H.exp} <span aria-hidden="true">↓</span></a>
-                <a className="vn-boton vn-boton-linea" href="#codigos">{H.cod}</a>
-              </div>
-            </div>
-            <ul className="vn-cifras">
-              {cifras.map((c) => (
-                <li key={c.k}>
-                  <a href={c.href}>
-                    <span className="vn-hueco vn-cifra-n" data-n={c.n}>{c.n}</span>
-                    <span className="vn-cifra-t">{plural(id, c.n, c.t)}</span>
-                  </a>
-                </li>
+        <PortadaRB id={id} />
+
+        {/* Dos cintas: los socios (abren su ficha) y los iconos reales de las apps. */}
+        <div className="vn-cinta" aria-hidden="true">
+          <div className="vn-cinta-fila">
+            <div className="vn-cinta-pista">
+              {[...ORDENADAS, ...ORDENADAS].map((a, n) => (
+                <a key={`${a.clave}-${n}`} href={`#${a.clave}`} tabIndex={-1} className="vn-cinta-socio"><IconoExp a={a} /><bdi dir="ltr">{a.nombre}</bdi></a>
               ))}
-            </ul>
-            {destacado && (
-              <a className="vn-heroe-billete" href="#codigos" style={{ ['--marca' as string]: destacado.marca.fondo }}>
-                <IconoApp a={destacado} />
-                <span><b dir="ltr">{destacado.descuento?.startsWith('−') ? destacado.descuento : `−${destacado.descuento}`}</b><small dir="ltr">{destacado.nombre} · {cuponDe(destacado)}</small></span>
+            </div>
+          </div>
+          <div className="vn-cinta-fila es-apps">
+            <div className="vn-cinta-pista">
+              {[...marquesina, ...marquesina].map((a, n) => <Link key={`${a.clave}-${n}`} to={`${RUTA[id]}${a.clave}/`} tabIndex={-1} title={a.nombre}><img src={`/v7/apps/${a.clave}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" /></Link>)}
+            </div>
+          </div>
+        </div>
+
+        <ComoFunciona id={id} onElegir={elegirCanje} onPase={() => setPase({ abierto: true })} />
+
+        <ExperienciasRB id={id} ruta={RUTA[id]} filtroInicial={filtroExp} onPase={(socio) => setPase({ abierto: true, socio })} />
+
+        <CodigosRB id={id} ruta={RUTA[id]}>
+          <div className="vn-cod-pie rb-cod-pie">
+            <p className="vn-guarda">
+              <a className="vn-boton vn-boton-wa" href={`https://wa.me/?text=${encodeURIComponent([GUARDA[id].msg, ...conCodigo.map((a) => `${a.nombre}: ${cuponDe(a)}${a.descuento ? ` (${a.descuento.startsWith('−') ? '' : '−'}${a.descuento})` : ''}`), `${GUARDA[id].todo} ${URL_VENTAJAS[id]}`].join('\n'))}`} target="_blank" rel="noopener noreferrer">
+                <IconoWa /> {GUARDA[id].boton}
               </a>
+              <small>{GUARDA[id].nota}</small>
+            </p>
+            {conEnlace.length > 0 && (
+              <div className="vn-enlaces-bloque">
+                <h3>{CODIGOS[id].enlaces}</h3>
+                <p>{CODIGOS[id].enlacesSub}</p>
+                <div className="vn-enlaces">
+                  {conEnlace.map((a) => (
+                    <a key={a.clave} href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored"><IconoApp a={a} /><b dir="ltr">{a.nombre}</b></a>
+                  ))}
+                </div>
+              </div>
             )}
           </div>
-          {/* Dos cintas: los socios (abren su experiencia más abajo) y los iconos reales de las apps.
-              8-11-2026: Clarity marcaba clics muertos en los iconos: cada uno abre su ficha. */}
-          <div className="vn-cinta" aria-hidden="true">
-            <div className="vn-cinta-fila">
-              <div className="vn-cinta-pista">
-                {[...ORDENADAS, ...ORDENADAS].map((a, n) => (
-                  <a key={`${a.clave}-${n}`} href={`#${a.clave}`} tabIndex={-1} className="vn-cinta-socio"><IconoExp a={a} /><bdi dir="ltr">{a.nombre}</bdi></a>
-                ))}
-              </div>
-            </div>
-            <div className="vn-cinta-fila es-apps">
-              <div className="vn-cinta-pista">
-                {[...marquesina, ...marquesina].map((a, n) => <Link key={`${a.clave}-${n}`} to={`${RUTA[id]}${a.clave}/`} tabIndex={-1} title={a.nombre}><img src={`/v7/apps/${a.clave}.webp`} alt="" width="56" height="56" loading="lazy" decoding="async" /></Link>)}
-              </div>
-            </div>
-          </div>
-        </section>
+        </CodigosRB>
+
+        <ClaroRB id={id} />
 
         {/* Planes: guía + experiencias, con las ventajas aplicadas (datosPlanes.ts) */}
         <div style={{ ['--pl-acento' as string]: '#e8452c' }}><PlanesVenta lang={id} guia={id === 'ru' ? 'larion' : 'tony'} url={`${BASE}${RUTA[id]}`} /></div>
-
-        <Experiencias id={id} ruta={RUTA[id]} />
-
-        {conCodigo.length > 0 && (
-          <section className="vn-cod" id="codigos" aria-labelledby="vn-cod-t">
-            <div className="vn-ancho">
-              <h2 id="vn-cod-t" className="vn-h2 vn-sube">{CODIGOS[id].titulo}</h2>
-              <p className="vn-lead vn-sube">{CODIGOS[id].sub}</p>
-              <h3 className="vn-cod-como" id="vn-cod-como">{PASOS_CODIGO[id].titulo}</h3>
-              <ol className="vn-cod-pasos" aria-labelledby="vn-cod-como">
-                {PASOS_CODIGO[id].pasos.map(([b, txt]) => <li key={b}><span><b>{b}</b> {txt}</span></li>)}
-              </ol>
-            </div>
-            <div className="vn-billetes">
-              {conCodigo.map((a) => (
-                <article key={a.clave} className="vn-billete" style={{ ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta }}>
-                  <div className="vn-billete-cab">
-                    <IconoApp a={a} />
-                    <span><b dir="ltr">{a.nombre}</b><small>{CATEGORIAS[a.cat][id]}</small></span>
-                  </div>
-                  <p className="vn-billete-dto" dir="ltr">{a.descuento}</p>
-                  <div className="vn-billete-corte" aria-hidden="true" />
-                  <div className="vn-billete-cod">
-                    <CodigoCifrado>{cuponDe(a)!}</CodigoCifrado>
-                    <BotonCopiar texto={cuponDe(a)!} copiar={p.copiar} copiado={p.copiado} />
-                  </div>
-                  <p className="vn-billete-pie">
-                    {a.caduca ? <small>{CODIGOS[id].hasta} <bdi dir="ltr">{new Date(`${a.caduca}T12:00:00`).toLocaleDateString(id === 'ar' ? 'ar-EG' : id, { day: 'numeric', month: 'short', year: 'numeric' })}</bdi></small> : <small />}
-                    <a href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored">{CODIGOS[id].ir}</a>
-                    <Link to={`${RUTA[id]}${a.clave}/`}>{CODIGOS[id].ver}</Link>
-                  </p>
-                </article>
-              ))}
-            </div>
-            <div className="vn-ancho vn-cod-pie">
-              <p className="vn-guarda">
-                <a className="vn-boton vn-boton-wa" href={`https://wa.me/?text=${encodeURIComponent([GUARDA[id].msg, ...conCodigo.map((a) => `${a.nombre}: ${cuponDe(a)}${a.descuento ? ` (${a.descuento.startsWith('−') ? '' : '−'}${a.descuento})` : ''}`), `${GUARDA[id].todo} ${URL_VENTAJAS[id]}`].join('\n'))}`} target="_blank" rel="noopener noreferrer">
-                  <IconoWa /> {GUARDA[id].boton}
-                </a>
-                <small>{GUARDA[id].nota}</small>
-              </p>
-              {conEnlace.length > 0 && (
-                <div className="vn-enlaces-bloque">
-                  <h3>{CODIGOS[id].enlaces}</h3>
-                  <p>{CODIGOS[id].enlacesSub}</p>
-                  <div className="vn-enlaces">
-                    {conEnlace.map((a) => (
-                      <a key={a.clave} href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored"><IconoApp a={a} /><b dir="ltr">{a.nombre}</b></a>
-                    ))}
-                  </div>
-                </div>
-              )}
-              <aside className="vn-claro"><b>{CODIGOS[id].claro}.</b> {CODIGOS[id].claroTexto}</aside>
-            </div>
-          </section>
-        )}
 
         <section className="vn-kit" id="kit" aria-labelledby="vn-kit-t">
           <div className="vn-ancho">
@@ -842,6 +660,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       </main>}
 
       <Pie id={id} />
+      <AnimatePresence>{pase.abierto && <PaseTony id={id} socio={pase.socio} onCerrar={() => setPase({ abierto: false })} />}</AnimatePresence>
     </div>
   )
 }
