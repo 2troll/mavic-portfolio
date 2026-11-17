@@ -13,6 +13,7 @@ import { FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
 import { FotoSocio, FotoZona } from './FotoZona'
 import { ICONO_EXP } from './iconosExperiencia'
 import { SelloVentaja, Vistazo, PasosReserva, tienePasos } from './Vistazo'
+import { reglasDe } from './datosCanje'
 import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
@@ -22,6 +23,11 @@ export const textoApp = (a: App, id: Id) => (id === 'ru' ? a.t.ru ?? T_RU[a.clav
 
 // Desde la ficha de un socio se vuelve a sus experiencias, no a «todas las apps».
 const TODAS_EXP: Record<Id, string> = { es: 'Todas las experiencias', en: 'All experiences', ar: 'كل التجارب', ru: 'Все впечатления' }
+// Condiciones que cada socio pidió por correo (datosCanje.ts), también en el HTML pregenerado.
+const CONDICIONES: Record<Id, string> = { es: 'Condiciones del socio', en: 'Partner conditions', ar: 'شروط الشريك', ru: 'Условия партнёра' }
+// Fuera de Kansai (Tokio, Hokkaido, Kyushu…) el título no puede decir «en Kansai».
+const PARA_QUIEN: Record<Id, string> = { es: 'Para quién es', en: 'Who it is for', ar: 'لمن تناسب', ru: 'Кому подойдёт' }
+const KANSAI = new Set(['osaka', 'kioto', 'nara', 'kumano', 'kansai'])
 const COMO: Record<Id, string> = { es: 'Cómo reservar', en: 'How to book', ar: 'كيف تحجز', ru: 'Как забронировать' }
 
 export const MAS: Record<Id, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
@@ -158,10 +164,19 @@ export function FichaApp({ a, id, lista, wa, final }: {
         </section>
       )}
 
+      {a.cat === 'experiencias' && reglasDe(a.clave, id).length > 0 && (
+        <section className="vt-ficha-bloque">
+          <h2>{CONDICIONES[id]}</h2>
+          <ul className="vt-ficha-para">
+            {reglasDe(a.clave, id).map((x) => <li key={x}><Dibujo n="check" className="vt-ficha-check" /><span>{x}</span></li>)}
+          </ul>
+        </section>
+      )}
+
       {d && (
         <>
           <section className="vt-ficha-bloque">
-            <h2>{l.para}</h2>
+            <h2>{a.ciudad && !KANSAI.has(a.ciudad) ? PARA_QUIEN[id] : l.para}</h2>
             <ul className="vt-ficha-para">
               {d.para.map((x) => <li key={x}><Dibujo n="check" className="vt-ficha-check" /><span>{x}</span></li>)}
             </ul>

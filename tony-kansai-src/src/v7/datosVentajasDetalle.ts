@@ -2,10 +2,14 @@
 // (datosVentajas.ts), en ES / EN / AR / RU. Los precios solo dicen lo seguro;
 // nada de cifras inventadas que mañana cambien.
 
+import { DETALLE_SOCIOS } from './datosVentajasDetalleSocios'
+
 export type LangDet = 'es' | 'en' | 'ar' | 'ru'
 export interface Detalle { intro: string; para: string[]; pasos: string[]; consejos: string[]; precio: string }
 
 export const DETALLE: Record<string, Record<LangDet, Detalle>> = {
+  // Socios de experiencias del 13 al 17-11-2026 (su texto vive aparte).
+  ...DETALLE_SOCIOS,
   airalo: {
     es: {
       intro: 'Airalo vende eSIM de datos: una SIM virtual que instalas en el móvil antes de viajar. Al aterrizar en Kansai tienes internet para mapas, traductor y trenes, sin buscar tienda ni cargar con un wifi de bolsillo.',
