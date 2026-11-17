@@ -4,19 +4,23 @@
 
 import { Link } from 'react-router-dom'
 import { CodigoCifrado } from './Cocina'
-import { APPS, CATEGORIAS, type App, cuponDe, esAfiliado } from './datosVentajas'
+import { APPS, CATEGORIAS, CIUDADES, type App, cuponDe, esAfiliado } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
 import { IconoCanal } from './IconoWa'
 import { GuiaTienda } from './GuiaTienda'
 import { FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
 import { FotoSocio, FotoZona } from './FotoZona'
+import { ICONO_EXP } from './iconosExperiencia'
+import { SelloVentaja, Vistazo, PasosReserva, tienePasos } from './Vistazo'
 import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
 
 /** Texto corto de la tarjeta en cualquier idioma (el ruso vive en T_RU). */
 export const textoApp = (a: App, id: Id) => (id === 'ru' ? a.t.ru ?? T_RU[a.clave] ?? a.t.en : a.t[id])
+
+const COMO: Record<Id, string> = { es: 'Cómo reservar', en: 'How to book', ar: 'كيف تحجز', ru: 'Как забронировать' }
 
 export const MAS: Record<Id, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
 
@@ -106,10 +110,13 @@ export function FichaApp({ a, id, lista, wa, final }: {
             <Link to={lista} className="vt-ficha-volver"><span aria-hidden="true">{id === 'ar' ? '→' : '←'}</span> {l.todas}</Link>
             <div className="vt-ficha-marca">
               <Logo a={a} className="vt-ico vt-ico-grande" />
-              <span className="vt-cat">{CATEGORIAS[a.cat][id]}</span>
+              <span className="vt-cat">{a.ciudad ? CIUDADES[a.ciudad][id] : CATEGORIAS[a.cat][id]}</span>
+              <SelloVentaja a={a} id={id} grande />
             </div>
             <h1 dir="ltr">{a.nombre}</h1>
             <p className="vt-que">{d?.intro ?? t.que}</p>
+            {/* De un vistazo (17-11-2026): desde, duración, grupo y reserva, también en el HTML pregenerado. */}
+            <Vistazo a={a} id={id} />
             <p className="vt-ventaja">{t.ventaja}</p>
             {cupon && (
               <div className="vt-cupon">
@@ -136,11 +143,18 @@ export function FichaApp({ a, id, lista, wa, final }: {
             </div>
           ) : (
             <div className="vt-ficha-dibujo" aria-hidden="true">
-              <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} />
+              {ICONO_EXP[a.clave] && !DIBUJO[a.clave] ? (() => { const Ico = ICONO_EXP[a.clave]; return <Ico strokeWidth={1.3} /> })() : <Dibujo n={DIBUJO[a.clave] ?? 'sparkles'} />}
             </div>
           )}
         </div>
       </section>
+
+      {a.cat === 'experiencias' && tienePasos(a) && (
+        <section className="vt-ficha-bloque vt-ficha-reserva" style={marca}>
+          <h2>{COMO[id]}</h2>
+          <PasosReserva a={a} id={id} titulo={false} />
+        </section>
+      )}
 
       {d && (
         <>

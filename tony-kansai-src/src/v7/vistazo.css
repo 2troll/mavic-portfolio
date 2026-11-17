@@ -1,0 +1,74 @@
+/* «De un vistazo» (Vistazo.tsx): sirve igual sobre el panel oscuro de /es/ventajas/ y
+   sobre el color de marca de cada ficha, porque todo sale de currentColor. El acento
+   (bermellón) solo en el sello de un descuento de verdad. Cifras con tabular-nums. */
+
+.vv-sello {
+  display: inline-flex; align-items: baseline; gap: 6px; padding: 4px 11px; border-radius: 999px;
+  font-size: .8rem; font-weight: 650; line-height: 1.35; white-space: nowrap;
+}
+.vv-sello b { font-weight: 800; font-variant-numeric: tabular-nums; letter-spacing: -0.01em; }
+.vv-sello.es-codigo, .vv-sello.es-descuento { background: var(--vv-acento, #e5533d); color: #fff; }
+.vv-sello.es-tony { border: 1px solid color-mix(in srgb, currentColor 38%, transparent); }
+.vv-sello.es-grande { font-size: .92rem; padding: 6px 14px; }
+.vv-sello.es-grande b { font-size: 1.3em; }
+
+/* Línea corta de la fila: desde · duración · grupo */
+.vv-meta { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; font-size: .84rem; font-variant-numeric: tabular-nums; }
+.vv-meta > span { display: inline-flex; align-items: center; gap: 5px; white-space: nowrap; }
+.vv-meta svg { width: 14px; height: 14px; flex: none; opacity: .75; }
+.vv-meta small { font-size: 1em; opacity: .75; }
+.vv-meta b { font-weight: 700; }
+
+/* Rejilla de datos */
+.vv { margin-top: 18px; }
+.vv-datos { display: grid; grid-template-columns: repeat(auto-fit, minmax(112px, 1fr)); gap: 8px; margin: 0; }
+.vv-dato {
+  min-width: 0; padding: 12px 14px; border-radius: 14px;
+  background: color-mix(in srgb, currentColor 7%, transparent); border: 1px solid color-mix(in srgb, currentColor 12%, transparent);
+}
+.vv-dato dt { display: flex; align-items: center; gap: 6px; font-size: .74rem; font-weight: 650; letter-spacing: .05em; text-transform: uppercase; opacity: .72; }
+.lang-ar .vv-dato dt, .lang-ru .vv-dato dt { letter-spacing: 0; }
+.lang-ar .vv-dato dt { text-transform: none; font-size: .82rem; }
+.vv-dato dt svg { width: 14px; height: 14px; flex: none; }
+.vv-dato dd { margin: 6px 0 0; }
+.vv-dato dd b { display: block; font-size: 1.05rem; font-weight: 750; letter-spacing: -0.02em; line-height: 1.2; font-variant-numeric: tabular-nums; }
+.vv-dato.es-desde dd b { font-size: 1.42rem; }
+.vv-dato dd small { display: block; margin-top: 3px; font-size: .8rem; line-height: 1.35; opacity: .75; }
+.vv-notas { list-style: none; display: flex; flex-wrap: wrap; gap: 6px; margin: 10px 0 0; padding: 0; }
+.vv-notas li { font-size: .8rem; font-weight: 600; padding: 4px 11px; border-radius: 999px; border: 1px solid color-mix(in srgb, currentColor 24%, transparent); }
+
+/* Cómo reservar, en uno o dos pasos */
+.vv-pasos { margin-top: 18px; }
+.vv-pasos-t { margin: 0 0 10px; font-size: .76rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; opacity: .72; }
+.lang-ar .vv-pasos-t { letter-spacing: 0; text-transform: none; font-size: .85rem; }
+.vv-pasos ol { list-style: none; counter-reset: vv; margin: 0; padding: 0; display: grid; gap: 10px; }
+.vv-pasos li { counter-increment: vv; display: flex; align-items: flex-start; gap: 12px; line-height: 1.45; }
+.vv-pasos li::before {
+  content: counter(vv); flex: none; display: grid; place-items: center; width: 26px; height: 26px; border-radius: 50%;
+  font-size: .82rem; font-weight: 750; background: color-mix(in srgb, currentColor 16%, transparent);
+}
+.vv-pasos li > span { padding-top: 2px; }
+.vv-pasos small { opacity: .75; }
+.vv-pasos code { font-family: inherit; font-weight: 750; letter-spacing: .02em; padding: 1px 9px; border-radius: 8px; border: 1px dashed color-mix(in srgb, currentColor 50%, transparent); background: none; color: inherit; }
+.vv-pasos q { font-weight: 650; }
+.vv-dir { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 14px 0 0; font-size: .92rem; }
+.vv-dir svg { width: 16px; height: 16px; flex: none; opacity: .8; }
+.vv-dir a { font-weight: 600; text-underline-offset: 3px; }
+
+/* En la página oscura de la lista: el sello «con Tony» y las notas para familias musulmanas en sus colores */
+.vn .vv-sello.es-tony { color: #ff9a87; border-color: rgba(229, 83, 61, .5); }
+.vn .vv-notas .es-halal, .vn .vv-notas .es-hiyab, .vn .vv-notas .es-oracion { color: #7fdcb3; border-color: rgba(63, 191, 138, .45); }
+.vn .vv-meta { color: var(--vn-suave); }
+.vn .vv-meta b { color: var(--vn-tinta); }
+
+/* Ficha de cada socio (/es/ventajas/<clave>/), sobre el color de su marca */
+.vt-ficha-marca { flex-wrap: wrap; }
+.vt-ficha-portada .vv-sello.es-codigo, .vt-ficha-portada .vv-sello.es-descuento { background: var(--marca-tinta); color: var(--marca); }
+.vt-ficha-portada .vv { margin: 0 0 18px; max-width: 640px; }
+.vt-ficha-reserva .vv-pasos {
+  margin: 0; padding: clamp(18px, 3vw, 26px); border-radius: 20px; font-size: 1.05rem;
+  background: var(--vt-blanco); border: 1px solid var(--vt-linea); color: var(--vt-tinta);
+}
+.vt-ficha-reserva .vv-pasos li { gap: 16px; }
+.vt-ficha-reserva .vv-pasos li::before { width: 34px; height: 34px; border-radius: 10px; background: var(--marca); color: var(--marca-tinta); }
+.vt-ficha-reserva .vv-pasos li > span { padding-top: 5px; }

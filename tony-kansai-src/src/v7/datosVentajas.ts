@@ -5,6 +5,29 @@
 export type Lang = 'es' | 'en' | 'ar' | 'ru'
 export type Categoria = 'experiencias' | 'internet' | 'planes' | 'dormir' | 'moverse' | 'dinero' | 'utiles'
 
+/** Notas de un vistazo: comida, ropa, oración, niños y si tu guía entra gratis. */
+export type Nota = 'halal' | 'sinCerdo' | 'sinAlcohol' | 'vegetariano' | 'hiyab' | 'oracion' | 'ninos' | 'guiaGratis'
+/** Por dónde se reserva: su web, TableCheck, correo, su formulario o conmigo por WhatsApp. */
+export type Reserva = 'web' | 'tablecheck' | 'correo' | 'formulario' | 'tony'
+/** Lo que el viajero quiere ver sin leer el texto (17-11-2026). SOLO datos que el socio dio por
+ *  escrito (correo, su web o lo que ya dice la ficha): si no consta, el campo se deja vacío. */
+export interface Vistazo {
+  /** Precio más bajo, en yenes, y a qué corresponde (por persona, por adulto o por grupo de hasta N). */
+  desde?: { yen: number; por: 'persona' | 'adulto' | 'grupo'; hasta?: number }
+  /** Duración en minutos: [fija] o [mínima, máxima]. */
+  duracion?: [number] | [number, number]
+  /** Máximo de personas por grupo o sesión. */
+  grupo?: number
+  reserva?: Reserva
+  /** Antelación mínima, en días (1 = hasta 24 h antes). */
+  antelacion?: number
+  /** Lo que se escribe o se dice al reservar para que sepan que vienes de mi parte. */
+  mencion?: string
+  notas?: Nota[]
+  /** Dirección en letra latina, tal como la dio el socio (abre Google Maps). */
+  direccion?: string
+}
+
 export interface App {
   clave: string
   cat: Categoria
@@ -25,6 +48,8 @@ export interface App {
   musulman?: boolean
   /** Ventaja que solo tienes viniendo conmigo o diciendo mi nombre (no la ve cualquiera en su web). */
   conTony?: boolean
+  /** Datos de un vistazo (precio, duración, grupo, cómo reservar): ver `Vistazo`. */
+  vistazo?: Vistazo
   /** El ruso de las fichas cortas vive en datosVentajasDetalle.ts (T_RU). */
   t: Record<'es' | 'en' | 'ar', { que: string; ventaja: string }> & { ru?: { que: string; ventaja: string } }
 }
@@ -117,6 +142,7 @@ const LISTA: App[] = [
   {
     clave: 'samurai', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Samurai & Ninja Museum', enlace: 'https://mai-ko.com/samurai/', descuento: '10 %',
     marca: { fondo: '#1c1c1c', tinta: '#ffffff', boton: '#c8102e', botonTinta: '#ffffff', palabra: 'SAMURAI' },
+    vistazo: { duracion: [60], reserva: 'tony', notas: ['ninos'] },
     t: {
       es: { que: 'Museo Samurái y Ninja de Kioto: armaduras, katanas y lanzamiento de shuriken, con guía en inglés.', ventaja: 'Te lo reservo yo con un 10 % menos (escríbeme por WhatsApp). Una hora divertida y a cubierto, ideal con niños.' },
       en: { que: 'Kyoto Samurai & Ninja Museum: armour, katanas and shuriken throwing, with an English-speaking guide.', ventaja: 'I book it for you with 10% off (message me on WhatsApp). A fun indoor hour, great with kids.' },
@@ -266,6 +292,7 @@ const LISTA: App[] = [
     // Programa Travel Advisor (10 % para el cliente o comisión) pendiente de alta: de momento, web oficial.
     clave: 'flytographer', cat: 'experiencias', nombre: 'Flytographer', enlace: 'https://www.flytographer.com/',
     marca: { fondo: '#111111', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#111111', palabra: 'Flytographer' },
+    vistazo: { reserva: 'web' },
     t: {
       es: { que: 'Fotógrafos locales en Kioto y Osaka: una sesión de fotos de toda la familia junta durante el viaje.', ventaja: 'Por fin salís todos en las fotos; las recibís en una galería online.' },
       en: { que: 'Local photographers in Kyoto and Osaka: a photo session with the whole family together on your trip.', ventaja: 'Everyone finally gets in the photos; you receive them in an online gallery.' },
@@ -349,6 +376,7 @@ const LISTA: App[] = [
   {
     clave: 'wargo', cat: 'experiencias', ciudad: 'kioto', otrasCiudades: ['osaka'], conTony: true, nombre: 'Kimono Wargo', enlace: 'https://kyotokimonorental.com/en', codigo: '261013_wgtn', descuento: '10 %', caduca: '2026-12-31',
     marca: { fondo: '#b5274a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#b5274a', palabra: '着物' },
+    vistazo: { reserva: 'web' },
     t: {
       es: { que: 'Alquiler de kimono y yukata en Kioto (te lo ponen en la tienda y sales a pasear por Higashiyama o Gion) y también en Osaka, en Shinsaibashi.', ventaja: 'Con el código 261013_wgtn, 10 % de descuento al reservar en su web (hasta el 31-12-2026). Vale en todas sus tiendas, también en la de Osaka Shinsaibashi.' },
       en: { que: 'Kimono and yukata rental in Kyoto (they dress you in the shop and you walk out into Higashiyama or Gion) and also in Osaka, at Shinsaibashi.', ventaja: 'Code 261013_wgtn gives 10% off when you book on their website (until 31 Dec 2026). It works at all their stores, Osaka Shinsaibashi included.' },
@@ -358,6 +386,7 @@ const LISTA: App[] = [
   {
     clave: 'camellia', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Camellia Tea Ceremony', enlace: 'https://tea-kyoto.com/', codigo: 'CAMAGENT67', descuento: '10 %',
     marca: { fondo: '#2f4a32', tinta: '#f3ead7', boton: '#f3ead7', botonTinta: '#2f4a32', palabra: '茶' },
+    vistazo: { reserva: 'web', antelacion: 1 },
     t: {
       es: { que: 'Ceremonia del té en una casa de té de Higashiyama (Kioto), tranquila y apta para familias.', ventaja: 'Código CAMAGENT67: 10 % menos en todas sus casas de té, también en el alquiler de kimono. Se reserva solo en su web, hasta 24 h antes. Si quieres que te traduzca al español o al árabe, reserva una ceremonia privada y entro contigo.' },
       en: { que: 'Tea ceremony in a Higashiyama teahouse in Kyoto: calm and family-friendly.', ventaja: 'Code CAMAGENT67: 10% off at all their teahouses, kimono rental included. Online booking only, up to 24 h before. Want me to translate into Spanish or Arabic? Book a private ceremony and I come in with you.' },
@@ -368,6 +397,7 @@ const LISTA: App[] = [
     // SnapKyoto (Matt, fotógrafo freelance): 10 % de comisión por PayPal si el cliente dice mi nombre al reservar (acuerdo por correo, 15-10-2026).
     clave: 'snapkyoto', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'SnapKyoto', enlace: 'https://snapkyoto.com',
     marca: { fondo: '#0d0d0d', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#0d0d0d', palabra: 'Snap' },
+    vistazo: { mencion: 'Tony Hanma (Tony Kansai Guide)' },
     t: {
       es: { que: 'Matt, fotógrafo en Kioto, Osaka y Nara: sesión de fotos de la familia o la pareja en Gion, Arashiyama o donde vayamos.', ventaja: 'Al reservar, di que vienes de parte de Tony Hanma (Tony Kansai Guide). Si estamos de tour, encajo la sesión en la ruta.' },
       en: { que: 'Matt, a photographer in Kyoto, Osaka and Nara: a family or couple photo session in Gion, Arashiyama or wherever we go.', ventaja: 'When you book, say you come from Tony Hanma (Tony Kansai Guide). If we are touring together, I fit the session into the route.' },
@@ -378,6 +408,7 @@ const LISTA: App[] = [
     // Yumeyakata: registrado como guía nº 1085 el 15-10-2026; el cliente lo escribe al reservar por adelantado.
     clave: 'yumeyakata', cat: 'experiencias', ciudad: 'kioto', conTony: true, musulman: true, nombre: 'Yumeyakata', enlace: 'https://www.kyoto.yumeyakata.com/', codigo: '1085',
     marca: { fondo: '#5b2a6e', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#5b2a6e', palabra: '夢' },
+    vistazo: { notas: ['oracion'] },
     t: {
       es: { que: 'Alquiler de kimono en Kioto (tiendas de Gojo y Oike), con peinado, maquillaje, ceremonia del té y fotos. Tienen sala de oración para sus clientes.', ventaja: 'Reserva por adelantado y escribe en las notas «ガイド番号1085 (Tony Hanma)»: así saben que vienes conmigo.' },
       en: { que: 'Kimono rental in Kyoto (Gojo and Oike shops), with hair set, make-up, tea ceremony and photos. They have a prayer room for their customers.', ventaja: 'Book in advance and write “Guide number 1085 (Tony Hanma)” in the notes, so they know you come with me.' },
@@ -388,6 +419,7 @@ const LISTA: App[] = [
     // Shogun Studio (Yoshi, dueño): 5 % de comisión por reserva pagada de un cliente mío (correo 16-10-2026); falta saber cómo identifica al cliente.
     clave: 'shogun', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Shogun Studio Japan', enlace: 'https://shogunstudiojapan.com/',
     marca: { fondo: '#111111', tinta: '#d4a646', boton: '#d4a646', botonTinta: '#111111', palabra: '侍' },
+    vistazo: { reserva: 'tony' },
     t: {
       es: { que: 'Ponte una armadura samurái de verdad en su estudio de Arashiyama (Kioto), con fotos para llevarte. También tienen kimono y ninja.', ventaja: 'Si vienes de tour conmigo por Arashiyama, lo encajo en la ruta y lo reservo yo con ellos.' },
       en: { que: 'Wear real samurai armour at their Arashiyama studio in Kyoto, with photos to take home. They also do kimono and ninja.', ventaja: 'Touring Arashiyama with me? I fit it into the route and book it with them for you.' },
@@ -398,6 +430,7 @@ const LISTA: App[] = [
     // Miyabi-yuki: hiyab bajo el junihitoe y solo personal femenino (correo 16-10-2026). Sin tarifa de guía.
     clave: 'miyabi', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Emondo Miyabi-yuki', enlace: 'https://www.miyabi-yuki.jp/',
     marca: { fondo: '#7a1f3d', tinta: '#f6e3b4', boton: '#f6e3b4', botonTinta: '#7a1f3d', palabra: '雅' },
+    vistazo: { notas: ['hiyab'] },
     t: {
       es: { que: 'Vístete con el junihitoe, el kimono de doce capas de la corte imperial Heian, en el centro de Kioto. Algo que no verás en ningún otro sitio.', ventaja: 'Puedes llevar el hiyab debajo y todo el personal es femenino: ya han vestido a clientas con hiyab.' },
       en: { que: 'Dress in the junihitoe, the twelve-layer kimono of the Heian imperial court, in central Kyoto. Something you will not see anywhere else.', ventaja: 'You can keep your hijab on underneath and all the staff are women; they have dressed guests in hijab before.' },
@@ -408,6 +441,7 @@ const LISTA: App[] = [
     // Tower Knives: presentación de 15-20 min con cita previa si traigo clientes; sin comisión ni descuento (correo 16-10-2026).
     clave: 'towerknives', cat: 'experiencias', ciudad: 'osaka', conTony: true, nombre: 'Tower Knives Osaka', enlace: 'https://www.towerknives.com/',
     marca: { fondo: '#23282d', tinta: '#e9edf0', boton: '#e9edf0', botonTinta: '#23282d', palabra: '包丁' },
+    vistazo: { duracion: [15, 20], reserva: 'tony' },
     t: {
       es: { que: 'Tienda de cuchillos japoneses junto a la torre Tsutenkaku (Shinsekai). El regalo que más se llevan mis viajeros de Osaka.', ventaja: 'Si vienes conmigo, pido cita y te hacen una presentación de 15-20 min: historia de los cuchillos de Sakai y demostración de corte.' },
       en: { que: 'Japanese knife shop by Tsutenkaku tower in Shinsekai. The gift my guests most often take home from Osaka.', ventaja: 'Come with me and I book a 15–20 min presentation: the history of Sakai knives and a cutting demonstration.' },
@@ -418,6 +452,7 @@ const LISTA: App[] = [
     // Cooking Sun: menú vegetariano sin alcohol a petición, NO halal certificado; sin comisión (correo 16-10-2026).
     clave: 'cookingsun', cat: 'experiencias', ciudad: 'kioto', musulman: true, nombre: 'Cooking Sun', enlace: 'https://www.cooking-sun.com/kyoto-cooking-class/',
     marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
+    vistazo: { duracion: [180], grupo: 10, reserva: 'web', notas: ['vegetariano', 'sinAlcohol'] },
     t: {
       es: { que: 'Clase de cocina casera japonesa en Kioto: cocinas tú y luego coméis juntos.', ventaja: 'Al reservar pide el menú vegetariano sin alcohol (sin sake ni mirin). No es halal certificado, pero no lleva carne ni alcohol.' },
       en: { que: 'Japanese home-cooking class in Kyoto: you cook, then you eat together.', ventaja: 'When booking, ask for the vegetarian menu without alcohol (no sake or mirin). Not halal-certified, but no meat and no alcohol.' },
@@ -428,6 +463,7 @@ const LISTA: App[] = [
     // Hamanasu (Sugimoto): 4.000 ¥/persona en efectivo, guía gratis, +15 min de regalo si vienen por mí; reserva por mí ≥3 días antes (≥5 si son 6+). Correo 16-10-2026.
     clave: 'hamanasu', cat: 'experiencias', ciudad: 'kumano', conTony: true, nombre: 'Kibori Hamanasu', enlace: 'https://hamanasu-kibori.raku-uru.jp/',
     marca: { fondo: '#6b4a2b', tinta: '#f4e7d3', boton: '#f4e7d3', botonTinta: '#6b4a2b', palabra: '木彫' },
+    vistazo: { desde: { yen: 4000, por: 'persona' }, reserva: 'tony', antelacion: 3 },
     t: {
       es: { que: 'Taller de talla en madera con una artesana de Kumano, en Kushimoto (Wakayama). Ideal si vas a hacer el Kumano Kodo. Nuevo: diseño asanoha (patrón geométrico japonés) y portaobjetos con tu nombre. 4.000 ¥ por persona, en efectivo.', ventaja: 'Si lo reservas a través de mí, te regalan 15 minutos más para hacer un diseño más elaborado. Avísame con 3 días de antelación.' },
       en: { que: 'Wood-carving workshop with a Kumano craftswoman in Kushimoto (Wakayama). Perfect if you are walking the Kumano Kodo. New: the asanoha design (a Japanese geometric pattern) and a small tray carved with your name. ¥4,000 per person, cash.', ventaja: 'Book it through me and you get 15 extra minutes free to carve a more detailed design. Tell me 3 days ahead.' },
@@ -438,6 +474,7 @@ const LISTA: App[] = [
     // Yokoyama Chikuzaiten (TAKENOKO): sin descuento, completo por reserva, 1 grupo cada vez, máx. 15 con guía; cestas desde 8 años; cerrado domingos y festivos (correo 16-10-2026).
     clave: 'yokotake', cat: 'experiencias', ciudad: 'kioto', nombre: 'Yokoyama Bamboo (TAKENOKO)', enlace: 'https://takenoko.co/pages/kyoushitsu240308-03.htm',
     marca: { fondo: '#5d7a2e', tinta: '#f3f0dc', boton: '#f3f0dc', botonTinta: '#5d7a2e', palabra: '竹' },
+    vistazo: { duracion: [90, 120], grupo: 15, reserva: 'tony', notas: ['ninos'] },
     t: {
       es: { que: 'Taller de bambú en una tienda de artesanos de Kioto: haces tu propia cesta, tus palillos o una cucharilla de té. De 1,5 a 2 horas.', ventaja: 'Solo un grupo cada vez (hasta 15 personas): perfecto para familias grandes. La cesta, a partir de 8 años. Yo te hago la reserva en japonés.' },
       en: { que: 'Bamboo workshop at a Kyoto craftsmen’s shop: make your own basket, chopsticks or tea scoop. 1.5 to 2 hours.', ventaja: 'Only one group at a time (up to 15 people): perfect for big families. Baskets from age 8. I make the booking for you in Japanese.' },
@@ -448,6 +485,7 @@ const LISTA: App[] = [
     // DOMYO: sin tarifa de guía ni descuento, precios normales de su web (correo 16-10-2026).
     clave: 'domyo', cat: 'experiencias', ciudad: 'kioto', nombre: 'DOMYO Kumihimo', enlace: 'https://kdomyo.com/en',
     marca: { fondo: '#a3324a', tinta: '#fbeef0', boton: '#fbeef0', botonTinta: '#a3324a', palabra: '組紐' },
+    vistazo: { notas: ['ninos'] },
     t: {
       es: { que: 'Trenza tu propio kumihimo, el cordón de seda tradicional, con la casa DOMYO, que lo hace desde 1652. Taller en inglés.', ventaja: 'Te llevas una pulsera hecha por ti. Va muy bien con niños y no necesita experiencia.' },
       en: { que: 'Braid your own kumihimo, the traditional silk cord, with DOMYO, makers since 1652. Workshop in English.', ventaja: 'You take home a bracelet you made yourself. Great with children, no experience needed.' },
@@ -468,6 +506,7 @@ const LISTA: App[] = [
     // Rental Kimono Okamoto (Hiro Hayashi): tarifa de agencia por escrito el 19-10-2026; comisión solo en los planes, no en los extras. 7 tiendas.
     clave: 'okamoto', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'Kimono Okamoto', enlace: 'https://www.okamoto-kimono.com/',
     marca: { fondo: '#7a1f2b', tinta: '#fbeee6', boton: '#fbeee6', botonTinta: '#7a1f2b', palabra: '岡本' },
+    vistazo: { reserva: 'tony' },
     t: {
       es: { que: 'Alquiler de kimono con 7 tiendas en Kioto (Kiyomizu, Gion, Fushimi Inari, Arashiyama…): te vistes junto al templo que vas a visitar.', ventaja: 'Si vienes de tour conmigo, te lo reservo yo. Puedes devolver el kimono en otra de sus tiendas, al día siguiente o en el hotel.' },
       en: { que: 'Kimono rental with 7 shops in Kyoto (Kiyomizu, Gion, Fushimi Inari, Arashiyama…): you get dressed right next to the temple you are visiting.', ventaja: 'Touring with me? I book it for you. You can return the kimono at another of their shops, the next day or at your hotel.' },
@@ -478,6 +517,7 @@ const LISTA: App[] = [
     // Nakamura Rosoku (Fushimi, desde la era Meiji): sin descuento ni tarifa de guía; muchos extranjeros, lo explican con Pocketalk; reserva directa por correo (17-10-2026).
     clave: 'nakamura', cat: 'experiencias', ciudad: 'kioto', nombre: 'Nakamura Rosoku', enlace: 'https://www.kyorousoku.jp/',
     marca: { fondo: '#b8452f', tinta: '#fdf1e4', boton: '#fdf1e4', botonTinta: '#b8452f', palabra: '蝋燭' },
+    vistazo: { reserva: 'tony', notas: ['ninos'] },
     t: {
       es: { que: 'Taller de velas japonesas (warousoku) en un taller de Fushimi que las hace desde la era Meiji: fabricas tu vela, la pintas o las dos cosas.', ventaja: 'Está a pocos minutos de Fushimi Inari: encaja justo después de los torii. Muy bueno con niños. Yo hago la reserva en japonés.' },
       en: { que: 'Japanese candle (warousoku) workshop at a Fushimi maker working since the Meiji era: make your candle, paint it, or both.', ventaja: 'A few minutes from Fushimi Inari, so it fits right after the torii gates. Great with kids. I make the booking in Japanese.' },
@@ -488,6 +528,7 @@ const LISTA: App[] = [
     // JAPANeid (J-LINE, Minamihorie): aceptan salir en la web y mandaron fotos el 19-10-2026; sin acuerdo para guías individuales todavía. Corrección suya del 21-10: venden productos con certificado halal Y dulces muslim-friendly sin certificado, en estantes rotulados.
     clave: 'japaneid', cat: 'experiencias', ciudad: 'osaka', musulman: true, nombre: 'JAPANeid', enlace: 'https://www.japaneid.com/',
     marca: { fondo: '#1f5a4c', tinta: '#f2ead3', boton: '#f2ead3', botonTinta: '#1f5a4c', palabra: 'Eid' },
+    vistazo: { notas: ['halal'] },
     t: {
       es: { que: 'Tienda en Minamihorie (Osaka) pensada para musulmanes: dulces japoneses sin ingredientes animales ni alcohol, hiyab de estilo kimono y alfombras de oración.', ventaja: 'Tienen productos con certificado halal y dulces muslim-friendly, cada uno en su estante rotulado. Si no te da tiempo de ir, piden por su web y te lo pueden mandar al hotel.' },
       en: { que: 'A shop in Minamihorie (Osaka) made for Muslims: Japanese treats with no animal ingredients or alcohol, kimono-style hijabs and prayer mats.', ventaja: 'Halal-certified products and Muslim-friendly sweets, each on its own labelled shelf. No time to visit? Order on their website and they can send it to your hotel.' },
@@ -508,6 +549,7 @@ const LISTA: App[] = [
     // Kobaien (Fukuro-san): taller de nigiri-zumi de octubre a mediados de abril; 1 guía/intérprete gratis; folleto en inglés (correo 21-10-2026). Sin comisión.
     clave: 'kobaien', cat: 'experiencias', ciudad: 'nara', conTony: true, nombre: 'Kobaien (tinta sumi)', enlace: 'https://www.kobaien.jp/',
     marca: { fondo: '#1c1c1c', tinta: '#efe6d2', boton: '#efe6d2', botonTinta: '#1c1c1c', palabra: '墨' },
+    vistazo: { reserva: 'tony', notas: ['guiaGratis'] },
     t: {
       es: { que: 'La casa de tinta sumi más antigua de Nara (desde 1577): moldeas con tus manos tu propia barra de tinta. Solo de octubre a mediados de abril, que es cuando se fabrica.', ventaja: 'Te lo reservo yo en japonés y entro contigo a traducirte el taller sin coste extra.' },
       en: { que: 'Nara’s oldest sumi ink maker (since 1577): you shape your own ink stick by hand. Only from October to mid-April, the ink-making season.', ventaja: 'I book it for you in Japanese and come in to translate the workshop at no extra cost.' },
@@ -518,6 +560,7 @@ const LISTA: App[] = [
     // MAIKOYA (Keigo/Shoko): 10 % de agencia con código que NO se publica; en plan privado el guía entra gratis, sin té (correo 28-10-2026).
     clave: 'maikoyate', cat: 'experiencias', ciudad: 'kioto', conTony: true, nombre: 'MAIKOYA (ceremonia del té)', enlace: 'https://mai-ko.com/', descuento: '10 %',
     marca: { fondo: '#7a1f2b', tinta: '#f6e9dc', boton: '#f6e9dc', botonTinta: '#7a1f2b', palabra: '舞' },
+    vistazo: { reserva: 'tony' },
     t: {
       es: { que: 'Ceremonia del té en Kioto, en grupo o privada, con explicación en inglés.', ventaja: 'Escríbeme por WhatsApp con la fecha y cuántos sois: te la reservo yo con un 10 % menos. En la privada entro contigo a traducir.' },
       en: { que: 'Tea ceremony in Kyoto, shared or private, explained in English.', ventaja: 'Send me the date and group size on WhatsApp: I book it for you with 10% off. For a private one I come in to translate.' },
@@ -528,6 +571,7 @@ const LISTA: App[] = [
     // Osaka Cooking Base (Yuka, junto a Tenmangu): mismo precio para todos, sin código; máx. 8, de 5 a 8 privada sin extra; guía gratis si no cocina; sin cerdo ni alcohol bajo petición, usa dashi (correo 11-11-2026, acepta salir en ventajas).
     clave: 'osakacookingbase', cat: 'experiencias', ciudad: 'osaka', musulman: true, nombre: 'Osaka Cooking Base', enlace: 'https://osakacookingbase.com/',
     marca: { fondo: '#c8442e', tinta: '#fff4e6', boton: '#fff4e6', botonTinta: '#c8442e', palabra: '台所' },
+    vistazo: { grupo: 8, notas: ['sinCerdo', 'sinAlcohol', 'guiaGratis'] },
     t: {
       es: { que: 'Clase de cocina casera en Osaka, junto a Tenmangu: okonomiyaki, ramen o gyoza con Yuka, en grupos de hasta 8.', ventaja: 'De 5 a 8 personas la clase es privada sin coste extra. Para familias musulmanas prepara okonomiyaki o ramen sin cerdo ni alcohol (sin mirin ni sake); pregunta antes por el caldo dashi. Yo entro gratis a traducir.' },
       en: { que: 'Home-style cooking class in Osaka, next to Tenmangu: okonomiyaki, ramen or gyoza with Yuka, up to 8 guests.', ventaja: 'For 5 to 8 people the class is private at no extra charge. For Muslim families she makes okonomiyaki or ramen with no pork and no alcohol (no mirin or sake); ask first about the dashi stock. I join free to translate.' },
@@ -536,8 +580,9 @@ const LISTA: App[] = [
     },
   },
   {
-    clave: 'unplugged', cat: 'experiencias', ciudad: 'amakusa', nombre: 'Unplugged (kayak en Amakusa)', enlace: 'https://e-unplugged.jp/',
+    clave: 'unplugged', cat: 'experiencias', ciudad: 'amakusa', conTony: true, descuento: '−500 ¥', nombre: 'Unplugged (kayak en Amakusa)', enlace: 'https://e-unplugged.jp/',
     marca: { fondo: '#0f6b78', tinta: '#eafcff', boton: '#eafcff', botonTinta: '#0f6b78', palabra: 'SEA' },
+    vistazo: { desde: { yen: 8000, por: 'persona' }, reserva: 'formulario', antelacion: 3, mencion: 'Tony Kansai Guide\u3000Tony Hanma' },
     t: {
       es: { que: 'Kayak de mar entre las islas deshabitadas de Amakusa, en el Parque Nacional Unzen-Amakusa, con un guía local. Se acaba en una isla de arena blanca de conchas donde puedes bañarte. Tarde Premium (13:00): 10.000 ¥ por persona entre semana y 11.000 ¥ en fin de semana, con fotos y vídeo del día. Mañana Simple (9:00, desde marzo): 8.000 / 9.000 ¥.', ventaja: '500 ¥ menos por persona: reserva en su formulario al menos 3 días antes y escribe «Tony Kansai Guide\u3000Tony Hanma» en observaciones. A 1 h 30 en coche de Kumamoto; se paga el día (efectivo, PayPay o tarjeta).' },
       en: { que: 'Paddle a sea kayak through the island-dotted waters of Amakusa, weaving between uninhabited islands in Unzen-Amakusa National Park with a local guide, and land on a white shell-sand island to swim and relax. Afternoon Premium (13:00): ¥10,000 per person on weekdays, ¥11,000 at weekends, with same-day photos and video. Morning Simple (9:00, from March): ¥8,000 / ¥9,000.', ventaja: '¥500 off per person: book on their form at least 3 days ahead and write “Tony Kansai Guide\u3000Tony Hanma” in the remarks. About 1.5 h by car from Kumamoto; pay on the day (cash, PayPay or card).' },
@@ -548,6 +593,7 @@ const LISTA: App[] = [
   {
     clave: 'hakusan', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Máscara de león de Kaga (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/',
     marca: { fondo: '#9b1c1c', tinta: '#fff1e0', boton: '#fff1e0', botonTinta: '#9b1c1c', palabra: '獅子' },
+    vistazo: { desde: { yen: 6600, por: 'persona' }, grupo: 20, reserva: 'correo', antelacion: 30 },
     t: {
       es: { que: 'Haz y pinta tu propia cabeza de león de Kaga (shishi-gashira) en miniatura, guiado por un artesano de una tradición de 400 años, en Hakusan, cerca de Kanazawa. Es pequeña y te la puedes llevar colgada (netsuke). 6.600 ¥ por persona, hasta 20 personas.', ventaja: 'Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com). Si vienes conmigo, traduzco al español o al árabe sin coste.' },
       en: { que: 'Make and paint your own small Kaga lion head (shishi-gashira), guided by a craftsperson from a 400-year-old tradition, in Hakusan near Kanazawa. It is small enough to carry with you (netsuke). ¥6,600 per person, up to 20 people.', ventaja: 'Book at least one month ahead by email (hakusan@urara-hakusanbito.com). Coming with me? I translate into Spanish or Arabic at no extra cost.' },
@@ -559,6 +605,7 @@ const LISTA: App[] = [
     // Hakusan City Tourism League (correo 14-11-2026): precios para visitantes extranjeros, reserva con 1 mes, fotos suyas.
     clave: 'hakusansanpai', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Shirayama Hime: guided visit (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/spot/detail_1415.html',
     marca: { fondo: '#7a2331', tinta: '#fbeee6', boton: '#fbeee6', botonTinta: '#7a2331', palabra: '参拝' },
+    vistazo: { duracion: [60], desde: { yen: 18150, por: 'grupo', hasta: 4 }, reserva: 'correo', antelacion: 30 },
     t: {
       es: { que: 'Visita guiada de 1 hora al santuario Shirayama Hime, en Hakusan (cerca de Kanazawa), con más de 2.000 años de historia: entras en el pabellón principal y ves la danza tradicional de una miko (doncella del santuario).', ventaja: 'Hasta 4 personas: 18.150 ¥ por grupo; desde 5: 3.630 ¥ por persona. Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com).' },
       en: { que: 'A 1-hour guided visit to Shirayama Hime Shrine in Hakusan, near Kanazawa, with over 2,000 years of history: you enter the main hall and watch a traditional dance by a shrine maiden (miko).', ventaja: 'Groups of up to 4: ¥18,150 per group; 5 or more: ¥3,630 per person. Book at least one month ahead by email (hakusan@urara-hakusanbito.com).' },
@@ -569,6 +616,7 @@ const LISTA: App[] = [
   {
     clave: 'hakusanmisogi', cat: 'experiencias', ciudad: 'ishikawa', nombre: 'Shirayama Hime: private misogi (Hakusan)', enlace: 'https://www.urara-hakusanbito.com/program/detail_1668.html',
     marca: { fondo: '#dfe8ee', tinta: '#1d3a5c', boton: '#1d3a5c', botonTinta: '#ffffff', palabra: '禊' },
+    vistazo: { duracion: [150], desde: { yen: 57750, por: 'grupo', hasta: 5 }, reserva: 'correo', antelacion: 30 },
     t: {
       es: { que: 'El misogi, el ritual sintoísta de purificación con agua, en privado en el santuario Shirayama Hime de Hakusan (cerca de Kanazawa): un sacerdote te explica la tradición y luego lo vives tú. Dura 2 h 30 min.', ventaja: '57.750 ¥ hasta 5 personas y 11.550 ¥ por cada persona más, con guía, ropa, seguro e impuestos incluidos. Se reserva con al menos un mes de antelación por correo (hakusan@urara-hakusanbito.com).' },
       en: { que: 'Misogi, the Shinto purification ritual with water, held privately at Shirayama Hime Shrine in Hakusan near Kanazawa: a Shinto priest explains the tradition and then you take part yourself. Lasts 2 h 30 min.', ventaja: '¥57,750 for up to 5 people and ¥11,550 for each extra person, including guide, clothing, insurance and taxes. Book at least one month ahead by email (hakusan@urara-hakusanbito.com).' },
@@ -579,6 +627,7 @@ const LISTA: App[] = [
   {
     clave: 'foodsample', cat: 'experiencias', ciudad: 'tokio', nombre: 'Food Sample Making Cafe (Asakusa)', enlace: 'https://foodsamplecafe.com/en/', codigo: 'TONY10', descuento: '10 %',
     marca: { fondo: '#ffd23f', tinta: '#2a2100', boton: '#2a2100', botonTinta: '#ffd23f', palabra: 'FOOD' },
+    vistazo: { reserva: 'tablecheck' },
     t: {
       es: { que: 'Haz tus propias réplicas de comida japonesa de plástico (como las de los escaparates) en Asakusa, Tokio. Un recuerdo que te llevas a casa.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»). La comida que sirven no es halal: las familias musulmanas eligen el plan sin comida.' },
       en: { que: 'Make your own Japanese plastic food replicas, like the ones in restaurant windows, in Asakusa, Tokyo. A souvenir you take home.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field). Their meals are not halal: Muslim families choose the plan without a meal.' },
@@ -589,6 +638,7 @@ const LISTA: App[] = [
   {
     clave: 'ninjacafe', cat: 'experiencias', ciudad: 'osaka', otrasCiudades: ['kioto', 'tokio'], nombre: 'Ninja Experience Cafe', enlace: 'https://ninja-cafe.com/en/', codigo: 'TONY10', descuento: '10 %',
     marca: { fondo: '#141414', tinta: '#f2f2f2', boton: '#c8102e', botonTinta: '#ffffff', palabra: '忍' },
+    vistazo: { reserva: 'tablecheck', notas: ['halal', 'guiaGratis'] },
     t: {
       es: { que: 'Vístete de ninja y aprende a usar sus armas (shuriken, cerbatana) en un café-taller en Dotonbori (Osaka), Gion (Kioto), Harajuku y Asakusa (Tokio). Grupos privados de 15 a 20 personas.', ventaja: 'Código TONY10: 10 % menos al reservar en TableCheck (campo «PROMO CODE»), en todas sus tiendas. Tienen curry ninja con salsa halal certificada, aunque el café no es halal. Si vienes conmigo, entro gratis a traducir al español o al árabe.' },
       en: { que: 'Dress as a ninja and learn their weapons (shuriken, blowgun) at a café-workshop in Dotonbori (Osaka), Gion (Kyoto), Harajuku and Asakusa (Tokyo). Private groups of 15 to 20.', ventaja: 'Code TONY10: 10% off when booking on TableCheck (“PROMO CODE” field), at all their stores. Their Ninja Curry uses a halal-certified sauce, though the café itself is not halal-certified. Coming with me? I join free to translate into Spanish or Arabic.' },
@@ -599,6 +649,7 @@ const LISTA: App[] = [
   {
     clave: 'koto', cat: 'experiencias', ciudad: 'hiroshima', codigo: 'kotodaisuki', descuento: '15 %', nombre: 'Koto Workshop Hiroshima', enlace: 'https://kotoworkshop.com/',
     marca: { fondo: '#3b2a5a', tinta: '#f5eefc', boton: '#f5eefc', botonTinta: '#3b2a5a', palabra: '琴' },
+    vistazo: { grupo: 10, reserva: 'web', notas: ['guiaGratis'] },
     t: {
       es: { que: 'Descubre el alma de Japón con el sonido del koto, el arpa tradicional, a un minuto de la Cúpula de la Bomba Atómica de Hiroshima. Hasta 10 personas.', ventaja: 'Código kotodaisuki: 15 % menos al reservar en su web. Si vienes conmigo, entro gratis a traducir.' },
       en: { que: 'Discover the soul of Japan through the timeless sound of the koto, just one minute from Hiroshima’s Atomic Bomb Dome. Up to 10 people.', ventaja: 'Code kotodaisuki: 15% off when you book on their website. Coming with me? I join free to translate.' },
@@ -611,6 +662,7 @@ const LISTA: App[] = [
     // en el comentario. Es comisión, no descuento: la ficha no lleva código ni promete rebaja.
     clave: 'teaosaka', cat: 'experiencias', ciudad: 'osaka', musulman: true, conTony: true, nombre: 'Tea Ceremony Osaka (Dotonbori)', enlace: 'https://teaceremonyosaka.com/',
     marca: { fondo: '#4d6b3c', tinta: '#f1f5e8', boton: '#f1f5e8', botonTinta: '#4d6b3c', palabra: '茶道' },
+    vistazo: { duracion: [45], desde: { yen: 7480, por: 'adulto' }, grupo: 10, reserva: 'web', mencion: 'Tony Kansai Guide', notas: ['halal'] },
     t: {
       es: { que: 'Ceremonia del té de 45 minutos en Dotonbori, en el centro de Osaka. 7.480 ¥ por adulto y 4.980 ¥ de 8 a 11 años; sesiones a las 10, 11, 12, 14, 15 y 16 h, hasta 10 personas.', ventaja: 'Reserva en su web y escribe «Tony Kansai Guide» en el comentario, para que sepan que vienes de mi parte. Los dulces son halal y nada lleva alcohol. Si vienes conmigo, entro a traducir.' },
       en: { que: '45-minute tea ceremony in Dotonbori, central Osaka. ¥7,480 per adult and ¥4,980 for ages 8 to 11; sessions at 10, 11, 12, 14, 15 and 16 h, up to 10 people.', ventaja: 'Book on their website and write “Tony Kansai Guide” in the booking comment so they know I sent you. The sweets are halal and nothing contains alcohol. Coming with me? I come in to translate.' },
@@ -621,6 +673,7 @@ const LISTA: App[] = [
   {
     clave: 'shaquda', cat: 'experiencias', ciudad: 'hiroshima', conTony: true, descuento: '10 %', nombre: 'SHAQUDA (pinceles de Kumano)', enlace: 'https://shaquda.jp/en/pages/workshop',
     marca: { fondo: '#1d1d1f', tinta: '#f4e4c1', boton: '#f4e4c1', botonTinta: '#1d1d1f', palabra: '筆' },
+    vistazo: { reserva: 'tony' },
     t: {
       es: { que: 'Taller de pinceles de maquillaje en Kumano (Hiroshima), el pueblo de los pinceles: montas el tuyo y te lo envían terminado en unas dos semanas (envío aparte).', ventaja: 'Reservando conmigo, 10 % menos y sin los 10.000 ¥ de intérprete, porque traduzco yo. Grupos de 6 se parten en dos de 3.' },
       en: { que: 'Make-up brush workshop in Kumano (Hiroshima), Japan’s brush town: you assemble your own and they ship it finished in about two weeks (shipping extra).', ventaja: 'Booked through me: 10% off and no ¥10,000 interpreter fee, because I translate. Groups of 6 are split into two groups of 3.' },
@@ -632,6 +685,7 @@ const LISTA: App[] = [
     // Kuchinotsu (Fukuda, correo 14-11-2026): quien va sin guía enseña el logo de Tony Kansai Guide en recepción; sin comisión en ese caso.
     clave: 'kuchinotsu', cat: 'experiencias', ciudad: 'nagasaki', nombre: 'Delfines de Kuchinotsu', enlace: 'https://dolwatch.jp/',
     marca: { fondo: '#1565c0', tinta: '#e8f4ff', boton: '#e8f4ff', botonTinta: '#1565c0', palabra: 'IRUKA' },
+    vistazo: { desde: { yen: 4000, por: 'adulto' }, notas: ['ninos'] },
     t: {
       es: { que: 'Salida en barco para ver delfines salvajes en Kuchinotsu (península de Shimabara, Nagasaki). Adultos 4.000 ¥, de 7 a 12 años 2.000 ¥, de 4 a 6 años 1.000 ¥, menores de 3 gratis.', ventaja: 'Grupos de 10 o más adultos: 10 % menos; de 30 o más: 20 % menos. Se sale de su oficina, a 700 m del puerto, frente al 7-Eleven. Si vas por tu cuenta, enseña en la recepción el logo de Tony Kansai Guide de esta web.' },
       en: { que: 'Boat trip to see wild dolphins at Kuchinotsu (Shimabara Peninsula, Nagasaki). Adults ¥4,000, ages 7–12 ¥2,000, ages 4–6 ¥1,000, 3 and under free.', ventaja: 'Groups of 10+ adults: 10% off; 30+: 20% off. Boarding at their office, 700 m from the port, opposite the 7-Eleven. Going on your own? Show the Tony Kansai Guide logo from this website at reception.' },
@@ -652,6 +706,7 @@ const LISTA: App[] = [
   {
     clave: 'kanemasa', cat: 'experiencias', ciudad: 'gifu', conTony: true, nombre: 'Kanemasa, forjador de katanas (Seki)', enlace: 'https://thekatana.jp/',
     marca: { fondo: '#2b2b2b', tinta: '#e9e4d8', boton: '#b8932e', botonTinta: '#141414', palabra: '刀' },
+    vistazo: { duracion: [240, 600], desde: { yen: 60000, por: 'persona' }, antelacion: 7 },
     t: {
       es: { que: 'Forja tu propio cuchillo con el maestro Kanemasa en Seki (Gifu), la ciudad de las espadas. De 4 a 10 horas, desde 60.000 ¥ por persona.', ventaja: 'Se reserva con 1 o 2 semanas de antelación. Si vienes conmigo, traduzco al español o al árabe y no pago entrada.' },
       en: { que: 'Forge your own knife with Master Kanemasa in Seki (Gifu), Japan’s sword town. 4 to 10 hours, from ¥60,000 per person.', ventaja: 'Book 1 to 2 weeks ahead. Coming with me? I translate into Spanish or Arabic at no extra cost.' },
@@ -663,6 +718,7 @@ const LISTA: App[] = [
     // Misma empresa que Cooking Sun Kioto (correo del 16-11-2026): mismo logo y colores. Dirección: la que dieron ellos.
     clave: 'cookingsunosaka', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cooking Sun Osaka (Namba)', enlace: 'https://www.cooking-sun.com/osaka-cooking-class/',
     marca: { fondo: '#f2a516', tinta: '#2b1d05', boton: '#2b1d05', botonTinta: '#f2a516', palabra: '料理' },
+    vistazo: { grupo: 12, reserva: 'web', notas: ['vegetariano', 'sinCerdo', 'sinAlcohol'], direccion: '1-2-4 Shiokusa, Naniwa-ku, Osaka 556-0024 (SUNREGIS NAMBA 202)' },
     t: {
       es: { que: 'Clase de cocina japonesa en inglés junto a Namba, Osaka. Clase compartida hasta 8 personas, privada de 1 a 8 y privada de grupo hasta 12. Opción vegetariana si se pide antes.', ventaja: 'Sin cerdo ni alcohol (ni sake ni mirin) si lo pides con antelación; los ingredientes no tienen certificado halal. La compartida se reserva en su web; la privada, por correo. Si quieres que entre a traducir, se lo pido yo en cada reserva.' },
       en: { que: 'Japanese cooking class in English near Namba, Osaka. Shared class up to 8 people, private class for 1 to 8, private group class up to 12. Vegetarian option on request.', ventaja: 'No pork and no alcohol (no sake or mirin) if you ask in advance; ingredients are not halal-certified. Shared classes are booked on their website, private ones by email. If you want me inside to translate, I ask them for each booking.' },
@@ -675,6 +731,7 @@ const LISTA: App[] = [
     // es descuento de agente, no del cliente, así que la ficha va sin código ni sello de ventaja. «Non-pork» en las clases de cocina: mismo correo.
     clave: 'inkansai', cat: 'experiencias', ciudad: 'osaka', nombre: 'Cycle & Eat Osaka / Kyoto', enlace: 'https://www.cycleosaka.com/',
     marca: { fondo: '#e85d1a', tinta: '#ffffff', boton: '#ffffff', botonTinta: '#e85d1a', palabra: '輪' },
+    vistazo: { reserva: 'web', notas: ['sinCerdo'] },
     t: {
       es: { que: 'Tours en bici y tours de comida por Osaka, Kioto e Hiroshima, en grupos pequeños y en inglés.', ventaja: 'Se reserva en su web, o te lo reservo yo si quieres. En sus clases de cocina (Eat Osaka / Eat Kyoto) pueden preparar la comida sin cerdo; si necesitas halal o sin alcohol, pregúntame antes y lo consulto con ellos.' },
       en: { que: 'Bike tours and food tours in Osaka, Kyoto and Hiroshima, in small groups and in English.', ventaja: 'Book on their website, or I can book it for you. Their cooking classes (Eat Osaka / Eat Kyoto) can make the food without pork; if you need halal or no alcohol, ask me first and I will check with them.' },
@@ -686,6 +743,7 @@ const LISTA: App[] = [
     // agencia para Tony, NO descuento para el cliente: no se enseña ningún porcentaje. Se reserva conmigo (coordino e interpreto).
     clave: 'fujioutdoor', cat: 'experiencias', ciudad: 'fuji', conTony: true, nombre: 'Fuji Mountain Outdoor Museum', enlace: 'https://www.fom3776.com',
     marca: { fondo: '#24463a', tinta: '#eef3ea', boton: '#eef3ea', botonTinta: '#24463a', palabra: '富士' },
+    vistazo: { desde: { yen: 3500, por: 'persona' }, duracion: [30, 60], grupo: 15, reserva: 'tony', notas: ['guiaGratis'] },
     t: {
       es: { que: 'Entra en los moldes de lava de árboles de Funatsu Tainai, Patrimonio Mundial al pie del Fuji: los dejó una erupción de hace unos 1.000 años, y en la era Edo los peregrinos visitaban este lugar sagrado el día antes de subir al Fuji. También caminata por el bosque primigenio de Aokigahara, paseo por Fujiyoshida con el santuario Fuji Sengen y taller de palillos con cepillo de carpintero.', ventaja: 'Resérvalo conmigo: coordino con ellos e interpreto, y el guía-intérprete entra gratis. Moldes de lava o bosque: 3.800 ¥ por persona (1 h) o 38.000 ¥ el grupo de hasta 15. Reserva cuanto antes.' },
       en: { que: 'Step inside the Funatsu Tainai lava tree molds, a World Heritage site at the foot of Mt Fuji: an eruption about 1,000 years ago left them, and in the Edo period pilgrims visited this sacred site the day before climbing Fuji. Also an Aokigahara primeval-forest trek, a Fujiyoshida town walk with Fuji Sengen Shrine and a chopstick-making workshop with a hand plane.', ventaja: 'Book it through me: I coordinate with them and interpret, and the interpreter-guide joins free. Lava molds or forest: ¥3,800 per person (1 h) or ¥38,000 for a group of up to 15. Book as early as you can.' },
@@ -697,6 +755,7 @@ const LISTA: App[] = [
     // (con ~1 h de traslado por trayecto). Sin código ni comisión publicada; no es halal ni se marca como tal.
     clave: 'tenchan', cat: 'experiencias', ciudad: 'hiroshima', nombre: 'tenchan surfing club', enlace: 'https://tenchanss.com/',
     marca: { fondo: '#0f5c7a', tinta: '#e9f7fb', boton: '#e9f7fb', botonTinta: '#0f5c7a', palabra: '波' },
+    vistazo: { desde: { yen: 88000, por: 'grupo', hasta: 4 }, duracion: [480], reserva: 'correo' },
     t: {
       es: { que: 'Surf o SUP en el mar de Japón, el mar Interior de Seto o un lago, y snowboard en Daisen, saliendo de Hiroshima (estación, aeropuerto u hotel), Matsue/Izumo o Yonago. Día de 8 h con traslados: 88.000 ¥ el grupo de hasta 4 en surf o SUP (tabla incluida; traje 2.200 ¥ por persona) y de hasta 5 en snowboard. Surf de junio a noviembre; Daisen, de finales de diciembre a principios de marzo.', ventaja: 'En un día normal te guían gratis hasta 2 h de turismo durante los traslados, y el mismo grupo tiene descuento o más servicio si repite 2 días seguidos o más. Hacen planes a medida (SUP en un lago con santuario de pueblo y caminata, o surf con barbacoa y SUP). Se reserva por correo, con tiempo.' },
       en: { que: 'Surfing or SUP on the Sea of Japan, the Seto Inland Sea or a lake, and snowboarding at Daisen, starting from Hiroshima (station, airport or hotel), Matsue/Izumo or Yonago. An 8-hour day with transfers: ¥88,000 for a group of up to 4 for surf or SUP (board included; wetsuit ¥2,200 per person) and up to 5 for snowboarding. Surf June to November; Daisen late December to early March.', ventaja: 'On a standard day they guide you free for up to 2 h of sightseeing during the transfers, and the same group gets a discount or extended service on 2 or more consecutive days. Custom plans too (lake SUP with a village shrine and a hike, or surf with a BBQ and SUP). Book by email, and plan early.' },
