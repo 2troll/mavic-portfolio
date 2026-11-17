@@ -19,7 +19,8 @@
 .rb-ojo-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--vn-acento); box-shadow: 0 0 0 5px rgba(229, 83, 61, .25); }
 .rb-rota { display: flex; flex-wrap: wrap; align-items: center; gap: .35em; margin: 22px 0 0; font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; color: var(--vn-tinta); }
 .vn.lang-ar .rb-rota { letter-spacing: 0; }
-.rb-rota-caja { display: inline-flex; white-space: nowrap; padding: .08em .45em .14em; border-radius: .38em; background: var(--vn-acento); color: #fff; overflow: hidden; }
+/* La caja la pinta RotatingText (highlight) y se estira con cada palabra. */
+.vn .rb-rota .text-rotate-highlight { padding: .06em .42em .14em; border-radius: .38em; color: #fff; }
 .vn .rb-portada-sub { font-size: clamp(1.05rem, 1.4vw, 1.25rem); max-width: 52ch; margin-top: 22px; color: #d5dae3; }
 .rb-ctas { align-items: center; }
 .vn .rb-cta { font-weight: 700; font-size: 1.05rem; padding: 16px 30px; text-decoration: none; }

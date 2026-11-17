@@ -27,12 +27,9 @@ import { PortadaRB, ComoFunciona, ExperienciasRB, CodigosRB, ClaroRB, PaseTony }
 import type { Canje } from './datosCanje'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
 import { FichaApp, textoApp, MAS } from './FichaVentaja'
-import { GUIA, FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
 import { HerramientasEnGuia } from './KitGuia'
-import { FotoSocio, FotoZona } from './FotoZona'
 const Pagina404 = lazy(() => import('./Pagina404'))
 import { ICONO_EXP } from './iconosExperiencia'
-import { SelloVentaja, MetaFila, Vistazo, PasosReserva } from './Vistazo'
 import './v7.css'
 import './ventajas.css'
 import './ventajas-noche.css'
@@ -284,35 +281,7 @@ function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string
 
 // ── Textos nuevos de la página rehecha ─────────────────────────────────────
 
-// Portada (17-11-2026): foto a sangre, titular enorme, cifras sacadas de los datos y dos
-// cintas en movimiento (socios y apps). Las cifras se calculan, nunca se escriben a mano.
-const HERO: Record<VentajasId, { h1: string; sub: string; exp: string; cod: string }> = {
-  es: { h1: 'Lo mejor de Japón, de mi parte', sub: 'Talleres, kimono, té, cocina y naturaleza con socios que conozco en persona, con descuento o un extra por venir de mi parte. Y las apps que uso cada día en Kansai.', exp: 'Ver experiencias', cod: 'Mis códigos' },
-  en: { h1: 'The best of Japan, through me', sub: 'Workshops, kimono, tea, cooking and nature with partners I know in person, with a discount or an extra for coming through me. Plus the apps I use every day in Kansai.', exp: 'See experiences', cod: 'My codes' },
-  ar: { h1: 'أفضل ما في اليابان، من طرفي', sub: 'ورش وكيمونو وشاي وطبخ وطبيعة مع شركاء أعرفهم شخصيًا، بخصم أو ميزة إضافية لأنك قادم من طرفي. ومعها التطبيقات التي أستخدمها كل يوم في كانساي.', exp: 'شاهد التجارب', cod: 'رموزي' },
-  ru: { h1: 'Лучшее в Японии — от нас', sub: 'Мастерские, кимоно, чай, кухня и природа с партнёрами, которых мы знаем лично, — со скидкой или бонусом от нас. И приложения на каждый день в Кансае.', exp: 'Смотреть впечатления', cod: 'Коды' },
-}
-
-/** Formas del plural por idioma (Intl.PluralRules: árabe y ruso cambian la palabra según la cifra). */
-type Plural = Partial<Record<Intl.LDMLPluralRule, string>> & { other: string }
-const CIFRAS: Record<VentajasId, { exp: Plural; cod: Plural; zonas: Plural; apps: Plural }> = {
-  es: { exp: { one: 'experiencia', other: 'experiencias' }, cod: { one: 'código activo', other: 'códigos activos' }, zonas: { one: 'zona de Japón', other: 'zonas de Japón' }, apps: { one: 'app probada', other: 'apps probadas' } },
-  en: { exp: { one: 'experience', other: 'experiences' }, cod: { one: 'live code', other: 'live codes' }, zonas: { one: 'area of Japan', other: 'areas of Japan' }, apps: { one: 'tested app', other: 'tested apps' } },
-  ar: {
-    exp: { one: 'تجربة', two: 'تجربتان', few: 'تجارب', other: 'تجربة' },
-    cod: { one: 'رمز خصم', two: 'رمزا خصم', few: 'رموز خصم', other: 'رمز خصم' },
-    zonas: { one: 'منطقة في اليابان', two: 'منطقتان في اليابان', few: 'مناطق في اليابان', other: 'منطقة في اليابان' },
-    apps: { one: 'تطبيق مجرّب', two: 'تطبيقان مجرّبان', few: 'تطبيقات مجرّبة', many: 'تطبيقًا مجرّبًا', other: 'تطبيق مجرّب' },
-  },
-  ru: {
-    exp: { one: 'впечатление', few: 'впечатления', many: 'впечатлений', other: 'впечатления' },
-    cod: { one: 'действующий код', few: 'действующих кода', many: 'действующих кодов', other: 'действующего кода' },
-    zonas: { one: 'регион Японии', few: 'региона Японии', many: 'регионов Японии', other: 'региона Японии' },
-    apps: { one: 'проверенное приложение', few: 'проверенных приложения', many: 'проверенных приложений', other: 'проверенного приложения' },
-  },
-}
-const plural = (id: VentajasId, n: number, p: Plural) => p[new Intl.PluralRules(id).select(n)] ?? p.other
-
+// La portada está en VentajasRB.tsx (PortadaRB); las cintas de socios y apps, debajo, aquí.
 const EXP_T: Record<VentajasId, { titulo: string; sub: string; todas: string; musulman: string; conTony: string; abrir: string; reservar: string; msg: string; solo: string }> = {
   es: { titulo: 'Experiencias que no encuentras en una app', sub: 'Talleres, kimonos, samuráis y cocina que conozco en persona. Si estamos de tour, lo encajo en la ruta.', todas: 'Todas', musulman: 'Apto para musulmanes', conTony: 'Ventaja con Tony', abrir: 'Ver su web', reservar: 'Resérvalo conmigo', msg: 'Hola Tony, me interesa {n}. ¿Me ayudas a reservarlo?', solo: 'Ve solo: cómo llegar y qué decir' },
   en: { titulo: 'Experiences you won’t find in an app', sub: 'Workshops, kimono, samurai and cooking I know in person. If we tour together, I fit it into the route.', todas: 'All', musulman: 'Muslim-friendly', conTony: 'Perk with Tony', abrir: 'Their website', reservar: 'Book it with me', msg: 'Hi Tony, I’m interested in {n}. Can you help me book it?', solo: 'Go on your own: getting there and what to say' },
@@ -427,16 +396,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   // Solo códigos que ahorran dinero: el nº de guía de Yumeyakata no es un descuento.
   const conCodigo = APPS.filter((a) => cuponDe(a) && a.descuento)
   const conEnlace = APPS.filter((a) => esAfiliado(a) && !cuponDe(a))
-  const destacado = APPS.find((a) => a.clave === 'nomad' && cuponDe(a)) ?? conCodigo[0]
   const marquesina = APPS_REJILLA.filter((a) => ICONOS_APP.has(a.clave))
-  // Cifras de la portada, siempre desde los datos: si entra o sale un socio, cambian solas.
-  const zonas = new Set(EXPERIENCIAS.flatMap((a) => ciudadesDe(a)))
-  const cifras = [
-    { k: 'exp', n: EXPERIENCIAS.length, t: CIFRAS[id].exp, href: '#experiencias' },
-    { k: 'cod', n: conCodigo.length, t: CIFRAS[id].cod, href: '#codigos' },
-    { k: 'zonas', n: zonas.size, t: CIFRAS[id].zonas, href: '#experiencias' },
-    { k: 'apps', n: APPS_REJILLA.length, t: CIFRAS[id].apps, href: '#apps' },
-  ]
 
   // Movimiento (solo en el cliente y sin «reducir movimiento»; matchMedia se lee aquí,
   // nunca al pintar: la página va pregenerada y si no, React da el error #418).

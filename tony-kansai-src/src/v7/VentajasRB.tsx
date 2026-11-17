@@ -249,7 +249,7 @@ export function PortadaRB({ id }: { id: Id }) {
         <h1>{t.h1}</h1>
         <p className="rb-rota" aria-hidden="true">
           <span>{t.con}</span>
-          <RotatingText texts={t.rota} mainClassName="rb-rota-caja" staggerDuration={0.02} staggerFrom="last" rotationInterval={2400} splitBy={id === 'ar' ? 'words' : 'characters'} />
+          <RotatingText texts={t.rota} mainClassName="rb-rota-caja" effect="blur" transition={{ type: 'tween', duration: 0.3, ease: [0.22, 1, 0.36, 1] }} highlight highlightColor="#e5533d" staggerDuration={0.008} rotationInterval={2600} splitBy={id === 'ar' ? 'words' : 'characters'} />
         </p>
         <p className="vn-lead rb-portada-sub">{t.sub}</p>
         <div className="vn-ctas rb-ctas">
