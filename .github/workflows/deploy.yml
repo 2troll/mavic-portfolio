@@ -114,6 +114,21 @@ jobs:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: tony-kansai-src/scripts/indexnow.mjs
+      # Sitemap de la publicación anterior (caché de Actions): solo se avisa de
+      # lo cambiado desde entonces. Si no hay caché, indexnow.mjs usa 2 días.
+      - name: Sitemap de la publicación anterior
+        uses: actions/cache/restore@v4
+        with:
+          path: .indexnow/sitemap.xml
+          key: indexnow-sitemap-${{ github.run_id }}
+          restore-keys: indexnow-sitemap-
       - name: IndexNow (páginas cambiadas)
         continue-on-error: true
-        run: sleep 60 && node tony-kansai-src/scripts/indexnow.mjs --recientes
+        run: sleep 60 && node tony-kansai-src/scripts/indexnow.mjs --recientes --anterior=.indexnow/sitemap.xml
+      - name: Guardar el sitemap publicado para la próxima vez
+        if: always() && hashFiles('.indexnow/sitemap.xml') != ''
+        continue-on-error: true
+        uses: actions/cache/save@v4
+        with:
+          path: .indexnow/sitemap.xml
+          key: indexnow-sitemap-${{ github.run_id }}

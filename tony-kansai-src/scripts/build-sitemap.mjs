@@ -195,7 +195,8 @@ const V7 = {
 // página (Bing la usa para decidir qué volver a rastrear, y las IAs prefieren
 // lo reciente). Si se pusiera la fecha del build en todas, los buscadores
 // aprenden que no es fiable y la ignoran. Se saca de git; si el archivo tiene
-// cambios sin commit o git no responde, vale la fecha de hoy.
+// cambios sin commit o git no responde, vale la fecha de hoy. Lleva la hora del
+// commit (%cI): así indexnow.mjs distingue dos cambios del mismo día.
 const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
@@ -233,7 +234,7 @@ function lastmod({ loc, v7 }) {
   const clave = ficheros.join('|')
   if (!cache.has(clave)) {
     const sucio = git(['status', '--porcelain', '--', ...ficheros])
-    cache.set(clave, sucio ? HOY : (git(['log', '-1', '--format=%cs', '--', ...ficheros]) || HOY))
+    cache.set(clave, sucio ? HOY : (git(['log', '-1', '--format=%cI', '--', ...ficheros]) || HOY))
   }
   return cache.get(clave)
 }
