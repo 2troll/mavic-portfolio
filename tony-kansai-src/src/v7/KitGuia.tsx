@@ -151,7 +151,7 @@ function TarjetaExp({ a, lang }: { a: App; lang: Lengua }) {
     <li className="kg-exp">
       <div className="kg-exp-foto" style={socio || zona ? undefined : { background: a.marca.fondo }}>
         {socio ? <FotoSocio {...socio} alt="" sizes={sizes} className="kg-exp-img" />
-          : zona ? <FotoZona zona={zona} sizes={sizes} className="kg-exp-img" />
+          : zona ? <FotoZona zona={zona} lang={lang} sizes={sizes} className="kg-exp-img" />
           : <span className="kg-exp-palabra" style={{ color: a.marca.tinta }} lang="ja" aria-hidden="true">{a.marca.palabra ?? a.nombre}</span>}
         <Logo a={a} />
       </div>

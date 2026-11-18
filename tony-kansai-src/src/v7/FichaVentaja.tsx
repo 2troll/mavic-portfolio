@@ -142,7 +142,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
             </div>
           ) : FOTO_EXP[a.clave] ? (
             <div className="vt-escaparate con-foto">
-              <FotoZona zona={FOTO_EXP[a.clave]} className="vt-escaparate-foto" sizes="(max-width: 800px) 100vw, 480px" />
+              <FotoZona zona={FOTO_EXP[a.clave]} lang={id} className="vt-escaparate-foto" sizes="(max-width: 800px) 100vw, 480px" />
               <Logo a={a} className="vt-ico vt-ico-escaparate" />
             </div>
           ) : ICONOS_APP.has(a.clave) ? (

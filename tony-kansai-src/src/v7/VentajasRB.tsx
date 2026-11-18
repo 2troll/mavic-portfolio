@@ -15,7 +15,7 @@ import { CANJE, canjeDe, reglasDe, type Canje } from './datosCanje'
 import { ICONOS_APP } from './logosMarcas'
 import { ICONO_EXP } from './iconosExperiencia'
 import { FOTO_EXP, FOTO_SOCIO, GUIA } from './datosVentajasGuia'
-import { FotoSocio, FotoZona } from './FotoZona'
+import { FotoSocio, FotoZona, nombreZona } from './FotoZona'
 import { textoApp, MAS } from './FichaVentaja'
 import { enlaceGuia } from './contenido'
 import { IconoCanal } from './IconoWa'
@@ -180,13 +180,14 @@ function Copiable({ texto, etiqueta, copiado, grande }: { texto: string; etiquet
 }
 
 /** Foto de la tarjeta: la del socio, la de su zona o, si no hay, su color con el icono. Sin enlaces dentro (va en un botón). */
-function FotoTarjeta({ a }: { a: App }) {
+function FotoTarjeta({ a, id }: { a: App; id: Id }) {
   const socio = FOTO_SOCIO[a.clave]
   const zona = FOTO_EXP[a.clave]
   const src = socio ? `/v7/socios/${socio.foto}-600.webp` : zona ? `/v8/zonas/${zona}-600.webp` : ''
   return (
     <span className="rb-exp-foto" style={estiloMarca(a)} aria-hidden="true">
-      {src && <img src={src} alt="" width="600" height="400" loading="lazy" decoding="async" />}
+      {/* La tarjeta es aria-hidden (va dentro del botón); el alt es para los buscadores. */}
+      {src && <img src={src} alt={socio ? socio.alt[id] : nombreZona(zona, id)} width="600" height="400" loading="lazy" decoding="async" />}
       {a.marca.palabra && <span className="rb-exp-kanji">{a.marca.palabra}</span>}
       <IconoSocio a={a} />
     </span>
@@ -345,7 +346,7 @@ function FichaEmergente({ a, id, ruta, onCerrar, onPase }: { a: App; id: Id; rut
         <button ref={cerrarRef} type="button" className="rb-modal-cerrar" onClick={onCerrar} aria-label={t.cerrar}><X size={20} /></button>
         <div className="rb-modal-cara">
           {FOTO_SOCIO[a.clave] ? <FotoSocio {...FOTO_SOCIO[a.clave]} alt={FOTO_SOCIO[a.clave].alt[id]} className="rb-modal-foto" sizes="(max-width: 760px) 100vw, 720px" />
-            : FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} className="rb-modal-foto" sizes="(max-width: 760px) 100vw, 720px" />}
+            : FOTO_EXP[a.clave] && <FotoZona zona={FOTO_EXP[a.clave]} lang={id} className="rb-modal-foto" sizes="(max-width: 760px) 100vw, 720px" />}
           {a.marca.palabra && <span className="rb-exp-kanji" aria-hidden="true">{a.marca.palabra}</span>}
           <IconoSocio a={a} size={34} />
         </div>
@@ -448,7 +449,7 @@ export function ExperienciasRB({ id, ruta, filtroInicial, onPase }: { id: Id; ru
               <li key={a.clave} id={a.clave} className={plegada && n >= CONTADAS ? 'es-plegada' : undefined}>
                 <SpotlightCard className="rb-exp-tarjeta" spotlightColor={a.marca.fondo === '#ffffff' || a.marca.fondo.toLowerCase() === '#fff' ? '#e5533d' : a.marca.fondo} proximity={0} intensity={0.7} style={estiloMarca(a)}>
                   <button type="button" className="rb-exp-boton" onClick={() => abrir(a)} aria-haspopup="dialog">
-                    <FotoTarjeta a={a} />
+                    <FotoTarjeta a={a} id={id} />
                     <span className="rb-exp-cuerpo">
                       <span className="rb-exp-lugar">{a.ciudad ? CIUDADES[a.ciudad][id] : 'Kansai'}{a.musulman && <span className="rb-sello-musulman" title={t.musulman}><Moon size={12} aria-hidden="true" /> {t.musulman}</span>}</span>
                       <b className="rb-exp-nombre"><bdi dir="ltr">{a.nombre}</bdi></b>
