@@ -31,6 +31,9 @@ const KANSAI = new Set(['osaka', 'kioto', 'nara', 'kumano', 'kansai'])
 const COMO: Record<Id, string> = { es: 'Cómo reservar', en: 'How to book', ar: 'كيف تحجز', ru: 'Как забронировать' }
 
 export const MAS: Record<Id, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
+// Socios sin web propia (Onigiri Hiroshima): el botón abre el correo, sin pestaña nueva.
+export const ESCRIBIRLES: Record<Id, string> = { es: 'Escribirles', en: 'Email them', ar: 'راسلهم', ru: 'Написать им' }
+export const esCorreo = (href: string) => href.startsWith('mailto:')
 
 const L: Record<Id, {
   todas: string; para: string; pasos: string; consejos: string; precio: string; abrir: string; cupon: string; copiar: string; copiado: string
@@ -107,7 +110,9 @@ export function FichaApp({ a, id, lista, wa, final }: {
   const otras = [...APPS.filter((x) => x.cat === a.cat && x.clave !== a.clave), ...APPS.filter((x) => x.cat !== a.cat)].slice(0, 8)
   const marca = { ['--marca' as string]: a.marca.fondo, ['--marca-tinta' as string]: a.marca.tinta, ['--marca-boton' as string]: a.marca.boton ?? a.marca.tinta, ['--marca-boton-tinta' as string]: a.marca.botonTinta ?? a.marca.fondo }
   const Boton = () => (
-    <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{l.abrir} {a.nombre} <span aria-hidden="true">{flecha}</span></a>
+    esCorreo(href)
+      ? <a className="vt-boton" href={href}>{ESCRIBIRLES[id]} · {a.nombre} <span aria-hidden="true">{flecha}</span></a>
+      : <a className="vt-boton" href={href} target="_blank" rel="noopener noreferrer sponsored">{l.abrir} {a.nombre} <span aria-hidden="true">{flecha}</span></a>
   )
 
   return (

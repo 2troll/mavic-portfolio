@@ -1072,4 +1072,96 @@ export const DETALLE_SOCIOS: Record<string, Record<LangDet, Detalle>> = {
       precio: 'Цена класса — на их сайте или по почте для частных занятий.',
     },
   },
+  // Onigiri Hiroshima: todo sale de sus correos del 16 y 19-11-2026 (tarifas, sedes, plazos, cancelación,
+  // guía gratis si no cocina ni come, musulmanes bienvenidos, miso sin alcohol, pago en efectivo el día).
+  onigiri: {
+    es: {
+      intro: 'Onigiri Hiroshima es el taller de Midori y Uiko: aprendes a hacer onigiri, las bolas de arroz que en Japón se comen a diario, y sopa de miso, en un grupo privado solo para vosotros. Hasta 6 personas lo hacen en Cafe Sheba; de 7 a 20, en Soraza Kitchen, a unos 10 minutos a pie del Parque Conmemorativo de la Paz.',
+      para: [
+        'Familias y grupos que pasan el día en Hiroshima: el taller es privado, solo para vosotros.',
+        'Familias musulmanas: lo preparan con cuidado si avisas de tu dieta al reservar, y la sopa de miso va sin mirin, sin sake de cocina y sin ningún alcohol.',
+        'Grupos grandes, de 7 a 20 personas: Soraza Kitchen abre cualquier día de la semana, cerca del Parque de la Paz.',
+      ],
+      pasos: [
+        'Escríbeme por WhatsApp con la fecha, la hora y cuántos sois. Lo consulto con ellas y solo te lo confirmo cuando me digan que hay hueco.',
+        'Si prefieres reservar tú, escríbeles directamente a su correo con los mismos datos.',
+        'Al reservar, di si alguien es musulmán o sigue otra dieta.',
+        'El día del taller pagas en efectivo, directamente a ellas.',
+      ],
+      consejos: [
+        'Grupos de 7 a 20: reserva con al menos 1 mes (lo ideal son 3), porque tienen que alquilar el local.',
+        'Grupos pequeños, de unas 4 personas: a menudo hay hueco con 1 semana.',
+        'Cancelación gratis hasta 10 días antes del taller.',
+        'Hasta 6 personas el taller es en Cafe Sheba, solo los domingos y los lunes.',
+        'Si vienes conmigo, entro gratis a traducir al español o al árabe mientras no cocine ni coma; si me pongo a cocinar, pago como uno más.',
+      ],
+      precio: 'Por persona: 18.500 ¥ (1 persona) · 15.000 ¥ (2) · 14.000 ¥ (de 3 a 6) · 10.000 ¥ (de 7 a 20). Local privado: 5.000 ¥ hasta 6 personas y 12.000 ¥ de 7 a 20. Mismo precio para todos, sin código; en efectivo, el día del taller.',
+    },
+    en: {
+      intro: 'Onigiri Hiroshima is Midori and Uiko’s workshop: you learn to make onigiri, the rice balls people in Japan eat every day, and miso soup, in a private group just for you. Up to 6 people work at Cafe Sheba; groups of 7 to 20 at Soraza Kitchen, about a 10-minute walk from Peace Memorial Park.',
+      para: [
+        'Families and groups spending the day in Hiroshima: the workshop is private, just for you.',
+        'Muslim families: they prepare everything with care if you share your diet when booking, and the miso soup is made with no mirin, no cooking sake and no alcohol at all.',
+        'Large groups of 7 to 20: Soraza Kitchen is available any day of the week, near Peace Memorial Park.',
+      ],
+      pasos: [
+        'Message me on WhatsApp with the date, time and group size. I check with them and only confirm once they say they are free.',
+        'If you prefer to book yourself, email them directly with the same details.',
+        'When booking, say if anyone is Muslim or follows another diet.',
+        'On the day you pay in cash, directly to them.',
+      ],
+      consejos: [
+        'Groups of 7 to 20: book at least 1 month ahead (3 months is ideal), because they need to rent the venue.',
+        'Small groups of about 4: there is often space with 1 week’s notice.',
+        'Free cancellation up to 10 days before the workshop.',
+        'Up to 6 people, the workshop is at Cafe Sheba on Sundays and Mondays only.',
+        'Coming with me? I join free to interpret into Spanish or Arabic as long as I am not cooking or eating; if I cook too, I pay like everyone else.',
+      ],
+      precio: 'Per person: ¥18,500 (1 person) · ¥15,000 (2) · ¥14,000 (3 to 6) · ¥10,000 (7 to 20). Private venue: ¥5,000 up to 6 people and ¥12,000 for 7 to 20. Same price for everyone, no code; cash, on the day.',
+    },
+    ar: {
+      intro: 'Onigiri Hiroshima ورشة ميدوري وأويكو: تتعلم صنع الأونيغيري، كرات الأرز التي يأكلها اليابانيون كل يوم، وحساء الميسو، في مجموعة خاصة لكم وحدكم. حتى 6 أشخاص تُقام في Cafe Sheba، ومن 7 إلى 20 في Soraza Kitchen على بُعد نحو 10 دقائق مشيًا من حديقة السلام التذكارية.',
+      para: [
+        'العائلات والمجموعات التي تقضي يومها في هيروشيما: الورشة خاصة لكم وحدكم.',
+        'العائلات المسلمة: يحضّرون كل شيء بعناية إن أخبرتهم بنظامك الغذائي عند الحجز، وحساء الميسو بلا ميرين ولا ساكي طبخ ولا أي كحول.',
+        'المجموعات الكبيرة من 7 إلى 20 شخصًا: Soraza Kitchen متاحة في أي يوم من الأسبوع قرب حديقة السلام.',
+      ],
+      pasos: [
+        'راسلني على واتساب بالتاريخ والساعة وعددكم. أسألهما ولا أؤكد لك إلا بعد أن تقولا إن هناك مكانًا.',
+        'إن فضّلت الحجز بنفسك فراسلهما مباشرة على بريدهما بالمعلومات نفسها.',
+        'عند الحجز أخبرهما إن كان بينكم مسلمون أو من يتبع نظامًا غذائيًا آخر.',
+        'يوم الورشة تدفع نقدًا لهما مباشرة.',
+      ],
+      consejos: [
+        'المجموعات من 7 إلى 20: احجز قبل شهر على الأقل (والأفضل 3 أشهر)، لأنهما تستأجران المكان.',
+        'المجموعات الصغيرة (نحو 4 أشخاص): كثيرًا ما يوجد مكان قبل أسبوع.',
+        'الإلغاء مجاني حتى 10 أيام قبل الورشة.',
+        'حتى 6 أشخاص تُقام الورشة في Cafe Sheba يومي الأحد والاثنين فقط.',
+        'إن جئت معي أدخل مجانًا لأترجم إلى العربية أو الإسبانية ما دمت لا أطبخ ولا آكل؛ وإن طبخت أدفع مثل أي مشارك.',
+      ],
+      precio: 'للشخص: 18,500 ين (شخص واحد) · 15,000 ين (شخصان) · 14,000 ين (من 3 إلى 6) · 10,000 ين (من 7 إلى 20). المكان الخاص: 5,000 ين حتى 6 أشخاص و12,000 ين من 7 إلى 20. السعر نفسه للجميع بلا رمز؛ نقدًا يوم الورشة.',
+    },
+    ru: {
+      intro: 'Onigiri Hiroshima — мастер-класс Мидори и Уико: вы учитесь готовить онигири, рисовые шарики, которые в Японии едят каждый день, и суп мисо, в частной группе только для вас. До 6 человек — в Cafe Sheba, от 7 до 20 — в Soraza Kitchen, примерно в 10 минутах пешком от Мемориального парка мира.',
+      para: [
+        'Семьям и группам, которые проводят день в Хиросиме: мастер-класс частный, только для вас.',
+        'Мусульманским семьям: всё приготовят внимательно, если при бронировании рассказать о питании; суп мисо — без мирина, кулинарного сакэ и любого алкоголя.',
+        'Большим группам от 7 до 20 человек: Soraza Kitchen работает в любой день недели, рядом с Парком мира.',
+      ],
+      pasos: [
+        'Напишите нам в Telegram: дата, время и сколько вас. Мы уточним у них и подтвердим, только когда они скажут, что место есть.',
+        'Если хотите забронировать сами, напишите им напрямую на почту с теми же данными.',
+        'При бронировании скажите, если кто-то мусульманин или соблюдает другую диету.',
+        'В день мастер-класса оплата наличными напрямую им.',
+      ],
+      consejos: [
+        'Группы от 7 до 20 человек: бронируйте минимум за месяц (лучше за 3), им нужно арендовать зал.',
+        'Небольшие группы (около 4 человек): часто есть места и за неделю.',
+        'Бесплатная отмена за 10 дней до мастер-класса.',
+        'До 6 человек мастер-класс проходит в Cafe Sheba, только по воскресеньям и понедельникам.',
+        'Гид переводит бесплатно, если сам не готовит и не ест; если готовит, платит как участник.',
+      ],
+      precio: 'С человека: 18 500 ¥ (1 человек) · 15 000 ¥ (2) · 14 000 ¥ (3–6) · 10 000 ¥ (7–20). Аренда зала: 5000 ¥ до 6 человек и 12 000 ¥ от 7 до 20. Одна цена для всех, без кода; наличными в день мастер-класса.',
+    },
+  },
 }

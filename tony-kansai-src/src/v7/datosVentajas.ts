@@ -756,6 +756,21 @@ const LISTA: App[] = [
       ar: { que: 'ركوب الأمواج أو التجديف وقوفًا (SUP) في بحر اليابان أو بحر سيتو الداخلي أو في بحيرة، والتزلج على الثلج في دايسن، انطلاقًا من هيروشيما (المحطة أو المطار أو الفندق) أو ماتسوي/إيزومو أو يوناغو. يوم من 8 ساعات مع التنقلات: 88,000 ين للمجموعة حتى 4 أشخاص في ركوب الأمواج أو SUP (اللوح مشمول، وبدلة الغوص 2,200 ين للشخص) وحتى 5 في التزلج. الأمواج من يونيو إلى نوفمبر، ودايسن من أواخر ديسمبر إلى أوائل مارس.', ventaja: 'في اليوم العادي يرشدونك مجانًا في جولة سياحية حتى ساعتين أثناء التنقلات، وللمجموعة نفسها خصم أو خدمة أوسع إن حجزت يومين متتاليين أو أكثر. ويصممون برامج خاصة (SUP في بحيرة مع مزار قروي ومشي، أو أمواج مع شواء وSUP). الحجز بالبريد ومبكرًا.' },
     },
   },
+  {
+    // Onigiri Hiroshima (Midori y Uiko; correos del 16 y 19-11-2026): sin código ni tarifa de agencia, mismo precio para todos.
+    // Aceptan salir si ven el texto antes de publicarlo. Reservas: los grupos que llevamos, primero a ellas por correo o LINE;
+    // quien las encuentre aquí reserva directamente con ellas. Pago: en efectivo, el día, directamente a ellas.
+    // «Muslim guests welcome» y miso sin mirin ni sake ni alcohol: apto para musulmanes, NO halal (no lo dicen).
+    clave: 'onigiri', cat: 'experiencias', ciudad: 'hiroshima', musulman: true, nombre: 'Onigiri Hiroshima', enlace: 'mailto:onigirihiroshimajapan@gmail.com',
+    marca: { fondo: '#1f2a24', tinta: '#f4efe3', boton: '#f4efe3', botonTinta: '#1f2a24', palabra: 'おにぎり' },
+    vistazo: { desde: { yen: 10000, por: 'persona' }, grupo: 20, reserva: 'tony', notas: ['sinAlcohol'] },
+    t: {
+      es: { que: 'Taller privado de onigiri (bolas de arroz) y sopa de miso en Hiroshima con Midori y Uiko. Hasta 6 personas, en Cafe Sheba (domingos y lunes); de 7 a 20, en Soraza Kitchen, cualquier día, a unos 10 minutos a pie del Parque de la Paz.', ventaja: 'Mismo precio para todos, sin código. Por persona: 18.500 ¥ si vas solo, 15.000 ¥ si sois 2, 14.000 ¥ de 3 a 6 y 10.000 ¥ de 7 a 20, más el local (5.000 ¥ hasta 6 personas, 12.000 ¥ de 7 a 20). Cancelación gratis hasta 10 días antes y pago en efectivo, el día, directamente a ellas. Si vienes conmigo, entro gratis a traducir mientras no cocine ni coma.' },
+      en: { que: 'Private onigiri (rice ball) and miso soup workshop in Hiroshima with Midori and Uiko. Up to 6 people at Cafe Sheba (Sundays and Mondays); 7 to 20 at Soraza Kitchen, any day, about a 10-minute walk from Peace Memorial Park.', ventaja: 'Same price for everyone, no code. Per person: ¥18,500 on your own, ¥15,000 for 2, ¥14,000 for 3 to 6 and ¥10,000 for 7 to 20, plus the venue (¥5,000 up to 6 people, ¥12,000 for 7 to 20). Free cancellation up to 10 days before, and you pay in cash on the day, directly to them. Coming with me? I join free to interpret, as long as I am not cooking or eating.' },
+      ar: { que: 'ورشة خاصة لصنع الأونيغيري (كرات الأرز) وحساء الميسو في هيروشيما مع ميدوري وأويكو. حتى 6 أشخاص في Cafe Sheba (الأحد والاثنين)، ومن 7 إلى 20 في Soraza Kitchen في أي يوم، على بُعد نحو 10 دقائق مشيًا من حديقة السلام.', ventaja: 'السعر نفسه للجميع، بلا رمز. للشخص: 18,500 ين إن كنت وحدك، و15,000 ين لشخصين، و14,000 ين من 3 إلى 6، و10,000 ين من 7 إلى 20، إضافةً إلى المكان (5,000 ين حتى 6 أشخاص، و12,000 ين من 7 إلى 20). الإلغاء مجاني حتى 10 أيام قبل الموعد، والدفع نقدًا يوم الورشة لهما مباشرة. إن جئت معي أدخل مجانًا لأترجم ما دمت لا أطبخ ولا آكل.' },
+      ru: { que: 'Частный мастер-класс онигири (рисовые шарики) и супа мисо в Хиросиме с Мидори и Уико. До 6 человек — в Cafe Sheba (воскресенье и понедельник); от 7 до 20 — в Soraza Kitchen в любой день, примерно в 10 минутах пешком от Парка мира.', ventaja: 'Одна цена для всех, без кода. С человека: 18 500 ¥ одному, 15 000 ¥ вдвоём, 14 000 ¥ от 3 до 6 и 10 000 ¥ от 7 до 20 человек, плюс аренда зала (5000 ¥ до 6 человек, 12 000 ¥ от 7 до 20). Бесплатная отмена за 10 дней, оплата наличными в день мастер-класса напрямую им. Гид переводит бесплатно, если сам не готовит и не ест.' },
+    },
+  },
 ]
 
 /** El código que se copia (no los enlaces https://), mientras no haya caducado. */

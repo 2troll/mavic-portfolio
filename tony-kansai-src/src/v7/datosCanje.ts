@@ -33,6 +33,7 @@ export const CANJE: Record<string, { tipo: Canje; texto?: string }> = {
   kobaien: { tipo: 'conmigo' }, okamoto: { tipo: 'conmigo' }, shogun: { tipo: 'conmigo' },
   towerknives: { tipo: 'conmigo' }, hamanasu: { tipo: 'conmigo' }, kanemasa: { tipo: 'conmigo' },
   fujioutdoor: { tipo: 'conmigo' }, // coordino e interpreto; el intérprete entra gratis (correo 16-11)
+  onigiri: { tipo: 'conmigo' }, // los grupos que llevo los consulto yo antes; quien quiera puede escribirles directo (19-11)
 }
 
 export const canjeDe = (clave: string): Canje => CANJE[clave]?.tipo ?? 'directo'
@@ -237,6 +238,13 @@ export const REGLAS: Record<string, Record<Lang, string[]>> = {
     en: ['Up to 12 people, same price', 'Pay in cash, on site', 'More than 12: price agreed with their guide', 'The interpreter-guide joins free', 'Book early: some dates fill up'],
     ar: ['حتى 12 شخصًا بالسعر نفسه', 'الدفع نقدًا في المكان', 'أكثر من 12: يُتفق على السعر مع مرشدهم', 'المرشد المترجم يدخل مجانًا', 'احجز مبكرًا: بعض التواريخ تمتلئ'],
     ru: ['До 12 человек по той же цене', 'Оплата наличными на месте', 'Больше 12: цену согласуют с их гидом', 'Гид-переводчик проходит бесплатно', 'Бронируйте заранее: некоторые даты заняты'],
+  },
+  // Onigiri Hiroshima (correos del 16 y 19-11-2026).
+  onigiri: {
+    es: ['Cancelación gratis hasta 10 días antes', 'Pago en efectivo, el día, directamente a ellas', 'Por persona: 18.500 ¥ (1) · 15.000 ¥ (2) · 14.000 ¥ (3–6) · 10.000 ¥ (7–20)', 'Local: 5.000 ¥ hasta 6 (Cafe Sheba, domingo y lunes) · 12.000 ¥ de 7 a 20 (Soraza Kitchen)', 'De 7 a 20: reserva con 1 mes, mejor 3; grupos pequeños, a menudo 1 semana', 'Musulmanes bienvenidos: di tu dieta al reservar; miso sin mirin, sake ni alcohol', 'Tu guía entra gratis si no cocina ni come'],
+    en: ['Free cancellation up to 10 days before', 'Pay in cash on the day, directly to them', 'Per person: ¥18,500 (1) · ¥15,000 (2) · ¥14,000 (3–6) · ¥10,000 (7–20)', 'Venue: ¥5,000 up to 6 (Cafe Sheba, Sun & Mon) · ¥12,000 for 7–20 (Soraza Kitchen)', '7–20 people: book 1 month ahead, ideally 3; small groups often 1 week', 'Muslim guests welcome: share your diet when booking; miso with no mirin, sake or alcohol', 'Your guide joins free if not cooking or eating'],
+    ar: ['إلغاء مجاني حتى 10 أيام قبل الموعد', 'الدفع نقدًا يوم الورشة لهما مباشرة', 'للشخص: 18,500 ين (1) · 15,000 ين (2) · 14,000 ين (3–6) · 10,000 ين (7–20)', 'المكان: 5,000 ين حتى 6 (Cafe Sheba، الأحد والاثنين) · 12,000 ين من 7 إلى 20 (Soraza Kitchen)', 'من 7 إلى 20: احجز قبل شهر، والأفضل 3؛ المجموعات الصغيرة غالبًا قبل أسبوع', 'المسلمون مرحّب بهم: أخبرهما بنظامك الغذائي؛ ميسو بلا ميرين ولا ساكي ولا كحول', 'مرشدك يدخل مجانًا إن لم يطبخ أو يأكل'],
+    ru: ['Бесплатная отмена за 10 дней', 'Оплата наличными в день мастер-класса, напрямую им', 'С человека: 18 500 ¥ (1) · 15 000 ¥ (2) · 14 000 ¥ (3–6) · 10 000 ¥ (7–20)', 'Зал: 5000 ¥ до 6 (Cafe Sheba, вс и пн) · 12 000 ¥ для 7–20 (Soraza Kitchen)', '7–20 человек: бронь за месяц, лучше за 3; малые группы — часто за неделю', 'Мусульманам рады: скажите о питании при брони; мисо без мирина, сакэ и алкоголя', 'Гид бесплатно, если не готовит и не ест'],
   },
   tenchan: {
     es: ['88.000 ¥ el grupo de hasta 4 (surf/SUP)', 'Surf de junio a noviembre; nieve de diciembre a marzo', 'Reserva por correo'],
