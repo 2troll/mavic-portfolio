@@ -230,8 +230,6 @@ export const FOTO_EXP: Record<string, string> = {
   // 17-11-2026: foto de su ciudad para los que no tenían (la página de ventajas va ahora en tarjetas con foto).
   teaosaka: 'osaka-dotonbori', ninjacafe: 'osaka-castillo', osakacookingbase: 'osaka-kuromon',
   cookingsunosaka: 'osaka-kuromon', koto: 'hiroshima-miyajima', shaquda: 'hiroshima-misen',
-  // 20-11-2026: Soraza Kitchen está a unos 10 min a pie del Parque de la Paz.
-  onigiri: 'hiroshima-cupula',
 }
 
 /** Fotos que nos manda el propio socio (public/v7/socios/<clave>-600|-900|.webp).
