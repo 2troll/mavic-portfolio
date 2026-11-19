@@ -10,8 +10,12 @@
 // (componentes de React Bits) con las condiciones que pidió cada socio (datosCanje.ts).
 // Se juntó con el rediseño paralelo del mismo día: sus cintas de socios y apps, y sus
 // datos de un vistazo (Vistazo.tsx: desde, duración, grupo) van dentro de las tarjetas.
+// 20-11-2026: la página va en partes numeradas con índice arriba (experiencias por zonas,
+// códigos, apps, herramientas, acuerdos con socios y preguntas) y cada parte acaba en una
+// sola acción. Cada socio enseña «cómo funciona» con él (Acuerdo.tsx) y la parte de
+// acuerdos los junta en una tabla filtrable. Nunca comisiones ni códigos de agente.
 import { PlanesVenta } from './PlanesVenta'
-import { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import { lazy, Suspense, useEffect, useRef, useState, type ReactNode } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -21,18 +25,19 @@ import { Logo } from './Logo'
 import { IconoWa, IconoCanal } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
 import { PIE } from './formato'
-import { APPS, CATEGORIAS, CIUDADES, KANSAI, REGIONES, SEO_VENTAJAS, ciudadesDe, cuponDe, enKansai, esAfiliado, enlaceDe, type Categoria, type Ciudad } from './datosVentajas'
+import { APPS, CATEGORIAS, SEO_VENTAJAS, cuponDe, enKansai, esAfiliado, enlaceDe, type Categoria } from './datosVentajas'
 import { LOGOS, ICONOS_APP } from './logosMarcas'
-import { PortadaRB, ComoFunciona, ExperienciasRB, CodigosRB, ClaroRB, PaseTony } from './VentajasRB'
-import type { Canje } from './datosCanje'
+import { PortadaRB, ComoFunciona, ExperienciasRB, CodigosRB, ClaroRB, PaseTony, TablaAcuerdos, CON_CODIGO, FILAS_ACUERDOS } from './VentajasRB'
+import type { Acuerdo } from './datosCanje'
 import { AYUDA, type Enlace } from './datosAyudaViaje'
-import { FichaApp, textoApp, MAS } from './FichaVentaja'
-import { HerramientasEnGuia } from './KitGuia'
+import { FichaApp, textoApp } from './FichaVentaja'
+import { HerramientasEnGuia, HERRAMIENTAS, esLenguaKit } from './KitGuia'
 const Pagina404 = lazy(() => import('./Pagina404'))
 import { ICONO_EXP } from './iconosExperiencia'
 import './v7.css'
 import './ventajas.css'
 import './ventajas-noche.css'
+import './partes.css'
 
 export type VentajasId = 'es' | 'en' | 'ar' | 'ru'
 const BASE = 'https://tonykansaiguide.com'
@@ -135,19 +140,7 @@ function colorTarjeta(a: (typeof APPS)[number]) {
     ? { ['--acento' as string]: a.marca.boton, ['--acento-tinta' as string]: a.marca.botonTinta ?? '#fff' }
     : { ['--acento' as string]: a.marca.fondo, ['--acento-tinta' as string]: a.marca.tinta }
 }
-// Índice fijo bajo la barra: la página es larga y cada bloque es de un tipo distinto.
-const INDICE: Record<VentajasId, { exp: string; codigos: string; kit: string; apps: string; preguntas: string }> = {
-  es: { exp: 'Experiencias', codigos: 'Códigos', kit: 'Kit de viaje', apps: 'Apps', preguntas: 'Preguntas' },
-  en: { exp: 'Experiences', codigos: 'Codes', kit: 'Travel kit', apps: 'Apps', preguntas: 'Questions' },
-  ar: { exp: 'التجارب', codigos: 'الرموز', kit: 'عُدّة السفر', apps: 'التطبيقات', preguntas: 'أسئلة' },
-  ru: { exp: 'Впечатления', codigos: 'Коды', kit: 'Набор', apps: 'Приложения', preguntas: 'Вопросы' },
-}
-const PORTADA: Record<VentajasId, { verExp: string; verCod: string; exp: string; apps: string; codigos: string }> = {
-  es: { verExp: 'Ver experiencias', verCod: 'Mis códigos de descuento', exp: 'experiencias con socios', apps: 'apps probadas', codigos: 'códigos de descuento' },
-  en: { verExp: 'See experiences', verCod: 'My discount codes', exp: 'partner experiences', apps: 'tested apps', codigos: 'discount codes' },
-  ar: { verExp: 'شاهد التجارب', verCod: 'رموز الخصم', exp: 'تجارب مع شركائي', apps: 'تطبيقات مجرّبة', codigos: 'رموز خصم' },
-  ru: { verExp: 'Смотреть впечатления', verCod: 'Коды на скидку', exp: 'впечатлений с партнёрами', apps: 'проверенных приложений', codigos: 'кодов на скидку' },
-}
+
 const APPS_T: Record<VentajasId, { titulo: string; sub: string }> = {
   es: { titulo: 'Las apps que uso en Kansai', sub: 'Internet, entradas, hotel, transporte y pagos. Filtra por lo que necesitas y abre la ficha para ver cómo funciona cada una.' },
   en: { titulo: 'The apps I use in Kansai', sub: 'Data, tickets, hotels, transport and payments. Filter by what you need and open each card to see how it works.' },
@@ -155,26 +148,7 @@ const APPS_T: Record<VentajasId, { titulo: string; sub: string }> = {
   ru: { titulo: 'Приложения, которыми мы пользуемся в Кансае', sub: 'Интернет, билеты, отели, транспорт и оплата. Выберите нужное и откройте карточку, чтобы узнать подробности.' },
 }
 
-function IndiceFijo({ id }: { id: VentajasId }) {
-  const t = INDICE[id]
-  const secciones = [['planes', PLANES_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
-  const [activa, setActiva] = useState('')
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return
-    const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) setActiva(e.target.id) }, { rootMargin: '-45% 0px -50% 0px' })
-    secciones.forEach(([k]) => { const el = document.getElementById(k); if (el) io.observe(el) })
-    return () => io.disconnect()
-  }, [id])
-  return (
-    <nav className="vt-indice-fijo" aria-label="Índice">
-      {secciones.map(([k, txt]) => <a key={k} href={`#${k}`} aria-current={activa === k ? 'true' : undefined}>{txt}</a>)}
-    </nav>
-  )
-}
-
-const PLANES_IDX: Record<VentajasId, string> = { es: 'Planes', en: 'Plans', ar: 'البرامج', ru: 'Программы' }
 const TODAS: Record<VentajasId, string> = { es: 'Todas', en: 'All', ar: 'الكل', ru: 'Все' }
-const ABRIR: Record<VentajasId, string> = { es: 'Abrir', en: 'Open', ar: 'افتح', ru: 'Открыть' }
 
 // Dibujo de cada app (Tabler Icons, MIT; sprite en /v7/ventajas-dibujos.svg).
 const DIBUJO: Record<string, string> = {
@@ -204,6 +178,7 @@ function IconoApp({ a }: { a: (typeof APPS)[number] }) {
   )
 }
 
+
 // El kit en tres momentos del viaje: qué instalar y cuándo.
 const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string; d: string; apps: string[] }[] }> = {
   es: { titulo: 'Tu kit en 3 pasos', lista: [
@@ -227,7 +202,6 @@ const PASOS: Record<VentajasId, { titulo: string; lista: { n: string; t: string;
     { n: 'route', t: 'По городу', d: 'Такси в одно касание, самокат или велосипед туда, куда не идёт поезд.', apps: ['go', 'luup', 'hello'] },
   ] },
 }
-const TOCA: Record<VentajasId, string> = { es: 'Toca una app para ver cómo funciona', en: 'Tap an app to see how it works', ar: 'اضغط على تطبيق لترى كيف يعمل', ru: 'Нажмите на приложение, чтобы узнать подробности' }
 
 // Enlace de una respuesta: a la ficha de una app, a una guía de la web o fuera.
 function EnlaceAyuda({ e, lista }: { e: Enlace; lista: string }) {
@@ -251,15 +225,6 @@ const CODIGOS: Record<VentajasId, { titulo: string; sub: string; hasta: string; 
   ru: { titulo: 'Ваши коды на скидку', sub: 'Скопируйте код и вставьте при оплате на их сайте или в приложении.', hasta: 'до', ver: 'Как использовать', ir: 'Открыть сайт', enlaces: 'Бронируйте по моим ссылкам', enlacesSub: 'Заходите отсюда — сайт поймёт, что вы от меня.', claro: 'Честно', claroTexto: 'Когда вы бронируете по моим ссылкам или кодам, компания платит мне небольшую комиссию. Для вас это ничего не стоит: цена та же, а с кодом даже ниже. Я советую только то, чем пользуюсь со своими гостями, и так вы помогаете сохранить этот гид бесплатным.' },
 }
 
-/** Botón «mándatela a tu WhatsApp»: el cliente se envía a sí mismo los códigos y el
- *  enlace, y así los tiene en su chat durante todo el viaje sin buscar la web. */
-// «Cómo usar tu código», en tres pasos, encima de los billetes.
-const PASOS_CODIGO: Record<VentajasId, { titulo: string; pasos: [string, string][] }> = {
-  es: { titulo: 'Cómo usar tu código', pasos: [['Cópialo', 'con el botón de copiar de su tarjeta.'], ['Abre su web', 'con «Ir a la web» y elige día, hora y personas.'], ['Pégalo antes de pagar', 'en el campo de código promocional o cupón (en TableCheck, «PROMO CODE»). ¿No lo ves? Escríbeme por WhatsApp.']] },
-  en: { titulo: 'How to use your code', pasos: [['Copy it', 'with the copy button on its card.'], ['Open their website', 'with “Go to website” and pick the day, time and people.'], ['Paste it before paying', 'in the promo code or coupon field (on TableCheck, “PROMO CODE”). Can’t find it? Message me on WhatsApp.']] },
-  ar: { titulo: 'كيف تستخدم الرمز', pasos: [['انسخه', 'بزر النسخ في بطاقته.'], ['افتح موقعهم', 'بزر «افتح الموقع» واختر اليوم والساعة وعدد الأشخاص.'], ['الصقه قبل الدفع', 'في خانة الرمز الترويجي أو القسيمة (في TableCheck اسمها «PROMO CODE»). لا تجدها؟ راسلني على واتساب.']] },
-  ru: { titulo: 'Как использовать код', pasos: [['Скопируйте', 'кнопкой копирования на карточке.'], ['Откройте их сайт', 'кнопкой «Открыть сайт» и выберите день, время и число людей.'], ['Вставьте перед оплатой', 'в поле промокода или купона (в TableCheck — «PROMO CODE»). Не нашли? Напишите нам.']] },
-}
 
 const GUARDA: Record<VentajasId, { boton: string; nota: string; msg: string; todo: string }> = {
   es: { boton: 'Mándatelos a tu WhatsApp', nota: 'Así los tienes a mano durante todo el viaje por Japón.', msg: 'Mis descuentos para Japón (Tony Kansai Guide):', todo: 'Todo aquí:' },
@@ -268,26 +233,6 @@ const GUARDA: Record<VentajasId, { boton: string; nota: string; msg: string; tod
   ru: { boton: 'Отправить себе в WhatsApp', nota: 'Пусть будут под рукой всю поездку по Японии.', msg: 'Мои скидки для Японии (Tony Kansai Guide):', todo: 'Всё здесь:' },
 }
 const URL_VENTAJAS: Record<VentajasId, string> = { es: 'https://tonykansaiguide.com/es/ventajas/', en: 'https://tonykansaiguide.com/en/perks/', ar: 'https://tonykansaiguide.com/ar/perks/', ru: 'https://tonykansaiguide.com/ru/perks/' }
-
-function BotonCopiar({ texto, copiar, copiado }: { texto: string; copiar: string; copiado: string }) {
-  const marcar = (b: HTMLButtonElement) => { b.textContent = copiado; setTimeout(() => { b.textContent = copiar }, 1800) }
-  return (
-    <button type="button" className="vt-copiar" onClick={(e) => {
-      const b = e.currentTarget
-      navigator.clipboard?.writeText(texto).then(() => marcar(b)).catch(() => window.prompt(copiar, texto))
-    }}>{copiar}</button>
-  )
-}
-
-// ── Textos nuevos de la página rehecha ─────────────────────────────────────
-
-// La portada está en VentajasRB.tsx (PortadaRB); las cintas de socios y apps, debajo, aquí.
-const EXP_T: Record<VentajasId, { titulo: string; sub: string; todas: string; musulman: string; conTony: string; abrir: string; reservar: string; msg: string; solo: string }> = {
-  es: { titulo: 'Experiencias que no encuentras en una app', sub: 'Talleres, kimonos, samuráis y cocina que conozco en persona. Si estamos de tour, lo encajo en la ruta.', todas: 'Todas', musulman: 'Apto para musulmanes', conTony: 'Ventaja con Tony', abrir: 'Ver su web', reservar: 'Resérvalo conmigo', msg: 'Hola Tony, me interesa {n}. ¿Me ayudas a reservarlo?', solo: 'Ve solo: cómo llegar y qué decir' },
-  en: { titulo: 'Experiences you won’t find in an app', sub: 'Workshops, kimono, samurai and cooking I know in person. If we tour together, I fit it into the route.', todas: 'All', musulman: 'Muslim-friendly', conTony: 'Perk with Tony', abrir: 'Their website', reservar: 'Book it with me', msg: 'Hi Tony, I’m interested in {n}. Can you help me book it?', solo: 'Go on your own: getting there and what to say' },
-  ar: { titulo: 'تجارب لن تجدها في أي تطبيق', sub: 'ورش وكيمونو وساموراي وطبخ أعرفها شخصيًا. إن كنا في جولة معًا أضعها في المسار.', todas: 'الكل', musulman: 'مناسب للمسلمين', conTony: 'ميزة مع طوني', abrir: 'موقعهم', reservar: 'احجزه معي', msg: 'مرحبًا طوني، أنا مهتم بـ {n}. هل تساعدني في الحجز؟', solo: 'اذهب وحدك: كيف تصل وماذا تقول' },
-  ru: { titulo: 'Впечатления, которых нет в приложениях', sub: 'Мастерские, кимоно, самураи и кулинария, которые мы знаем лично. На экскурсии впишем это в маршрут.', todas: 'Все', musulman: 'Подходит мусульманам', conTony: 'Бонус от нас', abrir: 'Их сайт', reservar: 'Забронировать с нами', msg: 'Здравствуйте! Меня интересует {n}. Поможете забронировать?', solo: 'Самостоятельно: как добраться и что сказать' },
-}
 
 // Foto de cada momento del kit (la grande y la tercera llevan foto; la del medio, el color de acento).
 const FOTO_KIT = ['/v8/zonas/kioto-kiyomizu-900.webp', '', '/v8/zonas/osaka-dotonbori-900.webp']
@@ -300,7 +245,6 @@ const ORDENADAS = [...EXPERIENCIAS].sort((a, b) => peso(b) - peso(a))
 const APPS_REJILLA = APPS.filter((a) => a.cat !== 'experiencias')
 
 type App = (typeof APPS)[number]
-type FiltroExp = '' | 'musulman' | 'conTony' | Ciudad
 
 function Barra({ id, sufijo, wa, boton }: { id: VentajasId; sufijo: string; wa: string; boton: string }) {
   const NOMBRE: Record<VentajasId, string> = { es: 'ES', en: 'EN', ar: 'عربي', ru: 'RU' }
@@ -334,24 +278,195 @@ function Pie({ id }: { id: VentajasId }) {
   )
 }
 
-const COMO_IDX: Record<VentajasId, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
-// Índice bajo la barra: marca la sección que se está leyendo.
-function Indice({ id }: { id: VentajasId }) {
-  const t = INDICE[id]
-  const secciones = [['como', COMO_IDX[id]], ['experiencias', t.exp], ['codigos', t.codigos], ['planes', PLANES_IDX[id]], ['kit', t.kit], ['apps', t.apps], ['preguntas', t.preguntas]] as const
+
+// ── Partes de la página (20-11-2026) ─────────────────────────────────────
+// Seis partes numeradas, cada una con su cifra y una sola acción al final. El ruso
+// (página de Larion) no tiene herramientas gratis: allí son cinco y se renumeran.
+
+type ParteK = 'exp' | 'cod' | 'apps' | 'herr' | 'acu' | 'faq'
+const ORDEN_PARTES: ParteK[] = ['exp', 'cod', 'apps', 'herr', 'acu', 'faq']
+const ID_PARTE: Record<ParteK, string> = { exp: 'experiencias', cod: 'codigos', apps: 'apps', herr: 'herramientas', acu: 'acuerdos', faq: 'preguntas' }
+type Parte = { k: ParteK; id: string; t: string; corto: string; d: string; cuenta: number }
+
+const PARTES_T: Record<VentajasId, Record<ParteK, { t: string; corto: string; d: string }>> = {
+  es: {
+    exp: { t: 'Experiencias con mis socios', corto: 'Experiencias', d: 'Talleres, kimono, té y cocina por zonas, con lo que acordé con cada socio.' },
+    cod: { t: 'Códigos de descuento', corto: 'Códigos', d: 'Cópialos y pégalos al pagar: el descuento es para ti.' },
+    apps: { t: 'Apps y servicios para el viaje', corto: 'Apps', d: 'Internet, traslados, hotel, transporte y pagos que uso en Kansai.' },
+    herr: { t: 'Herramientas gratis', corto: 'Herramientas', d: 'Tarjetas en japonés, trenes y planificador, sin registrarte.' },
+    acu: { t: 'Acuerdos con mis socios', corto: 'Acuerdos', d: 'Todos los socios en una tabla: qué acordamos, qué te toca hacer y cuándo se actualizó.' },
+    faq: { t: 'Preguntas frecuentes', corto: 'Preguntas', d: 'Aeropuerto, taxi, maletas, dinero y emergencias.' },
+  },
+  en: {
+    exp: { t: 'Experiences with my partners', corto: 'Experiences', d: 'Workshops, kimono, tea and cooking by area, with what I agreed with each partner.' },
+    cod: { t: 'Discount codes', corto: 'Codes', d: 'Copy and paste them at checkout: the discount is yours.' },
+    apps: { t: 'Apps and services for your trip', corto: 'Apps', d: 'Data, transfers, hotels, transport and payments I use in Kansai.' },
+    herr: { t: 'Free tools', corto: 'Tools', d: 'Japanese cards, train times and a planner, no sign-up.' },
+    acu: { t: 'Partner agreements', corto: 'Agreements', d: 'Every partner in one table: what we agreed, what you do and when it was updated.' },
+    faq: { t: 'Frequently asked questions', corto: 'Questions', d: 'Airport, taxis, luggage, money and emergencies.' },
+  },
+  ar: {
+    exp: { t: 'تجارب مع شركائي', corto: 'التجارب', d: 'ورش وكيمونو وشاي وطبخ حسب المنطقة، مع ما اتفقت عليه مع كل شريك.' },
+    cod: { t: 'رموز الخصم', corto: 'الرموز', d: 'انسخها والصقها عند الدفع: الخصم لك.' },
+    apps: { t: 'تطبيقات وخدمات لرحلتك', corto: 'التطبيقات', d: 'الإنترنت والتوصيل والفنادق والتنقل والدفع التي أستخدمها في كانساي.' },
+    herr: { t: 'أدوات مجانية', corto: 'الأدوات', d: 'بطاقات باليابانية ومواعيد القطارات ومخطط للرحلة، بلا تسجيل.' },
+    acu: { t: 'الاتفاقات مع شركائي', corto: 'الاتفاقات', d: 'كل الشركاء في جدول واحد: ما اتفقنا عليه وما عليك فعله ومتى حُدّث.' },
+    faq: { t: 'أسئلة شائعة', corto: 'أسئلة', d: 'المطار والتاكسي والحقائب والمال والطوارئ.' },
+  },
+  ru: {
+    exp: { t: 'Впечатления с нашими партнёрами', corto: 'Впечатления', d: 'Мастер-классы, кимоно, чай и кухня по регионам — с условиями каждого партнёра.' },
+    cod: { t: 'Коды на скидку', corto: 'Коды', d: 'Скопируйте и вставьте при оплате: скидка ваша.' },
+    apps: { t: 'Приложения и сервисы для поездки', corto: 'Приложения', d: 'Интернет, трансферы, отели, транспорт и оплата в Кансае.' },
+    herr: { t: 'Бесплатные инструменты', corto: 'Инструменты', d: '' },
+    acu: { t: 'Договорённости с партнёрами', corto: 'Партнёры', d: 'Все партнёры в одной таблице: о чём договорились, что сделать вам и когда обновлено.' },
+    faq: { t: 'Частые вопросы', corto: 'Вопросы', d: 'Аэропорт, такси, багаж, деньги и экстренные случаи.' },
+  },
+}
+
+/** «36 experiencias», «41 شريكًا», «41 партнёр»: la palabra que va con cada cifra. */
+const UNIDAD: Record<VentajasId, Record<ParteK, string[]>> = {
+  es: { exp: ['experiencia', 'experiencias'], cod: ['código', 'códigos'], apps: ['app', 'apps'], herr: ['herramienta', 'herramientas'], acu: ['socio', 'socios'], faq: ['respuesta', 'respuestas'] },
+  en: { exp: ['experience', 'experiences'], cod: ['code', 'codes'], apps: ['app', 'apps'], herr: ['tool', 'tools'], acu: ['partner', 'partners'], faq: ['answer', 'answers'] },
+  // Árabe: de 3 a 10, plural; de 11 en adelante, singular.
+  ar: { exp: ['تجربة', 'تجارب'], cod: ['رمزًا', 'رموز'], apps: ['تطبيقًا', 'تطبيقات'], herr: ['أداة', 'أدوات'], acu: ['شريكًا', 'شركاء'], faq: ['سؤالًا', 'أسئلة'] },
+  // Ruso: 1 партнёр, 2–4 партнёра, 5–20 партнёров.
+  ru: { exp: ['впечатление', 'впечатления', 'впечатлений'], cod: ['код', 'кода', 'кодов'], apps: ['приложение', 'приложения', 'приложений'], herr: ['инструмент', 'инструмента', 'инструментов'], acu: ['партнёр', 'партнёра', 'партнёров'], faq: ['ответ', 'ответа', 'ответов'] },
+}
+function unidad(k: ParteK, n: number, id: VentajasId): string {
+  const f = UNIDAD[id][k]
+  if (id === 'ar') return n >= 3 && n <= 10 ? f[1] : f[0]
+  if (id === 'ru') { const d = n % 10, c = n % 100; return d === 1 && c !== 11 ? f[0] : d >= 2 && d <= 4 && (c < 12 || c > 14) ? f[1] : f[2] }
+  return n === 1 ? f[0] : f[1]
+}
+
+const EN_ESTA: Record<VentajasId, string> = { es: 'En esta página', en: 'On this page', ar: 'في هذه الصفحة', ru: 'На этой странице' }
+const PARTE_DE: Record<VentajasId, (n: number, t: number) => string> = {
+  es: (n, t) => `Parte ${n} de ${t}`, en: (n, t) => `Part ${n} of ${t}`, ar: (n, t) => `الجزء ${n} من ${t}`, ru: (n, t) => `Часть ${n} из ${t}`,
+}
+const PARTES_EN: Record<VentajasId, (n: number) => string> = {
+  es: (n) => `${n} partes`, en: (n) => `${n} parts`, ar: (n) => `${n} أجزاء`, ru: (n) => `${n} частей`,
+}
+
+// Entradillas de cada parte (la de apps y la de preguntas ya existían: APPS_T y AYUDA).
+const LEAD: Record<VentajasId, { exp: string; cod: string; herr: string; acu: string }> = {
+  es: {
+    exp: 'Talleres, kimonos, samuráis y cocina que conozco en persona, ordenados por zonas. Cada tarjeta dice qué acordé con el socio, sus condiciones y qué tienes que hacer tú.',
+    cod: 'Toca un código para copiarlo y pégalo al pagar, en el campo de código promocional o cupón. El descuento es para ti.',
+    herr: 'Tarjetas en japonés para el restaurante y el taxi, horarios y precios de tren y un planificador de Kansai. Para usarlas en la calle, desde el móvil.',
+    acu: 'Lo que acordé con cada socio, tal como te afecta a ti: el tipo de acuerdo, sus condiciones y cuándo las confirmó. Filtra por tipo o por zona, o busca un nombre.',
+  },
+  en: {
+    exp: 'Workshops, kimono, samurai and cooking I know in person, sorted by area. Each card says what I agreed with the partner, their conditions and what you need to do.',
+    cod: 'Tap a code to copy it and paste it at checkout, in the promo code or coupon field. The discount is yours.',
+    herr: 'Japanese cards for restaurants and taxis, train times and fares, and a Kansai planner. Made to use on the street, on your phone.',
+    acu: 'What I agreed with each partner, as it affects you: the type of agreement, their conditions and when they confirmed them. Filter by type or area, or search for a name.',
+  },
+  ar: {
+    exp: 'ورش وكيمونو وساموراي وطبخ أعرفها شخصيًا، مرتبة حسب المنطقة. كل بطاقة تقول ما اتفقت عليه مع الشريك وشروطه وما عليك فعله.',
+    cod: 'اضغط على الرمز لنسخه والصقه عند الدفع في خانة الرمز الترويجي أو القسيمة. الخصم لك.',
+    herr: 'بطاقات باليابانية للمطعم والتاكسي، ومواعيد القطارات وأسعارها، ومخطط لرحلتك في كانساي. لتستخدمها في الشارع من هاتفك.',
+    acu: 'ما اتفقت عليه مع كل شريك كما يخصّك: نوع الاتفاق وشروطهم ومتى أكّدوها. صفِّ حسب النوع أو المنطقة، أو ابحث عن اسم.',
+  },
+  ru: {
+    exp: 'Мастер-классы, кимоно, самураи и кухня, которые мы знаем лично, по регионам. На каждой карточке — о чём договорились с партнёром, его условия и что сделать вам.',
+    cod: 'Нажмите на код, чтобы скопировать, и вставьте при оплате в поле промокода или купона. Скидка ваша.',
+    herr: '',
+    acu: 'О чём мы договорились с каждым партнёром — так, как это касается вас: формат, их условия и когда они их подтвердили. Фильтруйте по формату или региону или ищите по названию.',
+  },
+}
+
+// La acción con la que acaba cada parte.
+const CIERRE: Record<VentajasId, { exp: string; expBoton: string; expMsg: string; cod: string; apps: string; appsBoton: string; appsMsg: string; herr: string; herrBoton: string }> = {
+  es: {
+    exp: '¿Te encajo una en tu día? Te la reservo, la coordino y entro a traducir.', expBoton: 'Pídemelo por WhatsApp', expMsg: 'Hola Tony, he visto las experiencias de tus socios y quiero reservar una.',
+    cod: 'Guárdalos para todo el viaje: mándatelos a tu propio WhatsApp.',
+    apps: '¿No sabes qué app te hace falta? Dime tu plan y te digo cuáles instalar.', appsBoton: 'Pregúntame por WhatsApp', appsMsg: 'Hola Tony, ¿qué apps me recomiendas para mi viaje a Kansai?',
+    herr: 'Funcionan en el móvil, gratis y sin registrarte.', herrBoton: 'Abrir las herramientas',
+  },
+  en: {
+    exp: 'Want one in your day? I book it, coordinate it and come in to interpret.', expBoton: 'Ask me on WhatsApp', expMsg: 'Hi Tony, I saw your partners’ experiences and want to book one.',
+    cod: 'Keep them for the whole trip: send them to your own WhatsApp.',
+    apps: 'Not sure which app you need? Tell me your plan and I’ll tell you what to install.', appsBoton: 'Ask me on WhatsApp', appsMsg: 'Hi Tony, which apps do you recommend for my Kansai trip?',
+    herr: 'They work on your phone, free and with no sign-up.', herrBoton: 'Open the tools',
+  },
+  ar: {
+    exp: 'تريد إحداها في يومك؟ أحجزها وأنسّقها وأدخل لأترجم.', expBoton: 'اطلبها مني على واتساب', expMsg: 'السلام عليكم توني، رأيت تجارب شركائك وأريد حجز إحداها.',
+    cod: 'احتفظ بها طوال الرحلة: أرسلها إلى واتساب الخاص بك.',
+    apps: 'لا تعرف أي تطبيق تحتاج؟ أخبرني بخطتك وأقول لك ماذا تثبّت.', appsBoton: 'اسألني على واتساب', appsMsg: 'السلام عليكم توني، ما التطبيقات التي تنصحني بها لرحلتي إلى كانساي؟',
+    herr: 'تعمل على هاتفك، مجانًا وبلا تسجيل.', herrBoton: 'افتح الأدوات',
+  },
+  ru: {
+    exp: 'Хотите вписать что-то в свой день? Забронируем, всё согласуем и поможем с переводом.', expBoton: 'Написать в Telegram', expMsg: 'Здравствуйте! Увидел впечатления ваших партнёров и хочу забронировать.',
+    cod: 'Сохраните их на всю поездку: отправьте себе в WhatsApp.',
+    apps: 'Не знаете, какое приложение нужно? Расскажите о планах — подскажем, что установить.', appsBoton: 'Написать в Telegram', appsMsg: 'Здравствуйте! Какие приложения посоветуете для поездки в Кансай?',
+    herr: '', herrBoton: '',
+  },
+}
+
+// Índice fijo bajo la barra: las partes numeradas; marca la que se está leyendo.
+function Indice({ id, partes }: { id: VentajasId; partes: Parte[] }) {
   const [activa, setActiva] = useState('')
   useEffect(() => {
     if (!('IntersectionObserver' in window)) return
     const io = new IntersectionObserver((es) => { for (const e of es) if (e.isIntersecting) setActiva(e.target.id) }, { rootMargin: '-40% 0px -55% 0px' })
-    secciones.forEach(([k]) => { const el = document.getElementById(k); if (el) io.observe(el) })
+    partes.forEach((p) => { const el = document.getElementById(p.id); if (el) io.observe(el) })
     return () => io.disconnect()
-  }, [id])
+  }, [id, partes])
   return (
-    <nav className="vn-indice" aria-label="Índice">
-      {secciones.map(([k, txt]) => <a key={k} href={`#${k}`} aria-current={activa === k ? 'true' : undefined}>{txt}</a>)}
+    <nav className="vn-indice pt-indice-fijo" aria-label={EN_ESTA[id]}>
+      {partes.map((p, n) => (
+        <a key={p.id} href={`#${p.id}`} aria-current={activa === p.id ? 'true' : undefined}><span className="pt-indice-fijo-n" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>{p.corto}</a>
+      ))}
     </nav>
   )
 }
+
+/** Índice grande de partes, justo debajo de la portada: número, qué hay y cuántas cosas. */
+function IndicePartes({ id, partes }: { id: VentajasId; partes: Parte[] }) {
+  return (
+    <nav className="pt-indice" aria-labelledby="pt-indice-t">
+      <div className="vn-ancho">
+        <h2 id="pt-indice-t" className="pt-indice-t">{EN_ESTA[id]} <span>{PARTES_EN[id](partes.length)}</span></h2>
+        <ol className="pt-indice-lista">
+          {partes.map((p, n) => (
+            <li key={p.k} className="vn-sube">
+              <a href={`#${p.id}`}>
+                <span className="pt-indice-n" aria-hidden="true">{String(n + 1).padStart(2, '0')}</span>
+                <span className="pt-indice-txt"><b>{p.t}</b><small>{p.d}</small></span>
+                <span className="pt-indice-cuenta"><b className="pt-indice-cifra" data-n={p.cuenta}>{p.cuenta}</b> <small>{unidad(p.k, p.cuenta, id)}</small></span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </nav>
+  )
+}
+
+/** Cabecera de cada parte: número hueco enorme, «Parte 2 de 6 · 10 códigos», título y entradilla. */
+function CabezaParte({ id, p, n, total, lead }: { id: VentajasId; p: Parte; n: number; total: number; lead?: string }) {
+  return (
+    <header className="pt-cab vn-ancho">
+      <span className="pt-n" aria-hidden="true">{String(n).padStart(2, '0')}</span>
+      <div className="pt-cab-txt">
+        <p className="pt-ojo"><span className="rb-ojo-punto" />{PARTE_DE[id](n, total)} · <b>{p.cuenta}</b> {unidad(p.k, p.cuenta, id)}</p>
+        <h2 id={`${p.id}-t`} className="pt-h2">{p.t}</h2>
+        {lead && <p className="vn-lead">{lead}</p>}
+      </div>
+    </header>
+  )
+}
+
+/** Final de cada parte: una frase y una sola acción. */
+function Cierre({ texto, children, final }: { texto: ReactNode; children: ReactNode; final?: boolean }) {
+  return (
+    <div className={`pt-cierre vn-ancho vn-sube${final ? ' es-final' : ''}`}>
+      <div className="pt-cierre-txt">{texto}</div>
+      <div className="pt-cierre-accion">{children}</div>
+    </div>
+  )
+}
+
 
 // Icono de una experiencia: el dibujo de lo que se hace sobre el color de la marca.
 function IconoExp({ a, grande }: { a: App; grande?: boolean }) {
@@ -362,6 +477,7 @@ function IconoExp({ a, grande }: { a: App; grande?: boolean }) {
     </span>
   )
 }
+
 
 export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) {
   const p = T[id]
@@ -374,15 +490,16 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   const url = `${BASE}${RUTA[id]}${sufijo}`
   const inicio = id === 'ru' ? '/ru/' : `/${id}/`
   // La versión rusa es de Larion: el contacto (Telegram, lo lleva Tony) y la vuelta son suyos.
-  const wa = enlaceGuia(id === 'ru' ? 'larion' : 'tony', p.saludo)
+  const guia = id === 'ru' ? 'larion' : 'tony'
+  const wa = enlaceGuia(guia, p.saludo)
   const hermanas = (Object.keys(RUTA) as VentajasId[]).map((k) => ({ lang: k, href: `${BASE}${RUTA[k]}${sufijo}` }))
   const raiz = useRef<HTMLDivElement>(null)
-  // «Cómo funciona» filtra las experiencias por forma de canje; el pase se abre desde cualquier sitio.
-  const [filtroExp, setFiltroExp] = useState<{ canje: Canje | ''; n: number }>({ canje: '', n: 0 })
+  // «Cuatro formas de acuerdo» filtra las experiencias; el pase se abre desde cualquier sitio.
+  const [filtroExp, setFiltroExp] = useState<{ acuerdo: Acuerdo | ''; n: number }>({ acuerdo: '', n: 0 })
   const [pase, setPase] = useState<{ abierto: boolean; socio?: (typeof APPS)[number] }>({ abierto: false })
-  const elegirCanje = (c: Canje) => {
-    setFiltroExp((f) => ({ canje: c, n: f.n + 1 }))
-    document.getElementById('experiencias')?.scrollIntoView({ behavior: 'smooth' })
+  const elegirAcuerdo = (c: Acuerdo) => {
+    setFiltroExp((f) => ({ acuerdo: c, n: f.n + 1 }))
+    document.getElementById('experiencias-zonas')?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const categorias = (Object.keys(CATEGORIAS) as Categoria[]).filter((c) => APPS_REJILLA.some((a) => a.cat === c))
@@ -393,15 +510,27 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
     window.addEventListener('hashchange', quita)
     return () => window.removeEventListener('hashchange', quita)
   }, [])
-  // Solo códigos que ahorran dinero: el nº de guía de Yumeyakata no es un descuento.
-  const conCodigo = APPS.filter((a) => cuponDe(a) && a.descuento)
   const conEnlace = APPS.filter((a) => esAfiliado(a) && !cuponDe(a))
   const marquesina = APPS_REJILLA.filter((a) => ICONOS_APP.has(a.clave))
 
+  // Las partes y sus cifras (en ruso no hay herramientas gratis).
+  const cuentas: Record<ParteK, number> = {
+    exp: EXPERIENCIAS.length, cod: CON_CODIGO.length, apps: APPS_REJILLA.length,
+    herr: esLenguaKit(id) ? Object.keys(HERRAMIENTAS[id]).filter((k) => k !== 'hub').length : 0,
+    acu: FILAS_ACUERDOS.length, faq: AYUDA[id].preguntas.length,
+  }
+  const partes: Parte[] = ORDEN_PARTES.filter((k) => cuentas[k] > 0).map((k) => ({ k, id: ID_PARTE[k], ...PARTES_T[id][k], cuenta: cuentas[k] }))
+  const cabeza = (k: ParteK, lead?: string) => {
+    const n = partes.findIndex((x) => x.k === k)
+    return <CabezaParte id={id} p={partes[n]} n={n + 1} total={partes.length} lead={lead} />
+  }
+  const guardaHref = `https://wa.me/?text=${encodeURIComponent([GUARDA[id].msg, ...CON_CODIGO.map((a) => `${a.nombre}: ${cuponDe(a)}${a.descuento ? ` (${a.descuento.startsWith('−') ? '' : '−'}${a.descuento})` : ''}`), `${GUARDA[id].todo} ${URL_VENTAJAS[id]}`].join('\n'))}`
+
   // Movimiento (solo en el cliente y sin «reducir movimiento»; matchMedia se lee aquí,
   // nunca al pintar: la página va pregenerada y si no, React da el error #418).
-  // Lenis para el scroll, SplitText para el titular, las cifras que cuentan desde 0,
-  // las dos cintas en bucle (GSAP, se frenan al pasar el ratón) y bloques que suben.
+  // Lenis para el scroll, SplitText para el titular, las dos cintas en bucle (GSAP, se
+  // frenan al pasar el ratón), los números de cada parte que entran de lado, las cifras
+  // del índice que cuentan desde 0 y bloques que suben.
   useEffect(() => {
     const nodo = raiz.current
     if (appSel || !nodo || matchMedia('(prefers-reduced-motion: reduce)').matches) return
@@ -443,6 +572,18 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           fila.addEventListener('pointerleave', normal)
           quitar.push(() => { fila.removeEventListener('pointerenter', lento); fila.removeEventListener('pointerleave', normal) })
         })
+        // El número hueco de cada parte entra desde su lado: marca dónde empieza una parte nueva.
+        gsap.utils.toArray<HTMLElement>('.pt-n').forEach((n) => {
+          gsap.from(n, { xPercent: rtl ? 18 : -18, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: n, start: 'top 88%', once: true } })
+        })
+        // Cifras del índice: cuentan hasta su valor al aparecer (en el HTML ya está el número real).
+        gsap.utils.toArray<HTMLElement>('.pt-indice-cifra').forEach((el) => {
+          const fin = Number(el.dataset.n) || 0
+          ScrollTrigger.create({ trigger: el, start: 'top 92%', once: true, onEnter: () => {
+            const o = { v: 0 }
+            gsap.to(o, { v: fin, duration: 1.3, ease: 'power3.out', onUpdate: () => { el.textContent = String(Math.round(o.v)) } })
+          } })
+        })
         gsap.set('.vn-sube', { y: 28, opacity: 0 })
         ScrollTrigger.batch('.vn-sube', { once: true, start: 'top 88%', onEnter: (els) => gsap.to(els, { y: 0, opacity: 1, duration: 0.8, ease: 'expo.out', stagger: 0.07 }) })
       }, nodo)
@@ -454,6 +595,7 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
   // Una clave que no existe (/es/ventajas/loquesea/) es un 404, no la lista sin avisar.
   if (app && !appSel) return <Suspense fallback={null}><Pagina404 /></Suspense>
 
+  const canal = <IconoCanal tg={id === 'ru'} />
   return (
     <div ref={raiz} className={`vt lang-${id}${appSel ? '' : ' vn'}`} lang={id} dir={dir}>
       <Helmet>
@@ -471,9 +613,11 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       <Barra id={id} sufijo={sufijo} wa={wa} boton={p.finalBoton} />
 
       {appSel ? <FichaApp a={appSel} id={id} lista={RUTA[id]} wa={wa} final={p} /> : <main>
-        <Indice id={id} />
+        <Indice id={id} partes={partes} />
 
         <PortadaRB id={id} />
+
+        <IndicePartes id={id} partes={partes} />
 
         {/* Dos cintas: los socios (abren su ficha) y los iconos reales de las apps. */}
         <div className="vn-cinta" aria-hidden="true">
@@ -491,104 +635,131 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
           </div>
         </div>
 
-        <ComoFunciona id={id} onElegir={elegirCanje} onPase={() => setPase({ abierto: true })} />
-
-        <ExperienciasRB id={id} ruta={RUTA[id]} filtroInicial={filtroExp} onPase={(socio) => setPase({ abierto: true, socio })} />
-
-        <CodigosRB id={id} ruta={RUTA[id]}>
-          <div className="vn-cod-pie rb-cod-pie">
-            <p className="vn-guarda">
-              <a className="vn-boton vn-boton-wa" href={`https://wa.me/?text=${encodeURIComponent([GUARDA[id].msg, ...conCodigo.map((a) => `${a.nombre}: ${cuponDe(a)}${a.descuento ? ` (${a.descuento.startsWith('−') ? '' : '−'}${a.descuento})` : ''}`), `${GUARDA[id].todo} ${URL_VENTAJAS[id]}`].join('\n'))}`} target="_blank" rel="noopener noreferrer">
-                <IconoWa /> {GUARDA[id].boton}
-              </a>
-              <small>{GUARDA[id].nota}</small>
-            </p>
-            {conEnlace.length > 0 && (
-              <div className="vn-enlaces-bloque">
-                <h3>{CODIGOS[id].enlaces}</h3>
-                <p>{CODIGOS[id].enlacesSub}</p>
-                <div className="vn-enlaces">
-                  {conEnlace.map((a) => (
-                    <a key={a.clave} href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored"><IconoApp a={a} /><b dir="ltr">{a.nombre}</b></a>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </CodigosRB>
-
-        <ClaroRB id={id} />
-
-        {/* Planes: guía + experiencias, con las ventajas aplicadas (datosPlanes.ts) */}
-        <div style={{ ['--pl-acento' as string]: '#e8452c' }}><PlanesVenta lang={id} guia={id === 'ru' ? 'larion' : 'tony'} url={`${BASE}${RUTA[id]}`} /></div>
-
-        <section className="vn-kit" id="kit" aria-labelledby="vn-kit-t">
+        {/* ① Experiencias con socios, por zonas */}
+        <section className="pt pt-exp" id="experiencias" aria-labelledby="experiencias-t">
+          {cabeza('exp', LEAD[id].exp)}
           <div className="vn-ancho">
-            <h2 id="vn-kit-t" className="vn-h2 vn-sube">{PASOS[id].titulo}</h2>
-            <div className="vn-bento">
-              {PASOS[id].lista.map((paso, n) => (
-                <div key={paso.t} className={`vn-celda vn-celda-${n} vn-sube`}>
-                  {FOTO_KIT[n] && <img className="vn-celda-foto" src={FOTO_KIT[n]} alt="" loading="lazy" decoding="async" />}
-                  <div className="vn-celda-txt">
-                    <Dibujo n={paso.n} className="vn-celda-ico" />
-                    <h3>{paso.t}</h3>
-                    <p>{paso.d}</p>
-                    <div className="vn-celda-apps">
-                      {paso.apps.map((k) => { const ap = APPS.find((x) => x.clave === k); return ap && <a key={k} href={`#${k}`}><IconoApp a={ap} /><span dir="ltr">{ap.nombre.replace('Google ', '')}</span></a> })}
-                    </div>
+            <ComoFunciona id={id} onElegir={elegirAcuerdo} onPase={() => setPase({ abierto: true })} />
+            <div id="experiencias-zonas" className="pt-ancla">
+              <ExperienciasRB id={id} ruta={RUTA[id]} filtroInicial={filtroExp} onPase={(socio) => setPase({ abierto: true, socio })} />
+            </div>
+          </div>
+          {/* Planes: guía + experiencias, con las ventajas aplicadas (datosPlanes.ts) */}
+          <div style={{ ['--pl-acento' as string]: '#e8452c' }}><PlanesVenta lang={id} guia={guia} url={`${BASE}${RUTA[id]}`} /></div>
+          <Cierre texto={<p>{CIERRE[id].exp}</p>}>
+            <a className="vn-boton vn-boton-wa" href={enlaceGuia(guia, CIERRE[id].expMsg)} target="_blank" rel="noopener noreferrer">{canal} {CIERRE[id].expBoton}</a>
+          </Cierre>
+        </section>
+
+        {/* ② Códigos de descuento */}
+        <section className="pt pt-cod" id="codigos" aria-labelledby="codigos-t">
+          {cabeza('cod', LEAD[id].cod)}
+          <div className="vn-ancho">
+            <CodigosRB id={id} ruta={RUTA[id]}>
+              {conEnlace.length > 0 && (
+                <div className="vn-enlaces-bloque">
+                  <h3>{CODIGOS[id].enlaces}</h3>
+                  <p>{CODIGOS[id].enlacesSub}</p>
+                  <div className="vn-enlaces">
+                    {conEnlace.map((a) => (
+                      <a key={a.clave} href={enlaceDe(a)} target="_blank" rel="noopener noreferrer sponsored"><IconoApp a={a} /><b dir="ltr">{a.nombre}</b></a>
+                    ))}
                   </div>
                 </div>
-              ))}
-              <div className="vn-celda vn-celda-consejos vn-sube">
-                <h3>{p.consejosTitulo}</h3>
-                <ol>{p.consejos.map((c) => <li key={c}>{c}</li>)}</ol>
+              )}
+            </CodigosRB>
+          </div>
+          <Cierre texto={<p>{CIERRE[id].cod} <small>{GUARDA[id].nota}</small></p>}>
+            <a className="vn-boton vn-boton-wa" href={guardaHref} target="_blank" rel="noopener noreferrer"><IconoWa /> {GUARDA[id].boton}</a>
+          </Cierre>
+        </section>
+
+        {/* ③ Apps y servicios para el viaje */}
+        <section className="pt pt-apps" id="apps" aria-labelledby="apps-t">
+          {cabeza('apps', APPS_T[id].sub)}
+          <div className="vn-ancho">
+            <div className="vn-kit" id="kit">
+              <h3 className="vn-h3 vn-sube">{PASOS[id].titulo}</h3>
+              <div className="vn-bento">
+                {PASOS[id].lista.map((paso, n) => (
+                  <div key={paso.t} className={`vn-celda vn-celda-${n} vn-sube`}>
+                    {FOTO_KIT[n] && <img className="vn-celda-foto" src={FOTO_KIT[n]} alt="" loading="lazy" decoding="async" />}
+                    <div className="vn-celda-txt">
+                      <Dibujo n={paso.n} className="vn-celda-ico" />
+                      <h4>{paso.t}</h4>
+                      <p>{paso.d}</p>
+                      <div className="vn-celda-apps">
+                        {paso.apps.map((k) => { const ap = APPS.find((x) => x.clave === k); return ap && <a key={k} href={`#${k}`}><IconoApp a={ap} /><span dir="ltr">{ap.nombre.replace('Google ', '')}</span></a> })}
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="vn-celda vn-celda-consejos vn-sube">
+                  <h4>{p.consejosTitulo}</h4>
+                  <ol>{p.consejos.map((c) => <li key={c}>{c}</li>)}</ol>
+                </div>
               </div>
             </div>
+
+            <div className="vn-apps">
+              <h3 className="vn-h3">{APPS_T[id].titulo}</h3>
+              <div className="vn-chips" role="group" aria-label={APPS_T[id].titulo}>
+                <button type="button" aria-pressed={filtro === ''} onClick={() => setFiltro('')}>{TODAS[id]} <small>{APPS_REJILLA.length}</small></button>
+                {categorias.map((c) => (
+                  <button key={c} type="button" aria-pressed={filtro === c} onClick={() => setFiltro(c)}>
+                    {CATEGORIAS[c][id]} <small>{APPS_REJILLA.filter((a) => a.cat === c).length}</small>
+                  </button>
+                ))}
+              </div>
+              <ul className="vn-dock">
+                <AnimatePresence initial={false} mode="popLayout">
+                  {APPS_REJILLA.filter((a) => !filtro || a.cat === filtro).map((a) => {
+                    const cupon = cuponDe(a)
+                    return (
+                      <motion.li key={a.clave} id={a.clave} layout initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }}
+                        transition={{ type: 'spring', stiffness: 320, damping: 30 }}>
+                        <Link to={`${RUTA[id]}${a.clave}/`} className="vn-app">
+                          <IconoApp a={a} />
+                          <span className="vn-app-txt"><b dir="ltr">{a.nombre}</b><small>{textoApp(a, id).que}</small></span>
+                          {cupon && <code className="vn-app-cod" dir="ltr">{cupon}</code>}
+                        </Link>
+                      </motion.li>
+                    )
+                  })}
+                </AnimatePresence>
+              </ul>
+            </div>
           </div>
+          <Cierre texto={<p>{CIERRE[id].apps}</p>}>
+            <a className="vn-boton vn-boton-wa" href={enlaceGuia(guia, CIERRE[id].appsMsg)} target="_blank" rel="noopener noreferrer">{canal} {CIERRE[id].appsBoton}</a>
+          </Cierre>
         </section>
 
-        <section className="vn-apps" id="apps" aria-labelledby="vn-apps-t">
+        {/* ④ Herramientas gratis (tarjetas en japonés, trenes, planificador); no hay en ruso */}
+        {esLenguaKit(id) && (
+          <section className="pt pt-herr" id="herramientas" aria-labelledby="herramientas-t">
+            {cabeza('herr', LEAD[id].herr)}
+            <div className="vn-ancho"><HerramientasEnGuia lang={id} sinCabecera /></div>
+            <Cierre texto={<p>{CIERRE[id].herr}</p>}>
+              <a className="vn-boton vn-boton-acento" href={HERRAMIENTAS[id].hub}>{CIERRE[id].herrBoton} <span aria-hidden="true">{id === 'ar' ? '←' : '→'}</span></a>
+            </Cierre>
+          </section>
+        )}
+
+        {/* ⑤ Acuerdos con socios: todos en una tabla, sin comisiones ni códigos de agente */}
+        <section className="pt pt-acu" id="acuerdos" aria-labelledby="acuerdos-t">
+          {cabeza('acu', LEAD[id].acu)}
+          <ClaroRB id={id} />
+          <div className="vn-ancho"><TablaAcuerdos id={id} ruta={RUTA[id]} /></div>
+          <Cierre texto={<><h3 className="pt-cierre-t">{SOCIOS[id].titulo}</h3><p>{SOCIOS[id].texto}</p></>}>
+            <a className="vn-boton vn-boton-linea" href={`mailto:${CORREO}?subject=${encodeURIComponent(SOCIOS[id].asunto)}`}>{SOCIOS[id].boton}</a>
+          </Cierre>
+        </section>
+
+        {/* ⑥ Preguntas, y la última acción: escribirme */}
+        <section className="pt pt-faq vn-faq" id="preguntas" aria-labelledby="preguntas-t">
+          {cabeza('faq', AYUDA[id].sub)}
           <div className="vn-ancho">
-            <h2 id="vn-apps-t" className="vn-h2 vn-sube">{APPS_T[id].titulo}</h2>
-            <p className="vn-lead vn-sube">{APPS_T[id].sub}</p>
-            <div className="vn-chips" role="group" aria-label={APPS_T[id].titulo}>
-              <button type="button" aria-pressed={filtro === ''} onClick={() => setFiltro('')}>{TODAS[id]} <small>{APPS_REJILLA.length}</small></button>
-              {categorias.map((c) => (
-                <button key={c} type="button" aria-pressed={filtro === c} onClick={() => setFiltro(c)}>
-                  {CATEGORIAS[c][id]} <small>{APPS_REJILLA.filter((a) => a.cat === c).length}</small>
-                </button>
-              ))}
-            </div>
-            <ul className="vn-dock">
-              <AnimatePresence initial={false} mode="popLayout">
-                {APPS_REJILLA.filter((a) => !filtro || a.cat === filtro).map((a) => {
-                  const cupon = cuponDe(a)
-                  return (
-                    <motion.li key={a.clave} id={a.clave} layout initial={{ opacity: 0, scale: 0.94 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.94 }}
-                      transition={{ type: 'spring', stiffness: 320, damping: 30 }}>
-                      <Link to={`${RUTA[id]}${a.clave}/`} className="vn-app">
-                        <IconoApp a={a} />
-                        <span className="vn-app-txt"><b dir="ltr">{a.nombre}</b><small>{textoApp(a, id).que}</small></span>
-                        {cupon && <code className="vn-app-cod" dir="ltr">{cupon}</code>}
-                      </Link>
-                    </motion.li>
-                  )
-                })}
-              </AnimatePresence>
-            </ul>
-          </div>
-        </section>
-
-        {/* Herramientas gratis (tarjetas en japonés, trenes, planificador): ventajas y
-            herramientas, juntas en la misma página (16-11-2026). */}
-        <HerramientasEnGuia lang={id} />
-
-        <section className="vn-faq" id="preguntas" aria-labelledby="vn-faq-t">
-          <div className="vn-ancho vn-faq-grid">
-            <div className="vn-faq-cab">
-              <h2 id="vn-faq-t" className="vn-h2">{AYUDA[id].titulo}</h2>
-              <p className="vn-lead">{AYUDA[id].sub}</p>
-            </div>
             <div className="vn-faq-lista">
               {AYUDA[id].preguntas.map((q) => (
                 <details key={q.q}>
@@ -599,23 +770,11 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
               ))}
             </div>
           </div>
-        </section>
-
-        <section className="vn-final">
-          <div className="vn-ancho vn-final-grid">
-            <div className="vn-final-tour vn-sube">
-              <h2 className="vn-h2">{p.finalTitulo}</h2>
-              <p>{p.finalTexto}</p>
-              <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={id === 'ru'} /> {p.finalBoton}</a>
-              {id === 'ru' && <small className="v7-nota-tg">Telegram @Larik_Yokota · {NOTA_TG.ru} · WhatsApp +81 80-8506-7586</small>}
-              <Link className="vn-enlace" to={inicio}>{p.volver}</Link>
-            </div>
-            <div className="vn-final-socios vn-sube" id="colaborar">
-              <h3>{SOCIOS[id].titulo}</h3>
-              <p>{SOCIOS[id].texto}</p>
-              <a className="vn-boton vn-boton-linea" href={`mailto:${CORREO}?subject=${encodeURIComponent(SOCIOS[id].asunto)}`}>{SOCIOS[id].boton}</a>
-            </div>
-          </div>
+          <Cierre final texto={<><h3 className="pt-cierre-t">{p.finalTitulo}</h3><p>{p.finalTexto}</p></>}>
+            <a className="vn-boton vn-boton-wa" href={wa} target="_blank" rel="noopener noreferrer">{canal} {p.finalBoton}</a>
+            {id === 'ru' && <small className="v7-nota-tg">Telegram @Larik_Yokota · {NOTA_TG.ru} · WhatsApp +81 80-8506-7586</small>}
+            <Link className="vn-enlace" to={inicio}>{p.volver}</Link>
+          </Cierre>
         </section>
       </main>}
 

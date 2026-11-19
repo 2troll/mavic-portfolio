@@ -1,0 +1,105 @@
+/* Partes numeradas de la página de ventajas (20-11-2026): índice grande bajo la portada,
+   cabecera de cada parte con número hueco enorme (el estilo de las cifras que le gustó a
+   Tony), y una franja final con una sola acción. Solo bajo .vn (tema de noche). */
+
+.vn .pt { position: relative; padding-top: clamp(84px, 11vw, 150px); border-top: 1px solid var(--vn-linea); scroll-margin-top: 110px; }
+.vn .pt-ancla { scroll-margin-top: 130px; }
+.vn .pt-faq { padding-bottom: clamp(80px, 10vw, 140px); }
+.vn .vn-h3 { margin: 0; font-size: clamp(1.5rem, 2.6vw, 2.1rem); letter-spacing: -0.03em; line-height: 1.1; max-width: 24ch; text-wrap: balance; }
+.vn.lang-ar .vn-h3 { letter-spacing: 0; line-height: 1.35; }
+
+/* ── Cabecera de parte ─────────────────────────────────────────────────── */
+.vn .pt-cab { display: grid; grid-template-columns: auto minmax(0, 1fr); align-items: end; gap: clamp(16px, 3vw, 44px); }
+.vn .pt-n {
+  font-size: clamp(5.5rem, 15vw, 13rem); font-weight: 800; line-height: .78; letter-spacing: -0.06em; font-variant-numeric: tabular-nums;
+  color: var(--vn-tinta);
+}
+@supports (-webkit-text-stroke: 1px #fff) {
+  .vn .pt-n { color: transparent; -webkit-text-stroke: 1.5px rgba(238, 241, 245, .5); }
+}
+.vn .pt-cab-txt { min-width: 0; padding-bottom: .4em; }
+.vn .pt-ojo { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 4px 10px; margin: 0 0 14px; font-size: .8rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: #ffb4a6; }
+.vn .pt-ojo b { color: var(--vn-tinta); font-variant-numeric: tabular-nums; }
+.vn .pt-h2 { margin: 0; font-size: clamp(2.3rem, 5.6vw, 5rem); letter-spacing: -0.045em; line-height: .98; max-width: 15ch; text-wrap: balance; }
+.vn .pt-cab .vn-lead { max-width: 62ch; font-size: clamp(1.03rem, 1.3vw, 1.18rem); }
+.vn.lang-ar .pt-ojo { letter-spacing: 0; }
+.vn.lang-ar .pt-h2 { letter-spacing: 0; line-height: 1.25; }
+.vn.lang-ru .pt-h2 { max-width: 18ch; }
+
+/* ── Índice grande de partes ───────────────────────────────────────────── */
+.vn .pt-indice { padding: clamp(56px, 8vw, 104px) 0 clamp(36px, 5vw, 64px); }
+.vn .pt-indice-t { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 0; padding-bottom: 14px; border-bottom: 1px solid var(--vn-linea); font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--vn-suave); }
+.vn .pt-indice-t span { color: #ffb4a6; }
+.vn.lang-ar .pt-indice-t { letter-spacing: 0; }
+.vn .pt-indice-lista { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.vn .pt-indice-lista > li { display: flex; border-bottom: 1px solid var(--vn-linea); }
+.vn .pt-indice-lista > li:not(:nth-child(3n)) { border-inline-end: 1px solid var(--vn-linea); }
+.vn .pt-indice-lista a {
+  flex: 1; display: grid; grid-template-columns: auto minmax(0, 1fr); grid-template-areas: 'n txt' 'n cuenta'; gap: 10px 18px;
+  padding: 28px clamp(16px, 2vw, 28px); text-decoration: none; transition: background-color .2s ease;
+}
+.vn .pt-indice-lista a:hover { background: var(--vn-capa); }
+.vn .pt-indice-n { grid-area: n; font-size: clamp(2.6rem, 4vw, 3.6rem); font-weight: 800; line-height: .85; letter-spacing: -0.05em; color: transparent; -webkit-text-stroke: 1.2px rgba(238, 241, 245, .45); font-variant-numeric: tabular-nums; transition: -webkit-text-stroke-color .2s ease; }
+.vn .pt-indice-lista a:hover .pt-indice-n { -webkit-text-stroke-color: var(--vn-acento); }
+.vn .pt-indice-txt { grid-area: txt; display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.vn .pt-indice-txt b { font-size: 1.2rem; letter-spacing: -0.02em; line-height: 1.2; color: var(--vn-tinta); }
+.vn .pt-indice-txt small { color: var(--vn-suave); font-size: .92rem; line-height: 1.45; }
+.vn .pt-indice-cuenta { grid-area: cuenta; display: flex; align-items: baseline; gap: 8px; color: var(--vn-suave); }
+.vn .pt-indice-cifra { font-size: 2.2rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--vn-tinta); font-variant-numeric: tabular-nums; }
+.vn .pt-indice-cuenta small { font-size: .9rem; }
+
+/* Índice fijo: número pequeño delante de cada parte */
+.vn .pt-indice-fijo a { display: inline-flex; align-items: baseline; gap: 6px; }
+.vn .pt-indice-fijo-n { font-size: .72rem; font-weight: 700; font-variant-numeric: tabular-nums; opacity: .55; }
+
+/* ── Franja final de cada parte: una frase y una acción ────────────────── */
+.vn .pt-cierre {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 18px 36px;
+  margin-top: clamp(48px, 7vw, 88px); padding: clamp(22px, 3vw, 34px) clamp(22px, 3.5vw, 40px);
+  border-radius: var(--vn-radio); background: var(--vn-capa); border: 1px solid var(--vn-linea); border-inline-start: 4px solid var(--vn-acento);
+}
+.vn .pt-cierre-txt { flex: 1 1 380px; min-width: 0; }
+.vn .pt-cierre-txt p { margin: 0; max-width: 52ch; font-size: clamp(1.1rem, 1.7vw, 1.4rem); font-weight: 650; line-height: 1.38; letter-spacing: -0.015em; color: var(--vn-tinta); }
+.vn .pt-cierre-txt small { display: block; margin-top: 6px; font-size: .92rem; font-weight: 500; letter-spacing: 0; color: var(--vn-suave); }
+.vn .pt-cierre-t { margin: 0 0 8px; font-size: clamp(1.4rem, 2.6vw, 2.1rem); letter-spacing: -0.03em; line-height: 1.1; }
+.vn .pt-cierre-t + p { font-size: 1.02rem; font-weight: 400; color: var(--vn-suave); line-height: 1.6; }
+.vn .pt-cierre-accion { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 18px; }
+.vn .pt-cierre.es-final { background: radial-gradient(120% 140% at 0% 0%, rgba(229, 83, 61, .26), transparent 60%), var(--vn-capa); padding-block: clamp(28px, 4vw, 48px); }
+.vn .pt-cierre.es-final .pt-cierre-accion { flex-direction: column; align-items: flex-start; }
+.vn.lang-ar .pt-cierre-txt p, .vn.lang-ar .pt-cierre-t { letter-spacing: 0; }
+
+/* ── Bloques de siempre, ahora dentro de una parte: sin su propio relleno ── */
+.vn .pt .vn-exp, .vn .pt .vn-cod, .vn .pt .vn-kit, .vn .pt .vn-apps { padding: 0; background: none; border: 0; }
+.vn .pt .rb-como { padding: clamp(44px, 6vw, 72px) 0 0; }
+.vn .pt .vn-kit { margin-top: clamp(40px, 5vw, 64px); }
+.vn .pt .vn-apps { margin-top: clamp(56px, 7vw, 88px); padding-top: clamp(40px, 5vw, 64px); border-top: 1px solid var(--vn-linea); }
+.vn .pt .vn-celda h4 { font-size: 1.45rem; letter-spacing: -0.02em; margin: 12px 0 0; }
+.vn .pt .vn-celda-consejos h4 { margin: 0; }
+.vn .pt .rb-cod-pie, .vn .pt .vn-enlaces-bloque { margin-top: 40px; }
+.vn .pt-faq.vn-faq { padding-top: clamp(84px, 11vw, 150px); background: var(--vn-fondo); border-block: 0; border-top: 1px solid var(--vn-linea); }
+.vn .pt-faq .vn-faq-lista { max-width: 920px; margin-top: clamp(32px, 4vw, 48px); }
+.vn .pt .kg-herr.es-sin-cabecera { padding: 0; margin-top: clamp(32px, 4vw, 48px); }
+.vn .pt-acu .rb-claro { margin-top: clamp(40px, 5vw, 64px); }
+
+@media (max-width: 1000px) {
+  .vn .pt-indice-lista { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vn .pt-indice-lista > li:not(:nth-child(3n)) { border-inline-end: 0; }
+  .vn .pt-indice-lista > li:nth-child(odd) { border-inline-end: 1px solid var(--vn-linea); }
+}
+@media (max-width: 720px) {
+  .vn .pt { padding-top: 72px; }
+  .vn .pt-cab { grid-template-columns: minmax(0, 1fr); gap: 4px; }
+  .vn .pt-n { font-size: 5.2rem; }
+  .vn .pt-h2 { font-size: clamp(2.1rem, 10vw, 2.9rem); }
+  .vn .pt-indice-lista { grid-template-columns: minmax(0, 1fr); }
+  .vn .pt-indice-lista > li:nth-child(odd) { border-inline-end: 0; }
+  .vn .pt-indice-lista a { padding: 18px 2px; gap: 6px 14px; }
+  .vn .pt-indice-n { font-size: 2.4rem; }
+  .vn .pt-indice-txt b { font-size: 1.08rem; }
+  .vn .pt-indice-txt small { font-size: .86rem; }
+  .vn .pt-indice-cifra { font-size: 1.6rem; }
+  .vn .pt-cierre { padding: 20px 18px; border-inline-start-width: 3px; }
+  .vn .pt-cierre-txt { flex-basis: 100%; }
+  .vn .pt-cierre-accion, .vn .pt-cierre-accion .vn-boton { width: 100%; }
+  .vn .pt-cierre-accion .vn-boton { white-space: normal; text-align: center; }
+}

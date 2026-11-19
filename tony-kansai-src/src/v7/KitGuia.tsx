@@ -222,18 +222,19 @@ export function VentajasEnGuia({ lang, ciudad }: { lang: string; ciudad?: string
 }
 
 /** Las herramientas gratis (HTML estático), en tarjetas grandes con su kanji. */
-export function HerramientasEnGuia({ lang, nombreCiudad, ciudad }: { lang: string; nombreCiudad?: string; ciudad?: string }) {
+/** `sinCabecera`: en la página de ventajas la parte ya trae su título y su botón final (20-11-2026). */
+export function HerramientasEnGuia({ lang, nombreCiudad, ciudad, sinCabecera }: { lang: string; nombreCiudad?: string; ciudad?: string; sinCabecera?: boolean }) {
   if (!esLenguaKit(lang)) return null
   const t = T[lang]
   const r = HERRAMIENTAS[lang]
   const flecha = lang === 'ar' ? '←' : '→'
   return (
-    <section className="v7-seccion kg-herr" aria-labelledby="kg-herr-t">
-      <div className="kg-cab">
+    <section className={`v7-seccion kg-herr${sinCabecera ? ' es-sin-cabecera' : ''}`} aria-labelledby={sinCabecera ? undefined : 'kg-herr-t'}>
+      {!sinCabecera && <div className="kg-cab">
         <p className="kg-eti"><span lang="ja" aria-hidden="true">道具</span> {t.etiHerr}</p>
         <h2 id="kg-herr-t">{t.herr(nombreCiudad)}</h2>
         <p className="kg-entra">{t.herrEntra}</p>
-      </div>
+      </div>}
       <ul className="kg-herr-rejilla">
         {ORDEN_HERR[lang].map((h, i) => (
           <li key={h} className={i === 0 ? 'kg-herr-grande' : undefined}>
@@ -246,7 +247,7 @@ export function HerramientasEnGuia({ lang, nombreCiudad, ciudad }: { lang: strin
           </li>
         ))}
       </ul>
-      <a href={r.hub} className="kg-herr-todas">{t.todasHerr} <span aria-hidden="true">{flecha}</span></a>
+      {!sinCabecera && <a href={r.hub} className="kg-herr-todas">{t.todasHerr} <span aria-hidden="true">{flecha}</span></a>}
     </section>
   )
 }
