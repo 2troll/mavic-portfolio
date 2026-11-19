@@ -231,11 +231,12 @@ export const REGLAS: Record<string, Record<Lang, string[]>> = {
     ar: ['57,750 ين حتى 5 أشخاص', 'احجز قبل شهر، بالبريد'],
     ru: ['57 750 ¥ до 5 человек', 'Бронь за месяц, по почте'],
   },
+  // 19-11-2026: máximo 12 para extranjeros al mismo precio; más de 12, caso a caso con su guía; efectivo allí mismo.
   fujioutdoor: {
-    es: ['Desde 3.500 ¥ por persona', 'Hasta 15 personas', 'Lo coordino e interpreto yo'],
-    en: ['From ¥3,500 per person', 'Up to 15 people', 'I coordinate and interpret'],
-    ar: ['من 3,500 ين للشخص', 'حتى 15 شخصًا', 'أنسّق وأترجم أنا'],
-    ru: ['От 3500 ¥ с человека', 'До 15 человек', 'Координируем и переводим мы'],
+    es: ['Hasta 12 personas, al mismo precio', 'Pago en efectivo, allí mismo', 'Más de 12: el precio se acuerda con su guía', 'El guía-intérprete entra gratis', 'Reserva cuanto antes: algunas fechas se llenan'],
+    en: ['Up to 12 people, same price', 'Pay in cash, on site', 'More than 12: price agreed with their guide', 'The interpreter-guide joins free', 'Book early: some dates fill up'],
+    ar: ['حتى 12 شخصًا بالسعر نفسه', 'الدفع نقدًا في المكان', 'أكثر من 12: يُتفق على السعر مع مرشدهم', 'المرشد المترجم يدخل مجانًا', 'احجز مبكرًا: بعض التواريخ تمتلئ'],
+    ru: ['До 12 человек по той же цене', 'Оплата наличными на месте', 'Больше 12: цену согласуют с их гидом', 'Гид-переводчик проходит бесплатно', 'Бронируйте заранее: некоторые даты заняты'],
   },
   tenchan: {
     es: ['88.000 ¥ el grupo de hasta 4 (surf/SUP)', 'Surf de junio a noviembre; nieve de diciembre a marzo', 'Reserva por correo'],
