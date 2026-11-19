@@ -4,7 +4,7 @@
 // «enseña el logo») y como chips de condiciones, en vez de un párrafo suelto.
 // NO van aquí los códigos de agencia (Maikoya ag-special, InKansai HANMA, Camellia
 // de agente…): esos solo los usa Tony al reservar.
-import type { Lang } from './datosVentajas'
+import { cuponDe, type App, type Lang } from './datosVentajas'
 
 /**
  * codigo     → se copia un código y se pega al pagar (sale de `codigo` en datosVentajas.ts)
@@ -37,6 +37,44 @@ export const CANJE: Record<string, { tipo: Canje; texto?: string }> = {
 }
 
 export const canjeDe = (clave: string): Canje => CANJE[clave]?.tipo ?? 'directo'
+
+/**
+ * El acuerdo con cada socio, tal como le afecta al viajero (página de ventajas, 20-11-2026):
+ * codigo  → código de descuento para el viajero
+ * tony    → se reserva a través de Tony (coordina, traduce o tiene la tarifa)
+ * mencion → reserva el viajero y dice o escribe «Tony Kansai Guide» (o enseña el pase)
+ * lista   → sin acuerdo para el viajero: solo está recomendado
+ * Las comisiones, tarifas de agencia y códigos de agente NO salen nunca de aquí.
+ */
+export type Acuerdo = 'codigo' | 'tony' | 'mencion' | 'lista'
+export const ORDEN_ACUERDO: Acuerdo[] = ['codigo', 'tony', 'mencion', 'lista']
+export function acuerdoDe(a: App): Acuerdo {
+  const c = canjeDe(a.clave)
+  // Un código caducado (Wargo, 31-12) deja al socio como simple recomendación.
+  if (c === 'codigo' || (a.cat !== 'experiencias' && a.descuento)) return cuponDe(a) ? 'codigo' : 'lista'
+  if (c === 'conmigo') return 'tony'
+  if (c === 'directo') return 'lista'
+  return 'mencion'
+}
+
+/** Último día en que el socio confirmó o cambió sus condiciones (correo o ficha aprobada).
+ *  Fuente: comentarios de datosVentajas.ts, la memoria y la tabla de colaboraciones del 16-11-2026. */
+export const ACTUALIZADO: Record<string, string> = {
+  // Kioto
+  samurai: '2026-11-13', maikoyate: '2026-11-13', wargo: '2026-11-13', camellia: '2026-11-10', snapkyoto: '2026-10-15',
+  yumeyakata: '2026-10-15', shogun: '2026-10-16', miyabi: '2026-10-16', cookingsun: '2026-11-17', yokotake: '2026-10-16',
+  domyo: '2026-10-16', okamoto: '2026-10-19', nakamura: '2026-10-17',
+  // Osaka
+  towerknives: '2026-10-16', japaneid: '2026-10-21', osakacookingbase: '2026-11-17', ninjacafe: '2026-11-16',
+  teaosaka: '2026-11-16', cookingsunosaka: '2026-11-17', inkansai: '2026-10-24',
+  // Resto de Kansai y de Japón
+  hamanasu: '2026-10-16', kobaien: '2026-10-21', flytographer: '2026-10-11',
+  unplugged: '2026-11-13', hakusan: '2026-11-14', hakusansanpai: '2026-11-14', hakusanmisogi: '2026-11-14',
+  foodsample: '2026-11-16', koto: '2026-11-12', shaquda: '2026-11-12', kuchinotsu: '2026-11-16', shiretoko: '2026-11-12',
+  kanemasa: '2026-11-12', fujioutdoor: '2026-11-20', tenchan: '2026-11-17', onigiri: '2026-11-20',
+  // Apps con código
+  airalo: '2026-10-11', nomad: '2026-10-15', radical: '2026-10-13', japanwireless: '2026-10-19', japanwirelessesim: '2026-10-19',
+}
 
 /** Condiciones cortas de cada socio (chips). Solo lo que dijeron por escrito o está en su web. */
 export const REGLAS: Record<string, Record<Lang, string[]>> = {

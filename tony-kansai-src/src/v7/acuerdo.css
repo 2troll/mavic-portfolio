@@ -1,0 +1,118 @@
+/* «Cómo funciona con este socio» (Acuerdo.tsx) y la tabla de acuerdos (20-11-2026).
+   Va en la lista (tema de noche, .vn) y en la ficha de cada socio (tema claro): por eso
+   usa los colores --vt-* de cada tema y redefine aquí los botones que en claro no se verían.
+   Un solo acento (bermellón del torii); verde solo en WhatsApp y en las marcas de «sí». */
+
+.ac, .ac-corto, .ac-tabla-caja {
+  --ac-tinta: var(--vt-tinta); --ac-suave: var(--vt-suave); --ac-linea: var(--vt-linea);
+  --ac-capa: color-mix(in srgb, var(--vt-tinta) 4%, transparent); --ac-acento: #e5533d; --ac-acento-suave: #ff8a75; --ac-si: #34c77b;
+}
+.vt:not(.vn) .ac, .vt:not(.vn) .ac-corto { --ac-acento-suave: #c9402c; --ac-si: #1f9d5c; }
+
+/* Botones de la página de noche, también legibles en la ficha clara */
+.ac .vn-boton-acento, .ac-corto .vn-boton-acento { background: var(--ac-acento); color: #fff !important; }
+.ac .vn-boton-linea, .ac-corto .vn-boton-linea { border: 1px solid color-mix(in srgb, var(--ac-tinta) 26%, transparent); color: var(--ac-tinta) !important; }
+.ac .vn-boton-linea:hover, .ac-corto .vn-boton-linea:hover { border-color: var(--ac-tinta); }
+.ac-boton-pase { background: var(--ac-acento) !important; }
+.vt:not(.vn) .ac .rb-copiable { background: var(--vt-blanco); border-color: color-mix(in srgb, var(--ac-tinta) 30%, transparent); color: var(--ac-tinta); }
+.vt:not(.vn) .ac .rb-copiable-accion { background: var(--ac-tinta); color: var(--vt-blanco); }
+
+/* ── Pie de la tarjeta: acuerdo, dos condiciones y la acción ───────────── */
+.ac-corto { position: relative; z-index: 2; display: grid; gap: 10px; padding: 14px 18px 18px; border-top: 1px dashed var(--ac-linea); }
+.ac-corto-tipo { display: flex; align-items: center; gap: 7px; margin: 0; font-size: .88rem; font-weight: 700; color: var(--ac-tinta); }
+.ac-corto-tipo svg { flex: none; color: var(--ac-acento-suave); }
+.ac-corto.es-lista .ac-corto-tipo { color: var(--ac-suave); }
+.ac-corto.es-lista .ac-corto-tipo svg { color: var(--ac-suave); }
+.ac-corto-tipo em { margin-inline-start: auto; font-style: normal; font-weight: 800; color: var(--ac-acento-suave); font-variant-numeric: tabular-nums; }
+.ac-corto-cond { list-style: none; margin: 0; padding: 0; display: grid; gap: 4px; font-size: .82rem; line-height: 1.4; color: var(--ac-suave); }
+.ac-corto-cond li { position: relative; padding-inline-start: 13px; }
+.ac-corto-cond li::before { content: ''; position: absolute; inset-inline-start: 0; top: .55em; width: 5px; height: 5px; border-radius: 50%; background: currentColor; opacity: .6; }
+.ac-corto-accion { display: flex; flex-wrap: wrap; gap: 8px; }
+.ac-corto-accion .vn-boton { flex: 1 1 auto; padding: 10px 16px; font-size: .9rem; }
+.ac-corto-accion .rb-copiable { margin-top: 0; padding: 8px 8px 8px 12px; }
+.ac-corto-accion .rb-copiable-txt { font-size: .95rem; }
+.ac-corto-accion .rb-copiable-accion { padding: 6px 12px; font-size: .8rem; }
+.ac-corto-accion .rb-boton-pase { flex: 1 1 auto; justify-content: center; margin-top: 0; padding: 10px 16px; font-size: .9rem; }
+
+/* ── Bloque completo ───────────────────────────────────────────────────── */
+.ac { margin: 24px 0 0; padding: clamp(18px, 3vw, 28px); border-radius: 20px; border: 1px solid var(--ac-linea); background: var(--ac-capa); color: var(--ac-tinta); }
+.ac.es-codigo { border-color: color-mix(in srgb, var(--ac-acento) 50%, transparent); background: color-mix(in srgb, var(--ac-acento) 9%, transparent); }
+.ac.es-mencion { border-color: color-mix(in srgb, var(--ac-acento) 32%, transparent); }
+.ac.es-lista { border-style: dashed; }
+.ac-cab { margin: 0; font-size: .78rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--ac-suave); }
+.ac.es-ficha { margin: 0; }
+.ac.es-ficha .ac-cab { font-size: clamp(1.5rem, 3vw, 2.1rem); font-weight: 750; letter-spacing: -0.025em; text-transform: none; line-height: 1.15; color: var(--ac-tinta); }
+.lang-ar .ac-cab { letter-spacing: 0; }
+.ac-tipo { display: flex; gap: 14px; align-items: flex-start; margin-top: 16px; }
+.ac-tipo-ico { flex: none; display: grid; place-items: center; width: 50px; height: 50px; border-radius: 14px; background: var(--ac-acento); color: #fff; }
+.ac.es-tony .ac-tipo-ico { background: var(--ac-tinta); color: var(--vt-fondo); }
+.ac.es-lista .ac-tipo-ico { background: transparent; color: var(--ac-suave); border: 1px dashed color-mix(in srgb, var(--ac-tinta) 30%, transparent); }
+.ac-tipo-txt { min-width: 0; }
+.ac-tipo-t { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0; font-size: clamp(1.15rem, 2.2vw, 1.4rem); letter-spacing: -0.02em; line-height: 1.2; }
+.ac-tipo-t em { font-style: normal; font-weight: 800; color: var(--ac-acento-suave); font-variant-numeric: tabular-nums; }
+.ac-tipo-d { margin: 6px 0 0; color: var(--ac-suave); line-height: 1.55; }
+.ac-como { display: flex; gap: 8px; align-items: flex-start; margin: 10px 0 0; font-weight: 600; line-height: 1.45; }
+.ac-como svg { flex: none; margin-top: 3px; color: var(--ac-acento-suave); }
+.ac-pasos { margin-top: 16px; }
+.ac-sub { margin: 22px 0 0; font-size: .78rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ac-suave); }
+.lang-ar .ac-sub { letter-spacing: 0; }
+.ac-cond { list-style: none; margin: 10px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); gap: 8px 20px; }
+.ac-cond li { display: flex; gap: 8px; align-items: flex-start; line-height: 1.45; }
+.ac-cond svg { flex: none; margin-top: 3px; color: var(--ac-si); }
+.ac-acciones { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 22px; }
+.ac-acciones .rb-copiable { flex: 1 1 260px; width: auto; margin-top: 0; }
+.ac-acciones .rb-boton-pase { margin-top: 0; }
+.ac-fecha { margin: 16px 0 0; font-size: .82rem; color: var(--ac-suave); }
+.ac-fecha time { font-variant-numeric: tabular-nums; }
+
+/* ── Tabla de acuerdos (parte 5) ───────────────────────────────────────── */
+.ac-tabla-caja { margin-top: 28px; }
+.ac-filtros { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; }
+.ac-buscar { position: relative; flex: 1 1 240px; max-width: 360px; }
+.ac-buscar svg { position: absolute; inset-inline-start: 14px; top: 50%; translate: 0 -50%; color: var(--ac-suave); pointer-events: none; }
+.ac-buscar input { width: 100%; padding: 11px 16px; padding-inline-start: 40px; border-radius: 999px; border: 1px solid var(--ac-linea); background: transparent; color: var(--ac-tinta); font: inherit; font-size: .95rem; }
+.ac-buscar input:focus { outline: 2px solid var(--ac-acento); outline-offset: 2px; }
+.ac-tabla-caja .vn-chips { margin-top: 14px; }
+.ac-tabla { width: 100%; margin-top: 22px; border-collapse: collapse; font-size: .94rem; }
+.ac-tabla caption { text-align: start; color: var(--ac-suave); font-size: .85rem; padding-bottom: 10px; caption-side: bottom; padding-top: 14px; }
+.ac-tabla th, .ac-tabla td { padding: 11px 12px; text-align: start; vertical-align: top; border-bottom: 1px solid var(--ac-linea); }
+.ac-tabla thead th { position: sticky; top: calc(var(--vt-barra-alto) + 52px); z-index: 1; background: var(--vn-fondo, var(--vt-fondo)); font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--ac-suave); }
+.lang-ar .ac-tabla thead th { letter-spacing: 0; }
+.ac-tabla tbody tr { transition: background-color .15s ease; }
+.ac-tabla tbody tr:hover { background: var(--ac-capa); }
+.ac-tabla-socio a { display: inline-flex; align-items: center; gap: 10px; color: var(--ac-tinta); font-weight: 650; text-decoration: none; }
+.ac-tabla-socio a:hover bdi { text-decoration: underline; text-underline-offset: 3px; }
+.ac-tabla-socio .rb-ico { flex: none; width: 32px; height: 32px; border-radius: 9px; }
+.ac-tabla-zona { color: var(--ac-suave); white-space: nowrap; }
+.ac-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 999px; font-size: .82rem; font-weight: 700; white-space: nowrap; border: 1px solid var(--ac-linea); }
+.ac-chip svg { flex: none; }
+.ac-chip.es-codigo { background: color-mix(in srgb, var(--ac-acento) 18%, transparent); border-color: color-mix(in srgb, var(--ac-acento) 50%, transparent); }
+.ac-chip.es-tony { background: color-mix(in srgb, var(--ac-tinta) 10%, transparent); }
+.ac-chip.es-mencion { border-color: color-mix(in srgb, var(--ac-acento) 35%, transparent); }
+.ac-chip.es-lista { color: var(--ac-suave); border-style: dashed; }
+.ac-chip-dto { display: block; margin-top: 4px; font-size: .88rem; font-weight: 800; color: var(--ac-acento-suave); font-variant-numeric: tabular-nums; }
+.ac-tabla-cond { color: var(--ac-suave); line-height: 1.45; font-size: .9rem; }
+.ac-tabla-cond ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 3px; }
+.ac-tabla-fecha { white-space: nowrap; color: var(--ac-suave); font-variant-numeric: tabular-nums; }
+.ac-tabla-vacio { margin: 24px 0 0; color: var(--ac-suave); }
+
+@media (max-width: 860px) {
+  /* En el móvil, cada fila es una tarjeta corta: socio y zona; acuerdo y fecha; condiciones. */
+  .ac-tabla thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .ac-tabla, .ac-tabla tbody, .ac-tabla th, .ac-tabla td, .ac-tabla caption { display: block; }
+  .ac-tabla caption { padding: 0 0 12px; }
+  .ac-tabla tbody { display: grid; gap: 10px; }
+  .ac-tabla tbody tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 6px 12px; padding: 14px 16px; border: 1px solid var(--ac-linea); border-radius: 16px; }
+  .ac-tabla th, .ac-tabla td { padding: 0; border: 0; }
+  .ac-tabla .ac-tabla-socio { grid-column: 1 / -1; grid-row: 1; }
+  .ac-tabla .ac-tabla-zona { grid-column: 1 / -1; grid-row: 2; white-space: normal; font-size: .84rem; padding-inline-start: 42px; margin-top: -6px; }
+  .ac-tabla td:nth-child(3) { grid-column: 1; grid-row: 3; margin-top: 4px; }
+  .ac-tabla .ac-tabla-fecha { grid-column: 2; grid-row: 3; align-self: start; margin-top: 8px; font-size: .8rem; text-align: end; white-space: normal; }
+  .ac-tabla .ac-tabla-cond { grid-column: 1 / -1; grid-row: 4; padding-top: 4px; }
+  .ac-tabla .ac-chip-dto { display: inline; margin-inline-start: 8px; }
+  .ac-buscar { max-width: none; }
+}
+@media (max-width: 720px) {
+  .ac { padding: 18px 16px; }
+  .ac-acciones .vn-boton { flex: 1 1 auto; }
+}

@@ -2,7 +2,9 @@
 // qué es, para qué sirve en Kansai, cómo empezar paso a paso, consejos y precio.
 // Los textos largos están en datosVentajasDetalle.ts; aquí solo el armazón.
 
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence } from 'framer-motion'
 import { CodigoCifrado } from './Cocina'
 import { APPS, CATEGORIAS, CIUDADES, type App, cuponDe, esAfiliado } from './datosVentajas'
 import { DETALLE, T_RU } from './datosVentajasDetalle'
@@ -12,8 +14,8 @@ import { GuiaTienda } from './GuiaTienda'
 import { FOTO_EXP, FOTO_SOCIO } from './datosVentajasGuia'
 import { FotoSocio, FotoZona } from './FotoZona'
 import { ICONO_EXP } from './iconosExperiencia'
-import { SelloVentaja, Vistazo, PasosReserva, tienePasos } from './Vistazo'
-import { reglasDe } from './datosCanje'
+import { SelloVentaja, Vistazo } from './Vistazo'
+import { AcuerdoSocio, ESCRIBIRLES, PaseTony, esCorreo } from './Acuerdo'
 import './guia-tienda.css'
 
 type Id = 'es' | 'en' | 'ar' | 'ru'
@@ -23,17 +25,11 @@ export const textoApp = (a: App, id: Id) => (id === 'ru' ? a.t.ru ?? T_RU[a.clav
 
 // Desde la ficha de un socio se vuelve a sus experiencias, no a «todas las apps».
 const TODAS_EXP: Record<Id, string> = { es: 'Todas las experiencias', en: 'All experiences', ar: 'كل التجارب', ru: 'Все впечатления' }
-// Condiciones que cada socio pidió por correo (datosCanje.ts), también en el HTML pregenerado.
-const CONDICIONES: Record<Id, string> = { es: 'Condiciones del socio', en: 'Partner conditions', ar: 'شروط الشريك', ru: 'Условия партнёра' }
 // Fuera de Kansai (Tokio, Hokkaido, Kyushu…) el título no puede decir «en Kansai».
 const PARA_QUIEN: Record<Id, string> = { es: 'Para quién es', en: 'Who it is for', ar: 'لمن تناسب', ru: 'Кому подойдёт' }
 const KANSAI = new Set(['osaka', 'kioto', 'nara', 'kumano', 'kansai'])
-const COMO: Record<Id, string> = { es: 'Cómo reservar', en: 'How to book', ar: 'كيف تحجز', ru: 'Как забронировать' }
 
 export const MAS: Record<Id, string> = { es: 'Cómo funciona', en: 'How it works', ar: 'كيف يعمل', ru: 'Как это работает' }
-// Socios sin web propia (Onigiri Hiroshima): el botón abre el correo, sin pestaña nueva.
-export const ESCRIBIRLES: Record<Id, string> = { es: 'Escribirles', en: 'Email them', ar: 'راسلهم', ru: 'Написать им' }
-export const esCorreo = (href: string) => href.startsWith('mailto:')
 
 const L: Record<Id, {
   todas: string; para: string; pasos: string; consejos: string; precio: string; abrir: string; cupon: string; copiar: string; copiado: string
@@ -101,6 +97,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
   final: { finalTitulo: string; finalTexto: string; finalBoton: string }
 }) {
   const l = L[id]
+  const [pase, setPase] = useState(false)
   const d = DETALLE[a.clave]?.[id]
   const t = textoApp(a, id)
   const cupon = cuponDe(a)
@@ -162,20 +159,11 @@ export function FichaApp({ a, id, lista, wa, final }: {
         </div>
       </section>
 
-      {a.cat === 'experiencias' && tienePasos(a) && (
-        <section className="vt-ficha-bloque vt-ficha-reserva" style={marca}>
-          <h2>{COMO[id]}</h2>
-          <PasosReserva a={a} id={id} titulo={false} />
-        </section>
-      )}
-
-      {a.cat === 'experiencias' && reglasDe(a.clave, id).length > 0 && (
-        <section className="vt-ficha-bloque">
-          <h2>{CONDICIONES[id]}</h2>
-          <ul className="vt-ficha-para">
-            {reglasDe(a.clave, id).map((x) => <li key={x}><Dibujo n="check" className="vt-ficha-check" /><span>{x}</span></li>)}
-          </ul>
-        </section>
+      {/* «Cómo funciona con este socio» (20-11-2026): el mismo bloque que en la lista, también en el HTML pregenerado. */}
+      {a.cat === 'experiencias' && (
+        <div className="vt-ficha-bloque vt-ficha-acuerdo" style={marca}>
+          <AcuerdoSocio a={a} id={id} nivel="h2" ficha onPase={() => setPase(true)} />
+        </div>
       )}
 
       {d && (
@@ -234,6 +222,7 @@ export function FichaApp({ a, id, lista, wa, final }: {
         <p>{final.finalTexto}</p>
         <a className="vt-wa vt-wa-grande" href={wa} target="_blank" rel="noopener noreferrer"><IconoCanal tg={wa.includes('t.me/')} /> {final.finalBoton}</a>
       </section>
+      <AnimatePresence>{pase && <PaseTony id={id} socio={a} onCerrar={() => setPase(false)} />}</AnimatePresence>
     </main>
   )
 }
