@@ -1,4 +1,4 @@
-// Genera public/es/leyendas/ y public/en/legends/ (página estática de leyendas de Tony Hanma).
+// Genera public/es/leyendas/, public/en/legends/ y public/ar/asatir/ (páginas estáticas de leyendas de Tony Hanma) y sus subpáginas «Terror real» y «Lugares misteriosos» (leyendas-expedientes.mjs).
 // Uso: node scripts/leyendas.mjs. Los textos viven aquí; la maqueta en leyendas.src.html.
 // Las fotos se reutilizan de /tr/foto con el crédito de turkce-fotolar.json (obligatorio por licencia).
 import { readFileSync, writeFileSync, mkdirSync } from 'node:fs'
@@ -7,10 +7,18 @@ import { fileURLToPath } from 'node:url'
 import EN from './leyendas-en.mjs'
 import AR from './leyendas-ar.mjs'
 import { LUGARES } from './leyendas-lugares.mjs'
+import { TEXTOS } from './leyendas-sub-textos.mjs'
+import { EXPEDIENTES, CSS_EXPEDIENTES, cargarFotosTony, buscarFoto, figuraTony, imagenLD, galeriaTony, resumenesPrincipal, partesLD, generarSub } from './leyendas-expedientes.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
 const fotos = JSON.parse(readFileSync(join(raiz, 'scripts/turkce-fotolar.json'), 'utf8'))
 const URL = 'https://tonykansaiguide.com/es/leyendas/'
+// Fotos de Tony (manifiesto de ~/projects/leyendas-fotos/, copiado en scripts/leyendas-fotos.json).
+const fotosTony = cargarFotosTony(raiz)
+// Qué foto de Tony acompaña a cada leyenda y relato de la página principal (por posición, igual en los tres idiomas).
+const TONY_LEYENDA = { 1: ['himeji', 'himeji-castillo-foso-01.jpg'], 6: ['nara', 'nara-ciervo-01.jpg'], 8: ['dotonbori', 'dotonbori-canal-noche-01.jpg'], 12: ['nara', 'nara-templo-01.jpg'], 13: ['himeji', 'himeji-castillo-02.jpg'] }
+const TONY_RELATO = { 6: ['nara', 'nara-templo-ciervo-01.jpg'], 7: ['dotonbori', 'dotonbori-paseo-noche-01.jpg'], 9: ['castillo-osaka', 'castillo-osaka-01.jpg'] }
+const fotoDe = (mapa, i) => mapa[i] ? buscarFoto(fotosTony, { clave: mapa[i][0], archivo: mapa[i][1] }) : undefined
 
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
@@ -116,12 +124,12 @@ function generar(c) {
         <h3>${esc(x.t)}</h3>
         <p class="lugar">${esc(x.l)}</p>
         <p>${esc(x.p)}</p>
-        <p class="tony">${esc(x.y)}</p>
+        <p class="tony">${esc(x.y)}</p>${fotoDe(TONY_LEYENDA, i) ? `\n        ${figuraTony(fotoDe(TONY_LEYENDA, i), c.lang)}` : ''}
       </div>
     </article>`).join('\n')
 
   const relatos = c.RELATOS.map((r, i) => `      <li class="rel ent" id="relato-${i + 1}">
-        <span class="kanji" aria-hidden="true">${r.k}</span>
+        <span class="kanji" aria-hidden="true">${r.k}</span>${fotoDe(TONY_RELATO, i) ? `\n        ${figuraTony(fotoDe(TONY_RELATO, i), c.lang)}` : ''}
         <h3>${esc(r.t)}</h3>
         <p class="donde">${esc(r.d)}</p>
         <p>${esc(r.p)}</p>
@@ -140,7 +148,9 @@ function generar(c) {
       </li>`
   }).join('\n')
 
-  const preguntas = c.PREGUNTAS.map(([q, a]) => `      <details class="ent"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')
+  // Las preguntas nuevas sobre los expedientes de terror real y lugares misteriosos van al final.
+  const todasPreguntas = [...c.PREGUNTAS, ...TEXTOS[c.lang].preguntas]
+  const preguntas = todasPreguntas.map(([q, a]) => `      <details class="ent"><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('\n')
 
   const persona = {
     '@type': 'Person', '@id': 'https://tonykansaiguide.com/#tony', name: 'Tony Hanma', alternateName: 'ハンマ・トニー',
@@ -154,16 +164,26 @@ function generar(c) {
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
-      { '@type': 'ProfilePage', '@id': c.url + '#pagina', url: c.url, name: c.titulo, inLanguage: c.lang, dateModified: new Date().toISOString().slice(0, 19) + 'Z', mainEntity: persona },
+      { '@type': 'ProfilePage', '@id': c.url + '#pagina', url: c.url, name: c.titulo, inLanguage: c.lang, dateModified: new Date().toISOString().slice(0, 19) + 'Z', mainEntity: persona, hasPart: partesLD(c.lang),
+        ...(fotosTony.length ? { image: fotosTony.map((f) => imagenLD(f, c.lang)) } : {}) },
       { '@type': 'Book', name: 'Detrás del Rostro', author: { '@id': persona['@id'] }, inLanguage: 'es' },
       ...c.RELATOS.map((r, i) => ({ '@type': 'ShortStory', '@id': `${c.url}#relato-${i + 1}`, name: r.t, author: { '@id': persona['@id'] }, genre: c.genero, inLanguage: c.lang, datePublished: '2026', contentLocation: { '@type': 'Place', name: r.d }, text: r.p })),
       { '@type': 'ItemList', name: c.lista, itemListElement: c.LEYENDAS.map((x, i) => ({ '@type': 'ListItem', position: i + 1, name: x.t, url: `${c.url}#leyenda-${i + 1}` })) },
       { '@type': 'ItemList', name: c.listaLugares, itemListElement: LUGARES.map((x, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@type': 'TouristAttraction', name: x[c.lang].t, description: x[c.lang].p, address: x[c.lang].l, url: `${c.url}#lugar-${i + 1}` } })) },
-      { '@type': 'FAQPage', mainEntity: c.PREGUNTAS.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+      { '@type': 'FAQPage', mainEntity: todasPreguntas.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
     ],
   }
 
-  const html = readFileSync(join(raiz, 'scripts', c.plantilla), 'utf8')
+  const plantilla = readFileSync(join(raiz, 'scripts', c.plantilla), 'utf8')
+  // Las subpáginas reutilizan el CSS y las fuentes de la plantilla de su idioma para verse igual.
+  const css = plantilla.match(/<style>([\s\S]*?)<\/style>/)[1]
+  const fuentesWeb = plantilla.match(/<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]+" rel="stylesheet">/)[0]
+  const html = plantilla
+    .replace('</style>', `${CSS_EXPEDIENTES}</style>`)
+    .replace('{{GALERIA}}', galeriaTony(fotosTony, c.lang))
+    .replace('{{EXPEDIENTES_NUEVOS}}', resumenesPrincipal(c.lang))
+    .replace('{{N_TERROR}}', String(EXPEDIENTES.terror.length))
+    .replace('{{N_MISTERIO}}', String(EXPEDIENTES.misterio.length))
     .replace('{{JSONLD}}', `<script type="application/ld+json">${JSON.stringify(jsonld)}</script>`)
     .replace('{{FOTO_PORTADA}}', foto('fushimi-tunel', c.altPortada, { portada: true }))
     .replace('{{CAPITULOS}}', capitulos)
@@ -175,7 +195,9 @@ function generar(c) {
   const dest = join(raiz, 'public', c.ruta)
   mkdirSync(dest, { recursive: true })
   writeFileSync(join(dest, 'index.html'), html)
-  console.log(`leyendas ${c.lang}: ${c.LEYENDAS.length} leyendas, ${LUGARES.length} lugares, ${c.RELATOS.length} relatos, ${c.PREGUNTAS.length} preguntas → public/${c.ruta}/index.html`)
+  console.log(`leyendas ${c.lang}: ${c.LEYENDAS.length} leyendas, ${LUGARES.length} lugares, ${c.RELATOS.length} relatos, ${todasPreguntas.length} preguntas, ${fotosTony.length} fotos de Tony → public/${c.ruta}/index.html`)
+
+  for (const tipo of ['terror', 'misterio']) generarSub({ tipo, lang: c.lang, raiz, css, fuentesWeb, foto, fotosCommons: fotos, fotos: fotosTony })
 }
 
 generar({
