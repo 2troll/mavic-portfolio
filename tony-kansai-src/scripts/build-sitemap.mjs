@@ -62,6 +62,9 @@ const paginas = [
   { loc: '/es/leyendas', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
   { loc: '/en/legends', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
   { loc: '/ar/asatir', priority: '0.85', changefreq: 'monthly', v7: 'leyendas' },
+  // Expedientes «Terror real» y «Lugares misteriosos» (scripts/leyendas-expedientes.mjs, 21-11-2026).
+  ...[['/es/leyendas/terror-real', 'leyendasTerror'], ['/en/legends/true-horror-stories', 'leyendasTerror'], ['/ar/asatir/ruab-haqiqi', 'leyendasTerror'],
+    ['/es/leyendas/lugares-misteriosos', 'leyendasMisterio'], ['/en/legends/mysterious-places', 'leyendasMisterio'], ['/ar/asatir/amakin-ghamida', 'leyendasMisterio']].map(([loc, v7]) => ({ loc, priority: '0.85', changefreq: 'monthly', v7 })),
   { loc: '/en/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   { loc: '/ar/private-guide-calculator', priority: '0.85', changefreq: 'monthly', v7: 'calculadora' },
   // Herramientas gratis (scripts/herramientas.mjs y herramientas-viaje.mjs).
@@ -193,6 +196,9 @@ const V7 = {
   recogida: [['en', '/en/osaka-private-guide-hotel-pickup/']],
   precios: [['es', '/es/precios/'], ['en', '/en/prices/'], ['ar', '/ar/prices/']],
   destinos: [['es', '/es/destinos/'], ['en', '/en/destinations/'], ['ar', '/ar/destinations/']],
+  leyendas: [['es', '/es/leyendas/'], ['en', '/en/legends/'], ['ar', '/ar/asatir/']],
+  leyendasTerror: [['es', '/es/leyendas/terror-real/'], ['en', '/en/legends/true-horror-stories/'], ['ar', '/ar/asatir/ruab-haqiqi/']],
+  leyendasMisterio: [['es', '/es/leyendas/lugares-misteriosos/'], ['en', '/en/legends/mysterious-places/'], ['ar', '/ar/asatir/amakin-ghamida/']],
   ...HERR_RUTAS,
 }
 
@@ -206,7 +212,9 @@ const HOY = new Date().toISOString().slice(0, 10)
 const FUENTE = {
   portada: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], tony: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'], larion: ['src/v7/contenido.ts', 'src/v7/PaginaGuia.tsx'],
   turkce: ['scripts/turkce.mjs', 'scripts/turkce-cevaplar-yeni.mjs', 'scripts/turkce-cevaplar-musluman.mjs'],
-  leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html', 'scripts/leyendas-en.mjs', 'scripts/legends.src.html', 'scripts/leyendas-ar.mjs', 'scripts/asatir.src.html'],
+  leyendas: ['scripts/leyendas.mjs', 'scripts/leyendas.src.html', 'scripts/leyendas-en.mjs', 'scripts/legends.src.html', 'scripts/leyendas-ar.mjs', 'scripts/asatir.src.html', 'scripts/leyendas-expedientes.mjs', 'scripts/leyendas-sub-textos.mjs', 'scripts/leyendas-fotos.json'],
+  leyendasTerror: ['scripts/leyendas-terror.mjs', 'scripts/leyendas-terror-ar.mjs', 'scripts/leyendas-expedientes.mjs', 'scripts/leyendas-sub-textos.mjs'],
+  leyendasMisterio: ['scripts/leyendas-misterio.mjs', 'scripts/leyendas-misterio-ar.mjs', 'scripts/leyendas-expedientes.mjs', 'scripts/leyendas-sub-textos.mjs', 'scripts/leyendas-fotos.json'],
   francais: ['scripts/francais.mjs'],
   precios: ['scripts/precios.mjs', 'src/v7/contenido.ts'],
   destinos: ['scripts/destinos.mjs'],
