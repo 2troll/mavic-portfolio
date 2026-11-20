@@ -55,7 +55,7 @@ import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
 import { NUEVAS_RESPUESTAS } from './datosRespuestasNuevas'
 
-export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
+export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar' | 'halal-en'
   | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en' | 'mezquitas-en'
   | 'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar' | 'familia-en' | 'recogida-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
@@ -457,6 +457,74 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     final: { titulo: 'نخطط ليومكم مع غداء حلال؟', texto: 'أخبرني بالتاريخ وعددكم وما تحبون رؤيته، وأرسل لكم مساراً وسعراً ثابتاً للمجموعة.', boton: 'راسل طوني' },
     altFoto: 'شارع دوتونبوري في أوساكا', saludo: 'السلام عليكم طوني، رأيت صفحة الطعام الحلال وأريد أن أسأل عن جولة.',
     volver: '← العودة إلى صفحة طوني',
+  },
+  // 21-11-2026: la misma página en inglés. Quien busca «halal private guide Kyoto
+  // Osaka» suele escribir en inglés (Malasia, Indonesia, Singapur, Reino Unido),
+  // y solo existía en árabe. Mismos datos que halal-ar, sin añadir nada nuevo.
+  'halal-en': {
+    lang: 'en', ruta: '/en/halal-kyoto-osaka/', inicio: '/en/', grupo: 'halal',
+    foto: { clave: 'osaka-dotonbori', lugar: 'Dōtonbori, Osaka' }, og: '/v8/og/osaka.jpg',
+    seo: {
+      titulo: 'Halal Food in Kyoto and Osaka, with a Muslim Private Guide | Tony Kansai Guide',
+      descripcion: 'Halal food in Kyoto and Osaka: what Halal, Muslim Friendly and Muslim Welcome mean in Kyoto’s official list, halal wagyu, and what to ask at a Japanese restaurant. With a Muslim private guide.',
+    },
+    antetitulo: 'Kyoto & Osaka · checked October 2026',
+    titulo: 'Halal food in Kyoto and Osaka, with a Muslim guide',
+    respuesta: 'Yes, you can eat halal in Kyoto and Osaka, wagyu included. In Kyoto, the restaurants on the city’s official list are reviewed by the Kyoto Muslim Association and the Kyoto Council for Shariah and Halal, and rated in four levels. In Namba and Shinsaibashi, Osaka, there are halal-certified restaurants. I’m Tony, a Muslim private guide who speaks English and Arabic, and I choose the lunch stop with you before the day of the tour.',
+    actualizado: 'Last checked: October 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'What the labels mean in Kyoto',
+        parrafos: ['These are the levels of the official “Muslim Friendly Kyoto” list:'],
+        lista: [
+          'Halal: a restaurant or café where all the food is halal.',
+          'Muslim Friendly: it has a separate halal menu with a halal logo, but its regular menu includes non-halal dishes.',
+          'Muslim Welcome: no pork, pork products or alcohol-based seasonings anywhere in the restaurant, but no separate halal menu.',
+          'Pork-Free: no pork and no meat; alcohol-based seasonings may still be used in the cooking.',
+        ],
+      },
+      {
+        titulo: 'Halal wagyu',
+        parrafos: ['Kyoto’s official list includes Japanese beef restaurants with a halal menu, such as “Halal A5 Wagyu Yakiniku Sudaku Kyoto” and “Kobe Beef Gion Sudaku Teppan” in Gion. Lists change, so I check with the restaurant before your day and you book it yourselves.'],
+      },
+      {
+        titulo: 'What to ask at a Japanese restaurant',
+        lista: [
+          'Many Japanese sauces contain mirin or cooking sake, which are alcohol, even in dishes that look simple. Ask about them, or choose a halal restaurant.',
+          'Traditional tonkotsu ramen broth is made from pork bones; order halal ramen or chicken ramen from a restaurant you can trust.',
+          'A halal sign on the door is not enough on its own: ask whether the whole menu is halal or only part of it.',
+        ],
+      },
+      {
+        titulo: 'In Osaka',
+        parrafos: ['In and around Namba and Shinsaibashi there are halal-certified restaurants, some with a place to pray. I choose the restaurant to fit the day’s route and your group, and put lunch and prayer times into the route from the start. Mosques and prayer rooms in Kansai: see the mosques page.'],
+      },
+    ],
+    precios: {
+      titulo: 'Private tour in English or Arabic, price per group',
+      texto: 'I meet you in your hotel lobby in Osaka, Kyoto, Nara or Kobe. Just your family, at your pace.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: [
+        'Trains, admissions and meals aren’t included: you pay as we go.',
+        'Pay in yen in cash on the day, or in advance with PayPal or Wise.',
+        'Free cancellation up to 72 hours before.',
+      ],
+    },
+    faqTitulo: 'Frequently asked questions',
+    faq: [
+      { p: 'Is there halal food in Kyoto?', r: 'Yes. The official “Muslim Friendly Kyoto” list has halal restaurants and restaurants with a halal menu, reviewed by the Kyoto Muslim Association and the Kyoto Council for Shariah and Halal.' },
+      { p: 'Is there halal wagyu?', r: 'Yes. Kyoto has wagyu restaurants with a halal menu, such as “Halal A5 Wagyu Yakiniku Sudaku Kyoto” and “Kobe Beef Gion Sudaku Teppan”. I check them before your day and you book them yourselves.' },
+      { p: 'Where can I eat halal in Osaka?', r: 'In Namba and Shinsaibashi there are halal-certified restaurants. I pick one on the route of your tour.' },
+      { p: 'What is the difference between Halal and Muslim Friendly?', r: 'Halal: all the food is halal. Muslim Friendly: a separate halal menu, while the regular menu includes non-halal dishes.' },
+      { p: 'Is the guide Muslim?', r: 'Yes. I’m Tony, a Muslim guide who speaks English, Arabic and Spanish, and I know the trusted halal restaurants in Osaka and Kyoto. Tell me when you book, not on the day.' },
+      { p: 'What if there are more than six of us?', r: 'Fixed prices are for groups of up to six, and I guide larger groups of up to 14. Tell me how many you are and I will send you the price.' },
+    ],
+    fuentesTitulo: 'Sources',
+    fuentes: FUENTES_HALAL.map((f) => ({ ...f, texto: f.texto.replace('الطعام الحلال في كيوتو', 'Finding halal food in Kyoto') })),
+    final: { titulo: 'Shall I plan your day with a halal lunch?', texto: 'Tell me the date, how many you are and what you’d like to see, and I’ll send you a route and a fixed price for the group.', boton: 'Message Tony' },
+    altFoto: 'Dōtonbori street in Osaka', saludo: 'Assalamu alaikum Tony, I read your page about halal food in Kyoto and Osaka and I’d like to ask about a tour.',
+    volver: '← Back to Tony’s page',
   },
   // ── Páginas de oct. 2026 (auditoría SEO): cada una responde a una búsqueda
   // distinta y enlaza a la página de ciudad o de rutas que ya existe. Solo datos
