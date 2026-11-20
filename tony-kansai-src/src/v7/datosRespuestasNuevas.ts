@@ -6,6 +6,9 @@ import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
 
 export const PRECIO_CORTO = 25000
+/** 1 hora en Kioto (decidido el 21-11-2026: 1 h 20.000 / 2 h 25.000; antes la
+ *  portada de Kioto decía «1-2 h desde 20.000» y esta página «2 h = 25.000»). */
+export const PRECIO_1H = 20000
 
 const es = (n: number) => yenLocal(n, 'es')
 const en = (n: number) => yenLocal(n, 'en')
@@ -27,7 +30,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
     },
     antetitulo: 'Kioto · Tour corto',
     titulo: '¿Hay guía privado en Kioto por solo 1 o 2 horas?',
-    respuesta: `Sí: Tony, guía español que vive en Osaka, hace tours privados de 2 horas en Kioto por ${es(PRECIO_CORTO)} por grupo (hasta 6 personas). Te recoge en el vestíbulo de tu hotel o en una estación de Kioto, y si luego quieres más, tienes medio día (4 h, ${es(PRECIO_GUIA.medio)}) o día completo (8 h, ${es(PRECIO_GUIA.completo)}).`,
+    respuesta: `Sí: Tony, guía español que vive en Osaka, hace tours privados de 2 horas en Kioto por ${es(PRECIO_CORTO)} por grupo (hasta 6 personas); si solo tienes 1 hora, ${es(PRECIO_1H)}. Te recoge en el vestíbulo de tu hotel o en una estación de Kioto, y si luego quieres más, tienes medio día (4 h, ${es(PRECIO_GUIA.medio)}) o día completo (8 h, ${es(PRECIO_GUIA.completo)}).`,
     actualizado: 'Actualizado: nov. 2026',
     cta: 'Pregúntame por WhatsApp',
     secciones: [
@@ -96,7 +99,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
     },
     antetitulo: 'Kyoto · Short tour',
     titulo: 'Is there a private guide in Kyoto for just 1 or 2 hours?',
-    respuesta: `Yes: Tony, a Spanish guide who lives in Osaka, runs 2-hour private tours in Kyoto for ${en(PRECIO_CORTO)} per group (up to 6 people), in English, Spanish or Arabic. He meets you in your hotel lobby or at a Kyoto station; if you want more, there is a half day (4 h, ${en(PRECIO_GUIA.medio)}) or a full day (8 h, ${en(PRECIO_GUIA.completo)}).`,
+    respuesta: `Yes: Tony, a Spanish guide who lives in Osaka, runs 2-hour private tours in Kyoto for ${en(PRECIO_CORTO)} per group (up to 6 people), or 1 hour for ${en(PRECIO_1H)}, in English, Spanish or Arabic. He meets you in your hotel lobby or at a Kyoto station; if you want more, there is a half day (4 h, ${en(PRECIO_GUIA.medio)}) or a full day (8 h, ${en(PRECIO_GUIA.completo)}).`,
     actualizado: 'Updated: Nov 2026',
     cta: 'Ask me on WhatsApp',
     secciones: [
@@ -289,7 +292,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
     },
     antetitulo: 'كيوتو · جولة قصيرة',
     titulo: 'هل يوجد مرشد خاص في كيوتو لساعة أو ساعتين فقط؟',
-    respuesta: `نعم: طوني، مرشد إسباني يعيش في أوساكا ويتكلم العربية، يقدم جولات خاصة لمدة ساعتين في كيوتو بسعر ${ar(PRECIO_CORTO)} للمجموعة (حتى 6 أشخاص). يلتقي بكم في بهو الفندق أو في محطة في كيوتو، وإذا أردتم وقتًا أطول فهناك نصف يوم (4 ساعات، ${ar(PRECIO_GUIA.medio)}) أو يوم كامل (8 ساعات، ${ar(PRECIO_GUIA.completo)}).`,
+    respuesta: `نعم: طوني، مرشد إسباني يعيش في أوساكا ويتكلم العربية، يقدم جولات خاصة لمدة ساعتين في كيوتو بسعر ${ar(PRECIO_CORTO)} للمجموعة (حتى 6 أشخاص)، أو ساعة واحدة بسعر ${ar(PRECIO_1H)}. يلتقي بكم في بهو الفندق أو في محطة في كيوتو، وإذا أردتم وقتًا أطول فهناك نصف يوم (4 ساعات، ${ar(PRECIO_GUIA.medio)}) أو يوم كامل (8 ساعات، ${ar(PRECIO_GUIA.completo)}).`,
     actualizado: 'آخر تحديث: نوفمبر 2026',
     cta: 'راسلني على واتساب',
     secciones: [
