@@ -33,6 +33,7 @@ import './v8.css'
 import './figura.css'
 import { IconoCanal } from '../v7/IconoWa'
 import { BarraWa } from '../v7/BarraWa'
+import { SugerenciaIdioma } from '../v7/SugerenciaIdioma'
 import { SelloCiudad, LibroSellos } from '../v9/Sellos'
 import { BotonTema } from '../v7/Tema'
 import { enlacesHreflang } from '../seo/hreflang'
@@ -110,6 +111,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   const hermanas = guia === 'larion' ? (['/ru', '/larion'] as const) : (['/es', '/en', '/ar'] as const)
   const etiquetaIdioma: Record<string, string> = { '/es': 'Español', '/en': 'English', '/ar': 'العربية', '/ru': 'Русский', '/larion': 'English' }
   const langDe = (p: string): Lengua => (p === '/larion' ? 'en' : (p.slice(1) as Lengua))
+  const sugerencias = hermanas.map((h) => ({ lang: langDe(h), href: `${h}/${c.id}/` }))
   const titulo = tituloSeo(c.id, lang, guia)
   const tg = !!GUIAS[guia].tg
   const wa = enlaceGuia(guia, `${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)
@@ -144,6 +146,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
+
+      <SugerenciaIdioma actual={lang} opciones={sugerencias} />
 
       <main>
         {/* 1. Portada */}
