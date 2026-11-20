@@ -57,9 +57,9 @@ import { NUEVAS_RESPUESTAS } from './datosRespuestasNuevas'
 
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar'
   | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en' | 'mezquitas-en'
-  | 'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar'
+  | 'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar' | 'familia-en' | 'recogida-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
-export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe' | 'corto' | 'bici'
+export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe' | 'corto' | 'bici' | 'familia' | 'recogida'
 export type LangRespuesta = 'es' | 'en' | 'ar'
 
 /** Fecha de la última revisión: la ven el visitante, el JSON-LD y el sitemap. */

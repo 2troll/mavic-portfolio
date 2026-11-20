@@ -122,6 +122,9 @@ const paginas = [
   { loc: '/en/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
   { loc: '/ar/kyoto-private-guide-2-hours', priority: '0.8', changefreq: 'monthly', v7: 'corto' },
   { loc: '/ar/kyoto-private-bike-tour', priority: '0.8', changefreq: 'monthly', v7: 'bici' },
+  // Familia en Kioto y recogida en el hotel de Osaka, en inglés (21-11-2026).
+  { loc: '/en/kyoto-private-guide-family', priority: '0.8', changefreq: 'monthly', v7: 'familia' },
+  { loc: '/en/osaka-private-guide-hotel-pickup', priority: '0.8', changefreq: 'monthly', v7: 'recogida' },
   // Página de precios con todas las tarifas (scripts/precios.mjs, 12-11-2026).
   { loc: '/es/precios', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
   { loc: '/en/prices', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
@@ -186,6 +189,8 @@ const V7 = {
   halal: [['ar', '/ar/halal-kyoto-osaka/']],
   corto: [['es', '/es/guia-privado-kioto-2-horas/'], ['en', '/en/kyoto-private-guide-2-hours/'], ['ar', '/ar/kyoto-private-guide-2-hours/']],
   bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/'], ['ar', '/ar/kyoto-private-bike-tour/']],
+  familia: [['en', '/en/kyoto-private-guide-family/']],
+  recogida: [['en', '/en/osaka-private-guide-hotel-pickup/']],
   precios: [['es', '/es/precios/'], ['en', '/en/prices/'], ['ar', '/ar/prices/']],
   destinos: [['es', '/es/destinos/'], ['en', '/en/destinations/'], ['ar', '/ar/destinations/']],
   ...HERR_RUTAS,

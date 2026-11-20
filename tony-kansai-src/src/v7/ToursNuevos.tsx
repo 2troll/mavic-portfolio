@@ -7,7 +7,7 @@
 import { Link } from 'react-router-dom'
 import { GUIAS, contactoLd } from './contenido'
 import { PRECIO_GUIA } from './datosGuias'
-import { NUEVAS_RESPUESTAS, PRECIO_CORTO } from './datosRespuestasNuevas'
+import { NUEVAS_RESPUESTAS, PRECIO_1H, PRECIO_CORTO } from './datosRespuestasNuevas'
 import { yenLocal } from './formato'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -72,14 +72,15 @@ export function ToursNuevos({ lang, sin }: { lang: string; sin?: string }) {
  *  ofertas reales. Las demás páginas de respuesta no son tours: devuelve null. */
 export function viajeTourNuevo(id: string) {
   const p = (NUEVAS_RESPUESTAS as Record<string, (typeof NUEVAS_RESPUESTAS)[keyof typeof NUEVAS_RESPUESTAS]>)[id]
-  if (!p || !esLenguaTours(p.lang)) return null
+  // Solo corto y bici son tours con tarjeta propia; familia y recogida (21-11) son respuestas.
+  if (!p || !esLenguaTours(p.lang) || (p.grupo !== 'corto' && p.grupo !== 'bici')) return null
   const url = `${BASE}${p.ruta}`
   const grupo = { '@type': 'QuantitativeValue', maxValue: 6, unitText: 'people per group' }
   const oferta = (name: string, price: number) => ({
     '@type': 'Offer', name, price, priceCurrency: 'JPY', availability: 'https://schema.org/InStock', url, eligibleQuantity: grupo,
   })
   const offers = p.grupo === 'corto'
-    ? [oferta('2 hours', PRECIO_CORTO)]
+    ? [oferta('1 hour', PRECIO_1H), oferta('2 hours', PRECIO_CORTO)]
     : [oferta('Half day (4 h), bike rental not included', PRECIO_GUIA.medio), oferta('Full day (8 h), bike rental not included', PRECIO_GUIA.completo)]
   return {
     '@type': 'TouristTrip',
