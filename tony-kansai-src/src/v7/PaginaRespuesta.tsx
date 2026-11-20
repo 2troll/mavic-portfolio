@@ -17,6 +17,7 @@ import { yenLocal, PIE } from './formato'
 import { useCambio } from './cambio'
 import creditosZonas from '../v8/creditosZonas.json'
 import { PRECIO_GUIA } from './datosGuias'
+import { PRECIO } from './datosRutas'
 import { PAGINAS_RESPUESTA, REVISADO, hermanasRespuesta } from './datosRespuestas'
 import type { RespuestaId } from './datosRespuestas'
 import './v7.css'
@@ -134,7 +135,15 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
           <h2>{p.precios.titulo}</h2>
           <p className="v7-entradilla">{p.precios.texto}</p>
           <div className="v7-planes">
-            {([['medio', p.precios.medio], ['completo', p.precios.completo]] as const).map(([k, nombre]) => (
+            {p.precios.lejos ? (
+              <article className="v7-plan tarjeta v7-plan-destacado">
+                <h3>{p.precios.lejos.nombre}</h3>
+                <p className="v7-plan-precio"><bdi>{p.precios.lejos.desde} {yenLocal(PRECIO.lejos, p.lang)}</bdi></p>
+                <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
+                {cambios.length > 0 && <p className="v7-cambio"><bdi>≈ {enDivisa(PRECIO.lejos)}</bdi> {APROX[p.lang]}</p>}
+                <a className="v7-plan-pagar" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}>{p.precios.lejos.boton}</a>
+              </article>
+            ) : ([['medio', p.precios.medio], ['completo', p.precios.completo]] as const).map(([k, nombre]) => (
               <article key={k} className={`v7-plan tarjeta ${k === 'completo' ? 'v7-plan-destacado' : ''}`}>
                 <h3>{nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO_GUIA[k], p.lang)}</bdi></p>
@@ -145,7 +154,7 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
             ))}
           </div>
           <ul className="v7-notas">
-            <li>{pagar.nota}</li>
+            {!p.precios.lejos && <li>{pagar.nota}</li>}
             {p.precios.notas.map((n) => <li key={n}>{n}</li>)}
           </ul>
         </section>

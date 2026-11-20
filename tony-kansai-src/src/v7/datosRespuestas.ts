@@ -58,8 +58,9 @@ import { NUEVAS_RESPUESTAS } from './datosRespuestasNuevas'
 export type RespuestaId = 'coste-es' | 'coste-en' | 'mezquitas-ar' | 'halal-ar' | 'halal-en'
   | 'kansai-es' | 'privado-es' | 'arabe-es' | 'kansai-en' | 'arabe-en' | 'mezquitas-en'
   | 'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar' | 'familia-en' | 'recogida-en'
+  | 'nara-en' | 'nara-es' | 'hiroshima-es' | 'hiroshima-ar' | 'koyasan-en' | 'kobe-en'
 // Las de un mismo grupo son traducciones entre sí (hreflang y selector de idioma).
-export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe' | 'corto' | 'bici' | 'familia' | 'recogida'
+export type GrupoRespuesta = 'coste' | 'mezquitas' | 'halal' | 'kansai' | 'privado' | 'arabe' | 'corto' | 'bici' | 'familia' | 'recogida' | 'naradia' | 'hiroshimadia' | 'koyasan' | 'kobedia'
 export type LangRespuesta = 'es' | 'en' | 'ar'
 
 /** Fecha de la última revisión: la ven el visitante, el JSON-LD y el sitemap. */
@@ -78,7 +79,10 @@ export interface PaginaRespuesta {
   actualizado: string
   cta: string
   secciones: Seccion[]
-  precios: { titulo: string; texto: string; medio: string; completo: string; porGrupo: string; notas: string[] }
+  /** `lejos`: excursión larga (Hiroshima, Kōyasan…). En vez de las tarjetas de
+   *  medio día y día completo con pago, una sola «desde 70.000» y WhatsApp,
+   *  porque el precio se cierra según la ruta (21-11-2026). */
+  precios: { titulo: string; texto: string; medio: string; completo: string; porGrupo: string; notas: string[]; lejos?: { nombre: string; desde: string; boton: string } }
   faqTitulo: string; faq: { p: string; r: string }[]
   fuentesTitulo: string; fuentes: { texto: string; url: string }[]
   final: { titulo: string; texto: string; boton: string }

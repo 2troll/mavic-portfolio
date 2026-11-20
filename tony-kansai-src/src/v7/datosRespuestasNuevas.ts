@@ -4,6 +4,7 @@
 import type { PaginaRespuesta } from './datosRespuestas'
 import { PRECIO_GUIA } from './datosGuias'
 import { yenLocal } from './formato'
+import { PRECIO } from './datosRutas'
 
 export const PRECIO_CORTO = 25000
 /** 1 hora en Kioto (decidido el 21-11-2026: 1 h 20.000 / 2 h 25.000; antes la
@@ -20,7 +21,7 @@ const FUENTES_KIOTO_ES = [
 ]
 const FUENTES_KIOTO_EN = FUENTES_KIOTO_ES
 
-export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar' | 'familia-en' | 'recogida-en', PaginaRespuesta> = {
+export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'bici-es' | 'bici-en' | 'bici-ar' | 'familia-en' | 'recogida-en' | 'nara-en' | 'nara-es' | 'hiroshima-es' | 'hiroshima-ar' | 'koyasan-en' | 'kobe-en', PaginaRespuesta> = {
   'corto-es': {
     lang: 'es', ruta: '/es/guia-privado-kioto-2-horas/', inicio: '/es/', grupo: 'corto',
     foto: { clave: 'kioto-kiyomizu', lugar: 'Kiyomizu-dera' }, og: '/v8/og/kyoto.jpg',
@@ -553,6 +554,371 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
     final: { titulo: 'Staying in Osaka?', texto: 'Tell me the date and your hotel and I will tell you if I am free.', boton: 'Message on WhatsApp' },
     altFoto: 'Osaka Castle',
     saludo: 'Hi Tony, I am writing from the Osaka hotel pick-up page.\n\nDate:\nPeople:\nHotel:',
+    volver: '← Back to Tony’s page',
+  },
+  // 21-11-2026, ronda de descubrimiento en ChatGPT (20 preguntas): Tony no salía en
+  // las excursiones que no tenían página propia. Solo datos que ya están en la web:
+  // precios de datosGuias/datosRutas, zonas de ciudades.ts y trenes de la herramienta
+  // de trayectos (fuente Jorudan, scripts/herramientas-viaje.mjs).
+  'nara-en': {
+    lang: 'en', ruta: '/en/nara-day-trip-from-osaka/', inicio: '/en/', grupo: 'naradia',
+    foto: { clave: 'nara-parque', lugar: 'Nara Park' }, og: '/v8/og/nara.jpg',
+    seo: {
+      titulo: `Nara Day Trip from Osaka with a Private Guide: ${en(PRECIO_GUIA.medio)} per group | Tony Kansai Guide`,
+      descripcion: `Private guide for Nara from your Osaka hotel: Nara Park’s deer, Tōdai-ji and Kasuga Taisha. Half day ${en(PRECIO_GUIA.medio)} or full day ${en(PRECIO_GUIA.completo)} per group of up to 6. 37 minutes by train from Namba.`,
+    },
+    antetitulo: 'Nara · From Osaka',
+    titulo: 'Is there a private guide for a day trip to Nara from Osaka?',
+    respuesta: `Yes: Tony, a private guide who lives in Osaka, meets you in your Osaka hotel lobby and takes you to Nara by train, in English, Spanish or Arabic. A half day (4 h) is ${en(PRECIO_GUIA.medio)} and a full day (8 h) ${en(PRECIO_GUIA.completo)} per group of up to 6, not per person. From Osaka-Namba the Kintetsu train takes 37 minutes (${en(680)}) and arrives five minutes on foot from Nara Park.`,
+    actualizado: 'Updated: Nov 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'What we see in Nara',
+        lista: [
+          'Nara Park: over a thousand free-roaming deer that bow to you.',
+          'Tōdai-ji: a 15-metre Buddha under a wooden roof.',
+          'Kasuga Taisha: a thousand moss-covered stone lanterns.',
+          'Naramachi: centuries-old merchant houses, good for a slow lunch.',
+        ],
+      },
+      {
+        titulo: 'Getting there from Osaka',
+        tabla: {
+          cabecera: ['From', 'Train', 'Time and fare'],
+          filas: [
+            ['Osaka-Namba', 'Kintetsu Rapid Express (Nara Line), no change', `37 min · ${en(680)}`],
+            ['Osaka Station', 'JR Yamatoji Rapid, no change', `50 min · ${en(840)}`],
+          ],
+          nota: 'Fares per adult, from the Kansai train tool on this site (source: Jorudan). Kintetsu-Nara is about five minutes on foot from the park; JR Nara is about 16 minutes further.',
+        },
+      },
+      {
+        titulo: 'Half day or full day',
+        lista: [
+          `Half day (4 h), ${en(PRECIO_GUIA.medio)}: Nara Park, Tōdai-ji and Kasuga Taisha.`,
+          `Full day (8 h), ${en(PRECIO_GUIA.completo)}: Nara at an easy pace with lunch in Naramachi, or Kyoto and Nara in one day.`,
+          'Prices per group of up to 6. Trains, tickets and meals are extra.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'From your Osaka hotel, same price for 1 or 6 people',
+      texto: 'Just your group, at your pace. Hotel lobby meeting in Osaka or Kyoto.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by PayPal or Wise.', 'Free cancellation up to 72 hours before.'],
+    },
+    faqTitulo: 'FAQ',
+    faq: [
+      { p: 'How long is the train from Osaka to Nara?', r: `37 minutes from Osaka-Namba by Kintetsu (${en(680)}), or 50 minutes from Osaka Station by JR (${en(840)}).` },
+      { p: 'Is half a day enough for Nara?', r: 'Yes, for Nara Park, Tōdai-ji and Kasuga Taisha. A full day lets you add Naramachi and a relaxed lunch, or combine Nara with Kyoto.' },
+      { p: 'Do you pick us up at our Osaka hotel?', r: 'Yes, in your hotel lobby, and we go to Nara together by train.' },
+      { p: 'Is the price per person?', r: 'No, per group of up to 6: the same for 1 or 6 people.' },
+      { p: 'Which languages?', r: 'English, Spanish or Arabic.' },
+    ],
+    fuentesTitulo: 'Sources',
+    fuentes: [
+      { texto: 'Nara official travel guide — visitnara.jp', url: 'https://www.visitnara.jp/' },
+      { texto: 'Kansai train times and fares (Jorudan data)', url: 'https://tonykansaiguide.com/en/tools/kansai-train-times-fares/' },
+    ],
+    final: { titulo: 'Nara from Osaka?', texto: 'Tell me the date, how many you are and your hotel.', boton: 'Message on WhatsApp' },
+    altFoto: 'Deer in Nara Park',
+    saludo: 'Hi Tony, I am writing from the Nara day trip page.\n\nDate:\nPeople:\nHotel in Osaka:',
+    volver: '← Back to Tony’s page',
+  },
+  'nara-es': {
+    lang: 'es', ruta: '/es/excursion-nara-desde-osaka/', inicio: '/es/', grupo: 'naradia',
+    foto: { clave: 'nara-parque', lugar: 'Parque de Nara' }, og: '/v8/og/nara.jpg',
+    seo: {
+      titulo: `Excursión a Nara desde Osaka con guía en español: ${es(PRECIO_GUIA.medio)} por grupo | Tony Kansai Guide`,
+      descripcion: `Cómo ir de Osaka a Nara (37 min desde Namba, ${es(680)}) y qué ver: ciervos, Tōdai-ji y Kasuga Taisha. Guía privado en español desde tu hotel: medio día ${es(PRECIO_GUIA.medio)} por grupo de hasta 6.`,
+    },
+    antetitulo: 'Nara · Desde Osaka',
+    titulo: '¿Cómo ir de Osaka a Nara un día, y con guía en español?',
+    respuesta: `Desde Osaka-Namba, el tren Kintetsu tarda 37 minutos (${es(680)}) y te deja a cinco minutos a pie del parque de Nara; desde la estación de Osaka, la JR tarda 50 minutos (${es(840)}). Si quieres guía en español, Tony, guía español que vive en Osaka, te recoge en el vestíbulo de tu hotel: medio día (4 h) ${es(PRECIO_GUIA.medio)} o día completo (8 h) ${es(PRECIO_GUIA.completo)}, por grupo de hasta 6, no por persona.`,
+    actualizado: 'Actualizado: nov. 2026',
+    cta: 'Pregúntame por WhatsApp',
+    secciones: [
+      {
+        titulo: 'Qué ver en Nara en un día',
+        lista: [
+          'El parque de Nara: más de mil ciervos sueltos que te saludan.',
+          'Tōdai-ji: un Buda de 15 metros bajo un techo de madera.',
+          'Kasuga Taisha: mil faroles de piedra cubiertos de musgo.',
+          'Naramachi: casas de comerciantes de hace siglos, para comer sin prisa.',
+        ],
+      },
+      {
+        titulo: 'Cómo llegar desde Osaka',
+        tabla: {
+          cabecera: ['Desde', 'Tren', 'Tiempo y precio'],
+          filas: [
+            ['Osaka-Namba', 'Kintetsu Rapid Express (línea de Nara), sin transbordo', `37 min · ${es(680)}`],
+            ['Estación de Osaka', 'JR Yamatoji Rapid, sin transbordo', `50 min · ${es(840)}`],
+          ],
+          nota: 'Precio por adulto, de la herramienta de trenes de Kansai de esta web (fuente: Jorudan). Kintetsu-Nara está a unos cinco minutos a pie del parque; la estación JR, a unos 16 minutos más.',
+        },
+      },
+      {
+        titulo: 'Medio día o día completo',
+        lista: [
+          `Medio día (4 h), ${es(PRECIO_GUIA.medio)}: parque de Nara, Tōdai-ji y Kasuga Taisha.`,
+          `Día completo (8 h), ${es(PRECIO_GUIA.completo)}: Nara con calma y comida en Naramachi, o Kioto y Nara en un día.`,
+          'Precios por grupo de hasta 6. Trenes, entradas y comidas aparte.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'Desde tu hotel de Osaka, mismo precio para 1 o 6 personas',
+      texto: 'Solo tu grupo y a tu ritmo. Te recojo en el vestíbulo de tu hotel en Osaka o Kioto.',
+      medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
+      notas: ['Trenes, entradas y comidas no incluidos.', 'Pago en efectivo el día del tour o por adelantado por PayPal o Wise.', 'Cancelación gratis hasta 72 horas antes.'],
+    },
+    faqTitulo: 'Preguntas frecuentes',
+    faq: [
+      { p: '¿Cuánto se tarda de Osaka a Nara en tren?', r: `37 minutos desde Osaka-Namba con Kintetsu (${es(680)}), o 50 minutos desde la estación de Osaka con JR (${es(840)}).` },
+      { p: '¿Basta medio día para Nara?', r: 'Sí, para el parque, Tōdai-ji y Kasuga Taisha. Con el día completo añades Naramachi y una comida tranquila, o juntas Nara con Kioto.' },
+      { p: '¿Nos recoges en el hotel de Osaka?', r: 'Sí, en el vestíbulo de tu hotel, y vamos juntos a Nara en tren.' },
+      { p: '¿El precio es por persona?', r: 'No, por grupo de hasta 6: lo mismo para 1 que para 6 personas.' },
+    ],
+    fuentesTitulo: 'Fuentes',
+    fuentes: [
+      { texto: 'Guía oficial de turismo de Nara — visitnara.jp', url: 'https://www.visitnara.jp/' },
+      { texto: 'Trenes de Kansai: tiempos y precios (datos de Jorudan)', url: 'https://tonykansaiguide.com/es/herramientas/transporte-kansai/' },
+    ],
+    final: { titulo: '¿Nara desde Osaka?', texto: 'Dime la fecha, cuántos sois y tu hotel.', boton: 'Escríbeme por WhatsApp' },
+    altFoto: 'Ciervos en el parque de Nara',
+    saludo: 'Hola Tony, te escribo desde la página de la excursión a Nara.\n\nFecha:\nPersonas:\nHotel en Osaka:',
+    volver: '← Volver a la página de Tony',
+  },
+  'hiroshima-es': {
+    lang: 'es', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/', inicio: '/es/', grupo: 'hiroshimadia',
+    foto: { clave: 'hiroshima-miyajima', lugar: 'Miyajima' }, og: '/v8/og/hiroshima.jpg',
+    seo: {
+      titulo: `Excursión a Hiroshima y Miyajima desde Osaka con guía en español | Tony Kansai Guide`,
+      descripcion: `Hiroshima y Miyajima en un día desde Osaka con guía privado en español: museo y Cúpula por la mañana, la isla por la tarde. Desde ${es(PRECIO.lejos)} por grupo de hasta 6; shinkansen 85 min.`,
+    },
+    antetitulo: 'Hiroshima y Miyajima · Desde Osaka',
+    titulo: '¿Hay excursión a Hiroshima y Miyajima desde Osaka con guía en español?',
+    respuesta: `Sí: Tony, guía español que vive en Osaka, hace Hiroshima y Miyajima en un solo día con tu grupo: el Parque de la Paz, el museo y la Cúpula de la Bomba por la mañana, y la isla de Miyajima por la tarde. Cuesta desde ${es(PRECIO.lejos)} por grupo de hasta 6, no por persona; te paso un precio cerrado según la ruta. El shinkansen Nozomi tarda 85 minutos de Shin-Osaka a Hiroshima.`,
+    actualizado: 'Actualizado: nov. 2026',
+    cta: 'Pregúntame por WhatsApp',
+    secciones: [
+      {
+        titulo: 'Cómo es el día',
+        lista: [
+          'Por la mañana, Hiroshima: el Parque Conmemorativo de la Paz, el museo y la Cúpula de la Bomba, el edificio que se dejó en pie a propósito.',
+          'Por la tarde, Miyajima: el santuario de Itsukushima y su torii, que flota con la marea alta.',
+          'Si hay tiempo y ganas, el monte Misen, con el mar interior de Seto desde arriba.',
+          'Hiroshima y Miyajima van juntas en el mismo día: separarlas obliga a volver y no compensa.',
+        ],
+      },
+      {
+        titulo: 'El viaje desde Osaka',
+        tabla: {
+          cabecera: ['Tramo', 'Tren', 'Tiempo y precio'],
+          filas: [
+            ['Shin-Osaka → Hiroshima', 'Shinkansen Nozomi', `85 min · ${es(10950)}`],
+            ['Shin-Osaka → Hiroshima', 'Shinkansen Sakura', `92 min · ${es(10420)}`],
+          ],
+          nota: 'Precio por adulto y trayecto, de la herramienta de trenes de Kansai de esta web (fuente: Jorudan). Trenes, ferry, entradas y comidas van aparte del precio del guía.',
+        },
+      },
+    ],
+    precios: {
+      titulo: `Hiroshima y Miyajima: desde ${es(PRECIO.lejos)} por grupo`,
+      texto: 'El día entero, solo tu grupo. Te paso un precio cerrado según la ruta y la hora de salida.',
+      medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
+      lejos: { nombre: 'Hiroshima y Miyajima · día completo', desde: 'desde', boton: 'Pedir precio cerrado' },
+      notas: [`Excursiones largas (Hiroshima y Miyajima, Kōyasan, Kumano Kodo): desde ${es(PRECIO.lejos)} por grupo.`, 'Trenes, ferry, entradas y comidas no incluidos.', 'Cancelación gratis hasta 72 horas antes.'],
+    },
+    faqTitulo: 'Preguntas frecuentes',
+    faq: [
+      { p: '¿Se pueden ver Hiroshima y Miyajima en un día desde Osaka?', r: 'Sí. Salimos temprano en shinkansen (85 minutos desde Shin-Osaka), vemos Hiroshima por la mañana y Miyajima por la tarde, y volvemos a Osaka por la noche.' },
+      { p: '¿Cuánto cuesta el guía?', r: `Desde ${es(PRECIO.lejos)} por grupo de hasta 6, no por persona. Te paso un precio cerrado según la ruta.` },
+      { p: '¿Cuánto cuesta el shinkansen?', r: `De Shin-Osaka a Hiroshima, ${es(10950)} por adulto en el Nozomi o ${es(10420)} en el Sakura, por trayecto.` },
+      { p: '¿El guía habla español?', r: 'Sí. Tony es español y vive en Osaka; también guía en inglés y en árabe.' },
+    ],
+    fuentesTitulo: 'Fuentes',
+    fuentes: [
+      { texto: 'Museo Conmemorativo de la Paz de Hiroshima (sitio oficial)', url: 'https://hpmmuseum.jp/?lang=eng' },
+      { texto: 'Miyajima, turismo oficial', url: 'https://www.miyajima.or.jp/english/' },
+      { texto: 'Trenes de Kansai: tiempos y precios (datos de Jorudan)', url: 'https://tonykansaiguide.com/es/herramientas/transporte-kansai/' },
+    ],
+    final: { titulo: '¿Hiroshima y Miyajima desde Osaka?', texto: 'Dime la fecha y cuántos sois y te paso la ruta con un precio cerrado.', boton: 'Escríbeme por WhatsApp' },
+    altFoto: 'El torii de Miyajima en el mar',
+    saludo: 'Hola Tony, te escribo desde la página de Hiroshima y Miyajima.\n\nFecha:\nPersonas:\nHotel:',
+    volver: '← Volver a la página de Tony',
+  },
+  'hiroshima-ar': {
+    lang: 'ar', ruta: '/ar/hiroshima-miyajima-day-trip/', inicio: '/ar/', grupo: 'hiroshimadia',
+    foto: { clave: 'hiroshima-miyajima', lugar: 'ميياجيما' }, og: '/v8/og/hiroshima.jpg',
+    seo: {
+      titulo: 'رحلة إلى هيروشيما وميياجيما من أوساكا مع مرشد يتكلم العربية | Tony Kansai Guide',
+      descripcion: `هيروشيما وميياجيما في يوم واحد من أوساكا مع مرشد خاص يتكلم العربية: المتحف والقبة صباحاً والجزيرة بعد الظهر. من ${ar(PRECIO.lejos)} للمجموعة حتى 6 أشخاص.`,
+    },
+    antetitulo: 'هيروشيما وميياجيما · من أوساكا',
+    titulo: 'هل توجد رحلة إلى هيروشيما من أوساكا مع مرشد عربي؟',
+    respuesta: `نعم: طوني، مرشد مسلم يعيش في أوساكا ويتكلم العربية، يرافقكم إلى هيروشيما وميياجيما في يوم واحد: حديقة السلام والمتحف وقبة القنبلة الذرية صباحاً، وجزيرة ميياجيما بعد الظهر. السعر من ${ar(PRECIO.lejos)} للمجموعة حتى 6 أشخاص لا للفرد، وأرسل لكم سعراً ثابتاً حسب المسار. قطار الشينكانسن Nozomi يصل من شين-أوساكا إلى هيروشيما في 85 دقيقة.`,
+    actualizado: 'آخر تحديث: نوفمبر ٢٠٢٦',
+    cta: 'اسألني عبر واتساب',
+    secciones: [
+      {
+        titulo: 'كيف يكون اليوم',
+        lista: [
+          'صباحاً في هيروشيما: حديقة السلام التذكارية والمتحف وقبة القنبلة الذرية، المبنى الذي أُبقي قائماً عن قصد.',
+          'بعد الظهر في ميياجيما: معبد إتسوكوشيما وبوابة التوري التي تطفو مع المدّ.',
+          'وإن بقي وقت، جبل ميسن وبحر سيتو الداخلي من الأعلى.',
+          'أضع وقت الصلاة والغداء الحلال في المسار من البداية. أخبروني عند الحجز.',
+        ],
+      },
+      {
+        titulo: 'القطار من أوساكا',
+        tabla: {
+          cabecera: ['المسار', 'القطار', 'المدة والسعر'],
+          filas: [
+            ['شين-أوساكا ← هيروشيما', 'شينكانسن Nozomi', `85 دقيقة · ${ar(10950)}`],
+            ['شين-أوساكا ← هيروشيما', 'شينكانسن Sakura', `92 دقيقة · ${ar(10420)}`],
+          ],
+          nota: 'السعر للبالغ في الاتجاه الواحد، من أداة قطارات كانساي في هذا الموقع (المصدر: Jorudan). القطارات والعبّارة والتذاكر والطعام خارج سعر المرشد.',
+        },
+      },
+    ],
+    precios: {
+      titulo: `هيروشيما وميياجيما: من ${ar(PRECIO.lejos)} للمجموعة`,
+      texto: 'اليوم كاملاً لمجموعتكم وحدها. أرسل لكم سعراً ثابتاً حسب المسار ووقت الانطلاق.',
+      medio: 'نصف يوم · ٤ ساعات', completo: 'يوم كامل · ٨ ساعات', porGrupo: 'للمجموعة، حتى ٦ أشخاص',
+      lejos: { nombre: 'هيروشيما وميياجيما · يوم كامل', desde: 'من', boton: 'اطلب سعراً ثابتاً' },
+      notas: ['القطارات والعبّارة وتذاكر الدخول والطعام غير مشمولة.', 'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر PayPal أو Wise.', 'الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.'],
+    },
+    faqTitulo: 'أسئلة شائعة',
+    faq: [
+      { p: 'هل يمكن زيارة هيروشيما وميياجيما في يوم واحد من أوساكا؟', r: 'نعم. ننطلق صباحاً بالشينكانسن (85 دقيقة من شين-أوساكا)، ونزور هيروشيما صباحاً وميياجيما بعد الظهر، ونعود إلى أوساكا مساءً.' },
+      { p: 'كم سعر المرشد؟', r: `من ${ar(PRECIO.lejos)} للمجموعة حتى 6 أشخاص، لا للفرد. أرسل لكم سعراً ثابتاً حسب المسار.` },
+      { p: 'هل المرشد مسلم ويتكلم العربية؟', r: 'نعم. أنا طوني، مسلم وأتكلم العربية والإنجليزية والإسبانية.' },
+    ],
+    fuentesTitulo: 'المصادر',
+    fuentes: [
+      { texto: 'متحف هيروشيما التذكاري للسلام (الموقع الرسمي)', url: 'https://hpmmuseum.jp/?lang=eng' },
+      { texto: 'ميياجيما، الموقع السياحي الرسمي', url: 'https://www.miyajima.or.jp/english/' },
+      { texto: 'قطارات كانساي: المدة والأسعار (بيانات Jorudan)', url: 'https://tonykansaiguide.com/ar/tools/kansai-trains/' },
+    ],
+    final: { titulo: 'هيروشيما وميياجيما من أوساكا؟', texto: 'أخبرني بالتاريخ وعددكم، وأرسل لكم المسار وسعراً ثابتاً.', boton: 'راسل طوني' },
+    altFoto: 'بوابة التوري في ميياجيما فوق البحر',
+    saludo: 'السلام عليكم طوني، أكتب لك من صفحة رحلة هيروشيما وميياجيما.\n\nالتاريخ:\nعدد الأشخاص:\nالفندق:',
+    volver: '← العودة إلى صفحة طوني',
+  },
+  'koyasan-en': {
+    lang: 'en', ruta: '/en/koyasan-day-trip-private-guide/', inicio: '/en/', grupo: 'koyasan',
+    foto: { clave: 'lejos-koyasan', lugar: 'Okunoin, Kōyasan' }, og: '/v8/og/beyond.jpg',
+    seo: {
+      titulo: `Kōyasan Day Trip from Osaka with a Private Guide: from ${en(PRECIO.lejos)} per group | Tony Kansai Guide`,
+      descripcion: `Kōyasan (Mount Kōya) in a day from Osaka with your own guide: Okunoin, Kongōbu-ji and Danjō Garan. From ${en(PRECIO.lejos)} per group of up to 6; about 1 h 50 min by Nankai train and cable car from Namba.`,
+    },
+    antetitulo: 'Kōyasan · From Osaka',
+    titulo: 'Is there a Kōyasan day trip with a private guide from Osaka?',
+    respuesta: `Yes: Tony, a private guide who lives in Osaka, takes your group to Kōyasan for the day, in English, Spanish or Arabic. It is a long day trip, from ${en(PRECIO.lejos)} per group of up to 6, not per person, with a fixed price for your route. From Osaka-Namba, the Nankai train and the cable car take about 1 hour 50 minutes (${en(1430)}).`,
+    actualizado: 'Updated: Nov 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'What we see on Kōyasan',
+        lista: [
+          'Okunoin: centuries-old cedars and two hundred thousand gravestones on the path to Kōbō Daishi’s mausoleum.',
+          'Kongōbu-ji, the head temple of Shingon Buddhism.',
+          'Danjō Garan, with its great vermilion pagoda.',
+          'Lunch on the mountain: shōjin ryōri, the Buddhist temple food without meat or fish, is a good choice for vegetarians.',
+        ],
+      },
+      {
+        titulo: 'Getting there from Osaka',
+        tabla: {
+          cabecera: ['From', 'Train', 'Time and fare'],
+          filas: [
+            ['Osaka-Namba', 'Nankai Express (Kōya Line) + cable car', `111 min · ${en(1430)}`],
+            ['Osaka-Namba', 'Nankai Limited Express + cable car', `107 min · ${en(2530)}`],
+          ],
+          nota: 'Fares per adult, one way, from the Kansai train tool on this site (source: Jorudan). Trains, buses on the mountain, tickets and meals are extra.',
+        },
+      },
+    ],
+    precios: {
+      titulo: `Kōyasan for the day: from ${en(PRECIO.lejos)} per group`,
+      texto: 'The whole day, just your group. I send you a fixed price for your route.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      lejos: { nombre: 'Kōyasan · full day', desde: 'from', boton: 'Ask for a fixed price' },
+      notas: [`Long day trips (Kōyasan, Kumano Kodo, Hiroshima & Miyajima): from ${en(PRECIO.lejos)} per group.`, 'Trains, tickets and meals are not included.', 'Free cancellation up to 72 hours before.'],
+    },
+    faqTitulo: 'FAQ',
+    faq: [
+      { p: 'Can you do Kōyasan as a day trip from Osaka?', r: 'Yes. It is about 1 hour 50 minutes each way from Osaka-Namba by Nankai train and cable car, so we leave in the morning and are back in Osaka in the evening.' },
+      { p: 'How much is the guide?', r: `From ${en(PRECIO.lejos)} per group of up to 6, not per person, with a fixed price for your route.` },
+      { p: 'Is there food for vegetarians?', r: 'Yes: shōjin ryōri, the Buddhist temple cuisine of Kōyasan, has no meat or fish.' },
+      { p: 'Which languages?', r: 'English, Spanish or Arabic.' },
+    ],
+    fuentesTitulo: 'Sources',
+    fuentes: [
+      { texto: 'Kōyasan Shingon-shū (official)', url: 'https://www.koyasan.or.jp/en/' },
+      { texto: 'Kansai train times and fares (Jorudan data)', url: 'https://tonykansaiguide.com/en/tools/kansai-train-times-fares/' },
+    ],
+    final: { titulo: 'Kōyasan for a day?', texto: 'Tell me the date and how many you are, and I’ll send you a route with a fixed price.', boton: 'Message on WhatsApp' },
+    altFoto: 'Cedars and gravestones at Okunoin, Kōyasan',
+    saludo: 'Hi Tony, I am writing from the Kōyasan day trip page.\n\nDate:\nPeople:\nHotel:',
+    volver: '← Back to Tony’s page',
+  },
+  'kobe-en': {
+    lang: 'en', ruta: '/en/kobe-private-guide-one-day/', inicio: '/en/', grupo: 'kobedia',
+    foto: { clave: 'kobe-harbor', lugar: 'Kobe harbour' }, og: '/v8/og/kobe.jpg',
+    seo: {
+      titulo: `Private Tour Guide in Kobe for One Day: ${en(PRECIO_GUIA.medio)} per group | Tony Kansai Guide`,
+      descripcion: `A private guide in Kobe for half a day (${en(PRECIO_GUIA.medio)}) or a full day (${en(PRECIO_GUIA.completo)}) per group of up to 6: Kitano, Kobe Mosque, Nankinmachi, the harbour and Nunobiki Falls. 21 minutes by JR from Osaka.`,
+    },
+    antetitulo: 'Kobe · One day',
+    titulo: 'Is there a private tour guide in Kobe for one day?',
+    respuesta: `Yes: Tony, a private guide who lives in Osaka, guides your group around Kobe in English, Spanish or Arabic. A half day (4 h) is ${en(PRECIO_GUIA.medio)} and a full day (8 h) ${en(PRECIO_GUIA.completo)} per group of up to 6, not per person. Kobe is 21 minutes from Osaka Station by JR (${en(420)}), and he meets you in your hotel lobby in Osaka, Kyoto or Kobe.`,
+    actualizado: 'Updated: Nov 2026',
+    cta: 'Ask me on WhatsApp',
+    secciones: [
+      {
+        titulo: 'What we see in Kobe',
+        lista: [
+          'Kitano: the European merchants’ houses on the hill.',
+          'Kobe Mosque: Japan’s oldest mosque (1935), which survived the war and the 1995 earthquake.',
+          'Nankinmachi: Chinatown street food, eaten on the move.',
+          'The harbour and the red Port Tower, lit up over the sea in the evening.',
+          'Nunobiki Falls: a waterfall ten minutes from the Shin-Kobe bullet-train station.',
+        ],
+      },
+      {
+        titulo: 'Half day or full day',
+        lista: [
+          `Half day (4 h), ${en(PRECIO_GUIA.medio)}: Kitano, the mosque, Nankinmachi and the harbour.`,
+          `Full day (8 h), ${en(PRECIO_GUIA.completo)}: all of the above plus Nunobiki Falls, or Arima Onsen or Mount Rokko.`,
+          'Prices per group of up to 6. Trains, tickets and meals are extra.',
+        ],
+      },
+    ],
+    precios: {
+      titulo: 'Kobe with your own guide, same price for 1 or 6 people',
+      texto: 'Just your group, at your pace. Hotel lobby meeting in Osaka, Kyoto or Kobe.',
+      medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
+      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by PayPal or Wise.', 'Free cancellation up to 72 hours before.'],
+    },
+    faqTitulo: 'FAQ',
+    faq: [
+      { p: 'How far is Kobe from Osaka?', r: `21 minutes from Osaka Station to Sannomiya by JR Special Rapid (${en(420)}).` },
+      { p: 'Is half a day enough for Kobe?', r: 'Yes, for Kitano, the mosque, Chinatown and the harbour. A full day adds Nunobiki Falls, Arima Onsen or Mount Rokko.' },
+      { p: 'Can we visit Kobe Mosque?', r: 'Yes. It is Japan’s oldest mosque, at 2-25-14 Nakayamate-dori, and we can pray there if it is prayer time.' },
+      { p: 'Is the price per person?', r: 'No, per group of up to 6: the same for 1 or 6 people.' },
+    ],
+    fuentesTitulo: 'Sources',
+    fuentes: [
+      { texto: 'Feel KOBE, official Kobe tourism', url: 'https://www.feel-kobe.jp/en/' },
+      { texto: 'Kansai train times and fares (Jorudan data)', url: 'https://tonykansaiguide.com/en/tools/kansai-train-times-fares/' },
+    ],
+    final: { titulo: 'A day in Kobe?', texto: 'Tell me the date, how many you are and your hotel.', boton: 'Message on WhatsApp' },
+    altFoto: 'Kobe harbour and Port Tower',
+    saludo: 'Hi Tony, I am writing from the Kobe one-day tour page.\n\nDate:\nPeople:\nHotel:',
     volver: '← Back to Tony’s page',
   },
 }

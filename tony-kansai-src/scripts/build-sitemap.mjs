@@ -129,6 +129,13 @@ const paginas = [
   // Familia en Kioto y recogida en el hotel de Osaka, en inglés (21-11-2026).
   { loc: '/en/kyoto-private-guide-family', priority: '0.8', changefreq: 'monthly', v7: 'familia' },
   { loc: '/en/osaka-private-guide-hotel-pickup', priority: '0.8', changefreq: 'monthly', v7: 'recogida' },
+  // Excursiones de un día (21-11-2026, ronda de descubrimiento en ChatGPT).
+  { loc: '/en/nara-day-trip-from-osaka', priority: '0.8', changefreq: 'monthly', v7: 'naradia' },
+  { loc: '/es/excursion-nara-desde-osaka', priority: '0.8', changefreq: 'monthly', v7: 'naradia' },
+  { loc: '/es/excursion-hiroshima-miyajima-desde-osaka', priority: '0.8', changefreq: 'monthly', v7: 'hiroshimadia' },
+  { loc: '/ar/hiroshima-miyajima-day-trip', priority: '0.8', changefreq: 'monthly', v7: 'hiroshimadia' },
+  { loc: '/en/koyasan-day-trip-private-guide', priority: '0.8', changefreq: 'monthly', v7: 'koyasan' },
+  { loc: '/en/kobe-private-guide-one-day', priority: '0.8', changefreq: 'monthly', v7: 'kobedia' },
   // Página de precios con todas las tarifas (scripts/precios.mjs, 12-11-2026).
   { loc: '/es/precios', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
   { loc: '/en/prices', priority: '0.9', changefreq: 'monthly', v7: 'precios' },
@@ -195,6 +202,10 @@ const V7 = {
   bici: [['es', '/es/tour-privado-bici-kioto/'], ['en', '/en/kyoto-private-bike-tour/'], ['ar', '/ar/kyoto-private-bike-tour/']],
   familia: [['en', '/en/kyoto-private-guide-family/']],
   recogida: [['en', '/en/osaka-private-guide-hotel-pickup/']],
+  naradia: [['en', '/en/nara-day-trip-from-osaka/'], ['es', '/es/excursion-nara-desde-osaka/']],
+  hiroshimadia: [['es', '/es/excursion-hiroshima-miyajima-desde-osaka/'], ['ar', '/ar/hiroshima-miyajima-day-trip/']],
+  koyasan: [['en', '/en/koyasan-day-trip-private-guide/']],
+  kobedia: [['en', '/en/kobe-private-guide-one-day/']],
   precios: [['es', '/es/precios/'], ['en', '/en/prices/'], ['ar', '/ar/prices/']],
   destinos: [['es', '/es/destinos/'], ['en', '/en/destinations/'], ['ar', '/ar/destinations/']],
   leyendas: [['es', '/es/leyendas/'], ['en', '/en/legends/'], ['ar', '/ar/asatir/']],
