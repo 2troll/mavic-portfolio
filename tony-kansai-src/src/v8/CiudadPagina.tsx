@@ -18,7 +18,7 @@ import { BotonSonido } from '../v7/BotonSonido'
 import { CREDITOS_SONIDO } from '../v7/sonido'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo, h1Ciudad, descripcionSeo, faqCiudad, faqLd, introCiudad, fichaCiudad } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, FIGURAS, tituloSeo, h1Ciudad, descripcionSeo, faqCiudad, faqLd, introCiudad, fichaCiudad, precioPortada } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
@@ -158,6 +158,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             {/* La frase que la gente escribe en el buscador o en la IA («guía privado en Kioto en español»). */}
             <p className="v8-portada-guia"><strong>{h1Ciudad(c.id, lang, guia)}</strong></p>
             <p>{c.lema[lang]}</p>
+            <p className="v8-portada-precio">{precioPortada(c.id, lang, guia)}</p>
             <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
               onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `ciudad-${c.id}`, canal: 'whatsapp_ciudad' })}>
               {et.escribe(g)}

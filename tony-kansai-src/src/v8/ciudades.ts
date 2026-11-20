@@ -171,6 +171,19 @@ export function precioDesde(id: CiudadId, guia: 'tony' | 'larion' = 'tony'): num
   return conVisitaCorta(id, guia) ? Math.min(base, VISITA_CORTA) : base
 }
 
+/** Línea de precio de la portada. Quien llega desde ChatGPT lo hace al móvil y
+ *  se va en ~15 s sin bajar (Clarity, 30 días hasta el 21-11-2026): el precio
+ *  tiene que estar en la primera pantalla, no en la ficha de más abajo. */
+export function precioPortada(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion' = 'tony'): string {
+  const p = yenes(precioDesde(id, guia), lang)
+  return {
+    es: `Desde ${p} por grupo de hasta 6, no por persona`,
+    en: `From ${p} per group of up to 6, not per person`,
+    ar: `من ${p} للمجموعة حتى ${num(6, 'ar')} أشخاص، لا للشخص الواحد`,
+    ru: `От ${p} за группу до 6 человек, а не с человека`,
+  }[lang]
+}
+
 /** Mismo formato de yenes que las tarjetas del mosaico. */
 function yenes(n: number, lang: Lengua): string {
   const f = new Intl.NumberFormat(lang === 'ar' ? 'ar-EG' : lang === 'ru' ? 'ru-RU' : lang === 'en' ? 'en-US' : 'es-ES').format(n)
