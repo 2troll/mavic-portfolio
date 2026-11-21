@@ -92,6 +92,35 @@ jobs:
         run: node scripts/correo-visible.mjs ../deploy
 
       # ── Deploy to GitHub Pages ─────────────────────────────
+      # Clarity reproduce cada grabación con el CSS que tenía la página ese día.
+      # Cada publicación borraba los /assets/*.css anteriores y las grabaciones
+      # y mapas de calor salían sin estilos («la web destrozada», 21-11-2026).
+      # Se guardan 45 días de CSS (Clarity conserva 30) en la caché de Actions;
+      # estilos-anteriores/ trae los que se recuperaron de copias locales.
+      - name: CSS de publicaciones anteriores (caché)
+        uses: actions/cache/restore@v4
+        with:
+          path: .estilos-anteriores
+          key: estilos-anteriores-${{ github.run_id }}
+          restore-keys: estilos-anteriores-
+
+      - name: Conservar el CSS anterior para Clarity
+        run: |
+          # Copia sin pisar (cp -n sale con error en coreutils 9 si ya existe).
+          sin_pisar() { for f in "$1"/*.css; do [ -e "$f" ] || continue; [ -e "$2/$(basename "$f")" ] || cp "$f" "$2/"; done; }
+          mkdir -p .estilos-anteriores
+          sin_pisar tony-kansai-src/estilos-anteriores .estilos-anteriores
+          sin_pisar deploy/assets .estilos-anteriores
+          find .estilos-anteriores -name '*.css' -mtime +45 -delete
+          sin_pisar .estilos-anteriores deploy/assets
+          echo "CSS conservados: $(ls .estilos-anteriores | wc -l)"
+
+      - name: Guardar el CSS para la próxima publicación
+        uses: actions/cache/save@v4
+        with:
+          path: .estilos-anteriores
+          key: estilos-anteriores-${{ github.run_id }}
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
