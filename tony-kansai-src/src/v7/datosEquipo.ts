@@ -1,4 +1,5 @@
-// Equipo de guías: la franja «Nuestros guías» del final de cada página.
+// Equipo de guías: el pie de empresa del final de cada página (marca + lista plegada
+// «Nuestros guías y otros idiomas», sin fotos desde el 21-11-2026).
 // Los datos viven en scripts/equipo.json, que también lee scripts/equipo-estatico.mjs
 // para las secciones estáticas: un solo sitio que tocar si cambia un guía.
 
@@ -21,8 +22,7 @@ export interface GuiaEquipo {
   extra?: { ruta: string; lang: string; texto: string }
 }
 
-export const UI_EQUIPO = datos.ui as Record<'titulo' | 'sub' | 'aqui' | 'equipo', Record<IdiomaEquipo, string>>
-export const NOMBRE_IDIOMA = datos.idiomas as Record<string, string>
+export const UI_EQUIPO = datos.ui as Record<'lema' | 'enlace', Record<IdiomaEquipo, string>>
 export const EQUIPO = datos.guias as GuiaEquipo[]
 
 // El JSON no puede importar constantes: si cambia el Telegram de Larion o el

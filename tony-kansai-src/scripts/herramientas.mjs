@@ -890,8 +890,7 @@ function envoltorio({ lang, clave, title, desc, ld, cuerpo, msg, js = '' }) {
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#15130f" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3eee4" >
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[clave][l]}">`).join('\n')}
@@ -1129,8 +1128,6 @@ const CSS = `
 --mn-tarjeta:#fbf8f2;--mn-texto:#1d1b18;--mn-linea:rgba(29,27,24,.18);--mn-suave:#ebe4d6;--mn-acento:#b8381f;
 --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Source Serif 4',Georgia,serif;
 --ja:'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP','Noto Sans CJK JP','Yu Gothic UI','Yu Gothic',Meiryo,sans-serif;--r:14px;color-scheme:light}
-@media (prefers-color-scheme:dark){:root:not([data-tema=claro]){--papel:#15130f;--papel2:#1c1a16;--tarjeta:#221f1a;--tinta:#efe9dd;--gris:#ada596;--linea:rgba(239,233,221,.14);--acento:#ec6a4b;--acento-t:#190b06;--suave:rgba(236,106,75,.12);
---noche:#0c0b09;--noche-t:#efe9dd;--mn-tarjeta:#221f1a;--mn-texto:#efe9dd;--mn-linea:rgba(239,233,221,.2);--mn-suave:#2c2822;--mn-acento:#c8432a;color-scheme:dark}}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}

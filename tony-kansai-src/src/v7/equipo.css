@@ -1,306 +1,61 @@
-/* ── Franja «Nuestros guías» (.eq-*) ───────────────────────────────────────
-   Una sola hoja para las páginas React (Equipo.tsx la importa) y las secciones
-   estáticas (scripts/equipo-estatico.mjs la lee y la mete en su <style>).
-   5-11-2026: rehecha «de calidad» (Tony: «se ve mal»). Fuera la letra pixelada y
-   el shoji: tarjetas redondeadas con retrato grande, nombre e idiomas sobre la
-   foto, botón de píldora y carrusel deslizable en el móvil. Lleva sus propias
-   variables para verse igual dentro y fuera de .v7; las secciones estáticas
-   cambian fondo y acento con .eq--tr, .eq--fr… El oscuro va con :where() para
-   que esas variantes le ganen. Los nombres --eq-torii/--eq-shoji se conservan
-   porque las variantes los usan (ya no pintan un torii ni un shoji). */
-
-.eq {
-  --eq-fondo: #f7f4ee; --eq-shoji: #e6e0d4; --eq-tarjeta: #ffffff; --eq-borde: #1b1b1b; --eq-sombra: rgba(24, 20, 12, .10);
-  --eq-matcha: #6c8f3c; --eq-torii: #c8372a; --eq-torii-osc: #8f2116; --eq-torii-claro: #f08070;
-  --eq-texto: #17150f; --eq-tenue: #5d574b; --eq-chip: #f1ece2; --eq-boton-texto: #fff; --eq-boton-sombra: rgba(0, 0, 0, .25);
-  --eq-pixel: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+/* ── Pie de empresa (.eq-*) ─────────────────────────────────────────────────
+   21-11-2026: fuera el muro de fotos de guías (Antonio: «contactan con una
+   empresa, no con un chaval con gorra»; «cada guía en su propia página»).
+   Queda una línea sobria con la marca y, plegada, la lista de guías en texto:
+   los enlaces siguen en el HTML para Google y las IAs. Una sola hoja para React
+   (Equipo.tsx) y las estáticas (equipo-estatico.mjs la mete en su <style>).
+   Selectores con section.eq: la portada raíz tiene un <ul class="eq"> propio
+   (rutas-estaticas.mjs) que la hoja anterior pintaba sin querer.
+   Colores: pie claro (decisión del 21-11, no índigo). Son los tokens de
+   estilo-sereno escritos a mano, porque la franja va fuera de .v7 y las
+   variables de la página no le llegan: washi, tinta índigo, tenue y el verde de
+   las acciones solo para el foco. Si el pie de la página va en sakura-velo
+   (#fbf1f4), basta con poner ese --eq-fondo en section.eq.eq-react. */
+section.eq {
+  --eq-fondo: #fdfcfa; --eq-linea: rgba(30, 42, 54, 0.10); --eq-texto: #1e2a36; --eq-tenue: #56606c; --eq-acento: #2a7352;
   --eq-cuerpo: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  box-sizing: border-box;
-  clear: both;
-  width: 100%;
-  margin: 0;
-  padding: 72px 16px 56px;
-  color: var(--eq-texto);
-  font: 400 16px/1.5 var(--eq-cuerpo);
-  background: var(--eq-fondo);
-  border-top: 1px solid var(--eq-shoji);
-  overflow: hidden;
+  box-sizing: border-box; clear: both; width: 100%; margin: 0; padding: 20px 16px 24px;
+  font: 400 14px/1.5 var(--eq-cuerpo); color: var(--eq-tenue);
+  background: var(--eq-fondo); border-top: 1px solid var(--eq-linea);
 }
-:where(:root[data-tema='oscuro']) .eq {
-  --eq-fondo: #121118; --eq-shoji: #2a2833; --eq-tarjeta: #1b1a23; --eq-borde: #e9dfc8; --eq-sombra: rgba(0, 0, 0, .45);
-  --eq-matcha: #86b04d; --eq-torii: #e0493a; --eq-torii-claro: #ff8d7d;
-  --eq-texto: #f2ecdf; --eq-tenue: #b3ac9e; --eq-chip: #26242f;
-  color-scheme: dark;
+/* Oscuro «noche de primavera» de estilo-sereno: solo con data-tema="oscuro" explícito.
+   Sin bloque automático: esta hoja va también en las páginas estáticas, que no
+   pasan por index.html, y la web va siempre en claro (21-11-2026). */
+:where(:root[data-tema='oscuro']) section.eq { --eq-fondo: #111723; --eq-linea: rgba(237, 241, 246, 0.12); --eq-texto: #edf1f6; --eq-tenue: #a9b4c3; --eq-acento: #8fd3ac; color-scheme: dark; }
+/* Árabe (ar y la línea de Iheb en /ar/): la letra de texto que ya pide src/lib/arabicFont.ts;
+   Geist no trae árabe y el navegador caería en una de sistema distinta en cada móvil. */
+section.eq :lang(ar) { font-family: 'IBM Plex Sans Arabic', 'Noto Sans Arabic', 'Geeza Pro', 'SF Arabic', 'Segoe UI', Tahoma, sans-serif; }
+section.eq *, section.eq *::before, section.eq *::after { box-sizing: border-box; }
+section.eq :is(p, ul, li) { margin: 0; padding: 0; }
+section.eq ul { list-style: none; }
+section.eq li::before { content: none; }
+section.eq .eq-kap { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0 24px; }
+section.eq .eq-marca strong { color: var(--eq-texto); font-weight: 600; }
+/* Las páginas estáticas traen estilos globales de details/summary (tarjeta con borde,
+   «+» de filipp.mjs, borde grueso de iheb-estilo.mjs): aquí no aplican. */
+section.eq details.eq-guias { background: none; border: 0; border-radius: 0; padding: 0; margin: 0; box-shadow: none; max-width: none; }
+section.eq .eq-guias > summary::before { content: none; }
+section.eq .eq-guias > summary {
+  list-style: none; cursor: pointer; display: inline-flex; align-items: center; gap: 8px; min-height: 44px;
+  margin: 0; padding: 0; border: 0; background: none; font: inherit; color: var(--eq-texto); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--eq-linea);
 }
-@media (prefers-color-scheme: dark) {
-  :where(:root:not([data-tema='claro'])) .eq {
-    --eq-fondo: #121118; --eq-shoji: #2a2833; --eq-tarjeta: #1b1a23; --eq-borde: #e9dfc8; --eq-sombra: rgba(0, 0, 0, .45);
-    --eq-matcha: #86b04d; --eq-torii: #e0493a; --eq-torii-claro: #ff8d7d;
-    --eq-texto: #f2ecdf; --eq-tenue: #b3ac9e; --eq-chip: #26242f;
-    color-scheme: dark;
-  }
-}
+section.eq .eq-guias > summary::-webkit-details-marker { display: none; }
+section.eq .eq-guias > summary::after { content: ''; width: 6px; height: 6px; border: solid currentColor; border-width: 0 1.5px 1.5px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s; }
+section.eq .eq-guias[open] { flex-basis: 100%; }
+section.eq .eq-guias[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+section.eq .eq-guias ul { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 0 24px; padding-top: 4px; }
+section.eq .eq-guias li { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; border-top: 1px solid var(--eq-linea); }
+section.eq .eq-guias a { display: inline-flex; align-items: center; min-height: 44px; color: var(--eq-texto); text-decoration: none; }
+section.eq .eq-guias a:hover { text-decoration: underline; }
+section.eq .eq-guias a[aria-current='page'] { color: var(--eq-tenue); }
+section.eq .eq-quien { font-size: 13px; color: var(--eq-tenue); }
+section.eq :focus-visible { outline: 2px solid var(--eq-acento); outline-offset: 2px; border-radius: 4px; }
+/* React: es lo último de la página; hueco para la barra fija de WhatsApp/Telegram (≤ 860 px). */
+@media (max-width: 860px) { section.eq.eq-react { padding-bottom: calc(96px + env(safe-area-inset-bottom)); } }
+@media (prefers-reduced-motion: reduce) { section.eq .eq-guias > summary::after { transition: none; } }
 
-.eq *, .eq *::before, .eq *::after { box-sizing: border-box; }
-.eq :is(h2, h3, p, ul, li) { margin: 0; padding: 0; }
-.eq ul { list-style: none; }
-.eq li::before { content: none; }
-
-.eq .eq-kap { max-width: 1240px; margin: 0 auto; }
-.eq .eq-ante { display: inline-flex; align-items: center; gap: 8px; font: 600 12px/1 var(--eq-cuerpo); letter-spacing: .14em; text-transform: uppercase; color: var(--eq-torii); }
-.eq .eq-ante span { letter-spacing: .2em; color: var(--eq-tenue); font-weight: 500; }
-.eq .eq-titulo {
-  font: 700 clamp(28px, 3.6vw, 44px)/1.1 var(--eq-cuerpo) !important;
-  letter-spacing: -.02em !important; margin: 14px 0 10px !important; color: var(--eq-texto);
-  background: none !important; padding: 0 !important; display: block !important; text-transform: none !important;
-  -webkit-text-stroke: 0 !important; text-shadow: none !important;
-}
-.eq .eq-titulo::before, .eq .eq-titulo::after { content: none !important; }
-.eq .eq-sub { color: var(--eq-tenue); font-size: 16px; margin-bottom: 32px; max-width: 62ch; }
-.eq:lang(ar) .eq-ante, .eq:lang(ar) .eq-ante span { letter-spacing: 0; }
-
-/* Rejilla en escritorio; carrusel con imán en el móvil. */
-.eq .eq-fila { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 22px; }
-@media (min-width: 1180px) { .eq .eq-fila { grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 18px; } }
-@media (max-width: 719px) {
-  .eq .eq-fila {
-    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain;
-    margin: 0 -16px; padding: 4px 16px 18px; scroll-padding-inline: 16px; scrollbar-width: none;
-  }
-  .eq .eq-fila::-webkit-scrollbar { display: none; }
-  .eq .eq-tarjeta { flex: 0 0 78%; max-width: 300px; scroll-snap-align: start; }
-}
-
-.eq .eq-tarjeta {
-  position: relative; display: flex; flex-direction: column; min-width: 0;
-  background: var(--eq-tarjeta);
-  border: 1px solid var(--eq-shoji); border-radius: 22px; overflow: hidden;
-  box-shadow: 0 1px 2px var(--eq-sombra), 0 14px 34px -18px var(--eq-sombra);
-  text-align: start;
-  transition: transform .35s cubic-bezier(.2, .8, .2, 1), box-shadow .35s ease;
-}
-@media (hover: hover) {
-  .eq .eq-tarjeta:hover { transform: translateY(-4px); box-shadow: 0 2px 4px var(--eq-sombra), 0 26px 50px -22px var(--eq-sombra); }
-  .eq .eq-tarjeta:hover .eq-foto { transform: scale(1.04); }
-}
-.eq .eq-tarjeta.eq-aqui { border-color: var(--eq-torii); box-shadow: 0 0 0 2px var(--eq-torii), 0 14px 34px -18px var(--eq-sombra); }
-.eq .eq-sello {
-  position: absolute; z-index: 2; top: 12px; inset-inline-start: 12px;
-  display: inline-flex; align-items: center; gap: 6px;
-  font: 600 11px/1 var(--eq-cuerpo); letter-spacing: .04em; color: #fff;
-  background: rgba(15, 14, 20, .62); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
-  border: 1px solid rgba(255, 255, 255, .25); border-radius: 999px; padding: 6px 10px;
-}
-.eq .eq-sello::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: #3ddc84; box-shadow: 0 0 0 3px rgba(61, 220, 132, .25); }
-
-/* Cabeza = retrato grande con el nombre y los idiomas encima. */
-.eq .eq-cabeza { position: relative; aspect-ratio: 4 / 5; overflow: hidden; background: var(--eq-chip); }
-.eq .eq-cabeza::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, transparent 45%, rgba(8, 7, 12, .78) 100%); }
-.eq .eq-cabeza > div { position: absolute; z-index: 1; inset-inline: 14px; bottom: 12px; min-width: 0; }
-.eq .eq-foto {
-  display: block; width: 100%; height: 100%; max-width: none; object-fit: cover; object-position: 50% 22%;
-  transition: transform .7s cubic-bezier(.2, .8, .2, 1);
-}
-/* Sin foto: degradado con la inicial grande (no se inventa una cara). */
-.eq .eq-emblema {
-  position: absolute; inset: 0; display: grid; place-items: center;
-  background: radial-gradient(120% 90% at 20% 10%, var(--eq-torii-claro), transparent 60%), linear-gradient(150deg, var(--eq-torii), var(--eq-torii-osc));
-}
-.eq .eq-emblema span { font: 800 clamp(64px, 9vw, 96px)/1 var(--eq-cuerpo); color: rgba(255, 255, 255, .92); letter-spacing: -.04em; transform: translateY(-14%); }
-
-.eq .eq-nombre { font: 700 22px/1.1 var(--eq-cuerpo) !important; letter-spacing: -.01em !important; color: #fff !important; overflow-wrap: anywhere; margin: 0 !important; background: none !important; text-shadow: 0 1px 12px rgba(0, 0, 0, .35); }
-.eq .eq-idiomas { display: flex; flex-wrap: wrap; gap: 5px; margin-top: 8px; }
-.eq .eq-idiomas li {
-  font: 600 10.5px/1 var(--eq-cuerpo); letter-spacing: .06em; padding: 5px 8px; border-radius: 999px;
-  color: #fff; background: rgba(255, 255, 255, .16); border: 1px solid rgba(255, 255, 255, .32);
-  -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px);
-}
-
-.eq .eq-linea { padding: 16px 16px 0; font-size: 15px; line-height: 1.4; font-weight: 600; color: var(--eq-texto); }
-/* La frase completa: pequeña y recortada a la vista, entera en el HTML. */
-.eq .eq-desc {
-  margin: 8px 16px 0 !important; font-size: 13px; line-height: 1.5; color: var(--eq-tenue);
-  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; line-clamp: 3; overflow: hidden;
-}
-.eq .eq-acciones { margin-top: auto; padding: 16px; display: flex; flex-direction: column; align-items: stretch; gap: 6px; }
-.eq a.eq-boton {
-  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
-  min-height: 46px; padding: 10px 16px; border-radius: 999px;
-  font: 600 14px/1.15 var(--eq-cuerpo); text-align: center; text-decoration: none;
-  color: var(--eq-boton-texto); background: var(--eq-torii); border: 0;
-  transition: filter .2s ease, transform .2s ease;
-}
-.eq a.eq-boton > span[aria-hidden] { transition: transform .25s ease; }
-.eq a.eq-boton:hover { filter: brightness(1.08); }
-.eq a.eq-boton:hover > span[aria-hidden] { transform: translateX(3px); }
-.eq [dir='rtl'] a.eq-boton:hover > span[aria-hidden] { transform: translateX(-3px); }
-.eq a.eq-boton:active { transform: scale(.98); }
-.eq a.eq-boton:focus-visible, .eq a.eq-extra:focus-visible { outline: 3px solid var(--eq-matcha); outline-offset: 2px; }
-/* La tarjeta de la página en la que ya estás: botón apagado, sigue siendo enlace. */
-.eq .eq-aqui a.eq-boton { background: var(--eq-chip); color: var(--eq-texto); }
-.eq a.eq-extra { display: inline-flex; align-items: center; justify-content: center; min-height: 36px; font-size: 13px; color: var(--eq-tenue); text-decoration: underline; text-underline-offset: 3px; }
-.eq .eq-oculto { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-
-@media (max-width: 719px) {
-  .eq { padding: 52px 16px 104px; } /* hueco para las barras fijas de WhatsApp/Telegram del móvil */
-}
-.eq .eq-fin { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 6px 18px; margin-top: 44px; padding-top: 18px; border-top: 1px solid var(--eq-shoji); font-size: 13px; color: var(--eq-tenue); }
-.eq .eq-fin a { color: inherit; }
-@media (prefers-reduced-motion: reduce) { .eq .eq-tarjeta, .eq .eq-foto, .eq a.eq-boton { transition: none; } .eq .eq-tarjeta:hover, .eq .eq-tarjeta:hover .eq-foto { transform: none; } }
-
-/* Variantes de las secciones estáticas: fondo, tarjeta y acento de la página. */
-.eq.eq--tr, .eq.eq--fr { --eq-fondo: var(--bg); --eq-shoji: var(--cizgi); --eq-tarjeta: var(--kart); --eq-texto: var(--fg); --eq-tenue: var(--soluk); --eq-torii: var(--kirmizi); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
-.eq.eq--filipp { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--papel); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--chip); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
-.eq.eq--kndr { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--papel); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--chip); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
-.eq.eq--familias { --eq-fondo: var(--bg); --eq-shoji: var(--linea); --eq-tarjeta: var(--kart); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-torii: var(--acento); --eq-chip: var(--bg2); --eq-torii-osc: rgba(0, 0, 0, .28); --eq-torii-claro: rgba(255, 255, 255, .3); }
-/* /private/ (Mario): modo FAN de neón (por defecto) y modo EASY claro, según la clase de <html>.
-   En FAN el rosa neón lleva texto oscuro en el botón para pasar contraste AA. */
-.eq.eq--private { --eq-fondo: #0b0b1a; --eq-shoji: #1a1a36; --eq-tarjeta: #15152e; --eq-borde: #ffffff; --eq-sombra: #ff2e88; --eq-matcha: #00e5ff; --eq-torii: #ff2e88; --eq-torii-osc: rgba(0, 0, 0, .3); --eq-torii-claro: rgba(255, 255, 255, .35); --eq-texto: #f4f4ff; --eq-tenue: #c2c2e0; --eq-chip: #1e1e40; --eq-boton-texto: #0b0b1a; --eq-boton-sombra: transparent; color-scheme: dark; }
-html.easy .eq.eq--private { --eq-fondo: #fbf6ea; --eq-shoji: #efe6cf; --eq-tarjeta: #ffffff; --eq-borde: #15131a; --eq-sombra: #15131a; --eq-matcha: #006c80; --eq-torii: #b8321a; --eq-torii-osc: #7a1f0e; --eq-torii-claro: #e0705a; --eq-texto: #15131a; --eq-tenue: #3b3846; --eq-chip: #f3ecdc; --eq-boton-texto: #ffffff; --eq-boton-sombra: rgba(0, 0, 0, .25); color-scheme: light; }
-/* En oscuro esos acentos son claros: el texto del botón pasa a oscuro para leerse. */
-@media (prefers-color-scheme: dark) {
-  .eq.eq--fr, .eq.eq--filipp, .eq.eq--kndr, .eq.eq--familias, .eq.eq--tr { --eq-boton-texto: var(--bg); --eq-boton-sombra: transparent; }
-}
-
-/* ── 8-11-2026: estructura nueva (Tony: «todo seguido, que ninguno colapse ni
-   se quede uno solo debajo», móvil y ordenador). El guía de la página (o Tony
-   si la página no es de nadie) va primero y en GRANDE a lo ancho; los demás en
-   una rejilla par: 2 columnas en el móvil, 3 en tablet y 6 en el ordenador.
-   Ya no hay carrusel: se ven todos sin deslizar. */
-.eq .eq-fila { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; overflow: visible; margin: 0; padding: 0; }
-.eq .eq-fila > .eq-tarjeta { flex: none; max-width: none; }
-@media (min-width: 720px) { .eq .eq-fila { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; } }
-@media (min-width: 1180px) { .eq .eq-fila { grid-template-columns: repeat(6, minmax(0, 1fr)); } }
-
-/* Destacado: la primera tarjeta ocupa toda la fila. */
-.eq .eq-fila > .eq-tarjeta:first-child { grid-column: 1 / -1; }
-.eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { aspect-ratio: 16 / 10; }
-.eq .eq-fila > .eq-tarjeta:first-child .eq-nombre { font-size: 26px !important; }
-.eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: 4; line-clamp: 4; font-size: 14px; }
-@media (min-width: 720px) {
-  .eq .eq-fila > .eq-tarjeta:first-child { display: grid; grid-template-columns: minmax(220px, 320px) 1fr; grid-template-rows: auto auto 1fr; column-gap: 8px; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { grid-row: 1 / 4; aspect-ratio: 4 / 5; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-linea { padding: 24px 24px 0; font-size: 18px; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { margin: 10px 24px 0 !important; font-size: 15px; -webkit-line-clamp: 5; line-clamp: 5; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-acciones { padding: 20px 24px 24px; flex-direction: row; flex-wrap: wrap; align-items: center; align-self: end; }
-  .eq .eq-fila > .eq-tarjeta:first-child a.eq-boton { padding-inline: 26px; }
-}
-@media (min-width: 1180px) { .eq .eq-fila > .eq-tarjeta:first-child { grid-template-columns: 300px 1fr; } }
-
-/* Móvil: tarjetas pequeñas y legibles en 2 columnas. */
-@media (max-width: 719px) {
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) { border-radius: 18px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-cabeza { aspect-ratio: 1 / 1; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-cabeza > div { inset-inline: 10px; bottom: 8px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-nombre { font-size: 17px !important; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-idiomas li { font-size: 9.5px; padding: 4px 6px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-emblema span { font-size: 56px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-linea { padding: 10px 10px 0; font-size: 13px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-desc { margin: 6px 10px 0 !important; font-size: 12px; -webkit-line-clamp: 2; line-clamp: 2; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) .eq-acciones { padding: 10px; }
-  .eq .eq-fila > .eq-tarjeta:not(:first-child) a.eq-boton { min-height: 40px; font-size: 13px; padding: 8px 10px; }
-  .eq .eq-sello { top: 8px; inset-inline-start: 8px; }
-}
-/* Destacado en ordenador: foto cuadrada más baja para que no quede hueco vacío. */
-@media (min-width: 720px) {
-  .eq .eq-fila > .eq-tarjeta:first-child { grid-template-columns: 240px 1fr !important; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-cabeza { aspect-ratio: 1 / 1; }
-  .eq .eq-fila > .eq-tarjeta:first-child .eq-desc { -webkit-line-clamp: unset; line-clamp: unset; display: block; max-width: 70ch; }
-}
-
-
-/* --- Abanico de guías (VitrinaEquipo.tsx), estilo «Hero 8»: título enorme con caras + fotos que se abren. --- */
-.eq-react .eqv { margin-top: 4px; }
-.eq-react .eqv-grande {
-  font: 800 clamp(34px, 7.4vw, 108px)/1.02 var(--eq-cuerpo) !important; letter-spacing: -.04em; text-transform: uppercase;
-  color: var(--eq-texto); text-align: center; margin: 8px 0 44px !important;
-}
-.eq-react .eqv-grande > span { vertical-align: middle; }
-.eq-react .eqv-grande > span + span { margin-inline-start: .22em; }
-.eq-react .eqv-grande > br + span { margin-inline-start: 0; }
-.eq-react .eqv-pildora {
-  display: inline-block; height: .78em; width: 1.9em; border-radius: .2em; overflow: hidden; vertical-align: middle;
-  background: var(--eq-shoji); box-shadow: 0 10px 30px -12px rgba(0, 0, 0, .45);
-  transition: width .7s cubic-bezier(.65, 0, .35, 1);
-}
-.eq-react .eqv-pildora-b { width: 1.4em; }
-.eq-react .eqv:hover .eqv-pildora { width: 2.4em; }
-.eq-react .eqv:hover .eqv-pildora-b { width: 1.9em; }
-.eq-react .eqv-pildora img { width: 100%; height: 100%; object-fit: cover; display: block; animation: eqv-entra .7s cubic-bezier(.2, .8, .2, 1); }
-@keyframes eqv-entra { from { transform: scale(1.35); filter: blur(6px); opacity: 0; } to { transform: none; filter: none; opacity: 1; } }
-
-.eq-react .eqv-abanico { display: flex; gap: 10px; height: 560px; }
-.eq-react .eqv-hoja {
-  position: relative; flex: 1 1 0; min-width: 0; border-radius: 22px; overflow: hidden; cursor: pointer;
-  background: var(--eq-shoji); transition: flex-grow .7s cubic-bezier(.65, 0, .35, 1);
-}
-.eq-react .eqv-hoja.on { flex-grow: 6; cursor: default; }
-.eq-react .eqv-img, .eq-react .eqv-emblema { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(.2, .8, .2, 1), filter .7s ease; }
-.eq-react .eqv-hoja:not(.on) .eqv-img { filter: grayscale(.85) brightness(.75); transform: scale(1.15); }
-.eq-react .eqv-emblema { display: grid; place-items: center; background: var(--eq-torii); color: #fff; font: 800 120px/1 var(--eq-cuerpo); }
-.eq-react .eqv-velo { position: absolute; inset: 0; background: linear-gradient(180deg, transparent 35%, rgba(10, 8, 6, .82)); pointer-events: none; }
-.eq-react .eqv-pestana {
-  position: absolute; left: 50%; bottom: 22px; transform: translateX(-50%) rotate(180deg); writing-mode: vertical-rl;
-  background: none; border: 0; padding: 0; color: #fff; font: 700 17px/1 var(--eq-cuerpo); letter-spacing: .02em; white-space: nowrap; cursor: pointer;
-  transition: opacity .35s ease;
-}
-.eq-react .eqv-hoja.on .eqv-pestana { opacity: 0; pointer-events: none; }
-.eq-react .eqv-ficha {
-  position: absolute; inset: auto 0 0 0; padding: 28px 30px 30px; color: #fff; text-align: start;
-  opacity: 0; transform: translateY(24px); transition: opacity .35s ease, transform .5s ease; pointer-events: none;
-}
-.eq-react .eqv-hoja.on .eqv-ficha { opacity: 1; transform: none; transition-delay: .35s; pointer-events: auto; }
-.eq-react .eqv-sello { display: inline-block; font: 700 11px/1 var(--eq-cuerpo); letter-spacing: .1em; text-transform: uppercase; background: var(--eq-torii); color: #fff; padding: 7px 10px; border-radius: 999px; margin-bottom: 12px; }
-.eq-react .eqv-nombre { font: 800 clamp(34px, 4vw, 60px)/1 var(--eq-cuerpo) !important; letter-spacing: -.03em; color: #fff !important; text-transform: uppercase; }
-.eq-react .eqv-linea { font: 600 18px/1.3 var(--eq-cuerpo); color: rgba(255, 255, 255, .85); margin-top: 8px !important; max-width: 34ch; }
-.eq.eq-react ul.eqv-idiomas { display: flex; gap: 6px; margin-top: 14px !important; background: none !important; width: auto !important; border-radius: 0 !important; padding: 0 !important; }
-.eq-react .eqv-idiomas li { font: 700 11px/1 var(--eq-cuerpo); padding: 6px 9px; border-radius: 999px; border: 1px solid rgba(255, 255, 255, .6); color: #fff; }
-.eq-react .eqv-desc { font-size: 14px; line-height: 1.5; color: rgba(255, 255, 255, .78); margin-top: 12px !important; max-width: 52ch; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
-.eq.eq-react a.eqv-boton, .eq.eq-react a.eqv-boton:visited {
-  display: inline-flex; align-items: center; gap: 10px; margin-top: 18px; padding: 14px 24px; border-radius: 999px;
-  background: #fff; color: #15130f !important; font: 700 15px/1 var(--eq-cuerpo); text-decoration: none; transition: transform .25s ease, background .25s ease;
-}
-.eq.eq-react a.eqv-boton:hover { transform: translateY(-2px); background: var(--eq-torii); color: #fff !important; }
-@media (max-width: 719px) {
-  .eq-react .eqv-grande { margin-bottom: 28px !important; }
-  /* En el móvil, las hojas van en columna y la elegida se abre hacia abajo. */
-  .eq-react .eqv-abanico { flex-direction: column; height: auto; gap: 8px; }
-  .eq-react .eqv-hoja { flex: none; height: 64px; transition: height .6s cubic-bezier(.65, 0, .35, 1); }
-  .eq-react .eqv-hoja.on { height: 470px; }
-  .eq-react .eqv-pestana { writing-mode: horizontal-tb; transform: none; left: 20px; bottom: 50%; translate: 0 50%; font-size: 18px; }
-  .eq-react .eqv-ficha { padding: 22px; }
-}
-@media (prefers-reduced-motion: reduce) {
-  .eq-react .eqv-hoja, .eq-react .eqv-pildora, .eq-react .eqv-img, .eq-react .eqv-ficha { transition: none; }
-  .eq-react .eqv-pildora img { animation: none; }
-}
-/* Versión simple y más pequeña (Tony, 9-11): fotos más bajas, sin gris ni zoom, menos texto. */
-.eq-react .eqv-grande { font-size: clamp(26px, 4.2vw, 56px) !important; margin: 4px 0 28px !important; }
-.eq-react .eqv-abanico { height: 360px; gap: 8px; max-width: 1040px; margin-inline: auto; }
-.eq-react .eqv-hoja { border-radius: 16px; }
-.eq-react .eqv-hoja.on { flex-grow: 4; }
-.eq-react .eqv-img { object-position: 50% 22%; }
-.eq-react .eqv-hoja:not(.on) .eqv-img { filter: none; transform: none; }
-.eq-react .eqv-velo { background: linear-gradient(180deg, transparent 50%, rgba(10, 8, 6, .75)); }
-.eq-react .eqv-pestana { font-size: 14px; bottom: 16px; }
-.eq-react .eqv-ficha { padding: 18px 20px 20px; }
-.eq-react .eqv-nombre { font-size: clamp(24px, 2.4vw, 34px) !important; text-transform: none; letter-spacing: -.02em; }
-.eq-react .eqv-linea { font-size: 15px; margin-top: 4px !important; }
-.eq.eq-react ul.eqv-idiomas { margin-top: 10px !important; }
-/* La descripción sigue en el HTML para Google, pero no se pinta. */
-.eq-react .eqv-desc { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; margin: 0 !important; }
-.eq.eq-react a.eqv-boton, .eq.eq-react a.eqv-boton:visited { margin-top: 12px; padding: 10px 18px; font-size: 14px; }
-@media (max-width: 719px) {
-  .eq-react .eqv-abanico { height: auto; }
-  .eq-react .eqv-hoja { height: 52px; }
-  .eq-react .eqv-hoja.on { height: 320px; }
-  .eq-react .eqv-pestana { font-size: 16px; }
-}
-@media (max-width: 719px) {
-  /* Cerradas: sin foto (salían frentes recortadas), solo el nombre sobre la tarjeta. */
-  .eq-react .eqv-hoja:not(.on) { background: var(--eq-tarjeta); border: 1px solid var(--eq-shoji); }
-  .eq-react .eqv-hoja:not(.on) :is(.eqv-img, .eqv-emblema, .eqv-velo) { opacity: 0; }
-  .eq-react .eqv-hoja:not(.on) .eqv-pestana { color: var(--eq-texto); }
-  .eq-react .eqv-hoja:not(.on)::after { content: "+"; position: absolute; right: 20px; top: 50%; translate: 0 -50%; color: var(--eq-tenue); font: 600 22px/1 var(--eq-cuerpo); }
-}
-@media (max-width: 719px) { .eq-react .eqv-pestana { top: 50%; bottom: auto; translate: 0 -50%; line-height: 1; } }
+/* Variantes de las secciones estáticas: fondo y tinta de la página. */
+section.eq.eq--tr, section.eq.eq--fr { --eq-fondo: var(--bg); --eq-linea: var(--cizgi); --eq-texto: var(--fg); --eq-tenue: var(--soluk); --eq-acento: var(--kirmizi); }
+section.eq.eq--filipp, section.eq.eq--kndr, section.eq.eq--familias { --eq-fondo: var(--bg); --eq-linea: var(--linea); --eq-texto: var(--tinta); --eq-tenue: var(--suave); --eq-acento: var(--acento); }
+section.eq.eq--private { --eq-fondo: #0b0b1a; --eq-linea: #1a1a36; --eq-texto: #f4f4ff; --eq-tenue: #c2c2e0; --eq-acento: #00e5ff; color-scheme: dark; }
+html.easy section.eq.eq--private { --eq-fondo: #fbf6ea; --eq-linea: #efe6cf; --eq-texto: #15131a; --eq-tenue: #3b3846; --eq-acento: #006c80; color-scheme: light; }

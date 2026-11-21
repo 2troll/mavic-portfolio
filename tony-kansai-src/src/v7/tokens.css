@@ -2,7 +2,8 @@
    Papel, tinta y sello: 60 / 30 / 10.
      · Modo claro: 60 % papel blanco, 30 % tinta negra, 10 % rojo de sello.
      · Modo oscuro, al revés: 60 % tinta negra, 30 % papel blanco, 10 % rojo.
-   El tema sigue al sistema; el botón de la cabecera lo fija en <html data-tema>.
+   Desde el 21-11-2026 la web va siempre en claro: index.html fija
+   <html data-tema="claro"> y el oscuro solo saldría con data-tema="oscuro".
    «html .v7» gana a la regla «.v7» de v7.css sin depender del orden. */
 
 html .v7 {
@@ -50,7 +51,6 @@ html .v7 {
 
 /* Modo oscuro: elegido a mano o, si no se eligió, el del sistema. */
 :root[data-tema='oscuro'] .v7 { color-scheme: dark; }
-@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7 { color-scheme: dark; } }
 
 :root[data-tema='oscuro'] .v7 {
   --fondo: #0d0d0d;
@@ -67,24 +67,6 @@ html .v7 {
   --cristal: rgba(13, 13, 13, 0.74);
   --cristal-borde: rgba(255, 255, 255, 0.1);
   --sombra: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.8);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-tema='claro']) .v7 {
-    --fondo: #0d0d0d;
-    --superficie: #171717;
-    --superficie-2: #1f1f1f;
-    --tinta: #f2f2f2;
-    --tenue: #a6a6a6;
-    --linea: rgba(255, 255, 255, 0.14);
-    --acento: #ec5444;
-    --boton: #f2f2f2;
-  --boton-tinta: #121212;
-    --inverso: #ffffff;
-    --inverso-tinta: var(--tinta-pura);
-    --cristal: rgba(13, 13, 13, 0.74);
-    --cristal-borde: rgba(255, 255, 255, 0.1);
-    --sombra: 0 1px 0 rgba(255, 255, 255, 0.04), 0 18px 40px -24px rgba(0, 0, 0, 0.8);
-  }
 }
 
 /* Botón de tema en la cabecera. */

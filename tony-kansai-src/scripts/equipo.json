@@ -1,37 +1,21 @@
 {
-  "_nota": "Fuente única del equipo de guías. La leen src/v7/datosEquipo.ts (páginas React) y scripts/equipo-estatico.mjs (/tr/, /fr/, /ru/kndr/, /familias/, /private/). Solo datos ya publicados en la web y en public/llms.txt: no inventar.",
+  "_nota": "Fuente única del equipo de guías. La leen src/v7/datosEquipo.ts (páginas React) y scripts/equipo-estatico.mjs (/tr/, /fr/, /ru/kndr/, /familias/, /private/…). Solo datos ya publicados en la web y en public/llms.txt: no inventar.",
   "ui": {
-    "titulo": {
-      "es": "Nuestros guías",
-      "en": "Our guides",
-      "ar": "مرشدونا",
-      "ru": "Наши гиды",
-      "tr": "Rehberlerimiz",
-      "fr": "Nos guides"
+    "lema": {
+      "es": "Guías privados en Japón",
+      "en": "Private guides in Japan",
+      "ar": "مرشدون خاصون في اليابان",
+      "ru": "Частные гиды в Японии",
+      "tr": "Japonya'da özel rehberler",
+      "fr": "Guides privés au Japon"
     },
-    "sub": {
-      "es": "Cada guía te atiende en su idioma. Elige el tuyo.",
-      "en": "Each guide speaks with you in their own language. Pick yours.",
-      "ar": "كل مرشد يخدمك بلغته. اختر مرشدك.",
-      "ru": "Каждый гид говорит с вами на своём языке. Выберите своего.",
-      "tr": "Her rehber size kendi dilinde hizmet verir. Sizinkini seçin.",
-      "fr": "Chaque guide vous parle dans sa langue. Choisissez le vôtre."
-    },
-    "aqui": {
-      "es": "Estás aquí",
-      "en": "You are here",
-      "ar": "أنت هنا",
-      "ru": "Вы здесь",
-      "tr": "Buradasınız",
-      "fr": "Vous êtes ici"
-    },
-    "equipo": {
-      "es": "Equipo de Tony Kansai Guide",
-      "en": "The Tony Kansai Guide team",
-      "ar": "فريق Tony Kansai Guide",
-      "ru": "Команда Tony Kansai Guide",
-      "tr": "Tony Kansai Guide ekibi",
-      "fr": "L’équipe Tony Kansai Guide"
+    "enlace": {
+      "es": "Nuestros guías y otros idiomas",
+      "en": "Our guides and other languages",
+      "ar": "مرشدونا ولغات أخرى",
+      "ru": "Наши гиды и другие языки",
+      "tr": "Rehberlerimiz ve diğer diller",
+      "fr": "Nos guides et autres langues"
     }
   },
   "idiomas": {

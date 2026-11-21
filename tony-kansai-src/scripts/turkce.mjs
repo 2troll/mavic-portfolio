@@ -356,13 +356,38 @@ const SSS = [
   ['Hangi şehirlerde tur var?', "Kyoto, Osaka, Nara, Kobe ve Himeji. Hiroshima, Miyajima ve Koyasan gibi daha uzak yerlere günübirlik turlar için de WhatsApp'tan sorabilirsiniz."],
 ]
 
+// Capa «Japón sereno» (21-11-2026, crítica de diseño: /tr/ era otra web). Mismos
+// tokens que src/v7/estilo-sereno.css: washi, tinta índigo, titulares en Zen Old
+// Mincho, verde solo para la acción y nada de rojo. Fuera la marquesina de kanji
+// rojos, el sello giratorio, el degradado del botón, los iconos emoji, la banda
+// azul marino de cifras y el aro rojo del retrato. En el móvil, el WhatsApp fijo
+// es una barra abajo (la píldora de la derecha tapaba media línea al bajar).
+// Va después de rb.css, así que manda sobre lo anterior sin !important.
+const SERENO_TR = `
+:root{--bg:#fdfcfa;--fg:#1e2a36;--soluk:#56606c;--kart:#fff;--cizgi:rgba(30,42,54,.12);--kirmizi:#2a7352;--yesil:#2a7352;--turkuaz:#2a7352;--kobalt:#1e2a36;color-scheme:light}
+body{font-family:Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+h1,h2,h3{font-family:'Zen Old Mincho',Georgia,serif;font-weight:500}
+a{color:var(--fg);text-decoration-color:#8dbde0}
+header::after{display:none}
+footer{background-image:none}
+.muhur,.serit,.ik{display:none}
+.rakamlar{background:#edf4fa;color:var(--fg)}
+.rakamlar::before{display:none}
+.rakamlar strong{color:var(--fg);font-family:'Zen Old Mincho',Georgia,serif;font-weight:500;font-size:clamp(26px,4vw,36px)}
+.btn{background:#2a7352;box-shadow:none;border-radius:12px}
+.etiket{color:var(--soluk)}
+.cevap{border-left-color:#8dbde0}
+.portre img{border-color:var(--cizgi)}
+.wa-sabit{border-radius:12px;background:#2a7352}
+@media (max-width:640px){.wa-sabit{left:12px;right:12px;text-align:center;justify-content:center}}
+`.replace(/\s*\n\s*/g, '')
+
 const CSS = `
 :root{--bg:#fbfaf7;--fg:#1b1b1b;--soluk:#5c5c5c;--kart:#fff;--cizgi:#e6e2da;--kirmizi:#c8102e;--yesil:#128c4a}
-@media (prefers-color-scheme:dark){:root{--bg:#121212;--fg:#ededed;--soluk:#a8a8a8;--kart:#1c1c1c;--cizgi:#2e2e2e;--kirmizi:#ff4d5e;--yesil:#2fbf71}}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
 .kap{max-width:1080px;margin:0 auto;padding:0 16px}main>.kap>p,main>.kap>ul.ozet,main>.kap>ol,main>.kap>details,main>.kap>.cevap,main>.kap>table,main>.kap>h3{max-width:760px}
-h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;letter-spacing:-.01em}h2{font-size:clamp(26px,3.4vw,34px)!important;margin-top:56px!important}
+h1,h2,h3{font-family:'Zen Old Mincho',Georgia,serif;font-weight:600;letter-spacing:-.01em}h2{font-size:clamp(26px,3.4vw,34px)!important;margin-top:56px!important}
 header{border-bottom:1px solid var(--cizgi)}header .kap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:14px;flex-wrap:wrap}
 header a{color:var(--fg);text-decoration:none;font-weight:600}header nav{display:flex;gap:14px;flex-wrap:wrap;font-size:15px}header nav a{font-weight:500;color:var(--soluk)}
 .kahraman{position:relative;min-height:min(86vh,940px);display:flex;align-items:flex-end;overflow:hidden;background-color:#111;background-size:cover;background-position:center;color:#fff}
@@ -399,13 +424,13 @@ ul.yorumlar{list-style:none;padding:0;display:grid;gap:12px}ul.yorumlar li{backg
 .kahraman>img{will-change:transform}
 .btn2{display:inline-block;margin:8px 0 8px 10px;padding:12px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.55);color:#fff;text-decoration:none;font-weight:600;backdrop-filter:blur(6px);background:rgba(255,255,255,.08)}
 .muhur{position:absolute;right:clamp(16px,5vw,64px);top:clamp(84px,14vh,150px);width:clamp(96px,11vw,132px);aspect-ratio:1;z-index:2;color:#fff;pointer-events:none;border-radius:50%;background:rgba(15,47,92,.55);backdrop-filter:blur(6px);box-shadow:0 8px 30px rgba(0,0,0,.25)}
-.muhur svg{width:100%;height:100%;animation:don 26s linear infinite}.muhur b{position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1.1 Fraunces,Georgia,serif;text-align:center}
+.muhur svg{width:100%;height:100%;animation:don 26s linear infinite}.muhur b{position:absolute;inset:0;display:grid;place-items:center;font:600 13px/1.1 'Zen Old Mincho',Georgia,serif;text-align:center}
 @keyframes don{to{transform:rotate(360deg)}}
 .rakamlar{position:relative;background:#0f2f5c;color:#fff;overflow:hidden}
 .rakamlar::before{content:"";position:absolute;inset:0;opacity:.13;background:radial-gradient(circle at 50% 50%,#3fb8af 0 18%,transparent 19%),radial-gradient(circle at 0 0,#c8102e 0 12%,transparent 13%),radial-gradient(circle at 100% 100%,#c8102e 0 12%,transparent 13%);background-size:56px 56px}
 .rakamlar ul{position:relative;list-style:none;margin:0;padding:34px 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:20px;text-align:center}
-.rakamlar strong{display:block;font:600 clamp(34px,5vw,52px)/1 Fraunces,Georgia,serif;color:#ffd166}.rakamlar span{font-size:15px;opacity:.85}
-.serit{overflow:hidden;white-space:nowrap;border-block:1px solid var(--cizgi);padding:14px 0;font:600 clamp(20px,3vw,30px)/1 Fraunces,Georgia,serif}
+.rakamlar strong{display:block;font:600 clamp(34px,5vw,52px)/1 'Zen Old Mincho',Georgia,serif;color:#ffd166}.rakamlar span{font-size:15px;opacity:.85}
+.serit{overflow:hidden;white-space:nowrap;border-block:1px solid var(--cizgi);padding:14px 0;font:600 clamp(20px,3vw,30px)/1 'Zen Old Mincho',Georgia,serif}
 .serit div{display:inline-block;animation:kay 38s linear infinite}.serit span{margin:0 26px}.serit i{font-style:normal;color:var(--kirmizi);margin-right:10px}
 @keyframes kay{to{transform:translateX(-50%)}}
 @media (prefers-reduced-motion:reduce){.muhur svg,.serit div{animation:none}}
@@ -414,7 +439,6 @@ html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!
 @media (max-width:640px){.muhur{display:none}.btn2{margin-left:0}}
 /* 7-11-2026: kimlik İznik (turkuaz, kobalt, mercan) ve mobilde kaydırmalı kartlar */
 :root{--bg:#fbf7ef;--kirmizi:#c8402c;--turkuaz:#1b8a8f;--kobalt:#1d3f8f;--cini:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 56 56'%3E%3Cg fill='none' stroke='%231b8a8f' stroke-width='1.4' opacity='.55'%3E%3Cpath d='M28 4c6 8 6 16 0 24-6-8-6-16 0-24zM28 52c6-8 6-16 0-24-6 8-6 16 0 24zM4 28c8-6 16-6 24 0-8 6-16 6-24 0zM52 28c-8-6-16-6-24 0 8 6 16 6 24 0z'/%3E%3Ccircle cx='28' cy='28' r='3' fill='%23c8402c' stroke='none'/%3E%3C/g%3E%3C/svg%3E")}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1418;--turkuaz:#3fb8af;--kobalt:#7aa2ff}}
 header{border-bottom:0;background:var(--bg);box-shadow:0 10px 0 -2px transparent}
 header::after{content:"";display:block;height:14px;background:var(--cini) 0 0/28px;opacity:.9;border-top:2px solid var(--turkuaz)}
 footer{border-top:0;background-image:linear-gradient(var(--bg),var(--bg)),var(--cini);background-size:100% calc(100% - 14px),28px;background-repeat:no-repeat,repeat-x}
@@ -461,17 +485,17 @@ function sayfa({ yol, baslik, aciklama, gorsel, jsonld, govde, dil = 'tr' }) {
 ${gorsel && FOTOLAR[gorsel] ? `<link rel="preload" as="image" href="${heroSrc(gorsel)}" imagesrcset="${srcset(gorsel)}" imagesizes="${HERO_SIZES}" fetchpriority="high">` : ''}
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@500;700&family=Geist:wght@400;500;600;700&display=swap">
 ${equipoFuente}
 <style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.xp{--xp-acento:#1b8a8f;padding:8px 0}${planesCSS}.pl{--pl-acento:#1b8a8f}</style>
-<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#1b8a8f;--rb-acento2:#c8402c}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#2a7352;--rb-acento2:#2a7352}${SERENO_TR}</style>
 </head>
 <body>
 <header><div class="kap"><a href="/tr/">Ferhat · Japonya Türkçe Rehber</a>
 ${navHTML({ etiqueta: 'Ana menü', abrir: 'Menüyü aç', variante: 'tr', grupos: [
   { t: 'Şehirler', enlaces: [...SEHIRLER.map((s) => [s.ad, `/tr/${s.yol}/`]), ['Ana sayfa', '/tr/']] },
   { t: 'Bilgiler', enlaces: CEVAPLAR.slice(0, 8).map((c) => [esc(c.h1), `/tr/${c.yol}/`]) },
-  { t: 'Ekip', enlaces: [['Ferhat', '/tr/'], ['Rehberlerimiz', `#eq-titulo-${dil}`], { t: 'In English', h: `/tr/${INGILIZCE}/`, lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/en/']] },
+  { t: 'Ekip', enlaces: [['Ferhat', '/tr/'], { t: 'In English', h: `/tr/${INGILIZCE}/`, lang: 'en', hreflang: 'en' }, ['Tony Kansai Guide', '/en/']] },
 ], cta: { t: 'WhatsApp', h: WA_GENEL, aria: 'WhatsApp: Ferhat' } })}</div></header>
 <main>
 ${govde}

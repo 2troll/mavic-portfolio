@@ -51,9 +51,6 @@ body {
    scroll, el carril de la barra y la selección no enseñen el negro antiguo. */
 html:has(#root .v7), html:has(#root .v7) body { background-color: #ffffff; color: #121212; color-scheme: light; }
 html[data-tema='oscuro']:has(#root .v7), html[data-tema='oscuro']:has(#root .v7) body { background-color: #0d0d0d; color: #f2f2f2; color-scheme: dark; }
-@media (prefers-color-scheme: dark) {
-  html:not([data-tema='claro']):has(#root .v7), html:not([data-tema='claro']):has(#root .v7) body { background-color: #0d0d0d; color: #f2f2f2; color-scheme: dark; }
-}
 html:has(#root .v7) ::selection { background: rgba(192, 40, 27, 0.25); color: inherit; }
 
 /* Subtle noise texture — z-index BELOW all UI */

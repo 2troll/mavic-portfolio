@@ -10,15 +10,16 @@ import type { Tramo } from '../v7/datosRutas'
 import { IconoCanal } from '../v7/IconoWa'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
-import SplitFlapText from '../v7/reactbits/SplitFlapText'
 import './v8.css'
 
 const TITULO: Record<Lengua, string> = { es: 'Elige tu tour', en: 'Choose your tour', ar: 'اختر جولتك', ru: 'Выберите тур' }
+// Sin «hasta 6 personas» a la vista (Antonio: no cerrar puertas, que pregunten);
+// el tope sigue en los datos estructurados.
 const SUB: Record<Lengua, string> = {
-  es: 'Un día privado en cada ciudad, solo con tu grupo. El precio es por grupo, hasta 6 personas.',
-  en: 'A private day in each city, just your party. Prices are per group, up to 6 people.',
-  ar: 'يوم خاص في كل مدينة لمجموعتك وحدها. السعر للمجموعة، حتى 6 أشخاص.',
-  ru: 'Частный день в каждом городе, только ваша компания. Цена за группу до 6 человек.',
+  es: 'Un día privado en cada ciudad, solo con tu grupo. El precio es por grupo, no por persona.',
+  en: 'A private day in each city, just your party. Prices are per group, not per person.',
+  ar: 'يوم خاص في كل مدينة لمجموعتك وحدها. السعر للمجموعة، لا للشخص الواحد.',
+  ru: 'Частный день в каждом городе, только ваша компания. Цена за группу, а не с человека.',
 }
 const ET: Record<Lengua, { reservar: string; ver: string; desde: string; destaca: string; msg: (g: string, c: string) => string }> = {
   es: { reservar: 'Reservar', ver: 'Ver la ciudad', desde: 'desde', destaca: 'Lo más destacado', msg: (g, c) => `Hola, ${g}. Me interesa un tour privado en ${c}. ¿Qué fechas tienes libres?` },
@@ -45,6 +46,11 @@ export const PORTADA: Record<CiudadId, string> = {
   himeji: 'himeji-castillo', hiroshima: 'hiroshima-miyajima', beyond: 'lejos-kumano',
 }
 
+/** Foto que se enseña de la ciudad en tarjetas y mosaicos: la de su portada si la
+ *  tiene (Kioto: Kiyomizu-dera, sin torii rojos) y si no, la de PORTADA. PORTADA
+ *  se queda como está porque de ella salen el og:image y la foto 3D de MiraDentro. */
+export const fotoPortada = (id: CiudadId) => CIUDADES[id].portada ?? PORTADA[id]
+
 /** Tramos de la ciudad: los de su ruta; «Más lejos» no tiene maqueta y es excursión lejana. */
 export function tramos(id: CiudadId): Tramo[] {
   const ruta = CIUDADES[id].diorama
@@ -59,18 +65,13 @@ function yen(n: number, lang: Lengua) {
 export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 'larion'; prefijo: string }) {
   const lista = guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY
   const et = ET[lang]
-  const salidas = lista.filter((id) => id !== 'beyond').map((id) => id.toUpperCase())
   return (
     <section id="ciudades" className="v7-seccion v9-tours">
       <h2>{TITULO[lang]}</h2>
       <p className="v7-entradilla">{SUB[lang]}</p>
-      {/* Panel de salidas de estación japonesa (出発 = salidas): las ciudades pasan
-          letra a letra. Es adorno; la lista de abajo ya dice lo mismo en texto. */}
-      <div className="v9-salidas" aria-hidden="true" dir="ltr">
-        <span lang="ja">出発</span>
-        <SplitFlapText words={salidas} padTo={Math.max(...salidas.map((w) => w.length))}
-          charset="alpha" fontSize="clamp(20px, 3.4vw, 34px)" tileColor="#1a1a1a" textColor="#f6f0e4" tileRadius={2} gap={4} cycleDelay={2600} />
-      </div>
+      {/* Aquí iba un panel de salidas de estación (SplitFlapText) con las letras
+          girando: en el móvil se leían cosas como «MSIRG» y parecía un fallo
+          (auditoría P8). La lista de abajo ya dice lo mismo en texto. */}
       {/* Índice de revista: una fila por ciudad, con su foto, lo que dura, desde
           cuánto y las dos salidas. Se lee de un vistazo, de arriba abajo. */}
       <ul className="v9-indice">
@@ -82,7 +83,7 @@ export function Mosaico({ lang, guia, prefijo }: { lang: Lengua; guia: 'tony' | 
           return (
             <li key={id} className="v9-fila">
               <Link to={`${prefijo}/${id}/`} className="v9-fila-foto" tabIndex={-1} aria-hidden="true">
-                <img loading="lazy" {...foto(`/v8/zonas/${PORTADA[id]}.jpg`, '(max-width: 700px) 60vw, 240px')} alt={`${c.zonas.find((z) => z.id === PORTADA[id])?.nombre[lang] ?? c.nombre[lang]}, ${c.nombre[lang]}`} decoding="async" />
+                <img loading="lazy" {...foto(`/v8/zonas/${fotoPortada(id)}.jpg`, '(max-width: 700px) 60vw, 240px')} alt={`${c.zonas.find((z) => z.id === fotoPortada(id))?.nombre[lang] ?? c.nombre[lang]}, ${c.nombre[lang]}`} decoding="async" />
               </Link>
               <div className="v9-fila-nombre">
                 <span className="v9-fila-kanji" lang="ja" aria-hidden="true">{c.kanji}</span>

@@ -32,8 +32,15 @@ try {
 }
 
 // Foto de portada que conviene precargar (si no, no se pide hasta que arranca React).
-const PRECARGA = { es: '/v7/fotos/kioto', en: '/v7/fotos/nara', ar: '/v7/fotos/osaka', ru: '/v7/fotos/miyajima', larion: '/v7/fotos/miyajima' }
-const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-fushimi', nara: 'nara-parque', kobe: 'kobe-mezquita', himeji: 'himeji-castillo', hiroshima: 'hiroshima-cupula', beyond: 'lejos-koyasan' }
+// Igual que hero.foto de src/v7/contenido.ts. Desde el 21-11-2026 /es/, /en/ y /ar/
+// llevan el castillo de Himeji con cerezos (v7/fotos/portada*), con un recorte
+// vertical propio en escritorio: se precargan las dos con su media (ver abajo).
+// /ar/ y el castillo de Himeji en /en/ (fuera los torii rojos de Fushimi).
+const PRECARGA = { es: '/v7/fotos/portada', en: '/v7/fotos/portada', ar: '/v7/fotos/portada', ru: '/v7/fotos/miyajima', larion: '/v7/fotos/miyajima' }
+// Portada troncal: <picture> con recorte vertical en escritorio (= PaginaGuia.tsx).
+const TRONCAL = new Set(['es', 'en', 'ar'])
+// = campo «portada» de src/v8/ciudades.ts (o su zonas[0]): la foto que pinta la portada de la ciudad.
+const ZONA_PORTADA = { osaka: 'osaka-castillo', kyoto: 'kioto-kiyomizu', nara: 'nara-parque', kobe: 'kobe-mezquita', himeji: 'himeji-castillo', hiroshima: 'hiroshima-misen', beyond: 'lejos-amanohashidate' }
 
 // Primera pantalla ya pintada: se compila el render de servidor y cada página
 // de guía, de ciudad y del día sale con su HTML dentro de #root (main.tsx la
@@ -151,7 +158,9 @@ for (const ruta of rutas) {
   const foto = PRECARGA[ruta] ?? (ZONA_PORTADA[ciudad] && `/v8/zonas/${ZONA_PORTADA[ciudad]}`)
   // imagesizes igual que el sizes del <img>: si no, en escritorio se precarga la
   // de 1800 px y luego se pinta la de 900 (dos descargas).
-  if (foto) {
+  if (foto && TRONCAL.has(ruta)) {
+    html = html.replace('</head>', `  <link rel="preload" as="image" media="(max-width: 900px)" href="${foto}.webp" imagesrcset="${foto}-600.webp 600w, ${foto}-900.webp 900w, ${foto}-1200.webp 1200w, ${foto}.webp 1800w" imagesizes="100vw" fetchpriority="high" />\n  <link rel="preload" as="image" media="(min-width: 901px)" href="${foto}-retrato.webp" imagesrcset="${foto}-retrato-900.webp 720w, ${foto}-retrato.webp 1440w" imagesizes="50vw" fetchpriority="high" />\n  </head>`)
+  } else if (foto) {
     html = html.replace('</head>', `  <link rel="preload" as="image" href="${foto}.webp" imagesrcset="${foto}-600.webp 600w, ${foto}-900.webp 900w, ${foto}.webp 1800w" imagesizes="${PRECARGA[ruta] ? '(max-width: 900px) 70vw, 50vw' : '100vw'}" fetchpriority="high" />\n  </head>`)
   }
 
@@ -215,45 +224,75 @@ writeFileSync(mapa, readFileSync(mapa, 'utf8')
 // lo quita antes de pintar y la app redirige como siempre. 404.html y 200.html
 // ya se copiaron antes del índice limpio, así que no lo heredan.
 const yen = (n) => '¥' + n.toLocaleString('en-US')
-const P = { medio: 38000, completo: 58000, lejos: 70000 } // = YEN de src/v7/contenido.ts
+const P = { medio: 38000, completo: 58000 } // = YEN de src/v7/contenido.ts
 const WA = (n) => `https://wa.me/${n}`
 // 17-11-2026: la raíz deja de redirigir siempre (ver PortadaRaiz en src/v7/Redirige.tsx).
 // Google la veía igual que /en/ y elegía «/» como canónica de /en/. Ahora es la
 // página del equipo y de los idiomas: solo se quita (y la app redirige) si el
 // visitante ya eligió idioma antes o llega con ?lang=. Los datos de cada guía
 // son los mismos de public/llms.txt: si cambian allí, cambiarlos aquí.
+// 21-11-2026 (rediseño de Antonio y crítica de diseño): la raíz pasa de directorio
+// de seis guías con seis WhatsApp y «long day trips from ¥70,000» a portada de
+// marca: cabecera con el logo y los idiomas, la foto de la portada (Himeji con
+// cerezos), «Private guides across Japan», UN WhatsApp de la empresa y el precio
+// de referencia una sola vez. Los guías siguen en el HTML (Google y las IAs los
+// leen) pero plegados en «Our guides», sin teléfonos ni precios: cada uno los
+// tiene en su página. Mismos enlaces internos que antes (la prueba de SEO avisa si
+// desaparece alguno). Siempre en claro, como el resto de la web. El titular va en
+// Zen Old Mincho: la declara la hoja del build (index-*.css), que esta página
+// enlaza; si no llega, mincho del sistema. dir="ltr" porque el texto es inglés
+// aunque el navegador sea árabe.
+const MINCHO = `"Zen Old Mincho","Hiragino Mincho ProN","Yu Mincho","Noto Serif JP","Noto Serif",Georgia,serif`
+const WA_RAIZ = `${WA('34634193106')}?text=${encodeURIComponent("Hi, I'm writing from your website.")}`
+const TORII = 'M2.222 3.372a1 1 0 0 1 1.027-.34c1.078.277 2.167.517 3.257.738c1.852.375 4.015.73 5.494.73s3.642-.355 5.494-.73c1.09-.22 2.178-.461 3.256-.738a1 1 0 0 1 1.144 1.415l-2 4c-.15.3-.446.507-.778.546A91 91 0 0 1 16 9.3v1.366a58 58 0 0 0 3.797-.644a1 1 0 0 1 .406 1.958q-.6.123-1.203.23V18a1 1 0 1 1 0 2h-5a1 1 0 1 1 0-2v-5.095c-.692.059-1.374.095-2 .095s-1.308-.037-2-.095V18a1 1 0 1 1 0 2H5a1 1 0 0 1 0-2v-5.79a49 49 0 0 1-1.203-.23a1 1 0 0 1 .406-1.96l.003.002q1.886.382 3.794.643V9.299a91 91 0 0 1-3.116-.306q-.001 0 0 0a1 1 0 0 1-.778-.546l-2-4a1 1 0 0 1 .116-1.075M12 9.5c.617 0 1.304-.024 2-.062v1.459c-.703.063-1.387.103-2 .103s-1.297-.04-2-.103v-1.46c.696.039 1.383.063 2 .063'
+const ICONO_WA = '<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.3-.4.3-.4.7-1.4.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.1 5.1 0 0 0 1.1 2.7 11.6 11.6 0 0 0 4.5 4c1.7.7 2.3.8 3.2.6.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2-.1-.1-.3-.2-.5-.3Z"/></svg>'
 const portada = `
-    <main id="portada-texto" lang="en">
+    <main id="portada-texto" lang="en" dir="ltr">
       <style>
-        #portada-texto{--t:#16161a;--s:#55555f;--l:#e3e3e8;--f:#fff;--a:#b4232c;max-width:68rem;margin:0 auto;padding:clamp(1.5rem,5vw,4rem) 16px 4rem;font:16px/1.6 system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--t);background:var(--f)}
-        @media (prefers-color-scheme:dark){#portada-texto{--t:#f2f2f5;--s:#a9a9b3;--l:#2c2c33;--f:#111114;--a:#ff6b6b}}
-        html:has(#portada-texto),body:has(#portada-texto){background:var(--f,#fff)}
-        #portada-texto h1{font-size:clamp(1.9rem,4.5vw,3rem);line-height:1.1;letter-spacing:-.02em;margin:0 0 .6rem;max-width:22ch}
-        #portada-texto h2{font-size:1.15rem;margin:2.4rem 0 .9rem}
+        #portada-texto{--t:#1e2a36;--s:#56606c;--l:rgba(30,42,54,.12);--f:#fdfcfa;--p:#fff;--v:#2a7352;--vh:#1f5c41;--c:#edf4fa;--ch:#8dbde0;--k:#fbf1f4;max-width:68rem;margin:0 auto;padding:76px 16px 4rem;font:16px/1.6 "Geist Variable",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--t);background:var(--f);color-scheme:light}
+        html:has(#portada-texto),body:has(#portada-texto){background:#fdfcfa}
+        #portada-texto,#portada-texto *{box-sizing:border-box}
+        #portada-texto .cab{position:fixed;z-index:50;top:8px;left:50%;transform:translateX(-50%);width:min(68rem,calc(100% - 16px));display:flex;align-items:center;gap:10px;min-height:48px;padding:5px 6px 5px 12px;border-radius:15px;background:rgba(255,255,255,.94);border:1px solid var(--l);box-shadow:0 8px 24px -16px rgba(30,42,54,.35)}
+        #portada-texto .marca{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-weight:600;text-decoration:none;white-space:nowrap}
+        #portada-texto .marca svg{width:26px;height:26px;flex:none}
+        #portada-texto .cab .idi-cab{margin-inline-start:auto;display:flex;gap:2px;padding:3px;border-radius:10px;background:var(--c);font-size:12.5px}
+        #portada-texto .cab .idi-cab a{display:flex;align-items:center;min-height:30px;padding:0 7px;border-radius:7px;text-decoration:none;color:var(--s);font-weight:600}
+        #portada-texto .cab .wa-peq{display:inline-flex;align-items:center;justify-content:center;width:40px;height:36px;border-radius:10px;background:var(--v);color:#fff}
+        #portada-texto .cab .wa-peq svg{width:20px;height:20px}
+        #portada-texto .foto{display:block;width:100%;height:min(34svh,60vw);object-fit:cover;border-radius:20px;background:var(--c)}
+        #portada-texto h1{font:500 clamp(2rem,7.4vw,3.2rem)/1.12 ${MINCHO};letter-spacing:.005em;margin:1.3rem 0 .5rem;max-width:20ch;text-wrap:balance}
+        #portada-texto h2{font:500 1.4rem/1.25 ${MINCHO};margin:2.6rem 0 1rem}
         #portada-texto p{color:var(--s);max-width:62ch;margin:.4rem 0}
-        #portada-texto a{color:inherit}
-        #portada-texto .eq{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr));padding:0;margin:0;list-style:none}
-        #portada-texto .eq li{border:1px solid var(--l);border-radius:14px;padding:1rem 1.1rem}
-        #portada-texto .eq b{display:block;font-size:1.05rem}
-        #portada-texto .eq small{display:block;color:var(--a);font-weight:600;margin:.1rem 0 .4rem}
-        #portada-texto .eq span{display:block;color:var(--s);font-size:.95rem}
-        #portada-texto .eq a.ir{display:inline-block;margin-top:.55rem;font-weight:600;text-decoration:none;border-bottom:2px solid var(--a)}
+        #portada-texto a{color:inherit;text-underline-offset:4px}
+        #portada-texto :focus-visible{outline:2px solid var(--v);outline-offset:3px}
+        #portada-texto .wa{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;max-width:26rem;min-height:54px;margin:.9rem 0 1rem;padding:0 24px;border-radius:12px;background:var(--v);color:#fff;font-weight:600;font-size:17px;text-decoration:none;box-shadow:0 1px 2px rgba(30,42,54,.06)}
+        #portada-texto .wa:hover{background:var(--vh)}
+        #portada-texto .wa svg{width:22px;height:22px;flex:none}
         #portada-texto .idi{display:flex;flex-wrap:wrap;gap:8px;padding:0;margin:0;list-style:none}
-        #portada-texto .idi a{display:inline-block;padding:.5rem .95rem;border:1px solid var(--l);border-radius:999px;text-decoration:none;font-weight:600}
-        #portada-texto .pie{margin-top:2.4rem;font-size:.95rem}
+        #portada-texto .idi a{display:inline-flex;align-items:center;min-height:48px;padding:0 1.2rem;border-radius:12px;background:var(--c);text-decoration:none;font-weight:600;font-size:17px}
+        #portada-texto details.guias{margin-top:2.4rem;border-block:1px solid var(--l)}
+        #portada-texto details.guias>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;min-height:56px;font-weight:600}
+        #portada-texto details.guias>summary::-webkit-details-marker{display:none}
+        #portada-texto details.guias>summary::after{content:'';width:8px;height:8px;border:solid var(--s);border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg)}
+        #portada-texto details.guias[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
+        #portada-texto .eq{display:grid;gap:0 24px;grid-template-columns:repeat(auto-fill,minmax(min(100%,19rem),1fr));padding:0 0 1rem;margin:0;list-style:none}
+        #portada-texto .eq li{border-top:1px solid var(--l);padding:.8rem 0}
+        #portada-texto .eq b{display:block;font-weight:600}
+        #portada-texto .eq small{display:block;color:var(--s);margin:.1rem 0 .3rem}
+        #portada-texto .eq a.ir{display:inline-flex;align-items:center;min-height:36px;font-weight:600;text-decoration:none;border-bottom:2px solid var(--ch)}
+        #portada-texto .pie{margin-top:2.4rem;padding:1.1rem 1.2rem;border-radius:20px;background:var(--k);font-size:.95rem}
+        @media (max-width:369px){#portada-texto .marca-t{font-size:14px}#portada-texto .cab .idi-cab a{padding:0 5px}}
+        @media (min-width:901px){#portada-texto{padding-top:96px}#portada-texto .foto{height:min(56vh,520px)}}
       </style>
-      <h1>Tony Kansai Guide: private guides in Japan, in six languages</h1>
-      <p>A small team of private guides who live in Japan. Tours are for your group only: your guide meets you at your hotel and the day goes at your pace. Choose your guide and your language.</p>
-
-      <h2>The team</h2>
-      <ul class="eq">
-        <li><b>Tony Hanma</b><small>Spanish · English · Arabic — Kyoto, Osaka, Nara, Kobe, Himeji</small><span>Spanish guide who lives in Osaka. Half day (4 h) ${yen(P.medio)}, full day (8 h) ${yen(P.completo)}, long day trips from ${yen(P.lejos)}, per group of up to 6. WhatsApp <a href="${WA('34634193106')}">+34 634 193 106</a>.</span><a class="ir" href="/es/" lang="es">Español</a> · <a class="ir" href="/en/">English</a> · <a class="ir" href="/ar/" lang="ar">العربية</a></li>
-        <li><b>Larion</b><small>Russian · English — Kyoto, Osaka, Hiroshima</small><span>Private tours in Russian across Kansai and beyond. Telegram <a href="https://t.me/Larik_Yokota">@Larik_Yokota</a> (Larion answers himself).</span><a class="ir" href="/ru/" lang="ru">Русский</a></li>
-        <li><b>Mario</b><small>Premium English — anywhere in Japan</small><span>Professional private guide for English-speaking travellers, multi-day trips possible; also speaks Spanish. WhatsApp <a href="${WA('817089968582')}">+81 70 8996 8582</a>.</span><a class="ir" href="/private/">Mario, all of Japan</a></li>
-        <li><b>Iheb</b><small>French · Arabic · English — Tokyo, Kanto, Hakone, Nagano</small><span>French-speaking guide in Tokyo; also anime and Pokémon tours and Muslim-friendly days. WhatsApp <a href="${WA('818080155322')}">+81 80 8015 5322</a>.</span><a class="ir" href="/fr/" lang="fr">Français</a> · <a class="ir" href="/ar/tokyo/" lang="ar">طوكيو بالعربية</a> · <a class="ir" href="/en/tokyo-anime-guide/">Tokyo anime guide</a></li>
-        <li><b>Ferhat</b><small>Turkish — Kyoto, Osaka, Nara, Kobe, Himeji</small><span>Turkish guide who has lived in Japan for 4 years; private tours in Turkish, halal food tips and honeymoon plans.</span><a class="ir" href="/tr/" lang="tr">Türkçe</a></li>
-        <li><b>Antonio</b><small>Spanish — family and group trips, all of Japan</small><span>Trip coordinator who designs whole Japan trips for families and groups of 6 to 10. WhatsApp <a href="${WA('817090508554')}">+81 70 9050 8554</a>.</span><a class="ir" href="/familias/" lang="es">Viajes en familia</a></li>
-      </ul>
+      <header class="cab">
+        <a class="marca" href="/" aria-label="Tony Kansai Guide"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="${TORII}"/></svg><span class="marca-t">Tony Kansai Guide</span></a>
+        <nav class="idi-cab" aria-label="Language"><a href="/es/" lang="es" hreflang="es">ES</a><a href="/en/" hreflang="en">EN</a><a href="/ar/" lang="ar" hreflang="ar">AR</a></nav>
+        <a class="wa-peq" href="${WA_RAIZ}" aria-label="WhatsApp">${ICONO_WA}</a>
+      </header>
+      <img class="foto" src="/v7/fotos/portada.webp" srcset="/v7/fotos/portada-600.webp 600w, /v7/fotos/portada-900.webp 900w, /v7/fotos/portada-1200.webp 1200w, /v7/fotos/portada.webp 1800w" sizes="(max-width: 1100px) 100vw, 1088px" alt="The white castle of Himeji among cherry blossoms, under a blue sky" width="1800" height="1200" fetchpriority="high" />
+      <h1>Private guides across Japan</h1>
+      <a class="wa" href="${WA_RAIZ}">${ICONO_WA}Message us on WhatsApp</a>
+      <p>Tony Kansai Guide: private tours for your group only, in Spanish, English, Arabic, Russian, French and Turkish. We meet you at your hotel and the day goes at your pace, in Kyoto, Osaka, Tokyo, Mount Fuji or wherever you want to go. From ${yen(P.medio)} per group, not per person.</p>
 
       <h2>Choose your language</h2>
       <ul class="idi">
@@ -264,6 +303,18 @@ const portada = `
         <li lang="tr"><a href="/tr/">Türkçe</a></li>
         <li lang="fr"><a href="/fr/">Français</a></li>
       </ul>
+
+      <details class="guias">
+        <summary>Our guides</summary>
+        <ul class="eq">
+          <li><b>Tony Hanma</b><small>Spanish · English · Arabic — Kyoto, Osaka, Nara, Kobe, Himeji</small><a class="ir" href="/es/" lang="es">Español</a> · <a class="ir" href="/en/">English</a> · <a class="ir" href="/ar/" lang="ar">العربية</a></li>
+          <li><b>Larion</b><small>Russian · English — Kyoto, Osaka, Hiroshima</small><a class="ir" href="/ru/" lang="ru">Русский</a></li>
+          <li><b>Mario</b><small>Premium English — anywhere in Japan, multi-day trips</small><a class="ir" href="/private/">Mario, all of Japan</a></li>
+          <li><b>Iheb</b><small>French · Arabic · English — Tokyo, Kanto, Hakone, Nagano</small><a class="ir" href="/fr/" lang="fr">Français</a> · <a class="ir" href="/ar/tokyo/" lang="ar">طوكيو بالعربية</a> · <a class="ir" href="/en/tokyo-anime-guide/">Tokyo anime guide</a></li>
+          <li><b>Ferhat</b><small>Turkish — Kyoto, Osaka, Nara, Kobe, Himeji</small><a class="ir" href="/tr/" lang="tr">Türkçe</a></li>
+          <li><b>Antonio</b><small>Spanish — family and group trips, all of Japan</small><a class="ir" href="/familias/" lang="es">Viajes en familia</a></li>
+        </ul>
+      </details>
 
       <p class="pie">Useful: <a href="/en/prices/">Prices</a> · <a href="/en/kyoto/">Private guide in Kyoto</a> · <a href="/en/osaka-to-kyoto/">Osaka to Kyoto by train</a> · <a href="/en/kansai-airport/">Kansai Airport</a> · <a href="/en/tools/">Free travel tools</a> · <a href="/en/perks/">Partner perks</a> · <a href="/resenas.html">Reviews</a> · <a href="mailto:tony@tonykansaiguide.com">tony@tonykansaiguide.com</a></p>
     </main>

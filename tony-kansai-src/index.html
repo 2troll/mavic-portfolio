@@ -165,35 +165,36 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-title" content="Tony Admin" />
-    <!-- Barra del navegador del color del fondo: el gris claro de la web v7
-         (antes era rojo y teñía la barra de Safari encima de una página clara). -->
-    <meta name="theme-color" content="#ffffff" />
+    <!-- Barra del navegador del color del fondo: el blanco washi del estilo
+         sereno (21-11-2026; antes era rojo y teñía la barra de Safari). -->
+    <meta name="theme-color" content="#fdfcfa" />
 
     <!-- Fondo correcto antes de que cargue React. Sin esto, con el Mac en modo
          oscuro se veía un fogonazo negro (el fondo antiguo de body) antes de la
          página clara, y el rebote del scroll en iPhone enseñaba una franja negra.
          Las páginas antiguas (oscuras) se marcan aquí para no dar el fogonazo al
-         revés; una vez montada la app manda index.css (html:has(...)). -->
+         revés; una vez montada la app mandan index.css y estilo-sereno.css
+         (html:has(...)). Washi #fdfcfa, el fondo del estilo sereno, para que no
+         haya un fogonazo blanco puro o negro antes de que llegue la hoja. -->
     <style>
-      html { background: #ffffff; color-scheme: light; }
-      @media (prefers-color-scheme: dark) { html:not([data-tema='claro']) { background: #0d0d0d; color-scheme: dark; } }
-      html[data-tema='oscuro'] { background: #0d0d0d; color-scheme: dark; }
+      html { background: #fdfcfa; color-scheme: light; }
     </style>
     <script>
-      // Tema elegido a mano (botón de la cabecera), antes de pintar nada:
-      // así no hay destello del tema contrario al cargar.
-      (function () {
-        var t = null;
-        try { t = localStorage.getItem('tema'); } catch (e) {}
-        if (t === 'claro' || t === 'oscuro') document.documentElement.setAttribute('data-tema', t);
-        var oscuro = t === 'oscuro' || (t !== 'claro' && window.matchMedia && matchMedia('(prefers-color-scheme: dark)').matches);
-        document.querySelector('meta[name="theme-color"]').setAttribute('content', oscuro ? '#0d0d0d' : '#ffffff');
-      })();
+      // Siempre en claro (rediseño del 21-11-2026). El modo oscuro automático
+      // volvía la web azul marino de noche, justo cuando planifican desde
+      // Latinoamérica, y se perdían el blanco y el sakura que pide Antonio.
+      // Todas las hojas guardan su oscuro tras :not([data-tema='claro']) o
+      // [data-tema='oscuro']: con data-tema='claro' fijo no se activa nunca, ni
+      // aunque alguien lo eligiera antes con el botón (ya retirado).
+      document.documentElement.setAttribute('data-tema', 'claro');
+      try { localStorage.removeItem('tema'); } catch (e) {}
     </script>
 
     <!-- Fonts -->
-    <!-- Sin bloquear el primer pintado: las páginas de idioma (v7) usan la
-         letra del sistema; sólo las páginas antiguas usan estas. -->
+    <!-- Sin bloquear el primer pintado ni pedir nada a Google: la web v7 sirve
+         sus letras desde el propio sitio (Geist para el texto y, desde el
+         21-11-2026, Zen Old Mincho para los titulares, con font-display: swap;
+         ver src/v7/estilo-sereno.css). Las de abajo son solo del panel /admin. -->
     <script>
       // Las fuentes de la web antigua sólo las usa el panel /admin; la web v7
       // usa Geist, que va dentro del sitio. Fuera de /admin no se descargan.

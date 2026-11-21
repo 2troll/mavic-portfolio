@@ -1,0 +1,9 @@
+/* Barra fija de WhatsApp del móvil en ciudades, respuestas, montaña, otoño…
+   (BarraWa.tsx). Más fina y con radios concéntricos (caja 16 con relleno 4 →
+   botón 12): tapa menos pantalla junto a la cabecera y el aviso de cookies
+   (auditoría P2: entre las tres capas fijas se comían el 28 % del iPhone).
+   La barra de la portada de cada guía (.v7-barra-fila) no cambia. */
+@media (max-width: 860px) {
+  .v7-barra-movil.v7-barra-wa { padding: 4px; border-radius: 16px; }
+  .v7-barra-movil.v7-barra-wa .v7-boton { border-radius: 12px; }
+}

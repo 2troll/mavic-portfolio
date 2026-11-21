@@ -22,7 +22,19 @@ const ET: Record<Lengua, { ahora: string; lluvia: string; tifon: (t: Tifon, d: n
 
 function redondea(d: number) { return (Math.round(d / 50) * 50).toLocaleString('es-ES') }
 
-export function TiempoCiudad({ ciudad, lang }: { ciudad: CiudadId; lang: Lengua }) {
+/** El tiempo en palabras (el kanji 晴 o 雨 no lo entiende nadie del público hispano). */
+const PALABRA: Record<Lengua, Record<string, string>> = {
+  es: { 晴: 'soleado', 曇: 'nublado', 霧: 'niebla', 雪: 'nieve', 雷: 'tormenta', 雨: 'lluvia' },
+  en: { 晴: 'sunny', 曇: 'cloudy', 霧: 'fog', 雪: 'snow', 雷: 'storms', 雨: 'rain' },
+  ar: { 晴: 'مشمس', 曇: 'غائم', 霧: 'ضباب', 雪: 'ثلج', 雷: 'عواصف', 雨: 'مطر' },
+  ru: { 晴: 'солнечно', 曇: 'облачно', 霧: 'туман', 雪: 'снег', 雷: 'гроза', 雨: 'дождь' },
+}
+const HOY_EN: Record<Lengua, (c: string) => string> = { es: (c) => `Hoy en ${c}`, en: (c) => `Today in ${c}`, ar: (c) => `اليوم في ${c}`, ru: (c) => `Сегодня: ${c}` }
+
+/** linea: una sola línea de texto («Hoy en Kioto: soleado, 11 °C») para ir DEBAJO
+ *  del mensaje principal (21-11-2026: en la portada de la ciudad se ponía delante del
+ *  nombre, el precio y el WhatsApp; el BRIEF pide abajo, plegado o en una línea). */
+export function TiempoCiudad({ ciudad, lang, linea, nombre }: { ciudad: CiudadId; lang: Lengua; linea?: boolean; nombre?: string }) {
   const [tiempo, setTiempo] = useState<Tiempo | null>(null)
   const [aviso, setAviso] = useState<{ t: Tifon; d: number } | null>(null)
   const [lat, lon] = COORD[ciudad]
@@ -40,6 +52,14 @@ export function TiempoCiudad({ ciudad, lang }: { ciudad: CiudadId; lang: Lengua 
   }, [lat, lon])
 
   if (!tiempo) return null
+  if (linea) {
+    return (
+      <div className="v8-tiempo-linea" aria-live="polite">
+        <p>{HOY_EN[lang](nombre ?? '')}: {PALABRA[lang][kanjiTiempo(tiempo.codigo)]}, <bdi>{Math.round(tiempo.temp)} °C</bdi></p>
+        {aviso && <p className={`v8-tifon ${aviso.d < 600 ? 'cerca' : ''}`}>{et.tifon(aviso.t, aviso.d)} <bdi>{RUMBO[aviso.t.rumbo] ?? ''}</bdi>.</p>}
+      </div>
+    )
+  }
   const dia = new Intl.DateTimeFormat(lang === 'ar' ? 'ar-u-nu-latn' : lang, { weekday: 'short', timeZone: 'Asia/Tokyo' })
 
   return (

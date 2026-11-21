@@ -587,9 +587,6 @@ html.easy .mn--private .mn-col>summary{color:var(--ver)}
 .mn--private .mn-mas>summary{font:400 15px var(--px);color:var(--cyan);opacity:1;min-height:44px}
 .mn--private .mn-fin{border-top:2px dashed var(--line);font:400 14px/1.6 var(--px);color:var(--mute);opacity:1}
 .eq.eq--private{border-top:4px solid var(--win)}
-.eq h2,.eq h3{-webkit-text-stroke:0;text-shadow:none;padding:0}.eq h2::after{display:none}
-.eq--private .eq-titulo{font-family:var(--disp);color:#fff;-webkit-text-stroke:5px var(--ink);paint-order:stroke fill;text-shadow:3px 3px 0 var(--ink),var(--glow)}
-html.easy .eq--private .eq-titulo{color:var(--fg);-webkit-text-stroke:0;text-shadow:3px 3px 0 var(--yel)}
 .mn-tarjetas.mn--private{margin-top:48px}
 .mn--private .mn-tt{font:400 15px var(--px);letter-spacing:.08em;color:var(--ink);background:var(--yel);display:inline-block;padding:4px 12px;opacity:1}
 .mn--private .mn-fila a{border:3px solid var(--win);border-radius:0;background:var(--panel);font:400 17px/1.4 var(--px);min-height:64px;transition:transform .08s steps(2)}

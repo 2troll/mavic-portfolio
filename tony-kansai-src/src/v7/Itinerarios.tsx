@@ -16,7 +16,6 @@ import type { ItinId } from './datosItinerarios'
 import { foto } from './foto'
 import { BASE, PAGINAS_ITIN, SEO_ITIN as SEO } from './seoItin'
 import type { ItinPaginaId } from './seoItin'
-import { BotonSonido } from './BotonSonido'
 import { CREDITOS_SONIDO, suena } from './sonido'
 import { Logo } from './Logo'
 import { BarraWa } from './BarraWa'
@@ -27,7 +26,6 @@ const CIUDAD_DE: Partial<Record<ItinId, string>> = { kioto: 'kyoto', osaka: 'osa
 import './v7.css'
 import './estilo-pixel.css'
 import { IconoCanal } from './IconoWa'
-import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import {yenLocal, PIE } from './formato'
 import { FranjaVentajas } from './FranjaVentajas'
@@ -106,8 +104,6 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
             <Link key={k} to={PAGINAS_ITIN[k].ruta} lang={PAGINAS_ITIN[k].lang} aria-current={k === id ? 'page' : undefined}>{PAGINAS_ITIN[k].etiqueta}</Link>
           ))}
         </nav>
-        <BotonTema lang={lang} />
-        <BotonSonido lang={lang} ambiente="ciudad" />
         <a className="v7-boton v7-boton-peq" href={wa('')} target="_blank" rel="noopener noreferrer" aria-label={`${g} — WhatsApp`}>
           <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>

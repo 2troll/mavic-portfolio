@@ -93,13 +93,6 @@ html.lenis { scroll-behavior: auto !important; }
   .kv-banner { border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .kv-sello { transition: none; } }
-/* estilo-pixel.css pone DotGothic16 en los títulos latinos y quita todas las esquinas
-   con !important; el bloque VIP es otro mundo, así que se gana por id (#kndr, #kv-banner). */
-#kndr :is(h2, h3) { font-family: "Geist Variable", -apple-system, system-ui, sans-serif !important; font-weight: 800 !important; letter-spacing: -.035em !important; }
-#kv-banner { border-radius: 999px !important; }
-#kv-banner .kv-banner-vip, #kndr .kv-boton, #kndr .kv-atajos a { border-radius: 999px !important; }
-#kndr .kv-pase { border-radius: 22px !important; }
-#kndr .kv-bandeja { border-radius: 20px !important; }
-#kndr .kv-bandeja li { border-radius: 15px !important; }
-@media (max-width: 700px) { #kv-banner { border-radius: 20px !important; } }
+/* (El bloque con !important que devolvía las esquinas y la letra que quitaba el
+   estilo píxel se fue con él el 21-11-2026: la hoja serena no las quita.) */
 .kv-boton-tg { display: inline-flex; align-items: center; gap: 8px; background: #229ED9; color: #fff; border-color: #229ED9; }

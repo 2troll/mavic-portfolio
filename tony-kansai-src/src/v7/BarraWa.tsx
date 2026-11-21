@@ -3,6 +3,7 @@
 // esté siempre a un toque. La portada de cada guía tiene la suya (BarraMovil).
 import { useEffect, useState } from 'react'
 import { IconoCanal } from './IconoWa'
+import './barra-wa.css'
 
 const TEXTO = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
 // Larion (t.me) va por Telegram: misma barra, otro texto, icono y color.
@@ -28,7 +29,7 @@ export function BarraWa({ href, lang, pagina, ocultaEn }: { href: string; lang: 
   }, [ocultaEn])
   const tg = href.includes('t.me/')
   return (
-    <div className={`v7-barra-movil cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
+    <div className={`v7-barra-movil v7-barra-wa cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
       <a className={`v7-boton${tg ? ' v7-tg' : ''}`} href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}
         onClick={() => window.gtag?.('event', 'generate_lead', { pagina, canal: tg ? 'telegram_barra' : 'whatsapp_barra' })}>
         <IconoCanal tg={tg} /> {(tg ? TEXTO_TG : TEXTO)[lang]}

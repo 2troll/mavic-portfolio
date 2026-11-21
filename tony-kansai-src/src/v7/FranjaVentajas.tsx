@@ -3,16 +3,16 @@
 // de datosVentajas (cuponDe), así un código caducado o retirado desaparece solo.
 import { Link } from 'react-router-dom'
 import { APPS, cuponDe } from './datosVentajas'
-import { BurbujasVentajas } from './BurbujasVentajas'
 
 type Idioma = 'es' | 'en' | 'ar' | 'ru'
 
 const RUTA: Record<Idioma, string> = { es: '/es/ventajas/', en: '/en/perks/', ar: '/ar/perks/', ru: '/ru/perks/' }
 
 const TEXTO: Record<Idioma, { titulo: string; sub: string; boton: string }> = {
-  es: { titulo: 'Descuentos para tu viaje a Japón', sub: 'Mis clientes los usan antes de volar y durante el viaje: internet, consigna de maletas, kimono, taxis y más.', boton: 'Ver mis códigos' },
-  en: { titulo: 'Discounts for your trip to Japan', sub: 'My guests use them before flying and during the trip: mobile data, luggage storage, kimono, taxis and more.', boton: 'See my codes' },
-  ar: { titulo: 'خصومات لرحلتك إلى اليابان', sub: 'يستخدمها ضيوفي قبل السفر وأثناء الرحلة: الإنترنت، حفظ الأمتعة، الكيمونو، سيارات الأجرة والمزيد.', boton: 'شاهد رموز الخصم' },
+  // Voz de empresa (21-11-2026): «nuestros clientes», no «mis clientes».
+  es: { titulo: 'Descuentos para tu viaje a Japón', sub: 'Nuestros clientes los usan antes de volar y durante el viaje: internet, consigna de maletas, kimono, taxis y más.', boton: 'Ver los códigos' },
+  en: { titulo: 'Discounts for your trip to Japan', sub: 'Our guests use them before flying and during the trip: mobile data, luggage storage, kimono, taxis and more.', boton: 'See the codes' },
+  ar: { titulo: 'خصومات لرحلتك إلى اليابان', sub: 'يستخدمها ضيوفنا قبل السفر وأثناء الرحلة: الإنترنت، حفظ الأمتعة، الكيمونو، سيارات الأجرة والمزيد.', boton: 'شاهد رموز الخصم' },
   ru: { titulo: 'Скидки для поездки в Японию', sub: 'Мои гости пользуются ими до вылета и в поездке: интернет, хранение багажа, кимоно, такси и другое.', boton: 'Мои промокоды' },
 }
 
@@ -21,8 +21,9 @@ export function FranjaVentajas({ lang }: { lang: Idioma }) {
   const conCodigo = APPS.filter((a) => cuponDe(a))
   return (
     <>
-    {/* Las burbujas flotantes van con la franja: así salen en las mismas páginas. */}
-    <BurbujasVentajas lang={lang} />
+    {/* 21-11-2026: fuera las burbujas de cristal con la chapa roja «−10 %» que subían
+        por los lados (parecía una web de cupones; animación decorativa). Los
+        descuentos siguen aquí, en la franja, y en la página de ventajas. */}
     <aside className="v7-franja-ventajas" aria-label={t.titulo}>
       <div className="v7-franja-ventajas-texto">
         <strong>{t.titulo}</strong>

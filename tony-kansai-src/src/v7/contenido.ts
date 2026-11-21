@@ -27,11 +27,28 @@ export interface Pagina {
   guia: GuiaId
   seo: { titulo: string; descripcion: string }
   nav: { como: string; zona: string; precios: string; contacto: string; idioma: string }
-  hero: { foto: string; titulo: string; sub: string; chips: string[]; cta: string; cta2: string }
+  /** fotoAlt: qué se ve en la foto (si falta, se usa el titular). */
+  hero: { foto: string; fotoAlt?: string; titulo: string; sub: string; chips: string[]; cta: string; cta2: string }
   como: { titulo: string; pasos: { t: string; d: string }[]; noTitulo: string; no: string[]
     /** Qué incluye el precio: lo primero que compara un cliente entre guías. */
     si?: { titulo: string; items: string[] } }
-  guiaTxt: { titulo: string; idiomas: string; bio: string[]; otro?: { texto: string; enlace: string; ruta: string } }
+  guiaTxt: { titulo: string; idiomas: string; bio: string[] }
+  // ── Portada troncal de Tony (/es/, /en/, /ar/; rediseño de Antonio, 21-11-2026) ──
+  // Opcionales: /ru/ y /larion/ siguen con su portada de siempre y no los usan.
+  /** Tres experiencias genéricas, sin precio, que abren la conversación; y
+   *  «otras puertas» para no cerrar nada (familias, Tokio, varios días…). */
+  experiencias?: {
+    titulo: string; sub: string
+    lista: { titulo: string; texto: string; foto: string; alt: string; ruta: string }[]
+    otras: { texto: string; ruta: string }[]
+    preguntar: string
+  }
+  /** Un solo precio de referencia; la ficha completa va plegada debajo. */
+  precioRef?: { titulo: string; texto: string; enlace: string; ruta: string; plegado: string; otono: string }
+  /** Contacto con WhatsApp primero y el formulario plegado. */
+  contactoWa?: { sub: string; boton: string; formulario: string; correo: string }
+  /** Columna «Destinos» del pie. */
+  destinosTitulo?: string
   zona: { titulo: string; sub: string; lugares: Lugar[]; origenes: Lugar[] }
   /** Las cuatro frases del globo con scroll: origen → Kansai → hotel → destino. */
   viaje: string[]
@@ -141,8 +158,16 @@ export const CREDITOS = [
   { foto: 'Himeji: castillo', tr: { en: 'Himeji: the castle', ar: 'هيميجي: القلعة', ru: 'Химэдзи: замок' }, autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File:Himeji_Castle,_November_2016_-02.jpg' },
   { foto: 'Miyajima: torii', tr: { en: 'Miyajima: the torii', ar: 'ميياجيما: بوابة التوري', ru: 'Миядзима: тории' }, autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Itsukushima-jinja_torii,_Miyajima,_Japan,_20240816_1716_4048.jpg' },
   { foto: 'Hiroshima: Cúpula de la Bomba Atómica', tr: { en: 'Hiroshima: Atomic Bomb Dome', ar: 'هيروشيما: قبة القنبلة الذرية', ru: 'Хиросима: Атомный купол' }, autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
-  { foto: 'Avatares de las reseñas', tr: { en: 'Review avatars', ar: 'الصور الرمزية في المراجعات', ru: 'Аватары в отзывах' }, autor: 'DiceBear, Boring Avatars, Jdenticon, Tabler Icons, Phosphor Icons y Remix Icon (Lisa Wischofsky, Micah Lanier, Draftbit, The Visual Team, Ashley Seo, Natalia Spivak, vijay verma, Webpixels, Pablo Stanley, Zoish)', licencia: 'CC BY 4.0 / CC0 1.0 / MIT / Apache 2.0', url: 'https://www.dicebear.com/licenses/' },
   { foto: 'Globo y mapa: Blue Marble', tr: { en: 'Globe and map: Blue Marble', ar: 'الكرة الأرضية والخريطة: Blue Marble', ru: 'Глобус и карта: Blue Marble' }, licTr: { en: 'Public domain', ar: 'ملكية عامة', ru: 'Общественное достояние' }, autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
+  // 21-11-2026: portada de /es/, /en/ y /ar/ (el castillo de Himeji con cerezos, la
+  // de abajo: v7/fotos/portada*) y las fotos de las tres experiencias (datos de
+  // src/v8/creditosZonas.json). El Fuji salió de la portada (tenía un torii rojo en
+  // la orilla); su crédito sigue en /es/rutas/ (CREDITOS_ITIN de Itinerarios.tsx).
+  { foto: 'Himeji: castillo con cerezos', tr: { en: 'Himeji: castle with cherry blossoms', ar: 'هيميجي: القلعة وأزهار الكرز', ru: 'Химэдзи: замок и сакура' }, autor: 'Seattleite7', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File%3AHimeji_Castle_with_cherry_blossoms_from_front.jpg' },
+  { foto: 'Kioto: Kinkaku-ji', tr: { en: 'Kyoto: Kinkaku-ji', ar: 'كيوتو: كينكاكو-جي', ru: 'Киото: Кинкаку-дзи' }, autor: 'Basile Morin', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File%3AWater_reflection_of_Kinkaku-ji_Temple_a_sunny_day%2C_Kyoto%2C_Japan.jpg' },
+  { foto: 'Kioto: Kiyomizu-dera', tr: { en: 'Kyoto: Kiyomizu-dera', ar: 'كيوتو: كيوميزو-ديرا', ru: 'Киото: Киёмидзу-дэра' }, autor: 'Martin Falbisoner', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File%3AKiyomizu-dera%2C_Kyoto%2C_November_2016_-01.jpg' },
+  { foto: 'Osaka: mercado de Kuromon', tr: { en: 'Osaka: Kuromon Market', ar: 'أوساكا: سوق كورومون', ru: 'Осака: рынок Куромон' }, autor: 'SungMinSeung', licencia: 'CC BY-SA 4.0', url: 'https://commons.wikimedia.org/wiki/File%3AOsaka_market.jpg' },
+  { foto: 'Nara: monte Yoshino', tr: { en: 'Nara: Mount Yoshino', ar: 'نارا: جبل يوشينو', ru: 'Нара: гора Ёсино' }, autor: 'Nankou Oronain', licencia: 'CC BY-SA 3.0', url: 'https://commons.wikimedia.org/wiki/File%3A%E5%90%89%E9%87%8E%E5%B1%B1_%E4%B8%8A%E5%8D%83%E6%9C%AC%E3%81%8B%E3%82%89%E3%81%AE%E7%9C%BA%E3%82%81_Yoshino-yama%2C_view_from_Kami-sembon_2014.4.12_-_panoramio.jpg' },
 ]
 
 const fmtYen = (n: number, sep: string) => '¥' + n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, sep)
@@ -159,14 +184,18 @@ const es: Pagina = {
     titulo: 'Guía en español en Kioto, Osaka y Nara | Tony Kansai Guide',
     descripcion: 'Tony, guía privado en español. Te recoge en el hotel y pasáis el día en Kioto, Osaka, Nara o Kobe, con precio cerrado por grupo.',
   },
-  nav: { como: 'Cómo funciona', zona: 'Dónde vamos', precios: 'Precios', contacto: 'Escríbeme', idioma: 'Idioma' },
+  // 21-11-2026 (Antonio): voz de empresa («nosotros»), todo Japón y no solo Kansai,
+  // y el castillo blanco de Himeji con cerezos y cielo azul (el Japón que imagina el
+  // cliente, Antonio puntos 1-2), en vez de los torii rojos de Fushimi.
+  nav: { como: 'Cómo funciona', zona: 'Dónde vamos', precios: 'Precios', contacto: 'Escríbenos', idioma: 'Idioma' },
   hero: {
-    foto: F + 'kioto.jpg',
-    titulo: 'Tu guía privado en Japón, en español.',
-    sub: 'Soy Tony. Te recojo en el hotel y pasamos el día en Kioto, Osaka, Nara o donde te apetezca. Sin agencia y sin grupo: hablas directamente conmigo.',
-    chips: ['Solo tu grupo', 'Precio cerrado por grupo', 'Recogida en tu hotel'],
-    cta: 'Reserva tu tour',
-    cta2: 'Cuéntame tu viaje',
+    foto: F + 'portada.jpg',
+    fotoAlt: 'El castillo blanco de Himeji entre cerezos en flor, con cielo azul',
+    titulo: 'Guías privados en español por todo Japón.',
+    sub: 'Te recogemos en tu hotel y pasamos el día donde quieras: Kioto, Tokio, el monte Fuji o ese rincón de Japón que sueñas. Solo tu grupo y un precio cerrado.',
+    chips: ['Solo tu grupo', 'Recogida en tu hotel'],
+    cta: 'Escríbenos por WhatsApp',
+    cta2: 'Ver experiencias',
   },
   como: {
     titulo: 'Así funciona',
@@ -258,28 +287,33 @@ const es: Pagina = {
   faq: {
     titulo: 'Preguntas',
     items: [
-      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con PayPal o Wise desde los botones de Precios, o con un enlace de pago con tarjeta que te mando.' },
+      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con PayPal o Wise, o con un enlace de pago con tarjeta que te mando.' },
       { q: '¿Necesito el JR Pass?', a: 'Si os movéis dentro de Kansai, normalmente no. Con una tarjeta ICOCA o Suica pagáis cada tren y autobús. Pregúntame antes de comprar nada.' },
       { q: '¿Y si llueve?', a: 'Por ciudad salimos igual: Kansai con lluvia es precioso y hay menos gente. En montaña decido yo por seguridad; si se cancela, cambiamos de fecha o te devuelvo lo pagado.' },
       { q: '¿Podemos ir con niños?', a: 'Claro. Adapto el ritmo y el recorrido a su edad.' },
       { q: '¿Me recoges también en Kioto o en Nara?', a: 'Sí. Quedamos en el vestíbulo de tu hotel, esté en Osaka, Kioto, Nara o Kobe.' },
-      { q: '¿Y si somos más de 6?', a: 'Los precios son para grupos de hasta 6 personas. Si sois más, escríbeme y te digo cómo lo organizamos.' },
+      // Sin techos (Antonio: «nunca cerrar puertas»): el precio es por grupo y a un
+      // grupo grande se le contesta; el «hasta 6» sigue en el JSON-LD y en llms.txt.
+      { q: '¿Y si somos un grupo grande?', a: 'El precio publicado es por grupo, no por persona. Si sois un grupo grande, escríbenos: también acompañamos grupos más grandes y te decimos cómo lo organizamos.' },
       { q: '¿Hacéis tours de varios días?', a: 'Sí. Dime cuántos días tienes y qué quieres ver, y te paso un precio cerrado por todo.' },
-      { q: '¿Hay guía en francés?', a: 'Sí. En Tokio y la región de Kanto, Nagano y Shizuoka guía Iheb, en francés; también habla árabe e inglés.', enlace: { texto: 'Página de Iheb (en francés)', href: '/fr/' } },
-      { q: '¿Organizáis viajes para familias o grupos de 6 a 10 personas?', a: 'Sí. Antonio, coordinador del equipo, gestiona en español viajes a medida por todo Japón: guías, itinerario, hoteles, ryokan y transporte privado para grupos de más de 8. El presupuesto es a medida.', enlace: { texto: 'Viajes en familia y grupo', href: '/familias/' } },
+      // Sustituye a «¿Hay guía en francés?»: el que llega de Latinoamérica entra por
+      // Tokio y nadie le contestaba. Todo sale de /es/rutas/ (datosItinerarios.ts).
+      { q: '¿Guiáis también en Tokio, el monte Fuji u otras zonas de Japón?', a: 'Sí. Además de Kansai hay días en Tokio, el monte Fuji desde Hakone, Nagano o Fukuoka; el billete del guía hasta allí va incluido en el presupuesto cerrado. En Tokio también guía Iheb, en francés, árabe e inglés (/fr/).', enlace: { texto: 'Rutas por todo Japón, hora a hora', href: '/es/rutas/' } },
+      { q: '¿Organizáis viajes para familias o grupos?', a: 'Sí. Antonio, coordinador del equipo, gestiona en español viajes a medida por todo Japón: guías, itinerario, hoteles, ryokan y transporte privado. El presupuesto es a medida.', enlace: { texto: 'Viajes en familia y grupo', href: '/familias/' } },
       { q: '¿Y si alguien tiene movilidad reducida?', a: 'Dímelo al reservar. Adapto el recorrido, el ritmo y el transporte; algunos templos tienen muchas escaleras y te propongo alternativas.' },
       { q: '¿Y si cambian mis planes?', a: 'Escríbeme. Cancelar con más de 72 horas no cuesta nada; si tu vuelo se retrasa, buscamos otro día.' },
     ],
   },
   contacto: {
-    titulo: 'Cuéntame tu viaje',
+    titulo: 'Cuéntanos tu viaje',
     sub: 'Rellena lo que sepas y se abrirá WhatsApp con el mensaje listo. Esta web no guarda nada.',
     nombre: 'Tu nombre', pais: '¿De dónde venís?', ciudad: 'Ciudad', fechas: 'Fechas', personas: 'Personas',
     hotel: 'Hotel o zona donde os alojáis', intereses: 'Qué os apetece', notas: 'Algo más (niños, movilidad, comida…)',
     paises: ['España', 'México', 'Argentina', 'Colombia', 'Chile', 'Perú', 'Estados Unidos', 'Otro país'],
-    opcionesIntereses: ['Kioto', 'Osaka', 'Nara', 'Kobe', 'Himeji', 'Comida', 'Naturaleza', 'Otra zona de Japón'],
+    // Las tres experiencias de la portada y lo que no es Kansai, en vez de cinco ciudades de Kansai.
+    opcionesIntereses: ['Templos y tradición', 'Gastronomía', 'Naturaleza', 'Tokio / Fuji', 'Varios días', 'Otra zona de Japón'],
     wa: 'Enviar por WhatsApp', mail: 'Prefiero correo', vista: 'Tu mensaje',
-    aviso: 'Te respondo yo, Tony, normalmente el mismo día.',
+    aviso: 'Te respondemos normalmente el mismo día.',
     asuntoMail: 'Tour privado en Japón',
     plantilla: (d) => `Hola Tony, te escribo desde la web.\n\n` + lineas([
       ['Nombre', d.nombre], ['Venimos de', [d.pais, d.ciudad].filter(Boolean).join(', ')], ['Fechas', d.fechas],
@@ -287,13 +321,67 @@ const es: Pagina = {
     ]),
   },
   pie: {
-    lema: 'Guía privado en Japón. Trato directo, sin agencia.',
+    lema: 'Guías privados por todo Japón. Trato directo.',
     legal: 'Aviso legal', privacidad: 'Privacidad', condiciones: 'Condiciones', cookies: 'Cookies',
     creditos: 'Créditos de las fotos', otrosIdiomas: 'Otros idiomas',
   },
+  // Solo lo que la web ya ofrece: páginas de ciudad, planes temáticos (té, kimono,
+  // artesanos), comida halal/vegetariana y las rutas de montaña. Sin precio.
+  experiencias: {
+    titulo: 'Elige tu experiencia',
+    sub: 'No son paquetes cerrados: el día lo montamos a tu medida.',
+    lista: [
+      { titulo: 'Templos, castillos y tradición', texto: 'Kioto, Nara y el castillo blanco de Himeji. Ceremonia del té, kimono o un taller artesano, y la historia de cada lugar.',
+        foto: '/v8/zonas/kioto-kinkakuji', alt: 'El Pabellón Dorado de Kioto reflejado en su estanque, con cielo azul', ruta: '/es/kyoto/' },
+      { titulo: 'Gastronomía y mercados', texto: 'Mercados como Kuromon y Nishiki, comida callejera en Dōtonbori y dónde comer bien, también halal o vegetariano.',
+        foto: '/v8/zonas/osaka-kuromon', alt: 'Puestos del mercado de Kuromon, en Osaka', ruta: '/es/osaka/' },
+      { titulo: 'Naturaleza y Japón rural', texto: 'Montañas cerca de Kioto y Nara, los cerezos de Yoshino, Kōyasan o el Kumano Kodo, a tu ritmo.',
+        foto: '/v8/zonas/nara-yoshino', alt: 'El monte Yoshino cubierto de cerezos en flor', ruta: '/es/montana/' },
+    ],
+    otras: [
+      { texto: '¿Viajas en familia o en grupo? Organizamos el viaje entero por todo Japón', ruta: '/familias/' },
+      { texto: '¿Tokio, el monte Fuji o varios días? Mira las rutas', ruta: '/es/rutas/' },
+    ],
+    preguntar: '¿Dudas? Pregúntanos por WhatsApp',
+  },
+  precioRef: {
+    titulo: 'Cuánto cuesta',
+    texto: 'Medio día con guía privado, por grupo y no por persona. Para tu viaje te damos un precio cerrado por WhatsApp, sin letra pequeña.',
+    enlace: 'Ver todos los precios', ruta: '/es/precios/',
+    plegado: 'Qué incluye, pago y cancelación',
+    otono: 'Otoño en Kioto: los arces siguen rojos hasta principios de diciembre.',
+  },
+  contactoWa: {
+    sub: 'Escríbenos por WhatsApp y te respondemos normalmente el mismo día.',
+    boton: 'Escríbenos por WhatsApp', formulario: '¿Prefieres un formulario?', correo: 'o por correo',
+  },
+  destinosTitulo: 'Destinos',
 }
 
 // ── English · Tony · United Kingdom ─────────────────────────────────────────
+
+// Preguntas de /en/ tal como estaban antes del rediseño (21-11-2026): /larion/
+// hereda de `en` y se queda con ellas; /en/ cambia tres (CAMBIOS_FAQ_EN).
+const FAQ_EN_ANTES: Pregunta[] = [
+  { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I\'ll send you.' },
+  { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
+  { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
+  { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
+  { q: 'Can you pick us up in Kyoto or Nara too?', a: 'Yes. We meet in your hotel lobby, whether you\'re staying in Osaka, Kyoto, Nara or Kobe.' },
+  { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you\'re more, message me and I\'ll tell you how we can organise it.' },
+  { q: 'Do you do multi-day tours?', a: 'Yes. Tell me how many days you have and what you\'d like to see, and I\'ll send you one fixed price for everything.' },
+  { q: 'Is there a guide for Tokyo, anime and Pokémon?', a: 'Yes. For Tokyo and the Kanto region, Nagano and Shizuoka there is Iheb, who guides in English, French and Arabic and is a pro in anime, Japanese pop culture and Pokémon cards.', enlace: { texto: 'Iheb\'s page', href: '/en/tokyo-anime-guide/' } },
+  { q: 'Do you organise trips for families or groups of 6 to 10?', a: 'Yes. Antonio, the team\'s coordinator, arranges tailor-made trips all over Japan in Spanish: guides, itinerary, hotels, ryokan and private transport for groups of more than 8. Quotes are tailor-made.', enlace: { texto: 'Family and group trips (in Spanish)', href: '/familias/' } },
+  { q: 'What if someone has limited mobility?', a: 'Tell me when you book. I adapt the route, the pace and the transport; some temples have a lot of steps and I suggest alternatives.' },
+  { q: 'What if my plans change?', a: 'Message me. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed we find another day.' },
+]
+// Sin techos en /en/ (Antonio: «nunca cerrar puertas»): el «up to 6» sigue en el JSON-LD y en llms.txt.
+const CAMBIOS_FAQ_EN: Record<string, Pregunta> = {
+  // Los botones de PayPal y Wise iban en las tarjetas de precio de la portada, que ya no están.
+  'How do I pay?': { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise, or a card payment link I\'ll send you.' },
+  'What if there are more than 6 of us?': { q: 'What if we\'re a large group?', a: 'The listed price is per group, not per person. If you\'re a large group, message us: we guide larger groups too and we\'ll tell you how we can organise it.' },
+  'Do you organise trips for families or groups of 6 to 10?': { q: 'Do you organise trips for families or groups?', a: 'Yes. Antonio, the team\'s coordinator, arranges tailor-made trips all over Japan in Spanish: guides, itinerary, hotels, ryokan and private transport. Quotes are tailor-made.', enlace: { texto: 'Family and group trips (in Spanish)', href: '/familias/' } },
+}
 
 const en: Pagina = {
   id: 'en', lang: 'en', viaje: ['You fly in from London.', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we spend the day wherever you like.'], dir: 'ltr', ruta: '/en/', guia: 'tony',
@@ -301,14 +389,16 @@ const en: Pagina = {
     titulo: 'Private guide in Kyoto, Osaka & Nara | Tony Kansai Guide',
     descripcion: 'Tony is a private guide in Kansai. He meets you at your hotel for a day in Kyoto, Osaka, Nara or Kobe, with one fixed price per group.',
   },
-  nav: { como: 'How it works', zona: 'Where we go', precios: 'Prices', contacto: 'Message me', idioma: 'Language' },
+  // 21-11-2026: voz de empresa, todo Japón y el castillo blanco de Himeji con cielo azul.
+  nav: { como: 'How it works', zona: 'Where we go', precios: 'Prices', contacto: 'Message us', idioma: 'Language' },
   hero: {
-    foto: F + 'nara.jpg',
-    titulo: 'Your private guide in Japan.',
-    sub: 'I\'m Tony. I meet you in your hotel lobby and we spend the day in Kyoto, Osaka, Nara, or wherever you\'d like to go. No agency, no group: you deal with me directly.',
-    chips: ['Just your party', 'One price per group', 'Hotel pick-up'],
-    cta: 'Book a tour',
-    cta2: 'Plan your day',
+    foto: F + 'portada.jpg',
+    fotoAlt: 'The white castle of Himeji among cherry blossoms, under a blue sky',
+    titulo: 'Private guides across Japan.',
+    sub: 'We meet you at your hotel and spend the day wherever you like: Kyoto, Tokyo, Mount Fuji or the corner of Japan you have always pictured. Just your party, one fixed price.',
+    chips: ['Just your party', 'Hotel pick-up'],
+    cta: 'Message us on WhatsApp',
+    cta2: 'See experiences',
   },
   como: {
     titulo: 'How it works',
@@ -339,7 +429,6 @@ const en: Pagina = {
       'I\'m Tony. I\'m Spanish and I live in Osaka. I have guided more than 25 tours so far.',
       'I show you Kansai at your own pace: Kyoto, Osaka, Nara, Kobe and Himeji. If your trip goes further, I can come along to the rest of Japan too.',
     ],
-    otro: { texto: 'Heading to Hiroshima? Larion also guides in English and covers the west.', enlace: 'Meet Larion', ruta: '/larion/' },
   },
   zona: {
     titulo: 'Where we go',
@@ -397,29 +486,17 @@ const en: Pagina = {
   resenas: { titulo: 'What guests say', nota: 'Real reviews, translated from Spanish. Tap “See original” to read them as written.', opinar: 'Toured with us? Leave a review' },
   faq: {
     titulo: 'Questions',
-    items: [
-      { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I\'ll send you.' },
-      { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
-      { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
-      { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
-      { q: 'Can you pick us up in Kyoto or Nara too?', a: 'Yes. We meet in your hotel lobby, whether you\'re staying in Osaka, Kyoto, Nara or Kobe.' },
-      { q: 'What if there are more than 6 of us?', a: 'Prices are for groups of up to 6. If you\'re more, message me and I\'ll tell you how we can organise it.' },
-      { q: 'Do you do multi-day tours?', a: 'Yes. Tell me how many days you have and what you\'d like to see, and I\'ll send you one fixed price for everything.' },
-      { q: 'Is there a guide for Tokyo, anime and Pokémon?', a: 'Yes. For Tokyo and the Kanto region, Nagano and Shizuoka there is Iheb, who guides in English, French and Arabic and is a pro in anime, Japanese pop culture and Pokémon cards.', enlace: { texto: 'Iheb\'s page', href: '/en/tokyo-anime-guide/' } },
-      { q: 'Do you organise trips for families or groups of 6 to 10?', a: 'Yes. Antonio, the team\'s coordinator, arranges tailor-made trips all over Japan in Spanish: guides, itinerary, hotels, ryokan and private transport for groups of more than 8. Quotes are tailor-made.', enlace: { texto: 'Family and group trips (in Spanish)', href: '/familias/' } },
-      { q: 'What if someone has limited mobility?', a: 'Tell me when you book. I adapt the route, the pace and the transport; some temples have a lot of steps and I suggest alternatives.' },
-      { q: 'What if my plans change?', a: 'Message me. Cancelling more than 72 hours ahead costs nothing, and if your flight is delayed we find another day.' },
-    ],
+    items: FAQ_EN_ANTES.map((f) => CAMBIOS_FAQ_EN[f.q] ?? f),
   },
   contacto: {
-    titulo: 'Plan your day',
+    titulo: 'Tell us about your trip',
     sub: 'Fill in what you know and WhatsApp opens with the message ready. Nothing is stored on this site.',
     nombre: 'Your name', pais: 'Where are you travelling from?', ciudad: 'City', fechas: 'Dates', personas: 'People',
     hotel: 'Hotel or area you\'re staying in', intereses: 'What you\'d like', notas: 'Anything else (children, mobility, food…)',
     paises: ['United Kingdom', 'Ireland', 'United States', 'Canada', 'Australia', 'Other country'],
-    opcionesIntereses: ['Kyoto', 'Osaka', 'Nara', 'Kobe', 'Himeji', 'Food', 'Nature', 'Elsewhere in Japan'],
+    opcionesIntereses: ['Temples and tradition', 'Food', 'Nature', 'Tokyo / Fuji', 'Several days', 'Elsewhere in Japan'],
     wa: 'Send on WhatsApp', mail: 'I\'d rather email', vista: 'Your message',
-    aviso: 'Tony replies personally, usually the same day.',
+    aviso: 'We usually reply the same day.',
     asuntoMail: 'Private tour in Japan',
     plantilla: (d) => `Hi Tony, I'm writing from your website.\n\n` + lineas([
       ['Name', d.nombre], ['Travelling from', [d.ciudad, d.pais].filter(Boolean).join(', ')], ['Dates', d.fechas],
@@ -427,10 +504,41 @@ const en: Pagina = {
     ]),
   },
   pie: {
-    lema: 'Private guide in Japan. Booked directly, no agency.',
+    lema: 'Private guides across Japan. Direct contact.',
     legal: 'Legal notice', privacidad: 'Privacy', condiciones: 'Terms', cookies: 'Cookies',
     creditos: 'Photo credits', otrosIdiomas: 'Other languages',
   },
+  // La portada de /en/ ya es el castillo de Himeji: la primera tarjeta lleva Kiyomizu.
+  // El anime (Iheb, en inglés) va como «otra puerta», no como experiencia.
+  experiencias: {
+    titulo: 'Choose your experience',
+    sub: 'These aren\'t fixed packages: we shape the day around you.',
+    lista: [
+      { titulo: 'Temples, castles and tradition', texto: 'Kyoto, Nara and the white castle of Himeji. Tea ceremony, kimono or a craft workshop, and the story behind each place.',
+        foto: '/v8/zonas/kioto-kiyomizu', alt: 'Kiyomizu-dera temple among autumn leaves in Kyoto', ruta: '/en/kyoto/' },
+      { titulo: 'Food and markets', texto: 'Markets like Kuromon and Nishiki, street food in Dōtonbori and where to eat well, including halal or vegetarian.',
+        foto: '/v8/zonas/osaka-kuromon', alt: 'Stalls at Kuromon Market in Osaka', ruta: '/en/osaka/' },
+      { titulo: 'Nature and rural Japan', texto: 'Mountains near Kyoto and Nara, the cherry trees of Yoshino, Kōyasan or the Kumano Kodo, at your own pace.',
+        foto: '/v8/zonas/nara-yoshino', alt: 'Mount Yoshino covered in cherry blossom', ruta: '/en/hiking/' },
+    ],
+    otras: [
+      { texto: 'Tokyo, anime and pop culture', ruta: '/en/tokyo-anime-guide/' },
+      { texto: 'Tokyo, Mount Fuji or several days: see the routes', ruta: '/en/routes/' },
+    ],
+    preguntar: 'Questions? Ask us on WhatsApp',
+  },
+  precioRef: {
+    titulo: 'What it costs',
+    texto: 'Half day with a private guide, per group, not per person. For your trip you get one fixed price on WhatsApp, no small print.',
+    enlace: 'See all prices', ruta: '/en/prices/',
+    plegado: 'What\'s included, payment and cancellation',
+    otono: 'Autumn in Kyoto: the maples stay red until early December.',
+  },
+  contactoWa: {
+    sub: 'Message us on WhatsApp and we usually reply the same day.',
+    boton: 'Message us on WhatsApp', formulario: 'Prefer a form?', correo: 'or by email',
+  },
+  destinosTitulo: 'Destinations',
 }
 
 // ── العربية · Tony · الخليج ─────────────────────────────────────────────────
@@ -441,14 +549,17 @@ const ar: Pagina = {
     titulo: 'مرشد بالعربية في كيوتو وأوساكا ونارا | Tony Kansai Guide',
     descripcion: 'طوني مرشد خاص بالعربية في كانساي. يلتقيك في فندقك ليوم في كيوتو أو أوساكا أو نارا. بلا وكالة، بسعر ثابت للمجموعة، مع مطاعم حلال وأوقات الصلاة.',
   },
-  nav: { como: 'كيف نعمل', zona: 'إلى أين نذهب', precios: 'الأسعار', contacto: 'راسلني', idioma: 'اللغة' },
+  // 21-11-2026: voz de empresa, todo Japón y el Fuji de día (antes, Kobe de noche).
+  // El h1 lleva «مرشد خاص» y «بالعربية», lo que se busca.
+  nav: { como: 'كيف نعمل', zona: 'إلى أين نذهب', precios: 'الأسعار', contacto: 'راسلنا', idioma: 'اللغة' },
   hero: {
-    foto: F + 'osaka.jpg',
-    titulo: 'مرشدك الخاص في اليابان، بالعربية.',
-    sub: 'أنا طوني. ألتقيك في بهو فندقك ونقضي اليوم في كيوتو أو أوساكا أو نارا أو حيثما تحب. بلا وكالة ولا مجموعات: تتعامل معي مباشرة.',
-    chips: ['لعائلتك وحدها', 'سعر واحد للمجموعة', 'نلتقي في فندقك'],
-    cta: 'احجز جولتك',
-    cta2: 'خطّط ليومك',
+    foto: F + 'portada.jpg',
+    fotoAlt: 'قلعة هيميجي البيضاء بين أزهار الكرز تحت سماء زرقاء',
+    titulo: 'مرشد خاص بالعربية في كل أنحاء اليابان.',
+    sub: 'نلتقيكم في فندقكم ونقضي اليوم حيثما تحبون: كيوتو أو طوكيو أو جبل فوجي. لعائلتكم وحدها، بسعر ثابت، مع طعام حلال وأوقات الصلاة.',
+    chips: ['لعائلتك وحدها', 'نلتقي في فندقك'],
+    cta: 'راسلنا عبر واتساب',
+    cta2: 'اكتشف التجارب',
   },
   como: {
     titulo: 'كيف نعمل',
@@ -535,20 +646,21 @@ const ar: Pagina = {
   faq: {
     titulo: 'أسئلة',
     items: [
-      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر PayPal أو Wise من أزرار قسم الأسعار، أو برابط دفع بالبطاقة أرسله لك.' },
+      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر PayPal أو Wise، أو برابط دفع بالبطاقة أرسله لك.' },
       { q: 'هل يوجد طعام حلال؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة في أوساكا وكيوتو. أخبرني عند الحجز لا في يوم الجولة.' },
       { q: 'أين نصلي أثناء الجولة؟', a: 'في كانساي مسجد أوساكا ومسجد كوبي وجمعية كيوتو الإسلامية، وفي مطار كانساي مصليات في المبنيين. أضع وقفات الصلاة في المسار من البداية.' },
       { q: 'هل أحتاج تذكرة JR Pass؟', a: 'في الغالب لا إذا كانت إقامتك في كانساي. بطاقة ICOCA أو Suica تكفي لمعظم القطارات والحافلات. اسألني قبل أن تشتري.' },
       { q: 'هل تستقبلنا في كيوتو أو نارا أيضاً؟', a: 'نعم. نلتقي في بهو فندقكم، سواء كان في أوساكا أو كيوتو أو نارا أو كوبي.' },
       { q: 'هل الجولة مناسبة للعائلات مع الأطفال وكبار السن؟', a: 'نعم. الجولة خاصة بعائلتكم وحدها، بلا أي شخص من خارجها، وبالإيقاع الذي يناسبكم. أخبرني عند الحجز بأعمار الأطفال وكبار السن، فأختار مساراً أقل مشياً ودرجاً وأضع وقفات للراحة والصلاة.' },
-      { q: 'وماذا لو كنا أكثر من ستة؟', a: 'الأسعار الثابتة لمجموعات حتى ستة أشخاص، وأرافق مجموعات أكبر حتى ١٤ شخصاً. أخبرني بعددكم وأرسل لك السعر.' },
+      // Sin techos (Antonio): el «حتى ستة» sigue en el JSON-LD y en llms.txt.
+      { q: 'وماذا لو كنا مجموعة كبيرة؟', a: 'السعر للمجموعة كلها لا للشخص، ونرافق المجموعات الأكبر أيضاً. أخبرنا بعددكم ونرسل لكم السعر.' },
       { q: 'هل يمكن زيارة كيوتو في يوم واحد من أوساكا؟', a: 'نعم. كيوتو على بُعد أقل من ساعة بالقطار من أوساكا. ألتقيكم في الفندق صباحاً ونبدأ باكراً بفوشيمي إيناري قبل الزحام، وأضع الغداء الحلال ووقت الصلاة في المسار من البداية.' },
       { q: 'هل يمكن أن نزور مسجد كوبي؟', a: 'نعم، إن أحببتم. مسجد كوبي أقدم مسجد في اليابان، ونجعله جزءاً من يوم في كوبي مع الميناء وحي كيتانو، ونصلي فيه إن وافق وقت الصلاة.' },
       { q: 'هل ترافقنا إلى نارا؟', a: 'نعم. نارا على بُعد أقل من ساعة من أوساكا وكيوتو، ويكفيها نصف يوم: تمثال بوذا الكبير في توداي-جي والغزلان في الحديقة.' },
       { q: 'كم السعر بالريال أو الدرهم؟', a: 'الأسعار بالين وللمجموعة كلها لا للشخص. بجانب كل سعر تجد قيمته التقريبية بالريال والدرهم بسعر الصرف اليوم، وهي للتوضيح فقط، أما الدفع فيكون بالين.' },
       { q: 'هل تنظّم جولات لعدة أيام؟', a: 'نعم. أخبرني بعدد الأيام وما تحبون رؤيته، وأرسل لك سعراً ثابتاً للكل.' },
       { q: 'هل يوجد مرشد عربي في طوكيو؟', a: 'نعم. في طوكيو ومنطقة كانتو وناغانو وشيزوكا يرشد إيهاب، وهو تونسي مسلم، بالعربية والفرنسية والإنجليزية، مع طعام حلال وأوقات الصلاة وبلا معابد.', enlace: { texto: 'صفحة إيهاب', href: '/ar/tokyo/' } },
-      { q: 'هل تنظمون رحلات للعائلات أو المجموعات من 6 إلى 10 أشخاص؟', a: 'نعم. ينظم أنطونيو، منسق الفريق، رحلات حسب الطلب في كل أنحاء اليابان بالإسبانية: مرشدون وبرنامج وفنادق وريوكان ونقل خاص للمجموعات من أكثر من 8 أشخاص. السعر حسب الطلب.', enlace: { texto: 'رحلات العائلات والمجموعات (بالإسبانية)', href: '/familias/' } },
+      { q: 'هل تنظمون رحلات للعائلات أو المجموعات؟', a: 'نعم. ينظم أنطونيو، منسق الفريق، رحلات حسب الطلب في كل أنحاء اليابان بالإسبانية: مرشدون وبرنامج وفنادق وريوكان ونقل خاص. السعر حسب الطلب.', enlace: { texto: 'رحلات العائلات والمجموعات (بالإسبانية)', href: '/familias/' } },
       { q: 'وماذا لو كان أحدنا محدود الحركة؟', a: 'أخبرني عند الحجز. أكيّف المسار والوتيرة والمواصلات؛ بعض المعابد فيها درج كثير وأقترح بدائل.' },
       { q: 'وماذا لو تغيّرت خططي؟', a: 'راسلني. الإلغاء قبل أكثر من ٧٢ ساعة مجاني، وإن تأخرت رحلتك نجد يوماً آخر.' },
     ],
@@ -559,9 +671,9 @@ const ar: Pagina = {
     nombre: 'اسمك', pais: 'من أين تأتون؟', ciudad: 'المدينة', fechas: 'التواريخ', personas: 'عدد الأشخاص',
     hotel: 'الفندق أو المنطقة التي تقيمون فيها', intereses: 'ما الذي تحبونه', notas: 'شيء آخر (أطفال، حركة، طعام…)',
     paises: ['الإمارات', 'السعودية', 'قطر', 'الكويت', 'البحرين', 'عُمان', 'مصر', 'الأردن', 'المغرب', 'دولة أخرى'],
-    opcionesIntereses: ['كيوتو', 'أوساكا', 'نارا', 'كوبي', 'هيميجي', 'طعام حلال', 'الطبيعة', 'مكان آخر في اليابان'],
+    opcionesIntereses: ['القلاع والتقاليد', 'طعام حلال', 'الطبيعة', 'طوكيو / فوجي', 'عدة أيام', 'مكان آخر في اليابان'],
     wa: 'أرسل عبر واتساب', mail: 'أفضّل البريد الإلكتروني', vista: 'رسالتك',
-    aviso: 'يرد عليك طوني شخصياً، عادةً في اليوم نفسه.',
+    aviso: 'نردّ عليك عادةً في اليوم نفسه.',
     asuntoMail: 'جولة خاصة في اليابان',
     plantilla: (d) => `السلام عليكم يا طوني، أراسلك من الموقع.\n\n` + lineas([
       ['الاسم', d.nombre], ['قادمون من', [d.ciudad, d.pais].filter(Boolean).join('، ')], ['التواريخ', d.fechas],
@@ -569,10 +681,41 @@ const ar: Pagina = {
     ]),
   },
   pie: {
-    lema: 'مرشد خاص في اليابان. تعامل مباشر بلا وكالة.',
+    lema: 'مرشدون خاصون في كل اليابان. تعامل مباشر.',
     legal: 'إشعار قانوني', privacidad: 'الخصوصية', condiciones: 'الشروط', cookies: 'ملفات تعريف الارتباط',
     creditos: 'مصادر الصور', otrosIdiomas: 'لغات أخرى',
   },
+  // Sin «templos» en la primera tarjeta (el público musulmán los evita, igual que
+  // /ar/tokyo/), y la gastronomía es halal y lleva a su página.
+  experiencias: {
+    titulo: 'اختر تجربتك',
+    sub: 'ليست باقات جاهزة؛ نرتّب اليوم على مقاسك.',
+    lista: [
+      { titulo: 'القلاع والتقاليد اليابانية', texto: 'قلعة هيميجي البيضاء، وأزقة غيون في كيوتو، والكيمونو مع الحجاب.',
+        foto: '/v8/zonas/kioto-kinkakuji', alt: 'الجناح الذهبي في كيوتو ينعكس على بركته تحت سماء زرقاء', ruta: '/ar/kyoto/' },
+      { titulo: 'طعام حلال وأسواق', texto: 'مطاعم حلال موثوقة في أوساكا وكيوتو، وسوق كورومون، ووقفات للصلاة في المسار.',
+        foto: '/v8/zonas/osaka-kuromon', alt: 'أكشاك سوق كورومون في أوساكا', ruta: '/ar/halal-kyoto-osaka/' },
+      { titulo: 'الطبيعة والجبال', texto: 'جبال قريبة من كيوتو ونارا، وأزهار الكرز في يوشينو، وكوياسان، على راحتكم.',
+        foto: '/v8/zonas/nara-yoshino', alt: 'جبل يوشينو تكسوه أزهار الكرز', ruta: '/ar/hiking/' },
+    ],
+    otras: [
+      { texto: 'طوكيو بالعربية', ruta: '/ar/tokyo/' },
+      { texto: 'المساجد وأماكن الصلاة في كانساي', ruta: '/ar/mosques-kansai/' },
+    ],
+    preguntar: 'عندك سؤال؟ اسألنا عبر واتساب',
+  },
+  precioRef: {
+    titulo: 'كم التكلفة',
+    texto: 'نصف يوم مع مرشد خاص، للمجموعة لا للشخص. ولرحلتك نرسل لك سعراً ثابتاً عبر واتساب، بلا شروط مخفية.',
+    enlace: 'كل الأسعار', ruta: '/ar/prices/',
+    plegado: 'ما يشمله السعر والدفع والإلغاء',
+    otono: 'الخريف في كيوتو: تبقى أشجار القيقب حمراء حتى أوائل ديسمبر.',
+  },
+  contactoWa: {
+    sub: 'راسلنا عبر واتساب ونردّ عليك عادةً في اليوم نفسه.',
+    boton: 'راسلنا عبر واتساب', formulario: 'تفضّل استمارة؟', correo: 'أو بالبريد الإلكتروني',
+  },
+  destinosTitulo: 'الوجهات',
 }
 
 // ── Русский · Larion · Россия и СНГ ─────────────────────────────────────────
@@ -718,10 +861,15 @@ const ru: Pagina = {
 
 // ── English · Larion ─────────────────────────────────────────────────────────
 
+// Hereda de `en`, pero /larion/ se queda como estaba antes del rediseño de la
+// portada de Tony (21-11-2026): por eso fija aquí su nav, héroe, preguntas,
+// título del contacto y lema, que en `en` han pasado a la voz de empresa.
 const larion: Pagina = {
   ...en,
+  nav: { ...en.nav, contacto: 'Message me' },
   como: { ...en.como, pasos: en.como.pasos.map((x) => ({ ...x, d: x.d.replace(' If you prefer to pay in advance, I send you a card payment link.', '') })) },
-  faq: { ...en.faq, items: en.faq.items.filter((f) => f.q !== 'How do I pay?') },
+  faq: { ...en.faq, items: FAQ_EN_ANTES.filter((f) => f.q !== 'How do I pay?') },
+  pie: { ...en.pie, lema: 'Private guide in Japan. Booked directly, no agency.' },
   id: 'larion', ruta: '/larion/', guia: 'larion',
   viaje: ['Wherever you fly in from…', 'You land in Kansai.', 'I meet you in your hotel lobby.', 'And we head west, as far as Hiroshima.'],
   seo: {
@@ -732,7 +880,7 @@ const larion: Pagina = {
     foto: F + 'miyajima.jpg',
     titulo: 'A private guide in Kansai and Hiroshima.',
     sub: 'I\'m Larion. I meet you in your hotel lobby and we go wherever you\'d like: Kyoto, Osaka, Nara, Hiroshima, Miyajima. South Korea: Seoul and Busan on request. No agency, no group: you deal with me directly.',
-    chips: en.hero.chips, cta: en.hero.cta, cta2: en.hero.cta2,
+    chips: ['Just your party', 'One price per group', 'Hotel pick-up'], cta: 'Book a tour', cta2: 'Plan your day',
   },
   guiaTxt: {
     titulo: 'Your guide',
@@ -742,7 +890,6 @@ const larion: Pagina = {
       'I show you Kansai (Kyoto, Osaka, Nara, Himeji) and the west: Hiroshima and Miyajima.',
       'Mountains, temples and long walking days are my favourite ground.',
     ],
-    otro: { texto: 'Prefer Spanish or Arabic? Tony guides in both, as well as English.', enlace: 'Meet Tony', ruta: '/en/' },
   },
   zona: {
     titulo: 'Where we go',
@@ -777,6 +924,7 @@ const larion: Pagina = {
   resenas: { titulo: 'What guests say', nota: 'Messages guests sent Larion on WhatsApp, gathered here and translated from Russian. Tap “See original” to read them as written.', opinar: 'Toured with Larion? Leave a review', fuente: '/reviews-larion.json' },
   contacto: {
     ...en.contacto,
+    titulo: 'Plan your day',
     sub: 'Fill in what you know: we copy the message for you and Telegram opens, just paste it. Nothing is stored on this site.',
     wa: 'Message on Telegram',
     paises: ['United Kingdom', 'United States', 'Germany', 'Kazakhstan', 'Other country'],

@@ -3,6 +3,8 @@
 // Es la que se enseña en anuncios y publicaciones de octubre y noviembre, y la
 // que busca quien viene a ver los arces rojos. Los textos, en datosOtono.ts.
 
+// Texto visible sin «hasta 6» ni primera persona (vozEmpresa.ts); los datos no cambian.
+import { visible } from './vozEmpresa'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
@@ -12,7 +14,6 @@ import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { yenLocal, PIE } from './formato'
 import creditosZonas from '../v8/creditosZonas.json'
@@ -90,9 +91,8 @@ export default function Otono({ id }: { id: OtonoId }) {
             <Link key={x.ruta} to={x.ruta} lang={x.lang} aria-current={x === p ? 'page' : undefined}>{NOMBRE_LANG[x.lang]}</Link>
           ))}
         </nav>
-        <BotonTema lang={p.lang} />
-        <a className={`v7-boton v7-boton-peq${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.boton}`}>
-          <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
+        <a className={`v7-boton v7-boton-peq${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${visible(p.final.boton)}`}>
+          <span className="v7-solo-ancho">{visible(p.final.boton)}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
 
@@ -104,7 +104,7 @@ export default function Otono({ id }: { id: OtonoId }) {
             <h1>{p.titulo}</h1>
             <p>{p.sub}</p>
             <a className={`v7-boton${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer"
-              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {p.cta}</a>
+              onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {visible(p.cta)}</a>
           </div>
         </section>
 
@@ -135,13 +135,13 @@ export default function Otono({ id }: { id: OtonoId }) {
         </section>
 
         <section className="v7-seccion" id="precios">
-          <h2>{p.preciosTitulo}</h2>
+          <h2>{visible(p.preciosTitulo)}</h2>
           <div className="v7-planes">
             {([['medio', p.medio], ['completo', p.completo]] as const).map(([k, nombre]) => (
               <article key={k} className={`v7-plan tarjeta ${k === 'completo' ? 'v7-plan-destacado' : ''}`}>
                 <h3>{nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO[k], p.lang)}</bdi></p>
-                <p className="v7-plan-grupo">{p.porGrupo}</p>
+                <p className="v7-plan-grupo">{visible(p.porGrupo)}</p>
                 <p className="v7-plan-persona">{p.porPersona(yenLocal(PRECIO[k] / 4, p.lang))}</p>
                 {pagar && <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${PRECIO[k]}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
               </article>
@@ -162,7 +162,7 @@ export default function Otono({ id }: { id: OtonoId }) {
           <h2>{p.final.titulo}</h2>
           <p className="v7-entradilla">{p.final.texto}</p>
           <a className={`v7-boton${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer"
-            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {p.final.boton}</a>
+            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: id, canal })}><IconoCanal tg={tg} /> {visible(p.final.boton)}</a>
           {otra && <p className="v7-temporada-enlace"><Link to={otra.ruta}>{OTRA_TXT[p.temporada][p.lang]} →</Link></p>}
           <p><Link to={p.inicio}>{p.volver}</Link></p>
         </section>

@@ -2,6 +2,8 @@
 // viaje y el tour con precio en su moneda al cambio del día. Los textos están en
 // datosViajeros.ts; aquí solo la maqueta, igual para todos los mercados.
 
+// Texto visible sin «hasta 6» ni primera persona (vozEmpresa.ts); los datos no cambian.
+import { visible } from './vozEmpresa'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
@@ -11,7 +13,6 @@ import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { useCambio } from './cambio'
 import { yenLocal, PIE } from './formato'
 import { MERCADOS_TODOS as MERCADOS } from './datosViajeros'
@@ -76,8 +77,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <Link to={m.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         {/* Sin selector de idiomas: el hueco empuja los botones a la derecha. */}
         <span aria-hidden="true" style={{ flex: 1 }} />
-        <BotonTema lang={m.lang} />
-        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={m.final.boton}>
+        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={visible(m.final.boton)}>
           <span className="v7-solo-ancho">{m.escribe}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
       </header>
@@ -89,7 +89,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
             <p className="v7-antetitulo">{m.bandera} {m.antetitulo}</p>
             <h1>{m.titulo}</h1>
             <p>{m.sub}</p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {m.cta}</a>
+            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {visible(m.cta)}</a>
           </div>
         </section>
 
@@ -122,13 +122,13 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         ))}
 
         <section className="v7-seccion" id="precios">
-          <h2>{m.preciosTitulo}</h2>
+          <h2>{visible(m.preciosTitulo)}</h2>
           <div className="v7-planes">
             {YENES.map((y, i) => (
               <article key={y} className={`v7-plan tarjeta ${i === 1 ? 'v7-plan-destacado' : ''}`}>
                 <h3>{m.planes[i]}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(y, m.lang)}</bdi></p>
-                <p className="v7-plan-grupo">{m.porGrupo}</p>
+                <p className="v7-plan-grupo">{visible(m.porGrupo)}</p>
                 <p className="v7-plan-persona">{m.porPersona(yenLocal(y / 4, m.lang))}</p>
                 {cambios.length > 0 && <p className="v7-plan-aprox">≈ {enDivisa(y)}</p>}
                 {pagar && <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${y}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
@@ -157,7 +157,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <section className="v7-seccion v7-otono-final">
           <h2>{m.final.titulo}</h2>
           <p className="v7-entradilla">{m.final.texto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {m.final.boton}</a>
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoCanal tg={tg} /> {visible(m.final.boton)}</a>
           <p><Link to={m.inicio}>{m.final.principal}</Link></p>
         </section>
       </main>

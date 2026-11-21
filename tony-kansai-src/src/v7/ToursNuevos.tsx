@@ -14,26 +14,30 @@ const BASE = 'https://tonykansaiguide.com'
 type Lengua = 'es' | 'en' | 'ar'
 type Tour = 'corto' | 'bici'
 
+// Voz de empresa (rediseño 21-11-2026): «más tours en Kioto», no «de Tony».
 const TITULO: Record<Lengua, string> = {
-  es: 'Más tours de Tony en Kioto',
-  en: 'More Kyoto tours with Tony',
-  ar: 'جولات أخرى مع طوني في كيوتو',
+  es: 'Más tours privados en Kioto',
+  en: 'More private tours in Kyoto',
+  ar: 'جولات خاصة أخرى في كيوتو',
 }
 
 const y = (n: number, lang: Lengua) => yenLocal(n, lang)
 
-/** Texto de cada tarjeta, sacado de lo que ya dicen las páginas de cada tour. */
+/** Texto de cada tarjeta, sacado de lo que ya dicen las páginas de cada tour.
+ *  `titulo` es también el nombre del TouristTrip (JSON-LD): no tocarlo por estética.
+ *  `sub` es solo lo visible: sin «hasta 6» (Antonio: no cerrar puertas); el tope
+ *  sigue en el JSON-LD (eligibleQuantity) y en las páginas de cada tour. */
 const TARJETA: Record<Lengua, Record<Tour, { kanji: string; titulo: string; sub: string }>> = {
   es: {
-    corto: { kanji: '時', titulo: 'Tour privado de 2 horas en Kioto', sub: `${y(PRECIO_CORTO, 'es')} por grupo de hasta 6 · Gion, Fushimi Inari o Kiyomizu` },
+    corto: { kanji: '時', titulo: 'Tour privado de 2 horas en Kioto', sub: `${y(PRECIO_CORTO, 'es')} por grupo, no por persona · Gion, Fushimi Inari o Kiyomizu` },
     bici: { kanji: '輪', titulo: 'Kioto en bici con guía privado', sub: `Medio día ${y(PRECIO_GUIA.medio, 'es')} o día completo ${y(PRECIO_GUIA.completo, 'es')} por grupo · bicis aparte` },
   },
   en: {
-    corto: { kanji: '時', titulo: '2-hour private tour in Kyoto', sub: `${y(PRECIO_CORTO, 'en')} per group of up to 6 · Gion, Fushimi Inari or Kiyomizu-dera` },
+    corto: { kanji: '時', titulo: '2-hour private tour in Kyoto', sub: `${y(PRECIO_CORTO, 'en')} per group, not per person · Gion, Fushimi Inari or Kiyomizu-dera` },
     bici: { kanji: '輪', titulo: 'Private guided bike tour in Kyoto', sub: `Half day ${y(PRECIO_GUIA.medio, 'en')} or full day ${y(PRECIO_GUIA.completo, 'en')} per group · bikes extra` },
   },
   ar: {
-    corto: { kanji: '時', titulo: 'جولة خاصة لمدة ساعتين في كيوتو', sub: `${y(PRECIO_CORTO, 'ar')} للمجموعة حتى 6 أشخاص · غيون أو فوشيمي إيناري أو كيوميزو-ديرا` },
+    corto: { kanji: '時', titulo: 'جولة خاصة لمدة ساعتين في كيوتو', sub: `${y(PRECIO_CORTO, 'ar')} للمجموعة، لا للشخص الواحد · غيون أو فوشيمي إيناري أو كيوميزو-ديرا` },
     bici: { kanji: '輪', titulo: 'جولة خاصة بالدراجة في كيوتو', sub: `نصف يوم ${y(PRECIO_GUIA.medio, 'ar')} أو يوم كامل ${y(PRECIO_GUIA.completo, 'ar')} للمجموعة · الدراجات على حدة` },
   },
 }

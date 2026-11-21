@@ -134,7 +134,6 @@ const yen = (n, lang) => { const v = (Math.round(n / 100) * 100).toLocaleString(
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 const CSS = `:root{--f:#fbfaf7;--t:#17151a;--g:#5d5a63;--b:#e4e0d8;--c:#ffffff;--a:#c8402c;--ok:#1d7a4f}
-@media (prefers-color-scheme:dark){:root{--f:#111014;--t:#f2f0ee;--g:#a9a5ad;--b:#2a2830;--c:#1a191e;--a:#ff6a52;--ok:#3cc488}}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
 .res ul{padding-inline-start:20px}
 a{color:inherit}.w{width:min(760px,100% - 32px);margin-inline:auto}

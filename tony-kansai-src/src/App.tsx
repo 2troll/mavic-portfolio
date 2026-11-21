@@ -66,9 +66,8 @@ const RUTAS_CIUDAD = [
   ...['/es', '/en', '/ar'].flatMap((p) => CIUDADES_TONY.map((c) => `${p}/${c}`)),
   ...['/ru', '/larion'].flatMap((p) => CIUDADES_LARION.map((c) => `${p}/${c}`)),
 ]
-import { Corte } from './v7/Corte'
 import { MarcoLegal } from './v7/MarcoLegal'
-// Franja «Nuestros guías» al final de cada página (también la 404 y las legales).
+// Pie de empresa con enlace a cada guía, plegado y sin fotos, al final de cada página (también la 404 y las legales).
 import { Equipo } from './v7/Equipo'
 
 // Páginas legales: el contenido de siempre dentro del marco nuevo de papel y tinta.
@@ -95,7 +94,7 @@ class AppErrorBoundary extends Component<{ children: ReactNode }, { crashed: boo
       const t = (s: string) => translate(detectLang(), s)
       return (
         <div style={{
-          minHeight: '100vh', background: '#f5f5f7', // claro como el resto de la web: un fallo no debe parecer otra página
+          minHeight: '100vh', background: '#fdfcfa', // washi como el resto de la web: un fallo no debe parecer otra página
           display: 'flex', flexDirection: 'column',
           alignItems: 'center', justifyContent: 'center',
           gap: 20, padding: 24, fontFamily: 'system-ui',
@@ -133,11 +132,10 @@ export function Layout() {
   if (ciudad) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <CiudadPagina key={pathname} pg={ciudad} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
     )
   }
@@ -152,11 +150,10 @@ export function Layout() {
   if (mercado) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <Viajeros key={mercado} id={mercado} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
     )
   }
@@ -166,7 +163,7 @@ export function Layout() {
   if (ventajas) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <Ventajas key={`${ventajas.id}-${ventajas.app ?? ''}`} id={ventajas.id} app={ventajas.app} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
@@ -179,11 +176,10 @@ export function Layout() {
   if (respuesta) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <PaginaRespuesta key={respuesta} id={respuesta} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_GUIA), ...Object.keys(RUTAS_RESPUESTA)]} />
       </>
     )
   }
@@ -193,11 +189,10 @@ export function Layout() {
   if (guia) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <GuiaTransporte key={guia} id={guia} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
     )
   }
@@ -207,11 +202,10 @@ export function Layout() {
   if (otono) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         <Otono key={otono} id={otono} />
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
     )
   }
@@ -220,11 +214,10 @@ export function Layout() {
   if (v7) {
     return (
       <>
-      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
+      <Suspense fallback={<div style={{ minHeight: '100vh', background: '#fdfcfa' }} />}>
         {v7 === 'portada' ? <PortadaRaiz /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
         <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
-      <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
     )
   }

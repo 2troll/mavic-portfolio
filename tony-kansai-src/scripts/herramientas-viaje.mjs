@@ -1011,8 +1011,7 @@ function documento({ lang, rutas, t, ld, cuerpo, script }) {
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(t.desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#f3eee4" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#151412" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#f3eee4" >
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${rutas[l]}">`).join('\n')}
@@ -1298,13 +1297,12 @@ f.addEventListener('change',pinta)})()`
 
 // ═════════════════════════════════════════════════════════════════════════════
 // Estilo: papel y tinta, un solo acento (bermellón del torii, el de precios.mjs),
-// modo oscuro por prefers-color-scheme, cifras tabulares.
+// siempre en claro (21-11-2026: sin modo oscuro automático, como el resto de la web), cifras tabulares.
 // ═════════════════════════════════════════════════════════════════════════════
 const CSS = `
 :root{--papel:#f3eee4;--papel2:#ebe4d6;--tarjeta:#fbf8f2;--tinta:#1d1b18;--gris:#5c574f;--linea:rgba(29,27,24,.14);--linea2:rgba(29,27,24,.28);--acento:#b8381f;--acento-t:#fff;--acento-suave:rgba(184,56,31,.09);--hondo:#1d1b18;--hondo-t:#f3eee4;--hondo-g:rgba(243,238,228,.78);
 --mn-tarjeta:var(--tarjeta);--mn-texto:var(--tinta);--mn-linea:var(--linea2);--mn-suave:var(--papel2);--mn-acento:var(--acento);
 --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Source Serif 4',Georgia,serif;--r:14px;color-scheme:light}
-@media (prefers-color-scheme:dark){:root{--papel:#151412;--papel2:#1c1a17;--tarjeta:#22201c;--tinta:#ede7dc;--gris:#aaa296;--linea:rgba(237,231,220,.13);--linea2:rgba(237,231,220,.26);--acento:#f0876c;--acento-t:#1a0d09;--acento-suave:rgba(240,135,108,.12);--hondo:#0d0c0b;--hondo-t:#ede7dc;--hondo-g:rgba(237,231,220,.74);color-scheme:dark}}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}

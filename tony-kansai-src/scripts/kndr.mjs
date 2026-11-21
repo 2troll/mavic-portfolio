@@ -511,7 +511,7 @@ ${equipoFuente}
 ${navHTML({ etiqueta: 'Разделы', abrir: 'Открыть меню', variante: 'kndr', grupos: [
   { t: 'Туры', enlaces: [['Все туры 2027', '/ru/kndr/#tury'], ...TURY.map((t) => [esc(t.nombre), `/ru/kndr/${t.yol}/`])] },
   { t: 'Поездка', enlaces: NAV.filter(([, h]) => h.startsWith('/ru/kndr/') && !h.includes('#')).map(([t, h]) => [t, h]) },
-  { t: 'Команда', enlaces: [['Макс — сопровождающий', '/ru/maks/'], ['Записаться в группу', TG_URL], ['Наши гиды', '#eq-titulo-ru'], ['Отзывы туристов', '/ru/kndr/otzyvy-turistov-o-kndr/']] },
+  { t: 'Команда', enlaces: [['Макс — сопровождающий', '/ru/maks/'], ['Записаться в группу', TG_URL], ['Отзывы туристов', '/ru/kndr/otzyvy-turistov-o-kndr/']] },
 ], cta: { t: `${TG_ICONO} Записаться`, h: TG_URL, aria: `Записаться в группу в Telegram ${TG_VISIBLE}: ${TG_NOTA}` } })}</div></header>
 <main>
 ${cuerpo}

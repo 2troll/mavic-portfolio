@@ -221,7 +221,7 @@ const T = {
     seccion: 'Familias y grupos', inicio: ['Tony Kansai Guide', `${BASE}/es/`], ariaMiga: 'Ruta', sub: 'Japón para familias y grupos',
     nav: [['Diseña tu viaje', `${SECCION}#disena`, true], ['Guías', `${SECCION}#guias`], ['Cómo funciona', `${SECCION}#como`], ['Qué incluye', ruta(SLUG_COND)], ['Tony Kansai Guide', '/es/']],
     presupuesto: 'Pedir presupuesto', escribir: `Escribir a ${NOMBRE}`,
-    cajaT: `${NOMBRE} se lo organiza`, cajaP: 'Viaje a medida para familias y grupos de 6 a 10 personas, con presupuesto por WhatsApp.',
+    cajaT: `${NOMBRE} se lo organiza`, cajaP: 'Viaje a medida para familias y grupos, con presupuesto por WhatsApp.',
     incluye: 'Qué incluye y qué no', disenar: 'Diseñar el viaje paso a paso', indice: 'En esta página', faq: 'Preguntas frecuentes',
     sigue: 'Sigue leyendo', volver: 'Volver a Familias y grupos', laRuta: 'La ruta', diaADia: 'Día a día',
     waPag: (h) => `Hola ${NOMBRE}, he leído «${h}». Somos una familia/grupo de __ personas y queremos viajar a Japón. Fechas: `,
@@ -232,7 +232,7 @@ const T = {
     seccion: 'Families and groups', inicio: ['Tony Kansai Guide', `${BASE}/en/`], ariaMiga: 'Breadcrumb', sub: 'Japan for families and groups',
     nav: [['Plan your trip (ES)', `${SECCION}#disena`, true], ['Guides (ES)', `${SECCION}#guias`], ['Tony Kansai Guide', '/en/']],
     presupuesto: 'Ask for a quote', escribir: `Message ${NOMBRE}`,
-    cajaT: `${NOMBRE} organises it`, cajaP: 'Tailor-made trips for families and groups of 6 to 10 people, quoted on WhatsApp.',
+    cajaT: `${NOMBRE} organises it`, cajaP: 'Tailor-made trips for families and groups, quoted on WhatsApp.',
     incluye: 'What is included (in Spanish)', disenar: 'Plan the trip step by step (in Spanish)', indice: 'On this page', faq: 'Frequently asked questions',
     sigue: 'Keep reading', volver: 'Back to Families and groups', laRuta: 'The route', diaADia: 'Day by day',
     waPag: (h) => `Hello ${NOMBRE}, I have read «${h}». We are a family/group of __ people and would like to travel to Japan. Dates: `,
@@ -365,14 +365,35 @@ function rutaClaves(p) {
 }
 
 // ---------------------------------------------------------------- CSS
+// Capa «Japón sereno» (21-11-2026, crítica de diseño: /familias/ era otra web).
+// Mismos tokens que src/v7/estilo-sereno.css: washi, tinta índigo, titulares en
+// Zen Old Mincho y el verde solo para la acción. Fuera la palabra en cursiva
+// amarilla del titular, la marquesina de ciudades, los números de contorno y los
+// colores ámbar; el crédito de la foto baja al pie de la portada; el botón fijo
+// de WhatsApp, en el móvil, es una barra abajo que no pisa el texto.
+const SERENO_FAMILIAS = `
+.hero h1 em,.gancho{font-style:normal;font-weight:inherit;color:inherit}
+.cinta{display:none}
+.hero .credito{top:auto;bottom:8px;opacity:.8}
+.op-grande .op-n{color:var(--suave);-webkit-text-stroke:0}
+.ceja::before{background:currentColor}
+.btn,.wa-fijo{border-radius:12px}
+.servicios li:nth-child(1),.siono .si{background:var(--kart);color:var(--tinta);border-color:var(--linea)}
+.servicios li:nth-child(1) p,.siono .si p{color:var(--suave);opacity:1}
+.servicios li:nth-child(1) .ico-c,.siono .si .ok{background:var(--acento-2);color:var(--acento)}
+@media (max-width:640px){
+  .wa-fijo{left:12px;right:12px;bottom:max(12px,env(safe-area-inset-bottom));justify-content:center;padding:14px 18px;font-size:16px;gap:10px}
+  .wa-fijo span{position:static;width:auto;height:auto;overflow:visible;clip:auto}
+  body{padding-bottom:84px}
+}
+`.replace(/\s*\n\s*/g, '')
 const CSS = `
-:root{--bg:#f3f2ee;--bg2:#e9e8e2;--kart:#fbfbf8;--tinta:#15211c;--suave:#56625c;--linea:#d9dad2;--acento:#1d5c45;--acento-2:#e8efe9;--ambar:#c9861d;--oro:#f2c46d;--noche:#0e1712;--sobre:#fff;--sombra:20 40 30}
-@media (prefers-color-scheme:dark){:root{--bg:#0f1512;--bg2:#141c18;--kart:#18211d;--tinta:#ebefe9;--suave:#a3aea7;--linea:#28332e;--acento:#6cc79d;--acento-2:#1b2b24;--ambar:#e6a948;--sobre:#0f1512;--sombra:0 0 0}}
+:root{--bg:#fdfcfa;--bg2:#f7f3ee;--kart:#ffffff;--tinta:#1e2a36;--suave:#56606c;--linea:rgba(30,42,54,.12);--acento:#2a7352;--acento-2:#e9f3ed;--ambar:#56606c;--oro:#ffffff;--noche:#1e2a36;--sobre:#fff;--sombra:30 42 54;color-scheme:light}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth{scroll-behavior:auto!important}.lenis.lenis-stopped{overflow:hidden}
-body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
+body{margin:0;background:var(--bg);color:var(--tinta);font:17px/1.65 Geist,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
 img{max-width:100%}a{color:var(--acento);text-underline-offset:3px}
 .kap{width:100%;max-width:1240px;margin:0 auto;padding:0 16px}@media (min-width:768px){.kap{padding:0 32px}}
-h1,h2,h3,h4,.serif{font-family:Fraunces,Georgia,serif;font-optical-sizing:auto;font-weight:500;letter-spacing:-.015em;line-height:1.12}
+h1,h2,h3,h4,.serif{font-family:'Zen Old Mincho',Georgia,serif;font-optical-sizing:auto;font-weight:500;letter-spacing:-.015em;line-height:1.12}
 h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font-size:21px;margin:0 0 6px}
 .lead{font-size:clamp(18px,1.8vw,20px);color:var(--suave);max-width:60ch;margin:0 0 28px}
 .seccion{padding:clamp(72px,10vw,128px) 0}.seccion.alt{background:var(--bg2)}
@@ -386,7 +407,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 /* cabecera */
 .cab{position:absolute;inset:0 0 auto;z-index:5;color:#fff}.cab .kap{display:flex;justify-content:space-between;align-items:center;gap:16px;height:72px}
 .cab a{color:#fff;text-decoration:none}.marca{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;line-height:1.2}
-.marca .mono{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:Fraunces,Georgia,serif;font-size:18px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.marca .mono{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:'Zen Old Mincho',Georgia,serif;font-size:18px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
 .marca small{display:block;font-weight:400;opacity:.8;font-size:12.5px}
 .cab nav{display:flex;gap:22px;font-size:14.5px;align-items:center}.cab nav a{opacity:.85}.cab nav a:hover{opacity:1}
 .cab nav a.siempre{opacity:1;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
@@ -401,7 +422,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .pal-mask{padding:0 .05em .14em;margin:0 -.05em -.14em}
 .hero .lead{color:rgba(255,255,255,.88);max-width:46ch;margin-bottom:28px}
 .ceja{display:inline-flex;align-items:center;gap:12px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;margin:0 0 22px;color:rgba(255,255,255,.9)}.ceja::before{content:"";width:28px;height:1px;background:currentColor}
-.gancho{font-family:Fraunces,Georgia,serif;font-style:italic;font-size:clamp(20px,2.2vw,26px);color:var(--oro);margin:0 0 28px;line-height:1.3}
+.gancho{font-family:'Zen Old Mincho',Georgia,serif;font-style:italic;font-size:clamp(20px,2.2vw,26px);color:var(--oro);margin:0 0 28px;line-height:1.3}
 .g-rot>span+span::before{content:" · "}
 .acciones{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 .hero .credito{position:absolute;right:12px;top:78px;font-size:11px;color:rgba(255,255,255,.62);max-width:calc(100% - 24px);text-align:right}.hero .credito a{color:inherit}
@@ -418,7 +439,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .cinta{position:relative;border-top:1px solid rgba(255,255,255,.18);background:rgba(8,14,11,.35);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);overflow:hidden;padding:16px 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent)}
 .cinta-pista{display:flex;width:max-content;animation:cinta 60s linear infinite}
 .cinta ul{display:flex;list-style:none;margin:0;padding:0}
-.cinta li{display:flex;align-items:center;font:400 clamp(26px,3.6vw,52px)/1.1 Fraunces,Georgia,serif;letter-spacing:-.02em;white-space:nowrap;padding-right:.55em}
+.cinta li{display:flex;align-items:center;font:400 clamp(26px,3.6vw,52px)/1.1 'Zen Old Mincho',Georgia,serif;letter-spacing:-.02em;white-space:nowrap;padding-right:.55em}
 .cinta li:nth-child(even){color:transparent;-webkit-text-stroke:1px rgba(255,255,255,.8);font-style:italic}
 .cinta li::after{content:"";width:.16em;height:.16em;border-radius:50%;background:var(--oro);margin-left:.55em}
 .cinta:hover .cinta-pista{animation-play-state:paused}
@@ -426,7 +447,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 /* datos rápidos bajo el hero */
 .datos{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1px solid var(--linea)}
 .datos div{padding:26px 16px;border-right:1px solid var(--linea)}.datos div:last-child{border-right:0}
-.datos strong{display:block;font-family:Fraunces,Georgia,serif;font-weight:500;font-size:clamp(22px,2.6vw,32px);line-height:1.1}.datos span{color:var(--suave);font-size:14.5px}
+.datos strong{display:block;font-family:'Zen Old Mincho',Georgia,serif;font-weight:500;font-size:clamp(22px,2.6vw,32px);line-height:1.1}.datos span{color:var(--suave);font-size:14.5px}
 @media (max-width:640px){.datos{grid-template-columns:1fr}.datos div{border-right:0;border-bottom:1px solid var(--linea);padding:18px 0}.datos div:last-child{border-bottom:0}}
 /* configurador */
 .cfg-c{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,8fr);gap:clamp(28px,5vw,80px);align-items:start}
@@ -441,7 +462,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .cfg-pase dl>div{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.08)}.cfg-pase dl>div:nth-child(odd){border-right:1px solid rgba(255,255,255,.08)}
 .cfg-pase dl>div.ancho{grid-column:1/-1;border-right:0}
 .cfg-pase dt{font:600 10.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;letter-spacing:.14em;text-transform:uppercase;color:rgba(238,242,238,.55);margin-bottom:6px}
-.cfg-pase dd{margin:0;font:400 22px/1.2 Fraunces,Georgia,serif;min-height:1.2em}.cfg-pase dd.vacio{color:rgba(238,242,238,.3)}
+.cfg-pase dd{margin:0;font:400 22px/1.2 'Zen Old Mincho',Georgia,serif;min-height:1.2em}.cfg-pase dd.vacio{color:rgba(238,242,238,.3)}
 .cfg-pase .ancho dd{font-size:16px;font-family:system-ui,-apple-system,sans-serif}
 .cfg-caja{background:var(--kart);border:1px solid var(--linea);border-radius:28px;padding:clamp(20px,3.6vw,48px);box-shadow:0 40px 80px -60px rgb(var(--sombra)/.7)}
 .cfg-barra{display:none;height:4px;background:var(--linea);border-radius:4px;overflow:hidden;margin-bottom:16px}.cfg-barra span{display:block;height:100%;width:20%;background:var(--acento);border-radius:4px;transition:width .6s cubic-bezier(.16,1,.3,1)}
@@ -460,7 +481,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .op[aria-pressed="true"]{background:var(--acento);border-color:var(--acento);color:var(--sobre)}
 .op[aria-pressed="true"] .op-check{opacity:1;background:var(--sobre);color:var(--acento);border-color:var(--sobre)}.op[aria-pressed="true"] .op-check svg{opacity:1}
 .op-grande{flex-direction:column;justify-content:center;align-items:center;text-align:center;min-height:clamp(96px,11vw,128px);gap:2px}
-.op-grande .op-n{font:300 clamp(40px,5vw,64px)/1 Fraunces,Georgia,serif;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1.2px var(--tinta)}
+.op-grande .op-n{font:300 clamp(40px,5vw,64px)/1 'Zen Old Mincho',Georgia,serif;letter-spacing:-.03em;color:transparent;-webkit-text-stroke:1.2px var(--tinta)}
 .op-grande .op-n.txt{font-size:clamp(22px,2.4vw,28px);-webkit-text-stroke:0;color:inherit;font-weight:400}
 .op-grande .op-s{font-size:13px;font-weight:600;color:var(--suave);letter-spacing:.04em}
 .op-grande[aria-pressed="true"] .op-n{color:var(--sobre);-webkit-text-stroke:0}.op-grande[aria-pressed="true"] .op-s{color:inherit;opacity:.8}
@@ -478,7 +499,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .cfg-reco a{display:grid;grid-template-rows:auto 1fr;height:100%;text-decoration:none;color:var(--tinta);border:1px solid var(--linea);border-radius:16px;overflow:hidden;background:var(--bg);transition:transform .3s cubic-bezier(.16,1,.3,1)}
 .cfg-reco a:hover{transform:translateY(-3px)}
 .cfg-reco .im{aspect-ratio:16/10;background:#1d2b25 center/cover}
-.cfg-reco .tx{padding:12px 14px 14px}.cfg-reco small{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--acento);margin-bottom:4px}.cfg-reco strong{font:500 17px/1.25 Fraunces,Georgia,serif}
+.cfg-reco .tx{padding:12px 14px 14px}.cfg-reco small{display:block;font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;font-weight:700;color:var(--acento);margin-bottom:4px}.cfg-reco strong{font:500 17px/1.25 'Zen Old Mincho',Georgia,serif}
 @media (max-width:640px){.cfg-reco{grid-template-columns:minmax(0,1fr)}.cfg-reco a{grid-template-columns:96px minmax(0,1fr);grid-template-rows:auto;align-items:stretch}.cfg-reco .im{grid-column:1;grid-row:1;aspect-ratio:auto;width:96px;min-width:0;min-height:96px;height:100%}.cfg-reco .tx{grid-column:2;grid-row:1;min-width:0;padding:12px 14px;align-self:center;overflow-wrap:anywhere}.cfg-reco strong{font-size:16px;display:block}}
 .cfg-envio{display:flex;flex-wrap:wrap;gap:12px;align-items:center}
 @media (max-width:640px){.cfg-envio .btn{width:100%;white-space:normal}.cfg-resumen{grid-template-columns:1fr auto}.cfg-resumen dt{grid-column:1/-1;border-bottom:0;padding-bottom:0}}
@@ -495,12 +516,12 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .mapa .tierra{fill:#1a2b23;stroke:rgba(255,255,255,.3);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
 .mapa .seg{fill:none;stroke:var(--oro);stroke-width:2.5;stroke-linecap:round;vector-effect:non-scaling-stroke;filter:drop-shadow(0 0 6px rgba(242,196,109,.55))}
 .mapa .halo{fill:rgba(242,196,109,.16);transition:fill .3s}.mapa .nucleo{fill:var(--oro);stroke:var(--noche);stroke-width:2;vector-effect:non-scaling-stroke}
-.mapa text{fill:#eef2ee;font-family:Fraunces,Georgia,serif;font-weight:500;paint-order:stroke;stroke:var(--noche);stroke-width:.3em;stroke-linejoin:round;transition:fill .3s}
+.mapa text{fill:#eef2ee;font-family:'Zen Old Mincho',Georgia,serif;font-weight:500;paint-order:stroke;stroke:var(--noche);stroke-width:.3em;stroke-linejoin:round;transition:fill .3s}
 .mapa a{cursor:pointer}.mapa a:hover text,.mapa a:focus-visible text,.mapa .foco text{fill:var(--oro)}.mapa a:hover .halo,.mapa .foco .halo{fill:rgba(242,196,109,.45)}
 .mapa a:focus-visible{outline:none}.mapa a:focus-visible .nucleo{stroke:#fff;stroke-width:3}
 .paradas{list-style:none;padding:0;margin:8px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;counter-reset:pr}
 .paradas li{border-top:1px solid rgba(255,255,255,.12)}
-.paradas a,.paradas span.sin{display:flex;align-items:baseline;gap:12px;padding:11px 0;color:#eef2ee;text-decoration:none;font:400 19px/1.25 Fraunces,Georgia,serif}
+.paradas a,.paradas span.sin{display:flex;align-items:baseline;gap:12px;padding:11px 0;color:#eef2ee;text-decoration:none;font:400 19px/1.25 'Zen Old Mincho',Georgia,serif}
 .paradas a:hover{color:var(--oro)}.paradas .n{font:600 11.5px/1 ui-monospace,SFMono-Regular,Menlo,monospace;color:var(--oro);letter-spacing:.06em}
 .paradas a::after{content:"→";margin-left:auto;opacity:.45;font-family:system-ui,sans-serif;font-size:15px}
 @media (max-width:420px){.paradas{grid-template-columns:1fr}}
@@ -580,7 +601,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .pasos{list-style:none;margin:0;padding:0 0 0 60px;position:relative;counter-reset:p}
 .p-linea,.dias-linea{position:absolute;left:21px;top:10px;bottom:10px;width:2px;background:var(--linea);border-radius:2px}.p-linea span,.dias-linea span{position:absolute;inset:0;background:var(--acento);transform-origin:top;border-radius:2px}
 .pasos li{position:relative;padding:4px 0 44px;counter-increment:p}.pasos li:last-child{padding-bottom:0}
-.pasos li::before{content:counter(p);position:absolute;left:-60px;top:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--kart);border:1px solid var(--linea);font-family:Fraunces,Georgia,serif;font-size:19px;color:var(--acento);transition:background .4s,color .4s}
+.pasos li::before{content:counter(p);position:absolute;left:-60px;top:0;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--kart);border:1px solid var(--linea);font-family:'Zen Old Mincho',Georgia,serif;font-size:19px;color:var(--acento);transition:background .4s,color .4s}
 .pasos li.activo::before{background:var(--acento);color:var(--sobre);border-color:var(--acento)}
 .pasos h3{font-size:24px;margin-top:6px}.pasos p{margin:0;color:var(--suave)}
 @media (max-width:860px){.pasos-c{grid-template-columns:1fr}.pasos-c .fijo{position:static}}
@@ -600,7 +621,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .pildora{display:inline-block;font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:7px 14px;border-radius:999px;background:rgba(242,196,109,.14);color:var(--oro);margin-bottom:18px}
 /* antonio */
 .persona{display:grid;grid-template-columns:auto 1fr;gap:clamp(24px,4vw,56px);align-items:start;max-width:900px}
-.persona .mono{width:clamp(88px,12vw,140px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 clamp(44px,6vw,72px)/1 Fraunces,Georgia,serif}
+.persona .mono{width:clamp(88px,12vw,140px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 clamp(44px,6vw,72px)/1 'Zen Old Mincho',Georgia,serif}
 .persona p{margin:0 0 14px;max-width:62ch}
 @media (max-width:640px){.persona{grid-template-columns:1fr}}
 .persona .retrato{width:clamp(200px,24vw,300px);height:auto;aspect-ratio:1;object-fit:cover;border-radius:24px;display:block;box-shadow:0 24px 50px -28px rgb(var(--sombra)/.6)}
@@ -610,7 +631,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .cuerpo .ficha{margin:28px 0}
 .ficha-cab{display:flex;align-items:center;gap:14px;margin-bottom:6px}
 .ficha-cab h2{font-size:clamp(22px,2.6vw,28px)!important;margin:0!important}
-.ficha-cara{width:56px;height:56px;border-radius:50%;flex:none;object-fit:cover;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 26px/1 Fraunces,Georgia,serif}
+.ficha-cara{width:56px;height:56px;border-radius:50%;flex:none;object-fit:cover;display:grid;place-items:center;background:var(--acento);color:var(--sobre);font:400 26px/1 'Zen Old Mincho',Georgia,serif}
 .ficha dl{margin:8px 0 0}
 .ficha dl div{display:grid;grid-template-columns:150px 1fr;gap:12px;padding:10px 0;border-top:1px solid var(--linea)}
 .ficha dt{font-weight:700;font-size:14.5px;color:var(--suave)}
@@ -632,7 +653,7 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 /* artículo */
 .articulo{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:clamp(32px,5vw,72px);padding-top:clamp(48px,7vw,88px);padding-bottom:clamp(56px,8vw,100px)}
 .articulo .cuerpo{max-width:740px;min-width:0}
-.articulo .entr{font-size:clamp(20px,2.1vw,24px);line-height:1.5;margin:0 0 40px;font-family:Fraunces,Georgia,serif;font-weight:400}
+.articulo .entr{font-size:clamp(20px,2.1vw,24px);line-height:1.5;margin:0 0 40px;font-family:'Zen Old Mincho',Georgia,serif;font-weight:400}
 .articulo h2{font-size:clamp(28px,3.2vw,40px);margin:56px 0 14px;scroll-margin-top:24px}
 .articulo ul.lista{padding:0;list-style:none;display:grid;gap:10px;margin:18px 0}
 .articulo ul.lista li{position:relative;padding-left:26px}.articulo ul.lista li::before{content:"";position:absolute;left:4px;top:.62em;width:9px;height:9px;border-radius:50%;border:2px solid var(--acento)}
@@ -1082,10 +1103,10 @@ ${alt.map(([l, h]) => `<link rel="alternate" hreflang="${l}" href="${h}">`).join
 <script type="application/ld+json">${JSON.stringify(jsonld).replace(/</g, '\\u003c')}</script>
 ${HEAD_JS}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..600;1,9..144,300..500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Zen+Old+Mincho:wght@400;500;700&family=Geist:wght@400;500;600;700&display=swap">
 ${equipoFuente}
 <style>${CSS}${equipoCSS}${menuCSS}${EXPERIENCIAS_CSS}.indice{border-bottom:1px solid var(--linea);padding:12px 0}.indice summary{cursor:pointer;font-weight:600;font-size:18px;display:flex;justify-content:space-between}.indice summary span{opacity:.6;font-size:14px}.indice ul{margin:10px 0 4px;padding-left:18px;columns:2 260px;gap:24px}.indice li{margin:4px 0}.xp{--xp-acento:#2f5d50}${planesCSS}.pl{--pl-acento:#2f5d50}</style>
-<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#c9a227;--rb-acento2:#2f5d50}</style>
+<link rel="stylesheet" href="/rb/rb.css"><style>:root{--rb-acento:#2a7352;--rb-acento2:#2a7352}${SERENO_FAMILIAS}</style>
 </head>
 <body>
 <header class="cab"><div class="kap">
@@ -1115,7 +1136,7 @@ function navFamilias(lang, t) {
   return navHTML({ etiqueta: en ? 'Sections' : 'Secciones', abrir: en ? 'Open menu' : 'Abrir menú', variante: 'familias', grupos: [
     { t: en ? 'Destinations' : 'Destinos', enlaces: pagsDe(['destino', 'itinerario'], lang).slice(0, 8) },
     { t: en ? 'Plan' : 'Planificar', enlaces: pagsDe(['practico', 'temporada', 'ocasion'], lang).slice(0, 8) },
-    { t: NOMBRE, enlaces: [...resto.map(([n, h]) => ({ t: esc(n), h, ...seccion(h) })), { t: en ? 'Guest reviews (Spanish)' : 'Opiniones de clientes', h: ruta(SLUG_OPINIONES), ...seccion(SECCION) }, { t: en ? 'Our guides' : 'Nuestros guías', h: `#eq-titulo-${lang}` }] },
+    { t: NOMBRE, enlaces: [...resto.map(([n, h]) => ({ t: esc(n), h, ...seccion(h) })), { t: en ? 'Guest reviews (Spanish)' : 'Opiniones de clientes', h: ruta(SLUG_OPINIONES), ...seccion(SECCION) }] },
   ], cta: { t: esc(cta[0]), h: cta[1], cls: 'siempre' } })
 }
 function pieFamilias(lang, t) {
@@ -1145,12 +1166,14 @@ ${f ? `<small class="credito">${credito(f)}</small>` : ''}
 }
 
 // Bloque «Sí gestiona / No gestiona», compartido por la portada y condiciones.
-function sionoHtml({ completo }) {
+// soloSi (portada, 21-11-2026): sin la columna «No gestiona», que cerraba puertas en
+// la primera visita (Antonio: «nunca limitar»); sigue entera en /familias/condiciones/.
+function sionoHtml({ completo, soloSi = false }) {
   const si = CONDICIONES.incluye ?? []
   const no = CONDICIONES.noIncluye ?? []
   return `<div class="siono">
 <div class="si"><h3>Sí gestiona</h3><ul>${si.map((x) => `<li><span class="ok">${ICO_SI}</span><div><strong>${rico(x.titulo)}</strong>${x.texto ? `<p>${rico(x.texto)}</p>` : ''}</div></li>`).join('')}</ul></div>
-<div class="no"><h3>No gestiona</h3><ul>${no.map((x) => `<li><span class="ok">${ICO_NO}</span><div><strong>${rico(x.titulo)}</strong>${x.texto ? `<p>${rico(x.texto)}</p>` : ''}${completo && x.consejo ? `<span class="consejo">${rico(x.consejo)}</span>` : ''}</div></li>`).join('')}</ul></div>
+${soloSi ? '' : `<div class="no"><h3>No gestiona</h3><ul>${no.map((x) => `<li><span class="ok">${ICO_NO}</span><div><strong>${rico(x.titulo)}</strong>${x.texto ? `<p>${rico(x.texto)}</p>` : ''}${completo && x.consejo ? `<span class="consejo">${rico(x.consejo)}</span>` : ''}</div></li>`).join('')}</ul></div>`}
 </div>`
 }
 
@@ -1254,14 +1277,14 @@ const enlacesEn = PAGINAS_EN.map((p) => ['en', url(p.slug)])
   }).join('')
   const cats = CATS.map((c) => ({ ...c, ps: PAGINAS.filter((p) => p.cat === c.id) })).filter((c) => c.ps.length)
   const corps = `
-${hero({ k: 'hero', alt: 'Japón en familia', clase: 'hero-p', corps: `<p class="ceja entra">Japón a medida · 6 a 10 personas</p>
+${hero({ k: 'hero', alt: 'Japón en familia', clase: 'hero-p', corps: `<p class="ceja entra">Japón a medida · familias y grupos</p>
 <h1>${h1Html}</h1>
-<div class="hero-fila entra"><div><p class="lead">${rico(P.entradilla)}</p>
+<div class="hero-fila entra"><div><p class="lead">${rico(P.entradilla.replace(' de 6 a 10 personas', ''))}</p>
 ${ganchos.length ? `<p class="gancho"><span class="g-rot">${ganchos.map((g) => `<span>${esc(g)}</span>`).join(' ')}</span></p>` : ''}</div>
 <div class="acciones"><a class="btn claro" href="#disena">Diseñar el viaje ${FLECHA}</a><a class="btn fantasma" href="${WA_GENERAL}">${ICO_WA}Pedir presupuesto</a></div></div>`, tras: cinta })}
 <div class="kap"><div class="datos">
 <div><strong>Todo Japón</strong><span>Corea del Sur, próximamente</span></div>
-<div><strong>6 a 10 personas</strong><span>Familias y grupos, también agencias</span></div>
+<div><strong>Familias y grupos</strong><span>De cualquier tamaño, también agencias</span></div>
 <div><strong>En español</strong><span>También japonés, inglés y catalán</span></div>
 </div>
 ${fichaRapida('es')}
@@ -1293,9 +1316,9 @@ ${cats.map((c) => `<details class="indice"><summary>${esc(c.es)} <span>${c.ps.le
 </div></section>
 
 <section class="seccion alt" id="gestiona" aria-labelledby="t-gestiona"><div class="kap">
-<h2 id="t-gestiona">Lo que sí y lo que no</h2>
-<p class="lead">Claro desde el principio, para que no haya sorpresas.</p>
-${sionoHtml({ completo: false })}
+<h2 id="t-gestiona">Lo que organizamos</h2>
+<p class="lead">Claro desde el principio. Lo que queda fuera está en las condiciones.</p>
+${sionoHtml({ completo: false, soloSi: true })}
 <p style="margin-top:24px"><a class="enl" href="${ruta(SLUG_COND)}">Ver todas las condiciones ${FLECHA}</a></p>
 </div></section>
 

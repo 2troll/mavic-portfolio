@@ -301,7 +301,7 @@ const html = `<!doctype html>
 ${navHTML({ etiqueta: 'Разделы', abrir: 'Открыть меню', variante: 'filipp', grupos: [
   { t: 'Туры', enlaces: SETLIST.map((t) => [esc(t.titulo), '#setlist']).slice(0, 6).concat([['Программы с впечатлениями', '#planes']]) },
   { t: 'Филипп', enlaces: [['Почему с Филиппом', '#pochemu'], ['Как это работает', '#kak'], ['Вопросы', '#voprosy']] },
-  { t: 'Команда', enlaces: [['Ларион — гид на русском', '/ru/'], ['Ответы для туристов из России', '/ru/otvety/'], ['Полезное для поездки', '/ru/perks/'], ['Наши гиды', '#eq-titulo-ru']] },
+  { t: 'Команда', enlaces: [['Ларион — гид на русском', '/ru/'], ['Ответы для туристов из России', '/ru/otvety/'], ['Полезное для поездки', '/ru/perks/']] },
 ], cta: { t: `${TG_ICONO} Написать`, h: TG_URL, aria: `Telegram ${TG_VISIBLE}: ${TG_NOTA}` } })}</div></header>
 <main>
 ${cuerpo}

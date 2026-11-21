@@ -4,6 +4,8 @@
 // con datos comprobados y, al final, ofrecen el tour. Textos y fuentes en
 // datosGuias.ts; cada guía solo enlaza (hreflang, idiomas) con las de su grupo.
 
+// Texto visible sin «hasta 6» ni primera persona (vozEmpresa.ts); los datos no cambian.
+import { visible } from './vozEmpresa'
 import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
@@ -13,7 +15,6 @@ import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { enlacesHreflang } from '../seo/hreflang'
 import { yenLocal, PIE } from './formato'
 import creditosZonas from '../v8/creditosZonas.json'
@@ -80,9 +81,8 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
             <Link key={k} to={x.ruta} lang={x.lang} aria-current={k === id ? 'page' : undefined}>{x.lang === 'es' ? 'Español' : 'English'}</Link>
           ))}
         </nav>
-        <BotonTema lang={p.lang} />
-        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={p.final.boton}>
-          <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoWa /></span>
+        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={visible(p.final.boton)}>
+          <span className="v7-solo-ancho">{visible(p.final.boton)}</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
 
@@ -93,7 +93,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
             <p className="v7-antetitulo">{p.grupo === 'aeropuerto' ? '✈️' : '🚃'} {p.antetitulo}</p>
             <h1>{p.titulo}</h1>
             <p>{p.sub}</p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {p.cta}</a>
+            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {visible(p.cta)}</a>
           </div>
         </section>
 
@@ -121,13 +121,13 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <section className="v7-seccion" id="precios">
           <h2>{p.tour.titulo}</h2>
           <p className="v7-entradilla">{p.tour.texto}</p>
-          <h3>{p.preciosTitulo}</h3>
+          <h3>{visible(p.preciosTitulo)}</h3>
           <div className="v7-planes">
             {([['medio', p.medio], ['completo', p.completo]] as const).map(([k, nombre]) => (
               <article key={k} className={`v7-plan tarjeta ${k === 'completo' ? 'v7-plan-destacado' : ''}`}>
                 <h3>{nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO[k], p.lang)}</bdi></p>
-                <p className="v7-plan-grupo">{p.porGrupo}</p>
+                <p className="v7-plan-grupo">{visible(p.porGrupo)}</p>
                 <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${PRECIO[k]}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>
               </article>
             ))}
@@ -144,7 +144,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
             {p.faq.map((f) => (
               <details key={f.p}>
                 <summary>{f.p}</summary>
-                <p>{f.r}</p>
+                <p>{visible(f.r)}</p>
               </details>
             ))}
           </div>
@@ -155,7 +155,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>
           <p className="v7-entradilla">{p.final.texto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {p.final.boton}</a>
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {visible(p.final.boton)}</a>
           <p><Link to={p.inicio}>{p.volver}</Link></p>
         </section>
       </main>

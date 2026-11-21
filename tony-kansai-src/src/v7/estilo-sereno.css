@@ -1,0 +1,896 @@
+/* ══ Estilo «Japón sereno» ═══════════════════════════════════════════════════
+   Sustituye al estilo píxel desde el 21-11-2026 (rediseño de Antonio). Las 8
+   vistas que importaban estilo-pixel.css lo siguen haciendo: ese archivo es
+   ahora una sola línea que trae esta hoja, para no tocar sus imports.
+   Plan completo: Documents/Estudio-IA-2026-10/rediseno-movil/plan-estilo.md.
+
+   Encargo de Antonio (BRIEF.md): rosa sakura clarito, blanco, verde y cielo
+   azul; el rojo solo como acento mínimo; nada de píxel ni de neón; limpio,
+   elegante, mucho aire, «mucho menos detalle».
+
+   Reparto 60 / 30 / 10
+     60 %  blanco washi (#fdfcfa) y tarjetas blancas.
+     30 %  tinta índigo (#1e2a36) y bandas muy claras de sakura y de cielo
+           (reseñas, contacto y el pie: claro, decisión del 21-11).
+     10 %  verde (#2a7352): el ÚNICO color de acción (WhatsApp, enlaces, foco).
+     Rojo enji (#a63a3f): solo el sello 日本 de la portada.
+
+   Ámbito: el mismo que la hoja píxel (.v7 sin .v7-expedicion = Montaña, ni
+   .v7-sin-pixel = 404). Especificidad (0,3,0): gana a tokens.css (html .v7,
+   0,1,1) y a casi todo v7.css/v8.css sin !important. Donde v7.css usa
+   !important (color de .v7-boton, .ck-foil…) aquí también, y se dice.
+
+   Contraste medido con la fórmula WCAG 2.x (tabla en plan-estilo.md):
+   todo el texto ≥ 4,5:1 en claro y en oscuro; bordes de campos y chips
+   (--borde-control), foco y botones ≥ 3:1 (WCAG 1.4.11).
+   Sin backdrop-filter en nada que haga scroll (frena el móvil: ver v7.css). */
+
+/* ── 0. Letras ───────────────────────────────────────────────────────────────
+   @import tiene que ir antes que cualquier otra regla o el navegador lo ignora.
+
+   · Titulares es/en: Zen Old Mincho 500 (OFL). Mincho japonés de verdad con
+     latín propio: da el aire de Japón sin disfrazar la letra. 16 KB.
+   · Titulares ru: Source Serif 4 (ya en package.json, la usa Montaña). El
+     cirílico de Zen Old Mincho es ~22 % más ancho que su latín (medido: «о»
+     623 frente a «o» 506 unidades) y se vería espaciado, como DotGothic16.
+   · Titulares ar: Amiri 700 (OFL), naskh clásico que casa con el mincho.
+     No añade descarga: src/lib/arabicFont.ts ya pide Amiri + IBM Plex Sans
+     Arabic a Google Fonts en cada visita a /ar/ y hoy la web v7 no usa
+     ninguna (v7.css pone la letra del sistema). Si no ha llegado, sale el
+     naskh del sistema (Noto Naskh Arabic en Android, Geeza Pro en Apple).
+     El texto corrido sigue con la del sistema, como decidió v7.css.
+   · Texto corrido y CIFRAS: Geist, que ya carga v7.css. Zen Old Mincho y Zen
+     Kaku Gothic New no traen cifras tabulares (medido: sin rasgo «tnum», 9
+     anchos distintos para 0-9); los precios van siempre en Geist.
+   · Kanji de adorno: primero el mincho del sistema (Hiragino en iPhone/Mac,
+     Yu Mincho en Windows, Noto Serif CJK si el Android lo trae); solo si no
+     hay ninguno baja «Sereno Kanji», un subconjunto propio. */
+@import '@fontsource-variable/source-serif-4/wght.css';
+
+/* Latín de Zen Old Mincho 500, copiado de @fontsource/zen-old-mincho@5.3.1
+   (files/zen-old-mincho-latin-500-normal.woff2). OFL 1.1: la licencia va al
+   lado, en fuentes/LICENSE-OFL-zen-old-mincho.txt. El paquete no hace falta en
+   package.json: se hizo igual con el kanji de DotGothic16. Se declara a mano y no con @fontsource/zen-old-mincho/500.css porque esa
+   hoja añade 120 trozos japoneses: con 15 kanji de portada bajaban 12 trozos,
+   194 KB (medido). Y japanese-500.css es UN archivo de 2 MB sin unicode-range. */
+@font-face {
+  font-family: 'Zen Old Mincho';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./fuentes/zen-old-mincho-latin-500.woff2) format('woff2');
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+/* Latín extendido: la ō de Kōyasan o Tōdai-ji sale 23 veces en contenido.ts y
+   ciudades.ts; sin esto caía al mincho del sistema a media palabra. 2,8 KB. */
+@font-face {
+  font-family: 'Zen Old Mincho';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./fuentes/zen-old-mincho-latin-ext-500.woff2) format('woff2');
+  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C4, U+2113, U+2C60-2C7F, U+A720-A7FF;
+}
+/* Solo los kanji y kana de ADORNO (197: los campos «kanji:» de los datos, el
+   tiempo, las razones y 関西/日本): 51,6 KB medido; con los ~430 de toda la
+   web serían 101 KB. La lista está en fuentes/zen-old-mincho-kanji-caracteres.txt.
+   Para regenerarlo (un kanji nuevo de adorno), como se hizo con DotGothic16:
+   pyftsubset zen-old-mincho-japanese-500-normal.woff2 --text-file=zen-old-mincho-kanji-caracteres.txt
+     --flavor=woff2 --layout-features='vert,vrt2,palt,vpal'
+   Solo se descarga si ninguna letra del sistema de la pila --mincho tiene el
+   kanji: en iPhone, Mac y Windows nunca; en Android, sí (una vez, en caché). */
+@font-face {
+  font-family: 'Sereno Kanji';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(./fuentes/zen-old-mincho-kanji-web.woff2) format('woff2');
+  unicode-range: U+3000-30FF, U+3400-9FFF, U+FF00-FFEF;
+}
+
+/* ── 1. Paleta y sistema (modo claro, el de por defecto) ───────────────────── */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) {
+  /* Colores con nombre (no usar fuera de este bloque: usar los de rol). */
+  --washi: #fdfcfa;          /* blanco papel, cálido apenas */
+  --sakura-velo: #fbf1f4;    /* banda de reseñas, huecos de foto */
+  --sakura: #f6d9e0;         /* pétalo: inicial de reseña, selección */
+  --sakura-hondo: #e8a9b9;   /* solo adorno (kanji grande, filetes): no es texto */
+  --cielo-velo: #edf4fa;     /* banda de contacto, selector de idioma */
+  --cielo: #d6e8f5;
+  --cielo-hondo: #8dbde0;    /* solo adorno (subrayados, filete de aviso) */
+  --cielo-tinta: #23628f;    /* texto azul (lluvia, avisos): 6,5:1 sobre blanco */
+  --verde: #2a7352;          /* acción: con blanco encima 5,72:1 */
+  --verde-hondo: #1f5c41;    /* hover del botón: 7,88:1 */
+  --verde-velo: #e8f3ec;     /* fondo de chips y del plan recomendado */
+  --sello: #a63a3f;          /* rojo enji, apagado: blanco encima 6,37:1 */
+  --estrella: #b07d00;       /* estrellas: 3,6:1 (gráfico, mín. 3:1) */
+  --telegram: #1d6fa5;       /* el #229ED9 de Telegram con blanco da 3,02:1 (suspende) */
+
+  /* Roles (los que lee el resto de hojas: v7.css, v8.css, kit-guia.css…) */
+  --fondo: var(--washi);
+  --superficie: #ffffff;
+  --superficie-2: var(--sakura-velo);
+  --tinta: #1e2a36;          /* índigo sumi: 14,2:1 sobre washi */
+  --tenue: #56606c;          /* 6,2:1 sobre washi; 5,8:1 sobre las bandas */
+  --linea: rgba(30, 42, 54, 0.10);
+  --linea-fuerte: rgba(30, 42, 54, 0.18);
+  --borde-control: #7c8794;  /* campos y chips: 3,56:1 sobre washi, 3,29:1 sobre cielo-velo */
+  --acento: var(--verde);
+  --acento-tinta: #ffffff;
+  --boton: var(--verde);
+  --boton-hover: var(--verde-hondo);
+  --boton-tinta: #ffffff;
+  /* Pie claro en sakura (decisión del 21-11: no índigo). v7.css pinta el pie
+     con --inverso y su texto con --inverso-tinta al 72 %: sobre sakura-velo
+     sale ≈ 5,5:1. */
+  --inverso: var(--sakura-velo);
+  --inverso-tinta: var(--tinta);
+  --cristal: rgba(255, 255, 255, 0.94);
+  --cristal-borde: var(--linea);
+  --cristal-fondo: var(--superficie);
+
+  /* Radios: 4 pasos. Hijo = padre − relleno (regla 14). */
+  --r-1: 8px;
+  --r-2: 12px;
+  --r-3: 20px;
+  --r-4: 28px;
+  --radio: var(--r-3);
+
+  /* Un solo hueco entre secciones (Antonio: «no puede haber aquí más
+     espacio que aquí»). 64 px en el móvil, 120 px en escritorio. */
+  --hueco: clamp(64px, 9vw, 120px);
+
+  /* Sombras suaves teñidas de índigo; nunca negras ni duras. */
+  --sombra-1: 0 1px 2px rgba(30, 42, 54, 0.06);
+  --sombra-2: 0 1px 2px rgba(30, 42, 54, 0.05), 0 12px 32px -16px rgba(30, 42, 54, 0.18);
+  --sombra-3: 0 2px 6px rgba(30, 42, 54, 0.06), 0 18px 48px -20px rgba(30, 42, 54, 0.28);
+  --sombra: var(--sombra-2);
+
+  /* Letras (--mincho y --titular los usan v7.css, v8.css, sellos.css, kit-guia.css). */
+  --mincho: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif CJK JP', 'Noto Serif JP', 'Sereno Kanji', serif;
+  --titular: var(--mincho);
+  --letra: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  --letra-cifras: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+  color-scheme: light;
+  background-color: var(--fondo);
+  background-image: none;     /* fuera la rejilla de shoji */
+}
+
+/* ── 2. Modo oscuro: «noche de primavera» (índigo, no negro) ────────────────
+   Ya no se activa solo (21-11-2026): index.html fija data-tema="claro" y el
+   botón de tema salió de las cabeceras. Se queda por si algún día vuelve como
+   ajuste explícito del pie. */
+:root[data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) {
+  --washi: #111723;
+  --sakura-velo: #1d1a26;
+  --sakura: #4a3240;
+  --sakura-hondo: #b07a8a;
+  --cielo-velo: #142133;
+  --cielo: #1f3550;
+  --cielo-hondo: #5d8fb8;
+  --cielo-tinta: #8cc4ea;    /* 9,6:1 */
+  --verde: #8fd3ac;          /* botón claro con tinta oscura encima: 10,3:1 */
+  --verde-hondo: #a8e0bf;
+  --verde-velo: #17302a;
+  --estrella: #f0c24b;
+
+  --fondo: var(--washi);
+  --superficie: #182030;
+  --superficie-2: #1f2838;
+  --tinta: #edf1f6;          /* 15,8:1 */
+  --tenue: #a9b4c3;          /* 8,6:1 sobre el fondo; 7,1:1 sobre superficie-2 */
+  --linea: rgba(237, 241, 246, 0.12);
+  --linea-fuerte: rgba(237, 241, 246, 0.22);
+  --borde-control: #6b7a8f;  /* 3,73:1 sobre superficie */
+  --acento-tinta: #0c1a13;
+  --boton-tinta: #0c1a13;
+  --inverso: var(--sakura-velo);
+  --inverso-tinta: var(--tinta);
+  --cristal: rgba(24, 32, 48, 0.94);
+  --sombra-1: 0 1px 2px rgba(0, 0, 0, 0.35);
+  --sombra-2: 0 1px 2px rgba(0, 0, 0, 0.3), 0 14px 36px -16px rgba(0, 0, 0, 0.6);
+  --sombra-3: 0 2px 6px rgba(0, 0, 0, 0.3), 0 20px 50px -20px rgba(0, 0, 0, 0.7);
+  color-scheme: dark;
+}
+
+/* ── 3. Base: fondo plano y sin adornos de fondo ────────────────────────────
+   v7.css pinta dos manchas de color difuminadas fijas detrás de todo
+   (.v7::before): degradado decorativo (regla 13) y trabajo extra al hacer
+   scroll. Fuera: el blanco es el protagonista. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel)::before { content: none; }
+/* Fondo del documento (lo que se ve en el rebote del scroll del iPhone) y
+   selección. index.css (l. 52-57) los fija con «html:has(#root .v7)», que lleva
+   un id: para ganarle hace falta el mismo #root (1,3,1 frente a 1,1,1). La
+   selección era rojo de sello al 25 %; ahora pétalo. */
+html:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)), html:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #fdfcfa; color: #1e2a36; }
+html:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) ::selection { background: #f6d9e0; color: #1e2a36; }
+html[data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)), html[data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #111723; color: #edf1f6; }
+html[data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) ::selection { background: #4a3240; color: #edf1f6; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :focus-visible { outline: 2px solid var(--acento); outline-offset: 3px; }
+/* Mismo aire arriba de cada sección (v7.css usaba 112-176 px en escritorio y
+   72 px en el móvil; las bandas, otro valor abajo). El mercado es una tarjeta
+   con su propio relleno. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-seccion:not(.v7-mercado) { padding-top: var(--hueco); }
+
+/* ── 4. Titulares ───────────────────────────────────────────────────────────
+   Mincho en h1, h2 y en los nombres de tours y ciudades. El resto de h3 sigue
+   en Geist 600: un titular por bloque basta para dar el tono. El mincho no se
+   aprieta (v7.css ponía −0,045 em): apretado se ve sucio. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel):not(.lang-ar):not(.lang-ru) :is(h1, h2, .v9-fila h3, .v8-otra > span) {
+  font-family: var(--titular);
+  font-weight: 500;
+  font-synthesis: none;
+  letter-spacing: 0.005em;
+  line-height: 1.14;
+  text-wrap: balance;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel).lang-ru :is(h1, h2, .v9-fila h3, .v8-otra > span) {
+  font-family: 'Source Serif 4 Variable', Georgia, 'Times New Roman', serif;
+  font-weight: 560;
+  letter-spacing: -0.005em;
+  line-height: 1.12;
+  text-wrap: balance;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel).lang-ar :is(h1, h2, .v9-fila h3, .v8-otra > span) {
+  font-family: 'Amiri', 'Noto Naskh Arabic', 'Geeza Pro', 'SF Arabic', 'Segoe UI', Tahoma, serif;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1.45;
+  text-wrap: balance;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) h3 { font-weight: 600; letter-spacing: -0.01em; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-antetitulo { color: var(--tenue); font-weight: 600; letter-spacing: 0.02em; }
+/* El mincho es más ancho que Geist: en escritorio el titular de portada se
+   partía en 4 líneas. Venía del bloque Gloock de v7.css (ya borrado); en el
+   móvil no se limita, para que el titular ocupe menos líneas y el WhatsApp
+   suba en la primera pantalla. */
+@media (min-width: 721px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel):not(.lang-ar):not(.lang-ru) .v9-portada h1 { max-width: 16ch; }
+}
+/* En el móvil 42 px de h2 en mincho ocupaban media pantalla. */
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-seccion > h2 { font-size: clamp(1.9rem, 8vw, 2.4rem); }
+}
+
+/* Cifras: precios, horas, temperaturas y notas en Geist con cifras tabulares
+   (regla 18). Nunca en mincho: sus cifras bailan de ancho. «.v7-plan .v7-plan-precio»
+   sube la especificidad del :is() a (0,5,0): el bloque Gloock de v7.css
+   (l. 1316) empata a (0,4,0) y entonces mandaría el orden de carga. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plan .v7-plan-precio, .v7-plan-precio, .v8-precio strong, .v7-resumen-nota strong, .v8-tiempo-ahora strong, .v8-tiempo li, .v8-dia time, .v9-fila-dato strong, .v9-oracion-horas strong, .v7-reloj-hora) {
+  font-family: var(--letra-cifras);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Kanji de adorno: en tinta suave (el verde es solo para acciones) y los
+   grandes en rosa sakura, que es adorno y no texto. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-kanji, .v9-fila-kanji, .v8-tiempo-ahora span, .v8-tiempo li span, .v7-itin-indice span, .v7-itin-kanji) { color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-razon-kanji, .kg-herr-kanji) { color: var(--sakura-hondo); font-weight: 500; }
+
+/* ── 5. Botones ─────────────────────────────────────────────────────────────
+   Uno principal por pantalla (regla 10): verde, rectángulo de esquinas
+   suaves (12 px, ni píldora de app ni bloque). Secundario: contorno fino o
+   enlace subrayado. v7.css fija el color del botón con !important: aquí igual. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton {
+  min-height: 48px; padding: 0 22px; border: 0; border-radius: var(--r-2);
+  background: var(--boton); color: var(--boton-tinta) !important;
+  font-family: var(--letra); font-weight: 600; font-size: 16px; letter-spacing: 0;
+  text-shadow: none; box-shadow: var(--sombra-1); filter: none;
+  transition: background-color 0.18s ease, transform 0.18s ease;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton:hover { background: var(--boton-hover); filter: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton:active { transform: scale(0.98); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton-peq { min-height: 40px; padding: 0 14px; font-size: 14px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton-sec {
+  background: transparent; color: var(--tinta) !important;
+  border: 1px solid var(--linea-fuerte); box-shadow: none;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-boton-sec:hover { background: var(--cielo-velo); }
+/* Larion: Telegram con su azul, oscurecido lo justo para pasar AA (5,43:1). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-boton.v7-tg, a.v7-boton[href^="https://t.me/"]) { background: var(--telegram); color: #ffffff !important; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-boton.v7-tg, a.v7-boton[href^="https://t.me/"]):hover { background: #185d8a; }
+
+/* Enlace secundario de la portada («Ver precios»): subrayado de cielo. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-enlace {
+  color: var(--tinta); text-decoration-color: var(--cielo-hondo);
+  text-decoration-thickness: 2px; text-underline-offset: 6px;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-enlace:hover { text-decoration-color: var(--acento); }
+
+/* ── 6. Cabecera ────────────────────────────────────────────────────────────
+   Barra blanca flotante, línea fina y sombra suave. Radio 18 con relleno 6:
+   todo lo de dentro va a 12 (regla 14). El selector de idioma, en cielo. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .cristal {
+  /* Superficie y no --cristal: .v8-tiempo-fila redefine --cristal en blanco
+     y en oscuro dejaba texto claro sobre blanco. */
+  background: color-mix(in srgb, var(--superficie) 94%, transparent);
+  border: 1px solid var(--linea);
+  box-shadow: var(--sombra-3);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera { border-radius: 18px; padding: 6px 6px 6px 14px; gap: 12px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel)[dir='rtl'] .v7-cabecera { padding: 6px 14px 6px 6px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-boton { border-radius: var(--r-2); }
+/* El torii del logo en tinta: el rojo de santuario es justo lo que Antonio
+   llama «Japón barato». */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo svg { color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-anclas a { color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-anclas a:hover, .v7-anclas a[aria-current]) { color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-idiomas { background: var(--cielo-velo); border-radius: var(--r-2); padding: 3px; gap: 2px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-idiomas a { border-radius: 9px; color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-idiomas a[aria-current='page'] { background: var(--superficie); color: var(--tinta); font-weight: 600; box-shadow: var(--sombra-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-tema { border-radius: var(--r-2); border-color: var(--linea); background: var(--superficie); color: var(--tinta); }
+/* Móvil (auditoría P2 y P9). Cinco piezas en la barra eran demasiadas: el
+   sonido se va; logo, idioma, tema y WhatsApp se quedan. La barra baja de
+   62 a 48 px (piezas de 36 + relleno 5 + línea) y los tres idiomas caben
+   enteros en 360 px, sin deslizar ni cortar «العربية». Cuentas a 360 px:
+   barra 348 − 2 de línea − 15 de relleno = 331; logo 26 + tema 36 +
+   WhatsApp ≈ 42 + 3 huecos de 6 = 122, y quedan ≈ 209 para el selector,
+   que con 8 px por lado mide ≈ 190. Radio 15 con relleno 5 → piezas a 10;
+   el riel de idiomas, 10 con relleno 3 → píldoras a 7 (regla 14). */
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera {
+    top: 6px; width: calc(100% - 12px); min-height: 48px;
+    padding: 5px 5px 5px 10px; gap: 6px; border-radius: 15px;
+  }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel)[dir='rtl'] .v7-cabecera { padding: 5px 10px 5px 5px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-sonido { display: none; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-boton { min-height: 36px; padding: 0 11px; border-radius: 10px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-tema { width: 36px; height: 36px; border-radius: 10px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas {
+    height: 36px; align-items: stretch; padding: 3px; gap: 0; border-radius: 10px;
+    font-size: 12.5px; line-height: 1;
+  }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas a {
+    display: flex; align-items: center; padding: 0 8px; border-radius: 7px;
+  }
+}
+/* iPhone SE, Galaxy pequeños: 2 px menos por idioma por si una letra del
+   sistema sale más ancha (el árabe cambia mucho de un móvil a otro). */
+@media (max-width: 380px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas { font-size: 12px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas a { padding: 0 6px; }
+}
+/* Páginas con cuatro idiomas (otoño: es · en · ar · ru). A 390 px, con letra
+   de 12 y 6 px por lado, caben (≈ 222 de 239); a 380 o menos no hay sitio y
+   se va el botón de tema (sin él, la web sigue el modo del sistema), en vez
+   de cortar un idioma como antes. */
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas:has(> a:nth-child(4)) { font-size: 12px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-idiomas:has(> a:nth-child(4)) a { padding: 0 6px; }
+}
+@media (max-width: 380px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera:has(> .v7-idiomas > a:nth-child(4)) > .v7-tema { display: none; }
+}
+
+/* ── 7. Tarjetas y bloques ──────────────────────────────────────────────────
+   Blanco, línea de 1 px y sombra casi invisible. Nada de bordes de 3 px,
+   franjas matcha ni sombras duras. Sin desenfoque (rendimiento). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .tarjeta {
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--r-3); box-shadow: var(--sombra-1);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-razones li {
+  background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-3);
+  box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-razones li::before { content: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporada { border-inline-start: 3px solid var(--cielo-hondo); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-bento-no li::before { color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-guia-foto { border-radius: var(--r-3); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v9-dentro, .v9-maqueta3d) { border-radius: var(--r-4); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-monte { box-shadow: 0 0 0 1px var(--linea), var(--sombra-1); }
+
+/* Bloques oscuros que quedaban sueltos en una página blanca (vistos en la
+   prueba de /es/ a 390 px): ficha del guía con borde negro de 2 px, «Lo que
+   no incluye» en tinta invertida, las puertas a tours nuevos/montaña en
+   marrón casi negro con resplandor rojo y la herramienta grande en índigo.
+   Todo pasa a superficies claras; el contraste lo da el texto, no el bloque. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-ficha {
+  background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-3); padding: 16px 20px;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-bento-no { background: var(--superficie-2); color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-bento-no li { color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-puerta-montana {
+  background: var(--superficie); color: var(--tinta) !important;   /* v7.css: #efe8db !important */
+  border: 1px solid var(--linea); border-radius: var(--r-3); box-shadow: var(--sombra-1);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-puerta-montana::after { content: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-puerta-montana .v7-kanji { color: var(--sakura-hondo); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-puerta-montana small { color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-puerta-montana > span:last-child { color: var(--acento); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .kg-herr-grande .kg-herr-tarjeta { background: var(--cielo-velo); color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .kg-herr-grande .kg-herr-tarjeta small { color: var(--tenue); }
+/* «Ver más reseñas» era un botón negro: es secundario, va con contorno. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-ver-mas button {
+  background: var(--superficie); color: var(--tinta); border: 1px solid var(--linea-fuerte); border-radius: var(--r-2);
+}
+/* Planes de venta (planes.css): su acento rojo por defecto pasa a verde; en
+   oscuro el botón lleva tinta oscura sobre verde claro (planes.css pone blanco). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) { --pl-acento: var(--acento); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .pl-b { color: var(--boton-tinta); border-radius: var(--r-2); }
+
+/* Precios. El recomendado ya no es un bloque negro invertido (pesaba como
+   un anuncio): blanco con borde verde y un halo verde muy claro. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan { padding: 26px; --ck-borde: 1px; --ck-tinta-borde: var(--linea); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan h3 { font-family: var(--letra); font-weight: 600; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan-precio { font-weight: 600; font-size: 2rem; letter-spacing: -0.01em; color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .tarjeta.v7-plan-destacado {
+  background: var(--superficie); color: var(--tinta);
+  border: 1.5px solid var(--acento); box-shadow: 0 0 0 4px var(--verde-velo), var(--sombra-2);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan-destacado :is(.v7-plan-detalle, .v7-plan-grupo, .v7-plan-persona, .v7-plan-aprox, .v7-plan-desde) { color: var(--tenue); }
+/* «Recomendado»: se queda porque informa, pero sin holograma (.ck-foil lleva
+   !important en cocina.css). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plan-sello, .v7-plan-sello.ck-foil) {
+  background: var(--verde-velo) !important; color: var(--acento) !important;
+  text-shadow: none; box-shadow: none; border-radius: var(--r-1); font-family: var(--letra); font-weight: 600;
+}
+/* El resto de láminas (el pase VIP dorado de Larion) conserva su brillo, pero
+   sin la sombra dura de 2 px de cocina.css, que era del lenguaje de bloque. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .ck-foil:not(.v7-plan-sello) { box-shadow: inset 0 0 0 1px rgb(255 255 255 / 55%); }
+/* El billete ya no se inclina con el ratón y el troquel es una línea fina. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .ck-billete { transform: none; }
+/* (Separados: un pseudo-elemento no vale dentro de :is().) */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan .ck-corte::after,
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan .ck-corte > i { display: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plan .ck-corte::before { opacity: 0.2; }
+/* Pagar desde la tarjeta: era rojo de sello; es una acción, va en verde. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) a.v7-plan-pagar { background: var(--boton); color: var(--boton-tinta); border-radius: var(--r-2); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) a.v7-plan-pagar:hover { background: var(--boton-hover); }
+
+/* Preguntas */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details { background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-2); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details[open] { box-shadow: var(--sombra-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary::after { color: var(--acento); }
+
+/* Formulario (va después de WhatsApp, regla de Antonio). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-formulario :is(input, select, textarea) {
+  background: var(--superficie); color: var(--tinta);
+  border: 1px solid var(--borde-control); border-radius: var(--r-2);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-formulario :is(input, select, textarea):focus-visible {
+  outline: none; border-color: var(--acento); box-shadow: 0 0 0 3px var(--verde-velo);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-intereses button { background: var(--superficie); border-color: var(--borde-control); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-intereses button[aria-pressed='true'] { background: var(--acento); border-color: var(--acento); color: var(--acento-tinta); }
+
+/* Tabla de las páginas de respuesta */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-tabla thead th { background: var(--cielo-velo); }
+
+/* ── 8. Bandas de color: aquí viven el rosa y el azul ───────────────────────
+   En vez de cajas con borde, la sección entera se tiñe a sangre (regla 8:
+   agrupar con el espacio y el fondo, no con líneas). Mismo truco que el pie
+   de v7.css (box-shadow + clip-path). Ojo: clip-path recorta lo que se salga
+   de la sección por arriba o por abajo (comprobar la figura del guía en
+   #contacto). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) #resenas {
+  background: var(--sakura-velo);
+  box-shadow: 0 0 0 100vmax var(--sakura-velo); clip-path: inset(0 -100vmax);
+  padding-bottom: var(--hueco);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) #contacto {
+  background: var(--cielo-velo);
+  box-shadow: 0 0 0 100vmax var(--cielo-velo); clip-path: inset(0 -100vmax);
+  padding-bottom: var(--hueco);
+}
+
+/* ── 9. Reseñas (con foto: se quedan, hacia el final) ─────────────────────── */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas figure {
+  background: var(--superficie); border: 1px solid var(--linea);
+  border-radius: var(--r-3); box-shadow: var(--sombra-1);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas :is(.v7-resena-foto, .v7-resena-sinfoto) { border-radius: 6px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas:not(.v7-resenas-clasico) .v7-resena-sinfoto { background: var(--sakura-velo); border: 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas .v7-resena-sinfoto span { color: var(--sakura-hondo); opacity: 1; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas figure::before { color: var(--sakura-hondo); opacity: 0.45; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resena-lugar { color: var(--acento); background: var(--verde-velo); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-estrellas, .v7-hero-nota span) { color: var(--estrella); }
+
+/* ── 10. Tours y ciudades ──────────────────────────────────────────────────
+   Fila blanca de radio 20 y relleno 12: la foto de dentro, 8 (regla 14).
+   position: relative es OBLIGATORIO al quitar el desenfoque: backdrop-filter
+   hacía de bloque contenedor del texto para lectores (.v7-sr, absoluto) de
+   cada fila. Sin él, ese texto se colocaba respecto a la página, escapaba del
+   carrusel y ensanchaba el documento a 1.863 px: el móvil alejaba el zoom y
+   la página se veía diminuta (medido en /es/ con Chromium a 390 px). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-fila {
+  position: relative;
+  background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-3);
+  padding: 12px 20px 12px 12px; box-shadow: var(--sombra-1);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel)[dir='rtl'] .v9-fila { padding: 12px 12px 12px 20px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-fila-foto { border-radius: var(--r-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-fila h3 a:hover { text-decoration-color: var(--acento); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-fila h3 a:focus-visible { outline-color: var(--acento); }
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-fila,
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel)[dir='rtl'] .v9-fila { padding: 12px; }
+}
+/* Panel de salidas 出発 (fichas que giran, negro y amarillo): es adorno
+   (aria-hidden) y repite la lista de debajo. Aspecto de aeropuerto/gamer,
+   movimiento que no informa (regla 20). Fuera. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-salidas { display: none; }
+
+/* Mosaico de otras ciudades: radio del sistema y velo índigo, no negro. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-otra { border-radius: var(--r-3); box-shadow: var(--sombra-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-otra::after { background: linear-gradient(180deg, transparent 48%, rgba(17, 26, 40, 0.62)); }
+
+/* Filetes de los datos de portada: rosa (v7.css los pinta en rojo de sello). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-datos li { border-inline-start-color: var(--sakura-hondo); }
+
+/* ── 11. Sellos rojos: los ÚNICOS rojos de la página ─────────────────────── */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-sello { background: var(--sello); color: #ffffff; box-shadow: none; border-radius: 6px; }
+
+/* ── 12. Portada de las páginas de guía (.v9-portada) ──────────────────────
+   Escritorio: texto sobre washi a un lado y foto vertical a sangre al otro.
+   Móvil: la foto arriba a todo el ancho (la cabecera blanca flota encima),
+   con las esquinas de abajo redondeadas; debajo, sobre blanco, titular en
+   mincho, botón verde de WhatsApp a todo el ancho y la nota de reseñas.
+   Cuentas en un móvil de 390 × 844 (≈ 740 px útiles en Chrome Android):
+   foto 48svh ≈ 355 px + 20 + titular 2 líneas ≈ 85 + 14 + botón 54
+   → el botón acaba en ≈ 530 px: precio y WhatsApp en la primera pantalla. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada { background: var(--fondo); }
+/* Mientras llega una foto, su hueco es cielo claro y no un agujero blanco
+   (regla 19: nada de saltos ni huecos vacíos). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v9-portada-foto, .v8-portada > .v7-hero-foto, .v9-fila-foto, .v8-otra, .v7-resena-foto) { background-color: var(--cielo-velo); }
+@media (max-width: 900px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada-foto {
+    margin: 0; width: 100%; height: min(48svh, 100vw); max-height: none; aspect-ratio: auto;
+    border-radius: 0 0 var(--r-4) var(--r-4);
+  }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada-texto { padding: 20px 20px 32px; gap: 14px; }
+}
+@media (max-width: 720px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada h1 { font-size: clamp(30px, 8.6vw, 38px); line-height: 1.16; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada .v7-acciones .v7-boton { min-height: 54px; font-size: 17px; }
+}
+/* La mancha de tinta (HeroTinta, WebGL) sale por decisión del 21-11: en el
+   móvil se veía como un borrón oscuro sobre la foto y Clarity no graba los
+   <canvas>. Debajo del lienzo sigue la foto fija de siempre. Es una red de
+   seguridad: lo bueno es no montar el componente (ahorra el WebGL y 2-4
+   fotos de descarga). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-tinta { display: none; }
+
+/* Enlace a «Ventajas» en la portada: era tarjeta de borde negro y sombra
+   dura. Ahora una fila blanca discreta; la flecha, en verde claro. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-ventajas a {
+  color: var(--tinta); background: var(--superficie);
+  border: 1px solid var(--linea); border-radius: var(--r-2); box-shadow: var(--sombra-1);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-ventajas a:hover { transform: translateY(-1px); box-shadow: var(--sombra-2); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-ventajas a:active { transform: none; box-shadow: var(--sombra-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-ventajas-pila > span { border-color: var(--superficie); box-shadow: 0 0 0 1px var(--linea); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-hero-ventajas-flecha { color: var(--acento); background: var(--verde-velo); border-radius: var(--r-1); }
+
+/* ── 13. Portada de las páginas de ciudad (.v8-portada) ────────────────────
+   Escritorio: foto a sangre con el texto en blanco encima; el velo pasa de
+   negro a noche índigo (más limpio). Peor caso medido: blanco sobre la foto
+   más clara con el velo al 72 % = 6,95:1. La foto y el velo viven dentro de
+   .v8-portada-foto (v8.css hace la maqueta del móvil); el kanji vertical y el
+   tiempo ya no van encima de la foto (21-11-2026: el tiempo es una línea en la
+   ficha, TiempoCiudad «linea»). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-foto > .v7-hero-velo {
+  background: linear-gradient(180deg, rgba(17, 26, 40, 0.32) 0%, rgba(17, 26, 40, 0) 26%, rgba(17, 26, 40, 0.2) 52%, rgba(17, 26, 40, 0.74) 100%);
+}
+/* El precio, texto y no cápsula: la píldora gris sobre azul parecía un campo
+   desactivado (crítica del 21-11). En escritorio va en blanco sobre el velo. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto .v8-portada-precio {
+  padding: 0; background: none; border: 0; border-radius: 0; -webkit-backdrop-filter: none; backdrop-filter: none;
+  font-weight: 600; text-shadow: 0 1px 12px rgba(17, 26, 40, 0.45);
+}
+@media (max-width: 760px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada {
+    display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: min(40svh, 84vw) auto;
+    align-items: stretch; min-height: 0; color: var(--tinta); background: var(--fondo);
+  }
+  /* Solo un toque arriba para que la cabecera respire; abajo ya no hay texto sobre la foto. */
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-foto > .v7-hero-velo { background: linear-gradient(180deg, rgba(17, 26, 40, 0.36) 0%, rgba(17, 26, 40, 0) 34%); }
+  /* Texto sobre washi: tinta, sin sombras de texto. Abajo, poco aire: antes
+     quedaban ≈ 100 px vacíos hasta «En resumen». */
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto { grid-row: 2; padding: 20px 20px 8px; gap: 12px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto h1 { font-size: clamp(2.3rem, 10.5vw, 3rem); color: var(--tinta); text-shadow: none; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto p { color: var(--tenue); }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-guia strong { color: var(--tinta); font-size: 1.05rem; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto .v8-portada-precio { color: var(--tinta); text-shadow: none; font-size: 1.02rem; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada-texto .v7-boton { width: 100%; min-height: 54px; font-size: 17px; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-portada + .v8-ficha { padding-top: 40px; }
+}
+/* El tiempo de hoy en una línea, en la ficha (y el tifón debajo, si lo hay). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-tiempo-linea { margin-top: 16px; display: grid; gap: 8px; color: var(--tenue); font-size: 14px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-tiempo-linea p { margin: 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-tiempo-linea .v8-tifon { display: block; padding: 8px 12px; border-radius: var(--r-2); font-size: 13px; line-height: 1.4; }
+/* «Más sobre esta ciudad»: un plegable de una línea; dentro, las secciones de siempre. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas { padding-top: 48px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas > summary {
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 56px; cursor: pointer; font-weight: 600; color: var(--tinta); border-block: 1px solid var(--linea);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas > summary::-webkit-details-marker { display: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas > summary::after {
+  content: ''; flex: none; width: 8px; height: 8px; border: solid var(--tenue); border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.2s ease;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+/* Dentro del plegable las secciones no vuelven a centrarse ni a llevar su hueco grande. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) details.v8-mas > :is(section, .v7-seccion) { width: 100%; padding-inline: 0; padding-top: 48px; }
+/* Final de la ciudad: sin media pantalla vacía antes del pie. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v8-final { padding-bottom: 48px; }
+
+/* Portada de las páginas de respuesta, otoño, viajeros y transporte. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-hero img { border-radius: var(--r-4); box-shadow: var(--sombra-2); }
+
+/* ── 14. Franja de ventajas, kit del guía ───────────────────────────────── */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-franja-ventajas {
+  color: var(--tinta); background: var(--superficie);
+  border: 1px solid var(--linea); border-radius: var(--r-3); box-shadow: var(--sombra-1);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-franja-ventajas li { border: 1px solid var(--linea-fuerte); background: var(--superficie); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-franja-ventajas li b { color: var(--acento); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-franja-ventajas-boton { color: var(--boton-tinta); background: var(--boton); border: 0; border-radius: var(--r-2); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-franja-ventajas-boton:hover { transform: none; box-shadow: none; background: var(--boton-hover); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.kg-exp, .kg-herr-tarjeta) { border: 1px solid var(--linea); border-radius: var(--r-3); box-shadow: var(--sombra-1); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.kg-exp, .kg-herr-tarjeta):hover { transform: translateY(-2px); box-shadow: var(--sombra-2); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .kg-kit-fila { border: 1px solid var(--linea); border-radius: var(--r-2); }
+
+/* ── 15. Piezas fijas ───────────────────────────────────────────────────────
+   Barra de WhatsApp del móvil: radio 20 con relleno 6 → hijos a 14. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-barra-atajos a { border-radius: 14px; background: transparent; color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-barra-atajos a[aria-current='true'] { background: var(--cielo-velo); color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-barra-fila .v7-boton { border-radius: 14px; }
+
+/* Aviso de idioma (SugerenciaIdioma.tsx). Va FUERA de .v7 (App.tsx lo pinta
+   junto a las cookies), así que las variables de la página no le llegan: hoy
+   sale con el fondo transparente (--cristal no existe fuera de .v7) y el botón
+   en el rojo de reserva #b4232c de v7.css. Colores escritos, como las cookies.
+   Sigue arriba, pero en el móvil ahora cae sobre la FOTO (el titular y el
+   WhatsApp van debajo de ella). Radio 16 con relleno 6 → botón a 10. */
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma {
+  font-family: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e2a36; background: rgba(255, 255, 255, 0.97);
+  border: 1px solid rgba(30, 42, 54, 0.12); border-radius: 16px;
+  box-shadow: 0 18px 48px -20px rgba(30, 42, 54, 0.35);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma a { background: #2a7352; color: #ffffff; border-radius: 10px; }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma { color: #edf1f6; background: rgba(24, 32, 48, 0.97); border-color: rgba(237, 241, 246, 0.14); }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma a { background: #8fd3ac; color: #0c1a13; }
+/* La cabecera del móvil acaba ahora en 54 px (top 6 + 48): el aviso de idioma
+   sube con ella en vez de flotar a media foto (v7.css lo deja a 76 px). */
+@media (max-width: 560px) {
+  html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma { top: calc(env(safe-area-inset-top) + 62px); }
+}
+
+/* Aviso de cookies: va FUERA de .v7 (App.tsx), por eso se engancha con :has()
+   y lleva sus colores escritos. Antes era cristal negro: sobre una página
+   blanca parecía un error. La forma (una línea, abajo del todo o encima de
+   la barra de WhatsApp) está en v7.css, porque vale también para Montaña. */
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies {
+  font-family: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  /* Opaco: sin desenfoque, al 97 % se transparentaban los titulares de debajo. */
+  color: #1e2a36; background: #ffffff;
+  border: 1px solid rgba(30, 42, 54, 0.12); border-radius: 15px;
+  box-shadow: 0 18px 48px -20px rgba(30, 42, 54, 0.35);
+  -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies a { color: #1e2a36; text-decoration-color: #8dbde0; text-decoration-thickness: 1.5px; }
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button { background: #edf4fa; color: #1e2a36; border-radius: 11px; }
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button.si { background: #2a7352; color: #ffffff; }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies { color: #edf1f6; background: #182030; border-color: rgba(237, 241, 246, 0.14); }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies a { color: #edf1f6; text-decoration-color: #5d8fb8; }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button { background: #1f3550; color: #edf1f6; }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button.si { background: #8fd3ac; color: #0c1a13; }
+
+/* ── 16. Pie ────────────────────────────────────────────────────────────────
+   Pie claro (decisión del 21-11): v7.css lo pinta a sangre con --inverso, que
+   aquí es sakura-velo, y el texto con --inverso-tinta (tinta) al 72 %. El torii
+   del logo, en tinta: el rojo queda solo para el sello de la portada. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie .v7-logo svg { color: var(--inverso-tinta); }
+/* Foco en el pie: v7.css usa el rojo de sello; en tinta se ve en los dos temas. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie :focus-visible { outline-color: var(--inverso-tinta); }
+/* Pie de empresa (section.eq.eq-react, Equipo.tsx). Va DESPUÉS del pie y fuera
+   de .v7, con sus propias variables (washi): se le da el mismo sakura-velo
+   para que se lea como la última línea del pie y no como una franja suelta.
+   Contraste sobre #fbf1f4: tinta 13,2:1, tenue 5,78:1, verde del foco 5,2:1. */
+html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-fondo: #fbf1f4; --eq-linea: rgba(30, 42, 54, 0.10); --eq-texto: #1e2a36; --eq-tenue: #56606c; --eq-acento: #2a7352; border-top: 0; }
+:root[data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-fondo: #1d1a26; --eq-linea: rgba(237, 241, 246, 0.12); --eq-texto: #edf1f6; --eq-tenue: #a9b4c3; --eq-acento: #8fd3ac; }
+
+/* ── 17. Burbujas de descuento ──────────────────────────────────────────────
+   Retiradas en todas las páginas el 21-11-2026 (BurbujasVentajas.tsx borrado):
+   movimiento decorativo (regla 20), chapa roja y aspecto de web de cupones. */
+
+/* ── 18. Piezas nuevas de la portada troncal (plan-contenido.md §5.2) ───────
+   Experiencias, precio de referencia, reseñas en fila, FAQ plegada y contacto
+   con WhatsApp primero. Los ids (#experiencias, #precios, #resenas, #contacto)
+   los fija ese plan; las CLASES son una propuesta de este: si el JSX usa otras,
+   se cambian aquí solo los selectores.
+     section#experiencias > ul.v7-exp-lista > li > a.v7-exp > img + h3 + p
+     section#experiencias > p.v7-exp-otras > a…
+     section#precios > div.v7-precio-ref > p.v7-precio-cifra + p + a.v9-enlace
+       + details.v7-plegado
+     div.v7-resenas.v7-resenas-fila  (la de hoy, más una clase)
+     details.v7-faq-plegada > summary + div.v7-faq
+     section#contacto > div.v7-contacto-wa > a.v7-boton + p.v7-contacto-otros
+       + details.v7-plegado > summary + (formulario de siempre) */
+
+/* Experiencias: tres tarjetas-enlace sin kanji ni sello (reglas 1 y 13).
+   Tarjeta de radio 20 con relleno 10 → foto a 10 (regla 14). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-lista {
+  list-style: none; margin: 28px 0 0; padding: 0;
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp {
+  display: flex; flex-direction: column; height: 100%; padding: 10px 10px 22px;
+  color: var(--tinta); text-decoration: none;
+  background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-3);
+  box-shadow: var(--sombra-1); transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp img {
+  width: 100%; height: auto; aspect-ratio: 4 / 3; object-fit: cover;
+  border-radius: calc(var(--r-3) - 10px); background: var(--sakura-velo);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp h3 {
+  margin: 16px 10px 0; font-family: var(--titular); font-weight: 500;
+  font-size: 1.35rem; line-height: 1.2; letter-spacing: 0; text-wrap: balance;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel).lang-ar .v7-exp h3 { font-family: 'Amiri', 'Noto Naskh Arabic', 'Geeza Pro', serif; font-weight: 700; line-height: 1.45; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp p { margin: 6px 10px 0; color: var(--tenue); font-size: 15px; line-height: 1.55; }
+@media (hover: hover) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp:hover { transform: translateY(-2px); box-shadow: var(--sombra-2); }
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-otras { margin-top: 20px; color: var(--tenue); font-size: 15px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-otras a {
+  color: var(--tinta); text-decoration: underline; text-decoration-color: var(--cielo-hondo);
+  text-decoration-thickness: 2px; text-underline-offset: 5px;
+}
+/* Móvil: carrusel con un trozo de la siguiente (≈ 0,9 pantallas en vez de 3). */
+@media (max-width: 720px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-lista {
+    display: flex; gap: 14px; overflow-x: auto; scroll-snap-type: x mandatory;
+    margin-inline: -20px; padding: 4px 20px 12px; scroll-padding-inline: 20px;
+    overscroll-behavior-x: contain; scrollbar-width: none;
+  }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-lista::-webkit-scrollbar { display: none; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-lista > li { flex: 0 0 82%; scroll-snap-align: start; }
+}
+
+/* Precio de referencia: UNA cifra grande y una frase, sin caja (regla 8:
+   agrupa el espacio). El detalle, plegado debajo. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-ref { display: grid; gap: 12px; justify-items: start; max-width: 40rem; margin-top: 20px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-cifra {
+  margin: 0; font-family: var(--letra-cifras); font-variant-numeric: tabular-nums;
+  font-weight: 600; font-size: clamp(2rem, 7vw, 2.75rem); line-height: 1.1; letter-spacing: -0.02em; color: var(--tinta);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-ref > p:not(.v7-precio-cifra) { color: var(--tenue); max-width: 34rem; }
+
+/* Bloques plegados (detalle del precio, formulario, FAQ): una línea fina
+   arriba y abajo y un chevrón; nada de cajas. 56 px de alto para el dedo. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) {
+  width: 100%; margin-top: 16px; border-block: 1px solid var(--linea);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) > summary {
+  list-style: none; display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  min-height: 56px; cursor: pointer; font-weight: 600; color: var(--tinta);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) > summary::-webkit-details-marker { display: none; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) > summary::after {
+  content: ''; flex: none; width: 8px; height: 8px; border: solid var(--tenue); border-width: 0 1.5px 1.5px 0;
+  transform: translateY(-2px) rotate(45deg); transition: transform 0.2s ease;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada)[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada)[open] > :not(summary) { padding-bottom: 20px; }
+
+/* Reseñas en fila también en escritorio: la sección mide una pantalla y las
+   28 reseñas siguen en el HTML para las IAs. Las de foto, primero (orden en el JSX). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas.v7-resenas-fila {
+  display: flex; gap: 20px; overflow-x: auto; scroll-snap-type: x mandatory;
+  padding: 4px 2px 16px; scroll-padding-inline: 2px; overscroll-behavior-x: contain; scrollbar-width: thin;
+  /* Cada tarjeta con su altura: estiradas a la de las que llevan foto, las de
+     solo texto dejaban medio móvil en blanco encima del nombre. */
+  align-items: flex-start;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas.v7-resenas-fila figure { flex: 0 0 min(340px, 84%); scroll-snap-align: start; }
+
+/* Contacto: WhatsApp grande primero; teléfono y correo en una línea; el
+   formulario, plegado (regla 10: un botón principal por pantalla). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-wa { display: grid; gap: 14px; justify-items: start; max-width: 40rem; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-wa > .v7-boton { min-height: 56px; padding-inline: 28px; font-size: 17px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-otros { color: var(--tenue); font-size: 15px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-otros a { color: var(--tinta); text-underline-offset: 4px; }
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-wa { justify-items: stretch; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-wa > .v7-boton { width: 100%; }
+}
+
+/* ── 19. Arreglos finales del rediseño (21-11-2026) ─────────────────────────
+   Lo que vieron la crítica de diseño, la auditoría móvil y Clarity tras
+   montar el estilo sereno. Va al final: manda sobre lo anterior. */
+
+/* Cabecera flotante: por el hueco de arriba asomaba el texto que pasaba por
+   debajo («…precio cerrado.» cortado encima del logo). Un velo del color del
+   papel, debajo de la cabecera, lo funde. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel)::after {
+  content: ''; position: fixed; inset: 0 0 auto; z-index: 49; pointer-events: none;
+  height: calc(env(safe-area-inset-top) + 30px);
+  background: linear-gradient(var(--fondo) 40%, color-mix(in srgb, var(--fondo) 0%, transparent));
+}
+/* Escritorio: en respuestas y otoño la cabecera no lleva anclas, que eran las
+   que empujaban el resto a la derecha; logo, idiomas y botón quedaban
+   amontonados a la izquierda con media cápsula vacía. */
+.v7-marca + .v7-idiomas { margin-inline-start: auto; }
+/* Toque de 44 px sin engordar la cabecera de 48: el área crece por fuera. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera :is(.v7-marca, .v7-idiomas a) { position: relative; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-idiomas a::after { content: ''; position: absolute; inset: -5px 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-marca::after { content: ''; position: absolute; inset: -9px -9px; }
+.v7 .v7-resena-leer { min-height: 44px; display: inline-flex; align-items: center; }
+
+/* Móvil: una sola capa flotante abajo y un solo WhatsApp a la vista.
+   · Mientras no se responde a las cookies, la barra de WhatsApp no sale: el
+     aviso ocupa su sitio (Clarity: aviso + barra + cabecera tapaban el 30 %).
+     El WhatsApp sigue en la cabecera.
+   · Con la barra a la vista, el WhatsApp de la cabecera se esconde (sin mover
+     el resto: visibility, no display). */
+@media (max-width: 860px) {
+  html:has(.v7-cookies) .v7-barra-movil { visibility: hidden; transform: translateY(140%); }
+  html:has(.v7-barra-movil.ver) .v7-cookies { bottom: max(10px, env(safe-area-inset-bottom)); }
+  html:has(.v7-barra-movil.ver):not(:has(.v7-cookies)) .v7-cabecera .v7-boton-peq { visibility: hidden; opacity: 0; }
+  .v7-barra-movil.v7-barra-sola { display: block; padding: 6px; border-radius: 16px; }
+  .v7-barra-movil.v7-barra-sola .v7-boton { width: 100%; min-height: 48px; justify-content: center; border-radius: 12px; }
+}
+/* La raíz «/» no tiene .v7 (es HTML estático): mismo aviso claro que /es/. */
+html:has(#portada-texto) .v7-cookies {
+  font-family: 'Geist Variable', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1e2a36; background: #ffffff; border: 1px solid rgba(30, 42, 54, 0.12);
+  box-shadow: 0 18px 48px -20px rgba(30, 42, 54, 0.35); -webkit-backdrop-filter: none; backdrop-filter: none;
+}
+html:has(#portada-texto) .v7-cookies a { color: #1e2a36; text-decoration-color: #8dbde0; }
+html:has(#portada-texto) .v7-cookies button { background: #edf4fa; color: #1e2a36; border-radius: 11px; }
+html:has(#portada-texto) .v7-cookies button.si { background: #2a7352; color: #ffffff; }
+
+/* Precio: un solo titular, la cifra, en la letra de los titulares (antes
+   «Cuánto cuesta» en mincho y otra cifra en Geist casi igual de grande). En
+   escritorio, el bloque centrado: ya no deja media pantalla vacía. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-seccion .v7-precio-ref { margin-top: 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-ref h2.v7-precio-cifra {
+  font-size: clamp(2.1rem, 7.6vw, 3.4rem); font-weight: 500; line-height: 1.12; letter-spacing: -0.01em;
+  font-variant-numeric: tabular-nums lining-nums; max-width: none; margin: 0;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel):not(.lang-ar):not(.lang-ru) .v7-precio-ref h2.v7-precio-cifra { font-family: var(--titular); }
+@media (min-width: 901px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-seccion { text-align: center; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-seccion .v7-precio-ref { margin-inline: auto; justify-items: center; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-seccion .v7-precio-ref > p { margin-inline: auto; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-seccion .v7-plegado { text-align: start; }
+}
+
+/* Reseñas: la inicial en un círculo sakura, igual en todas (fuera los 250
+   avatares de 24 estilos); procedencia en una línea tenue; el mismo cuerpo
+   de letra en todas (las cortas salían más grandes y descuadraban la fila). */
+.v7 .v7-resena-inicial {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--sakura-velo, #f6e3e8); color: var(--tinta);
+  font-family: 'Zen Old Mincho', var(--titular, serif); font-weight: 500; font-size: 18px; line-height: 1;
+}
+.v7 .v7-resenas figcaption small { color: var(--tenue); }
+.v7 .v7-resena-corta blockquote { font-size: inherit; line-height: inherit; font-weight: inherit; }
+
+/* Ritmo: entre el último bloque y el pie quedaban ≈ 256 px en blanco (margen
+   del pie + relleno de la sección + el del pie). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie { margin-top: clamp(48px, 7vw, 96px); }
+@media (max-width: 600px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie { margin-top: 32px; }
+}
+
+/* Kanji de adorno fuera (crítica del 21-11, regla 2 «nada de antetítulos dobles»):
+   el icono rosa de las tarjetas de tours y herramientas (時 輪 駅…) y el «優待» /
+   «道具» delante de «Ventajas» / «Herramientas». El título y la flecha bastan. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-tours-nuevos .v7-kanji, .kg-herr-kanji, .kg-eti > span[lang='ja']) { display: none; }
+/* Sin el kanji, la tarjeta de herramienta del móvil ya no reserva su columna de 52 px. */
+@media (max-width: 720px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .kg-herr-tarjeta { grid-template-columns: minmax(0, 1fr); }
+}
+/* Pie: el icono de WhatsApp iba solo en su línea encima del número (.v7-pie a lo
+   volvía inline-block después de .v7-pie-wa a). */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie .v7-pie-wa a { display: inline-flex; align-items: center; gap: 8px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie .v7-pie-wa svg { flex: none; width: 20px; height: 20px; }

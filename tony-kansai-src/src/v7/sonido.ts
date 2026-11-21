@@ -1,12 +1,13 @@
 // Sonido de la web: apagado por defecto (los navegadores no dejan sonar sin
 // un toque, y un móvil que suena solo en el metro espanta al cliente). Al
 // encenderlo: campana de templo de bienvenida, un koto de fondo y, de vez
-// en cuando, un shishi-odoshi (ciudad) o un hototogisu (montaña). El corte de
-// katana suena al cambiar de página y un fūrin en cada transformación.
+// en cuando, un shishi-odoshi (ciudad) o un hototogisu (montaña), y un fūrin en cada
+// transformación. (La katana al cambiar de página se fue con la transición
+// «corte» el 21-11-2026.)
 //
 // Sonidos de Wikimedia Commons; autores y licencias en CREDITOS_SONIDO.
 
-type Nombre = 'katana' | 'furin' | 'campana' | 'shishiodoshi' | 'hototogisu' | 'koto'
+type Nombre = 'furin' | 'campana' | 'shishiodoshi' | 'hototogisu' | 'koto'
 export type Ambiente = 'ciudad' | 'montana'
 
 export const CREDITOS_SONIDO = [
@@ -15,10 +16,9 @@ export const CREDITOS_SONIDO = [
   { sonido: 'Shishi-odoshi', autor: 'Fg2', licencia: 'Dominio público', url: 'https://commons.wikimedia.org/wiki/File:Shishiodoshi-LS100103.ogg' },
   { sonido: 'Koto (música de fondo)', autor: 'Torsodog', licencia: 'CC BY 3.0', url: 'https://commons.wikimedia.org/wiki/File:Koto_performance.ogg' },
   { sonido: 'Campanillas de viento', autor: 'Esc861', licencia: 'Dominio público', url: 'https://commons.wikimedia.org/wiki/File:Windchimes.ogg' },
-  { sonido: 'Espada', autor: 'Gravity Sound', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Sword_9_(Gravity_Sound).mp3' },
 ]
 
-const VOLUMEN: Record<Nombre, number> = { katana: 0.55, furin: 0.35, campana: 0.5, shishiodoshi: 0.45, hototogisu: 0.3, koto: 0.3 }
+const VOLUMEN: Record<Nombre, number> = { furin: 0.35, campana: 0.5, shishiodoshi: 0.45, hototogisu: 0.3, koto: 0.3 }
 const CLAVE = 'v7-sonido'
 
 let ctx: AudioContext | null = null

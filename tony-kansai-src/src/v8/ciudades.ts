@@ -16,13 +16,19 @@ export interface Ciudad {
   id: CiudadId; kanji: string; nombre: T; lema: T
   diorama?: RutaId; itinerario?: ItinId; montes: string[]; guias: ('tony' | 'larion')[]
   zonas: Zona[]
+  /** Foto de la portada de su página, si no es la primera zona. La primera zona
+   *  sigue siendo la imagen del JSON-LD (seoTours.ts), así que no se reordena:
+   *  en Kioto era Fushimi Inari, y los torii rojos son justo el «Japón barato»
+   *  que Antonio pide sacar de la portada (rediseño 21-11-2026). */
+  portada?: string
 }
 
 const t = (es: string, en: string, ar: string, ru: string): T => ({ es, en, ar, ru })
 
 export const CIUDADES: Record<CiudadId, Ciudad> = {
   osaka: {
-    id: 'osaka', kanji: '大阪', diorama: 'osaka', itinerario: 'osaka', guias: ['tony', 'larion'],
+    // portada: el castillo blanco de día (Antonio: Dōtonbori de noche, con neones, es «para otakus»).
+    id: 'osaka', kanji: '大阪', diorama: 'osaka', itinerario: 'osaka', guias: ['tony', 'larion'], portada: 'osaka-castillo',
     nombre: t('Osaka', 'Osaka', 'أوساكا', 'Осака'),
     lema: t('La cocina de Japón. Aquí vivo.', 'Japan\'s kitchen. I live here.', 'مطبخ اليابان، وهنا أعيش.', 'Кухня Японии: рынки, неон и уличная еда.'),
     montes: ['minoh-falls', 'mt-ikoma', 'mt-kongo', 'hoshi-no-buranko', 'sky-house-daito'],
@@ -38,7 +44,7 @@ export const CIUDADES: Record<CiudadId, Ciudad> = {
     ],
   },
   kyoto: {
-    id: 'kyoto', kanji: '京都', diorama: 'kioto', itinerario: 'kioto', guias: ['tony', 'larion'],
+    id: 'kyoto', kanji: '京都', diorama: 'kioto', itinerario: 'kioto', guias: ['tony', 'larion'], portada: 'kioto-kiyomizu',
     nombre: t('Kioto', 'Kyoto', 'كيوتو', 'Киото'),
     lema: t('Mil años de capital, a 30 minutos.', 'A thousand-year capital, 30 minutes away.', 'عاصمة ألف عام على بُعد ٣٠ دقيقة.', 'Тысячелетняя столица в 30 минутах.'),
     montes: ['fushimi-inari', 'mt-hiei', 'mt-atago', 'mt-daimonji'],
@@ -93,7 +99,9 @@ export const CIUDADES: Record<CiudadId, Ciudad> = {
     ],
   },
   hiroshima: {
-    id: 'hiroshima', kanji: '広島', diorama: 'miyajima', itinerario: 'hiroshima', guias: ['tony', 'larion'],
+    // portada: Miyajima desde el monte Misen (mar y verde). Abría con la Cúpula de la
+    // Bomba y en los mosaicos salía el torii rojo; zonas[0] sigue siendo la imagen del JSON-LD.
+    id: 'hiroshima', kanji: '広島', diorama: 'miyajima', itinerario: 'hiroshima', guias: ['tony', 'larion'], portada: 'hiroshima-misen',
     nombre: t('Hiroshima y Miyajima', 'Hiroshima & Miyajima', 'هيروشيما وميياجيما', 'Хиросима и Миядзима'),
     lema: t('La ciudad de la paz y el torii en el mar.', 'The city of peace and the torii in the sea.', 'مدينة السلام والتوري في البحر.', 'Город мира и тории в море.'),
     montes: [],
@@ -104,7 +112,8 @@ export const CIUDADES: Record<CiudadId, Ciudad> = {
     ],
   },
   beyond: {
-    id: 'beyond', kanji: '遠出', guias: ['tony'],
+    // portada: Amanohashidate (cielo y mar) en vez de la pagoda roja de Kumano en los mosaicos.
+    id: 'beyond', kanji: '遠出', guias: ['tony'], portada: 'lejos-amanohashidate',
     nombre: t('Más lejos', 'Further afield', 'أبعد من ذلك', 'Дальше'),
     lema: t('Un día entero para lo que pocos ven.', 'A full day for what few people see.', 'يوم كامل لما يراه القليلون.', 'Целый день для того, что видят немногие.'),
     montes: ['mt-kongo', 'fukuchiyama-tunnels', 'zato-valley'],
@@ -177,12 +186,17 @@ export function precioDesde(id: CiudadId, guia: 'tony' | 'larion' = 'tony'): num
  *  se va en ~15 s sin bajar (Clarity, 30 días hasta el 21-11-2026): el precio
  *  tiene que estar en la primera pantalla, no en la ficha de más abajo. */
 export function precioPortada(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion' = 'tony'): string {
-  const p = yenes(precioDesde(id, guia), lang)
+  // El yen delante, como en la portada y las respuestas («¥20.000»): antes la
+  // ciudad decía «20.000 ¥» y la portada «¥38.000». yenes() se queda para el
+  // título y la descripción de Google, que no cambian.
+  const p = lang === 'ru' ? yenes(precioDesde(id, guia), lang) : '¥' + precioDesde(id, guia).toString().replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'es' ? '.' : ',')
   return {
-    es: `Desde ${p} por grupo de hasta 6, no por persona`,
-    en: `From ${p} per group of up to 6, not per person`,
-    ar: `من ${p} للمجموعة حتى ${num(6, 'ar')} أشخاص، لا للشخص الواحد`,
-    ru: `От ${p} за группу до 6 человек, а не с человека`,
+    // Sin «hasta 6»: Antonio pide no poner límites a la vista (que pregunten).
+    // El tope sigue en el JSON-LD, la ficha y las preguntas, que es lo que leen Google y las IAs.
+    es: `Desde ${p} por grupo, no por persona`,
+    en: `From ${p} per group, not per person`,
+    ar: `من ${p} للمجموعة، لا للشخص الواحد`,
+    ru: `От ${p} за группу, а не с человека`,
   }[lang]
 }
 
@@ -367,9 +381,12 @@ export function introCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion')
     ? `Ларион проводит частные экскурсии ${donde} на русском или английском: только ваша группа, встреча в лобби отеля.`
     : `Larion runs private tours ${donde} in Russian or English: just your group, with hotel lobby pick-up.`
   return {
-    es: `Tony es un guía español que vive en Osaka y hace tours privados ${donde} solo para tu grupo, con recogida en tu hotel. Reservas hablando con él, sin agencia.`,
-    en: `Tony is a Spanish guide who lives in Osaka and runs private tours ${donde} for your group only, with hotel pick-up, in English, Spanish or Arabic. You book directly with him, no agency.`,
-    ar: `توني مرشد إسباني يعيش في أوساكا، ينظّم جولات خاصة ${donde} لمجموعتك فقط، مع الاستقبال من الفندق، بالعربية أو الإسبانية أو الإنجليزية. تحجز معه مباشرة، بدون وكالة.`,
+    // Voz de empresa (Antonio, 21-11-2026): antes «Tony es un guía español que vive en
+    // Osaka… Reservas hablando con él, sin agencia». Solo es texto visible: no va en
+    // el JSON-LD (seoTours.ts) ni en el título o la descripción.
+    es: `Tony Kansai Guide organiza tours privados ${donde} solo para tu grupo, con recogida en tu hotel y guía en español. Reservas directamente con nosotros por WhatsApp.`,
+    en: `Tony Kansai Guide runs private tours ${donde} for your group only, with hotel pick-up, in English, Spanish or Arabic. You book directly with us on WhatsApp.`,
+    ar: `تنظّم Tony Kansai Guide جولات خاصة ${donde} لمجموعتك فقط، مع الاستقبال من الفندق، بالعربية أو الإسبانية أو الإنجليزية. تحجزون معنا مباشرة عبر واتساب.`,
     ru: `Tony runs private tours ${donde} in English, Spanish or Arabic.`,
   }[lang]
 }
@@ -378,8 +395,10 @@ export function fichaCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion')
   // Sólo la primera frase del precio (la cifra); la explicación entera está en
   // la pregunta frecuente, y repetirla en cada ciudad era texto duplicado.
   const entera = faqCiudad(id, lang, guia)[0].a
-  const POR_GRUPO: Record<Lengua, string> = { es: 'por grupo de hasta 6', en: 'per group of up to 6', ar: 'للمجموعة حتى ٦ أشخاص', ru: 'за группу до 6 человек' }
-  const corta = entera.split('. ')[0]
+  // Sin techo a la vista (Antonio: «nunca limitar»): el «hasta 6» sigue en las
+  // preguntas del JSON-LD (faqLd), que es lo que leen Google y las IAs.
+  const POR_GRUPO: Record<Lengua, string> = { es: 'por grupo, no por persona', en: 'per group, not per person', ar: 'للمجموعة، لا للشخص الواحد', ru: 'за группу, а не с человека' }
+  const corta = sinTecho(entera.split('. ')[0], lang)
   const precio = /grupo|group|المجموعة|групп/.test(corta) ? `${corta}.` : `${corta}${lang === 'ar' ? '،' : ','} ${POR_GRUPO[lang]}.`
   const zonas = zonasEnFrase(id, lang, 4)
   if (guia === 'larion') return lang === 'ru' ? [
@@ -417,6 +436,38 @@ export function fichaCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion')
     ],
   }
   return lang === 'ru' ? tony.en : tony[lang]
+}
+
+/** Lo visible de las preguntas, sin techos ni primera persona (Antonio, 21-11-2026:
+ *  «nunca limitar ni cerrar puertas» y tono de empresa). Solo para la página: el
+ *  FAQPage (faqLd) conserva el texto de siempre, que es el que citan las IAs y el
+ *  que compara la prueba de SEO antes de publicar. */
+const TECHOS: [RegExp, string][] = [
+  [/ por grupo de hasta 6 personas, no por persona/g, ' por grupo, no por persona'],
+  [/ por grupo de hasta 6 personas/g, ' por grupo'],
+  [/ por grupo de hasta 6/g, ' por grupo'],
+  [/ per group of up to 6, not per person/g, ' per group, not per person'],
+  [/ per group of up to 6/g, ' per group'],
+  [/ за группу до 6 человек, а не с человека/g, ' за группу, а не с человека'],
+  [/ за группу до 6 человек/g, ' за группу'],
+  [/للمجموعة حتى ٦ أشخاص/g, 'للمجموعة'],
+  [/te paso un precio cerrado/g, 'te pasamos un precio cerrado'],
+  [/I send you a fixed price/g, 'we send you a fixed price'],
+  [/escríbeme y te digo/g, 'escríbenos y te decimos'],
+  [/message me and I will tell you/g, 'message us and we will tell you'],
+]
+export function sinTecho(texto: string, _lang: Lengua): string {
+  return TECHOS.reduce((t, [re, por]) => t.replace(re, por), texto).replace(/\s+([،,.])/g, '$1')
+}
+const GRANDE: Partial<Record<Lengua, PreguntaCiudad>> = {
+  es: { q: '¿Y si somos un grupo grande?', a: 'También. El precio es por grupo, no por persona: escríbenos con cuántos sois y te decimos cómo lo organizamos.' },
+  en: { q: 'What if we are a large group?', a: 'That works too. The price is per group, not per person: message us with your numbers and we will tell you how we organise it.' },
+  ar: { q: 'وماذا لو كنا مجموعة كبيرة؟', a: 'لا مشكلة. السعر للمجموعة لا للفرد: راسلونا بعددكم ونخبركم كيف ننظّم الأمر.' },
+}
+/** Preguntas tal como se ven en la página (las del JSON-LD, sin techos). */
+export function faqCiudadVisible(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion'): PreguntaCiudad[] {
+  return faqCiudad(id, lang, guia).map((f) =>
+    guia === 'tony' && /más de 6|more than 6|أكثر من ستة/.test(f.q) && GRANDE[lang] ? GRANDE[lang]! : { q: f.q, a: sinTecho(f.a, lang) })
 }
 
 /** FAQPage para Google y los asistentes: las mismas preguntas que se ven en la página. */

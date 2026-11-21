@@ -1,6 +1,16 @@
 // Página de un idioma: un público, un guía, todo en una sola página.
-// Orden pensado para quien llega sin saber nada: qué es → cómo funciona →
-// quién → dónde → cuánto → de dónde vienes → preguntas → escribir.
+//
+// Páginas de Tony (/es/, /en/, /ar/): portada «troncal» desde el 21-11-2026
+// (encargo de Antonio: rediseno-movil/BRIEF.md y plan-contenido.md). Unas 5-6
+// pantallas de móvil: portada → tres experiencias → un precio de referencia →
+// reseñas → preguntas plegadas → contacto con WhatsApp primero → pie. Todo lo
+// demás (ciudades, tarifas, planes, ventajas, herramientas…) sigue en sus
+// páginas, a dos clics. Los datos para Google y las IAs no cambian: Helmet,
+// JSON-LD, la ficha rápida y las 11 preguntas siguen en el HTML (plegadas).
+//
+// Páginas de Larion (/ru/, /larion/): la página larga de siempre, sin cambios:
+// qué es → cómo funciona → quién → dónde → cuánto → de dónde vienes →
+// preguntas → escribir.
 
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Children } from 'react'
@@ -17,8 +27,6 @@ import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, P
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
-import { BotonSonido } from './BotonSonido'
-import { HeroTinta } from './HeroTinta'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import { useCambio } from './cambio'
@@ -26,16 +34,23 @@ import './v7.css'
 import './estilo-pixel.css'
 import { IconoCanal } from './IconoWa'
 import './figuras.css'
+// Lo que les falta a las piezas de la portada troncal (después de la hoja de estilo general).
+import './portada.css'
+import { Experiencias } from './Experiencias'
+import { useAparicion } from './aparicion'
 import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
-import { BotonTema } from './Tema'
 import { PRECIO } from './datosRutas'
 import { listaTours } from '../v8/seoTours'
-import { CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
+import type { Lengua } from '../v8/ciudades'
 import resenasTony from '../../public/reviews.json'
 import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
+import { visible } from './vozEmpresa'
+import { FAQ_LD_PORTADA } from './faqLdPortada'
+import { planesLD, type LangPlan } from './datosPlanes'
 import { useBilletes } from './Cocina'
 import './kndr-vip.css'
 const KndrVip = lazy(() => import('./KndrVip'))
@@ -43,8 +58,8 @@ import { enlacesHreflang } from '../seo/hreflang'
 import { RESPUESTAS_PROPIAS } from './datosRespuestas'
 import { PRECIO_CORTO } from './datosRespuestasNuevas'
 import { yenLocal } from './formato'
-import { ToursNuevos, viajesToursNuevos } from './ToursNuevos'
-import { VentajasEnGuia, HerramientasEnGuia, HERRAMIENTAS, esLenguaKit } from './KitGuia'
+import { viajesToursNuevos } from './ToursNuevos'
+import { HERRAMIENTAS, esLenguaKit } from './KitGuia'
 
 /** Añade al final de la lista de tours de Tony el de 2 h y el de bici por Kioto. */
 function conToursNuevos(lista: ReturnType<typeof listaTours>, p: { guia: string; lang: string }) {
@@ -61,6 +76,9 @@ const BASE = 'https://tonykansaiguide.com'
 // el navegador bajaba la de 1800 px (≈250 KB) para un panel de 390 px; con 70vw
 // elige la de 900 (x3) o la de 600 (x2), y se sigue viendo nítida.
 export const SIZES_PORTADA = '(max-width: 900px) 70vw, 50vw'
+/** Troncal (/es/, /en/, /ar/) en escritorio: recorte vertical 4:5 que ocupa media
+ *  pantalla (igual en scripts/rutas-estaticas.mjs, que lo precarga). */
+export const SIZES_PORTADA_ESCRITORIO = '50vw'
 
 declare global {
   interface Window { gtag?: (...args: unknown[]) => void }
@@ -99,21 +117,52 @@ interface Resena { id: string; stars: number; name: string; country: string; tou
   /** Nombre, procedencia y lugar ya escritos en otro idioma (las de Larion, en inglés). */
   meta?: Record<string, { name: string; country: string; tour: string }> }
 
-// Bandera por país (en ruso o inglés, como venga): da a cada tarjeta algo propio.
-const BANDERAS: [RegExp, string][] = [
-  [/Росси|Russia/, '🇷🇺'], [/Казахстан|Kazakhstan/, '🇰🇿'], [/Беларусь|Belarus/, '🇧🇾'], [/Украин|Ukrain/, '🇺🇦'],
-  [/Узбекистан|Uzbekistan/, '🇺🇿'], [/Кыргызстан|Kyrgyz/, '🇰🇬'], [/Армени|Armenia/, '🇦🇲'], [/Молдов|Moldova/, '🇲🇩'],
-  [/Грузи|Georgia/, '🇬🇪'], [/Азербайджан|Azerbaijan/, '🇦🇿'], [/Литв|Lithuania/, '🇱🇹'], [/Латви|Latvia/, '🇱🇻'],
-  [/Эстони|Estonia/, '🇪🇪'], [/España|Spain|Испани/, '🇪🇸'], [/México|Mexico/, '🇲🇽'],
-]
-const bandera = (pais: string) => BANDERAS.find(([re]) => re.test(pais))?.[1] ?? ''
-// Cada cliente, una foto de perfil propia, como en redes: 250 avatares de 24 familias
-// (DiceBear, Boring Avatars, Jdenticon, Tabler, Phosphor, Remix), generados en local en /v7/avatares/.
-const AVATARES = 250
-function repartoIconos(lista: { id: string }[]) {
-  // En orden: el generador ya los dejó barajados y sin dos del mismo estilo seguidos,
-  // así que la reseña n.º i lleva el avatar i y ninguno se repite.
-  return new Map(lista.map((r, i) => [r.id, `/v7/avatares/a${String(i % AVATARES).padStart(3, '0')}.svg?v=4`]))
+// 21-11-2026 (crítica de diseño): fuera los 250 avatares de 24 familias distintas
+// (teteras, caricaturas, mosaicos de píxeles: cada tarjeta parecía de otra web) y
+// las banderas emoji. Ahora todas llevan la inicial del nombre en un círculo
+// sakura, igual para todos, y la procedencia en texto.
+function Inicial({ nombre }: { nombre: string }) {
+  return <span className="v7-resena-inicial" aria-hidden="true">{[...nombre.trim()][0]?.toUpperCase() ?? '·'}</span>
+}
+
+/** Idioma real del texto. reviews.json marca algunas en inglés como «es» y la
+ *  portada española abría con una reseña en inglés: se mira el propio texto. */
+function idiomaTexto(t: string): string {
+  if (/[\u0600-\u06FF]/.test(t)) return 'ar'
+  if (/[а-яё]/i.test(t)) return 'ru'
+  const es = (t.match(/\b(el|la|los|las|que|muy|con|por|para|nos|gracias|fue|una|del|todo|tour)\b|[ñ¿¡áéíóú]/gi) ?? []).length
+  const en = (t.match(/\b(the|and|was|we|with|our|for|you|very|had|day|it)\b/gi) ?? []).length
+  return en > es ? 'en' : 'es'
+}
+/** El texto que se pinta en una página: su traducción si la hay, si no el original. */
+const textoEn = (r: Resena, lang: string) => r.traducciones?.[lang] ?? r.text
+/** Lugar de la reseña en el idioma de la página (en /ar/ salía «KIOTO» en español). */
+const LUGARES: Record<string, Record<string, string>> = {
+  Kioto: { en: 'Kyoto', ar: 'كيوتو', ru: 'Киото' }, Osaka: { en: 'Osaka', ar: 'أوساكا', ru: 'Осака' },
+  Nara: { en: 'Nara', ar: 'نارا', ru: 'Нара' }, Kobe: { en: 'Kobe', ar: 'كوبي', ru: 'Кобе' },
+  Himeji: { en: 'Himeji', ar: 'هيميجي', ru: 'Химэдзи' }, Hiroshima: { en: 'Hiroshima', ar: 'هيروشيما', ru: 'Хиросима' },
+}
+function lugarEn(lugar: string | undefined, lang: string, yaTraducido: boolean): string {
+  if (!lugar) return ''
+  if (yaTraducido || lang === 'es') return lugar
+  return LUGARES[lugar]?.[lang] ?? ''
+}
+const FOTO_DE: Record<string, string> = { es: 'Foto de la reseña de', en: 'Photo from the review by', ar: 'صورة من تقييم', ru: 'Фото из отзыва:' }
+/** Si la foto de una reseña no carga (/api/resenas/fotopub caído), fuera el
+ *  hueco: un recuadro con el icono de imagen rota parecía la web rota. */
+function quitaFoto(img: HTMLImageElement) {
+  img.closest('figure')?.classList.remove('v7-resena-con-foto')
+  img.closest('a')?.remove()
+}
+function sinFoto(e: { currentTarget: HTMLImageElement }) { quitaFoto(e.currentTarget) }
+/** Las fotos que fallaron ANTES de hidratar (vienen en el HTML pregenerado y el
+ *  navegador las pide antes de que React escuche su «error»): se revisan al montar. */
+function useFotosRotas(dep: unknown) {
+  useEffect(() => {
+    document.querySelectorAll<HTMLImageElement>('.v7-resenas img').forEach((img) => {
+      if (img.complete && img.naturalWidth === 0 && img.getAttribute('src')) quitaFoto(img)
+    })
+  }, [dep])
 }
 // Enlace a la página de ventajas (apps y descuentos para el viajero). Larion lleva
 // la versión rusa (/ru/perks/) y su página inglesa la de Tony en inglés.
@@ -181,22 +230,20 @@ function repartir<T>(lista: T[], n: number): T[][] {
   lista.forEach((x, i) => cols[i % n].push(x))
   return cols
 }
-function TarjetaClasica({ r, lang, icono }: { r: Resena; lang: string; icono?: string }) {
+function TarjetaClasica({ r, lang }: { r: Resena; lang: string }) {
   const m = r.meta?.[lang]
-  const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
-  const texto = r.traducciones?.[lang] ?? r.text
+  const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = lugarEn(m?.tour ?? r.tour, lang, !!m)
   return (
-    <figure className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}`}>
+    <figure className="tarjeta">
       <div className="v7-resena-cabeza">
         <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
-        {lugar && <span className="v7-resena-lugar">{lugar}</span>}
       </div>
       <TextoResena r={r} lang={lang} />
       <figcaption>
-        <img className="v7-resena-avatar" src={icono} alt="" loading="lazy" width="52" height="52" />
-        <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
+        <Inicial nombre={nombre} />
+        <span><strong>{nombre}</strong><small>{[lugar, pais].filter(Boolean).join(' · ')}</small></span>
       </figcaption>
-      {r.photo && <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener"><img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" /></a>}
+      {r.photo && <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" aria-label={`${FOTO_DE[lang] ?? FOTO_DE.en} ${nombre}`}><img loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} /></a>}
     </figure>
   )
 }
@@ -213,6 +260,7 @@ function resenasFijas(): Resena[] {
 const KANJI_CIUDAD: [RegExp, string][] = [[/kio|kyo|كيو|киот/i, '京都'], [/osa|أوس|осак/i, '大阪'], [/nara|نار|нар/i, '奈良'], [/kob|كوب|кобе/i, '神戸'], [/hime|هيم|химе/i, '姫路'], [/hiro|miya|هير|хиро/i, '広島']]
 const kanjiDe = (tour?: string) => KANJI_CIUDAD.find(([re]) => re.test(tour ?? ''))?.[1] ?? '関西'
 
+const MAS_PIE: Record<string, string> = { es: 'Más', en: 'More', ar: 'المزيد', ru: 'Ещё' }
 const LEER_MAS: Record<string, [string, string]> = { es: ['Leer más', 'Leer menos'], en: ['Read more', 'Read less'], ar: ['اقرأ المزيد', 'اقرأ أقل'], ru: ['Читать дальше', 'Свернуть'] }
 
 /** Recorta a la vista las reseñas largas para que todas las tarjetas midan
@@ -271,19 +319,30 @@ function useSeccionActiva(ids: string[]) {
   return activa
 }
 
-function Cabecera({ p }: { p: Pagina }) {
-  const activa = useSeccionActiva(['zona', 'ciudades', 'rutas', 'como', 'precios', 'contacto'])
+/** Atajos de la portada troncal (cabecera y barra del móvil): las tres
+ *  secciones que quedan entre la portada y el contacto. */
+const ATAJOS_TRONCAL: Record<string, [string, string, string]> = {
+  es: ['Experiencias', 'Precio', 'Reseñas'], en: ['Experiences', 'Price', 'Reviews'], ar: ['التجارب', 'السعر', 'التقييمات'],
+}
+
+function Cabecera({ p, troncal }: { p: Pagina; troncal: boolean }) {
+  const activa = useSeccionActiva(troncal ? ['experiencias', 'precios', 'resenas', 'contacto'] : ['zona', 'ciudades', 'rutas', 'como', 'precios', 'contacto'])
   const g = GUIAS[p.guia]
   const msg = p.contacto.plantilla(VACIO)
+  const [exp, , opiniones] = ATAJOS_TRONCAL[p.lang] ?? ATAJOS_TRONCAL.en
+  const anclas: [string, string][] = troncal
+    ? [['experiencias', exp], ['precios', p.nav.precios], ['resenas', opiniones]]
+    : [['ciudades', p.nav.zona], ['rutas', ({ es: 'Mira dentro', en: 'Step inside', ar: 'ادخل إلى المشهد', ru: 'Загляните внутрь' } as Record<string, string>)[p.lang]], ['como', p.nav.como], ['precios', p.nav.precios]]
   return (
     <header className="v7-cabecera cristal">
       <Link to="/" className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
       </Link>
       <nav className="v7-anclas" aria-label={p.nav.idioma}>
-        {([['ciudades', p.nav.zona], ['rutas', ({ es: 'Mira dentro', en: 'Step inside', ar: 'ادخل إلى المشهد', ru: 'Загляните внутрь' } as Record<string, string>)[p.lang]], ['como', p.nav.como], ['precios', p.nav.precios]] as const).map(([id, txt]) => (
+        {anclas.map(([id, txt]) => (
           <a key={id} href={`#${id}`} aria-current={activa === id ? 'location' : undefined}>{txt}</a>
         ))}
-        {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas"><svg className="v7-icono-regalo" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v2a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1l0 -2M12 8l0 13M19 12v7a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-7M7.5 8a2.5 2.5 0 0 1 0 -5a4.8 8 0 0 1 4.5 5a4.8 8 0 0 1 4.5 -5a2.5 2.5 0 0 1 0 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" /></svg> {VENTAJAS[p.id].corto}</Link>}
+        {/* «Ventajas» como un enlace más: el regalo y la negrita la hacían insignia de relleno (crítica, 21-11). */}
+        {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas">{VENTAJAS[p.id].corto}</Link>}
       </nav>
       <nav className="v7-idiomas" aria-label={p.nav.idioma}>
         {HERMANAS[p.guia].map((h) => (
@@ -292,8 +351,6 @@ function Cabecera({ p }: { p: Pagina }) {
           </Link>
         ))}
       </nav>
-      <BotonTema lang={p.lang} />
-      <BotonSonido lang={p.lang} ambiente="ciudad" />
       <a className={`v7-boton v7-boton-peq${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — ${canal(p)}`}>
         <IconoCanal tg={!!g.tg} /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
       </a>
@@ -428,7 +485,8 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
           <article key={plan.nombre} className={`v7-plan tarjeta ck-billete ${i === 1 ? 'v7-plan-destacado' : ''}`}>
             {i === 1 && <p className="v7-plan-sello ck-foil">{RECOMENDADO[p.lang] ?? RECOMENDADO.en}</p>}
             <h3>{plan.nombre}</h3>
-            <p className="v7-plan-detalle">{plan.detalle}</p>
+            {/* Sin «hasta 6» a la vista (vozEmpresa.ts); el Offer del JSON-LD conserva el detalle. */}
+            <p className="v7-plan-detalle">{visible(plan.detalle)}</p>
             <p className="v7-plan-precio">{plan.desde && <span className="v7-plan-desde">{p.precios.desde} </span>}<bdi>{plan.precio}</bdi></p>
             <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
             {p.precios.porPersona && !plan.desde && <p className="v7-plan-persona">{p.precios.porPersona(plan.yenes)}</p>}
@@ -549,37 +607,120 @@ function Contacto({ p }: { p: Pagina }) {
   )
 }
 
+/** Precio de referencia de la portada troncal: UNA cifra a la vista (Antonio:
+ *  precios repetidos = sobrecarga; antes ¥38.000 salía 8 veces). Tarifas,
+ *  PayPal, planes y experiencias siguen en /es/precios/ (/en/prices/,
+ *  /ar/prices/). La ficha rápida sigue en el HTML, plegada: es lo que ChatGPT
+ *  encontró y citó (18-10-2026), y lo que lee scripts/textos-ia.mjs. */
+function PrecioReferencia({ p }: { p: Pagina }) {
+  const otono = useEsOtono()
+  const r = p.precioRef
+  if (!r) return null
+  const flecha = p.dir === 'rtl' ? '←' : '→'
+  const temporada = p.precios.temporada?.enlace
+  return (
+    <section id="precios" className="v7-seccion v7-precio-seccion" aria-label={r.titulo}>
+      {/* Un solo titular: la cifra. Antes «Cuánto cuesta» (mincho) y debajo otra cifra
+          en negrita casi igual de grande: dos titulares en dos letras (crítica, 21-11). */}
+      <div className="v7-precio-ref" data-aparece="">
+        <h2 className="v7-precio-cifra">{desdeHero(p.lang)}</h2>
+        <p>{r.texto}</p>
+        {/* HTML estático (scripts/precios.mjs): <a>, no <Link>, para salir de la SPA. */}
+        <a className="v9-enlace" href={r.ruta}>{r.enlace} {flecha}</a>
+        {/* Arces de Kioto (1-oct a 7-dic, hora de Japón): una línea, no un bloque. */}
+        {otono && temporada && (
+          <p className="v7-precio-otono">{r.otono} <Link to={temporada.ruta}>{temporada.texto} {flecha}</Link></p>
+        )}
+        {FICHA_RAPIDA[p.lang] && (
+          <details className="v7-plegado">
+            <summary>{r.plegado}</summary>
+            <dl className="v9-ficha">
+              {FICHA_RAPIDA[p.lang].map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
+            </dl>
+          </details>
+        )}
+      </div>
+    </section>
+  )
+}
+
+/** Contacto de la portada troncal: WhatsApp grande primero, número y correo a
+ *  la vista, y el formulario de siempre plegado debajo (Antonio: el contacto
+ *  antes que los formularios). form.v7-formulario no cambia: Clarity lo marca. */
+function ContactoTroncal({ p, msg }: { p: Pagina; msg: string }) {
+  const g = GUIAS[p.guia]
+  const c = p.contactoWa
+  if (!c) return null
+  return (
+    <section id="contacto" className="v7-seccion">
+      <h2>{p.contacto.titulo}</h2>
+      <p className="v7-entradilla">{c.sub}</p>
+      <div className="v7-contacto-wa" data-aparece="">
+        <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${c.boton} — ${canal(p)}`}>
+          <IconoCanal tg={!!g.tg} /> {c.boton}
+        </a>
+        <p className="v7-contacto-otros">
+          {p.lang === 'ar' ? 'واتساب' : 'WhatsApp'} <bdi dir="ltr">{telefono(g.wa ?? '')}</bdi> · {c.correo} <a href={`mailto:${CORREO}`}>{CORREO}</a>
+        </p>
+      </div>
+      {/* Fuera de .v7-contacto-wa (que mide 40rem) para que el formulario y la
+          vista previa del mensaje tengan el ancho de siempre en escritorio. */}
+      <details className="v7-plegado">
+        <summary>{c.formulario}</summary>
+        <p className="v7-entradilla">{p.contacto.sub}</p>
+        <Contacto p={p} />
+      </details>
+    </section>
+  )
+}
+
 const ATAJOS: Record<string, [string, string, string]> = {
   es: ['Tours', 'Precios', 'Reseñas'], en: ['Tours', 'Prices', 'Reviews'],
   ar: ['الجولات', 'الأسعار', 'التقييمات'], ru: ['Туры', 'Цены', 'Отзывы'],
 }
 
 /** En móvil, en cuanto se deja atrás la portada, queda abajo una barra con lo
- *  que busca el cliente (tours, precios, reseñas) y el botón de WhatsApp. */
-function BarraMovil({ p, href, conResenas }: { p: Pagina; href: string; conResenas: boolean }) {
+ *  que busca el cliente (tours o experiencias, precios, reseñas) y el botón de
+ *  WhatsApp. Se esconde donde ya hay un WhatsApp grande a la vista (el
+ *  contacto y, en la portada troncal, el pie): así no tapa sus enlaces. */
+function BarraMovil({ p, href, conResenas, troncal }: { p: Pagina; href: string; conResenas: boolean; troncal: boolean }) {
   const [ver, setVer] = useState(false)
+  const primera = troncal ? 'experiencias' : 'ciudades'
   // Con las reseñas (llegan después) cambia la lista y se vuelve a observar.
-  const activa = useSeccionActiva(conResenas ? ['ciudades', 'precios', 'resenas'] : ['ciudades', 'precios'])
+  const activa = useSeccionActiva(conResenas ? [primera, 'precios', 'resenas'] : [primera, 'precios'])
   useEffect(() => {
     // La portada actual es .v9-portada (con .v7-hero, la de antes, la barra no salía nunca).
     const hero = document.querySelector('.v9-portada, .v7-hero')
     const contacto = document.getElementById('contacto')
+    const pie = troncal ? document.querySelector('.v7-pie') : null
     if (!hero) return
-    let pasada = false, enContacto = false
-    const pinta = () => setVer(pasada && !enContacto)
+    let pasada = false, enContacto = false, enPie = false
+    const pinta = () => setVer(pasada && !enContacto && !enPie)
     const io = new IntersectionObserver((es) => {
       for (const e of es) {
         if (e.target === hero) pasada = !e.isIntersecting
         if (e.target === contacto) enContacto = e.isIntersecting
+        if (e.target === pie) enPie = e.isIntersecting
       }
       pinta()
     })
     io.observe(hero)
     if (contacto) io.observe(contacto)
+    if (pie) io.observe(pie)
     return () => io.disconnect()
-  }, [])
-  const [tours, precios, opiniones] = ATAJOS[p.lang] ?? ATAJOS.en
-  const atajos: [string, string][] = [['ciudades', tours], ['precios', precios], ...(conResenas ? [['resenas', opiniones] as [string, string]] : [])]
+  }, [troncal])
+  const [tours, precios, opiniones] = (troncal ? ATAJOS_TRONCAL : ATAJOS)[p.lang] ?? ATAJOS.en
+  const atajos: [string, string][] = [[primera, tours], ['precios', precios], ...(conResenas ? [['resenas', opiniones] as [string, string]] : [])]
+  // Troncal (portada corta): solo el botón de WhatsApp, a lo ancho y con su texto.
+  // Los atajos eran una segunda navegación encima de la cabecera; Clarity pide una
+  // barra con un solo botón (estudio del 21-11, mejora 7) y la portada ya es corta.
+  if (troncal) {
+    return (
+      <div className={`v7-barra-movil v7-barra-sola cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
+        <a className="v7-boton" href={href} target="_blank" rel="noopener noreferrer" tabIndex={ver ? 0 : -1}><IconoCanal tg={false} /> {p.hero.cta}</a>
+      </div>
+    )
+  }
   return (
     <div className={`v7-barra-movil v7-barra-fila cristal ${ver ? 'ver' : ''}`} aria-hidden={!ver}>
       <nav className="v7-barra-atajos" aria-label={atajos.map(([, t]) => t).join(' · ')}>
@@ -617,7 +758,7 @@ export function valoracionTonyAntigua() {
 
 /** Fecha de la última revisión de contenido de estas páginas (dateModified).
  *  A mano y no la del build: un build sin cambios no es contenido nuevo. */
-const ACTUALIZADO = '2026-10-14'
+const ACTUALIZADO = '2026-11-21'
 
 /** El negocio es uno (index.html lo declara con este @id, igual en todas las
  *  rutas); cada página dice qué persona guía y la enlaza a él. Así /ru/ y
@@ -671,16 +812,6 @@ const PUERTA_MONTANA: Record<PaginaId, { ruta: string; titulo: string; sub: stri
   larion: { ruta: '/en/hiking/', titulo: 'Already seen Kyoto? Climb its mountains', sub: 'Eight guided mountain routes: Kongō, Atago, Hiei, Rokkō, Yoshino…' },
 }
 
-/** Pase de la portada: la foto de siempre primero y dos destinos más de ese público. */
-const FOTOS_HERO: Record<PaginaId, string[]> = {
-  es: ['/v7/fotos/kioto.jpg', '/v7/fotos/osaka.jpg', '/v7/fotos/nara.jpg'],
-  en: ['/v7/fotos/nara.jpg', '/v7/fotos/kioto.jpg', '/v7/fotos/himeji.jpg'],
-  ar: ['/v7/fotos/osaka.jpg', '/v7/fotos/kobe.jpg', '/v7/fotos/kioto.jpg'],
-  // Sin la Cúpula de la Bomba: en la portada pasan el guía en manga y las hojas
-  // de la estación, y delante de un memorial no tocan. Se ve en la página de Hiroshima.
-  ru: ['/v7/fotos/miyajima.jpg', '/v7/fotos/kioto.jpg', '/v7/fotos/himeji.jpg'],
-  larion: ['/v7/fotos/miyajima.jpg', '/v7/fotos/himeji.jpg', '/v7/fotos/kioto.jpg'],
-}
 
 /** «Por qué conmigo»: tres razones, todas ya dichas en la web (sin agencia,
  *  idiomas del guía, precio por grupo de hasta 6 y cancelación hasta 72 h). */
@@ -721,16 +852,19 @@ function desdeHero(lang: string): string {
 }
 
 
-/** Ficha rápida de Tony (sección «Tu guía»). Solo datos que ya dice la web. */
+/** Ficha rápida de Tony: plegada en el precio de la portada troncal. Solo datos
+ *  que ya dice la web. 21-11-2026 (Antonio): sin techos a la vista («hasta 6»,
+ *  «hasta 14»); esas cifras siguen en el JSON-LD (offers) y en llms.txt. Y
+ *  primero «todo Japón», no solo Kansai (Tokio y el Fuji: /es/rutas/). */
 const FICHA_RAPIDA: Record<string, [string, string][]> = {
   es: [
     ['Guía', 'Tony Hanma, español, vive en Osaka'],
     ['Idiomas', 'Español (nativo), inglés y árabe'],
-    ['Dónde', 'Kioto, Osaka, Nara, Kobe y Himeji; también el resto de Japón'],
-    ['Precio', 'Medio día (4 h) ¥38.000 · día completo (8 h) ¥58.000, por grupo de hasta 6'],
-    ['Tour corto', `2 horas en Kioto, ${yenLocal(PRECIO_CORTO, 'es')} por grupo de hasta 6`],
+    ['Dónde', 'Todo Japón: Kansai (Kioto, Osaka, Nara, Kobe, Himeji), Tokio, el monte Fuji y más'],
+    ['Precio', 'Medio día (4 h) ¥38.000 · día completo (8 h) ¥58.000, por grupo, no por persona'],
+    ['Tour corto', `2 horas en Kioto, ${yenLocal(PRECIO_CORTO, 'es')} por grupo`],
     ['En bici', 'Kioto en bici con el guía, al precio de medio día o día completo; las bicis se alquilan aparte'],
-    ['Grupos', 'Solo tu grupo; hasta 14 personas, precio a consultar'],
+    ['Grupos', 'Solo tu grupo; grupos grandes, precio a consultar'],
     ['Recogida', 'En el vestíbulo de tu hotel'],
     ['Pago', 'Efectivo el día del tour, o PayPal o Wise por adelantado'],
     ['Cancelación', 'Gratis hasta 72 horas antes'],
@@ -740,11 +874,11 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
   en: [
     ['Guide', 'Tony Hanma, from Spain, lives in Osaka'],
     ['Languages', 'Spanish (native), English and Arabic'],
-    ['Where', 'Kyoto, Osaka, Nara, Kobe and Himeji; the rest of Japan too'],
-    ['Price', 'Half day (4 h) ¥38,000 · full day (8 h) ¥58,000, per group of up to 6'],
-    ['Short tour', `2 hours in Kyoto, ${yenLocal(PRECIO_CORTO, 'en')} per group of up to 6`],
+    ['Where', 'All of Japan: Kansai (Kyoto, Osaka, Nara, Kobe, Himeji), Tokyo, Mount Fuji and more'],
+    ['Price', 'Half day (4 h) ¥38,000 · full day (8 h) ¥58,000, per group, not per person'],
+    ['Short tour', `2 hours in Kyoto, ${yenLocal(PRECIO_CORTO, 'en')} per group`],
     ['By bike', 'Kyoto by bike with your guide, at the half-day or full-day price; bikes are rented separately'],
-    ['Groups', 'Your group only; up to 14 people, price on request'],
+    ['Groups', 'Your group only; larger groups, price on request'],
     ['Pick-up', 'In your hotel lobby'],
     ['Payment', 'Cash on the day, or PayPal or Wise in advance'],
     ['Cancellation', 'Free up to 72 hours before'],
@@ -754,11 +888,11 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
   ar: [
     ['المرشد', 'طوني هانما، إسباني مسلم يعيش في أوساكا'],
     ['اللغات', 'العربية والإسبانية والإنجليزية'],
-    ['الأماكن', 'كيوتو وأوساكا ونارا وكوبي وهيميجي، وبقية اليابان أيضاً'],
-    ['السعر', 'نصف يوم (٤ ساعات) ٣٨٬٠٠٠ ين · يوم كامل (٨ ساعات) ٥٨٬٠٠٠ ين، للمجموعة حتى ٦ أشخاص'],
-    ['جولة قصيرة', `ساعتان في كيوتو، ${new Intl.NumberFormat('ar-EG').format(PRECIO_CORTO)} ين للمجموعة حتى ٦ أشخاص`],
+    ['الأماكن', 'كل اليابان: كانساي (كيوتو وأوساكا ونارا وكوبي وهيميجي) وطوكيو وجبل فوجي وغيرها'],
+    ['السعر', 'نصف يوم (٤ ساعات) ٣٨٬٠٠٠ ين · يوم كامل (٨ ساعات) ٥٨٬٠٠٠ ين، للمجموعة لا للشخص'],
+    ['جولة قصيرة', `ساعتان في كيوتو، ${new Intl.NumberFormat('ar-EG').format(PRECIO_CORTO)} ين للمجموعة`],
     ['بالدراجة', 'كيوتو بالدراجة مع المرشد، بسعر نصف اليوم أو اليوم الكامل؛ والدراجات تُستأجر على حدة'],
-    ['المجموعات', 'مجموعتك وحدها؛ حتى ١٤ شخصاً بسعر حسب الطلب'],
+    ['المجموعات', 'مجموعتك وحدها؛ المجموعات الكبيرة بسعر حسب الطلب'],
     ['الاستقبال', 'في بهو فندقك'],
     ['الدفع', 'نقداً يوم الجولة، أو مسبقاً عبر PayPal أو Wise'],
     ['الإلغاء', 'مجاني حتى ٧٢ ساعة قبل الجولة'],
@@ -768,6 +902,33 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
 }
 
 const RESPUESTAS_TITULO: Record<string, string> = { es: 'Guías y precios', en: 'Guides and prices', ar: 'أدلة وأسعار' }
+/** Título del plegable de preguntas en la portada troncal. */
+const PREGUNTAS_FRECUENTES: Record<string, string> = { es: 'Preguntas frecuentes', en: 'Frequently asked questions', ar: 'الأسئلة الشائعة' }
+/** Columna «Destinos» del pie (troncal), tras las 7 ciudades: lo que no es una
+ *  ciudad de Kansai. Rutas existentes (App.tsx, datosOtono, datosTemporadas). */
+const DESTINOS_EXTRA: Record<string, { texto: string; ruta: string; estatica?: boolean }[]> = {
+  es: [
+    { texto: 'Tokio, el Fuji y más: rutas hora a hora', ruta: '/es/rutas/' },
+    { texto: 'Montaña', ruta: '/es/montana/' },
+    { texto: 'Otoño en Kioto', ruta: '/es/otono-kioto/' },
+    { texto: 'Sakura en Kioto', ruta: '/es/sakura-kioto/' },
+    { texto: 'Todos los destinos', ruta: '/es/destinos/', estatica: true },
+  ],
+  en: [
+    { texto: 'Tokyo, Fuji and more: hour-by-hour routes', ruta: '/en/routes/' },
+    { texto: 'Hiking', ruta: '/en/hiking/' },
+    { texto: 'Autumn in Kyoto', ruta: '/en/kyoto-autumn/' },
+    { texto: 'Cherry blossom in Kyoto', ruta: '/en/kyoto-cherry-blossom/' },
+    { texto: 'All destinations', ruta: '/en/destinations/', estatica: true },
+  ],
+  ar: [
+    { texto: 'طوكيو وفوجي وغيرهما: المسارات ساعة بساعة', ruta: '/ar/routes/' },
+    { texto: 'الجبال', ruta: '/ar/hiking/' },
+    { texto: 'الخريف في كيوتو', ruta: '/ar/kyoto-autumn/' },
+    { texto: 'أزهار الكرز في كيوتو', ruta: '/ar/kyoto-cherry-blossom/' },
+    { texto: 'كل الوجهات', ruta: '/ar/destinations/', estatica: true },
+  ],
+}
 /** Columna del pie: título + hasta 6 enlaces a la vista; el resto en «Ver todo (N)».
  *  Abierta en el HTML; en el móvil se pliega al montar (acordeón). */
 const VER_TODO: Record<string, string> = { es: 'Ver todo', en: 'See all', ar: 'عرض الكل', ru: 'Показать все' }
@@ -800,9 +961,32 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   // Con 200 reseñas la sección sería un muro: se abren por tandas.
   const [verResenas, setVerResenas] = useState(12)
   const [filtroEstrellas, setFiltroEstrellas] = useState(0)
-  const iconos = useMemo(() => repartoIconos(resenas), [resenas])
   const columnasLarion = useColumnas()
-  const resenasVistas = filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
+  // Portada troncal (rediseño de Antonio, 21-11-2026) solo en las páginas de Tony.
+  const troncal = p.guia === 'tony'
+  // Foto de portada sin «.jpg»: base de sus variantes webp (-600, -900, -1200, -retrato…).
+  const baseHero = p.hero.foto.replace(/\.jpg$/, '')
+  const principal = useRef<HTMLElement>(null)
+  useAparicion(principal, troncal)
+  // Troncal: todas las reseñas en una fila (así las 28 llegan al HTML que leen
+  // las IAs) y las de foto primero (Antonio: «está genial»). sort es estable:
+  // dentro de cada grupo se mantiene el orden de reviews.json.
+  // Troncal: primero las que se leen en el idioma de la página (en /es/ abría una
+  // en inglés) y, entre ellas, las que llevan foto. En /ar/ solo las que están en
+  // árabe o traducidas (la entradilla dice «traducidas»); si fueran menos de 3,
+  // todas, para que la fila no quede vacía.
+  useFotosRotas(resenas)
+  const resenasVistas = useMemo(() => {
+    if (!troncal) return filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
+    const enSuIdioma = (r: Resena) => idiomaTexto(textoEn(r, p.lang)) === p.lang
+    const peso = (r: Resena) => (enSuIdioma(r) ? 2 : 0) + (r.photo ? 1 : 0)
+    let lista = [...resenas].sort((a, b) => peso(b) - peso(a))
+    if (p.lang === 'ar') {
+      const legibles = lista.filter(enSuIdioma)
+      if (legibles.length >= 3) lista = legibles
+    }
+    return lista
+  }, [troncal, resenas, filtroEstrellas, p.lang])
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -827,7 +1011,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const msgCorto = p.contacto.plantilla(VACIO)
 
   return (
-    <div className={`v7 v7-pagina lang-${p.lang}`} lang={p.lang} dir={p.dir}>
+    <div className={`v7 v7-pagina lang-${p.lang}${troncal ? ' v7-troncal' : ''}`} lang={p.lang} dir={p.dir}>
       <Helmet>
         <html lang={p.lang} dir={p.dir} />
         <title>{p.seo.titulo}</title>
@@ -840,7 +1024,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <meta property="og:url" content={`${BASE}${p.ruta}`} />
         <meta property="og:image" content={`${BASE}${p.hero.foto}`} />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="theme-color" content="#f5f5f7" />
+        <meta name="theme-color" content="#fdfcfa" />
         <script type="application/ld+json">{JSON.stringify(datosEstructurados(p))}</script>
         {/* Las estrellas van en el negocio (LocalBusiness; no TravelAgency: la web dice que no es agencia): Google no admite reseñas dentro de un Service. */}
         {p.guia !== 'larion' && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'LocalBusiness', '@id': NEGOCIO_ID, name: 'Tony Kansai Guide', url: `${BASE}/`, ...valoracionTony() })}</script>}
@@ -853,26 +1037,34 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Las preguntas de la página, para que Google pueda enseñarlas en el resultado. */}
         <script type="application/ld+json">{JSON.stringify({
           '@context': 'https://schema.org', '@type': 'FAQPage', inLanguage: p.lang,
-          mainEntity: p.faq.items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+          mainEntity: (FAQ_LD_PORTADA[p.id] ?? p.faq.items).map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
         })}</script>
+        {/* Troncal: los planes de venta ya no se pintan en la portada (están en
+            /es/precios/#planes), pero su OfferCatalog se queda en el JSON-LD de la
+            portada, igual que estaba publicado (regla del rediseño: no tocar el JSON-LD). */}
+        {troncal && <script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', ...planesLD(p.lang as LangPlan, p.guia, `${BASE}${p.ruta}`) })}</script>}
         <script type="application/ld+json">{JSON.stringify(conToursNuevos(listaTours(p.guia === 'larion' ? CIUDADES_LARION : CIUDADES_TONY, p.lang, p.guia, p.ruta.replace(/\/$/, '')), p))}</script>
       </Helmet>
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
-      <Cabecera p={p} />
+      <Cabecera p={p} troncal={troncal} />
 
-      <main>
+      <main ref={principal}>
         {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
-            otro, a sangre. Sin efectos encima: la foto y el titular bastan. */}
+            otro, a sangre. Sin efectos encima: la foto y el titular bastan.
+            Troncal (Tony): titular, una frase, UN botón de WhatsApp y la nota
+            de las reseñas (único sitio con la cifra). El precio baja a #precios
+            y las ventajas, a su página (enlace de la cabecera y del pie). */}
         <section className="v9-portada">
           <div className="v9-portada-texto">
-            <span className="v9-sello" lang="ja" aria-hidden="true">関西</span>
+            {/* El único rojo de la página. 日本 y no 関西 en la de Tony: guías por todo Japón. */}
+            <span className="v9-sello" lang="ja" aria-hidden="true">{troncal ? '日本' : '関西'}</span>
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
               {/* «Reservar» abre WhatsApp con el mensaje listo: es la reserva de verdad. */}
               <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer" aria-label={`${p.hero.cta} — ${canal(p)}`}><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
-              <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>
+              {!troncal && <a className="v9-enlace" href="#contacto">{p.hero.cta2}</a>}
             </div>
             {g.tg && <p className="v7-nota-tg">Telegram {TG_LARION_VISIBLE} · {notaTg(p)} · WhatsApp <a href={WA_LARION_URL} target="_blank" rel="noopener noreferrer"><bdi dir="ltr">{WA_LARION_VISIBLE}</bdi></a></p>}
             {/* La nota sale de las reseñas reales; sin reseñas no se enseña nada. */}
@@ -881,7 +1073,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 <span aria-hidden="true">★</span> {mediaResenas(resenas, p.lang)} · {resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}
               </a></p>
             )}
-            {VENTAJAS[p.id] && (
+            {!troncal && VENTAJAS[p.id] && (
               <p className="v7-hero-ventajas"><Link to={VENTAJAS[p.id].ruta}>
                 <span className="v7-hero-ventajas-pila" aria-hidden="true">
                   {MUESTRA_APPS.map((a) => (
@@ -894,31 +1086,56 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 <span className="v7-hero-ventajas-flecha" aria-hidden="true">{p.dir === 'rtl' ? '←' : '→'}</span>
               </Link></p>
             )}
-            {/* Lo que hay que saber antes de escribir: precio, grupo y recogida. */}
-            <ul className="v7-hero-datos">
-              <li>{desdeHero(p.lang)}</li>
-              {p.hero.chips.filter((c) => !/precio|price|سعر|цена/i.test(c)).map((c) => <li key={c}>{c}</li>)}
-            </ul>
+            {/* Lo que hay que saber antes de escribir: precio, grupo y recogida.
+                Troncal: nada, porque la frase de debajo del titular ya dice «solo
+                tu grupo» y «te recogemos en tu hotel», y el precio va una sola vez
+                en #precios (Antonio: no repetir). */}
+            {!troncal && (
+              <ul className="v7-hero-datos">
+                <li>{desdeHero(p.lang)}</li>
+                {p.hero.chips.filter((c) => !/precio|price|سعر|цена/i.test(c)).map((c) => <li key={c}>{c}</li>)}
+              </ul>
+            )}
           </div>
           <div className="v9-portada-foto">
-            <img {...foto(p.hero.foto, SIZES_PORTADA)} alt={p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
-            <HeroTinta fotos={FOTOS_HERO[p.id]} />
+            {/* Troncal: el castillo de Himeji con cerezos (v7/fotos/portada*). Se veía
+                borrosa: el panel de escritorio es vertical (≈ 700 × 900) y recortaba una
+                foto apaisada de 900 px, y en el iPhone x3 «70vw» bajaba la de 900.
+                Ahora hay un recorte vertical propio para escritorio y en el móvil se
+                pide el ancho real (100vw), con un paso de 1200 px para pantallas x3.
+                La mancha de tinta (HeroTinta, WebGL) ya no se monta en ninguna
+                portada (decisión del 21-11, también /ru/ y /larion/). */}
+            {troncal ? (
+              <picture>
+                <source media="(min-width: 901px)" srcSet={`${baseHero}-retrato-900.webp 720w, ${baseHero}-retrato.webp 1440w`} sizes={SIZES_PORTADA_ESCRITORIO} />
+                <img srcSet={`${baseHero}-600.webp 600w, ${baseHero}-900.webp 900w, ${baseHero}-1200.webp 1200w, ${baseHero}.webp 1800w`} sizes="100vw" src={`${baseHero}.webp`} alt={p.hero.fotoAlt ?? p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+              </picture>
+            ) : (
+              <img {...foto(p.hero.foto, SIZES_PORTADA)} alt={p.hero.fotoAlt ?? p.hero.titulo} width={1800} height={1200} {...{ fetchpriority: 'high' }} />
+            )}
           </div>
         </section>
 
-        {/* Cómo funciona */}
-        {/* Las ciudades, cada una con su página (v8) */}
-        <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
+        {/* Troncal: tres experiencias que enlazan a sus páginas (en vez del
+            mosaico de 7 ciudades con precio y «Reservar» en cada una). */}
+        {troncal && <Experiencias p={p} msg={msgCorto} />}
 
-        {/* Tour de 2 h y tour en bici por Kioto (11-11-2026), junto a los tours por ciudad. */}
-        {p.guia === 'tony' && <ToursNuevos lang={p.lang} />}
+        {/* Las ciudades, cada una con su página (v8). En la troncal están en la
+            columna «Destinos» del pie (y el JSON-LD ItemList las sigue listando). */}
+        {!troncal && <Mosaico lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />}
+
+        {/* Tour de 2 h y tour en bici por Kioto (11-11-2026): solo eran de Tony y
+            ahora viven en la página de Kioto, en /es/precios/ y en el pie («Guías y precios»). */}
 
         {/* Precios justo después de los tours: es lo primero que busca quien
-            llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas. */}
-        <section id="precios" className="v7-seccion">
-          <h2>{p.precios.titulo}</h2>
-          <Precios p={p} resenas={resenas} />
-        </section>
+            llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas.
+            Troncal: un solo precio de referencia; el resto, a dos clics. */}
+        {troncal ? <PrecioReferencia p={p} /> : (
+          <section id="precios" className="v7-seccion">
+            <h2>{p.precios.titulo}</h2>
+            <Precios p={p} resenas={resenas} />
+          </section>
+        )}
 
         {/* Viajes a la RPDC del equipo, con Max (KndrVip.tsx, cargada aparte). Larion no va: solo tiene pasaporte japonés. */}
         {(p.id === 'ru' || p.id === 'larion') && (
@@ -927,13 +1144,15 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </Suspense>
         )}
 
-        {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos. */}
+        {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos.
+            Troncal: una fila que se desliza, sin el resumen de estrellas (todas son de 5★
+            y la cifra ya está en la portada) ni «Ver más»: van todas en el HTML. */}
         {p.resenas && resenas.length > 0 && (
           <section className="v7-seccion" id="resenas">
             <h2>{p.resenas.titulo}</h2>
             {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
             <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
-            {resenas.length >= 20 && (() => {
+            {!troncal && resenas.length >= 20 && (() => {
               // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
               const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)
               return (
@@ -958,39 +1177,38 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.guia === 'larion' ? (
               <div className="v7-resenas v7-resenas-clasico">
                 {repartir(resenasVistas.slice(0, verResenas), columnasLarion).map((col, c) => (
-                  <div key={c} className="v7-resenas-col">{col.map((r) => <TarjetaClasica key={r.id} r={r} lang={p.lang} icono={iconos.get(r.id)} />)}</div>
+                  <div key={c} className="v7-resenas-col">{col.map((r) => <TarjetaClasica key={r.id} r={r} lang={p.lang} />)}</div>
                 ))}
               </div>
             ) : (
-            <div className="v7-resenas">
-              {resenasVistas.slice(0, verResenas).map((r) => {
+            <div className={`v7-resenas${troncal ? ' v7-resenas-fila' : ''}`} {...(troncal ? { role: 'region', 'aria-label': p.resenas.titulo, tabIndex: 0 } : {})}>
+              {(troncal ? resenasVistas : resenasVistas.slice(0, verResenas)).map((r) => {
                 const m = r.meta?.[p.lang]
-                const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = m?.tour ?? r.tour
-                const texto = r.traducciones?.[p.lang] ?? r.text
+                const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = lugarEn(m?.tour ?? r.tour, p.lang, !!m)
+                const texto = textoEn(r, p.lang)
                 return (
-                <figure key={r.id} className={`tarjeta${texto.length < 110 ? ' v7-resena-corta' : ''}${r.photo ? ' v7-resena-con-foto' : ''}`}>
+                <figure key={r.id} className={`tarjeta${r.photo ? ' v7-resena-con-foto' : ''}`}>
                   {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
                       natural y la rejilla quedaba como un puzle mal encajado. */}
                   {r.photo
-                    ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" /></a>
+                    ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }} aria-label={`${FOTO_DE[p.lang] ?? FOTO_DE.en} ${nombre}`}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} /></a>
                     : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
                   <div className="v7-resena-cabeza">
                     <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
-                    {lugar && <span className="v7-resena-lugar">{lugar}</span>}
                   </div>
                   <TextoRecortable largo={texto.length > 320} lang={p.lang}>
                     <TextoResena r={r} lang={p.lang} />
                   </TextoRecortable>
                   <figcaption>
-                    <img className="v7-resena-avatar" src={iconos.get(r.id)} alt="" loading="lazy" width="52" height="52" />
-                    <span><strong>{nombre}</strong><small>{bandera(pais)} {pais}</small></span>
+                    <Inicial nombre={nombre} />
+                    <span><strong>{nombre}</strong><small>{[lugar, pais].filter(Boolean).join(' · ')}</small></span>
                   </figcaption>
                 </figure>
                 )
               })}
             </div>
             )}
-            {resenasVistas.length > verResenas && (
+            {!troncal && resenasVistas.length > verResenas && (
               <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
                 {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})
               </button></p>
@@ -999,6 +1217,14 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         )}
 
 
+        {/* Desde aquí hasta las preguntas, solo /ru/ y /larion/. En la troncal de
+            Tony cada bloque sigue en su página, a dos clics (plan-contenido.md § 2.6):
+            por qué/cómo funciona/qué incluye → /es/guia-espanol-kansai/ y /es/precios/#incluye;
+            el guía → /es/guia-espanol-kansai/; Mira dentro → páginas de ciudad;
+            montaña → tarjeta «Naturaleza»; herramientas y ventajas → pie y cabecera;
+            el mercado (relojes) → guía práctica en «Destinos»; la oración en vivo,
+            hoy solo en la portada árabe, queda pendiente de su página (/ar/mosques-kansai/). */}
+        {!troncal && (<>
         {/* Así funciona + el guía, en una sola rejilla asimétrica (bento de soft-skill):
             la cara del guía manda, los tres pasos al lado y lo que no hacemos debajo. */}
         {/* Por qué conmigo: tres razones antes de contar cómo funciona. */}
@@ -1009,7 +1235,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               <li key={t}>
                 <span className="v7-razon-kanji" lang="ja" aria-hidden="true">{k}</span>
                 <h3>{t}</h3>
-                <p>{d}</p>
+                <p>{visible(d)}</p>
               </li>
             ))}
           </ul>
@@ -1038,9 +1264,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             )}
             <a className={`v7-boton${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msgCorto)} target="_blank" rel="noopener noreferrer"><IconoCanal tg={!!g.tg} /> {p.hero.cta}</a>
             {g.tg && <p className="v7-nota-tg">{notaTg(p)} · WhatsApp <a href={WA_LARION_URL} target="_blank" rel="noopener noreferrer"><bdi dir="ltr">{WA_LARION_VISIBLE}</bdi></a></p>}
-            {p.guiaTxt.otro && (
-              <p className="v7-otro-guia">{p.guiaTxt.otro.texto} <Link to={p.guiaTxt.otro.ruta}>{p.guiaTxt.otro.enlace} {p.dir === 'rtl' ? '←' : '→'}</Link></p>
-            )}
+            {/* 21-11-2026 (plan-equipo, paso 8): fuera el aviso «conoce a otro guía»;
+                cada guía está en la franja del equipo, al final de la página. */}
           </div>
         </section>
 
@@ -1096,10 +1321,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </Link>
         </section>
 
-        {/* Herramientas gratis y ventajas de los socios de todo Kansai (16-11-2026), ya
-            dentro de la página: antes solo se llegaba a ellas desde el pie. */}
-        {p.guia === 'tony' && <HerramientasEnGuia lang={p.lang} />}
-        {p.guia === 'tony' && <VentajasEnGuia lang={p.lang} />}
+        {/* Las herramientas gratis y las ventajas de los socios (HerramientasEnGuia,
+            VentajasEnGuia) eran solo de Tony: desde el 21-11-2026 viven en sus páginas
+            (/es/herramientas/, /es/ventajas/), enlazadas desde la cabecera y el pie. */}
 
         {/* El mercado: husos, divisas y lo que le importa a ese público */}
         <section className="v7-seccion v7-mercado tarjeta">
@@ -1110,37 +1334,64 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </div>
           <Relojes p={p} />
         </section>
+        </>)}
 
-        {/* Preguntas */}
-        <section className="v7-seccion v7-faq-seccion">
-          <h2>{p.faq.titulo}</h2>
-          <div className="v7-faq">
-            {p.faq.items.map((f) => (
-              <details key={f.q}>
-                <summary>{f.q}</summary>
-                <p>{f.a}</p>
-                {/* /fr/ y similares son HTML estático, fuera del router: <a>, no <Link>. */}
-                {f.enlace && <p><a href={f.enlace.href}>{f.enlace.texto}</a></p>}
-              </details>
-            ))}
-          </div>
-        </section>
+        {/* Preguntas. Troncal: todas dentro de un solo plegable (una línea en el
+            móvil). Siguen en el DOM, así que el JSON-LD FAQPage sigue respaldado y
+            textos-ia.mjs las copia en index.md. El h2 va dentro del <summary>. */}
+        {troncal ? (
+          <section className="v7-seccion v7-faq-troncal">
+            <details className="v7-faq-plegada">
+              <summary><h2>{PREGUNTAS_FRECUENTES[p.lang] ?? p.faq.titulo} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
+              <div className="v7-faq">
+                {p.faq.items.map((f) => (
+                  <details key={f.q}>
+                    <summary>{visible(f.q)}</summary>
+                    <p>{visible(f.a)}</p>
+                    {f.enlace && <p><a href={f.enlace.href}>{f.enlace.texto}</a></p>}
+                  </details>
+                ))}
+              </div>
+            </details>
+          </section>
+        ) : (
+          <section className="v7-seccion v7-faq-seccion">
+            <h2>{p.faq.titulo}</h2>
+            <div className="v7-faq">
+              {p.faq.items.map((f) => (
+                <details key={f.q}>
+                  <summary>{visible(f.q)}</summary>
+                  <p>{visible(f.a)}</p>
+                  {/* /fr/ y similares son HTML estático, fuera del router: <a>, no <Link>. */}
+                  {f.enlace && <p><a href={f.enlace.href}>{f.enlace.texto}</a></p>}
+                </details>
+              ))}
+            </div>
+          </section>
+        )}
 
-        <LibroSellos lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />
+        {/* Libro de sellos y planes de venta: solo /ru/ y /larion/. En la troncal,
+            los sellos siguen en cada página de ciudad y los planes (con su
+            OfferCatalog) en /es/precios/#planes y /es/ventajas/. */}
+        {!troncal && <LibroSellos lang={p.lang} guia={p.guia} prefijo={p.ruta.replace(/\/$/, '')} />}
 
         {/* Planes de venta: guía + experiencias de los socios (datosPlanes.ts) */}
-        <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />
+        {!troncal && <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />}
 
         {/* Contacto */}
-        <section id="contacto" className="v7-seccion">
-          <h2>{p.contacto.titulo}</h2>
-          <p className="v7-entradilla">{p.contacto.sub}</p>
-          <Contacto p={p} />
-        </section>
+        {troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
+          <section id="contacto" className="v7-seccion">
+            <h2>{p.contacto.titulo}</h2>
+            <p className="v7-entradilla">{p.contacto.sub}</p>
+            <Contacto p={p} />
+          </section>
+        )}
       </main>
-      <BarraMovil p={p} href={enlaceGuia(p.guia, msgCorto)} conResenas={!!p.resenas && resenas.length > 0} />
+      <BarraMovil p={p} href={enlaceGuia(p.guia, msgCorto)} conResenas={!!p.resenas && resenas.length > 0} troncal={troncal} />
 
-      <FranjaVentajas lang={p.lang} />
+      {/* La franja de descuentos (y sus burbujas) sale de la troncal: las ventajas
+          tienen su página, enlazada desde la cabecera y el pie. */}
+      {!troncal && <FranjaVentajas lang={p.lang} />}
 
       <footer className="v7-pie">
         <div className="v7-pie-fila">
@@ -1154,11 +1405,34 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           {/* Columnas cortas con título (patrón de nawatravel.ae): en el móvil son
               acordeones cerrados (PieColumna los cierra tras montar); el HTML las
               trae abiertas, así Google y las IAs leen todos los enlaces. */}
-          <PieColumna lang={p.lang} titulo={p.pie.legal}>
-            <Link to={`/legal/?lang=${p.lang}`}>{p.pie.legal}</Link>
-            <Link to={`/privacy/?lang=${p.lang}`}>{p.pie.privacidad}</Link>
-            <Link to={`/terms/?lang=${p.lang}`}>{p.pie.condiciones}</Link>
-            <Link to={`/cookies/?lang=${p.lang}`}>{p.pie.cookies}</Link>
+          {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
+              sitemap): Google y las IAs dan menos peso a una página huérfana. */}
+          {p.guia === 'tony' && RESPUESTAS_PROPIAS.some(([, r]) => r.lang === p.lang) && (
+            <PieColumna lang={p.lang} titulo={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
+              {RESPUESTAS_PROPIAS.filter(([, r]) => r.lang === p.lang).map(([, r]) => (
+                <Link key={r.ruta} to={r.ruta}>{r.titulo}</Link>
+              ))}
+            </PieColumna>
+          )}
+          {/* Destinos (troncal): las ciudades que antes enseñaba el mosaico de la
+              portada, las rutas fuera de Kansai, la montaña, las temporadas y la guía
+              práctica. Así cada URL del JSON-LD ItemList sigue enlazada desde la
+              portada, y ganan enlace /es/rutas/, la sakura y /es/destinos/. */}
+          {troncal && p.destinosTitulo && (
+            <PieColumna lang={p.lang} titulo={p.destinosTitulo}>
+              {CIUDADES_TONY.map((c) => (
+                <Link key={c} to={`${p.ruta}${c}/`}>{CIUDADES[c].nombre[p.lang as Lengua]}</Link>
+              ))}
+              {DESTINOS_EXTRA[p.lang]?.map((d) => (
+                // /es/destinos/ es HTML estático (scripts/destinos.mjs): <a>, no <Link>.
+                d.estatica ? <a key={d.ruta} href={d.ruta}>{d.texto}</a> : <Link key={d.ruta} to={d.ruta}>{d.texto}</Link>
+              ))}
+              {p.mercado.enlaces?.map((e) => <Link key={e.ruta} to={e.ruta}>{e.texto}</Link>)}
+            </PieColumna>
+          )}
+          {/* 21-11-2026 (crítica): «Aviso legal» era la primera columna y llevaba dentro
+              Ventajas, Yuru Camp, TikTok… Ahora lo útil va en «Más» y lo legal, al final. */}
+          <PieColumna lang={p.lang} titulo={MAS_PIE[p.lang] ?? MAS_PIE.en}>
             {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta}>{VENTAJAS[p.id].corto}</Link>}
             {/* La guía halal vive fuera de la web; enlazarla aquí ayuda a que Google la descubra. */}
             {p.lang === 'ar' && <a href="https://2troll.github.io/yubisashi/dalil/">دليل الحلال في كانساي</a>}
@@ -1192,27 +1466,14 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
               </a>
             )}
           </PieColumna>
-          {/* Las páginas de respuesta no salían enlazadas desde ningún sitio (solo el
-              sitemap): Google y las IAs dan menos peso a una página huérfana. */}
-          {p.guia === 'tony' && RESPUESTAS_PROPIAS.some(([, r]) => r.lang === p.lang) && (
-            <PieColumna lang={p.lang} titulo={RESPUESTAS_TITULO[p.lang] ?? 'Guides'}>
-              {RESPUESTAS_PROPIAS.filter(([, r]) => r.lang === p.lang).map(([, r]) => (
-                <Link key={r.ruta} to={r.ruta}>{r.titulo}</Link>
-              ))}
-            </PieColumna>
-          )}
           <PieColumna lang={p.lang} titulo={p.pie.otrosIdiomas}>
             {(Object.keys(PAGINAS) as PaginaId[]).filter((k) => k !== p.id).map((k) => (
               <Link key={k} to={PAGINAS[k].ruta} lang={PAGINAS[k].lang}>
                 {k === 'larion' ? 'English · Larion' : HERMANAS[PAGINAS[k].guia].find((h) => h.id === k)?.etiqueta}
               </Link>
             ))}
-            {/* /tr/, /fr/, /private/ y /familias/ (HTML estático, <a> y no <Link>) salen
-                también en la franja del equipo, justo debajo. */}
-            <a href="/tr/" lang="tr">Türkçe · Ferhat</a>
-            <a href="/fr/" lang="fr">Français · Iheb</a>
-            <a href="/private/" lang="en">Private guide · Mario</a>
-            <a href="/familias/" lang="es">Familias y grupos · Antonio</a>
+            {/* 21-11-2026 (plan-equipo, paso 8): /tr/, /fr/, /private/ y /familias/
+                ya no se repiten aquí: los lleva la franja del equipo, justo debajo. */}
             <a href={p.lang === 'ar' ? '/partners/?lang=ar' : p.lang === 'es' ? '/partners/' : '/partners/?lang=en'}>
               {p.lang === 'ar' ? 'للوكالات · Hanma Travel Partners' : p.lang === 'es' ? 'Agencias · Hanma Travel Partners' : 'Agencies · Hanma Travel Partners'}
             </a>
@@ -1229,6 +1490,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             {p.guia === 'larion' && <a href="/ru/kndr/" lang="ru">Туры в КНДР · Макс</a>}
             {p.guia === 'larion' && <a href="/ru/otvety/" lang="ru">Гид на русском: ответы · Ларион</a>}
           </PieColumna>
+          <PieColumna lang={p.lang} titulo={p.pie.legal}>
+            <Link to={`/legal/?lang=${p.lang}`}>{p.pie.legal}</Link>
+            <Link to={`/privacy/?lang=${p.lang}`}>{p.pie.privacidad}</Link>
+            <Link to={`/terms/?lang=${p.lang}`}>{p.pie.condiciones}</Link>
+            <Link to={`/cookies/?lang=${p.lang}`}>{p.pie.cookies}</Link>
+          </PieColumna>
           {/* Solo el grupo: cada marca va por separado y únicamente HBH las reúne todas.
               Un cliente de café vio la marca de guía y se confundió (20-11-2026). */}
           <PieColumna lang={p.lang} titulo="HBH Group">
@@ -1239,9 +1506,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         </div>
         <details className="v7-creditos">
           <summary>{p.pie.creditos}</summary>
-          <ul lang="es" dir="ltr">
+          <ul dir="ltr">
             {CREDITOS.map((c) => (
-              <li key={c.url}>{c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
+              <li key={c.url}>{(c.tr as Record<string, string> | undefined)?.[p.lang] ?? c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
             ))}
             {CREDITOS_SONIDO.map((c) => (
               <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia} (Wikimedia Commons)</li>

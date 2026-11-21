@@ -34,7 +34,8 @@ function guardaEleccion(valor: 'accepted' | 'declined') {
   } catch { /* sin almacenamiento: el banner volverá a salir la próxima vez */ }
 }
 
-/** compacto: versión de cristal en una línea para las páginas v7. */
+/** compacto: versión de una sola línea para las páginas v7 (forma en v7.css,
+ *  colores del estilo sereno en estilo-sereno.css). */
 export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) {
   const { t } = useLanguage()
   const [visible, setVisible] = useState(false)
@@ -64,9 +65,14 @@ export function CookieBanner({ compacto = false }: { compacto?: boolean } = {}) 
   if (compacto) {
     return visible ? (
       <div className="v7-cookies" role="region" aria-label={t.cookie.title}>
+        {/* Una sola línea (auditoría P2): el propio «Usamos cookies» lleva a la
+            política. En el móvil «· Política de privacidad» se oculta a la vista
+            (v7.css) pero sigue en el nombre del enlace. Abrir la política cuenta
+            como rechazar, igual que antes. */}
         <p>
-          {t.cookie.title}.{' '}
-          <Link to="/privacy/" onClick={decline}>{t.cookie.learn}</Link>
+          <Link to="/privacy/" onClick={decline} title={`${t.cookie.title} · ${t.cookie.learn}`}>
+            {t.cookie.title}<span className="v7-cookies-mas"> · {t.cookie.learn}</span>
+          </Link>
         </p>
         <div>
           <button type="button" onClick={decline}>{t.cookie.decline}</button>

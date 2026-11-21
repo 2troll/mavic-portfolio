@@ -84,7 +84,6 @@
 [dir='rtl'] .sl-acordeon.abierto::before { transform: rotateY(160deg); }
 
 :root[data-tema='oscuro'] .v7 { --papel-libro: #1f1c18; }
-@media (prefers-color-scheme: dark) { :root:not([data-tema='claro']) .v7 { --papel-libro: #1f1c18; } }
 
 @media (max-width: 700px) {
   .sl-acordeon { --ancho: 128px; --alto: 196px; }

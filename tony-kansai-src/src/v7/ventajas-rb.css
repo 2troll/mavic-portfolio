@@ -19,6 +19,10 @@
 .rb-ojo-punto { width: 8px; height: 8px; border-radius: 50%; background: var(--vn-acento); box-shadow: 0 0 0 5px rgba(229, 83, 61, .25); }
 .rb-rota { display: flex; flex-wrap: wrap; align-items: center; gap: .35em; margin: 22px 0 0; font-size: clamp(1.4rem, 3vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; color: var(--vn-tinta); }
 .vn.lang-ar .rb-rota { letter-spacing: 0; }
+/* 21-11-2026 (auditoría móvil): la palabra que gira («kimono», «ceremonia del té»…)
+   saltaba de línea en 360 px y empujaba el párrafo y los botones 44 px (CLS 0,08
+   a los 3,5 s). Dos líneas reservadas desde el principio: ya no se mueve nada. */
+@media (max-width: 720px) { .rb-rota { min-height: calc(2 * 1.25em + .35em); align-content: flex-start; line-height: 1.25; } }
 /* La caja la pinta RotatingText (highlight) y se estira con cada palabra. */
 .vn .rb-rota .text-rotate-highlight { padding: .06em .42em .14em; border-radius: .38em; color: #fff; }
 .vn .rb-portada-sub { font-size: clamp(1.05rem, 1.4vw, 1.25rem); max-width: 52ch; margin-top: 22px; color: #d5dae3; }

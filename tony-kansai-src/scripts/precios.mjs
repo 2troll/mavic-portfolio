@@ -238,6 +238,32 @@ const T = {
 const flecha = (lang) => (lang === 'ar' ? '←' : '→')
 const wa = (msg) => `https://wa.me/${WA_TONY}?text=${encodeURIComponent(msg)}`
 
+// 21-11-2026 (rediseño de Antonio): lo VISIBLE sin techos de grupo («hasta 6
+// personas») — «nunca limitar ni cerrar puertas». Los datos, la meta description y
+// el JSON-LD (FAQPage, ofertas) siguen igual: los comprueba la prueba de SEO.
+// Mismas reglas que src/v7/vozEmpresa.ts.
+const TECHOS = [
+  [/ \(hasta 6 personas\)/g, ''], [/ · hasta 6 personas/g, ''], [/ de hasta 6 personas/g, ''], [/ de hasta 6\b(?!\s*(?:h\b|horas?))/g, ''], [/,? hasta 6 personas/g, ''],
+  [/ \(up to 6 people\)/g, ''], [/ · up to 6 people/g, ''], [/ for up to 6 people/g, ' per group'], [/ of up to 6 people/g, ''], [/ of up to 6\b(?!\s*(?:h\b|hours?))/g, ''], [/,? up to 6 people/g, ''],
+  [/ \(حتى [٦6] أشخاص\)/g, ''], [/ · حتى [٦6] أشخاص/g, ''], [/،? ?حتى [٦6] أشخاص/g, ''],
+]
+TECHOS.push(
+  [/^Más de 6 personas$/, 'Grupos grandes'], [/^More than 6 people$/, 'Large groups'], [/^أكثر من 6 أشخاص$/, 'مجموعات كبيرة'],
+  [/^Escríbeme y te digo cómo lo organizamos/, 'Escríbenos y te decimos cómo lo organizamos'],
+  [/^Message me and I’ll tell you how we organise it/, 'Message us and we will tell you how we organise it'],
+  [/^راسلني وأخبرك كيف ننظّمها/, 'راسلونا ونخبركم كيف ننظّمها'],
+)
+const vis = (s) => TECHOS.reduce((t, [re, por]) => t.replace(re, por), s).replace(/ {2,}/g, ' ').replace(/ ([,.;:،])/g, '$1')
+/** La frase de arriba sin la excursión lejana: Antonio pide no poner en la primera
+ *  pantalla precios de excursiones lejanas que confunden. Sigue en la tabla de tarifas. */
+const sinLejos = (s) => s.replace(/; excursión lejana desde .*?(?=\. )/, '').replace(/; long day trips from .*?(?=\. )/, '').replace(/؛ والرحلات البعيدة ابتداءً من .*?(?=\. )/, '')
+/** Bloques largos plegados (siguen en el HTML para Google y las IAs). */
+// Foto de arriba: la misma de la portada (Himeji con cerezos), no los torii rojos de Fushimi.
+const FOTO_HEROE = CREDITOS.find((c) => c.foto === 'Himeji: castillo con cerezos')
+if (!FOTO_HEROE) throw new Error('precios: falta el crédito «Himeji: castillo con cerezos» en CREDITOS (contenido.ts)')
+const VER_DETALLE = { es: 'Ver el detalle', en: 'See the details', ar: 'عرض التفاصيل' }
+const plegado = (lang, html) => `<details class="plegado"><summary>${VER_DETALLE[lang]}</summary>${html}</details>`
+
 function filasTarifas(lang) {
   const t = T[lang]
   const b = tarifas(lang)
@@ -266,13 +292,13 @@ function pagina(lang) {
 
   // ── Tarifas ────────────────────────────────────────────────────────────
   const tarifasHTML = `<ol class="tf">${filas.map((f) => `<li class="tf-f${f.destacada ? ' tf-dest' : ''}" id="tarifa-${f.id}">
-<div class="tf-q"><h3>${esc(f.n)}</h3><p class="tf-d">${esc(f.d)}</p><p class="tf-u">${esc(f.u)}</p>${f.enlace ? `<a class="tf-l" href="${f.enlace[1]}">${esc(f.enlace[0])} <span aria-hidden="true">${flecha(lang)}</span></a>` : ''}</div>
+<div class="tf-q"><h3>${esc(f.n)}</h3><p class="tf-d">${esc(vis(f.d))}</p><p class="tf-u">${esc(f.u)}</p>${f.enlace ? `<a class="tf-l" href="${f.enlace[1]}">${esc(f.enlace[0])} <span aria-hidden="true">${flecha(lang)}</span></a>` : ''}</div>
 <div class="tf-p">${f.desde ? `<small>${esc(t.desde)}</small>` : ''}<b>${yen(f.yenes, lang)}</b><span>${esc(t.porGrupo)}</span>${f.grupo6 ? `<em>${t.porPersona(yen(f.yenes / 4, lang))}</em>` : ''}</div>
 </li>`).join('')}</ol>`
 
   const notasHTML = `<div class="nt"><h3>${esc(t.notasH)}</h3><dl>${t.notas.map((n) => {
     const enl = n.enlaceOtono ? (otono ? [otono.texto, otono.ruta] : null) : n.enlace
-    return `<div><dt>${esc(n.t)}</dt><dd>${esc(n.d)}${enl ? ` <a href="${enl[1]}">${esc(enl[0])} <span aria-hidden="true">${flecha(lang)}</span></a>` : ''}</dd></div>`
+    return `<div><dt>${esc(vis(n.t))}</dt><dd>${esc(vis(n.d))}${enl ? ` <a href="${enl[1]}">${esc(enl[0])} <span aria-hidden="true">${flecha(lang)}</span></a>` : ''}</dd></div>`
   }).join('')}<div><dt>${esc(t.pagoT)}</dt><dd>${esc(pagoTexto)}</dd></div></dl></div>`
 
   // ── Qué incluye ────────────────────────────────────────────────────────
@@ -374,7 +400,7 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
   const secciones = Object.entries(t.secs)
   const fuentes = rtl
     ? 'family=IBM+Plex+Sans+Arabic:wght@400;500;600;700'
-    : 'family=Geist:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,500;8..60,600'
+    : 'family=Geist:wght@400;500;600;700&family=Zen+Old+Mincho:wght@500'
 
   return `<!doctype html>
 <html lang="${lang}" dir="${rtl ? 'rtl' : 'ltr'}" data-estatica="precios">
@@ -384,7 +410,7 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#f3eee4">
+<meta name="theme-color" content="#fdfcfa">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]}">`).join('\n')}
 <link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
@@ -399,7 +425,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
-<link rel="preload" as="image" href="/v7/fotos/kioto-900.webp" imagesrcset="/v7/fotos/kioto-600.webp 600w, /v7/fotos/kioto-900.webp 900w" imagesizes="(min-width:960px) 44vw, 100vw">
+<link rel="preload" as="image" href="/v7/fotos/portada-900.webp" imagesrcset="/v7/fotos/portada-600.webp 600w, /v7/fotos/portada-900.webp 900w" imagesizes="(min-width:960px) 44vw, 100vw">
 <style>${CSS}${menuCSS}${equipoCSS}</style>
 </head>
 <body>
@@ -415,10 +441,10 @@ ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
 <div class="heroe-t">
 <p class="ceja">${esc(t.ceja)}</p>
 <h1>${esc(t.h1)}</h1>
-<p class="respuesta">${t.respuesta(precioTxt)}</p>
-<ul class="resumen" aria-label="${esc(t.tarifasH)}">${filas.map((f) => `<li><a href="#tarifa-${f.id}"><span>${esc(f.n)}</span><b>${f.desde ? `<small>${esc(t.desde)}</small> ` : ''}${yen(f.yenes, lang)}</b></a></li>`).join('')}</ul>
+<p class="respuesta">${vis(sinLejos(t.respuesta(precioTxt)))}</p>
+<ul class="resumen" aria-label="${esc(t.tarifasH)}">${filas.filter((f) => f.id !== 'lejos').map((f) => `<li><a href="#tarifa-${f.id}"><span>${esc(f.n)}</span><b>${f.desde ? `<small>${esc(t.desde)}</small> ` : ''}${yen(f.yenes, lang)}</b></a></li>`).join('')}</ul>
 </div>
-<figure class="heroe-f"><img src="/v7/fotos/kioto-900.webp" srcset="/v7/fotos/kioto-600.webp 600w, /v7/fotos/kioto-900.webp 900w" sizes="(min-width:960px) 44vw, 100vw" alt="${esc(CREDITOS[0].tr?.[lang] ?? CREDITOS[0].foto)}" width="900" height="600" fetchpriority="high"><figcaption>${esc(t.foto)}: <a href="${CREDITOS[0].url}" rel="noopener">${esc(CREDITOS[0].autor)}</a>, ${esc(CREDITOS[0].licencia)}</figcaption></figure>
+<figure class="heroe-f"><img src="/v7/fotos/portada-900.webp" srcset="/v7/fotos/portada-600.webp 600w, /v7/fotos/portada-900.webp 900w" sizes="(min-width:960px) 44vw, 100vw" alt="${esc(FOTO_HEROE.tr?.[lang] ?? FOTO_HEROE.foto)}" width="900" height="600" fetchpriority="high"><figcaption>${esc(t.foto)}: <a href="${FOTO_HEROE.url}" rel="noopener">${esc(FOTO_HEROE.autor)}</a>, ${esc(FOTO_HEROE.licencia)}</figcaption></figure>
 </div></section>
 
 <section class="regla" aria-label="${esc(t.pagaT)} / ${esc(t.aparteT)}"><div class="kap regla-k">
@@ -441,28 +467,28 @@ ${incluyeHTML}
 
 <section class="bloque" id="ciudades"><div class="kap">
 <h2>${esc(t.ciudadesH)}</h2><p class="sub">${esc(t.ciudadesP)}</p>
-${ciudadesHTML}
+${plegado(lang, ciudadesHTML)}
 </div></section>
 
 <section class="bloque bloque-claro" id="montana"><div class="kap">
 <h2>${esc(t.montanaH)}</h2><p class="sub">${esc(t.montanaP)}</p>
-${montanaHTML}
+${plegado(lang, montanaHTML)}
 </div></section>
 
 <section class="bloque" id="planes"><div class="kap">
 <h2>${esc(t.planesH)}</h2><p class="sub">${esc(t.planesP)}</p>
-${planesHTML}
+${plegado(lang, planesHTML)}
 </div></section>
 
 <section class="bloque bloque-claro" id="experiencias"><div class="kap">
 <h2>${esc(t.expH)}</h2><p class="sub">${esc(t.expP)}</p>
-${expHTML}
-${kitHTML}
+<p class="mas"><a href="${t.todas[1]}">${esc(t.todas[0])} <span aria-hidden="true">${flecha(lang)}</span></a></p>
+${plegado(lang, expHTML + kitHTML)}
 </div></section>
 
 <section class="bloque" id="preguntas"><div class="kap estrecho">
 <h2>${esc(t.faqH)}</h2>
-${faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
+${faq.map(([q, a]) => `<details><summary>${esc(vis(q))}</summary><p>${esc(vis(a))}</p></details>`).join('')}
 </div></section>
 
 <section class="cierre"><div class="kap">
@@ -485,11 +511,13 @@ ${faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></de
 `
 }
 
-// Papel y tinta, un solo acento (bermellón del torii). Precios en cifras tabulares.
+// Estilo sereno (21-11-2026, como la portada): washi, tinta índigo, titulares en
+// Zen Old Mincho y el verde solo para la acción (antes papel crema y bermellón de
+// torii, que Antonio llama «Japón barato»). Precios en cifras tabulares.
 const CSS = `
-:root{--papel:#f3eee4;--papel2:#ebe4d6;--tarjeta:#fbf8f2;--tinta:#1d1b18;--gris:#5c574f;--linea:rgba(29,27,24,.14);--acento:#b8381f;--acento-t:#fff;
---mn-tarjeta:#fbf8f2;--mn-texto:#1d1b18;--mn-linea:rgba(29,27,24,.18);--mn-suave:#ebe4d6;--mn-acento:#b8381f;
---sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Source Serif 4',Georgia,serif;--r:14px}
+:root{--papel:#fdfcfa;--papel2:#f7f3ee;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#56606c;--linea:rgba(30,42,54,.12);--acento:#2a7352;--acento-t:#fff;
+--mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.14);--mn-suave:#edf4fa;--mn-acento:#2a7352;
+--sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Zen Old Mincho','Hiragino Mincho ProN','Yu Mincho',Georgia,serif;--r:14px}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
@@ -498,6 +526,13 @@ body{margin:0;background:var(--papel);color:var(--tinta);font:400 16px/1.6 var(-
 img{max-width:100%;height:auto;display:block}
 a{color:inherit;text-underline-offset:3px}
 h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1,h2{font-weight:500}
+details.plegado{margin-top:18px;border-block:1px solid var(--linea)}
+details.plegado>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;font-weight:600}
+details.plegado>summary::-webkit-details-marker{display:none}
+details.plegado>summary::after{content:'';flex:none;width:8px;height:8px;border:solid var(--gris);border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg)}
+details.plegado[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
+details.plegado[open]{padding-bottom:18px}
 html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3{letter-spacing:0;line-height:1.35;font-weight:700}
 p{margin:0}
 [dir=ltr]{unicode-bidi:isolate}
@@ -533,15 +568,15 @@ h1{font-size:clamp(34px,7.4vw,64px)}
 figcaption{font-size:11px;color:var(--gris);margin-top:6px}
 figcaption a{color:inherit}
 /* La regla de oro: guía aparte de todo lo demás */
-.regla{background:var(--tinta);color:var(--papel)}
+.regla{background:var(--mn-suave);color:var(--tinta)}
 .regla-k{display:grid;gap:0;padding-top:4px;padding-bottom:4px}
 @media (min-width:720px){.regla-k{grid-template-columns:1fr 1fr}}
 .regla-k>div{padding:22px 0}
-.regla-k>div+div{border-top:1px solid rgba(243,238,228,.2)}
-@media (min-width:720px){.regla-k>div{padding:30px 0}.regla-k>div+div{border-top:0;border-inline-start:1px solid rgba(243,238,228,.2);padding-inline-start:32px}}
+.regla-k>div+div{border-top:1px solid var(--linea)}
+@media (min-width:720px){.regla-k>div{padding:30px 0}.regla-k>div+div{border-top:0;border-inline-start:1px solid var(--linea);padding-inline-start:32px}}
 .regla h2{font-size:clamp(22px,3.2vw,30px);margin-bottom:6px}
-.regla-k>div:first-child h2{color:#f0a48f}
-.regla p{color:rgba(243,238,228,.82);max-width:52ch}
+.regla-k>div:first-child h2{color:var(--acento)}
+.regla p{color:var(--gris);max-width:52ch}
 /* Índice de secciones (se desliza en el móvil) */
 .indice{position:sticky;top:60px;z-index:40;background:var(--papel);border-bottom:1px solid var(--linea)}
 .indice ul{list-style:none;margin:0;padding:10px 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
@@ -658,10 +693,10 @@ figcaption a{color:inherit}
 #preguntas details p{color:var(--gris);padding:0 0 16px;max-width:68ch}
 #preguntas h2{margin-bottom:20px}
 /* Cierre */
-.cierre{padding:64px 0;background:var(--tinta);color:var(--papel);text-align:center}
+.cierre{padding:64px 0;background:#fbf1f4;color:var(--tinta);text-align:center}
 .cierre h2{font-size:clamp(28px,5vw,44px)}
-.cierre p{color:rgba(243,238,228,.8);margin:10px auto 24px;max-width:48ch}
-.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--acento);color:var(--acento-t);font-weight:600;font-size:17px;text-decoration:none;transition:transform .15s}
+.cierre p{color:var(--gris);margin:10px auto 24px;max-width:48ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--acento);color:var(--acento-t);font-weight:600;font-size:17px;text-decoration:none;transition:transform .15s;border-radius:12px}
 .btn:active{transform:scale(.97)}
 footer{background:var(--papel2);padding-top:48px;color:var(--tinta)}
 `.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '')

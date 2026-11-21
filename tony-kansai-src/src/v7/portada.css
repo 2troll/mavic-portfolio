@@ -1,0 +1,95 @@
+/* ══ Portada troncal de Tony (/es/, /en/, /ar/) ═════════════════════════════
+   Rediseño de Antonio (21-11-2026): portada → experiencias → un precio →
+   reseñas → preguntas plegadas → contacto con WhatsApp primero.
+
+   Lo común de estas piezas (tarjetas de experiencias, precio de referencia,
+   plegables, reseñas en fila y contacto) vive en el § 18 de estilo-sereno.css.
+   Aquí solo lo que falta para que encajen con el resto de v7.css.
+
+   Ámbito: .v7-troncal, que PaginaGuia pone solo en las páginas de Tony; /ru/
+   y /larion/ no cambian. El prefijo largo es el de estilo-sereno.css (0,3,0)
+   más .v7-troncal, para ganarle sin !important. */
+
+/* La cabecera fija tapa el principio de la sección al saltar por un ancla. */
+.v7.v7-troncal #experiencias { scroll-margin-top: 72px; }
+
+/* ── Experiencias ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-otras + .v7-exp-otras { margin-top: 8px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-cta { margin-top: 28px; }
+
+/* ── Precio de referencia: la línea de otoño, discreta y sin emoji ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-otono {
+  margin: 0; padding-inline-start: 12px; border-inline-start: 2px solid var(--sakura-hondo, #e8a9b9);
+  color: var(--tenue); font-size: 15px;
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-precio-otono a { color: var(--tinta); text-underline-offset: 4px; }
+/* La ficha plegada (dl.v9-ficha) ya va dentro de una línea fina: sin caja doble. */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plegado .v9-ficha { margin: 0; max-width: none; }
+
+/* ── Preguntas: un solo plegable; el h2 va dentro del <summary> para que
+   Google y las IAs sigan leyendo «## Preguntas frecuentes», pero con la
+   medida de una línea de plegable, no de titular de sección. ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-seccion.v7-faq-troncal { padding-top: 32px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq-plegada > summary > h2 {
+  margin: 0; font-size: clamp(1.3rem, 5vw, 1.6rem); line-height: 1.25; max-width: none;
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq-cuantas {
+  font-family: var(--letra-cifras, inherit); font-variant-numeric: tabular-nums; font-size: 0.7em; color: var(--tenue);
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq-plegada .v7-faq { max-width: 52rem; }
+
+/* ── Contacto: número y correo visibles; el formulario, plegado y a lo ancho ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-contacto-otros bdi { color: var(--tinta); font-weight: 600; font-variant-numeric: tabular-nums; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plegado .v7-contacto { margin-top: 8px; }
+
+/* ── Reseñas en fila ──
+   Las tarjetas no llevan la entrada ligada al scroll de v7.css (view()):
+   dentro de un carrusel horizontal no tiene sentido. La primera conserva el
+   «empujoncito» que enseña que se desliza. */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas.v7-resenas-fila figure:not(:first-child) { animation: none; }
+
+/* ── Móvil ──
+   Los dos carruseles (experiencias y reseñas) salen a sangre justo lo que
+   mide el margen de la sección (v7.css: 16 px hasta 560, 24 px hasta 720).
+   Sin esto, la fila de reseñas se comía la primera tarjeta por la izquierda
+   (v7.css le pone −20 px de margen y el § 18 deja 2 px de relleno). */
+@media (max-width: 720px) {
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-exp-lista, .v7-resenas.v7-resenas-fila) {
+    margin-inline: -24px; padding-inline: 24px; scroll-padding-inline: 24px;
+  }
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-resenas.v7-resenas-fila figure { flex-basis: 84%; }
+}
+@media (max-width: 560px) {
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-exp-lista, .v7-resenas.v7-resenas-fila) {
+    margin-inline: -16px; padding-inline: 16px; scroll-padding-inline: 16px;
+  }
+  /* Un botón principal por pantalla, a todo el ancho y fácil de pulsar. */
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-exp-cta .v7-boton { width: 100%; min-height: 54px; }
+}
+
+/* ── Barra fija de WhatsApp (BarraMovil) ──
+   Se esconde sobre la portada, el contacto y el pie (ahí ya hay WhatsApp a la
+   vista); el resto del tiempo, lo que se enfoca con el teclado no queda debajo. */
+@media (max-width: 860px) {
+  html:has(.v7.v7-troncal) { scroll-padding-bottom: calc(84px + env(safe-area-inset-bottom)); }
+}
+/* (Los atajos Experiencias · Precio · Reseñas salieron de la barra el 21-11:
+   en la portada troncal lleva solo el botón de WhatsApp, .v7-barra-sola.) */
+
+/* ── Escritorio: una sola rejilla (crítica del 21-11) ──
+   El titular empezaba en otra línea que las secciones (72 px frente a 154) y la
+   foto acababa a 23 px del borde: ni a sangre ni alineada. Ahora el texto arranca
+   donde arrancan las secciones y la foto llega al borde, redondeada solo por
+   dentro. Propiedades lógicas: en /ar/ es lo mismo en espejo. */
+@media (min-width: 901px) {
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada-texto {
+    padding-inline-start: max(24px, calc((100vw - var(--ancho)) / 2 + 24px));
+  }
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v9-portada-foto {
+    margin-inline-end: 0; border-start-end-radius: 0; border-end-end-radius: 0;
+  }
+}
+/* /ru/ y /larion/ (y cualquier página con barra fija): el pie no queda debajo de ella. */
+@media (max-width: 860px) {
+  .v7:has(.v7-barra-movil):not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie { padding-bottom: calc(var(--e-6, 48px) + 72px); }
+}

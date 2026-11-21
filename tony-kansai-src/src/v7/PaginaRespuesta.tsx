@@ -8,20 +8,22 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { visible, CIERRE_EMPRESA } from './vozEmpresa'
+import { Oracion } from '../v8/Oracion'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
 import { BarraWa } from './BarraWa'
-import { BotonTema } from './Tema'
 import { yenLocal, PIE } from './formato'
 import { useCambio } from './cambio'
 import creditosZonas from '../v8/creditosZonas.json'
 import { PRECIO_GUIA } from './datosGuias'
 import { PRECIO } from './datosRutas'
 import { PAGINAS_RESPUESTA, REVISADO, hermanasRespuesta } from './datosRespuestas'
-import type { RespuestaId } from './datosRespuestas'
+import type { RespuestaId, Tabla } from './datosRespuestas'
 import './v7.css'
-import './estilo-pixel.css'
+// La hoja serena directamente (estilo-pixel.css ya solo la reimporta).
+import './estilo-sereno.css'
 import './respuesta.css'
 import { FranjaVentajas } from './FranjaVentajas'
 import { ToursNuevos, viajeTourNuevo } from './ToursNuevos'
@@ -108,9 +110,8 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
             ? hermanas.map(([k, x]) => <Link key={k} to={x.ruta} lang={x.lang} aria-current={k === id ? 'page' : undefined}>{NOMBRE_IDIOMA[x.lang]}</Link>)
             : <Link to={p.inicio} lang={p.lang}>{NOMBRE_IDIOMA[p.lang]}</Link>}
         </nav>
-        <BotonTema lang={p.lang} />
-        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={p.final.boton}>
-          <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoWa /></span>
+        <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={visible(p.final.boton)}>
+          <span className="v7-solo-ancho">{visible(p.final.boton)}</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
 
@@ -120,40 +121,49 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
           <div className="v7-otono-hero-texto">
             <p className="v7-antetitulo">{p.antetitulo}</p>
             <h1>{p.titulo}</h1>
-            <p className="v7-respuesta-directa">{p.respuesta}</p>
+            {/* Lo visible pasa por visible(): sin «hasta 6» ni «pregúntame» (vozEmpresa.ts). */}
+            <p className="v7-respuesta-directa">{visible(p.respuesta)}</p>
             <p className="v7-actualizado"><time dateTime={REVISADO}>{p.actualizado}</time></p>
-            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {p.cta}</a>
+            <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {visible(p.cta)}</a>
           </div>
         </section>
 
         <SeccionesRespuesta id={id} />
 
+        {/* Horas de oración de hoy y qibla en vivo: solo salían en la portada árabe,
+            que ya no las lleva (portada corta). Su sitio es la página de mezquitas. */}
+        {id === 'mezquitas-ar' && <Oracion />}
+
+        {/* Precios: las tarjetas informan y ya no llevan botón. Antes cada una tenía
+            «Pagar con PayPal» (o «Pedir precio cerrado»), y con el WhatsApp eran dos
+            botones principales iguales (crítica del 21-11). PayPal queda como enlace
+            secundario debajo de las notas; reservar sigue siendo WhatsApp. */}
         <section className="v7-seccion" id="precios">
-          <h2>{p.precios.titulo}</h2>
-          <p className="v7-entradilla">{p.precios.texto}</p>
+          <h2>{visible(p.precios.titulo)}</h2>
+          <p className="v7-entradilla">{visible(p.precios.texto)}</p>
           <div className="v7-planes">
             {p.precios.lejos ? (
               <article className="v7-plan tarjeta v7-plan-destacado">
                 <h3>{p.precios.lejos.nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{p.precios.lejos.desde} {yenLocal(PRECIO.lejos, p.lang)}</bdi></p>
-                <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
+                <p className="v7-plan-grupo">{visible(p.precios.porGrupo)}</p>
                 {cambios.length > 0 && <p className="v7-cambio"><bdi>≈ {enDivisa(PRECIO.lejos)}</bdi> {APROX[p.lang]}</p>}
-                <a className="v7-plan-pagar" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}>{p.precios.lejos.boton}</a>
               </article>
             ) : ([['medio', p.precios.medio], ['completo', p.precios.completo]] as const).map(([k, nombre]) => (
               <article key={k} className={`v7-plan tarjeta ${k === 'completo' ? 'v7-plan-destacado' : ''}`}>
                 <h3>{nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO_GUIA[k], p.lang)}</bdi></p>
-                <p className="v7-plan-grupo">{p.precios.porGrupo}</p>
+                <p className="v7-plan-grupo">{visible(p.precios.porGrupo)}</p>
                 {cambios.length > 0 && <p className="v7-cambio"><bdi>≈ {enDivisa(PRECIO_GUIA[k])}</bdi> {APROX[p.lang]}</p>}
-                <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${PRECIO_GUIA[k]}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>
               </article>
             ))}
           </div>
           <ul className="v7-notas">
-            {!p.precios.lejos && <li>{pagar.nota}</li>}
-            {p.precios.notas.map((n) => <li key={n}>{n}</li>)}
+            {p.precios.notas.map((n) => <li key={n}>{visible(n)}</li>)}
           </ul>
+          {!p.precios.lejos && (
+            <p className="v7-pagar-antes">{pagar.nota} <a className="v9-enlace" href={`${PAYPAL_TONY}/${PRECIO_GUIA.medio}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a></p>
+          )}
         </section>
 
         <section className="v7-seccion v7-faq-seccion">
@@ -161,8 +171,8 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
           <div className="v7-faq">
             {p.faq.map((f) => (
               <details key={f.p}>
-                <summary>{f.p}</summary>
-                <p>{f.r}</p>
+                <summary>{visible(f.p)}</summary>
+                <p>{visible(f.r)}</p>
               </details>
             ))}
           </div>
@@ -180,9 +190,9 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
 
         <section className="v7-seccion v7-otono-final">
           <h2>{p.final.titulo}</h2>
-          <p className="v7-entradilla">{p.final.texto}</p>
-          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {p.final.boton}</a>
-          <p><Link to={p.inicio}>{p.volver}</Link></p>
+          <p className="v7-entradilla">{CIERRE_EMPRESA[p.lang] ?? p.final.texto}</p>
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer" onClick={lead}><IconoWa /> {visible(p.final.boton)}</a>
+          <p><Link to={p.inicio}>{visible(p.volver)}</Link></p>
         </section>
       </main>
       <BarraWa href={wa} lang={p.lang} pagina={id} />
@@ -221,23 +231,9 @@ export function SeccionesRespuesta({ id, fuentes = false }: { id: RespuestaId; f
       {p.secciones.map((s) => (
         <section key={s.titulo} className="v7-seccion">
           <h2>{s.titulo}</h2>
-          {s.parrafos?.map((t) => <p key={t} className="v7-entradilla">{t}</p>)}
-          {s.lista && <ul className="v7-lista-respuesta">{s.lista.map((t) => <li key={t}>{t}</li>)}</ul>}
-          {s.tabla && (
-            <>
-              <div className="v7-tabla-marco tarjeta">
-                <table className="v7-tabla">
-                  <thead><tr>{s.tabla.cabecera.map((c) => <th key={c} scope="col">{c}</th>)}</tr></thead>
-                  <tbody>
-                    {s.tabla.filas.map((f) => (
-                      <tr key={f[0]}>{f.map((c, i) => (i === 0 ? <th key={i} scope="row">{c}</th> : <td key={i}>{c}</td>))}</tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-              <p className="v7-tabla-nota">{s.tabla.nota}</p>
-            </>
-          )}
+          {s.parrafos?.map((t) => <p key={t} className="v7-entradilla">{visible(t)}</p>)}
+          {s.lista && <ul className="v7-lista-respuesta">{s.lista.map((t) => <li key={t}>{visible(t)}</li>)}</ul>}
+          {s.tabla && <TablaRespuesta tabla={s.tabla} />}
         </section>
       ))}
       {fuentes && (
@@ -248,6 +244,30 @@ export function SeccionesRespuesta({ id, fuentes = false }: { id: RespuestaId; f
           </ul>
         </section>
       )}
+    </>
+  )
+}
+
+/** Tabla comparativa de una respuesta. Es una <table> de verdad en el HTML (la
+ *  leen Google y las IAs); en el móvil respuesta.css la pinta como tarjetas, una
+ *  por fila, y cada dato lleva delante su cabecera (data-etiqueta). Antes era una
+ *  tabla de 640 px en una caja de 352 que cortaba la última columna (auditoría P10). */
+function TablaRespuesta({ tabla }: { tabla: Tabla }) {
+  return (
+    <>
+      <div className="v7-tabla-caja">
+        <table className="v7-tabla">
+          <thead><tr>{tabla.cabecera.map((c, i) => <th key={i} scope="col">{visible(c)}</th>)}</tr></thead>
+          <tbody>
+            {tabla.filas.map((f) => (
+              <tr key={f[0]}>{f.map((c, i) => (i === 0
+                ? <th key={i} scope="row">{visible(c)}</th>
+                : <td key={i} data-etiqueta={tabla.cabecera[i] ?? ''}>{visible(c)}</td>))}</tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="v7-tabla-nota">{visible(tabla.nota)}</p>
     </>
   )
 }
