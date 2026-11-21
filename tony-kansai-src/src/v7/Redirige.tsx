@@ -47,17 +47,25 @@ export default function Redirige({ destino = 'inicio' }: { destino?: Destino }) 
  * los demás ven el equipo y los idiomas, que vienen pintados en el HTML
  * (main#portada-texto, fuera de #root: lo pone scripts/rutas-estaticas.mjs).
  */
+/** El equipo y los idiomas de la raíz son HTML suelto (main#portada-texto, fuera
+ *  de #root): si la raíz redirige, hay que quitarlo o se queda pegado debajo de
+ *  la página de destino (auditoría móvil, 21-11-2026). */
+function quitaPortadaEstatica() {
+  try { document.getElementById('portada-texto')?.remove() } catch { /* sin DOM (render de servidor) */ }
+}
+
 export function PortadaRaiz() {
   const { search } = useLocation()
   const pedido = new URLSearchParams(search).get('lang')
   let guardado: string | null = null
   try { guardado = localStorage.getItem('v7-pagina') } catch { /* bloqueado */ }
-  if ((pedido && pedido in PAGINAS) || (guardado && guardado in PAGINAS)) return <Redirige />
-  // Navegador en español → directo a /es/ (21-11-2026: la mayoría de clientes son
-  // hispanohablantes). Google lee la raíz con el navegador en inglés: sigue viendo
+  if ((pedido && pedido in PAGINAS) || (guardado && guardado in PAGINAS)) { quitaPortadaEstatica(); return <Redirige /> }
+  // Navegador en español o árabe → directo a /es/ o /ar/ (21-11-2026: la mayoría
+  // de clientes son hispanohablantes). Google lee la raíz con el navegador en inglés: sigue viendo
   // la página de idiomas, que es lo que pide para la x-default.
   let elegido: string | null = null
   try { elegido = localStorage.getItem(ELEGIDO) } catch { /* bloqueado */ }
-  if (!elegido && idiomaPrincipal() === 'es') return <Navigate to="/es/" replace />
+  const principal = idiomaPrincipal()
+  if (!elegido && (principal === 'es' || principal === 'ar')) { quitaPortadaEstatica(); return <Navigate to={`/${principal}/`} replace /> }
   return null
 }

@@ -71,7 +71,8 @@ export function SugerenciaIdioma() {
 
   useEffect(() => {
     setSugerida(null)
-    if (pathname.startsWith('/admin')) return
+    // En la raíz decide PortadaRaiz (Redirige.tsx): aquí no se toca.
+    if (pathname.startsWith('/admin') || pathname === '/') return
     const principal = idiomaPrincipal()
     // El idioma de la página se saca de la dirección (/en/…, /es/…); si no lleva
     // prefijo, del <html lang>. La versión española la declara la página en su
