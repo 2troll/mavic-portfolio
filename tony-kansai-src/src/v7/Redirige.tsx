@@ -4,6 +4,7 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import { PAGINAS } from './contenido'
 import type { PaginaId } from './contenido'
+import { ELEGIDO, idiomaPrincipal } from './SugerenciaIdioma'
 
 /** es → es; ar → ar; ruso y vecinos → ru; el resto, inglés. */
 export function idiomaSugerido(): PaginaId {
@@ -52,5 +53,11 @@ export function PortadaRaiz() {
   let guardado: string | null = null
   try { guardado = localStorage.getItem('v7-pagina') } catch { /* bloqueado */ }
   if ((pedido && pedido in PAGINAS) || (guardado && guardado in PAGINAS)) return <Redirige />
+  // Navegador en español → directo a /es/ (21-11-2026: la mayoría de clientes son
+  // hispanohablantes). Google lee la raíz con el navegador en inglés: sigue viendo
+  // la página de idiomas, que es lo que pide para la x-default.
+  let elegido: string | null = null
+  try { elegido = localStorage.getItem(ELEGIDO) } catch { /* bloqueado */ }
+  if (!elegido && idiomaPrincipal() === 'es') return <Navigate to="/es/" replace />
   return null
 }

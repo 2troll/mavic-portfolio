@@ -25,7 +25,6 @@ import './estilo-pixel.css'
 import './respuesta.css'
 import { FranjaVentajas } from './FranjaVentajas'
 import { ToursNuevos, viajeTourNuevo } from './ToursNuevos'
-import { SugerenciaIdioma } from './SugerenciaIdioma'
 import { HerramientasEnGuia } from './KitGuia'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -114,8 +113,6 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
           <span className="v7-solo-ancho">{p.final.boton}</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
       </header>
-
-      <SugerenciaIdioma actual={p.lang} opciones={hermanas.map(([, x]) => ({ lang: x.lang, href: x.ruta }))} />
 
       <main>
         <section className="v7-otono-hero v7-respuesta-hero">

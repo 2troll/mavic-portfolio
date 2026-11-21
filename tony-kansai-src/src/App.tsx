@@ -27,6 +27,7 @@ const Admin = lazy(() => import('./pages/Admin'))
 // del Footer antiguos; three.js sólo se descarga al entrar en ellas.
 import Redirige, { PortadaRaiz } from './v7/Redirige'
 import AvisoRuso from './v7/AvisoRuso'
+import { SugerenciaIdioma } from './v7/SugerenciaIdioma'
 import type { Destino } from './v7/Redirige'
 const PaginaGuia = lazy(() => import('./v7/PaginaGuia'))
 const Montana = lazy(() => import('./v7/Montana'))
@@ -134,7 +135,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <CiudadPagina key={pathname} pg={ciudad} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -153,7 +154,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Viajeros key={mercado} id={mercado} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -167,7 +168,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Ventajas key={`${ventajas.id}-${ventajas.app ?? ''}`} id={ventajas.id} app={ventajas.app} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       </>
     )
@@ -180,7 +181,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <PaginaRespuesta key={respuesta} id={respuesta} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_GUIA), ...Object.keys(RUTAS_RESPUESTA)]} />
       </>
@@ -194,7 +195,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <GuiaTransporte key={guia} id={guia} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -208,7 +209,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         <Otono key={otono} id={otono} />
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD, ...Object.keys(RUTAS_OTONO), ...Object.keys(RUTAS_GUIA)]} />
       </>
@@ -221,7 +222,7 @@ export function Layout() {
       <>
       <Suspense fallback={<div style={{ minHeight: '100vh', background: '#f5f5f7' }} />}>
         {v7 === 'portada' ? <PortadaRaiz /> : v7.startsWith('m-') ? <Montana key={v7} id={v7 as 'm-es' | 'm-en' | 'm-ar' | 'm-ru'} /> : v7.startsWith('i-') ? <Itinerarios key={v7} id={v7 as 'i-es' | 'i-en' | 'i-ar' | 'i-ru' | 'i-larion'} /> : <PaginaGuia key={v7} id={v7 as 'es' | 'en' | 'ar' | 'ru' | 'larion'} />}
-        <Equipo /><CookieTardio compacto /><AvisoRuso />
+        <Equipo /><CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </Suspense>
       <Corte rutas={[...Object.keys(RUTAS_V7), ...RUTAS_CIUDAD]} />
       </>
@@ -242,7 +243,7 @@ export function Layout() {
             <Route path="/accessibility" element={<Accessibility />} />
           </Routes>
         </Suspense>
-        <CookieTardio compacto /><AvisoRuso />
+        <CookieTardio compacto /><AvisoRuso /><SugerenciaIdioma />
       </MarcoLegal>
       <Equipo />
       </>
