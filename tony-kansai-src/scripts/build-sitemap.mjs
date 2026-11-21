@@ -71,6 +71,8 @@ const paginas = [
   ...Object.entries(HERR_RUTAS).flatMap(([tipo, grupo]) => grupo.map(([, r]) => ({ loc: r.replace(/\/$/, ''), priority: tipo === 'herrHub' ? '0.9' : '0.85', changefreq: 'monthly', v7: tipo }))),
   // Hanma Travel Partners: página B2B estática para agencias (public/partners/).
   { loc: '/partners', priority: '0.9', changefreq: 'monthly', v7: 'partners' },
+  // Oferta: guía musulmana freelance (scripts/empleo-guia.mjs, 21-11-2026). JobPosting para Google Empleos.
+  ...['/en/careers/muslim-female-guide', '/es/empleo/guia-musulmana', '/ar/wazaif/murshida-muslima'].map((loc) => ({ loc, priority: '0.8', changefreq: 'monthly', v7: 'empleo' })),
   // «Kansai de TikTok»: sitios virales por temporada + Ruta TikTok (scripts/tiktok.mjs).
   ...['/tiktok', '/tiktok/otono', '/tiktok/invierno', '/tiktok/primavera', '/tiktok/en', '/tiktok/en/autumn', '/tiktok/en/winter', '/tiktok/en/spring', '/tiktok/ar', '/tiktok/ar/autumn', '/tiktok/ar/winter', '/tiktok/ar/spring'].map((loc) => ({ loc, priority: loc.split('/').length > 3 || /otono|invierno|primavera/.test(loc) ? '0.85' : '0.95', changefreq: 'weekly', v7: 'tiktok' })),
   // Antonio, coordinador de viajes a medida para familias y grupos hispanohablantes: HTML estático de scripts/familias.mjs.
@@ -242,6 +244,7 @@ const FUENTE = {
   rutasTony: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'], rutasLarion: ['src/v7/datosItinerarios.ts', 'src/v7/Itinerarios.tsx'],
   otono: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'], sakura: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'],
   osakaKioto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'], aeropuerto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'],
+  empleo: ['scripts/empleo-guia.mjs'],
   ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
   coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
   ...Object.fromEntries(['kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
