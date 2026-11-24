@@ -31,6 +31,9 @@ html[lang="es"] #resenas.rs-es .rs-cifras b { color: var(--tinta); font-weight: 
 html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila {
   gap: 14px; scroll-snap-type: x mandatory; align-items: flex-start;
   padding-bottom: 10px; scrollbar-width: none;
+  /* MandosFila le pone la altura de las tarjetas a la vista: lo que sobra de
+     las largas fuera de pantalla se recorta, sin barra vertical. */
+  overflow-y: hidden; transition: height .25s ease;
 }
 html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila::-webkit-scrollbar { display: none; }
 html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila:focus-visible { outline: 2px solid var(--verde, var(--acento)); outline-offset: 4px; border-radius: 12px; }
@@ -108,7 +111,7 @@ html[lang="es"] #resenas.rs-es .rs-opinar { margin: 14px 0 0 !important; }
   html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila figure { flex-basis: 86%; }
 }
 @media (prefers-reduced-motion: reduce) {
-  html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila { scroll-behavior: auto; }
+  html[lang="es"] #resenas.rs-es .v7-resenas.v7-resenas-fila { scroll-behavior: auto; transition: none; }
 }
 
 /* Fila «Fotos de nuestros viajeros»: miniaturas locales de 160 px (scripts/

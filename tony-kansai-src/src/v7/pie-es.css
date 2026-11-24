@@ -100,4 +100,7 @@ html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-marca { display: none; }
 html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-guias > summary { font-size: 13px; min-height: 40px; color: var(--eq-tenue); }
 @media (max-width: 860px) {
   html[lang="es"]:has(.v7-pie-es) section.eq.eq-react { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  /* Mientras el aviso de cookies está abierto (52 px abajo), la última línea
+     del pie sube por encima de él en vez de quedar tapada (auditoría 24-11). */
+  html[lang="es"]:has(.v7-pie-es):has(.v7-cookies) section.eq.eq-react { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 }

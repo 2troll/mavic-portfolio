@@ -349,6 +349,34 @@ function MandosFila({ fila, total }: { fila: RefObject<HTMLDivElement | null>; t
     const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches
     f.scrollBy({ left: dir * paso, behavior: quieto ? 'auto' : 'smooth' })
   }
+  // La fila mide lo que las tarjetas A LA VISTA, no lo que la más larga: a 360 px,
+  // al pasar a una reseña corta quedaba un hueco de ~300 px bajo ella (auditoría 24-11).
+  useEffect(() => {
+    const f = fila.current
+    if (!f || typeof ResizeObserver === 'undefined') return
+    let raf = 0
+    const ajustar = () => {
+      cancelAnimationFrame(raf)
+      raf = requestAnimationFrame(() => {
+        const caja = f.getBoundingClientRect()
+        let alto = 0
+        f.querySelectorAll('figure').forEach((t) => {
+          const r = t.getBoundingClientRect()
+          if (r.right > caja.left + 1 && r.left < caja.right - 1) alto = Math.max(alto, r.height)
+        })
+        if (!alto) return
+        const cs = getComputedStyle(f)
+        const relleno = cs.boxSizing === 'border-box' ? parseFloat(cs.paddingTop) + parseFloat(cs.paddingBottom) : 0
+        f.style.height = `${Math.ceil(alto + relleno)}px`
+      })
+    }
+    const ro = new ResizeObserver(ajustar)
+    f.querySelectorAll('figure').forEach((t) => ro.observe(t))
+    ro.observe(f)
+    f.addEventListener('scroll', ajustar, { passive: true })
+    ajustar()
+    return () => { cancelAnimationFrame(raf); ro.disconnect(); f.removeEventListener('scroll', ajustar) }
+  }, [fila, total])
   return (
     <div className="rs-mandos">
       <span className="rs-pista">Desliza para leer las {total}</span>
