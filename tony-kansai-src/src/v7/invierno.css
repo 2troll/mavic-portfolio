@@ -1,0 +1,55 @@
+/* Páginas de invierno (Otono.tsx con temporada «invierno»). Solo clases v7-invierno-*,
+   así las de otoño y sakura no cambian. Colores de la paleta común (variables de v7.css
+   y estilo-sereno.css); la acción va siempre en el verde de --boton. */
+
+.v7-invierno-esencial dl { display: grid; gap: 0; margin: 20px 0 0; max-width: 52rem; }
+.v7-invierno-esencial dl > div { display: grid; grid-template-columns: 8.5rem 1fr; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--linea); }
+.v7-invierno-esencial dt { font-weight: 600; }
+.v7-invierno-esencial dd { margin: 0; color: var(--tenue); line-height: 1.55; }
+
+.v7-invierno-tours { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin-top: 24px; }
+.v7-invierno-tour { position: relative; padding: 26px; display: grid; gap: 14px; align-content: start; scroll-margin-top: 90px; }
+.v7-invierno-tour h3 { font-size: 1.3rem; margin: 0; padding-inline-end: 44px; }
+.v7-invierno-letra { position: absolute; top: 22px; inset-inline-end: 22px; margin: 0; width: 34px; height: 34px; display: grid; place-items: center;
+  border-radius: 50%; background: var(--fondo); font-weight: 700; color: var(--sakura-tinta, var(--tenue)); }
+.v7-invierno-resumen { margin: 0; color: var(--tenue); line-height: 1.55; }
+.v7-invierno-precios { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; }
+.v7-invierno-precios > div { display: grid; gap: 2px; align-content: start; }
+.v7-invierno-precios .v7-plan-precio { margin-top: 0 !important; font-size: 1.8rem; }
+.v7-invierno-etiqueta { font-size: 14px; font-weight: 600; }
+.v7-invierno-pagar { justify-self: start; margin-top: 6px; font-size: 14px; font-weight: 600; color: var(--verde, var(--boton)); text-underline-offset: 3px; }
+.v7-invierno-datos { display: grid; gap: 8px; margin: 0; }
+.v7-invierno-datos > div { display: grid; grid-template-columns: 7rem 1fr; gap: 12px; }
+.v7-invierno-datos dt { font-weight: 600; font-size: 15px; }
+.v7-invierno-datos dd { margin: 0; color: var(--tenue); font-size: 15px; line-height: 1.5; }
+.v7-invierno-ruta summary { cursor: pointer; font-weight: 600; min-height: 44px; display: flex; align-items: center; color: var(--verde, var(--boton)); }
+.v7-invierno-ruta .v7-otono-dia { margin-top: 4px; }
+.v7-invierno-ruta .v7-otono-dia p { margin: 0; line-height: 1.5; }
+.v7-invierno-incluye { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.v7-invierno-incluye h4 { margin: 0; font-size: 15px; }
+.v7-invierno-incluye .v7-notas { margin-top: 8px; font-size: 15px; }
+.v7-invierno-no { margin: 8px 0 0; padding: 0; list-style: none; display: grid; gap: 6px; color: var(--tenue); font-size: 15px; }
+.v7-invierno-no li { padding-inline-start: 22px; position: relative; }
+.v7-invierno-no li::before { content: '–'; position: absolute; inset-inline-start: 4px; }
+.v7-invierno-tour .v7-boton { justify-self: start; }
+
+.v7-invierno-cal { list-style: none; padding: 0; margin: 24px 0 0; display: grid; max-width: 60rem; }
+.v7-invierno-cal li { display: grid; grid-template-columns: 11rem minmax(0, 1fr) auto; gap: 16px; align-items: start; padding: 14px 0; border-bottom: 1px solid var(--linea); }
+.v7-invierno-fecha { font-weight: 600; font-variant-numeric: tabular-nums; color: var(--sakura-tinta, var(--tinta)); }
+.v7-invierno-cal h3 { margin: 0 0 4px; font-size: 1.05rem; }
+.v7-invierno-cal p { margin: 0; color: var(--tenue); line-height: 1.5; }
+.v7-invierno-estado { font-size: 13px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; color: var(--sakura-tinta, var(--tinta)); background: var(--fondo); border: 1px dashed currentColor; }
+.v7-invierno-estado.ok { color: var(--tinta); background: var(--superficie); border: 1px solid var(--linea); }
+
+.v7-invierno-hermanas { margin-top: 8px; }
+.v7-invierno-hermanas h3 { font-size: 1rem; margin: 0 0 4px; }
+
+@media (max-width: 820px) {
+  .v7-invierno-tours { grid-template-columns: 1fr; }
+  .v7-invierno-tour { padding: 20px; }
+  .v7-invierno-esencial dl > div { grid-template-columns: 1fr; gap: 2px; }
+  .v7-invierno-cal li { grid-template-columns: 1fr auto; }
+  .v7-invierno-cal li > div { grid-column: 1 / -1; grid-row: 2; }
+  .v7-invierno-incluye { grid-template-columns: 1fr; }
+  .v7-invierno-datos > div { grid-template-columns: 1fr; gap: 0; }
+}

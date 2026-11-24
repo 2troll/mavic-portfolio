@@ -44,7 +44,11 @@ export interface Pagina {
     preguntar: string
   }
   /** Un solo precio de referencia; la ficha completa va plegada debajo. */
-  precioRef?: { titulo: string; texto: string; enlace: string; ruta: string; plegado: string; otono: string }
+  precioRef?: { titulo: string; texto: string; enlace: string; ruta: string; plegado: string; otono: string
+    /** Aviso de sakura en la portada (15-2 a 25-4, hora de Japón): frase + página. */
+    sakura?: { titulo: string; texto: string; enlace: string; ruta: string }
+    /** Rótulo del índice «Explora» de la portada. */
+    explora?: string }
   /** Contacto con WhatsApp primero y el formulario plegado. */
   contactoWa?: { sub: string; boton: string; formulario: string; correo: string }
   /** Columna «Destinos» del pie. */
@@ -350,6 +354,8 @@ const es: Pagina = {
     enlace: 'Ver todos los precios', ruta: '/es/precios/',
     plegado: 'Qué incluye, pago y cancelación',
     otono: 'Otoño en Kioto: los arces siguen rojos hasta principios de diciembre.',
+    sakura: { titulo: 'Sakura en Kioto', texto: 'Los cerezos de Kioto florecen entre finales de marzo y principios de abril. Llevo un solo grupo al día: reserva tu fecha pronto.', enlace: 'Ver el día de sakura en Kioto', ruta: '/es/sakura-kioto/' },
+    explora: 'Todo lo que tenemos',
   },
   contactoWa: {
     sub: 'Escríbenos por WhatsApp y te respondemos normalmente el mismo día.',
@@ -533,6 +539,8 @@ const en: Pagina = {
     enlace: 'See all prices', ruta: '/en/prices/',
     plegado: 'What\'s included, payment and cancellation',
     otono: 'Autumn in Kyoto: the maples stay red until early December.',
+    sakura: { titulo: 'Cherry blossom in Kyoto', texto: 'Kyoto’s cherry trees bloom from late March to early April. I take one group a day: book your date early.', enlace: 'See the Kyoto cherry blossom day', ruta: '/en/kyoto-cherry-blossom/' },
+    explora: 'Everything we offer',
   },
   contactoWa: {
     sub: 'Message us on WhatsApp and we usually reply the same day.',
@@ -710,6 +718,8 @@ const ar: Pagina = {
     enlace: 'كل الأسعار', ruta: '/ar/prices/',
     plegado: 'ما يشمله السعر والدفع والإلغاء',
     otono: 'الخريف في كيوتو: تبقى أشجار القيقب حمراء حتى أوائل ديسمبر.',
+    sakura: { titulo: 'أزهار الكرز في كيوتو', texto: 'تتفتح أزهار الكرز في كيوتو بين أواخر مارس وأوائل أبريل. أرافق مجموعة واحدة فقط في اليوم، فاحجز موعدك مبكراً.', enlace: 'شاهد يوم الساكورا في كيوتو', ruta: '/ar/kyoto-cherry-blossom/' },
+    explora: 'كل ما نقدمه',
   },
   contactoWa: {
     sub: 'راسلنا عبر واتساب ونردّ عليك عادةً في اليوم نفسه.',

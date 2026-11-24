@@ -4,17 +4,45 @@
 // Regla de contenido: nada que no sea verdad. Sin horarios ni precios de
 // entradas, que cambian cada año; las fechas del otoño son las habituales.
 
-import { NUEVAS } from './datosTemporadas'
+import { NUEVAS, INVIERNO } from './datosTemporadas'
+export { PRECIO_INVIERNO } from './datosTemporadas'
 
-export type OtonoId = 'o-es' | 'o-en' | 'o-ar' | 'o-ru' | 's-es' | 's-en' | 's-ar' | 's-ru'
+export type OtonoId = 'o-es' | 'o-en' | 'o-ar' | 'o-ru' | 's-es' | 's-en' | 's-ar' | 's-ru' | 'w-es' | 'w-en' | 'w-ar'
 
 export const PRECIO_OTONO = { medio: 38000, completo: 58000 }
 
 interface Sitio { kanji: string; nombre: string; texto: string }
+
+/** Un tour de temporada con precio propio (invierno). Precio siempre por grupo. */
+export interface ProductoTemporada {
+  /** ancla de la tarjeta y del @id en el JSON-LD */
+  id: string
+  nombre: string; resumen: string; duracion: string; fechas: string; para: string
+  /** una tarifa por variante o por tramo de fechas; desde/hasta en ISO (Offer) */
+  precios: { etiqueta: string; yen: number; desde: string; hasta: string }[]
+  ruta: { h: string; t: string }[]
+  /** paradas para el itinerario del JSON-LD */
+  paradas: string[]
+  incluye: string[]; noIncluye: string[]
+}
+/** Lo propio de las páginas de invierno: varios tours, calendario y preguntas. */
+export interface ExtraInvierno {
+  fotoLugar: string
+  esencial: { titulo: string; puntos: { k: string; v: string }[] }
+  tours: {
+    titulo: string; intro: string
+    etiquetas: { duracion: string; fechas: string; para: string; ruta: string; incluye: string; noIncluye: string; reservar: string }
+  }
+  calendario: { titulo: string; intro: string; confirmado: string; sinConfirmar: string; eventos: { fecha: string; nombre: string; texto: string; confirmado: boolean }[] }
+  faq: { titulo: string; preguntas: { p: string; r: string }[] }
+  hermanasTitulo: string
+  saludoTour: (nombre: string) => string
+  touristType: string
+}
 export interface PaginaOtono {
   lang: 'es' | 'en' | 'ar' | 'ru'; ruta: string; inicio: string
   /** otoño (momiji) o primavera (sakura); el guía decide el WhatsApp y si hay PayPal. */
-  temporada: 'otono' | 'sakura'; guia: 'tony' | 'larion'; foto: string
+  temporada: 'otono' | 'sakura' | 'invierno'; guia: 'tony' | 'larion'; foto: string
   seo: { titulo: string; descripcion: string }
   antetitulo: string; titulo: string; sub: string; cta: string
   cuando: { titulo: string; texto: string[] }
@@ -25,6 +53,9 @@ export interface PaginaOtono {
   consejosTitulo: string; consejos: string[]
   final: { titulo: string; texto: string; boton: string }
   saludo: string; volver: string
+  /** Solo invierno: tours con precio propio (sustituyen a medio/completo). */
+  productos?: ProductoTemporada[]
+  invierno?: ExtraInvierno
 }
 
 export const OTONO: Record<OtonoId, PaginaOtono> = {
@@ -141,6 +172,8 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     saludo: 'Hi Tony, I\'m coming in autumn and I\'d like a day in Kyoto. Dates: ',
     volver: 'Back to the main page',
   },
+  // Invierno 2026-27 (es/en/ar, solo Tony): al final para no alterar el orden de las demás.
+  ...INVIERNO,
 }
 
 export const RUTAS_OTONO: Record<string, OtonoId> = Object.fromEntries(

@@ -93,3 +93,56 @@
 @media (max-width: 860px) {
   .v7:has(.v7-barra-movil):not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie { padding-bottom: calc(var(--e-6, 48px) + 72px); }
 }
+
+/* ── Temporada (24-11-2026): tarjeta blanca de la temporada que toca (otoño,
+   invierno o sakura; datosInvierno.ts) dentro del precio de referencia. Una sola
+   superficie (el precio de referencia no es tarjeta): nada de cajas dentro de cajas.
+   Invierno: los 4 tours en filas «nombre · horas · precio». ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp {
+  margin: 4px 0 0; padding: 18px 20px; max-width: 40rem;
+  background: var(--superficie, #fff); border: 1px solid var(--linea);
+  border-inline-start: 3px solid var(--sakura-tinta, #9c3d60); border-radius: 14px;
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp h3 { margin: 0 0 6px; font-size: 1.15rem; line-height: 1.3; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-texto { margin: 0 0 10px; color: var(--tenue); font-size: 15px; line-height: 1.5; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-lista { list-style: none; margin: 0 0 8px; padding: 0; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-lista li {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 2px 12px;
+  padding: 6px 0; border-top: 1px solid var(--linea); font-size: 15px; line-height: 1.35;
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-nombre { color: var(--tinta); font-weight: 500; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-precio {
+  color: var(--tinta); white-space: nowrap; font-variant-numeric: tabular-nums; font-family: var(--letra-cifras, inherit);
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-nota { margin: 0 0 10px; color: var(--tenue); font-size: 13.5px; line-height: 1.45; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp .v9-enlace { display: inline-block; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-otra { margin: 10px 0 0; font-size: 15px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-otra a { color: var(--tinta); text-underline-offset: 4px; }
+
+/* ── Explora: índice de todo lo que ofrece la web (24-11-2026). Chips en tres
+   grupos; en escritorio, tres columnas. Sin tarjetas: solo texto y filetes. ── */
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-seccion.v7-explora { padding-top: 24px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora h2 { font-size: clamp(1.3rem, 5vw, 1.6rem); margin-bottom: 14px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupos { display: grid; gap: 14px; }
+@media (min-width: 900px) {
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo h3 {
+  margin: 0 0 8px; font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tenue);
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 5px 12px;
+  border: 1px solid var(--linea-fuerte); border-radius: 999px; background: var(--superficie, #fff);
+  color: var(--tinta); font-size: 14.5px; line-height: 1.25; text-decoration: none;
+  transition: border-color .15s, color .15s;
+}
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a:hover { border-color: var(--acento); color: var(--acento); }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
+.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-nuevo {
+  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
+  padding: 1px 6px; border-radius: 999px; background: var(--sakura, #f6d9e0); color: var(--sakura-tinta, #9c3d60);
+}
+@media (prefers-reduced-motion: reduce) {
+  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a { transition: none; }
+}

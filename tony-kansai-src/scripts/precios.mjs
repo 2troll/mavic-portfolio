@@ -12,6 +12,7 @@
 //   · tour de 2 h en Kioto → src/v7/datosRespuestasNuevas.ts (PRECIO_CORTO)
 //   · senderismo → src/lib/data.ts (HIKING_ROUTES, las 8 rutas de src/v7/datosMontana.ts)
 //   · rutas por ciudad → src/v7/datosRutas.ts (TEXTOS, META, PRECIO)
+//   · invierno 2026-27 → PRECIO_INVIERNO de src/v7/datosTemporadas.ts (cifras) + src/v7/datosInvierno.ts (formato; también lo usa la portada)
 //   · planes → src/v7/datosPlanes.ts · experiencias y descuentos → src/v7/datosVentajas.ts
 //
 // Uso: node scripts/precios.mjs → public/es/precios/, public/en/prices/, public/ar/prices/
@@ -29,6 +30,18 @@ const { MONTES, KANJI, CIMA } = await import('../src/v7/datosMontana.ts')
 const { PLANES, KIT_LLEGADA } = await import('../src/v7/datosPlanes.ts')
 const { APPS, CIUDADES, RUTA_VENTAJAS, cuponDe } = await import('../src/v7/datosVentajas.ts')
 const { yenLocal } = await import('../src/v7/formato.ts')
+const { toursInvierno, CLAVES_PRECIO_INVIERNO, TXT_INVIERNO, RUTA_INVIERNO, yenesDesde, variosPrecios, horasTexto } = await import('../src/v7/datosInvierno.ts')
+
+// Invierno: datosTemporadas.ts importa sin extensión (Node no puede cargarlo), así
+// que PRECIO_INVIERNO se lee de su texto. Única fuente de las cifras de invierno.
+const fuenteTemp = readFileSync(join(root, 'src/v7/datosTemporadas.ts'), 'utf8')
+const mInv = fuenteTemp.match(/export const PRECIO_INVIERNO = \{([^}]*)\}/)
+if (!mInv) throw new Error('precios: no encuentro PRECIO_INVIERNO en src/v7/datosTemporadas.ts')
+const PRECIO_INVIERNO = Object.fromEntries([...mInv[1].matchAll(/(\w+)\s*:\s*(\d+)/g)].map(([, k, v]) => [k, Number(v)]))
+for (const k of CLAVES_PRECIO_INVIERNO) {
+  if (!Number.isInteger(PRECIO_INVIERNO[k])) throw new Error(`precios: falta «${k}» en PRECIO_INVIERNO (datosTemporadas.ts); datosInvierno.ts lo necesita`)
+}
+const TOURS_INVIERNO = toursInvierno(PRECIO_INVIERNO)
 
 // datosRespuestasNuevas.ts importa sin extensión (Vite sí, Node no): se lee la cifra del fichero.
 const fuenteCorto = readFileSync(join(root, 'src/v7/datosRespuestasNuevas.ts'), 'utf8')
@@ -56,6 +69,24 @@ for (const l of LANGS) {
   const t = tarifas(l)
   if (t.medio.yenes !== PRECIO_RUTA.medio || t.completo.yenes !== PRECIO_RUTA.completo || t.lejos.yenes !== PRECIO_RUTA.lejos) {
     throw new Error(`precios: contenido.ts y datosRutas.ts no coinciden (${l}); arregla la fuente antes de publicar`)
+  }
+}
+
+// Invierno: cifras enteras, ids únicos y nunca por debajo de la tarifa normal de
+// su duración (desde 8 h → día completo; menos → medio día). Si no cuadra, se para.
+{
+  const ids = new Set()
+  for (const t of TOURS_INVIERNO) {
+    if (ids.has(t.id)) throw new Error(`precios: tour de invierno repetido «${t.id}» en datosInvierno.ts`)
+    ids.add(t.id)
+    if (!t.opciones.length) throw new Error(`precios: el tour de invierno «${t.id}» no tiene precio`)
+    for (const o of t.opciones) {
+      const h = Number(String(o.horas).match(/\d+/)?.[0])
+      if (!Number.isInteger(o.yenes) || o.yenes <= 0 || !h) throw new Error(`precios: precio u horas no válidos en el tour de invierno «${t.id}»`)
+      const base = h >= 8 ? PRECIO_RUTA.completo : PRECIO_RUTA.medio
+      if (o.yenes < base) throw new Error(`precios: «${t.id}» (${o.horas}, ¥${o.yenes}) cuesta menos que la tarifa normal (¥${base}); revisa datosInvierno.ts`)
+    }
+    for (const l of LANGS) if (!t.nombre[l] || !t.fechas[l]) throw new Error(`precios: falta el texto (${l}) del tour de invierno «${t.id}»`)
   }
 }
 
@@ -95,7 +126,7 @@ const T = {
     respuesta: (p) => `Tony cobra por grupo, no por persona. En la ciudad (hasta 6 personas): 2 horas en Kioto ${p.corto}, medio día (4 h) ${p.medio} y día completo (8 h) ${p.completo}; excursión lejana desde ${p.lejos}. Senderismo guiado: ${p.monte} por grupo. Ese precio es solo el guiado: entradas, trenes, comidas y experiencias se pagan aparte, directamente.`,
     pagaT: 'Al guía le pagas', paga: 'Solo el guiado: la tarifa de su tour, por grupo.',
     aparteT: 'Aparte, directamente', aparte: 'Entradas, trenes, autobuses, comidas y experiencias (kimono, té, talleres). Los pagas tú en el momento o al socio; yo te digo cómo.',
-    indice: 'En esta página', secs: { tarifas: 'Tarifas', incluye: 'Qué incluye', ciudades: 'Ciudades', montana: 'Montaña', planes: 'Planes', experiencias: 'Experiencias', preguntas: 'Preguntas' },
+    indice: 'En esta página', secs: { tarifas: 'Tarifas', invierno: 'Invierno', incluye: 'Qué incluye', ciudades: 'Ciudades', montana: 'Montaña', planes: 'Planes', experiencias: 'Experiencias', preguntas: 'Preguntas' },
     tarifasH: 'Tarifas del guía', tarifasP: 'Precio cerrado por grupo, no por persona: el mismo para 1 que para 6.',
     porGrupo: 'por grupo', desde: 'desde', porPersona: (y) => `Siendo 4: ${y} por persona`,
     filas: {
@@ -144,7 +175,7 @@ const T = {
     respuesta: (p) => `Tony charges per group, not per person. City tours (up to 6 people): 2 hours in Kyoto ${p.corto}, half day (4 h) ${p.medio} and full day (8 h) ${p.completo}; long day trips from ${p.lejos}. Guided hiking: ${p.monte} per group. That price is the guiding only: tickets, trains, meals and experiences are paid separately, directly.`,
     pagaT: 'You pay the guide', paga: 'Only for the guiding: the tour rate, per group.',
     aparteT: 'Separately, directly', aparte: 'Tickets, trains, buses, meals and experiences (kimono, tea, workshops). You pay them on the spot or to the partner; I show you how.',
-    indice: 'On this page', secs: { tarifas: 'Rates', incluye: 'What’s included', ciudades: 'Cities', montana: 'Hiking', planes: 'Plans', experiencias: 'Experiences', preguntas: 'Questions' },
+    indice: 'On this page', secs: { tarifas: 'Rates', invierno: 'Winter', incluye: 'What’s included', ciudades: 'Cities', montana: 'Hiking', planes: 'Plans', experiencias: 'Experiences', preguntas: 'Questions' },
     tarifasH: 'Guide rates', tarifasP: 'One fixed price per group, not per person: the same for 1 as for 6.',
     porGrupo: 'per group', desde: 'from', porPersona: (y) => `For 4 people: ${y} each`,
     filas: {
@@ -192,7 +223,7 @@ const T = {
     respuesta: (p) => `يحسب طوني السعر للمجموعة لا للشخص. جولات المدينة (حتى 6 أشخاص): ساعتان في كيوتو ${p.corto}، ونصف يوم (4 ساعات) ${p.medio}، ويوم كامل (8 ساعات) ${p.completo}؛ والرحلات البعيدة ابتداءً من ${p.lejos}. المشي الجبلي مع مرشد: ${p.monte} للمجموعة. هذا السعر للإرشاد فقط: تذاكر الدخول والقطارات والوجبات والتجارب تُدفع على حدة، مباشرةً.`,
     pagaT: 'تدفع للمرشد', paga: 'مقابل الإرشاد فقط: سعر الجولة للمجموعة.',
     aparteT: 'على حدة، مباشرةً', aparte: 'تذاكر الدخول والقطارات والحافلات والوجبات والتجارب (الكيمونو والشاي والورش). تدفعونها بأنفسكم في حينها أو للشريك، وأنا أدلّكم على الطريقة.',
-    indice: 'في هذه الصفحة', secs: { tarifas: 'الأسعار', incluye: 'ما يشمله', ciudades: 'المدن', montana: 'الجبال', planes: 'الخطط', experiencias: 'التجارب', preguntas: 'أسئلة' },
+    indice: 'في هذه الصفحة', secs: { tarifas: 'الأسعار', invierno: 'الشتاء', incluye: 'ما يشمله', ciudades: 'المدن', montana: 'الجبال', planes: 'الخطط', experiencias: 'التجارب', preguntas: 'أسئلة' },
     tarifasH: 'أسعار المرشد', tarifasP: 'سعر ثابت للمجموعة لا للشخص: السعر نفسه لشخص واحد أو لستة.',
     porGrupo: 'للمجموعة', desde: 'ابتداءً من', porPersona: (y) => `لأربعة أشخاص: ${y} للشخص`,
     filas: {
@@ -301,6 +332,21 @@ function pagina(lang) {
     return `<div><dt>${esc(vis(n.t))}</dt><dd>${esc(vis(n.d))}${enl ? ` <a href="${enl[1]}">${esc(enl[0])} <span aria-hidden="true">${flecha(lang)}</span></a>` : ''}</dd></div>`
   }).join('')}<div><dt>${esc(t.pagoT)}</dt><dd>${esc(pagoTexto)}</dd></div></dl></div>`
 
+  // ── Invierno 2026-27 (datosInvierno.ts) ────────────────────────────────
+  const ti = TXT_INVIERNO[lang]
+  const invTxt = { es: { op: 'Opciones' }, en: { op: 'Options' }, ar: { op: 'الخيارات' } }[lang]
+  const horasTxt = (h) => horasTexto(h, lang)
+  const inviernoHTML = `<ol class="tf inv">${TOURS_INVIERNO.map((tour) => {
+    const varias = tour.opciones.length > 1
+    const ops = varias ? `<ul class="inv-op" aria-label="${esc(invTxt.op)}">${tour.opciones.map((o) => `<li><span>${esc([o.cuando[lang], horasTxt(o.horas)].filter(Boolean).join(' · '))}</span><b>${yen(o.yenes, lang)}</b></li>`).join('')}</ul>` : ''
+    return `<li class="tf-f" id="invierno-${tour.id}">
+<div class="tf-q"><h3>${esc(tour.nombre[lang])}</h3><p class="tf-d">${esc(varias ? tour.fechas[lang] : `${horasTxt(tour.opciones[0].horas)} · ${tour.fechas[lang]}`)}</p>${ops}</div>
+<div class="tf-p">${variosPrecios(tour) ? `<small>${esc(ti.desde)}</small>` : ''}<b>${yen(yenesDesde(tour), lang)}</b><span>${esc(ti.porGrupo)}</span></div>
+</li>`
+  }).join('')}</ol>
+<p class="inv-nota">${esc(ti.nota)}</p>
+<p class="mas"><a href="${RUTA_INVIERNO[lang]}">${esc(ti.enlace)} <span aria-hidden="true">${flecha(lang)}</span></a></p>`
+
   // ── Qué incluye ────────────────────────────────────────────────────────
   const incluyeHTML = `<div class="inc"><div class="inc-si"><h3>${esc(t.siT)}</h3><ul>${P.como.si.items.map((i) => `<li>${esc(i)}</li>`).join('')}</ul></div>
 <div class="inc-no"><h3>${esc(t.noT)}</h3><ul>${P.como.no.map((i) => `<li>${esc(i)}</li>`).join('')}<li>${esc(t.aparte)}</li></ul></div></div>`
@@ -375,6 +421,11 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
             price: PRECIO_RUTA[META[id].tramos[i]], priceCurrency: 'JPY', url: `${url}#ciudades`, offeredBy: tony,
             itemOffered: { '@type': 'TouristTrip', name: `${TEXTOS[lang][id].titulo}: ${o.nombre}`, description: o.texto, provider: tony },
           }))),
+          ...TOURS_INVIERNO.flatMap((tour) => tour.opciones.map((o) => ({
+            '@type': 'Offer', name: [tour.nombre[lang], o.cuando[lang]].filter(Boolean).join(' · '), description: `${o.horas} · ${tour.fechas[lang]}. ${ti.nota}`,
+            price: o.yenes, priceCurrency: 'JPY', url: `${url}#invierno`, offeredBy: tony,
+            itemOffered: { '@type': 'TouristTrip', name: tour.nombre[lang], description: tour.fechas[lang], provider: tony },
+          }))),
           ...MONTES_DATOS.filter((m) => m.yenes > 0).map(({ id, r, yenes }) => ({
             '@type': 'Offer', name: `${t.filas.monte.n}: ${tc(r.title, lang)} (${KANJI[id]})`, price: yenes, priceCurrency: 'JPY', url: `${url}#montana`, offeredBy: tony,
             itemOffered: { '@type': 'TouristTrip', name: tc(r.title, lang), description: tc(r.subtitle, lang), provider: tony },
@@ -410,7 +461,7 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="#fdfcfa">
+<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#fdfcfa'}">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]}">`).join('\n')}
 <link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
@@ -426,7 +477,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
 <link rel="preload" as="image" href="/v7/fotos/portada-900.webp" imagesrcset="/v7/fotos/portada-600.webp 600w, /v7/fotos/portada-900.webp 900w" imagesizes="(min-width:960px) 44vw, 100vw">
-<style>${CSS}${menuCSS}${equipoCSS}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}</style>
 </head>
 <body>
 <a class="saltar" href="#tarifas">${esc(t.secs.tarifas)}</a>
@@ -458,6 +509,11 @@ ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
 <h2>${esc(t.tarifasH)}</h2><p class="sub">${esc(t.tarifasP)}</p>
 ${tarifasHTML}
 ${notasHTML}
+</div></section>
+
+<section class="bloque bloque-inv" id="invierno"><div class="kap">
+<h2>${esc(ti.titulo)}</h2><p class="sub">${esc(ti.entradilla)}</p>
+${inviernoHTML}
 </div></section>
 
 <section class="bloque bloque-claro" id="incluye"><div class="kap">
@@ -506,7 +562,7 @@ ${faq.map(([q, a]) => `<details><summary>${esc(vis(q))}</summary><p>${esc(vis(a)
   equipo: equipoHTML({ lang, actual: 'tony' }),
   fin: `<span>© Tony Kansai Guide</span><span>${esc(t.pie.act)}: <bdi dir="ltr">${HOY}</bdi></span>`,
 })}</footer>
-</body>
+${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 </html>
 `
 }
@@ -514,6 +570,199 @@ ${faq.map(([q, a]) => `<details><summary>${esc(vis(q))}</summary><p>${esc(vis(a)
 // Estilo sereno (21-11-2026, como la portada): washi, tinta índigo, titulares en
 // Zen Old Mincho y el verde solo para la acción (antes papel crema y bermellón de
 // torii, que Antonio llama «Japón barato»). Precios en cifras tabulares.
+// 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
+const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#e9d5d8;--eq-tenue:#515b67;--eq-acento:#2d684c}
+
+:root{--papel:#f2e6e7;--papel2:#e9d5d8;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--acento:#2d684c;--acento-t:#fff;
+--mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.14);--mn-suave:#ffffff;--mn-acento:#2d684c;
+--sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Zen Old Mincho','Hiragino Mincho ProN','Yu Mincho',Georgia,serif;--r:14px}
+html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--papel);color:var(--tinta);font:400 16px/1.6 var(--sans);overflow-x:hidden}
+img{max-width:100%;height:auto;display:block}
+a{color:inherit;text-underline-offset:3px}
+h1,h2,h3{font-family:var(--serif);font-weight:600;line-height:1.12;margin:0;text-wrap:balance;letter-spacing:-.01em}
+h1,h2{font-weight:500}
+details.plegado{margin-top:18px;border-block:1px solid var(--linea)}
+details.plegado>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;min-height:52px;font-weight:600}
+details.plegado>summary::-webkit-details-marker{display:none}
+details.plegado>summary::after{content:'';flex:none;width:8px;height:8px;border:solid var(--gris);border-width:0 1.5px 1.5px 0;transform:translateY(-2px) rotate(45deg)}
+details.plegado[open]>summary::after{transform:translateY(1px) rotate(-135deg)}
+details.plegado[open]{padding-bottom:18px}
+html[dir=rtl] h1,html[dir=rtl] h2,html[dir=rtl] h3{letter-spacing:0;line-height:1.35;font-weight:700}
+p{margin:0}
+[dir=ltr]{unicode-bidi:isolate}
+bdi,.tf-p b,.resumen b,.mt-p b,.cd-o i{font-variant-numeric:tabular-nums}
+.kap{max-width:1120px;margin:0 auto;padding:0 16px}
+@media (min-width:720px){.kap{padding:0 28px}}
+.saltar{position:absolute;top:8px;inset-inline-start:16px;z-index:100;background:var(--tarjeta);padding:8px 12px;border-radius:8px;clip-path:inset(50%);width:1px;height:1px;overflow:hidden;white-space:nowrap}.saltar:focus{clip-path:none;width:auto;height:auto}
+:focus-visible{outline:2px solid var(--acento);outline-offset:2px}
+/* Cabecera */
+.top{position:sticky;top:0;z-index:50;background:color-mix(in srgb,var(--tarjeta) 94%,transparent);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--linea)}
+.top .kap{display:flex;align-items:center;gap:12px;min-height:60px}
+.marca{font:600 17px/1 var(--sans);text-decoration:none;white-space:nowrap;display:flex;gap:8px;align-items:center}
+.marca span{color:var(--acento)}
+@media (max-width:420px){.marca{font-size:15px}}
+/* Portada */
+.heroe{padding:28px 0 36px}
+.heroe-k{display:grid;gap:24px}
+@media (min-width:960px){.heroe{padding:56px 0 64px}.heroe-k{grid-template-columns:1.1fr .9fr;gap:48px;align-items:center}}
+.ceja{font:600 12px/1.2 var(--sans);letter-spacing:.14em;text-transform:uppercase;color:var(--acento);margin-bottom:12px}
+html[dir=rtl] .ceja{letter-spacing:0;font-size:14px}
+h1{font-size:clamp(34px,7.4vw,64px)}
+.respuesta{margin-top:16px;font-size:17px;line-height:1.65;color:var(--gris);max-width:62ch}
+.respuesta bdi{color:var(--tinta);font-weight:600}
+.resumen{list-style:none;margin:24px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+@media (max-width:559px){.resumen li:last-child:nth-child(odd){grid-column:1/-1}}@media (min-width:560px){.resumen{grid-template-columns:repeat(6,minmax(0,1fr))}.resumen li{grid-column:span 2}.resumen li:nth-child(n+4){grid-column:span 3}}
+.resumen a{display:flex;flex-direction:column;gap:4px;height:100%;padding:12px 14px;border:1px solid var(--linea);border-radius:12px;background:var(--tarjeta);text-decoration:none;transition:border-color .2s}
+.resumen a:hover{border-color:var(--tinta)}
+.resumen span{font-size:13px;color:var(--gris);line-height:1.3}
+.resumen b{font-size:21px;font-weight:600;letter-spacing:-.01em}
+.resumen small{font-size:12px;font-weight:500;color:var(--gris)}
+.heroe-f{margin:0}
+.heroe-f img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:var(--r)}
+figcaption{font-size:11px;color:var(--gris);margin-top:6px}
+figcaption a{color:inherit}
+/* La regla de oro: guía aparte de todo lo demás */
+.regla{background:var(--mn-suave);color:var(--tinta)}
+.regla-k{display:grid;gap:0;padding-top:4px;padding-bottom:4px}
+@media (min-width:720px){.regla-k{grid-template-columns:1fr 1fr}}
+.regla-k>div{padding:22px 0}
+.regla-k>div+div{border-top:1px solid var(--linea)}
+@media (min-width:720px){.regla-k>div{padding:30px 0}.regla-k>div+div{border-top:0;border-inline-start:1px solid var(--linea);padding-inline-start:32px}}
+.regla h2{font-size:clamp(22px,3.2vw,30px);margin-bottom:6px}
+.regla-k>div:first-child h2{color:var(--acento)}
+.regla p{color:var(--gris);max-width:52ch}
+/* Índice de secciones (se desliza en el móvil) */
+.indice{position:sticky;top:60px;z-index:40;background:var(--papel);border-bottom:1px solid var(--linea)}
+.indice ul{list-style:none;margin:0;padding:10px 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
+.indice ul::-webkit-scrollbar{display:none}
+.indice a{display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1px solid var(--linea);text-decoration:none;font-size:14px;white-space:nowrap;background:var(--tarjeta)}
+.indice a:hover{border-color:var(--tinta)}
+/* Bloques */
+.bloque{padding:52px 0;scroll-margin-top:112px}
+@media (min-width:720px){.bloque{padding:80px 0}}
+.bloque-claro{background:var(--papel2)}
+.bloque>.kap>h2{font-size:clamp(28px,5vw,44px)}
+.sub{color:var(--gris);margin:10px 0 28px;max-width:64ch;font-size:16.5px}
+.estrecho{max-width:820px}
+.mas{margin-top:18px}.mas a{font-weight:600}
+/* Tarifario */
+.tf{list-style:none;margin:0;padding:0;border-top:2px solid var(--tinta)}
+.tf-f{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 20px;padding:22px 0;border-bottom:1px solid var(--linea);scroll-margin-top:120px}
+.tf-dest{position:relative}
+.tf-dest::before{content:"";position:absolute;inset-block:14px;inset-inline-start:-14px;width:3px;border-radius:3px;background:var(--acento)}
+@media (max-width:719px){.tf-dest::before{inset-inline-start:-10px}}
+.tf-q h3{font-size:clamp(21px,3vw,27px)}
+.tf-d{font-weight:600;font-size:14px;margin-top:4px}
+.tf-u{color:var(--gris);margin-top:4px;max-width:56ch}
+.tf-l{display:inline-flex;align-items:center;gap:6px;margin-top:8px;font-weight:600;font-size:15px;min-height:32px}
+.tf-p{text-align:end;display:flex;flex-direction:column;align-items:flex-end;gap:2px}
+.tf-p small{font-size:13px;color:var(--gris)}
+.tf-p b{font-family:var(--sans);font-size:clamp(26px,4.4vw,38px);font-weight:600;letter-spacing:-.02em;line-height:1}
+.tf-p span{font-size:13px;color:var(--gris)}
+.bloque-inv{background:var(--tarjeta)}
+.inv-op{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:4px;max-width:30rem}
+.inv-op li{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;color:var(--gris);padding-top:4px;border-top:1px dashed var(--linea)}
+.inv-op b{color:var(--tinta);font-weight:600;white-space:nowrap}
+.inv-nota{margin:16px 0 0;color:var(--gris);font-size:14.5px}
+.tf-p em{font-style:normal;font-size:12.5px;color:var(--gris);margin-top:4px}
+@media (max-width:519px){.tf-f{grid-template-columns:1fr}.tf-p{align-items:flex-start;text-align:start;flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 10px;margin-top:6px}.tf-p em{flex-basis:100%;margin-top:0}}
+.nt{margin-top:36px}
+.nt h3{font-size:22px;margin-bottom:8px}
+.nt dl{margin:0;display:grid;gap:0}
+.nt dl>div{padding:14px 0;border-bottom:1px solid var(--linea);display:grid;gap:4px}
+@media (min-width:720px){.nt dl>div{grid-template-columns:240px minmax(0,1fr);gap:24px}}
+.nt dt{font-weight:600}
+.nt dd{margin:0;color:var(--gris)}
+.nt dd a{color:var(--tinta);font-weight:600;white-space:nowrap}
+/* Qué incluye */
+.inc{display:grid;gap:14px;margin-top:24px}
+@media (min-width:720px){.inc{grid-template-columns:1fr 1fr;gap:20px}}
+.inc>div{padding:22px;border-radius:var(--r);background:var(--tarjeta);border:1px solid var(--linea)}
+.inc h3{font-size:20px;margin-bottom:12px}
+.inc ul{margin:0;padding:0;list-style:none;display:grid;gap:10px}
+.inc li{position:relative;padding-inline-start:26px}
+.inc li::before{position:absolute;inset-inline-start:0;top:0;font-weight:700}
+.inc-si li::before{content:"✓";color:#2f6b3a}
+.inc-no{border-color:var(--tinta)!important}
+.inc-no li::before{content:"✕";color:var(--acento)}
+/* Ciudades */
+.cd{list-style:none;margin:0;padding:0;display:grid;gap:18px}
+.cd-c{display:grid;gap:16px;padding:16px;border-radius:var(--r);background:var(--tarjeta);border:1px solid var(--linea)}
+@media (min-width:720px){.cd-c{grid-template-columns:280px minmax(0,1fr);gap:24px;padding:20px}}
+.cd-c figure{margin:0}
+.cd-c img{width:100%;aspect-ratio:3/2;object-fit:cover;border-radius:calc(var(--r) - 6px)}
+.cd-t h3{font-size:26px}
+.cd-desde{font-size:13px;font-weight:600;color:var(--acento);margin:4px 0 8px}
+.cd-t>p:not(.cd-desde){color:var(--gris)}
+.cd-o{list-style:none;margin:14px 0 0;padding:0;border-top:1px solid var(--linea)}
+.cd-o li{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;padding:12px 0;border-bottom:1px solid var(--linea)}
+.cd-o li div{display:grid;gap:2px}
+.cd-o span{color:var(--gris);font-size:15px}
+.cd-o i{font-style:normal;font-weight:600;font-size:18px;white-space:nowrap}
+/* Montaña */
+.mt{list-style:none;margin:0;padding:0;display:grid;gap:0;border-top:2px solid var(--tinta)}
+@media (min-width:860px){.mt{grid-template-columns:1fr 1fr;column-gap:40px}}
+.mt li{display:grid;grid-template-columns:52px minmax(0,1fr) auto;gap:14px;align-items:start;padding:16px 0;border-bottom:1px solid var(--linea)}
+.mt-k{font:500 15px/1.2 'Hiragino Mincho ProN','Yu Mincho',serif;writing-mode:vertical-rl;color:var(--acento);justify-self:center;max-height:96px}
+.mt-t h3{font-size:19px}
+.mt-t p{color:var(--gris);font-size:14.5px;margin-top:2px}
+.mt-m{font-size:13px!important}
+.mt-p{text-align:end;display:grid;gap:2px}
+.mt-p b{font-size:20px;font-weight:600}
+.mt-p span{font-size:12px;color:var(--gris)}
+/* Planes */
+.pn{list-style:none;margin:0;padding:0;display:grid;gap:14px}
+@media (min-width:720px){.pn{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1040px){.pn{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.pn>li{display:flex;flex-direction:column;gap:10px;padding:20px;border-radius:var(--r);background:var(--tarjeta);border:1px solid var(--linea);scroll-margin-top:120px}
+.pn h3{font-size:21px}
+.pn>li>p{color:var(--gris)}
+.pn-r{margin:0;padding-inline-start:18px;display:grid;gap:4px;font-size:15px}
+.sello{align-self:flex-start;font-size:13px;font-weight:600;color:#2f6b3a;border:1px solid currentColor;border-radius:999px;padding:3px 10px}
+.pn-p{margin-top:auto!important;padding-top:12px;border-top:1px solid var(--linea);font-size:14.5px;color:var(--tinta)!important}
+.pn-p span{color:var(--gris)}
+.pn-x p{font-size:12.5px;font-weight:600;color:var(--gris);margin-bottom:6px}
+.pn-x div{display:flex;flex-wrap:wrap;gap:6px}
+.pn-x span{font-size:13px;padding:4px 10px;border-radius:999px;background:var(--papel2)}
+.pn-x b,.ex-p b,.kit b{color:var(--acento);font-weight:700}
+/* Experiencias */
+.ex{list-style:none;margin:0;padding:0;display:grid;gap:12px}
+@media (min-width:640px){.ex{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (min-width:1000px){.ex{grid-template-columns:repeat(3,minmax(0,1fr))}}
+.ex>li{display:flex;flex-direction:column;gap:8px;padding:18px;border-radius:var(--r);background:var(--tarjeta);border:1px solid var(--linea)}
+.ex-c{font-size:12.5px;font-weight:600;color:var(--gris);letter-spacing:.04em}
+.ex-m{color:#2f6b3a}
+.ex h3{font-size:19px;font-family:var(--sans)}
+.ex>li>p:not(.ex-c):not(.ex-p){color:var(--gris);font-size:15px}
+.ex-p{margin-top:auto!important;padding-top:10px;border-top:1px dashed var(--linea);font-size:13.5px}
+.ex>li>a{font-weight:600;font-size:14.5px;min-height:32px;display:inline-flex;align-items:center;gap:6px}
+.kit{margin-top:28px;padding:20px;border-radius:var(--r);border:1px solid var(--tinta);display:grid;gap:14px;background:var(--tarjeta)}
+@media (min-width:860px){.kit{grid-template-columns:1fr auto auto;align-items:center;gap:28px}}
+.kit h3{font-size:20px}.kit p{color:var(--gris);font-size:15px;margin-top:2px}
+.kit ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.kit li{font-size:14px;padding:6px 12px;border-radius:999px;background:var(--papel2)}
+.kit>a{font-weight:600;white-space:nowrap}
+/* Preguntas */
+#preguntas details{border-top:1px solid var(--linea);padding:4px 0}
+#preguntas details:last-of-type{border-bottom:1px solid var(--linea)}
+#preguntas summary{cursor:pointer;font-weight:600;font-size:17px;min-height:52px;display:flex;align-items:center;list-style:none;gap:12px;justify-content:space-between}
+#preguntas summary::-webkit-details-marker{display:none}
+#preguntas summary::after{content:"+";font-size:22px;color:var(--acento);flex:none}
+#preguntas details[open] summary::after{content:"−"}
+#preguntas details p{color:var(--gris);padding:0 0 16px;max-width:68ch}
+#preguntas h2{margin-bottom:20px}
+/* Cierre */
+.cierre{padding:64px 0;background:var(--tarjeta);color:var(--tinta);text-align:center}
+.cierre h2{font-size:clamp(28px,5vw,44px)}
+.cierre p{color:var(--gris);margin:10px auto 24px;max-width:48ch}
+.btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--acento);color:var(--acento-t);font-weight:600;font-size:17px;text-decoration:none;transition:transform .15s;border-radius:12px}
+.btn:active{transform:scale(.97)}
+footer{background:var(--papel2);padding-top:48px;color:var(--tinta)}
+`.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '')
 const CSS = `
 :root{--papel:#fdfcfa;--papel2:#f7f3ee;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#56606c;--linea:rgba(30,42,54,.12);--acento:#2a7352;--acento-t:#fff;
 --mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.14);--mn-suave:#edf4fa;--mn-acento:#2a7352;
@@ -699,7 +948,12 @@ figcaption a{color:inherit}
 .btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--acento);color:var(--acento-t);font-weight:600;font-size:17px;text-decoration:none;transition:transform .15s;border-radius:12px}
 .btn:active{transform:scale(.97)}
 footer{background:var(--papel2);padding-top:48px;color:var(--tinta)}
-`.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '')
+/* Invierno 2026-27 */
+.bloque-inv{background:var(--tarjeta)}
+.inv-op{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:4px;max-width:30rem}
+.inv-op li{display:flex;justify-content:space-between;gap:12px;font-size:14.5px;color:var(--gris);padding-top:4px;border-top:1px dashed var(--linea)}
+.inv-op b{color:var(--tinta);font-weight:600;white-space:nowrap}
+.inv-nota{margin:16px 0 0;color:var(--gris);font-size:14.5px}`.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '')
 
 for (const lang of LANGS) {
   const dir = join(root, 'public', RUTA[lang])

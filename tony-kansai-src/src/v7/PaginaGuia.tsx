@@ -60,6 +60,11 @@ import { PRECIO_CORTO } from './datosRespuestasNuevas'
 import { yenLocal } from './formato'
 import { viajesToursNuevos } from './ToursNuevos'
 import { HERRAMIENTAS, esLenguaKit } from './KitGuia'
+import { toursInvierno, TXT_INVIERNO, RUTA_INVIERNO, VENTANAS, temporadasActivas, yenesDesde, variosPrecios, horasTexto } from './datosInvierno'
+// Cifras de invierno: única fuente en datosTemporadas.ts (vía datosOtono, que App.tsx ya carga).
+import { PRECIO_INVIERNO } from './datosOtono'
+const TOURS_INVIERNO = toursInvierno(PRECIO_INVIERNO)
+import type { LangInvierno, Temporada, TourInvierno } from './datosInvierno'
 
 /** Añade al final de la lista de tours de Tony el de 2 h y el de bici por Kioto. */
 function conToursNuevos(lista: ReturnType<typeof listaTours>, p: { guia: string; lang: string }) {
@@ -393,6 +398,79 @@ function useEsOtono() {
   return si
 }
 
+/** Temporadas de la portada de Tony (datosInvierno.ts: otoño, invierno, sakura),
+ *  en hora de Japón. Tras montar, como useEsOtono: el HTML pregenerado no lleva
+ *  fecha. «?fecha=2027-03-20» fuerza otra fecha para revisar la tarjeta (solo
+ *  cambia qué aviso se ve; formato estricto AAAA-MM-DD). */
+function useTemporadas() {
+  const [lista, setLista] = useState<Temporada[]>([])
+  useEffect(() => {
+    const q = new URLSearchParams(window.location.search).get('fecha') ?? ''
+    const forzada = /^\d{4}-\d{2}-\d{2}$/.test(q) ? new Date(`${q}T12:00:00+09:00`) : null
+    setLista(temporadasActivas(forzada && !Number.isNaN(forzada.getTime()) ? forzada : new Date()))
+  }, [])
+  return lista
+}
+
+const esLangInvierno = (l: string): l is LangInvierno => l === 'es' || l === 'en' || l === 'ar'
+
+/** «4–5 h» con las duraciones distintas de un tour (en árabe, con el número aislado). */
+function horasTour(t: TourInvierno, lang: LangInvierno) {
+  const h = [...new Set(t.opciones.map((o) => o.horas))]
+  return horasTexto(h.length > 1 ? `${h.map((x) => x.replace(/ h$/, '')).join('–')} h` : h[0], lang)
+}
+
+/** Aviso de temporada de la portada troncal: una tarjeta para la temporada que
+ *  toca (la que termina antes) y, si coincide otra, una línea con su enlace.
+ *  Invierno: los 4 tours con su precio por grupo, en formato compacto. Enlaces
+ *  con <a>: la página de invierno puede ser HTML estático fuera de la SPA. */
+function TemporadaPortada({ p }: { p: Pagina }) {
+  const lista = useTemporadas()
+  const r = p.precioRef
+  if (!r || !esLangInvierno(p.lang) || lista.length === 0) return null
+  const lang = p.lang
+  const flecha = p.dir === 'rtl' ? '←' : '→'
+  const txt = TXT_INVIERNO[lang]
+  const datos = (t: Temporada): { titulo: string; texto: string; enlace?: { texto: string; ruta: string } } | null => {
+    if (t === 'invierno') return { titulo: txt.titulo, texto: txt.entradilla, enlace: { texto: txt.enlace, ruta: RUTA_INVIERNO[lang] } }
+    // r.otono empieza por «Otoño en Kioto:», que ya es el titular de la tarjeta.
+    if (t === 'otono') {
+      const texto = r.otono.replace(/^[^:]+:\s*/, '')
+      return p.precios.temporada ? { titulo: p.precios.temporada.titulo, texto: texto.charAt(0).toUpperCase() + texto.slice(1), enlace: p.precios.temporada.enlace } : null
+    }
+    return r.sakura ? { titulo: r.sakura.titulo, texto: r.sakura.texto, enlace: { texto: r.sakura.enlace, ruta: r.sakura.ruta } } : null
+  }
+  const [primera, segunda] = lista
+  const d = datos(primera)
+  if (!d) return null
+  const otra = segunda ? datos(segunda) : null
+  return (
+    <aside className={`v7-temp v7-temp-${primera}`} aria-labelledby="v7-temp-titulo">
+      <h3 id="v7-temp-titulo"><span aria-hidden="true">{VENTANAS[primera].emoji}</span> {d.titulo}</h3>
+      <p className="v7-temp-texto">{d.texto}</p>
+      {primera === 'invierno' && (
+        <>
+          <ul className="v7-temp-lista">
+            {TOURS_INVIERNO.map((t) => (
+              <li key={t.id}>
+                <span className="v7-temp-nombre">{t.nombre[lang]}</span>
+                <span className="v7-temp-precio">
+                  {horasTour(t, lang)} · {variosPrecios(t) ? `${txt.desde} ` : ''}<bdi dir="ltr">{yenLocal(yenesDesde(t), lang)}</bdi>
+                </span>
+              </li>
+            ))}
+          </ul>
+          <p className="v7-temp-nota">{txt.nota}</p>
+        </>
+      )}
+      {d.enlace && <a className="v9-enlace" href={d.enlace.ruta}>{d.enlace.texto} {flecha}</a>}
+      {otra?.enlace && (
+        <p className="v7-temp-otra"><span aria-hidden="true">{VENTANAS[segunda].emoji}</span> <a href={otra.enlace.ruta}>{otra.enlace.texto} {flecha}</a></p>
+      )}
+    </aside>
+  )
+}
+
 /** Ejemplo de fechas en el formulario: noviembre, que es la temporada que vendemos. */
 const EJ_FECHAS: Record<string, string> = { es: '18–21 nov.', en: '18–21 Nov', ar: '18–21 نوفمبر', ru: '18–21 нояб.' }
 
@@ -627,8 +705,10 @@ function PrecioReferencia({ p }: { p: Pagina }) {
         <p>{r.texto}</p>
         {/* HTML estático (scripts/precios.mjs): <a>, no <Link>, para salir de la SPA. */}
         <a className="v9-enlace" href={r.ruta}>{r.enlace} {flecha}</a>
-        {/* Arces de Kioto (1-oct a 7-dic, hora de Japón): una línea, no un bloque. */}
-        {otono && temporada && (
+        {/* Temporada que toca o se acerca (otoño, invierno o sakura; datosInvierno.ts):
+            solo en español (Tony, 24-11). EN/AR siguen con la línea de los arces de
+            Kioto (1-oct a 7-dic, hora de Japón), como antes. */}
+        {p.lang === 'es' ? <TemporadaPortada p={p} /> : otono && temporada && (
           <p className="v7-precio-otono">{r.otono} <Link to={temporada.ruta}>{temporada.texto} {flecha}</Link></p>
         )}
         {FICHA_RAPIDA[p.lang] && (
@@ -929,6 +1009,115 @@ const DESTINOS_EXTRA: Record<string, { texto: string; ruta: string; estatica?: b
     { texto: 'كل الوجهات', ruta: '/ar/destinations/', estatica: true },
   ],
 }
+/** Índice «Todo lo que tenemos» de la portada troncal (24-11-2026): lo que la web
+ *  ofrece y no sale ya en el cuerpo de la portada (las tres experiencias, sus
+ *  «otras puertas» y el precio). Solo rutas que existen en ese idioma (sitemap,
+ *  datosRespuestas*, App.tsx) más la página de invierno nueva. Todo con <a>: hay
+ *  HTML estático fuera de la SPA y así va entero en el HTML pregenerado. */
+interface GrupoExplora { titulo: string; enlaces: { texto: string; ruta: string; nuevo?: boolean }[] }
+const NUEVO: Record<string, string> = { es: 'nuevo', en: 'new', ar: 'جديد' }
+const EXPLORA: Record<string, GrupoExplora[]> = {
+  es: [
+    { titulo: 'Excursiones y tours', enlaces: [
+      { texto: 'Nara desde Osaka', ruta: '/es/excursion-nara-desde-osaka/' },
+      { texto: 'Hiroshima y Miyajima en un día', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/' },
+      { texto: 'Kioto en 2 horas', ruta: '/es/guia-privado-kioto-2-horas/' },
+      { texto: 'Kioto en bici', ruta: '/es/tour-privado-bici-kioto/' },
+      { texto: 'Kobe', ruta: '/es/kobe/' },
+      { texto: 'Himeji', ruta: '/es/himeji/' },
+    ] },
+    { titulo: 'Temporadas', enlaces: [
+      { texto: 'Invierno en Kansai', ruta: RUTA_INVIERNO.es, nuevo: true },
+      { texto: 'Otoño en Kioto', ruta: '/es/otono-kioto/' },
+      { texto: 'Sakura en Kioto', ruta: '/es/sakura-kioto/' },
+    ] },
+    { titulo: 'Para tu viaje', enlaces: [
+      { texto: 'Ventajas y descuentos', ruta: '/es/ventajas/' },
+      { texto: 'Herramientas gratis', ruta: '/es/herramientas/' },
+      { texto: '¿Te compensa un guía?', ruta: '/es/calculadora-guia/' },
+      { texto: 'Aeropuerto de Kansai', ruta: '/es/aeropuerto-kansai/' },
+      { texto: 'Leyendas de Japón', ruta: '/es/leyendas/' },
+      { texto: 'Japón de TikTok', ruta: '/tiktok/' },
+      { texto: 'Destinos fuera de Japón', ruta: '/es/destinos/' },
+    ] },
+  ],
+  en: [
+    { titulo: 'Day trips and tours', enlaces: [
+      { texto: 'Nara from Osaka', ruta: '/en/nara-day-trip-from-osaka/' },
+      { texto: 'Kobe in one day', ruta: '/en/kobe-private-guide-one-day/' },
+      { texto: 'Kōyasan day trip', ruta: '/en/koyasan-day-trip-private-guide/' },
+      { texto: 'Hiroshima and Miyajima', ruta: '/en/hiroshima/' },
+      { texto: 'Kyoto in 2 hours', ruta: '/en/kyoto-private-guide-2-hours/' },
+      { texto: 'Kyoto by bike', ruta: '/en/kyoto-private-bike-tour/' },
+      { texto: 'Kyoto with kids', ruta: '/en/kyoto-private-guide-family/' },
+    ] },
+    { titulo: 'Seasons', enlaces: [
+      { texto: 'Kansai in winter', ruta: RUTA_INVIERNO.en, nuevo: true },
+      { texto: 'Autumn in Kyoto', ruta: '/en/kyoto-autumn/' },
+      { texto: 'Cherry blossom in Kyoto', ruta: '/en/kyoto-cherry-blossom/' },
+    ] },
+    { titulo: 'For your trip', enlaces: [
+      { texto: 'Halal food in Kyoto and Osaka', ruta: '/en/halal-kyoto-osaka/' },
+      { texto: 'Mosques in Kansai', ruta: '/en/mosques-kansai/' },
+      { texto: 'Premium guide in English', ruta: '/private/' },
+      { texto: 'Perks and discounts', ruta: '/en/perks/' },
+      { texto: 'Free travel tools', ruta: '/en/tools/' },
+      { texto: 'Is a guide worth it?', ruta: '/en/private-guide-calculator/' },
+      { texto: 'Kansai Airport', ruta: '/en/kansai-airport/' },
+      { texto: 'Legends of Japan', ruta: '/en/legends/' },
+      { texto: 'TikTok Japan', ruta: '/tiktok/en/' },
+      { texto: 'Destinations beyond Japan', ruta: '/en/destinations/' },
+    ] },
+  ],
+  ar: [
+    { titulo: 'رحلات اليوم الواحد والجولات', enlaces: [
+      { texto: 'هيروشيما وميياجيما في يوم', ruta: '/ar/hiroshima-miyajima-day-trip/' },
+      { texto: 'نارا', ruta: '/ar/nara/' },
+      { texto: 'كوبي', ruta: '/ar/kobe/' },
+      { texto: 'هيميجي', ruta: '/ar/himeji/' },
+      { texto: 'كيوتو في ساعتين', ruta: '/ar/kyoto-private-guide-2-hours/' },
+      { texto: 'كيوتو بالدراجة', ruta: '/ar/kyoto-private-bike-tour/' },
+    ] },
+    { titulo: 'المواسم', enlaces: [
+      { texto: 'الشتاء في كانساي', ruta: RUTA_INVIERNO.ar, nuevo: true },
+      { texto: 'الخريف في كيوتو', ruta: '/ar/kyoto-autumn/' },
+      { texto: 'أزهار الكرز في كيوتو', ruta: '/ar/kyoto-cherry-blossom/' },
+    ] },
+    { titulo: 'لرحلتك', enlaces: [
+      { texto: 'دليل المسافر من الخليج', ruta: '/ar/from-gulf/' },
+      { texto: 'مزايا وخصومات', ruta: '/ar/perks/' },
+      { texto: 'أدوات مجانية للسفر', ruta: '/ar/tools/' },
+      { texto: 'هل يستحق المرشد الخاص؟', ruta: '/ar/private-guide-calculator/' },
+      { texto: 'أساطير اليابان', ruta: '/ar/asatir/' },
+      { texto: 'يابان تيك توك', ruta: '/tiktok/ar/' },
+      { texto: 'وجهات خارج اليابان', ruta: '/ar/destinations/' },
+    ] },
+  ],
+}
+
+function Explora({ p }: { p: Pagina }) {
+  const grupos = EXPLORA[p.lang]
+  // Solo en la portada española (Tony, 24-11): EN/AR se quedan como estaban.
+  if (p.lang !== 'es' || !grupos || !p.precioRef?.explora) return null
+  return (
+    <section className="v7-seccion v7-explora" aria-labelledby="v7-explora-titulo">
+      <h2 id="v7-explora-titulo">{p.precioRef.explora}</h2>
+      <div className="v7-explora-grupos">
+        {grupos.map((g) => (
+          <nav key={g.titulo} className="v7-explora-grupo" aria-label={g.titulo}>
+            <h3>{g.titulo}</h3>
+            <ul>
+              {g.enlaces.map((e) => (
+                <li key={e.ruta}><a href={e.ruta}>{e.texto}{e.nuevo && <small className="v7-explora-nuevo">{NUEVO[p.lang]}</small>}</a></li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 /** Columna del pie: título + hasta 6 enlaces a la vista; el resto en «Ver todo (N)».
  *  Abierta en el HTML; en el móvil se pliega al montar (acordeón). */
 const VER_TODO: Record<string, string> = { es: 'Ver todo', en: 'See all', ar: 'عرض الكل', ru: 'Показать все' }
@@ -1379,7 +1568,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {!troncal && <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />}
 
         {/* Contacto */}
-        {troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
+        {troncal ? <><ContactoTroncal p={p} msg={msgCorto} /><Explora p={p} /></> : (
           <section id="contacto" className="v7-seccion">
             <h2>{p.contacto.titulo}</h2>
             <p className="v7-entradilla">{p.contacto.sub}</p>

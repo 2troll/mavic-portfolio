@@ -133,6 +133,34 @@ const T = {
 const yen = (n, lang) => { const v = (Math.round(n / 100) * 100).toLocaleString(lang === 'es' ? 'es-ES' : 'en-US', { useGrouping: 'always' }); return lang === 'es' ? `${v} ¥` : lang === 'ar' ? `${v} ين` : `¥${v}` }
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
+// 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
+const CSS_ES = `:root{--f:#f2e6e7;--t:#1e2a36;--g:#515b67;--b:#dcc4c9;--c:#ffffff;--a:#8e3b55;--ok:#2d684c}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
+.res ul{padding-inline-start:20px}
+a{color:inherit}.w{width:min(760px,100% - 32px);margin-inline:auto}
+header{padding:18px 0;border-bottom:1px solid var(--b)}header a{font-weight:700;text-decoration:none}
+.eti{font-size:13px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--a);margin:40px 0 8px}
+h1{font-size:clamp(32px,6vw,52px);line-height:1.05;letter-spacing:-.02em;margin:0 0 12px;text-wrap:balance}
+.lead{color:var(--g);font-size:18px;margin:0 0 28px;max-width:52ch}
+fieldset{border:0;padding:0;margin:0 0 26px}legend{font-weight:700;font-size:18px;margin-bottom:10px}
+.ops{display:flex;flex-wrap:wrap;gap:8px}.ops label{position:relative}
+.ops input{position:absolute;opacity:0;inset:0;cursor:pointer}
+.ops span{display:inline-block;padding:11px 16px;border:1px solid #6b7683;border-radius:999px;background:var(--c);cursor:pointer;transition:border-color .2s,background .2s}
+.ops input:checked+span{border-color:var(--ok);background:#e8f3ec;font-weight:600}
+.ops input:focus-visible+span{outline:2px solid var(--ok);outline-offset:2px}
+.num{display:flex;align-items:center;gap:12px}.num button{width:44px;height:44px;border-radius:50%;border:1px solid #6b7683;background:var(--c);color:var(--t);font-size:22px;cursor:pointer}
+.num output{font-size:28px;font-weight:700;min-width:2ch;text-align:center;font-variant-numeric:tabular-nums}
+.res{margin:10px 0 40px;padding:24px;border-radius:20px;background:var(--c);border:1px solid var(--b)}
+.res .eti{margin:0 0 6px}.res h2{margin:0 0 6px;font-size:26px;line-height:1.15}
+.precio{display:flex;flex-wrap:wrap;align-items:baseline;gap:6px 18px;margin:14px 0}
+.precio b{font-size:40px;letter-spacing:-.02em;font-variant-numeric:tabular-nums}.precio span{color:var(--g)}
+.res ul{margin:10px 0 0;padding-left:20px;color:var(--g)}.res .nota{font-size:14px;color:var(--g);margin:14px 0 0}
+.btn{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:15px 22px;border-radius:999px;background:var(--ok);color:#fff;font-weight:700;text-decoration:none}
+.btn:active{transform:scale(.97)}.sec{margin-inline-start:12px;color:var(--g)}
+.faq details{border-top:1px solid var(--b);padding:14px 0}.faq summary{font-weight:600;cursor:pointer}.faq p{color:var(--g);margin:8px 0 0}
+.tabla table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.tabla th,.tabla td{padding:10px 8px;border-bottom:1px solid var(--b);text-align:start}.tabla th{font-size:14px;color:var(--g);font-weight:600}
+.rel ul{list-style:none;padding:0;margin:0}.rel li{border-top:1px solid var(--b)}.rel a{display:block;padding:14px 0;text-decoration:none;font-weight:600}.rel a::after{content:' →'}[dir=rtl] .rel a::after{content:' ←'}
+footer{padding:30px 0 50px;color:var(--g);font-size:14px}`
 const CSS = `:root{--f:#fbfaf7;--t:#17151a;--g:#5d5a63;--b:#e4e0d8;--c:#ffffff;--a:#c8402c;--ok:#1d7a4f}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
 .res ul{padding-inline-start:20px}
@@ -184,7 +212,7 @@ ${Object.keys(RUTA).map((l) => `<link rel="alternate" hreflang="${l}" href="${BA
 <meta property="og:title" content="${esc(t.title)}"><meta property="og:description" content="${esc(t.desc)}"><meta property="og:url" content="${BASE}${RUTA[lang]}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
-<style>${CSS}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}</style>
 </head>
 <body>
 <header><div class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · ${Object.keys(RUTA).filter((l) => l !== lang).map((l) => `<a href="${RUTA[l]}" hreflang="${l}" lang="${l}">${l === 'ar' ? 'عربي' : l.toUpperCase()}</a>`).join(' · ')}</div></header>
@@ -243,7 +271,7 @@ function calc(){
 calc();
 })();
 </script>
-</body>
+${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 </html>
 `
 }

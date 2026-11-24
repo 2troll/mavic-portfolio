@@ -170,43 +170,54 @@ function jobPosting(lang, t) {
   }
 }
 
-function pagina(lang) {
-  const t = T[lang]
-  const rtl = lang === 'ar'
-  const url = BASE + RUTAS[lang]
-  const alternos = Object.entries(RUTAS).map(([l, r]) => `<link rel="alternate" hreflang="${l}" href="${BASE + r}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${BASE + RUTAS.en}">`
-  const idiomas = Object.entries(RUTAS).map(([l, r]) => l === lang ? `<b>${NOMBRE_IDIOMA[l]}</b>` : `<a href="${r}" hreflang="${l}" lang="${l}">${NOMBRE_IDIOMA[l]}</a>`).join('<span aria-hidden="true">·</span>')
-  const mailto = `mailto:${MAIL}?subject=${encodeURIComponent(t.asunto)}&body=${encodeURIComponent(t.waTexto)}`
-  const bahasa = lang === 'en' ? `
-<section class="kap bloque rev" lang="id">
-  <h2>${BAHASA.h}</h2>
-  <p>${BAHASA.p}</p>
-  <a class="btn wa" href="${waLink(BAHASA.waTexto)}" target="_blank" rel="noopener">${BAHASA.wa}</a>
-</section>` : ''
-  return `<!doctype html>
-<html lang="${lang}"${rtl ? ' dir="rtl"' : ''} data-estatica="empleo">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>${esc(t.title)}</title>
-<meta name="description" content="${esc(t.desc)}">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="${url}">
-${alternos}
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="Tony Kansai Guide">
-<meta property="og:url" content="${url}">
-<meta property="og:title" content="${esc(t.h1)}">
-<meta property="og:description" content="${esc(t.desc)}">
-<meta property="og:image" content="${BASE}/tr/foto/kobe-camii-1920.webp">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#123f3a">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<script type="application/ld+json">${JSON.stringify(jobPosting(lang, t))}</script>
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&family=Tajawal:wght@400;500;800&display=swap">
-<style>
-:root{--fg:#1d2422;--suave:#56605d;--fondo:#f6f1e8;--verde:#123f3a;--bermellon:#c4472f;--linea:#e2d9c8}
+// 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
+const CSS_ES = `:root{--fg:#1e2a36;--suave:#515b67;--fondo:#f2e6e7;--verde:#2d684c;--bermellon:#2d684c;--linea:#dcc4c9;--rosa:#8e3b55}
+*{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--fondo);color:var(--fg);font:18px/1.7 'Source Sans 3',system-ui,sans-serif}
+[dir=rtl] body,[lang=ar] body{font-family:Tajawal,system-ui,sans-serif}
+h1,h2{font-family:Fraunces,Georgia,serif;font-weight:700;line-height:1.15;letter-spacing:-.01em}
+[dir=rtl] h1,[dir=rtl] h2{font-family:Tajawal,system-ui,sans-serif;font-weight:800;letter-spacing:0}
+a{color:var(--verde)}
+.kap{max-width:1040px;margin:0 auto;padding:0 20px}
+header{position:absolute;inset:0 0 auto;z-index:2}
+header .kap{display:flex;justify-content:space-between;align-items:center;gap:12px;padding-block:16px;flex-wrap:wrap}
+header a,header b{color:#fff;text-decoration:none;font-weight:700}
+.idiomas{display:flex;gap:8px;font-size:15px;color:rgba(255,255,255,.75)}.idiomas a{font-weight:600;color:rgba(255,255,255,.85)}
+.heroe{position:relative;min-height:min(88vh,860px);display:flex;align-items:flex-end;color:#fff;background:#0c2724;overflow:hidden}
+.heroe img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.55}
+.heroe::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,39,36,.35),rgba(12,39,36,.92))}
+.heroe .kap{position:relative;z-index:1;padding-block:140px 72px;width:100%}
+.kicker{display:inline-block;font-size:14px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#f3c9a8}
+[dir=rtl] .kicker{letter-spacing:0}
+.heroe h1{font-size:clamp(36px,6.4vw,68px);margin:12px 0 18px;max-width:14em}
+.heroe p{font-size:clamp(18px,2.2vw,22px);max-width:36em;color:rgba(255,255,255,.92);margin:0 0 30px}
+.btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:52px;padding:0 24px;border-radius:999px;font-weight:700;text-decoration:none;border:2px solid transparent;font-size:17px;cursor:pointer;font-family:inherit}
+.btn.wa{background:var(--bermellon);color:#fff}.btn.wa:hover{background:#23513c}
+.btn.borde{border-color:currentColor;color:inherit;background:transparent}
+.heroe .btn.borde{color:#fff}
+.credito{position:absolute;z-index:1;inset-inline-end:12px;bottom:8px;font-size:12px;color:rgba(255,255,255,.65)}
+.bloque{padding-block:64px 8px}
+.bloque h2{font-size:clamp(28px,3.6vw,40px);margin:0 0 22px;color:var(--fg)}
+.dos{display:grid;grid-template-columns:1fr 1fr;gap:56px}
+ul.lista{list-style:none;margin:0;padding:0}
+ul.lista li{position:relative;padding-inline-start:30px;margin-bottom:14px}
+ul.lista li::before{content:"";position:absolute;inset-inline-start:0;top:.62em;width:12px;height:2px;background:var(--rosa)}
+ol.pasos{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,1fr);gap:28px;counter-reset:paso}
+ol.pasos li{counter-increment:paso;border-top:2px solid var(--rosa);padding-top:16px}
+ol.pasos li::before{content:counter(paso,decimal-leading-zero);display:block;font-family:Fraunces,Georgia,serif;font-size:34px;color:var(--rosa);line-height:1;margin-bottom:10px}
+ol.pasos b{display:block;font-size:19px;margin-bottom:4px}
+ol.pasos p{margin:0;color:var(--suave)}
+.nota{color:var(--suave);font-size:16px;margin-top:28px}
+.final{margin-top:72px;background:#ffffff;color:var(--fg);padding-block:64px}
+.final h2{color:var(--fg)}.final p{color:var(--suave);max-width:34em}
+.final .btn.borde{color:var(--fg)}
+footer{padding-block:28px;font-size:15px;color:var(--suave)}
+footer a{color:var(--suave)}
+.rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}.rev.vis{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}}
+@media (max-width:760px){body{font-size:17px}.dos{grid-template-columns:1fr;gap:8px}ol.pasos{grid-template-columns:1fr}.btn{width:100%}.heroe .kap{padding-block:120px 56px}.bloque{padding-block:48px 0}}`
+const CSS = `:root{--fg:#1d2422;--suave:#56605d;--fondo:#f6f1e8;--verde:#123f3a;--bermellon:#c4472f;--linea:#e2d9c8}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--fondo);color:var(--fg);font:18px/1.7 'Source Sans 3',system-ui,sans-serif}
 [dir=rtl] body,[lang=ar] body{font-family:Tajawal,system-ui,sans-serif}
@@ -251,7 +262,45 @@ footer{padding-block:28px;font-size:15px;color:var(--suave)}
 footer a{color:var(--suave)}
 .rev{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}.rev.vis{opacity:1;transform:none}
 @media (prefers-reduced-motion:reduce){.rev{opacity:1;transform:none;transition:none}}
-@media (max-width:760px){body{font-size:17px}.dos{grid-template-columns:1fr;gap:8px}ol.pasos{grid-template-columns:1fr}.btn{width:100%}.heroe .kap{padding-block:120px 56px}.bloque{padding-block:48px 0}}
+@media (max-width:760px){body{font-size:17px}.dos{grid-template-columns:1fr;gap:8px}ol.pasos{grid-template-columns:1fr}.btn{width:100%}.heroe .kap{padding-block:120px 56px}.bloque{padding-block:48px 0}}`
+
+function pagina(lang) {
+  const t = T[lang]
+  const rtl = lang === 'ar'
+  const url = BASE + RUTAS[lang]
+  const alternos = Object.entries(RUTAS).map(([l, r]) => `<link rel="alternate" hreflang="${l}" href="${BASE + r}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${BASE + RUTAS.en}">`
+  const idiomas = Object.entries(RUTAS).map(([l, r]) => l === lang ? `<b>${NOMBRE_IDIOMA[l]}</b>` : `<a href="${r}" hreflang="${l}" lang="${l}">${NOMBRE_IDIOMA[l]}</a>`).join('<span aria-hidden="true">·</span>')
+  const mailto = `mailto:${MAIL}?subject=${encodeURIComponent(t.asunto)}&body=${encodeURIComponent(t.waTexto)}`
+  const bahasa = lang === 'en' ? `
+<section class="kap bloque rev" lang="id">
+  <h2>${BAHASA.h}</h2>
+  <p>${BAHASA.p}</p>
+  <a class="btn wa" href="${waLink(BAHASA.waTexto)}" target="_blank" rel="noopener">${BAHASA.wa}</a>
+</section>` : ''
+  return `<!doctype html>
+<html lang="${lang}"${rtl ? ' dir="rtl"' : ''} data-estatica="empleo">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>${esc(t.title)}</title>
+<meta name="description" content="${esc(t.desc)}">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<link rel="canonical" href="${url}">
+${alternos}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Tony Kansai Guide">
+<meta property="og:url" content="${url}">
+<meta property="og:title" content="${esc(t.h1)}">
+<meta property="og:description" content="${esc(t.desc)}">
+<meta property="og:image" content="${BASE}/tr/foto/kobe-camii-1920.webp">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#123f3a'}">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<script type="application/ld+json">${JSON.stringify(jobPosting(lang, t))}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&family=Tajawal:wght@400;500;800&display=swap">
+<style>
+${lang === 'es' ? CSS_ES : CSS}
 </style>
 </head>
 <body>
@@ -295,7 +344,7 @@ footer a{color:var(--suave)}
 document.getElementById('copiar').addEventListener('click',function(e){var b=e.currentTarget;navigator.clipboard&&navigator.clipboard.writeText(${JSON.stringify(url)}).then(function(){b.textContent=b.dataset.ok})});
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target)}})},{threshold:.15});document.querySelectorAll('.rev').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.rev').forEach(function(el){el.classList.add('vis')})}
 </script>
-</body>
+${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 </html>
 `
 }
