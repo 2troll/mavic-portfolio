@@ -29,6 +29,8 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
+import { CabeceraEs } from './CabeceraEs'
+import './marca-es.css'
 import { PieEs, PieColumna, Creditos, DESTINOS_EXTRA } from './PieEs'
 import { useCambio } from './cambio'
 import './v7.css'
@@ -1088,6 +1090,98 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
   ],
 }
 
+/** Placa de la marca sobre la foto de la portada española (Tony, 25-11-2026:
+ *  «que al entrar digan: wow, esto es Japón»). Es el cartel de andén japonés
+ *  (駅名標): nombre grande, la franja de la línea y las estaciones vecinas a los
+ *  lados. Franja: granate Hankyu y azul Shinkansen. Solo tipografía y CSS
+ *  (marca-es.css); la flor es la de UIX (logo-sakura.ts). */
+function PlacaEs() {
+  return (
+    <div className="es-placa" role="img" aria-label="Tony Kansai Guide">
+      <span className="es-placa-kana" lang="ja" aria-hidden="true">関西 · 日本</span>
+      <span className="es-placa-nombre" aria-hidden="true"><Logo /></span>
+      <span className="es-placa-linea" aria-hidden="true" />
+      <span className="es-placa-vecinas" aria-hidden="true"><span>← Kioto</span><span>Nara →</span></span>
+    </div>
+  )
+}
+
+/** «Lo que hay» de la portada española: las experiencias (montaña incluida) y,
+ *  en la misma sección, el precio cerrado por grupo (#precios sigue existiendo
+ *  para los enlaces antiguos /es/#precios). Sin botón propio: el contacto va
+ *  justo debajo. Clases de tarjeta: las de Experiencias (§ 18 de estilo-sereno). */
+function LoQueHayEs({ p }: { p: Pagina }) {
+  const e = p.experiencias
+  const r = p.precioRef
+  if (!e) return null
+  return (
+    <section id="experiencias" className="v7-seccion es-loquehay">
+      <h2>{e.titulo}</h2>
+      <p className="v7-entradilla">{e.sub}</p>
+      <ul className="v7-exp-lista">
+        {e.lista.map((x) => (
+          <li key={x.ruta} data-aparece="">
+            <a className="v7-exp" href={x.ruta}>
+              <img {...foto(x.foto, '(max-width: 720px) 82vw, 33vw')} alt={x.alt} width={600} height={450} loading="lazy" decoding="async" />
+              <h3>{x.titulo}</h3>
+              <p>{x.texto}</p>
+            </a>
+          </li>
+        ))}
+      </ul>
+      {r && (
+        <div id="precios" className="es-precio" data-aparece="">
+          <p className="es-precio-cifra">{desdeHero(p.lang)}</p>
+          <p className="es-precio-texto">{r.texto}</p>
+          <a className="v9-enlace" href={r.ruta}>{r.enlace} →</a>
+        </div>
+      )}
+      {e.otras.map((o) => (
+        <p key={o.ruta} className="v7-exp-otras"><a href={o.ruta}>{o.texto} →</a></p>
+      ))}
+    </section>
+  )
+}
+
+/** Final de la portada española: todo lo que no es «reseñas y lo que hay»,
+ *  plegado y en el HTML (los enlaces siguen ahí y el JSON-LD FAQPage sigue
+ *  respaldado por el texto visible al abrir). */
+function MasEs({ p }: { p: Pagina }) {
+  const r = p.precioRef
+  // Tras montar (como TemporadaPortada): el HTML pregenerado no lleva fecha.
+  const hayTemporada = useTemporadas().length > 0
+  return (
+    <section className="v7-seccion v7-faq-troncal es-mas">
+      {r && hayTemporada && (
+        <details className="v7-plegado">
+          <summary>Esta temporada en Kansai</summary>
+          <TemporadaPortada p={p} />
+        </details>
+      )}
+      {r && FICHA_RAPIDA.es && (
+        <details className="v7-plegado">
+          <summary>{r.plegado}</summary>
+          <dl className="v9-ficha">
+            {FICHA_RAPIDA.es.map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
+          </dl>
+        </details>
+      )}
+      <details className="v7-faq-plegada">
+        <summary><h2>{PREGUNTAS_FRECUENTES.es} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
+        <div className="v7-faq">
+          {p.faq.items.map((f) => (
+            <details key={f.q}>
+              <summary>{visible(f.q)}</summary>
+              <p>{visible(f.a)}</p>
+              {f.enlace && <p><a href={f.enlace.href}>{f.enlace.texto}</a></p>}
+            </details>
+          ))}
+        </div>
+      </details>
+    </section>
+  )
+}
+
 const RESPUESTAS_TITULO: Record<string, string> = { es: 'Guías y precios', en: 'Guides and prices', ar: 'أدلة وأسعار' }
 /** Título del plegable de preguntas en la portada troncal. */
 const PREGUNTAS_FRECUENTES: Record<string, string> = { es: 'Preguntas frecuentes', en: 'Frequently asked questions', ar: 'الأسئلة الشائعة' }
@@ -1277,7 +1371,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       </Helmet>
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
-      <Cabecera p={p} troncal={troncal} />
+      {/* Español: la cabecera común de todas las páginas (marca + ☰). EN/AR, la suya. */}
+      {esEs ? <CabeceraEs activo="inicio" enPagina={[{ texto: 'Experiencias', ruta: '#experiencias' }, { texto: 'Precio', ruta: '#precios' }, { texto: 'Reseñas', ruta: '#resenas' }]} /> : <Cabecera p={p} troncal={troncal} />}
 
       <main ref={principal}>
         {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
@@ -1288,7 +1383,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <section className="v9-portada">
           <div className="v9-portada-texto">
             {/* El único rojo de la página. 日本 y no 関西 en la de Tony: guías por todo Japón. */}
-            <span className="v9-sello" lang="ja" aria-hidden="true">{troncal ? '日本' : '関西'}</span>
+            {!esEs && <span className="v9-sello" lang="ja" aria-hidden="true">{troncal ? '日本' : '関西'}</span>}
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
@@ -1335,6 +1430,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 pide el ancho real (100vw), con un paso de 1200 px para pantallas x3.
                 La mancha de tinta (HeroTinta, WebGL) ya no se monta en ninguna
                 portada (decisión del 21-11, también /ru/ y /larion/). */}
+            {esEs && <PlacaEs />}
             {troncal ? (
               <picture>
                 <source media="(min-width: 901px)" srcSet={`${baseHero}-retrato-900.webp 720w, ${baseHero}-retrato.webp 1440w`} sizes={SIZES_PORTADA_ESCRITORIO} />
@@ -1350,7 +1446,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             mosaico de 7 ciudades con precio y «Reservar» en cada una). */}
         {esEs && seccionResenas}
 
-        {troncal && <Experiencias p={p} msg={msgCorto} />}
+        {esEs ? <LoQueHayEs p={p} /> : troncal && <Experiencias p={p} msg={msgCorto} />}
 
         {/* Las ciudades, cada una con su página (v8). En la troncal están en la
             columna «Destinos» del pie (y el JSON-LD ItemList las sigue listando). */}
@@ -1362,7 +1458,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Precios justo después de los tours: es lo primero que busca quien
             llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas.
             Troncal: un solo precio de referencia; el resto, a dos clics. */}
-        {troncal ? <PrecioReferencia p={p} /> : (
+        {esEs ? null : troncal ? <PrecioReferencia p={p} /> : (
           <section id="precios" className="v7-seccion">
             <h2>{p.precios.titulo}</h2>
             <Precios p={p} resenas={resenas} />
@@ -1502,7 +1598,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Preguntas. Troncal: todas dentro de un solo plegable (una línea en el
             móvil). Siguen en el DOM, así que el JSON-LD FAQPage sigue respaldado y
             textos-ia.mjs las copia en index.md. El h2 va dentro del <summary>. */}
-        {troncal ? (
+        {esEs ? null : troncal ? (
           <section className="v7-seccion v7-faq-troncal">
             <details className="v7-faq-plegada">
               <summary><h2>{PREGUNTAS_FRECUENTES[p.lang] ?? p.faq.titulo} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
@@ -1542,7 +1638,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {!troncal && <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />}
 
         {/* Contacto */}
-        {troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
+        {/* Español: tras el contacto, lo demás plegado (temporada, ficha, preguntas). */}
+        {esEs && <><ContactoTroncal p={p} msg={msgCorto} /><MasEs p={p} /></>}
+        {esEs ? null : troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
           <section id="contacto" className="v7-seccion">
             <h2>{p.contacto.titulo}</h2>
             <p className="v7-entradilla">{p.contacto.sub}</p>

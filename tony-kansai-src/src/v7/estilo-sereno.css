@@ -973,3 +973,21 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo { gap: 7px; 
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto {
   font-family: var(--titular); font-weight: 600; letter-spacing: 0.01em; font-size: 16.5px; color: #1e2a36;
 }
+
+/* §22 Logotipo español en la cabecera (25-11-2026, marca): el nombre en granate
+   Hankyu (#5d1f2a, 12,9:1 sobre blanco y 11,8:1 sobre #fdeff2) con la franja de
+   tren debajo: granate y un hilo azul Shinkansen (#1d4f91). Flor UIX en sakura. */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto {
+  color: #5d1f2a; padding-bottom: 5px;
+  background:
+    linear-gradient(#5d1f2a 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
+    linear-gradient(#1d4f91 0 0) 0 100% / 100% 1px no-repeat;
+}
+html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto {
+  color: #f1c4d0;
+  background:
+    linear-gradient(#e8a9b9 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
+    linear-gradient(#8fb2e6 0 0) 0 100% / 100% 1px no-repeat;
+}
+/* Flor UIX en rosa cerezo (#b5426a, 5,3:1 sobre blanco) en la cabecera española: §1 la pintaba en tinta. */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo svg.v7-logo-sakura { color: #b5426a; }

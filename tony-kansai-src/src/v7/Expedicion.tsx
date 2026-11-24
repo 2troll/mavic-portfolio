@@ -276,7 +276,7 @@ export function Atlas({ t, lang, nombre, sub, grado, precio, wa, onVer3d }: Prop
           <figure className="ex-calendario">
             <figcaption className="ex-medidor-et">{t.atlas.calendario}</figcaption>
             <table>
-              <thead><tr><th scope="col" /> {nombres.map((n, k) => <th key={n} scope="col" title={n}>{lang === 'ar' ? k + 1 : n.slice(0, 1)}</th>)}</tr></thead>
+              <thead><tr><th scope="col" />{nombres.map((n, k) => <th key={n} scope="col" title={n}>{lang === 'ar' ? k + 1 : n.slice(0, 1)}</th>)}</tr></thead>
               <tbody>
                 {MONTES.map((m) => (
                   <tr key={m} className={m === sel ? 'activo' : ''} onClick={() => setSel(m)}>

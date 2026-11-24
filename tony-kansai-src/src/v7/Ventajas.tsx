@@ -20,7 +20,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useLanguage } from '../contexts/LanguageContext'
-import { CORREO, enlaceGuia, NOTA_TG } from './contenido'
+import { CORREO, enlaceGuia, NOTA_TG, PAGINAS } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
 import { Logo } from './Logo'
 import { IconoWa, IconoCanal } from './IconoWa'
 import { enlacesHreflang } from '../seo/hreflang'
@@ -610,7 +612,10 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
       </Helmet>
       {!appSel && <Helmet><script type="application/ld+json">{JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: AYUDA[id].preguntas.map((q) => ({ '@type': 'Question', name: q.q, acceptedAnswer: { '@type': 'Answer', text: q.a } })) })}</script></Helmet>}
 
-      <Barra id={id} sufijo={sufijo} wa={wa} boton={p.finalBoton} />
+      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {id === 'es'
+        ? <CabeceraEs activo={`${RUTA.es}${sufijo}`} idiomas={(['en', 'ar'] as const).map((k) => ({ lang: k, ruta: `${RUTA[k]}${sufijo}`, texto: k === 'en' ? 'English' : 'العربية' }))} />
+        : <Barra id={id} sufijo={sufijo} wa={wa} boton={p.finalBoton} />}
 
       {appSel ? <FichaApp a={appSel} id={id} lista={RUTA[id]} wa={wa} final={p} /> : <main>
         <Indice id={id} partes={partes} />
@@ -778,7 +783,9 @@ export default function Ventajas({ id, app }: { id: VentajasId; app?: string }) 
         </section>
       </main>}
 
-      <Pie id={id} />
+      {id === 'es'
+        ? <PieEs p={PAGINAS.es} idiomas={(['en', 'ar', 'ru'] as const).map((k) => ({ lang: k, ruta: `${RUTA[k]}${sufijo}`, texto: k === 'en' ? 'English' : k === 'ar' ? 'العربية' : 'Русский' }))} />
+        : <Pie id={id} />}
       <AnimatePresence>{pase.abierto && <PaseTony id={id} socio={pase.socio} onCerrar={() => setPase({ abierto: false })} />}</AnimatePresence>
     </div>
   )

@@ -9,7 +9,9 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, CREDITOS, enlaceGuia } from './contenido'
+import { GUIAS, CORREO, CREDITOS, PAGINAS, enlaceGuia } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
 import { ETIQUETAS, PRECIO } from './datosRutas'
 import { ET_ITIN, HORAS, ITINERARIOS, META_ITIN, ORDEN_LARION, ORDEN_TONY } from './datosItinerarios'
 import type { ItinId } from './datosItinerarios'
@@ -94,7 +96,8 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <meta property="og:image" content={`${BASE}${META_ITIN[orden[0]].foto}`} />
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {lang === 'es' ? <CabeceraEs activo={pg.ruta} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <header className="v7-cabecera cristal">
         <Link to={pg.ciudad} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-anclas">
           <Link to={pg.ciudad}>{flecha === '→' ? '←' : '→'} {et.volver}</Link>
@@ -107,7 +110,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <a className="v7-boton v7-boton-peq" href={wa('')} target="_blank" rel="noopener noreferrer" aria-label={`${g} — WhatsApp`}>
           <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         <section className="v7-seccion v7-itin-intro">
@@ -182,7 +185,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
 
       <FranjaVentajas lang={lang} />
 
-      <footer className="v7-pie">
+      {lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITOS_ITIN} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -198,7 +201,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
           </ul>
         </details>
-      </footer>
+      </footer>}
     </div>
   )
 }

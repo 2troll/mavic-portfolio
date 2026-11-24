@@ -9,6 +9,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, CREDITOS, enlaceGuia, contactoLd } from './contenido'
+import { PAGINAS } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoCanal } from './IconoWa'
@@ -73,14 +76,15 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {m.lang === 'es' ? <CabeceraEs activo={m.ruta} /> : <header className="v7-cabecera cristal">
         <Link to={m.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         {/* Sin selector de idiomas: el hueco empuja los botones a la derecha. */}
         <span aria-hidden="true" style={{ flex: 1 }} />
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={visible(m.final.boton)}>
           <span className="v7-solo-ancho">{m.escribe}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         <section className="v7-otono-hero">
@@ -165,7 +169,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
 
       <FranjaVentajas lang={m.lang} />
 
-      <footer className="v7-pie">
+      {m.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={credito ? [credito] : undefined} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -181,7 +185,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
             <ul lang="es"><li>{credito.foto}: <a href={credito.url} target="_blank" rel="noopener noreferrer">{credito.autor}</a>, {credito.licencia}</li></ul>
           </details>
         )}
-      </footer>
+      </footer>}
     </div>
   )
 }

@@ -35,6 +35,8 @@ import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
 import { LOGO_SAKURA } from './logo-sakura.mjs'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 
 // datosItinerarios.ts importa './itin-en' sin extensión (Vite sí, Node no).
 registerHooks({
@@ -972,6 +974,11 @@ function relacionados(lang, actual) {
 
 function cabecera({ lang, rutas, clave, secciones, t }) {
   const C = COMUN[lang]
+  // En español, la cabecera común (árbol de la web, 25-11-2026): las secciones y
+  // las demás herramientas siguen en el menú, como ramas propias de la página.
+  if (lang === 'es') return cabeceraEsHTML({ actual: rutas.es, enPagina: secciones.map(([id, n]) => [n, `#${id}`]),
+    ramasPagina: [{ titulo: C.nav.g2, enlaces: C.herramientas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }, { titulo: C.nav.g3, enlaces: C.mas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }],
+    idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })) })
   return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: C.nav.etiqueta, abrir: C.nav.abrir, grupos: [
     { t: C.nav.g1, enlaces: secciones.map(([id, n]) => [esc(n), `#${id}`]) },
@@ -986,8 +993,10 @@ function migas(lang, nombre) {
   return `<nav class="migas" aria-label="${esc(C.migas)}"><ol><li><a href="/${lang}/">Tony Kansai Guide</a></li><li>${sep}<a href="${RUTA.hub[lang]}">${esc(C.hub)}</a></li><li aria-current="page">${sep}${tx(nombre, lang)}</li></ol></nav>`
 }
 
-function pie(lang, t) {
+function pie(lang, t, rutas) {
   const C = COMUN[lang]
+  if (lang === 'es') return pieEsHTML({ idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })),
+    extra: `${esc(C.pie.act)}: <bdi dir="ltr">${HOY}</bdi>`, equipo: equipoHTML({ lang, actual: 'tony' }) })
   return `<footer>${pieHTML({ mas: C.pie.mas,
     intro: `<p>${esc(C.pie.intro)}</p>`,
     columnas: [
@@ -1029,7 +1038,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${rutas[l
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
-<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
 </head>
 <body>
 <a class="saltar" href="#principal">${esc(lang === 'es' ? 'Ir al contenido' : lang === 'en' ? 'Skip to content' : 'انتقل إلى المحتوى')}</a>
@@ -1165,7 +1174,7 @@ ${texto}
 ${faqSec}
 ${cierre}
 </main>
-${pie(lang, t)}`
+${pie(lang, t, RUTA.trenes)}`
 
   const script = `(()=>{const D=${JSON.stringify({ tramos: D.tramos, origenes: D.origenes, lugares: D.lugares }).replace(/</g, '\\u003c')};D.L=${etiquetasJS(L).replace(/<\/script/gi, '<\\/script')};const M=(${crearMotor.toString()})(D);
 const f=document.getElementById('busc'),out=document.getElementById('resultado');if(!f||!out)return;const de=f.elements.de,a=f.elements.a;
@@ -1282,7 +1291,7 @@ ${precios}
 ${faqSec}
 ${cierre}
 </main>
-${pie(lang, t)}`
+${pie(lang, t, RUTA.plan)}`
 
   // En la página: los datos de las dos bases (cambia el texto de la tarde de Nara).
   const datos = { osaka: conTardeNara(D0, lang, 'osaka').bloques.nara.guia.texto, kioto: conTardeNara(D0, lang, 'kioto').bloques.nara.guia.texto }

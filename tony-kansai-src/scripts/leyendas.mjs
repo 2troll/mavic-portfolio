@@ -8,6 +8,8 @@ import EN from './leyendas-en.mjs'
 import AR from './leyendas-ar.mjs'
 import { LUGARES } from './leyendas-lugares.mjs'
 import { TEXTOS } from './leyendas-sub-textos.mjs'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 import { EXPEDIENTES, CSS_EXPEDIENTES, cargarFotosTony, buscarFoto, figuraTony, imagenLD, galeriaTony, resumenesPrincipal, partesLD, generarSub } from './leyendas-expedientes.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -178,7 +180,7 @@ function generar(c) {
   // Las subpáginas reutilizan el CSS y las fuentes de la plantilla de su idioma para verse igual.
   const css = plantilla.match(/<style>([\s\S]*?)<\/style>/)[1]
   const fuentesWeb = plantilla.match(/<link href="https:\/\/fonts\.googleapis\.com\/css2[^"]+" rel="stylesheet">/)[0]
-  const html = plantilla
+  let html = plantilla
     .replace('</style>', `${CSS_EXPEDIENTES}</style>`)
     .replace('{{GALERIA}}', galeriaTony(fotosTony, c.lang))
     .replace('{{EXPEDIENTES_NUEVOS}}', resumenesPrincipal(c.lang))
@@ -191,6 +193,15 @@ function generar(c) {
     .replace('{{PREGUNTAS}}', preguntas)
     .replace('{{LUGARES}}', lugares)
   if (/\{\{[A-Z_]+\}\}/.test(html)) throw new Error(`Quedan huecos sin rellenar en ${c.plantilla}`)
+  // En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). EN/AR, igual.
+  if (c.lang === 'es') {
+    const antes = html
+    html = html
+      .replace(/<header class="barra">[\s\S]*?<\/header>/, cabeceraEsHTML({ actual: '/es/leyendas/', idiomas: [{ lang: 'en', ruta: '/en/legends/', texto: 'English' }, { lang: 'ar', ruta: '/ar/asatir/', texto: 'العربية' }] }))
+      .replace(/<footer>[\s\S]*?<\/footer>/, pieEsHTML({ idiomas: [{ lang: 'en', ruta: '/en/legends/', texto: 'English' }, { lang: 'ar', ruta: '/ar/asatir/', texto: 'العربية' }], extra: 'Relatos originales © Tony Hanma. Fotos de Wikimedia Commons con su autor y licencia en cada imagen.' }))
+      .replace('</style>', `${cabeceraEsCSS}${pieEsCSS}</style>`)
+    if (html === antes || !html.includes('class="cab-es"') || !html.includes('class="pie-es"')) throw new Error('leyendas: no se pudo poner la cabecera/pie común en español')
+  }
 
   const dest = join(raiz, 'public', c.ruta)
   mkdirSync(dest, { recursive: true })

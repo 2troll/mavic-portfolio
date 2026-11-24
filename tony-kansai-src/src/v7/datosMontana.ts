@@ -157,3 +157,29 @@ export const MONTANA: Record<MontanaId, PaginaMontana> = {
 
 /** La página de ciudad de cada idioma, para el enlace de vuelta. */
 export const CIUDAD: Record<MontanaId, string> = { 'm-es': '/es/', 'm-en': '/en/', 'm-ar': '/ar/', 'm-ru': '/ru/' }
+
+/** Bloque de venta de /es/montana/ (25-11-2026: «que quien quiera hacer
+ *  senderismo le contrate ya»). Precios de HIKING_ROUTES (data.ts) y de llms.txt:
+ *  68.000 ¥ el día de montaña por grupo; 45.000 ¥ las rutas cortas de cascada.
+ *  «Incluye» sale del campo includes de las rutas; el pago, de llms.txt. */
+export const VENTA_ES = {
+  kicker: 'Guía privado de senderismo',
+  titulo: 'Un día de montaña cerca de Kioto, Osaka y Kobe, con tu propio guía en español',
+  sub: 'Solo tu grupo, a vuestro ritmo, por senderos que casi ningún extranjero pisa. Quedáis con Tony en la estación de salida, subís juntos a la cima y volvéis con él a la ciudad.',
+  precio: { yen: 68000, etiqueta: 'por grupo, día completo', nota: 'Hasta 6 personas. Precio cerrado por grupo, no por persona.' },
+  corto: { yen: 45000, texto: 'Rutas cortas de cascada (Minoh, Fushimi Inari, Nunobiki)' },
+  incluye: [
+    'Guía privado todo el día, en español',
+    'Navegación y seguridad en el sendero',
+    'Botiquín de emergencia',
+    'Ayuda con trenes y autobuses desde la ciudad',
+    'La historia de cada cima y cada santuario',
+    'Fotos de la ruta, enviadas después',
+  ],
+  noIncluye: 'Trenes, autobuses, comidas y entradas: se pagan aparte, directamente.',
+  pago: 'Pago en efectivo en yenes el mismo día, o por adelantado con PayPal, Wise o transferencia cuando la fecha esté confirmada.',
+  boton: 'Pedir mi día de montaña por WhatsApp',
+  verRutas: 'Ver las rutas',
+  resenas: { titulo: 'Lo que dicen de Tony sus clientes', de: 'reseñas', todas: 'Ver todas las reseñas' },
+  saludo: 'Hola Tony, te escribo desde la página de montaña. Queremos un día de senderismo con guía privado.\n\nRuta (si ya tenéis una):\nFechas:\nPersonas:\nNivel (tranquilo / exigente):\nNos alojamos en:',
+}

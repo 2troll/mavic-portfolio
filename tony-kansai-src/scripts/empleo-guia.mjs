@@ -9,6 +9,8 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -300,11 +302,11 @@ ${alternos}
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&family=Source+Sans+3:wght@400;600;700&family=Tajawal:wght@400;500;800&display=swap">
 <style>
-${lang === 'es' ? CSS_ES : CSS}
+${lang === 'es' ? CSS_ES + cabeceraEsCSS + pieEsCSS : CSS}
 </style>
 </head>
 <body>
-<header><div class="kap"><a href="/${lang}/">Tony Kansai Guide</a><nav class="idiomas" aria-label="Language">${idiomas}</nav></div></header>
+${lang === 'es' ? cabeceraEsHTML({ actual: RUTAS.es, idiomas: ['en', 'ar'].map((l) => ({ lang: l, ruta: RUTAS[l], texto: l === 'ar' ? 'العربية' : 'English' })) }) : `<header><div class="kap"><a href="/${lang}/">Tony Kansai Guide</a><nav class="idiomas" aria-label="Language">${idiomas}</nav></div></header>`}
 <main>
 <section class="heroe">
   <img src="/tr/foto/kobe-camii-1920.webp" srcset="/tr/foto/kobe-camii-1080.webp 1080w, /tr/foto/kobe-camii-1920.webp 1920w, /tr/foto/kobe-camii-3840.webp 3840w" sizes="100vw" alt="" fetchpriority="high">
@@ -339,7 +341,7 @@ ${lang === 'es' ? CSS_ES : CSS}
   </div>
 </section>
 </main>
-<footer><div class="kap">${t.pie} · <a href="mailto:${MAIL}">${MAIL}</a></div></footer>
+${lang === 'es' ? pieEsHTML({ idiomas: ['en', 'ar'].map((l) => ({ lang: l, ruta: RUTAS[l], texto: l === 'ar' ? 'العربية' : 'English' })), extra: esc(t.pie) }) : `<footer><div class="kap">${t.pie} · <a href="mailto:${MAIL}">${MAIL}</a></div></footer>`}
 <script>
 document.getElementById('copiar').addEventListener('click',function(e){var b=e.currentTarget;navigator.clipboard&&navigator.clipboard.writeText(${JSON.stringify(url)}).then(function(){b.textContent=b.dataset.ok})});
 if('IntersectionObserver' in window){var io=new IntersectionObserver(function(es){es.forEach(function(x){if(x.isIntersecting){x.target.classList.add('vis');io.unobserve(x.target)}})},{threshold:.15});document.querySelectorAll('.rev').forEach(function(el){io.observe(el)})}else{document.querySelectorAll('.rev').forEach(function(el){el.classList.add('vis')})}

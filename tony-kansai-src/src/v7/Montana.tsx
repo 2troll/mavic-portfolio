@@ -5,8 +5,11 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
-import { MONTANA, MONTES, KANJI, CIUDAD, CIMA } from './datosMontana'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, PAGINAS, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
+import resenasTony from '../../public/reviews.json'
+import { MONTANA, MONTES, KANJI, CIUDAD, CIMA, VENTA_ES } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
 import { MontesScroll } from './MontesScroll'
 import { EfectoEstacion, estacionDeHoy } from './Estacion'
@@ -22,7 +25,7 @@ import { EXP, CREDITOS as CREDITOS_FOTO } from './datosExpedicion'
 import { IconoCanal } from './IconoWa'
 import { BarraWa } from './BarraWa'
 import { enlacesHreflang } from '../seo/hreflang'
-import { milesLocal, PIE } from './formato'
+import { milesLocal, yenLocal, PIE } from './formato'
 import { FranjaVentajas } from './FranjaVentajas'
 import { Cumbres, Banda, datosCumbres } from './Cumbres'
 import '@fontsource-variable/oswald'
@@ -30,6 +33,7 @@ import '@fontsource-variable/source-serif-4'
 import './montana-pro.css'
 import './montana-neon.css'
 import './montana-movil.css'
+import './montana-venta.css'
 import { TEXTOS_CUMBRES } from './datosCumbres'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -74,6 +78,59 @@ function datosEstructurados(p: (typeof MONTANA)[MontanaId], tc: (t: string) => s
 }
 const ruta = (id: MonteId) => HIKING_ROUTES.find((r) => r.id === id) as Ruta
 
+/** Reseñas reales de Tony (public/reviews.json): nota media, total y tres citas.
+ *  No son de senderismo en concreto y así se dice en el título. */
+type ResenaTony = { id: string; stars: number; name: string; country?: string; tour?: string; text: string }
+const RESENAS_TONY = ((resenasTony as unknown as { reviews: ResenaTony[] }).reviews ?? []).filter((r) => r?.text && r.stars)
+const CITAS_ES = ['mvg2jpb2-551fd9ca', 'mw1u2lxq-6143f264', 'mw20iy6v-9646e097']
+
+/** Arriba del todo en /es/montana/: qué es, cuánto cuesta, qué incluye y el botón. */
+function VentaEs({ onRutas }: { onRutas: () => void }) {
+  const v = VENTA_ES
+  const wa = enlaceGuia('tony', v.saludo)
+  const media = RESENAS_TONY.length ? RESENAS_TONY.reduce((a, r) => a + r.stars, 0) / RESENAS_TONY.length : 0
+  const citas = CITAS_ES.map((id) => RESENAS_TONY.find((r) => r.id === id)).filter((r): r is ResenaTony => !!r)
+  const yen = (n: number) => yenLocal(n, 'es')
+  return (
+    <section className="mv-venta" aria-labelledby="mv-venta-titulo">
+      <div className="mv-venta-cuerpo">
+        <p className="ex-kicker"><span className="ex-regla" aria-hidden="true" />{v.kicker}</p>
+        <h2 id="mv-venta-titulo">{v.titulo}</h2>
+        <p className="mv-venta-sub">{v.sub}</p>
+        <div className="mv-venta-acciones">
+          <a className="v7-boton" href={wa} target="_blank" rel="noopener noreferrer"
+            onClick={() => window.gtag?.('event', 'generate_lead', { pagina: 'm-es', canal: 'whatsapp_montana', sitio: 'venta' })}>
+            <IconoCanal tg={false} /> {v.boton}</a>
+          <button type="button" className="mv-venta-rutas" onClick={onRutas}>{v.verRutas} <span aria-hidden="true">↓</span></button>
+        </div>
+      </div>
+      <div className="mv-venta-ficha">
+        <p className="mv-venta-precio"><strong>{yen(v.precio.yen)}</strong> <span>{v.precio.etiqueta}</span></p>
+        <p className="mv-venta-nota">{v.precio.nota}</p>
+        <p className="mv-venta-nota">{v.corto.texto}: <b>{yen(v.corto.yen)}</b>.</p>
+        <h3>Incluye</h3>
+        <ul className="mv-venta-incluye">{v.incluye.map((x) => <li key={x}>{x}</li>)}</ul>
+        <p className="mv-venta-nota">{v.noIncluye}</p>
+        <p className="mv-venta-nota">{v.pago}</p>
+      </div>
+      {citas.length > 0 && (
+        <div className="mv-venta-resenas">
+          <h3>{v.resenas.titulo} <span className="mv-venta-media"><span aria-hidden="true">★</span> {media.toFixed(1).replace('.', ',')} · {RESENAS_TONY.length} {v.resenas.de}</span></h3>
+          <ul>
+            {citas.map((r) => (
+              <li key={r.id}>
+                <blockquote>«{r.text.trim()}»</blockquote>
+                <p>{r.name.trim()}{r.country ? `, ${r.country.trim()}` : ''}{r.tour ? ` · ${r.tour}` : ''}</p>
+              </li>
+            ))}
+          </ul>
+          <p><Link to="/es/#resenas">{v.resenas.todas} →</Link></p>
+        </div>
+      )}
+    </section>
+  )
+}
+
 export default function Montana({ id }: { id: MontanaId }) {
   const p = MONTANA[id]
   const raiz = useRef<HTMLDivElement>(null)
@@ -96,6 +153,7 @@ export default function Montana({ id }: { id: MontanaId }) {
   // Larion va por Telegram (enlaceGuia lo decide; t.me no lleva texto).
   const wa = (g: 'tony' | 'larion', texto: string) => enlaceGuia(g, p.saludo(nombreGuia(g), texto))
   const tg = !!GUIAS[p.guias[0]].tg
+  const es = p.lang === 'es'
 
   // Salta al capítulo i del relieve 3D (0 = portada del relieve): el progreso
   // de MontesScroll es lineal con el scroll de su sección.
@@ -174,7 +232,9 @@ export default function Montana({ id }: { id: MontanaId }) {
         {datosCumbres(p.lang, `${BASE}${p.ruta}`).map((d) => <script key={d['@type']} type="application/ld+json">{JSON.stringify(d)}</script>)}
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {/* En español, la cabecera común; envuelta en un .v7 claro porque su estilo
+          (y el del pie) va fuera de .v7-expedicion. */}
+      {es ? <div className="v7 lang-es mv-comun"><CabeceraEs enPagina={[{ texto: 'Cumbres', ruta: '#cumbres' }, { texto: 'El oficio', ruta: '#oficio' }]} /></div> : <header className="v7-cabecera cristal">
         <Link to={CIUDAD[id]} className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
         </Link>
         <nav className="v7-anclas">
@@ -191,10 +251,11 @@ export default function Montana({ id }: { id: MontanaId }) {
         <a className={`v7-boton v7-boton-peq${tg ? ' v7-tg' : ''}`} href={wa(p.guias[0], '')} target="_blank" rel="noopener noreferrer" aria-label={`${p.final.escribir(nombreGuia(p.guias[0]))} — ${tg ? 'Telegram' : 'WhatsApp'}`}>
           <span className="v7-solo-ancho">{p.final.escribir(nombreGuia(p.guias[0]))}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         <PortadaViva t={t} lang={p.lang} maxGrupo={MAX_GRUPO} onBaja={() => suaveA(document.getElementById('atlas'))} />
+        {es && <VentaEs onRutas={() => suaveA(document.getElementById('atlas'))} />}
         <Travesia lang={p.lang} onVer3d={(i) => irA3d(i + 1)} paradas={MONTES.map((m) => {
           const r = ruta(m)
           return { id: m, nombre: tc(r.title), sub: tc(r.subtitle), altura: CIMA[m].m, duracion: tc(r.duration), precio: precioDe(m), pedir: p.et.pedir, wa: wa(p.guias[0], tc(r.title)) }
@@ -242,7 +303,29 @@ export default function Montana({ id }: { id: MontanaId }) {
 
       <FranjaVentajas lang={p.lang} />
 
-      <footer className="v7-pie">
+      {es ? (
+        <>
+          {/* Lo que el pie común no lleva: idiomas, seguridad y los créditos de fotos, datos y sonido. */}
+          <aside className="mv-es-extra">
+            <nav aria-label="Otros idiomas">
+              {IDIOMAS.filter((x) => x.id !== id).map((x) => <Link key={x.id} to={MONTANA[x.id].ruta} lang={MONTANA[x.id].lang}>{x.etiqueta}</Link>)}
+              <Link to="/safety/?lang=es">{PIE.es.seguridad}</Link>
+            </nav>
+            <p>{p.et.fuente}</p>
+            <details>
+              <summary>{PIE.es.creditos}</summary>
+              <ul>
+                {Object.entries(CREDITOS_FOTO).map(([k, c]) => <li key={k}>Foto «{c.titulo}»: <a href={c.pagina} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
+                <li>Previsión: <a href="https://api.met.no/" target="_blank" rel="noopener noreferrer">MET Norway</a>, CC BY 4.0 · iconos <a href="https://github.com/metno/weathericons" target="_blank" rel="noopener noreferrer">metno/weathericons</a>, MIT</li>
+                <li>Vuelo 3D: MapLibre GL (BSD-3), foto aérea 出典 国土地理院, relieve AWS Terrain Tiles, senderos OpenFreeMap © OpenStreetMap</li>
+                <li>Mapa: <a href="https://www.naturalearthdata.com/" target="_blank" rel="noopener noreferrer">Natural Earth</a>, dominio público</li>
+                {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
+              </ul>
+            </details>
+          </aside>
+          <div className="v7 lang-es mv-comun"><PieEs p={PAGINAS.es} /></div>
+        </>
+      ) : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -262,7 +345,7 @@ export default function Montana({ id }: { id: MontanaId }) {
             {CREDITOS_SONIDO.map((c) => <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>)}
           </ul>
         </details>
-      </footer>
+      </footer>}
     </div>
   )
 }

@@ -4,6 +4,8 @@
 // Las fotos de Tony salen de scripts/leyendas-fotos.json (copia del manifiesto de ~/projects/leyendas-fotos/
 // con w/h añadidos) y de public/leyendas/fotos/<archivo>-800.webp y -1600.webp.
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 import { join } from 'node:path'
 import { TERROR } from './leyendas-terror.mjs'
 import TERROR_AR from './leyendas-terror-ar.mjs'
@@ -293,14 +295,14 @@ ${alternas}
 ${fuentesWeb}
 ${preload}
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${css}${CSS_EXPEDIENTES}</style>
+<style>${css}${CSS_EXPEDIENTES}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
 </head>
 <body>
 <a class="salto" href="#contenido">${esc(t.salto)}</a>
-<header class="barra">
+${lang === 'es' ? cabeceraEsHTML({ actual: `/${RUTAS[tipo].es}/`, ramasPagina: [{ titulo: 'Leyendas', enlaces: [['Leyendas de Tony Hanma', PRINCIPAL.es], [t.terror.nombre, `/${RUTAS.terror.es}/`], [t.misterio.nombre, `/${RUTAS.misterio.es}/`]] }], idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })) }) : `<header class="barra">
   <a href="${PRINCIPAL[lang]}">${esc(t.volver)}</a>
   <a class="wa" href="${t.wa}">WhatsApp</a>
-</header>
+</header>`}
 
 <main id="contenido">
 <div class="portada" id="portada">
@@ -357,13 +359,13 @@ ${fuentesUnicas.map((f) => `      <li>${enlaceFuente(f)}</li>`).join('\n')}
 </section>
 </main>
 
-<footer>
+${lang === 'es' ? pieEsHTML({ idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })), creditos: `<li>${esc(altPortada)}: <a href="${fc.kaynak}" rel="noopener">${esc(fc.autor)}</a>, ${fc.lisans}</li>`, extra: esc(t.pie) }) : `<footer>
   <div class="kap">
     <span>${t.idiomas.map(([l, n]) => `<a href="/${RUTAS[tipo][l]}/" hreflang="${l}">${n}</a>`).join(' · ')}</span>
     <span>© 2026 Tony Hanma · Tony Kansai Guide · Osaka</span>
     <span>${esc(t.pie)} ${esc(t.credito)} ${esc(altPortada)}: <a href="${fc.kaynak}" rel="noopener">${esc(fc.autor)}</a>, ${fc.lisans}.</span>
   </div>
-</footer>
+</footer>`}
 
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" defer></script>

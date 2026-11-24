@@ -21,6 +21,8 @@ import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
 import { LOGO_SAKURA } from './logo-sakura.mjs'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const { PAGINAS, WA_TONY } = await import('../src/v7/contenido.ts')
@@ -908,20 +910,20 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[cl
 <script type="application/ld+json">${jsonScript(ld)}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
-<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
 </head>
 <body>
 <a class="saltar" href="#contenido">${esc(c.saltar)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
+${lang === 'es' ? cabeceraEsHTML({ actual: RUTA[clave].es, enPagina: c.herr, tituloPagina: c.nav.g1, idiomas: otros.map((o) => ({ lang: o.lang, ruta: o.h, texto: o.t })) }) : `<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: c.nav.etiqueta, abrir: c.nav.abrir, grupos: [
   { t: c.nav.g1, enlaces: c.herr.map(([n, h]) => [esc(n), h]) },
   { t: c.nav.g2, enlaces: c.tours.map(([n, h]) => [esc(n), h]) },
   { t: c.nav.g3, enlaces: [...c.mas.map(([n, h]) => [esc(n), h]), ...otros] },
-], cta: { t: c.nav.cta, h: wa(msg) } })}</div></header>
+], cta: { t: c.nav.cta, h: wa(msg) } })}</div></header>`}
 <main id="contenido">
 ${cuerpo}
 </main>
-<footer>${pieHTML({ mas: c.pie.mas,
+${lang === 'es' ? pieEsHTML({ idiomas: otros.map((o) => ({ lang: o.lang, ruta: o.h, texto: o.t })), extra: `${esc(c.pie.act)}: <bdi dir="ltr">${HOY}</bdi>`, equipo: equipoHTML({ lang, actual: 'tony' }) }) : `<footer>${pieHTML({ mas: c.pie.mas,
   intro: `<p>${esc(c.pie.intro)}</p>`,
   columnas: [
     { t: c.pie.c1, enlaces: c.herr.map(([n, h]) => [esc(n), h]) },
@@ -930,7 +932,7 @@ ${cuerpo}
   ],
   equipo: equipoHTML({ lang, actual: 'tony' }),
   fin: `<span>© Tony Kansai Guide</span><span>${esc(c.pie.act)}: <bdi dir="ltr">${HOY}</bdi></span>`,
-})}</footer>
+})}</footer>`}
 ${js ? `<script>${js}</script>` : ''}
 ${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 </html>

@@ -10,7 +10,9 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd } from './contenido'
+import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, PAGINAS, enlaceGuia, contactoLd } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoCanal } from './IconoWa'
@@ -23,6 +25,7 @@ import type { OtonoId, PaginaOtono } from './datosOtono'
 import './v7.css'
 import './invierno.css'
 import './estilo-pixel.css'
+import './temporadas-es.css'
 import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -60,6 +63,8 @@ export default function Otono({ id }: { id: OtonoId }) {
   const otra = p.temporada === 'invierno' ? undefined : Object.values(P).find((x) => x.lang === p.lang && x.temporada !== p.temporada && x.temporada !== 'invierno')
   const otrasInvierno = p.temporada === 'invierno' ? (['otono', 'sakura'] as const).map((t) => Object.values(P).find((x) => x.lang === p.lang && x.temporada === t)).filter((x): x is PaginaOtono => !!x) : []
   const pie = PIE[p.lang]
+  // En español, cabecera y pie comunes y la paleta de su estación (temporadas-es.css).
+  const es = p.lang === 'es'
   const ld = p.productos && p.invierno ? ldInvierno(p) : {
     '@context': 'https://schema.org', '@type': 'TouristTrip',
     name: p.seo.titulo.split(' | ')[0], description: p.seo.descripcion, url: `${BASE}${p.ruta}`, inLanguage: p.lang,
@@ -74,7 +79,7 @@ export default function Otono({ id }: { id: OtonoId }) {
   }
 
   return (
-    <div className={`v7 v7-pagina v7-otono lang-${p.lang}`} lang={p.lang} dir={dir}>
+    <div className={`v7 v7-pagina v7-otono lang-${p.lang}${es ? ` tmp-es tmp-${p.temporada}` : ''}`} lang={p.lang} dir={dir}>
       <Helmet>
         <html lang={p.lang} dir={dir} />
         <title>{p.seo.titulo}</title>
@@ -88,7 +93,7 @@ export default function Otono({ id }: { id: OtonoId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {es ? <CabeceraEs /> : <header className="v7-cabecera cristal">
         <Link to={p.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-idiomas" aria-label="Language">
           {familia.map((x) => (
@@ -98,11 +103,11 @@ export default function Otono({ id }: { id: OtonoId }) {
         <a className={`v7-boton v7-boton-peq${claseBoton}`} href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${visible(p.final.boton)}`}>
           <span className="v7-solo-ancho">{visible(p.final.boton)}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         <section className="v7-otono-hero">
-          <img {...foto(hero, '(max-width: 820px) calc(100vw - 32px), 50vw')} alt={p.sitios[0]?.nombre ?? lugar} {...{ fetchpriority: 'high' }} />
+          <img {...foto(hero, '(max-width: 820px) calc(100vw - 32px), 50vw')} alt={p.invierno?.fotoLugar ?? p.sitios[0]?.nombre ?? lugar} {...{ fetchpriority: 'high' }} />
           <div className="v7-otono-hero-texto">
             <p className="v7-antetitulo">{emoji} {p.antetitulo}</p>
             <h1>{p.titulo}</h1>
@@ -223,7 +228,18 @@ export default function Otono({ id }: { id: OtonoId }) {
 
       <FranjaVentajas lang={p.lang} />
 
-      <footer className="v7-pie">
+      {es ? (
+        <>
+          {/* Lo que el pie común no lleva: la misma página en otros idiomas y el crédito de la foto. */}
+          <aside className="tmp-es-extra">
+            <nav aria-label="Otros idiomas">
+              {familia.filter((x) => x !== p).map((x) => <Link key={x.ruta} to={x.ruta} lang={x.lang}>{NOMBRE_LANG[x.lang]}</Link>)}
+            </nav>
+            <p>Foto · {lugar}: <a href={credito.url} target="_blank" rel="noopener noreferrer">{credito.autor}</a>, {credito.licencia}</p>
+          </aside>
+          <PieEs p={PAGINAS.es} />
+        </>
+      ) : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -239,7 +255,7 @@ export default function Otono({ id }: { id: OtonoId }) {
             <li>{lugar}: <a href={credito.url} target="_blank" rel="noopener noreferrer">{credito.autor}</a>, {credito.licencia}</li>
           </ul>
         </details>
-      </footer>
+      </footer>}
     </div>
   )
 }

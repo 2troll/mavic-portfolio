@@ -38,7 +38,8 @@ const tarjeta = (r) => {
 const ini = html.indexOf('<!-- REVIEWS-HTML:START -->'), fin = html.indexOf('<!-- REVIEWS-HTML:END -->')
 if (ini < 0 || fin < 0) { console.error('✗ resenas-estaticas: faltan las marcas REVIEWS-HTML en resenas.html'); process.exit(1) }
 const antes = (html.slice(ini, fin).match(/<blockquote/g) || []).length
-if (lista.length < antes) { console.error(`✗ resenas-estaticas: reviews.json tiene ${lista.length} y la página ${antes}: no quito reseñas`); process.exit(1) }
+// Si el Worker no contestó en el build, reviews.json trae menos: se deja la página como está.
+if (lista.length < antes) { console.warn(`⚠ resenas-estaticas: reviews.json tiene ${lista.length} y la página ${antes}: la dejo como está (no quito reseñas)`); process.exit(0) }
 const media = lista.reduce((s, r) => s + r.stars, 0) / lista.length
 const bloque = `<!-- REVIEWS-HTML:START -->
     <!-- Generado por scripts/resenas-estaticas.mjs: todas las reseñas en el HTML (Google e IAs).

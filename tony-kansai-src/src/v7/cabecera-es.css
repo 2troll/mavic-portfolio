@@ -1,0 +1,189 @@
+/* ── Cabecera común en español (CabeceraEs.tsx y scripts/cabecera-es.mjs) ──────
+   Una barra fina: la flor y el nombre a la izquierda, el botón ☰ a la derecha.
+   Al tocarlo, una hoja a la derecha (en el móvil, la pantalla entera) con el
+   árbol de la web. Lo usan igual las páginas React y las estáticas (el generador
+   lee este mismo archivo y lo pega en su <style>): por eso no depende de .v7 ni
+   de estilo-sereno y trae sus propios colores. Paleta ES (brief §Piezas):
+   tinta #1e2a36 (14,9:1 sobre blanco), tenue #515b67 (6,9:1), vino #8e3b55
+   (7,6:1), verde #2d684c (6,6:1 con texto blanco). */
+.cab-es {
+  --ce-barra: rgba(253, 239, 242, .9);
+  --ce-panel: #ffffff;
+  --ce-banda: #f9e4e9;
+  --ce-tinta: #1e2a36;
+  --ce-tenue: #515b67;
+  --ce-vino: #8e3b55;
+  --ce-rosa: #b5426a;
+  --ce-verde: #2d684c;
+  --ce-verde-hondo: #24563e;
+  --ce-linea: rgba(30, 42, 54, .12);
+  --ce-titular: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
+  position: sticky; top: 0; z-index: 900;
+  display: block; width: 100%; margin: 0; padding: 0;
+  background: none;
+  border-bottom: 1px solid var(--ce-linea);
+  color: var(--ce-tinta);
+  font: 400 16px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  text-align: start;
+}
+html[data-tema='oscuro'] .cab-es {
+  --ce-barra: rgba(22, 20, 30, .9); --ce-panel: #1d1a26; --ce-banda: #262233;
+  --ce-tinta: #f3eef0; --ce-tenue: #b9c1cc; --ce-vino: #f2a7c0; --ce-rosa: #f2a7c0;
+  --ce-linea: rgba(255, 255, 255, .14);
+}
+/* El cristal va en un pseudo: un backdrop-filter en la propia cabecera haría de
+   «containing block» y la hoja fija del menú quedaría metida en los 60 px. */
+.cab-es::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; background: var(--ce-barra);
+  -webkit-backdrop-filter: saturate(1.4) blur(12px); backdrop-filter: saturate(1.4) blur(12px);
+}
+.cab-es *, .cab-es *::before, .cab-es *::after { box-sizing: border-box; }
+.cab-es-in {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: min(1180px, 100%); min-height: 60px; margin: 0 auto; padding: 8px 16px;
+}
+.cab-es a { color: inherit; }
+.cab-es :focus-visible { outline: 2px solid var(--ce-verde); outline-offset: 2px; border-radius: 8px; }
+
+/* La marca. Es la de estilo-sereno §22 (PORTADA): nombre en granate Hankyu
+   #5d1f2a con la franja de tren granate + hilo azul Shinkansen #1d4f91, flor
+   #b5426a. §22 solo alcanza a .v7-cabecera dentro de .v7, y las páginas
+   estáticas no cargan estilo-sereno: por eso se repiten aquí LOS MISMOS valores
+   (si §22 cambia, cambiar también aquí). Solo la marca de la barra. */
+.cab-es .cab-es-marca, .cab-es .cab-es-panel-marca { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.cab-es .v7-logo { display: inline-flex; align-items: center; gap: 7px; }
+.cab-es .v7-logo .v7-logo-torii { display: none; }
+.cab-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 24px; height: 24px; }
+.cab-es .v7-logo-texto { display: inline; font-family: var(--ce-titular); font-weight: 600; font-size: 16.5px; letter-spacing: .01em; white-space: nowrap; }
+html .cab-es .cab-es-marca .v7-logo svg.v7-logo-sakura { color: #b5426a; }
+/* Clase repetida a propósito: gana a estilo-sereno §21 (0,5,1) dentro de .v7 sin !important. */
+html .cab-es.cab-es .cab-es-marca .v7-logo .v7-logo-texto.v7-logo-texto {
+  font-family: var(--ce-titular); font-weight: 600; font-size: 16.5px; letter-spacing: .01em; text-transform: none;
+  color: #5d1f2a; padding-bottom: 5px;
+  background:
+    linear-gradient(#5d1f2a 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
+    linear-gradient(#1d4f91 0 0) 0 100% / 100% 1px no-repeat;
+}
+html[data-tema='oscuro'] .cab-es.cab-es .cab-es-marca .v7-logo .v7-logo-texto.v7-logo-texto {
+  color: #f1c4d0;
+  background:
+    linear-gradient(#e8a9b9 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
+    linear-gradient(#8fb2e6 0 0) 0 100% / 100% 1px no-repeat;
+}
+html .cab-es .cab-es-panel-marca .v7-logo svg.v7-logo-sakura { color: #b5426a; }
+html .cab-es.cab-es .cab-es-panel-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--ce-titular); font-weight: 600; font-size: 16.5px; letter-spacing: .01em; text-transform: none; color: var(--ce-tinta); }
+
+/* El botón ☰: tres rayas y, si cabe, la palabra. */
+.cab-es .cab-es-boton {
+  display: inline-flex; align-items: center; gap: 10px; min-width: 44px; min-height: 44px; margin: 0; padding: 0 14px 0 12px;
+  border: 1px solid rgba(30, 42, 54, .28); border-radius: 12px; background: var(--ce-panel); color: var(--ce-tinta);
+  font: 600 15px/1 system-ui, -apple-system, 'Segoe UI', sans-serif; cursor: pointer;
+  transition: background-color .15s, border-color .15s;
+}
+.cab-es .cab-es-boton:hover { border-color: var(--ce-tinta); }
+.cab-es .cab-es-rayas { display: inline-grid; gap: 4px; width: 20px; }
+.cab-es .cab-es-rayas i { display: block; height: 2px; border-radius: 2px; background: currentColor; }
+@media (max-width: 379px) { .cab-es .cab-es-boton-txt { display: none; } .cab-es .cab-es-boton { padding: 0 12px; } }
+
+/* Velo y hoja. Cerrados: invisibles y fuera del orden del foco (visibility). */
+.cab-es .cab-es-velo {
+  position: fixed; inset: 0; z-index: 901; background: rgba(30, 42, 54, .38);
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s linear .25s;
+}
+.cab-es .cab-es-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 902;
+  display: flex; flex-direction: column; gap: 4px;
+  width: min(420px, 100vw); height: 100vh; height: 100dvh; margin: 0;
+  padding: 8px 20px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto; overscroll-behavior: contain;
+  background: var(--ce-panel); color: var(--ce-tinta);
+  box-shadow: -24px 0 60px -30px rgba(30, 42, 54, .45);
+  transform: translateX(100%); visibility: hidden;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .3s;
+}
+.cab-es[data-abierto] { z-index: 2147483000; } /* por encima de hojas, cookies y barra de WhatsApp */
+.cab-es[data-abierto] .cab-es-velo { opacity: 1; visibility: visible; transition: opacity .25s; }
+.cab-es[data-abierto] .cab-es-panel { transform: none; visibility: visible; transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+@media (max-width: 560px) { .cab-es .cab-es-panel { width: 100vw; box-shadow: none; } }
+/* Con el menú abierto, la página de detrás no se desplaza. */
+html.cab-es-bloqueo, html.cab-es-bloqueo body { overflow: hidden; }
+
+.cab-es .cab-es-panel-cab {
+  position: sticky; top: -8px; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+  min-height: 60px; margin: -8px -20px 4px; padding: 8px 12px 8px 20px;
+  background: var(--ce-panel); border-bottom: 1px solid var(--ce-linea);
+}
+.cab-es .cab-es-cerrar {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: 0; padding: 0;
+  border: 0; border-radius: 12px; background: transparent; color: var(--ce-tinta); cursor: pointer;
+}
+.cab-es .cab-es-cerrar:hover { background: var(--ce-banda); }
+
+.cab-es .cab-es-arbol { display: block; margin: 0; padding: 0; }
+.cab-es .cab-es-arbol ul { list-style: none; margin: 0; padding: 0; }
+.cab-es .cab-es-arbol li { margin: 0; padding: 0; }
+.cab-es .cab-es-arbol li::before { content: none; }
+
+/* Primer nivel: tres enlaces grandes. */
+.cab-es .cab-es-primeros a {
+  display: flex; align-items: center; min-height: 52px; padding: 4px 0;
+  border-bottom: 1px solid var(--ce-linea); text-decoration: none;
+  font-family: var(--ce-titular); font-size: 21px; font-weight: 600; color: var(--ce-tinta);
+}
+.cab-es .cab-es-primeros a[aria-current='page'] { color: var(--ce-vino); }
+
+/* Ramas plegables. */
+.cab-es .cab-es-rama { margin: 0; padding: 0; border: 0; border-bottom: 1px solid var(--ce-linea); background: none; }
+.cab-es .cab-es-rama > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;
+  list-style: none; cursor: pointer; font-size: 17px; font-weight: 650; color: var(--ce-tinta);
+}
+.cab-es .cab-es-rama > summary::-webkit-details-marker { display: none; }
+.cab-es .cab-es-rama > summary::after {
+  content: ''; flex: none; width: 8px; height: 8px; margin-inline-end: 6px;
+  border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.cab-es .cab-es-rama[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.cab-es .cab-es-rama ul { padding: 0 0 14px; display: grid; gap: 0; }
+.cab-es .cab-es-rama a {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 0 6px 14px;
+  border-inline-start: 1px solid var(--ce-linea); text-decoration: none; color: var(--ce-tenue); font-size: 16px; line-height: 1.3;
+}
+.cab-es .cab-es-rama a:hover, .cab-es .cab-es-rama a[aria-current='page'] { color: var(--ce-tinta); border-inline-start-color: var(--ce-rosa); }
+.cab-es .cab-es-rama a[aria-current='page'] { font-weight: 600; }
+/* Las ciudades, cortas, en dos columnas: la rama abierta no se hace eterna. */
+.cab-es .cab-es-rama-experiencias ul { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+.cab-es .cab-es-rama-experiencias li:has(> a:not([href^='/es/osaka/']):not([href^='/es/kyoto/']):not([href^='/es/nara/']):not([href^='/es/kobe/']):not([href^='/es/himeji/']):not([href^='/es/hiroshima/']):not([href^='/es/beyond/'])) { grid-column: 1 / -1; }
+.cab-es a.cab-es-destacado {
+  margin: 6px 0; padding: 10px 14px; border: 0; border-radius: 12px;
+  background: var(--ce-banda); color: var(--ce-vino); font-weight: 650;
+}
+.cab-es a.cab-es-destacado::after { content: '→'; margin-inline-start: auto; }
+.cab-es .cab-es-nuevo {
+  flex: none; padding: 1px 7px; border-radius: 999px; background: var(--ce-banda); color: var(--ce-vino);
+  font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* Contacto: el botón verde, abajo del todo. */
+.cab-es .cab-es-wa {
+  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; margin: 18px 0 0; padding: 0 18px;
+  border-radius: 14px; background: var(--ce-verde); color: #ffffff; text-decoration: none; font-weight: 650; font-size: 16px;
+}
+.cab-es .cab-es-wa:hover { background: var(--ce-verde-hondo); }
+.cab-es .cab-es-wa svg { flex: none; width: 20px; height: 20px; }
+.cab-es .cab-es-idiomas { margin: 12px 0 0; font-size: 14px; color: var(--ce-tenue); text-align: center; }
+.cab-es .cab-es-idiomas a { display: inline-flex; align-items: center; min-height: 44px; color: var(--ce-tenue); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cab-es .cab-es-velo, .cab-es .cab-es-panel, .cab-es[data-abierto] .cab-es-velo, .cab-es[data-abierto] .cab-es-panel,
+  .cab-es .cab-es-rama > summary::after, .cab-es .cab-es-boton { transition: none; }
+}
+@media print { .cab-es { position: static; } .cab-es .cab-es-velo, .cab-es .cab-es-panel, .cab-es .cab-es-boton { display: none; } }
+
+/* Igual que el pie: en la montaña (.v7-expedicion / .mv-comun) sin heredar mayúsculas. */
+.v7-expedicion .cab-es, .mv-comun .cab-es, .v7-expedicion .cab-es :not(.cab-es-nuevo), .mv-comun .cab-es :not(.cab-es-nuevo) { text-transform: none; }
+
+/* Igual que el pie: los <summary> del menú no heredan los de la página. */
+.cab-es summary { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; letter-spacing: 0; text-transform: none; padding: 0; margin: 0; background: none; border: 0; }
+.cab-es summary::before { content: none; display: none; }
+.cab-es .cab-es-rama > summary::after { position: static; background: none; color: inherit; }

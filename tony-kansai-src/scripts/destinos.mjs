@@ -17,6 +17,8 @@ import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
 import { LOGO_SAKURA } from './logo-sakura.mjs'
+import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
+import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const { WA_TONY } = await import('../src/v7/contenido.ts')
@@ -310,16 +312,16 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
-<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
 </head>
 <body>
 <a class="saltar" href="#${ORDEN_PAISES[0]}">${esc(t.indice)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
+${lang === 'es' ? cabeceraEsHTML({ actual: RUTA.es, enPagina: [...ORDEN_PAISES.map((p) => [PAISES[p][lang].n, `#${p}`]), [t.faqH, '#preguntas']], idiomas: LANGS.filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })) }) : `<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
   { t: t.nav.g1, enlaces: ORDEN_PAISES.map((p) => [esc(PAISES[p][lang].n), `#${p}`]) },
   { t: t.nav.g2, enlaces: t.nav.japon.map(([n, h]) => [esc(n), h]) },
   { t: t.nav.g3, enlaces: [...t.nav.mas.map(([n, h]) => [esc(n), h]), ...idiomas] },
-], cta: { t: t.nav.cta, h: wa(t.msgGeneral) } })}</div></header>
+], cta: { t: t.nav.cta, h: wa(t.msgGeneral) } })}</div></header>`}
 <main>
 <section class="heroe"><div class="kap">
 <p class="ceja">${esc(t.ceja)}</p>
@@ -347,7 +349,7 @@ ${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></
 <a class="btn" href="${esc(wa(t.msgGeneral))}" rel="noopener">${esc(t.ctaB)} <span aria-hidden="true">${flecha(lang)}</span></a>
 </div></section>
 </main>
-<footer>${pieHTML({ mas: t.pie.mas,
+${lang === 'es' ? pieEsHTML({ idiomas: LANGS.filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })), extra: `${esc(t.pie.act)}: <bdi dir="ltr">${HOY}</bdi>`, equipo: equipoHTML({ lang, actual: 'tony' }) }) : `<footer>${pieHTML({ mas: t.pie.mas,
   intro: `<p>${esc(t.pie.intro)}</p>`,
   columnas: [
     { t: t.pie.c1, enlaces: t.nav.japon.map(([n, h]) => [esc(n), h]) },
@@ -356,7 +358,7 @@ ${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></
   ],
   equipo: equipoHTML({ lang, actual: 'tony' }),
   fin: `<span>© Tony Kansai Guide</span><span>${esc(t.pie.act)}: <bdi dir="ltr">${HOY}</bdi></span>`,
-})}</footer>
+})}</footer>`}
 ${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 </html>
 `

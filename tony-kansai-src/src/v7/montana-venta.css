@@ -1,0 +1,70 @@
+/* /es/montana/: bloque de venta bajo la portada (25-11-2026) y envoltorio de la
+   cabecera y el pie comunes. Colores de expedicion.css: papel #f1ece1 sobre
+   bosque #141811 (15,9:1), tenue #b4ad9d (8,1:1), oro #f0b33a como acción con
+   tinta #17120a encima (10,0:1). Solo existe en español (Montana.tsx). */
+
+.mv-venta {
+  position: relative; z-index: 2;
+  width: min(var(--ancho, 1180px), calc(100% - 32px)); margin: clamp(32px, 6vw, 72px) auto;
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: clamp(20px, 3vw, 40px);
+  align-items: start;
+}
+.mv-venta-cuerpo { display: grid; grid-template-columns: minmax(0, 1fr); gap: 18px; align-content: start; }
+.mv-venta h2 { font-size: clamp(1.9rem, 4.2vw, 3rem); line-height: 1.08; color: var(--ex-papel); text-wrap: balance; }
+.mv-venta-sub { color: var(--ex-tenue); font-size: 1.1rem; line-height: 1.6; max-width: 38rem; }
+.mv-venta-acciones { display: flex; flex-wrap: wrap; gap: 12px 20px; align-items: center; margin-top: 4px; }
+.mv-venta-acciones .v7-boton { min-height: 52px; }
+.mv-venta-rutas {
+  min-height: 44px; padding: 0 4px; background: none; border: 0; cursor: pointer; font: inherit; font-weight: 600;
+  color: var(--ex-papel); text-decoration: underline; text-underline-offset: 4px; text-decoration-color: var(--ex-oro);
+}
+.mv-venta-rutas:hover { color: var(--ex-oro); }
+
+.mv-venta-ficha { min-width: 0;
+  background: var(--ex-bosque); border: 1px solid var(--ex-linea); border-radius: 20px;
+  padding: clamp(20px, 3vw, 30px); display: grid; gap: 10px;
+}
+.mv-venta-precio { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 12px; margin: 0; }
+.mv-venta-precio strong { font-family: var(--ex-serif); font-size: clamp(2.2rem, 5vw, 2.9rem); font-weight: 600; color: var(--ex-oro); font-variant-numeric: tabular-nums; line-height: 1; }
+.mv-venta-precio span { color: var(--ex-papel); font-weight: 600; }
+.mv-venta-nota { color: var(--ex-tenue); font-size: 15px; line-height: 1.5; margin: 0; }
+.mv-venta-nota b { color: var(--ex-papel); }
+.mv-venta-ficha h3 { margin: 10px 0 0; font-size: 1.05rem; color: var(--ex-papel); }
+.mv-venta-incluye { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
+.mv-venta-incluye li { position: relative; padding-inline-start: 24px; color: var(--ex-papel); font-size: 15.5px; line-height: 1.45; }
+.mv-venta-incluye li::before { content: ''; position: absolute; inset-inline-start: 2px; top: 0.42em; width: 11px; height: 6px; border-left: 2px solid var(--ex-oro); border-bottom: 2px solid var(--ex-oro); transform: rotate(-45deg); }
+
+.mv-venta-resenas { grid-column: 1 / -1; border-top: 1px solid var(--ex-linea); padding-top: clamp(20px, 3vw, 28px); display: grid; gap: 14px; }
+.mv-venta-resenas h3 { font-size: 1.2rem; color: var(--ex-papel); display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; }
+.mv-venta-media { font-family: var(--letra, inherit); font-size: 15px; font-weight: 600; color: var(--ex-tenue); letter-spacing: 0; }
+.mv-venta-media span { color: var(--ex-oro); }
+.mv-venta-resenas ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.mv-venta-resenas li { border-inline-start: 2px solid var(--ex-oro); padding-inline-start: 14px; display: grid; gap: 6px; align-content: start; }
+.mv-venta-resenas blockquote { margin: 0; color: var(--ex-papel); line-height: 1.5; font-size: 15.5px; }
+.mv-venta-resenas li p { color: var(--ex-tenue); font-size: 14px; }
+.mv-venta-resenas > p a { color: var(--ex-papel); text-underline-offset: 3px; display: inline-flex; min-height: 40px; align-items: center; }
+.mv-venta-resenas > p a:hover { color: var(--ex-oro); }
+
+@media (max-width: 860px) {
+  .mv-venta { grid-template-columns: minmax(0, 1fr); }
+  .mv-venta-acciones .v7-boton { white-space: normal; text-align: center; justify-content: center; width: 100%; }
+  .mv-venta-resenas ul { grid-template-columns: 1fr; }
+}
+
+/* Envoltorio .v7 claro de la cabecera y el pie comunes dentro de la página oscura. */
+.v7-expedicion .mv-comun { min-height: 0; background: transparent; overflow: visible; }
+.v7-expedicion .mv-comun:has(.pie-es) { background: var(--fondo); color: var(--tinta); }
+.v7-expedicion .mv-comun :is(h1, h2, h3, h4) { font-family: var(--titular, inherit); }
+
+/* Idiomas, seguridad y créditos sobre el pie común. */
+.mv-es-extra { width: min(var(--ancho, 1180px), calc(100% - 32px)); margin: 32px auto 20px; display: grid; gap: 8px; font-size: 14px; color: var(--ex-tenue); }
+.mv-es-extra nav { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.mv-es-extra a { color: var(--ex-papel); text-underline-offset: 3px; }
+.mv-es-extra nav a { min-height: 32px; display: inline-flex; align-items: center; }
+.mv-es-extra summary { cursor: pointer; min-height: 32px; display: flex; align-items: center; color: var(--ex-papel); }
+.mv-es-extra ul { margin: 6px 0 0; padding-inline-start: 18px; display: grid; gap: 4px; }
+
+/* El envoltorio .mv-comun es un .v7 «no expedición»: sin esto, la regla §21 de
+   estilo-sereno pintaría de rosa el <body> de esta página oscura. */
+html[lang="es"]:has(#root .v7.v7-montana.v7-expedicion .mv-comun),
+html[lang="es"]:has(#root .v7.v7-montana.v7-expedicion .mv-comun) body { background-color: #05070c; color: #ffffff; }

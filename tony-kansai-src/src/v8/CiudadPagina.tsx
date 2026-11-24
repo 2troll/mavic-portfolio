@@ -14,6 +14,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, enlaceGuia, NOTA_TG } from '../v7/contenido'
+import { PAGINAS } from '../v7/contenido'
+import { CabeceraEs } from '../v7/CabeceraEs'
+import { PieEs } from '../v7/PieEs'
 import { HORAS, ITINERARIOS, META_ITIN } from '../v7/datosItinerarios'
 import { PRECIO, ETIQUETAS } from '../v7/datosRutas'
 import { foto } from '../v7/foto'
@@ -131,7 +134,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         <script type="application/ld+json">{JSON.stringify(faqLd(c.id, lang, guia))}</script>
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {prefijo === '/es' ? <CabeceraEs activo={`/es/${c.id}/`} idiomas={hermanas.filter((h) => h !== prefijo).map((h) => ({ lang: langDe(h), ruta: `${h}/${c.id}/`, texto: etiquetaIdioma[h] }))} /> : <header className="v7-cabecera cristal">
         <Link to={`${prefijo}/`} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-anclas" aria-label={et.otras}>
           {guia === 'tony' && prefijo in NAV_TONY
@@ -144,7 +148,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={`${g} WhatsApp`}>
           <span className="v7-solo-ancho">{tg ? 'Telegram' : 'WhatsApp'}</span><span className="v7-solo-movil"><IconoCanal tg={tg} /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         {/* 1. Portada. La foto, el velo, el kanji y el tiempo van juntos en una caja:
@@ -293,7 +297,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           flotante que saltaba encima de los botones va oculta en v8.css (auditoría P8). */}
       <SelloCiudad id={c.id} lang={lang} guia={guia} />
 
-      <footer className="v7-pie">
+      {prefijo === '/es' ? <PieEs p={PAGINAS.es} creditos={[...c.zonas.flatMap((z) => CREDITOS[z.id] ? [{ foto: z.nombre.es, ...CREDITOS[z.id] }] : []), { foto: 'Tiempo', autor: 'Open-Meteo', licencia: 'CC BY 4.0', url: 'https://open-meteo.com/' }, { foto: 'Tifones', autor: 'Agencia Meteorológica de Japón', url: 'https://www.jma.go.jp/bosai/map.html#contents=typhoon' }]} idiomas={hermanas.filter((h) => h !== prefijo).map((h) => ({ lang: langDe(h), ruta: `${h}/${c.id}/`, texto: etiquetaIdioma[h] }))} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -309,7 +313,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             <li>Tiempo: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> (CC BY 4.0); tifones: <a href="https://www.jma.go.jp/bosai/map.html#contents=typhoon" target="_blank" rel="noopener noreferrer">Agencia Meteorológica de Japón</a></li>
           </ul>
         </details>
-      </footer>
+      </footer>}
     </div>
   )
 }

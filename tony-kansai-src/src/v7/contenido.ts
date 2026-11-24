@@ -198,7 +198,7 @@ const es: Pagina = {
     foto: F + 'portada.jpg',
     fotoAlt: 'El castillo blanco de Himeji entre cerezos en flor, con cielo azul',
     titulo: 'Guías privados en español por todo Japón.',
-    sub: 'Te recogemos en tu hotel y pasamos el día donde quieras: Kioto, Tokio, el monte Fuji o ese rincón de Japón que sueñas. Solo tu grupo y un precio cerrado.',
+    sub: 'Te recogemos en tu hotel y pasamos el día a tu ritmo: Kioto, Tokio, el monte Fuji o ese rincón de Japón que sueñas. Un guía solo para tu grupo, con precio cerrado.',
     chips: ['Solo tu grupo', 'Recogida en tu hotel'],
     cta: 'Escríbenos por WhatsApp',
     cta2: 'Ver experiencias',
@@ -334,15 +334,16 @@ const es: Pagina = {
   // Solo lo que la web ya ofrece: páginas de ciudad, planes temáticos (té, kimono,
   // artesanos), comida halal/vegetariana y las rutas de montaña. Sin precio.
   experiencias: {
-    titulo: 'Elige tu experiencia',
-    sub: 'No son paquetes cerrados: el día lo montamos a tu medida.',
+    titulo: 'Experiencias privadas',
+    sub: 'Cada día se prepara para tu grupo: la ruta, el ritmo y las paradas, con recogida en tu hotel.',
     lista: [
-      { titulo: 'Templos, castillos y tradición', texto: 'Kioto, Nara y el castillo blanco de Himeji. Ceremonia del té, kimono o un taller artesano, y la historia de cada lugar.',
+      { titulo: 'Templos, castillos y tradición', texto: 'Kioto, Nara y el castillo blanco de Himeji, con la historia de cada lugar. Ceremonia del té, kimono o un taller artesano, si os apetece.',
         foto: '/v8/zonas/kioto-kinkakuji', alt: 'El Pabellón Dorado de Kioto reflejado en su estanque, con cielo azul', ruta: '/es/kyoto/' },
-      { titulo: 'Gastronomía y mercados', texto: 'Mercados como Kuromon y Nishiki, comida callejera en Dōtonbori y dónde comer bien, también halal o vegetariano.',
+      { titulo: 'Gastronomía y mercados', texto: 'Los mercados de Kuromon y Nishiki, Dōtonbori y las mesas donde se come bien de verdad, también halal o vegetariano.',
         foto: '/v8/zonas/osaka-kuromon', alt: 'Puestos del mercado de Kuromon, en Osaka', ruta: '/es/osaka/' },
-      { titulo: 'Naturaleza y Japón rural', texto: 'Montañas cerca de Kioto y Nara, los cerezos de Yoshino, Kōyasan o el Kumano Kodo, a tu ritmo.',
-        foto: '/v8/zonas/nara-yoshino', alt: 'El monte Yoshino cubierto de cerezos en flor', ruta: '/es/montana/' },
+      // Montaña a la vista (Tony, 25-11): 18 rutas en /es/montana/ (datosMontana.ts).
+      { titulo: 'Montaña y senderismo', texto: '18 rutas con guía cerca de Osaka y Kioto: el Kumano Kodō, Kōyasan, Rokkō o Hakkyōgadake, el techo de Kansai (1.915 m).',
+        foto: '/v8/zonas/lejos-kumano', alt: 'La pagoda roja de Seiganto-ji y la cascada de Nachi entre montañas, en el Kumano Kodō', ruta: '/es/montana/' },
     ],
     otras: [
       { texto: '¿Viajas en familia o en grupo? Organizamos el viaje entero por todo Japón', ruta: '/familias/' },
@@ -352,7 +353,7 @@ const es: Pagina = {
   },
   precioRef: {
     titulo: 'Cuánto cuesta',
-    texto: 'Medio día con guía privado, por grupo y no por persona. Para tu viaje te damos un precio cerrado por WhatsApp, sin letra pequeña.',
+    texto: 'Medio día con guía privado, por grupo y no por persona. Para tu viaje te preparamos un precio cerrado por WhatsApp, sin letra pequeña.',
     enlace: 'Ver todos los precios', ruta: '/es/precios/',
     plegado: 'Qué incluye, pago y cancelación',
     otono: 'Otoño en Kioto: los arces siguen rojos hasta principios de diciembre.',
@@ -360,7 +361,7 @@ const es: Pagina = {
     explora: 'Todo lo que tenemos',
   },
   contactoWa: {
-    sub: 'Escríbenos por WhatsApp y te respondemos normalmente el mismo día.',
+    sub: 'Cuéntanos fechas, hotel y qué os apetece. Te respondemos normalmente el mismo día con una propuesta y un precio cerrado.',
     boton: 'Escríbenos por WhatsApp', formulario: '¿Prefieres un formulario?', correo: 'o por correo',
   },
   destinosTitulo: 'Destinos',

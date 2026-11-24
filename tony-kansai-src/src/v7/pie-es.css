@@ -1,106 +1,141 @@
-/* ── Pie de la portada española (PieEs en PaginaGuia.tsx, 24-11-2026) ─────────
-   Tony: «la parte de abajo está sobrecargada». Patrón de pie de Linear/Vercel/
-   shadcn: marca y lema arriba, UN índice de cuatro grupos (en el móvil,
-   acordeones de 56 px cerrados al montar) y, al final, una línea pequeña con
-   los idiomas, lo legal y los créditos plegados. Sin chips ni tarjetas: texto,
-   aire y filetes finos. Todo bajo html[lang="es"] y .v7-pie-es: EN/AR/RU no
-   cambian. Colores de §21 (estilo-sereno): banda #f9e4e9 (--inverso), tinta
-   10,40:1, tenue 4,92:1, verde solo en el foco. Especificidad (0,5,1): gana a
-   v7.css y a estilo-sereno §16 (0,4,0) sin !important. */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es {
-  /* Sin margen: la banda del pie empieza justo donde acaba el blanco del contacto. */
-  margin-top: 0; padding-top: clamp(40px, 6vw, 64px); padding-bottom: 16px;
-  color: var(--tenue); font-size: 15px; line-height: 1.5;
+/* ── Pie común en español (PieEs.tsx y scripts/pie-es.mjs) ─────────────────────
+   Tony (25-11-2026): «al final de todas las páginas, el mismo formato». Lo
+   básico: marca, lema y contacto; los tres enlaces principales; las cuatro ramas
+   del árbol (las mismas del menú ☰) en columnas cortas —6 a la vista y el resto
+   en «Ver todo»—, que en el móvil son acordeones de 56 px; y una línea final
+   pequeña con idioma, lo legal, créditos y ©. Lo usan igual React y las páginas
+   estáticas (el generador pega este archivo en su <style>): no depende de .v7 y
+   trae sus colores. Banda #f9e4e9: tinta #1e2a36 12,0:1, tenue #515b67 5,7:1,
+   vino #8e3b55 6,0:1; foco verde #2d684c 5,4:1. */
+.pie-es {
+  --pe-banda: #f9e4e9;
+  --pe-tinta: #1e2a36;
+  --pe-tenue: #515b67;
+  --pe-vino: #8e3b55;
+  --pe-rosa: #b5426a;
+  --pe-verde: #2d684c;
+  --pe-linea: rgba(30, 42, 54, .16);
+  --pe-titular: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
+  display: block; width: 100%; max-width: none; margin: 0; padding: clamp(40px, 6vw, 64px) 0 20px;
+  background: var(--pe-banda); color: var(--pe-tenue); border: 0;
+  font: 400 15px/1.5 system-ui, -apple-system, 'Segoe UI', sans-serif; text-align: start;
 }
-@media (max-width: 860px) {
-  /* La barra fija se esconde con el pie a la vista: no hace falta su hueco. */
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es { padding-bottom: 24px; }
+html[data-tema='oscuro'] .pie-es {
+  --pe-banda: #1d1a26; --pe-tinta: #f3eef0; --pe-tenue: #b9c1cc; --pe-vino: #f2a7c0; --pe-rosa: #f2a7c0; --pe-verde: #8fd3ac;
+  --pe-linea: rgba(255, 255, 255, .16);
 }
+.pie-es *, .pie-es *::before, .pie-es *::after { box-sizing: border-box; }
+.pie-es .pie-es-in { width: min(1180px, 100%); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 721px) { .pie-es .pie-es-in { padding: 0 24px; } }
+.pie-es a { color: var(--pe-tenue); text-decoration: none; }
+.pie-es a:hover { color: var(--pe-tinta); text-decoration: underline; text-underline-offset: 3px; }
+.pie-es :focus-visible { outline: 2px solid var(--pe-verde); outline-offset: 2px; border-radius: 4px; }
+.pie-es ul { list-style: none; margin: 0; padding: 0; }
+.pie-es li { margin: 0; padding: 0; }
+.pie-es li::before { content: none; }
+.pie-es p { margin: 0; }
 
-/* Marca y lema */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-cabeza {
-  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px;
-  padding-bottom: 24px; border-bottom: 1px solid var(--linea-fuerte);
-}
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-cabeza p { margin: 0; text-wrap: balance; }
+/* Marca, lema y contacto */
+.pie-es .pie-es-cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-bottom: 20px; }
+.pie-es .pie-es-marca { display: inline-flex; align-items: center; min-height: 44px; color: var(--pe-tinta); }
+.pie-es .v7-logo { display: inline-flex; align-items: center; gap: 7px; }
+.pie-es .v7-logo .v7-logo-torii { display: none; }
+.pie-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 24px; height: 24px; }
+html .pie-es .pie-es-marca .v7-logo svg.v7-logo-sakura { color: var(--pe-rosa); }
+/* Clase repetida a propósito: gana a estilo-sereno §21 y a la montaña sin !important. */
+html .pie-es.pie-es .pie-es-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--pe-titular); font-weight: 600; font-size: 18px; letter-spacing: .01em; text-transform: none; color: var(--pe-tinta); }
+.pie-es .v7-logo-texto { display: inline; font-family: var(--pe-titular); font-weight: 600; font-size: 18px; letter-spacing: .01em; color: var(--pe-tinta); }
+.pie-es .pie-es-lema { flex: 1 1 260px; color: var(--pe-tenue); text-wrap: balance; }
+.pie-es .pie-es-contacto { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.pie-es .pie-es-contacto a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: var(--pe-tinta); font-weight: 600; }
+.pie-es .pie-es-contacto svg { flex: none; width: 18px; height: 18px; color: var(--pe-verde); }
 
-/* Índice: móvil, una columna de acordeones */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice { display: grid; grid-template-columns: 1fr; gap: 0; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col > summary {
-  margin: 0 0 12px; color: var(--tinta);
-  font-size: 15px; font-weight: 600; letter-spacing: 0; text-transform: none;
-}
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col nav { display: grid; gap: 2px; align-content: start; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a {
-  display: inline-flex; align-items: center; gap: 8px; width: fit-content;
-  padding-block: 4px; color: var(--tenue); text-decoration: none; transition: color .15s;
-}
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es a:hover { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es :focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; border-radius: 4px; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-nuevo {
-  flex: none;
-  font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
-  padding: 1px 7px; border-radius: 999px; background: var(--superficie, #fff); color: var(--sakura-tinta);
-}
+/* Lo principal: Inicio · Reseñas · Precios */
+.pie-es .pie-es-primeros { display: flex; flex-wrap: wrap; gap: 0 24px; padding: 4px 0; border-top: 1px solid var(--pe-linea); border-bottom: 1px solid var(--pe-linea); }
+.pie-es .pie-es-primeros a { display: inline-flex; align-items: center; min-height: 48px; font-family: var(--pe-titular); font-size: 18px; font-weight: 600; color: var(--pe-tinta); }
 
-@media (max-width: 720px) {
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col { border-top: 0; border-bottom: 1px solid var(--linea-fuerte); }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col > summary { min-height: 56px; margin: 0; font-size: 16px; }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col nav { padding-bottom: 12px; }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a { min-height: 44px; font-size: 15.5px; }
+/* Las cuatro ramas: móvil, acordeones */
+.pie-es .pie-es-cols { display: grid; grid-template-columns: 1fr; gap: 0; }
+.pie-es .pie-es-col { margin: 0; padding: 0; border: 0; border-bottom: 1px solid var(--pe-linea); background: none; }
+.pie-es .pie-es-col > summary {
+  display: flex; align-items: center; justify-content: space-between; min-height: 56px;
+  list-style: none; cursor: pointer; color: var(--pe-tinta); font-size: 16px; font-weight: 650;
 }
+.pie-es .pie-es-col > summary::-webkit-details-marker { display: none; }
+.pie-es .pie-es-col > summary::after {
+  content: ''; width: 8px; height: 8px; margin-inline-end: 6px; border: solid currentColor; border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.pie-es .pie-es-col[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.pie-es .pie-es-col ul { display: grid; gap: 0; }
+.pie-es .pie-es-col a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; line-height: 1.3; }
+.pie-es .pie-es-col > ul:last-child, .pie-es .pie-es-mas { padding-bottom: 12px; }
+.pie-es .pie-es-mas { margin: 0; border: 0; background: none; }
+.pie-es .pie-es-mas > summary {
+  display: inline-flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer;
+  color: var(--pe-vino); font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;
+}
+.pie-es .pie-es-mas > summary::-webkit-details-marker { display: none; }
+.pie-es .pie-es-mas[open] > summary { display: none; }
+.pie-es .pie-es-nuevo {
+  flex: none; padding: 1px 7px; border-radius: 999px; background: #ffffff; color: var(--pe-vino);
+  font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
+}
+html[data-tema='oscuro'] .pie-es .pie-es-nuevo { background: #2c2838; }
 
-/* Escritorio: cuatro columnas; «Viajes y excursiones» en dos */
+/* Escritorio: columnas siempre abiertas, sin acordeón */
 @media (min-width: 721px) {
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice {
-    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 40px; padding-top: 36px;
-  }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav { display: block; columns: 2; column-gap: 24px; }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav a { display: flex; width: auto; break-inside: avoid; margin-bottom: 2px; }
+  .pie-es .pie-es-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding: 32px 0 8px; }
+  .pie-es .pie-es-col { border: 0; }
+  .pie-es .pie-es-col > summary { min-height: 0; margin: 0 0 10px; pointer-events: none; cursor: default; font-size: 15px; }
+  .pie-es .pie-es-col > summary::after { display: none; }
+  .pie-es .pie-es-col a { min-height: 34px; }
+  .pie-es .pie-es-mas > summary { min-height: 34px; }
 }
-@media (min-width: 1040px) {
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice { grid-template-columns: 2fr 1.15fr 1.35fr 1.35fr; gap: 40px; }
-}
+@media (min-width: 1040px) { .pie-es .pie-es-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 
-/* Línea final: idiomas · legal · créditos, pequeña y discreta */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base {
-  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 32px;
-  margin-top: clamp(28px, 4vw, 48px); padding-top: 16px; border-top: 1px solid var(--linea-fuerte);
-  font-size: 13px;
+/* Línea final: idioma · legal · créditos · © */
+.pie-es .pie-es-base {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px;
+  margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--pe-linea); font-size: 13.5px;
 }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base nav,
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base a { display: inline-flex; align-items: center; min-height: 32px; padding: 0; color: var(--tenue); text-decoration: none; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos { margin: 0; font-size: 13px; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary { display: inline-flex; align-items: center; min-height: 32px; list-style: none; cursor: pointer; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary::-webkit-details-marker { display: none; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary::after { content: '+'; margin-inline-start: 6px; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos[open] > summary::after { content: '−'; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-legal:has(.v7-creditos[open]) .v7-creditos { flex-basis: 100%; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos ul { margin: 4px 0 0; padding-inline-start: 18px; line-height: 1.6; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos ul a { display: inline; min-height: 0; text-decoration: underline; text-underline-offset: 2px; }
+.pie-es .pie-es-base nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
+.pie-es .pie-es-base a { display: inline-flex; align-items: center; min-height: 44px; }
+.pie-es .pie-es-idiomas a { color: var(--pe-tinta); font-weight: 600; }
+.pie-es .pie-es-creditos { margin: 0; padding: 0; border: 0; background: none; }
+.pie-es .pie-es-creditos > summary { display: inline-flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer; }
+.pie-es .pie-es-creditos > summary::-webkit-details-marker { display: none; }
+.pie-es .pie-es-creditos > summary::after { content: '+'; margin-inline-start: 6px; }
+.pie-es .pie-es-creditos[open] { flex-basis: 100%; order: 9; }
+.pie-es .pie-es-creditos[open] > summary::after { content: '−'; }
+.pie-es .pie-es-creditos ul { padding: 0 0 8px 18px; list-style: disc; line-height: 1.6; }
+.pie-es .pie-es-creditos ul a { display: inline; min-height: 0; text-decoration: underline; text-underline-offset: 2px; }
+.pie-es .pie-es-copy { margin-inline-start: auto; }
+@media (max-width: 720px) { .pie-es .pie-es-copy { margin-inline-start: 0; flex-basis: 100%; padding: 8px 0 4px; } }
 
-@media (max-width: 720px) {
-  /* El último acordeón ya cierra con su filete: la línea final no lleva otro. */
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base { margin-top: 12px; padding-top: 8px; border-top: 0; }
-  /* Las 14 de «Viajes y excursiones» en dos columnas: la mitad de alto al abrir. */
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav { display: block; columns: 2; column-gap: 16px; }
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav a { display: flex; width: auto; break-inside: avoid; line-height: 1.3; }
-}
-@media (prefers-reduced-motion: reduce) {
-  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a { transition: none; }
-}
+@media (prefers-reduced-motion: reduce) { .pie-es .pie-es-col > summary::after { transition: none; } }
 
-/* Franja del equipo (Equipo.tsx, fuera de .v7) tras el pie español: es la última
-   línea del pie, no una sección aparte. Sin repetir la marca (ya va arriba) ni
-   filete; mismo ancho que el pie y sin el hueco de la barra fija (oculta aquí). */
-html[lang="es"]:has(.v7-pie-es) section.eq.eq-react { border-top: 0; padding: 0 24px 20px; }
-html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-kap { max-width: 1132px; }
-html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-marca { display: none; }
-html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-guias > summary { font-size: 13px; min-height: 40px; color: var(--eq-tenue); }
+/* Franja del equipo (Equipo.tsx, fuera de .v7) tras el pie español: la misma
+   banda, sin repetir la marca, como última línea del pie. */
+html[lang="es"]:has(.pie-es) section.eq.eq-react { border-top: 0; padding: 0 16px 20px; background: #f9e4e9; }
+html[lang="es"]:has(.pie-es) section.eq.eq-react .eq-kap { max-width: 1132px; }
+html[lang="es"]:has(.pie-es) section.eq.eq-react .eq-marca { display: none; }
+html[lang="es"]:has(.pie-es) section.eq.eq-react .eq-guias > summary { font-size: 13px; min-height: 44px; color: #515b67; }
 @media (max-width: 860px) {
-  html[lang="es"]:has(.v7-pie-es) section.eq.eq-react { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
-  /* Mientras el aviso de cookies está abierto (52 px abajo), la última línea
-     del pie sube por encima de él en vez de quedar tapada (auditoría 24-11). */
-  html[lang="es"]:has(.v7-pie-es):has(.v7-cookies) section.eq.eq-react { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+  html[lang="es"]:has(.pie-es) section.eq.eq-react { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  /* Con el aviso de cookies abierto (52 px abajo), la última línea sube por encima. */
+  html[lang="es"]:has(.pie-es):has(.v7-cookies) section.eq.eq-react { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
 }
+
+/* Dentro de páginas con estilo propio (montaña: .v7-expedicion / .mv-comun) el pie
+   no hereda sus mayúsculas ni su espaciado de letra. */
+.v7-expedicion .pie-es, .mv-comun .pie-es, .v7-expedicion .pie-es :not(.pie-es-nuevo), .mv-comun .pie-es :not(.pie-es-nuevo) { text-transform: none; }
+
+/* Páginas con estilos propios de <summary>/<details> (leyendas, reseñas…): el pie
+   no los hereda. Letra, tamaño y adornos fijados aquí. */
+.pie-es summary { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; letter-spacing: 0; text-transform: none; padding: 0; margin: 0; background: none; border: 0; }
+.pie-es summary::before { content: none; display: none; }
+.pie-es .pie-es-mas > summary::after { content: none; display: none; }
+.pie-es .pie-es-creditos > summary { font-size: 13.5px; font-weight: 400; color: var(--pe-tenue); }
+.pie-es .pie-es-creditos > summary::after { color: inherit; font: inherit; position: static; transform: none; border: 0; width: auto; height: auto; background: none; }
+.pie-es .pie-es-col > summary::after { position: static; background: none; color: inherit; }

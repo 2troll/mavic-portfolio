@@ -703,7 +703,7 @@ const yEN = (n: number) => yenLocal(n, 'en')
 
 export const INVIERNO: Record<'w-es' | 'w-en' | 'w-ar', PaginaOtono> = {
   'w-es': {
-    lang: 'es', ruta: '/es/invierno-kansai/', inicio: '/es/', temporada: 'invierno', guia: 'tony', foto: 'kioto-fushimi',
+    lang: 'es', ruta: '/es/invierno-kansai/', inicio: '/es/', temporada: 'invierno', guia: 'tony', foto: 'kioto-nieve',
     seo: {
       titulo: 'Invierno en Kansai 2026-27: Año Nuevo en Kioto, luces de Kobe, nieve y onsen | Tony Kansai Guide',
       descripcion: `Tours privados de invierno con guía en español: Año Nuevo en Kioto sin multitudes, Kobe Luminarie, nieve en Rokko y onsen en Arima, ciruelos. Desde ${yES(PI.lucesOsaka)} por grupo.`,
@@ -814,7 +814,7 @@ export const INVIERNO: Record<'w-es' | 'w-en' | 'w-ar', PaginaOtono> = {
       },
     ],
     invierno: {
-      fotoLugar: 'Fushimi Inari-taisha',
+      fotoLugar: 'Kinkaku-ji nevado',
       touristType: 'Familias y parejas de España y México',
       esencial: {
         titulo: 'Lo esencial',

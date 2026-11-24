@@ -11,6 +11,9 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { PAGINAS } from './contenido'
+import { CabeceraEs } from './CabeceraEs'
+import { PieEs } from './PieEs'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
@@ -74,7 +77,8 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      <header className="v7-cabecera cristal">
+      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {p.lang === 'es' ? <CabeceraEs activo={p.ruta} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <header className="v7-cabecera cristal">
         <Link to={p.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-idiomas" aria-label="Language">
           {hermanas.map(([k, x]) => (
@@ -84,7 +88,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <a className="v7-boton v7-boton-peq" href={wa} target="_blank" rel="noopener noreferrer" aria-label={visible(p.final.boton)}>
           <span className="v7-solo-ancho">{visible(p.final.boton)}</span><span className="v7-solo-movil"><IconoWa /></span>
         </a>
-      </header>
+      </header>}
 
       <main>
         <section className="v7-otono-hero">
@@ -163,7 +167,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
 
       <FranjaVentajas lang={p.lang} />
 
-      <footer className="v7-pie">
+      {p.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITO ? [{ foto: p.foto.lugar, ...CREDITO }] : undefined} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
@@ -179,7 +183,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
             <li>{p.foto.lugar}: <a href={CREDITO.url} target="_blank" rel="noopener noreferrer">{CREDITO.autor}</a>, {CREDITO.licencia}</li>
           </ul>
         </details>
-      </footer>
+      </footer>}
     </div>
   )
 }
