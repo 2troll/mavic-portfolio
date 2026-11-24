@@ -171,7 +171,7 @@ function jobPosting(lang, t) {
 }
 
 // 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
-const CSS_ES = `:root{--fg:#1e2a36;--suave:#515b67;--fondo:#f2e6e7;--verde:#2d684c;--bermellon:#2d684c;--linea:#dcc4c9;--rosa:#8e3b55}
+const CSS_ES = `:root{--fg:#1e2a36;--suave:#515b67;--fondo:#fdeff2;--verde:#2d684c;--bermellon:#2d684c;--linea:#eccdd5;--rosa:#8e3b55}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}
 body{margin:0;background:var(--fondo);color:var(--fg);font:18px/1.7 'Source Sans 3',system-ui,sans-serif}
 [dir=rtl] body,[lang=ar] body{font-family:Tajawal,system-ui,sans-serif}
@@ -294,7 +294,7 @@ ${alternos}
 <meta property="og:description" content="${esc(t.desc)}">
 <meta property="og:image" content="${BASE}/tr/foto/kobe-camii-1920.webp">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#123f3a'}">
+<meta name="theme-color" content="${lang === 'es' ? '#fdeff2' : '#123f3a'}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(jobPosting(lang, t))}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

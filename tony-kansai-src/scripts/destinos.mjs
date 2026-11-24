@@ -295,7 +295,7 @@ function pagina(lang) {
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow">
-<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#f3eee4'}">
+<meta name="theme-color" content="${lang === 'es' ? '#fdeff2' : '#f3eee4'}">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]}">`).join('\n')}
 <link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
@@ -313,7 +313,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 </head>
 <body>
 <a class="saltar" href="#${ORDEN_PAISES[0]}">${esc(t.indice)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">⛩</span> Tony Kansai Guide</a>
+<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
 ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
   { t: t.nav.g1, enlaces: ORDEN_PAISES.map((p) => [esc(PAISES[p][lang].n), `#${p}`]) },
   { t: t.nav.g2, enlaces: t.nav.japon.map(([n, h]) => [esc(n), h]) },
@@ -363,10 +363,10 @@ ${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 
 // Mismo papel y tinta que la página de precios (scripts/precios.mjs), solo texto.
 // 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
-const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#e9d5d8;--eq-tenue:#515b67;--eq-acento:#2d684c}
+const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#f9e4e9;--eq-tenue:#515b67;--eq-acento:#2d684c}
 
-:root{--papel:#f2e6e7;--papel2:#e9d5d8;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--acento:#2d684c;--acento-t:#fff;--rosa:#8e3b55;
---mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.18);--mn-suave:#e9d5d8;--mn-acento:#2d684c;
+:root{--papel:#fdeff2;--papel2:#f9e4e9;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--acento:#2d684c;--acento-t:#fff;--rosa:#8e3b55;
+--mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.18);--mn-suave:#f9e4e9;--mn-acento:#2d684c;
 --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Source Serif 4',Georgia,serif;--r:14px}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}
 *{box-sizing:border-box}

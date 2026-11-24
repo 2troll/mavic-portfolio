@@ -165,6 +165,8 @@ const paginas = [
   { loc: '/en/kyoto-cherry-blossom', priority: '0.9', changefreq: 'weekly', v7: 'sakura' },
   { loc: '/ar/kyoto-cherry-blossom', priority: '0.9', changefreq: 'weekly', v7: 'sakura' },
   { loc: '/ru/kyoto-sakura', priority: '0.9', changefreq: 'weekly', v7: 'sakura' },
+  // Inglés y árabe juntos (25-11-2026): la portada española ya no lleva selector; su pie enlaza aquí.
+  { loc: '/international', priority: '0.5', changefreq: 'monthly', sinAlternas: true },
   // Temporada: invierno en Kansai (24-11-2026). Solo Tony (es/en/ar): /ru/ y /larion/ no llevan tours de invierno.
   { loc: '/es/invierno-kansai', priority: '0.9', changefreq: 'weekly', v7: 'invierno' },
   { loc: '/en/kansai-winter', priority: '0.9', changefreq: 'weekly', v7: 'invierno' },
@@ -285,7 +287,7 @@ function hreflangs(grupo) {
     + (en ? `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${BASE}${en[1] === '/en/' ? '/' : en[1]}"/>` : '')
 }
 
-const url = ({ loc, priority, changefreq, v7 }) => {
+const url = ({ loc, priority, changefreq, v7, sinAlternas }) => {
   // GitHub Pages sirve cada ruta como carpeta: sin barra final responde 301 y
   // Search Console no indexa URLs que redirigen. /booking es un .html real.
   const conBarra = loc === '/' || loc === '/booking' || loc.endsWith('.html') ? loc : `${loc}/`
@@ -306,7 +308,7 @@ const url = ({ loc, priority, changefreq, v7 }) => {
     }
     return `  <url>\n    <loc>${abs}</loc>${hreflangs(grupo)}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`
   }
-  const alternates = loc.endsWith('.html') ? '' : LANGS.map((l) =>
+  const alternates = loc.endsWith('.html') || sinAlternas ? '' : LANGS.map((l) =>
     `\n    <xhtml:link rel="alternate" hreflang="${l}" href="${abs}${l === 'en' ? '' : `?lang=${l}`}"/>`
   ).join('') + `\n    <xhtml:link rel="alternate" hreflang="x-default" href="${abs}"/>`
   return `  <url>\n    <loc>${abs}</loc>${alternates}\n    <lastmod>${lastmod({ loc, v7 })}</lastmod>\n    <changefreq>${changefreq}</changefreq>\n    <priority>${priority}</priority>\n  </url>`

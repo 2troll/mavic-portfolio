@@ -897,9 +897,9 @@ html:has(#portada-texto) .v7-cookies button.si { background: #2a7352; color: #ff
 
 /* ── 21. Temporada «sakura empolvado» (24-11-2026): SOLO las páginas en español ──
    Tony: lo nuevo, solo en español; /en/, /ar/, /ru/ y /larion/ se quedan con la
-   paleta de arriba. El rosa #fbeef2 le pareció «de pastel»: va empolvado.
+   paleta de arriba. El rosa #fbeef2 le pareció «de pastel»: iba empolvado; el 25-11 Tony lo pidió «más clarito de Japón»: usuzakura #fdeff2 y bandas #f9e4e9 (texto ≥ 5,4:1).
    Reparto 60 / 30 / 10
-     60 %  fondo #f2e6e7 y bandas #e9d5d8 (reseñas, pie, cabeceras de tabla, huecos de foto).
+     60 %  fondo #fdeff2 y bandas #f9e4e9 (reseñas, pie, cabeceras de tabla, huecos de foto).
      30 %  blanco #ffffff: tarjetas, reseñas, cabecera y la banda de contacto.
      10 %  verde #2d684c (hover #23513c): el ÚNICO color de acción. Pedido #2f6b4f,
            oscurecido lo justo: daba 4,49:1 sobre la banda.
@@ -912,10 +912,10 @@ html:has(#portada-texto) .v7-cookies button.si { background: #2a7352; color: #ff
    <html>). Especificidad (0,4,1): gana a §1 (0,3,0) sin !important; el oscuro
    explícito (0,5,0) sigue ganando. */
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) {
-  --washi: #f2e6e7;          /* el 60 %: sakura empolvado, fondo de página */
-  --sakura-velo: #e9d5d8;    /* banda: reseñas, pie, cabeceras de tabla, huecos de foto */
-  --sakura: #e9d5d8;         /* pétalo: inicial de reseña, chip «nuevo», selección */
-  --sakura-hondo: #c4949f;   /* solo adorno (kanji grande, filetes): no es texto */
+  --washi: #fdeff2;          /* el 60 %: usuzakura, fondo de página */
+  --sakura-velo: #f9e4e9;    /* banda: reseñas, pie, cabeceras de tabla, huecos de foto */
+  --sakura: #f9e4e9;         /* pétalo: inicial de reseña, chip «nuevo», selección */
+  --sakura-hondo: #e8a9b9;   /* solo adorno (kanji grande, filetes): no es texto */
   --sakura-tinta: #8e3b55;   /* rosa vino para TEXTO de adorno: 5,93 fondo / 5,15 banda */
   --verde: #2d684c;
   --verde-hondo: #23513c;
@@ -925,8 +925,8 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) {
 }
 html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) { --sakura-tinta: #e8a9b9; }
 
-html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)), html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #f2e6e7; color: #1e2a36; }
-html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) ::selection { background: #e9d5d8; color: #1e2a36; }
+html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)), html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #fdeff2; color: #1e2a36; }
+html[lang="es"]:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) ::selection { background: #f9e4e9; color: #1e2a36; }
 html[lang="es"][data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)), html[lang="es"][data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #111723; color: #edf1f6; }
 
 /* Lo que iba en cielo pasa a blanco o a la banda: el azul queda en detalles mínimos. */
@@ -941,10 +941,27 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) #contacto {
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v9-portada-foto, .v8-portada > .v7-hero-foto, .v9-fila-foto, .v8-otra, .v7-resena-foto) { background-color: var(--sakura-velo); }
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-barra-atajos a[aria-current='true'] { background: var(--sakura-velo); }
 html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-sugerencia-idioma a { background: #2d684c; }
-html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button { background: #f2e6e7; }
+html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button { background: #fdeff2; }
 html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) .v7-cookies button.si { background: #2d684c; }
-/* Pie de empresa (fuera de .v7): la misma banda. Sobre #e9d5d8: tinta 10,40, tenue 4,92, foco verde 4,69. */
-html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-fondo: #e9d5d8; --eq-tenue: #515b67; --eq-acento: #2d684c; }
+/* Pie de empresa (fuera de .v7): la misma banda. Sobre #f9e4e9: tinta 10,40, tenue 4,92, foco verde 4,69. */
+html[lang="es"]:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-fondo: #f9e4e9; --eq-tenue: #515b67; --eq-acento: #2d684c; }
 html[lang="es"][data-tema='oscuro']:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-fondo: #1d1a26; --eq-tenue: #a9b4c3; --eq-acento: #8fd3ac; }
 /* Las horas del «día de ejemplo» (otoño, invierno) iban en --acento (verde) y no son un control: rosa vino. */
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-dia span { color: var(--sakura-tinta); }
+
+/* Logo: flor de cerezo en español, torii en el resto (Logo.tsx lleva los dos). */
+.v7-logo-sakura { display: none; }
+[lang="es"] .v7-logo .v7-logo-sakura { display: block; }
+[lang="es"] .v7-logo .v7-logo-torii { display: none; }
+[lang="es"] [lang]:not([lang="es"]) .v7-logo .v7-logo-sakura { display: none; }
+[lang="es"] [lang]:not([lang="es"]) .v7-logo .v7-logo-torii { display: block; }
+
+/* Cabecera española sin selector de idiomas (25-11-2026): en el móvil cabe el
+   nombre junto a la flor, y el botón de WhatsApp vuelve a la derecha (antes lo
+   empujaba el selector, que era el que llevaba margin-inline-start: auto). */
+@media (max-width: 860px) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera > .v7-boton { margin-inline-start: auto; }
+}
+@media (max-width: 560px) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto { display: inline; font-size: 15px; }
+}

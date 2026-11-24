@@ -971,7 +971,7 @@ function relacionados(lang, actual) {
 
 function cabecera({ lang, rutas, clave, secciones, t }) {
   const C = COMUN[lang]
-  return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">⛩</span> Tony Kansai Guide</a>
+  return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
 ${navHTML({ etiqueta: C.nav.etiqueta, abrir: C.nav.abrir, grupos: [
     { t: C.nav.g1, enlaces: secciones.map(([id, n]) => [esc(n), `#${id}`]) },
     { t: C.nav.g2, enlaces: C.herramientas.filter(([, k]) => k !== clave).map(([n, k]) => [esc(n), enlaceRuta(k, lang)]) },
@@ -1011,7 +1011,7 @@ function documento({ lang, rutas, t, ld, cuerpo, script }) {
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(t.desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#f3eee4'}" >
+<meta name="theme-color" content="${lang === 'es' ? '#fdeff2' : '#f3eee4'}" >
 <meta name="color-scheme" content="light dark">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${rutas[l]}">`).join('\n')}
@@ -1300,9 +1300,9 @@ f.addEventListener('change',pinta)})()`
 // siempre en claro (21-11-2026: sin modo oscuro automático, como el resto de la web), cifras tabulares.
 // ═════════════════════════════════════════════════════════════════════════════
 // 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
-const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#e9d5d8;--eq-tenue:#515b67;--eq-acento:#2d684c}
+const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#f9e4e9;--eq-tenue:#515b67;--eq-acento:#2d684c}
 
-:root{--papel:#f2e6e7;--papel2:#e9d5d8;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--linea2:#6b7683;--acento:#2d684c;--acento-t:#fff;--acento-suave:#e9d5d8;--hondo:#ffffff;--hondo-t:#1e2a36;--hondo-g:#515b67;--rosa:#8e3b55;
+:root{--papel:#fdeff2;--papel2:#f9e4e9;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--linea2:#6b7683;--acento:#2d684c;--acento-t:#fff;--acento-suave:#f9e4e9;--hondo:#ffffff;--hondo-t:#1e2a36;--hondo-g:#515b67;--rosa:#8e3b55;
 --mn-tarjeta:var(--tarjeta);--mn-texto:var(--tinta);--mn-linea:var(--linea2);--mn-suave:var(--papel2);--mn-acento:var(--acento);
 --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Source Serif 4',Georgia,serif;--r:14px;color-scheme:light}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}

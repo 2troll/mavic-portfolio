@@ -4,7 +4,7 @@
    acordeones de 56 px cerrados al montar) y, al final, una línea pequeña con
    los idiomas, lo legal y los créditos plegados. Sin chips ni tarjetas: texto,
    aire y filetes finos. Todo bajo html[lang="es"] y .v7-pie-es: EN/AR/RU no
-   cambian. Colores de §21 (estilo-sereno): banda #e9d5d8 (--inverso), tinta
+   cambian. Colores de §21 (estilo-sereno): banda #f9e4e9 (--inverso), tinta
    10,40:1, tenue 4,92:1, verde solo en el foco. Especificidad (0,5,1): gana a
    v7.css y a estilo-sereno §16 (0,4,0) sin !important. */
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es {

@@ -452,13 +452,16 @@ function Cabecera({ p, troncal }: { p: Pagina; troncal: boolean }) {
         {/* «Ventajas» como un enlace más: el regalo y la negrita la hacían insignia de relleno (crítica, 21-11). */}
         {VENTAJAS[p.id] && <Link to={VENTAJAS[p.id].ruta} className="v7-ancla-ventajas">{VENTAJAS[p.id].corto}</Link>}
       </nav>
-      <nav className="v7-idiomas" aria-label={p.nav.idioma}>
+      {/* En español, sin selector (Tony, 25-11-2026: «que el español, que es la mayoría
+          de mis clientes, siempre vea la página en español»). El inglés y el árabe
+          viven en /international/, enlazada desde el pie. Los hreflang no cambian. */}
+      {p.lang !== 'es' && <nav className="v7-idiomas" aria-label={p.nav.idioma}>
         {HERMANAS[p.guia].map((h) => (
           <Link key={h.id} to={PAGINAS[h.id].ruta} lang={PAGINAS[h.id].lang} aria-current={h.id === p.id ? 'page' : undefined}>
             {h.etiqueta}
           </Link>
         ))}
-      </nav>
+      </nav>}
       <a className={`v7-boton v7-boton-peq${g.tg ? ' v7-tg' : ''}`} href={enlaceGuia(p.guia, msg)} target="_blank" rel="noopener noreferrer" aria-label={`${p.nav.contacto} — ${canal(p)}`}>
         <IconoCanal tg={!!g.tg} /> <span className="v7-solo-ancho">{p.nav.contacto}</span>
       </a>
@@ -1208,12 +1211,9 @@ function PieEs({ p }: { p: Pagina }) {
         ))}
       </div>
       <div className="pie-es-base">
+        {/* Un solo enlace: la página de inglés y árabe (estática, public/international/). */}
         <nav className="pie-es-idiomas" aria-label={p.pie.otrosIdiomas}>
-          {(Object.keys(PAGINAS) as PaginaId[]).filter((k) => k !== p.id).map((k) => (
-            <Link key={k} to={PAGINAS[k].ruta} lang={PAGINAS[k].lang}>
-              {k === 'larion' ? 'English · Larion' : HERMANAS[PAGINAS[k].guia].find((h) => h.id === k)?.etiqueta}
-            </Link>
-          ))}
+          <a href="/international/" lang="en">English · <span lang="ar" dir="rtl">العربية</span></a>
         </nav>
         <div className="pie-es-legal">
           <nav aria-label={p.pie.legal}>

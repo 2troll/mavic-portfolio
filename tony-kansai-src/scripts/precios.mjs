@@ -461,7 +461,7 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
 <title>${esc(t.title)}</title>
 <meta name="description" content="${esc(desc)}">
 <meta name="robots" content="index, follow, max-image-preview:large">
-<meta name="theme-color" content="${lang === 'es' ? '#f2e6e7' : '#fdfcfa'}">
+<meta name="theme-color" content="${lang === 'es' ? '#fdeff2' : '#fdfcfa'}">
 <link rel="canonical" href="${url}">
 ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]}">`).join('\n')}
 <link rel="alternate" hreflang="x-default" href="${BASE}${RUTA.en}">
@@ -481,7 +481,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 </head>
 <body>
 <a class="saltar" href="#tarifas">${esc(t.secs.tarifas)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">⛩</span> Tony Kansai Guide</a>
+<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
 ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
   { t: t.nav.g1, enlaces: secciones.map(([id, n]) => [esc(n), `#${id}`]) },
   { t: t.nav.g2, enlaces: t.nav.tours.map(([n, h]) => [esc(n), h]) },
@@ -571,9 +571,9 @@ ${lang === 'es' ? '<script src="/caida.js" defer></script>\n' : ''}</body>
 // Zen Old Mincho y el verde solo para la acción (antes papel crema y bermellón de
 // torii, que Antonio llama «Japón barato»). Precios en cifras tabulares.
 // 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
-const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#e9d5d8;--eq-tenue:#515b67;--eq-acento:#2d684c}
+const CSS_ES = `html[lang=es] section.eq:not([class*="eq--"]){--eq-fondo:#f9e4e9;--eq-tenue:#515b67;--eq-acento:#2d684c}
 
-:root{--papel:#f2e6e7;--papel2:#e9d5d8;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--acento:#2d684c;--acento-t:#fff;
+:root{--papel:#fdeff2;--papel2:#f9e4e9;--tarjeta:#ffffff;--tinta:#1e2a36;--gris:#515b67;--linea:rgba(30,42,54,.12);--acento:#2d684c;--acento-t:#fff;
 --mn-tarjeta:#ffffff;--mn-texto:#1e2a36;--mn-linea:rgba(30,42,54,.14);--mn-suave:#ffffff;--mn-acento:#2d684c;
 --sans:'Geist',system-ui,-apple-system,'Segoe UI',sans-serif;--serif:'Zen Old Mincho','Hiragino Mincho ProN','Yu Mincho',Georgia,serif;--r:14px}
 html[dir=rtl]{--sans:'IBM Plex Sans Arabic',system-ui,sans-serif;--serif:'IBM Plex Sans Arabic',system-ui,sans-serif}

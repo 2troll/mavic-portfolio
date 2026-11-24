@@ -134,7 +134,7 @@ const yen = (n, lang) => { const v = (Math.round(n / 100) * 100).toLocaleString(
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 
 // 24-11-2026: la paleta «sakura empolvado» solo va en español; EN/AR siguen con la hoja de siempre.
-const CSS_ES = `:root{--f:#f2e6e7;--t:#1e2a36;--g:#515b67;--b:#dcc4c9;--c:#ffffff;--a:#8e3b55;--ok:#2d684c}
+const CSS_ES = `:root{--f:#fdeff2;--t:#1e2a36;--g:#515b67;--b:#eccdd5;--c:#ffffff;--a:#8e3b55;--ok:#2d684c}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
 .res ul{padding-inline-start:20px}
 a{color:inherit}.w{width:min(760px,100% - 32px);margin-inline:auto}
