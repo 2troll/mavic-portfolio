@@ -258,6 +258,55 @@
           "desc": "Mario, a professional private guide for four years based in Kansai, travels with English-speaking parties anywhere in Japan: otaku days (anime, Pokémon cards, trains, cameras, electronics) and full-service trips for older travelers. He also speaks Spanish."
         }
       }
+    },
+    {
+      "id": "musulmanas",
+      "ld": "/en/muslim-female-guide-japan/#servicio",
+      "idiomas": [
+        "ar",
+        "id",
+        "en",
+        "fr",
+        "ja"
+      ],
+      "zona": "Kansai: Osaka, Kyoto, Nara, Kobe",
+      "contacto": {
+        "wa": "34634193106"
+      },
+      "versiones": {
+        "en": {
+          "ruta": "/en/muslim-female-guide-japan/",
+          "nombre": "Muslimah guides",
+          "linea": "Female Muslim guides in Kansai",
+          "boton": "View page",
+          "oculto": " of the Muslim women guides",
+          "desc": "Four Muslim women guides who live in Osaka and Kyoto guide Muslim women, women-only groups and families in Arabic, Indonesian, English, French and Japanese."
+        },
+        "ar": {
+          "ruta": "/ar/murshida-muslima-yaban/",
+          "nombre": "مرشدات مسلمات",
+          "linea": "مرشدات مسلمات في كانساي",
+          "boton": "عرض الصفحة",
+          "oculto": " للمرشدات المسلمات",
+          "desc": "أربع مرشدات مسلمات يعشن في أوساكا وكيوتو يرشدن النساء المسلمات والمجموعات النسائية والعائلات بالعربية والإندونيسية والإنجليزية والفرنسية واليابانية."
+        },
+        "es": {
+          "ruta": "/es/guia-musulmana-japon/",
+          "nombre": "Guías musulmanas",
+          "linea": "Guías musulmanas mujeres en Kansai",
+          "boton": "Ver página",
+          "oculto": " de las guías musulmanas",
+          "desc": "Cuatro guías musulmanas que viven en Osaka y Kioto guían a mujeres, grupos de mujeres y familias musulmanas en árabe, indonesio, inglés, francés y japonés."
+        },
+        "fr": {
+          "ruta": "/fr/guide-musulmane-japon/",
+          "nombre": "Guides musulmanes",
+          "linea": "Guides musulmanes femmes dans le Kansai",
+          "boton": "Voir la page",
+          "oculto": " des guides musulmanes",
+          "desc": "Quatre guides musulmanes qui vivent à Osaka et Kyoto accompagnent les femmes, groupes de femmes et familles musulmanes en arabe, indonésien, anglais, français et japonais."
+        }
+      }
     }
   ]
 }
