@@ -1,0 +1,103 @@
+/* ── Pie de la portada española (PieEs en PaginaGuia.tsx, 24-11-2026) ─────────
+   Tony: «la parte de abajo está sobrecargada». Patrón de pie de Linear/Vercel/
+   shadcn: marca y lema arriba, UN índice de cuatro grupos (en el móvil,
+   acordeones de 56 px cerrados al montar) y, al final, una línea pequeña con
+   los idiomas, lo legal y los créditos plegados. Sin chips ni tarjetas: texto,
+   aire y filetes finos. Todo bajo html[lang="es"] y .v7-pie-es: EN/AR/RU no
+   cambian. Colores de §21 (estilo-sereno): banda #e9d5d8 (--inverso), tinta
+   10,40:1, tenue 4,92:1, verde solo en el foco. Especificidad (0,5,1): gana a
+   v7.css y a estilo-sereno §16 (0,4,0) sin !important. */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es {
+  /* Sin margen: la banda del pie empieza justo donde acaba el blanco del contacto. */
+  margin-top: 0; padding-top: clamp(40px, 6vw, 64px); padding-bottom: 16px;
+  color: var(--tenue); font-size: 15px; line-height: 1.5;
+}
+@media (max-width: 860px) {
+  /* La barra fija se esconde con el pie a la vista: no hace falta su hueco. */
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es { padding-bottom: 24px; }
+}
+
+/* Marca y lema */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-cabeza {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 20px;
+  padding-bottom: 24px; border-bottom: 1px solid var(--linea-fuerte);
+}
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-cabeza p { margin: 0; text-wrap: balance; }
+
+/* Índice: móvil, una columna de acordeones */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice { display: grid; grid-template-columns: 1fr; gap: 0; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col > summary {
+  margin: 0 0 12px; color: var(--tinta);
+  font-size: 15px; font-weight: 600; letter-spacing: 0; text-transform: none;
+}
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col nav { display: grid; gap: 2px; align-content: start; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a {
+  display: inline-flex; align-items: center; gap: 8px; width: fit-content;
+  padding-block: 4px; color: var(--tenue); text-decoration: none; transition: color .15s;
+}
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es a:hover { color: var(--tinta); text-decoration: underline; text-underline-offset: 3px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es :focus-visible { outline: 2px solid var(--verde); outline-offset: 2px; border-radius: 4px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-nuevo {
+  flex: none;
+  font-size: 11px; font-weight: 600; letter-spacing: .04em; text-transform: uppercase;
+  padding: 1px 7px; border-radius: 999px; background: var(--superficie, #fff); color: var(--sakura-tinta);
+}
+
+@media (max-width: 720px) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col { border-top: 0; border-bottom: 1px solid var(--linea-fuerte); }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col > summary { min-height: 56px; margin: 0; font-size: 16px; }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col nav { padding-bottom: 12px; }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a { min-height: 44px; font-size: 15.5px; }
+}
+
+/* Escritorio: cuatro columnas; «Viajes y excursiones» en dos */
+@media (min-width: 721px) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice {
+    grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 36px 40px; padding-top: 36px;
+  }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav { display: block; columns: 2; column-gap: 24px; }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav a { display: flex; width: auto; break-inside: avoid; margin-bottom: 2px; }
+}
+@media (min-width: 1040px) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-indice { grid-template-columns: 2fr 1.15fr 1.35fr 1.35fr; gap: 40px; }
+}
+
+/* Línea final: idiomas · legal · créditos, pequeña y discreta */
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base {
+  display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 8px 32px;
+  margin-top: clamp(28px, 4vw, 48px); padding-top: 16px; border-top: 1px solid var(--linea-fuerte);
+  font-size: 13px;
+}
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base nav,
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base a { display: inline-flex; align-items: center; min-height: 32px; padding: 0; color: var(--tenue); text-decoration: none; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos { margin: 0; font-size: 13px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary { display: inline-flex; align-items: center; min-height: 32px; list-style: none; cursor: pointer; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary::-webkit-details-marker { display: none; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos > summary::after { content: '+'; margin-inline-start: 6px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos[open] > summary::after { content: '−'; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-legal:has(.v7-creditos[open]) .v7-creditos { flex-basis: 100%; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos ul { margin: 4px 0 0; padding-inline-start: 18px; line-height: 1.6; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-creditos ul a { display: inline; min-height: 0; text-decoration: underline; text-underline-offset: 2px; }
+
+@media (max-width: 720px) {
+  /* El último acordeón ya cierra con su filete: la línea final no lleva otro. */
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-base { margin-top: 12px; padding-top: 8px; border-top: 0; }
+  /* Las 14 de «Viajes y excursiones» en dos columnas: la mitad de alto al abrir. */
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav { display: block; columns: 2; column-gap: 16px; }
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .pie-es-dos nav a { display: flex; width: auto; break-inside: avoid; line-height: 1.3; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-pie-es .v7-pie-col a { transition: none; }
+}
+
+/* Franja del equipo (Equipo.tsx, fuera de .v7) tras el pie español: es la última
+   línea del pie, no una sección aparte. Sin repetir la marca (ya va arriba) ni
+   filete; mismo ancho que el pie y sin el hueco de la barra fija (oculta aquí). */
+html[lang="es"]:has(.v7-pie-es) section.eq.eq-react { border-top: 0; padding: 0 24px 20px; }
+html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-kap { max-width: 1132px; }
+html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-marca { display: none; }
+html[lang="es"]:has(.v7-pie-es) section.eq.eq-react .eq-guias > summary { font-size: 13px; min-height: 40px; color: var(--eq-tenue); }
+@media (max-width: 860px) {
+  html[lang="es"]:has(.v7-pie-es) section.eq.eq-react { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+}

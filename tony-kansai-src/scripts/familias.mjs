@@ -409,6 +409,8 @@ h2{font-size:clamp(32px,5vw,64px);margin:0 0 18px;letter-spacing:-.025em}h3{font
 .cab a{color:#fff;text-decoration:none}.marca{display:flex;align-items:center;gap:10px;font-weight:600;font-size:15px;line-height:1.2}
 .marca .mono{width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:'Zen Old Mincho',Georgia,serif;font-size:18px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
 .marca small{display:block;font-weight:400;opacity:.8;font-size:12.5px}
+/* Móvil 24-11: en pantallas estrechas el lema partía la marca en 4 líneas y «Antonio» se salía por arriba */
+@media (max-width:420px){html[lang=es] .cab .kap{gap:10px}html[lang=es] .marca{min-width:0}html[lang=es] .marca small{display:none}html[lang=es] .cab nav{gap:12px}}
 .cab nav{display:flex;gap:22px;font-size:14.5px;align-items:center}.cab nav a{opacity:.85}.cab nav a:hover{opacity:1}
 .cab nav a.siempre{opacity:1;padding:8px 14px;border-radius:999px;background:rgba(255,255,255,.14);box-shadow:inset 0 0 0 1px rgba(255,255,255,.3);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px)}
 

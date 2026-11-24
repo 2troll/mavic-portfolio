@@ -1544,3 +1544,8 @@ a.v7-boton[href^="https://t.me/"], a.cu-boton[href^="https://t.me/"], a.vn-boton
 .v7-sugerencia-idioma a { padding: 7px 14px; border-radius: 999px; background: var(--acento, #b4232c); color: #fff; text-decoration: none; white-space: nowrap; }
 .v7-sugerencia-idioma button { border: 0; background: none; font: inherit; font-size: 18px; line-height: 1; padding: 4px 8px; cursor: pointer; color: inherit; opacity: 0.6; }
 @media (max-width: 420px) { .v7-sugerencia-idioma { font-size: 13px; gap: 6px; } }
+
+/* Móvil 24-11-2026 (solo ES): en las páginas legales la etiqueta en negrita («Clientes sordos o con
+   pérdida auditiva:») no podía encogerse y empujaba el texto fuera de la línea. Párrafo normal. */
+html[lang="es"] .v7-legal .prose-custom li.flex.gap-2 { display: block; overflow-wrap: anywhere; }
+html[lang="es"] .v7-legal .prose-custom li.flex.gap-2 > span:first-child { margin-inline-end: 0.35em; }

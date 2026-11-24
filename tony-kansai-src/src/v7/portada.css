@@ -119,30 +119,4 @@
 .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-otra { margin: 10px 0 0; font-size: 15px; }
 .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temp-otra a { color: var(--tinta); text-underline-offset: 4px; }
 
-/* ── Explora: índice de todo lo que ofrece la web (24-11-2026). Chips en tres
-   grupos; en escritorio, tres columnas. Sin tarjetas: solo texto y filetes. ── */
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-seccion.v7-explora { padding-top: 24px; }
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora h2 { font-size: clamp(1.3rem, 5vw, 1.6rem); margin-bottom: 14px; }
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupos { display: grid; gap: 14px; }
-@media (min-width: 900px) {
-  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupos { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 32px; }
-}
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo h3 {
-  margin: 0 0 8px; font-family: inherit; font-size: 13px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--tenue);
-}
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px; }
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a {
-  display: inline-flex; align-items: center; gap: 6px; min-height: 34px; padding: 5px 12px;
-  border: 1px solid var(--linea-fuerte); border-radius: 999px; background: var(--superficie, #fff);
-  color: var(--tinta); font-size: 14.5px; line-height: 1.25; text-decoration: none;
-  transition: border-color .15s, color .15s;
-}
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a:hover { border-color: var(--acento); color: var(--acento); }
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a:focus-visible { outline: 2px solid var(--acento); outline-offset: 2px; }
-.v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-nuevo {
-  font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .04em;
-  padding: 1px 6px; border-radius: 999px; background: var(--sakura, #f6d9e0); color: var(--sakura-tinta, #9c3d60);
-}
-@media (prefers-reduced-motion: reduce) {
-  .v7.v7-troncal:not(.v7-expedicion):not(.v7-sin-pixel) .v7-explora-grupo a { transition: none; }
-}
+/* El índice «Explora» (chips) se fundió con el pie español: ver pie-es.css. */

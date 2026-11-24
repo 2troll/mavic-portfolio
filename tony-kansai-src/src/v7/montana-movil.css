@@ -25,3 +25,26 @@
   /* Que la barra fija de WhatsApp no tape el final de la página. */
   html .v7.v7-montana main { padding-bottom: 84px; }
 }
+
+/* Móvil 24-11-2026 (solo ES): nada que se salga ni se corte en 320-390 px. */
+/* La ficha del monte es una rejilla sin columnas: la foto (441 px) la ensanchaba fuera de la pantalla. */
+html[lang="es"] .v7.v7-montana .ex-panel-ficha { grid-template-columns: minmax(0, 1fr); }
+html[lang="es"] .v7.v7-montana .ex-panel-ficha :is(h3, p, a) { overflow-wrap: anywhere; }
+/* Calendario: los nombres de ruta se cortaban con «…» (Hoshi no Buranko); ahora bajan de línea. */
+html[lang="es"] .v7.v7-montana .ex-calendario tbody th { white-space: normal; overflow: visible; text-overflow: clip; line-height: 1.2; overflow-wrap: anywhere; }
+/* Alturas: ocho columnas de 30 px; la etiqueta parte la palabra en vez de salirse. */
+html[lang="es"] .v7.v7-montana .ex-alturas :is(li, button) { min-width: 0; }
+html[lang="es"] .v7.v7-montana .ex-alturas-n { overflow-wrap: anywhere; }
+/* Tarjeta del guía: el botón «Escribir a Tony» (sin salto) se salía de la tarjeta. */
+html[lang="es"] .v7.v7-montana .v7-montana-guia { flex: 1 1 min(320px, 100%); flex-wrap: wrap; min-width: 0; }
+html[lang="es"] .v7.v7-montana .v7-montana-guia .v7-boton { white-space: normal; text-align: center; }
+/* «Verlo en relieve» + «Pedir esta ruta» (sin salto) en dos columnas no cabían: en móvil, uno debajo del otro. */
+@media (max-width: 560px) {
+  html[lang="es"] .v7.v7-montana .ex-panel-acciones { grid-template-columns: minmax(0, 1fr); }
+  html[lang="es"] .v7.v7-montana .ex-panel-acciones :is(.ex-boton, .ex-boton-linea) { white-space: normal; text-align: center; }
+}
+/* «1125» en negrita no cabe en una columna de 30 px a 320 px. */
+@media (max-width: 360px) {
+  html[lang="es"] .v7.v7-montana .ex-alturas ol { gap: 4px; }
+  html[lang="es"] .v7.v7-montana .ex-alturas-m { font-size: 10.5px; }
+}

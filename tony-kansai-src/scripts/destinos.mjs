@@ -448,6 +448,14 @@ h1{font-size:clamp(34px,7.4vw,64px)}
 .btn{display:inline-flex;align-items:center;gap:10px;min-height:52px;padding:0 26px;border-radius:999px;background:var(--acento);color:var(--acento-t);font-weight:600;font-size:17px;text-decoration:none;transition:transform .15s}
 .btn:active{transform:scale(.97)}
 footer{background:var(--papel2);padding-top:48px;color:var(--tinta)}
+@media (max-width:400px){
+.top .kap{gap:8px}
+.top .marca{font-size:14px;gap:6px;min-width:0;flex:0 1 auto;white-space:normal;line-height:1.15}
+.top .mn-nav{gap:4px!important;flex:0 0 auto}
+.top .mn-js .mn-cta{padding:0 12px;font-size:14px}
+}
+main h1,main h2,main h3,main dt,main td,main th{overflow-wrap:break-word}
+.indice a{min-height:44px}
 `.replace(/\s*\n\s*/g, '')
 const CSS = `
 :root{--papel:#f3eee4;--papel2:#ebe4d6;--tarjeta:#fbf8f2;--tinta:#1d1b18;--gris:#5c574f;--linea:rgba(29,27,24,.14);--acento:#b8381f;--acento-t:#fff;

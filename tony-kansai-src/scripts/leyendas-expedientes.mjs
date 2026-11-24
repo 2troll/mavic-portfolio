@@ -198,6 +198,14 @@ export const CSS_EXPEDIENTES = `
 }
 [dir=rtl] .bloque h4,[dir=rtl] .caso .estado{letter-spacing:0}
 [dir=rtl] .caso h3,[dir=rtl] .resumen-casos .r-t{line-height:1.45}
+/* Móvil 24-11 (solo ES): una palabra larga del título ensanchaba la ficha 36 px fuera de la pantalla */
+html[lang=es] .lista-casos{grid-template-columns:minmax(0,1fr)}
+html[lang=es] .caso-cab>div{min-width:0}
+html[lang=es] .caso h3,html[lang=es] .caso .donde,html[lang=es] .caso .fuente{overflow-wrap:anywhere}
+html[lang=es] .barra{gap:10px}
+html[lang=es] .barra a{min-width:0}
+html[lang=es] details.ent>summary{min-height:44px}
+@media (max-width:400px){html[lang=es] .barra{padding:8px 8px 8px 16px}html[lang=es] .barra a{font-size:14px;line-height:1.25}html[lang=es] .caso{padding:20px 16px}html[lang=es] .caso-cab{gap:14px}html[lang=es] .caso .kanji{font-size:40px}}
 `
 
 // ── Subpáginas ──────────────────────────────────────────────────────────────

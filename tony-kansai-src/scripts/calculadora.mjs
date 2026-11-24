@@ -160,7 +160,8 @@ fieldset{border:0;padding:0;margin:0 0 26px}legend{font-weight:700;font-size:18p
 .faq details{border-top:1px solid var(--b);padding:14px 0}.faq summary{font-weight:600;cursor:pointer}.faq p{color:var(--g);margin:8px 0 0}
 .tabla table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}.tabla th,.tabla td{padding:10px 8px;border-bottom:1px solid var(--b);text-align:start}.tabla th{font-size:14px;color:var(--g);font-weight:600}
 .rel ul{list-style:none;padding:0;margin:0}.rel li{border-top:1px solid var(--b)}.rel a{display:block;padding:14px 0;text-decoration:none;font-weight:600}.rel a::after{content:' →'}[dir=rtl] .rel a::after{content:' ←'}
-footer{padding:30px 0 50px;color:var(--g);font-size:14px}`
+footer{padding:30px 0 50px;color:var(--g);font-size:14px}
+.faq summary{padding-block:10px}`
 const CSS = `:root{--f:#fbfaf7;--t:#17151a;--g:#5d5a63;--b:#e4e0d8;--c:#ffffff;--a:#c8402c;--ok:#1d7a4f}
 *{box-sizing:border-box}html{-webkit-text-size-adjust:100%}body{margin:0;background:var(--f);color:var(--t);font:16px/1.55 Inter,system-ui,-apple-system,"Segoe UI","Geeza Pro","Noto Kufi Arabic",sans-serif}
 .res ul{padding-inline-start:20px}

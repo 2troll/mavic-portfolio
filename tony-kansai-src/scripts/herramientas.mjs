@@ -1357,6 +1357,15 @@ html[dir=rtl] .fr td{padding:14px 0 14px 12px}
 .cierre .btn{background:var(--acento);color:#fff}
 footer{background:var(--papel2);padding-top:48px;color:var(--tinta)}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition:none!important;animation:none!important}}
+/* Móvil 24-11: la cabecera cabe en 320 px (antes el menú se salía 2 px) */
+@media (max-width:400px){
+.top .kap{gap:8px}
+.top .marca{font-size:14px;gap:6px;min-width:0;flex:0 1 auto;white-space:normal;line-height:1.15}
+.top .mn-nav{gap:4px!important;flex:0 0 auto}
+.top .mn-js .mn-cta{padding:0 12px;font-size:14px}
+}
+main h1,main h2,main h3,main dt,main td,main th{overflow-wrap:break-word}
+.indice a{min-height:44px}
 `.replace(/\/\*[\s\S]*?\*\//g, '').replace(/\s*\n\s*/g, '')
 const CSS = `
 :root{--papel:#f3eee4;--papel2:#ebe4d6;--tarjeta:#fbf8f2;--tinta:#1d1b18;--gris:#5c574f;--linea:rgba(29,27,24,.14);--acento:#b8381f;--acento-t:#fff;--suave:rgba(184,56,31,.08);

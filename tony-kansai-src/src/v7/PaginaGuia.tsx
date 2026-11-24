@@ -14,7 +14,7 @@
 
 import { lazy, Suspense, useEffect, useMemo, useRef, useState } from 'react'
 import { Children } from 'react'
-import type { ReactNode } from 'react'
+import type { ReactNode, RefObject } from 'react'
 import { Link } from 'react-router-dom'
 import { APPS } from './datosVentajas'
 import { FranjaVentajas } from './FranjaVentajas'
@@ -36,6 +36,8 @@ import { IconoCanal } from './IconoWa'
 import './figuras.css'
 // Lo que les falta a las piezas de la portada troncal (después de la hoja de estilo general).
 import './portada.css'
+import './resenas-es.css'
+import './pie-es.css'
 import { Experiencias } from './Experiencias'
 import { useAparicion } from './aparicion'
 import { HistoriaManga } from '../v8/HistoriaManga'
@@ -45,6 +47,8 @@ import { listaTours } from '../v8/seoTours'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import type { Lengua } from '../v8/ciudades'
 import resenasTony from '../../public/reviews.json'
+// Miniaturas webp locales de las fotos de reseñas (scripts/miniaturas-resenas.mjs, a mano).
+import MINIS_RESENAS from './resenas-min.json'
 import { CuandoCerca } from './CuandoCerca'
 import { MiraDentro } from '../v8/MiraDentro'
 import { Oracion } from '../v8/Oracion'
@@ -279,6 +283,77 @@ function TextoRecortable({ largo, lang, children }: { largo: boolean; lang: stri
     <div className={`v7-resena-recorte${abierto ? ' abierto' : ''}`}>
       {children}
       <button type="button" className="v7-resena-leer" aria-expanded={abierto} onClick={() => setAbierto((a) => !a)}>{abierto ? menos : mas}</button>
+    </div>
+  )
+}
+
+/** /es/: la tarjeta pide la miniatura local (≤ 640 px, ~35 KB) si el script la
+ *  generó; si no (foto nueva del Worker), la completa. El enlace sigue a la grande. */
+const MINIS = MINIS_RESENAS as Record<string, { src: string; w: number; h: number; mini: string }>
+function atributosFotoEs(photo: string) {
+  const m = MINIS[photo]
+  return { decoding: 'async' as const, fetchpriority: 'low', ...(m ? { src: m.src, width: m.w, height: m.h } : { width: 600, height: 480 }) }
+}
+
+/** /es/: fila de fotos de clientes (miniaturas de 160 px, ~7 KB) que lleva a su
+ *  reseña dentro de la fila deslizable. Solo las que tienen miniatura local. */
+function FotosViajeros({ lista }: { lista: Resena[] }) {
+  const conMini = lista.filter((r) => r.photo && MINIS[r.photo]).slice(0, 8)
+  if (conMini.length < 4) return null
+  const ir = (e: { preventDefault(): void }, id: string) => {
+    const t = document.getElementById(`resena-${id}`)
+    if (!t) return
+    e.preventDefault()
+    const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    t.scrollIntoView({ behavior: quieto ? 'auto' : 'smooth', block: 'nearest', inline: 'start' })
+  }
+  return (
+    <div className="rs-fotos">
+      <p className="rs-fotos-titulo">Fotos de nuestros viajeros</p>
+      <ul>
+        {conMini.map((r) => (
+          <li key={r.id}><a href={`#resena-${r.id}`} onClick={(e) => ir(e, r.id)} aria-label={`Ver la reseña de ${r.name}`}>
+            <img src={MINIS[r.photo!].mini} alt="" width={160} height={160} loading="lazy" decoding="async" />
+          </a></li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+
+/** Portada española: nota media y número real de reseñas, calculados de la
+ *  lista que se pinta (reviews.json + las aprobadas en el Worker), nunca a mano. */
+function ResumenResenas({ resenas, lang }: { resenas: Resena[]; lang: string }) {
+  const media = resenas.reduce((a, r) => a + r.stars, 0) / resenas.length
+  const llenas = Math.round(media)
+  const conFoto = resenas.filter((r) => r.photo).length
+  return (
+    <div className="rs-resumen" role="group" aria-label={`Nota media ${mediaResenas(resenas, lang)} de 5 en ${resenas.length} reseñas`}>
+      <p className="rs-nota" aria-hidden="true">
+        <strong>{mediaResenas(resenas, lang)}</strong>
+        <span className="v7-estrellas">{'★'.repeat(llenas)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - llenas)}</span></span>
+      </p>
+      <p className="rs-cifras"><b>{resenas.length}</b> reseñas de clientes{conFoto > 0 && <> · <b>{conFoto}</b> con fotos de su viaje</>}</p>
+    </div>
+  )
+}
+
+/** Flechas de la fila de reseñas (/es/): pasan una tarjeta. En el móvil se
+ *  desliza con el dedo y con teclado la fila (tabIndex 0) se mueve con las flechas. */
+function MandosFila({ fila, total }: { fila: RefObject<HTMLDivElement | null>; total: number }) {
+  const mover = (dir: 1 | -1) => {
+    const f = fila.current
+    const t = f?.querySelector('figure')
+    if (!f || !t) return
+    const paso = t.getBoundingClientRect().width + parseFloat(getComputedStyle(f).columnGap || '0')
+    const quieto = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    f.scrollBy({ left: dir * paso, behavior: quieto ? 'auto' : 'smooth' })
+  }
+  return (
+    <div className="rs-mandos">
+      <span className="rs-pista">Desliza para leer las {total}</span>
+      <button type="button" onClick={() => mover(-1)} aria-label="Reseña anterior">←</button>
+      <button type="button" onClick={() => mover(1)} aria-label="Reseña siguiente">→</button>
     </div>
   )
 }
@@ -1009,125 +1084,134 @@ const DESTINOS_EXTRA: Record<string, { texto: string; ruta: string; estatica?: b
     { texto: 'كل الوجهات', ruta: '/ar/destinations/', estatica: true },
   ],
 }
-/** Índice «Todo lo que tenemos» de la portada troncal (24-11-2026): lo que la web
- *  ofrece y no sale ya en el cuerpo de la portada (las tres experiencias, sus
- *  «otras puertas» y el precio). Solo rutas que existen en ese idioma (sitemap,
- *  datosRespuestas*, App.tsx) más la página de invierno nueva. Todo con <a>: hay
- *  HTML estático fuera de la SPA y así va entero en el HTML pregenerado. */
-interface GrupoExplora { titulo: string; enlaces: { texto: string; ruta: string; nuevo?: boolean }[] }
-const NUEVO: Record<string, string> = { es: 'nuevo', en: 'new', ar: 'جديد' }
-const EXPLORA: Record<string, GrupoExplora[]> = {
-  es: [
-    { titulo: 'Excursiones y tours', enlaces: [
-      { texto: 'Nara desde Osaka', ruta: '/es/excursion-nara-desde-osaka/' },
-      { texto: 'Hiroshima y Miyajima en un día', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/' },
-      { texto: 'Kioto en 2 horas', ruta: '/es/guia-privado-kioto-2-horas/' },
-      { texto: 'Kioto en bici', ruta: '/es/tour-privado-bici-kioto/' },
-      { texto: 'Kobe', ruta: '/es/kobe/' },
-      { texto: 'Himeji', ruta: '/es/himeji/' },
+/** Pie de la portada española (Tony, 24-11-2026: «la parte de abajo está
+ *  sobrecargada»). Sustituye al índice «Todo lo que tenemos» (chips) y a las seis
+ *  columnas del pie, que repetían muchos enlaces: UN solo índice en cuatro grupos,
+ *  sin repetidos, y debajo, en pequeño, los idiomas, lo legal y los créditos.
+ *  Todos los enlaces de antes siguen en el HTML pregenerado (Google y las IAs):
+ *  los acordeones van abiertos en el HTML y PieColumna los cierra en el móvil.
+ *  EN/AR/RU conservan su pie de siempre. */
+interface EnlacePie { texto: string; ruta: string; app?: boolean; nuevo?: boolean; fuera?: boolean }
+interface GrupoPie { titulo: string; clase?: string; enlaces: EnlacePie[] }
+/** Las páginas de respuesta tienen por título una pregunta larga: en el índice, corto. */
+const RESPUESTA_CORTA: Record<string, string> = {
+  '/es/guia-espanol-kansai/': 'Guía en español en Kansai: servicios y precios',
+  '/es/tour-privado-o-en-grupo-japon/': '¿Tour privado o en grupo en Japón?',
+  '/es/guia-espanol-arabe-japon/': 'Guía en español y árabe en Japón',
+}
+function gruposPieEs(p: Pagina): GrupoPie[] {
+  const respuestas = RESPUESTAS_PROPIAS.filter(([, r]) => r.lang === 'es').map(([, r]) => r)
+  const grupos: GrupoPie[] = [
+    { titulo: 'Viajes y excursiones', clase: 'pie-es-dos', enlaces: [
+      ...CIUDADES_TONY.map((c) => ({ texto: CIUDADES[c].nombre.es, ruta: `${p.ruta}${c}/`, app: true })),
+      { texto: 'Excursión a Nara desde Osaka', ruta: '/es/excursion-nara-desde-osaka/', app: true },
+      { texto: 'Hiroshima y Miyajima en un día', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/', app: true },
+      { texto: 'Kioto en 2 horas', ruta: '/es/guia-privado-kioto-2-horas/', app: true },
+      { texto: 'Kioto en bici', ruta: '/es/tour-privado-bici-kioto/', app: true },
+      { texto: 'Tokio, el Fuji y más: rutas', ruta: '/es/rutas/', app: true },
+      { texto: 'Montaña', ruta: '/es/montana/', app: true },
+      { texto: 'Todos los destinos', ruta: '/es/destinos/' },
     ] },
     { titulo: 'Temporadas', enlaces: [
       { texto: 'Invierno en Kansai', ruta: RUTA_INVIERNO.es, nuevo: true },
-      { texto: 'Otoño en Kioto', ruta: '/es/otono-kioto/' },
-      { texto: 'Sakura en Kioto', ruta: '/es/sakura-kioto/' },
+      { texto: 'Otoño en Kioto', ruta: '/es/otono-kioto/', app: true },
+      { texto: 'Sakura en Kioto', ruta: '/es/sakura-kioto/', app: true },
     ] },
     { titulo: 'Para tu viaje', enlaces: [
-      { texto: 'Ventajas y descuentos', ruta: '/es/ventajas/' },
-      { texto: 'Herramientas gratis', ruta: '/es/herramientas/' },
-      { texto: '¿Te compensa un guía?', ruta: '/es/calculadora-guia/' },
+      ...(p.mercado.enlaces ?? []).map((e) => ({ texto: e.texto, ruta: e.ruta, app: true })),
       { texto: 'Aeropuerto de Kansai', ruta: '/es/aeropuerto-kansai/' },
-      { texto: 'Leyendas de Japón', ruta: '/es/leyendas/' },
-      { texto: 'Japón de TikTok', ruta: '/tiktok/' },
-      { texto: 'Destinos fuera de Japón', ruta: '/es/destinos/' },
+      ...(VENTAJAS[p.id] ? [{ texto: 'Ventajas y descuentos', ruta: VENTAJAS[p.id].ruta, app: true }] : []),
+      { texto: 'Herramientas gratis', ruta: HERRAMIENTAS.es.hub },
+      { texto: '¿Te compensa un guía? Calculadora', ruta: '/es/calculadora-guia/' },
+      { texto: 'Leyendas y lugares perdidos', ruta: '/es/leyendas/' },
+      { texto: 'Japón de TikTok · precio especial', ruta: '/tiktok/' },
+      { texto: 'Mapa de Yuru Camp△ (anime)', ruta: 'https://2troll.github.io/yurucamp-mapa/guia/' },
     ] },
-  ],
-  en: [
-    { titulo: 'Day trips and tours', enlaces: [
-      { texto: 'Nara from Osaka', ruta: '/en/nara-day-trip-from-osaka/' },
-      { texto: 'Kobe in one day', ruta: '/en/kobe-private-guide-one-day/' },
-      { texto: 'Kōyasan day trip', ruta: '/en/koyasan-day-trip-private-guide/' },
-      { texto: 'Hiroshima and Miyajima', ruta: '/en/hiroshima/' },
-      { texto: 'Kyoto in 2 hours', ruta: '/en/kyoto-private-guide-2-hours/' },
-      { texto: 'Kyoto by bike', ruta: '/en/kyoto-private-bike-tour/' },
-      { texto: 'Kyoto with kids', ruta: '/en/kyoto-private-guide-family/' },
+    { titulo: 'Sobre nosotros', enlaces: [
+      ...respuestas.map((r) => ({ texto: RESPUESTA_CORTA[r.ruta] ?? r.titulo, ruta: r.ruta, app: true })),
+      { texto: 'Agencias · Hanma Travel Partners', ruta: '/partners/' },
+      { texto: 'Agencias · Pide presupuesto de guía', ruta: 'https://forms.fillout.com/t/3Pq2Nob6Wkus', fuera: true },
+      { texto: 'Tony Kansai Guide es una empresa de HBH Group', ruta: 'https://hbh.tonykansaiguide.com/es/' },
     ] },
-    { titulo: 'Seasons', enlaces: [
-      { texto: 'Kansai in winter', ruta: RUTA_INVIERNO.en, nuevo: true },
-      { texto: 'Autumn in Kyoto', ruta: '/en/kyoto-autumn/' },
-      { texto: 'Cherry blossom in Kyoto', ruta: '/en/kyoto-cherry-blossom/' },
-    ] },
-    { titulo: 'For your trip', enlaces: [
-      { texto: 'Halal food in Kyoto and Osaka', ruta: '/en/halal-kyoto-osaka/' },
-      { texto: 'Mosques in Kansai', ruta: '/en/mosques-kansai/' },
-      { texto: 'Premium guide in English', ruta: '/private/' },
-      { texto: 'Perks and discounts', ruta: '/en/perks/' },
-      { texto: 'Free travel tools', ruta: '/en/tools/' },
-      { texto: 'Is a guide worth it?', ruta: '/en/private-guide-calculator/' },
-      { texto: 'Kansai Airport', ruta: '/en/kansai-airport/' },
-      { texto: 'Legends of Japan', ruta: '/en/legends/' },
-      { texto: 'TikTok Japan', ruta: '/tiktok/en/' },
-      { texto: 'Destinations beyond Japan', ruta: '/en/destinations/' },
-    ] },
-  ],
-  ar: [
-    { titulo: 'رحلات اليوم الواحد والجولات', enlaces: [
-      { texto: 'هيروشيما وميياجيما في يوم', ruta: '/ar/hiroshima-miyajima-day-trip/' },
-      { texto: 'نارا', ruta: '/ar/nara/' },
-      { texto: 'كوبي', ruta: '/ar/kobe/' },
-      { texto: 'هيميجي', ruta: '/ar/himeji/' },
-      { texto: 'كيوتو في ساعتين', ruta: '/ar/kyoto-private-guide-2-hours/' },
-      { texto: 'كيوتو بالدراجة', ruta: '/ar/kyoto-private-bike-tour/' },
-    ] },
-    { titulo: 'المواسم', enlaces: [
-      { texto: 'الشتاء في كانساي', ruta: RUTA_INVIERNO.ar, nuevo: true },
-      { texto: 'الخريف في كيوتو', ruta: '/ar/kyoto-autumn/' },
-      { texto: 'أزهار الكرز في كيوتو', ruta: '/ar/kyoto-cherry-blossom/' },
-    ] },
-    { titulo: 'لرحلتك', enlaces: [
-      { texto: 'دليل المسافر من الخليج', ruta: '/ar/from-gulf/' },
-      { texto: 'مزايا وخصومات', ruta: '/ar/perks/' },
-      { texto: 'أدوات مجانية للسفر', ruta: '/ar/tools/' },
-      { texto: 'هل يستحق المرشد الخاص؟', ruta: '/ar/private-guide-calculator/' },
-      { texto: 'أساطير اليابان', ruta: '/ar/asatir/' },
-      { texto: 'يابان تيك توك', ruta: '/tiktok/ar/' },
-      { texto: 'وجهات خارج اليابان', ruta: '/ar/destinations/' },
-    ] },
-  ],
+  ]
+  // Lo que ya salió en un grupo anterior no se repite (las respuestas de Kioto,
+  // Nara e Hiroshima ya están en «Viajes y excursiones»). Ningún enlace se pierde.
+  const visto = new Set<string>()
+  for (const g of grupos) g.enlaces = g.enlaces.filter((e) => !visto.has(e.ruta) && !!visto.add(e.ruta))
+  // Destinos extra del pie de siempre que no estén ya: al final del primer grupo.
+  for (const d of DESTINOS_EXTRA.es) if (!visto.has(d.ruta)) { visto.add(d.ruta); grupos[0].enlaces.push({ texto: d.texto, ruta: d.ruta, app: !d.estatica }) }
+  return grupos
 }
 
-function Explora({ p }: { p: Pagina }) {
-  const grupos = EXPLORA[p.lang]
-  // Solo en la portada española (Tony, 24-11): EN/AR se quedan como estaban.
-  if (p.lang !== 'es' || !grupos || !p.precioRef?.explora) return null
+function EnlacePieEs({ e }: { e: EnlacePie }) {
+  const dentro = <>{e.texto}{e.nuevo && <small className="pie-es-nuevo">nuevo</small>}</>
+  if (e.app) return <Link to={e.ruta}>{dentro}</Link>
+  return e.fuera ? <a href={e.ruta} target="_blank" rel="noopener">{dentro}</a> : <a href={e.ruta}>{dentro}</a>
+}
+
+function Creditos({ p }: { p: Pagina }) {
   return (
-    <section className="v7-seccion v7-explora" aria-labelledby="v7-explora-titulo">
-      <h2 id="v7-explora-titulo">{p.precioRef.explora}</h2>
-      <div className="v7-explora-grupos">
-        {grupos.map((g) => (
-          <nav key={g.titulo} className="v7-explora-grupo" aria-label={g.titulo}>
-            <h3>{g.titulo}</h3>
-            <ul>
-              {g.enlaces.map((e) => (
-                <li key={e.ruta}><a href={e.ruta}>{e.texto}{e.nuevo && <small className="v7-explora-nuevo">{NUEVO[p.lang]}</small>}</a></li>
-              ))}
-            </ul>
-          </nav>
+    <details className="v7-creditos">
+      <summary>{p.pie.creditos}</summary>
+      <ul dir="ltr">
+        {CREDITOS.map((c) => (
+          <li key={c.url}>{(c.tr as Record<string, string> | undefined)?.[p.lang] ?? c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
+        ))}
+        {CREDITOS_SONIDO.map((c) => (
+          <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia} (Wikimedia Commons)</li>
+        ))}
+      </ul>
+    </details>
+  )
+}
+
+function PieEs({ p }: { p: Pagina }) {
+  return (
+    <footer className="v7-pie v7-pie-es">
+      <div className="pie-es-cabeza">
+        <strong><Logo /></strong>
+        <p>{p.pie.lema}</p>
+      </div>
+      <div className="pie-es-indice">
+        {gruposPieEs(p).map((g) => (
+          <PieColumna key={g.titulo} lang="es" titulo={g.titulo} todos clase={g.clase}>
+            {g.enlaces.map((e) => <EnlacePieEs key={e.ruta} e={e} />)}
+          </PieColumna>
         ))}
       </div>
-    </section>
+      <div className="pie-es-base">
+        <nav className="pie-es-idiomas" aria-label={p.pie.otrosIdiomas}>
+          {(Object.keys(PAGINAS) as PaginaId[]).filter((k) => k !== p.id).map((k) => (
+            <Link key={k} to={PAGINAS[k].ruta} lang={PAGINAS[k].lang}>
+              {k === 'larion' ? 'English · Larion' : HERMANAS[PAGINAS[k].guia].find((h) => h.id === k)?.etiqueta}
+            </Link>
+          ))}
+        </nav>
+        <div className="pie-es-legal">
+          <nav aria-label={p.pie.legal}>
+            <Link to="/legal/?lang=es">{p.pie.legal}</Link>
+            <Link to="/privacy/?lang=es">{p.pie.privacidad}</Link>
+            <Link to="/terms/?lang=es">{p.pie.condiciones}</Link>
+            <Link to="/cookies/?lang=es">{p.pie.cookies}</Link>
+          </nav>
+          <Creditos p={p} />
+        </div>
+      </div>
+    </footer>
   )
 }
 
 /** Columna del pie: título + hasta 6 enlaces a la vista; el resto en «Ver todo (N)».
  *  Abierta en el HTML; en el móvil se pliega al montar (acordeón). */
 const VER_TODO: Record<string, string> = { es: 'Ver todo', en: 'See all', ar: 'عرض الكل', ru: 'Показать все' }
-function PieColumna({ titulo, lang, children }: { titulo: string; lang: string; children: ReactNode }) {
+function PieColumna({ titulo, lang, children, todos, clase }: { titulo: string; lang: string; children: ReactNode; todos?: boolean; clase?: string }) {
   const ref = useRef<HTMLDetailsElement>(null)
   useEffect(() => { if (ref.current && window.matchMedia('(max-width: 720px)').matches) ref.current.open = false }, [])
   const hijos = Children.toArray(children)
-  const vis = hijos.slice(0, 6), resto = hijos.slice(6)
+  // «todos» (pie español): sin «Ver todo», la lista entera a la vista al abrir.
+  const vis = todos ? hijos : hijos.slice(0, 6), resto = todos ? [] : hijos.slice(6)
   return (
-    <details className="v7-pie-col" open ref={ref}>
+    <details className={clase ? `v7-pie-col ${clase}` : 'v7-pie-col'} open ref={ref}>
       <summary className="v7-pie-titulo">{titulo}</summary>
       <nav aria-label={titulo}>
         {vis}
@@ -1153,6 +1237,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const columnasLarion = useColumnas()
   // Portada troncal (rediseño de Antonio, 21-11-2026) solo en las páginas de Tony.
   const troncal = p.guia === 'tony'
+  // Portada española: reseñas arriba, con resumen y tarjetas de foto grande (resenas-es.css).
+  const esEs = troncal && p.lang === 'es'
+  const filaResenas = useRef<HTMLDivElement>(null)
   // Foto de portada sin «.jpg»: base de sus variantes webp (-600, -900, -1200, -retrato…).
   const baseHero = p.hero.foto.replace(/\.jpg$/, '')
   const principal = useRef<HTMLElement>(null)
@@ -1169,13 +1256,19 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
     if (!troncal) return filtroEstrellas ? resenas.filter((r) => r.stars === filtroEstrellas) : resenas
     const enSuIdioma = (r: Resena) => idiomaTexto(textoEn(r, p.lang)) === p.lang
     const peso = (r: Resena) => (enSuIdioma(r) ? 2 : 0) + (r.photo ? 1 : 0)
-    let lista = [...resenas].sort((a, b) => peso(b) - peso(a))
+    // /es/: a igual peso, el orden del build (reviews.json) y las que solo están en
+    // el Worker detrás. Así la fila no cambia de orden al llegar la petición: antes
+    // la primera tarjeta pasaba al puesto 11 y Chrome, que mantiene el imán en la
+    // tarjeta encajada, desplazaba la fila hasta allí.
+    const delBuild = esEs ? new Map(resenasFijas().map((r, i) => [r.id, i])) : null
+    const puesto = (r: Resena) => delBuild?.get(r.id) ?? Number.MAX_SAFE_INTEGER
+    let lista = [...resenas].sort((a, b) => peso(b) - peso(a) || (delBuild ? puesto(a) - puesto(b) : 0))
     if (p.lang === 'ar') {
       const legibles = lista.filter(enSuIdioma)
       if (legibles.length >= 3) lista = legibles
     }
     return lista
-  }, [troncal, resenas, filtroEstrellas, p.lang])
+  }, [troncal, esEs, resenas, filtroEstrellas, p.lang])
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -1198,6 +1291,89 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
   const hermanas = HERMANAS[p.guia]
   const msgCorto = p.contacto.plantilla(VACIO)
+
+  // Reseñas: en /es/ suben justo tras la portada (Tony, 24-11: «las reseñas son lo
+  // importante»); en el resto de idiomas siguen tras el precio, como estaban.
+  const seccionResenas = (
+    <>
+      {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos.
+        Troncal: una fila que se desliza, sin el resumen de estrellas (todas son de 5★
+        y la cifra ya está en la portada) ni «Ver más»: van todas en el HTML. */}
+    {p.resenas && resenas.length > 0 && (
+      <section className={`v7-seccion${esEs ? ' rs-es' : ''}`} id="resenas">
+        <h2>{p.resenas.titulo}</h2>
+        {esEs && <ResumenResenas resenas={resenas} lang={p.lang} />}
+        {esEs && <FotosViajeros lista={resenasVistas} />}
+        {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
+        {!esEs && <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>}
+        {!troncal && resenas.length >= 20 && (() => {
+          // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
+          const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)
+          return (
+            <div className="v7-resumen tarjeta">
+              <div className="v7-resumen-nota">
+                <strong>{mediaResenas(resenas, p.lang)}</strong>
+                <span className="v7-estrellas" aria-hidden="true">★★★★★</span>
+                <small>{resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}</small>
+              </div>
+              <div className="v7-resumen-barras" role="group">
+                <button type="button" aria-pressed={filtroEstrellas === 0} onClick={() => { setFiltroEstrellas(0); setVerResenas(12) }}>{TODAS[p.lang] ?? TODAS.en}</button>
+                {cuenta.map(([n, c]) => (
+                  <button type="button" key={n} aria-pressed={filtroEstrellas === n} onClick={() => { setFiltroEstrellas(n); setVerResenas(12) }}>
+                    <span>{n}★</span><i style={{ ['--p' as string]: `${(c / resenas.length) * 100}%` }} /><b>{c}</b>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )
+        })()}
+        {/* Larion conserva su diseño de antes (columnas sueltas, sin rejilla ni kanji): a Tony le gustaba así. */}
+        {p.guia === 'larion' ? (
+          <div className="v7-resenas v7-resenas-clasico">
+            {repartir(resenasVistas.slice(0, verResenas), columnasLarion).map((col, c) => (
+              <div key={c} className="v7-resenas-col">{col.map((r) => <TarjetaClasica key={r.id} r={r} lang={p.lang} />)}</div>
+            ))}
+          </div>
+        ) : (
+        <div ref={esEs ? filaResenas : undefined} className={`v7-resenas${troncal ? ' v7-resenas-fila' : ''}`} {...(troncal ? { role: 'region', 'aria-label': p.resenas.titulo, tabIndex: 0 } : {})}>
+          {(troncal ? resenasVistas : resenasVistas.slice(0, verResenas)).map((r) => {
+            const m = r.meta?.[p.lang]
+            const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = lugarEn(m?.tour ?? r.tour, p.lang, !!m)
+            const texto = textoEn(r, p.lang)
+            return (
+            <figure key={r.id} className={`tarjeta${r.photo ? ' v7-resena-con-foto' : ''}`} {...(esEs ? { id: `resena-${r.id}` } : {})}>
+              {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
+                  natural y la rejilla quedaba como un puzle mal encajado. */}
+              {r.photo
+                ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }} aria-label={`${FOTO_DE[p.lang] ?? FOTO_DE.en} ${nombre}`}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} {...(esEs ? atributosFotoEs(r.photo) : {})} /></a>
+                : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
+              <div className="v7-resena-cabeza">
+                <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
+              </div>
+              {/* En /es/ el recorte es más corto (6 líneas en el móvil, resenas-es.css): la tarjeta cabe en una pantalla. */}
+              <TextoRecortable largo={texto.length > (esEs ? 220 : 320)} lang={p.lang}>
+                <TextoResena r={r} lang={p.lang} />
+              </TextoRecortable>
+              <figcaption>
+                <Inicial nombre={nombre} />
+                <span><strong>{nombre}</strong><small>{[lugar, pais].filter(Boolean).join(' · ')}</small></span>
+              </figcaption>
+            </figure>
+            )
+          })}
+        </div>
+        )}
+        {esEs && <MandosFila fila={filaResenas} total={resenasVistas.length} />}
+        {esEs && <p className="v7-opinar rs-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} →</a></p>}
+        {!troncal && resenasVistas.length > verResenas && (
+          <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
+            {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})
+          </button></p>
+        )}
+      </section>
+    )}
+    </>
+  )
 
   return (
     <div className={`v7 v7-pagina lang-${p.lang}${troncal ? ' v7-troncal' : ''}`} lang={p.lang} dir={p.dir}>
@@ -1307,6 +1483,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Troncal: tres experiencias que enlazan a sus páginas (en vez del
             mosaico de 7 ciudades con precio y «Reservar» en cada una). */}
+        {esEs && seccionResenas}
+
         {troncal && <Experiencias p={p} msg={msgCorto} />}
 
         {/* Las ciudades, cada una con su página (v8). En la troncal están en la
@@ -1333,77 +1511,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           </Suspense>
         )}
 
-        {/* Reseñas reales, justo después de los tours: el cliente quiere ver pronto que otros quedaron contentos.
-            Troncal: una fila que se desliza, sin el resumen de estrellas (todas son de 5★
-            y la cifra ya está en la portada) ni «Ver más»: van todas en el HTML. */}
-        {p.resenas && resenas.length > 0 && (
-          <section className="v7-seccion" id="resenas">
-            <h2>{p.resenas.titulo}</h2>
-            {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
-            <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>
-            {!troncal && resenas.length >= 20 && (() => {
-              // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
-              const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)
-              return (
-                <div className="v7-resumen tarjeta">
-                  <div className="v7-resumen-nota">
-                    <strong>{mediaResenas(resenas, p.lang)}</strong>
-                    <span className="v7-estrellas" aria-hidden="true">★★★★★</span>
-                    <small>{resenas.length} {RESENAS_TXT[p.lang] ?? RESENAS_TXT.en}</small>
-                  </div>
-                  <div className="v7-resumen-barras" role="group">
-                    <button type="button" aria-pressed={filtroEstrellas === 0} onClick={() => { setFiltroEstrellas(0); setVerResenas(12) }}>{TODAS[p.lang] ?? TODAS.en}</button>
-                    {cuenta.map(([n, c]) => (
-                      <button type="button" key={n} aria-pressed={filtroEstrellas === n} onClick={() => { setFiltroEstrellas(n); setVerResenas(12) }}>
-                        <span>{n}★</span><i style={{ ['--p' as string]: `${(c / resenas.length) * 100}%` }} /><b>{c}</b>
-                      </button>
-                    ))}
-                  </div>
-                </div>
-              )
-            })()}
-            {/* Larion conserva su diseño de antes (columnas sueltas, sin rejilla ni kanji): a Tony le gustaba así. */}
-            {p.guia === 'larion' ? (
-              <div className="v7-resenas v7-resenas-clasico">
-                {repartir(resenasVistas.slice(0, verResenas), columnasLarion).map((col, c) => (
-                  <div key={c} className="v7-resenas-col">{col.map((r) => <TarjetaClasica key={r.id} r={r} lang={p.lang} />)}</div>
-                ))}
-              </div>
-            ) : (
-            <div className={`v7-resenas${troncal ? ' v7-resenas-fila' : ''}`} {...(troncal ? { role: 'region', 'aria-label': p.resenas.titulo, tabIndex: 0 } : {})}>
-              {(troncal ? resenasVistas : resenasVistas.slice(0, verResenas)).map((r) => {
-                const m = r.meta?.[p.lang]
-                const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = lugarEn(m?.tour ?? r.tour, p.lang, !!m)
-                const texto = textoEn(r, p.lang)
-                return (
-                <figure key={r.id} className={`tarjeta${r.photo ? ' v7-resena-con-foto' : ''}`}>
-                  {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
-                      natural y la rejilla quedaba como un puzle mal encajado. */}
-                  {r.photo
-                    ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }} aria-label={`${FOTO_DE[p.lang] ?? FOTO_DE.en} ${nombre}`}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} /></a>
-                    : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
-                  <div className="v7-resena-cabeza">
-                    <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
-                  </div>
-                  <TextoRecortable largo={texto.length > 320} lang={p.lang}>
-                    <TextoResena r={r} lang={p.lang} />
-                  </TextoRecortable>
-                  <figcaption>
-                    <Inicial nombre={nombre} />
-                    <span><strong>{nombre}</strong><small>{[lugar, pais].filter(Boolean).join(' · ')}</small></span>
-                  </figcaption>
-                </figure>
-                )
-              })}
-            </div>
-            )}
-            {!troncal && resenasVistas.length > verResenas && (
-              <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
-                {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})
-              </button></p>
-            )}
-          </section>
-        )}
+        {/* Portada española: las reseñas van arriba, tras la portada (ver seccionResenas). */}
+        {!esEs && seccionResenas}
 
 
         {/* Desde aquí hasta las preguntas, solo /ru/ y /larion/. En la troncal de
@@ -1568,7 +1677,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {!troncal && <PlanesVenta lang={p.lang} guia={p.guia} url={`${BASE}${p.ruta}`} />}
 
         {/* Contacto */}
-        {troncal ? <><ContactoTroncal p={p} msg={msgCorto} /><Explora p={p} /></> : (
+        {troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
           <section id="contacto" className="v7-seccion">
             <h2>{p.contacto.titulo}</h2>
             <p className="v7-entradilla">{p.contacto.sub}</p>
@@ -1582,6 +1691,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           tienen su página, enlazada desde la cabecera y el pie. */}
       {!troncal && <FranjaVentajas lang={p.lang} />}
 
+      {/* Portada española: pie limpio de un solo índice (PieEs). */}
+      {esEs ? <PieEs p={p} /> : (
       <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div>
@@ -1693,18 +1804,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             </a>
           </PieColumna>
         </div>
-        <details className="v7-creditos">
-          <summary>{p.pie.creditos}</summary>
-          <ul dir="ltr">
-            {CREDITOS.map((c) => (
-              <li key={c.url}>{(c.tr as Record<string, string> | undefined)?.[p.lang] ?? c.foto}: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia}</li>
-            ))}
-            {CREDITOS_SONIDO.map((c) => (
-              <li key={c.url}>Sonido «{c.sonido}»: <a href={c.url} target="_blank" rel="noopener noreferrer">{c.autor}</a>, {c.licencia} (Wikimedia Commons)</li>
-            ))}
-          </ul>
-        </details>
+        <Creditos p={p} />
       </footer>
+      )}
     </div>
   )
 }
