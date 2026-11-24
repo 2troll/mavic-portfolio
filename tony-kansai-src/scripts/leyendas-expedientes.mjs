@@ -6,6 +6,8 @@
 import { existsSync, readFileSync, writeFileSync, mkdirSync } from 'node:fs'
 import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
 import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
+import { cabeceraEnHTML, cabeceraEnCSS } from './cabecera-en.mjs'
+import { pieEnHTML, pieEnCSS } from './pie-en.mjs'
 import { join } from 'node:path'
 import { TERROR } from './leyendas-terror.mjs'
 import TERROR_AR from './leyendas-terror-ar.mjs'
@@ -295,11 +297,12 @@ ${alternas}
 ${fuentesWeb}
 ${preload}
 <script type="application/ld+json">${JSON.stringify(jsonld)}</script>
-<style>${css}${CSS_EXPEDIENTES}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
+<style>${css}${CSS_EXPEDIENTES}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : lang === 'en' ? cabeceraEnCSS + pieEnCSS : ''}</style>
 </head>
 <body>
 <a class="salto" href="#contenido">${esc(t.salto)}</a>
-${lang === 'es' ? cabeceraEsHTML({ actual: `/${RUTAS[tipo].es}/`, ramasPagina: [{ titulo: 'Leyendas', enlaces: [['Leyendas de Tony Hanma', PRINCIPAL.es], [t.terror.nombre, `/${RUTAS.terror.es}/`], [t.misterio.nombre, `/${RUTAS.misterio.es}/`]] }], idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })) }) : `<header class="barra">
+${lang === 'es' ? cabeceraEsHTML({ actual: `/${RUTAS[tipo].es}/`, ramasPagina: [{ titulo: 'Leyendas', enlaces: [['Leyendas de Tony Hanma', PRINCIPAL.es], [t.terror.nombre, `/${RUTAS.terror.es}/`], [t.misterio.nombre, `/${RUTAS.misterio.es}/`]] }], idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })) })
+  : lang === 'en' ? cabeceraEnHTML({ actual: `/${RUTAS[tipo].en}/`, ramasPagina: [{ titulo: 'Legends', enlaces: [[t.volver, PRINCIPAL.en], [t.terror.nombre, `/${RUTAS.terror.en}/`], [t.misterio.nombre, `/${RUTAS.misterio.en}/`], ['WhatsApp', t.wa]] }], idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })) }) : `<header class="barra">
   <a href="${PRINCIPAL[lang]}">${esc(t.volver)}</a>
   <a class="wa" href="${t.wa}">WhatsApp</a>
 </header>`}
@@ -359,7 +362,8 @@ ${fuentesUnicas.map((f) => `      <li>${enlaceFuente(f)}</li>`).join('\n')}
 </section>
 </main>
 
-${lang === 'es' ? pieEsHTML({ idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })), creditos: `<li>${esc(altPortada)}: <a href="${fc.kaynak}" rel="noopener">${esc(fc.autor)}</a>, ${fc.lisans}</li>`, extra: esc(t.pie) }) : `<footer>
+${lang === 'es' ? pieEsHTML({ idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })), creditos: `<li>${esc(altPortada)}: <a href="${fc.kaynak}" rel="noopener">${esc(fc.autor)}</a>, ${fc.lisans}</li>`, extra: esc(t.pie) })
+  : lang === 'en' ? pieEnHTML({ idiomas: t.idiomas.map(([l, n]) => ({ lang: l, ruta: `/${RUTAS[tipo][l]}/`, texto: n })), creditos: `<li>${esc(altPortada)}: <a href="${fc.kaynak}" rel="noopener">${esc(fc.autor)}</a>, ${fc.lisans}</li>`, extra: esc(t.pie) }) : `<footer>
   <div class="kap">
     <span>${t.idiomas.map(([l, n]) => `<a href="/${RUTAS[tipo][l]}/" hreflang="${l}">${n}</a>`).join(' · ')}</span>
     <span>© 2026 Tony Hanma · Tony Kansai Guide · Osaka</span>

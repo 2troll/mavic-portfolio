@@ -30,6 +30,10 @@ import { foto } from './foto'
 import { CREDITOS_SONIDO } from './sonido'
 import { Logo } from './Logo'
 import { CabeceraEs } from './CabeceraEs'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
+import './marca-en.css'
+import './resenas-en.css'
 import './marca-es.css'
 import { PieEs, PieColumna, Creditos, DESTINOS_EXTRA } from './PieEs'
 import { useCambio } from './cambio'
@@ -300,7 +304,14 @@ function atributosFotoEs(photo: string) {
 
 /** /es/: fila de fotos de clientes (miniaturas de 160 px, ~7 KB) que lleva a su
  *  reseña dentro de la fila deslizable. Solo las que tienen miniatura local. */
-function FotosViajeros({ lista }: { lista: Resena[] }) {
+/** Textos de la portada simple (/es/ y /en/) alrededor de las reseñas. */
+const TXT_RS: Record<'es' | 'en', { fotos: string; verDe: string; media: (m: string, n: number) => string; clientes: string; conFotos: string; desliza: (n: number) => string; ant: string; sig: string }> = {
+  es: { fotos: 'Fotos de nuestros viajeros', verDe: 'Ver la reseña de', media: (m, n) => `Nota media ${m} de 5 en ${n} reseñas`, clientes: 'reseñas de clientes', conFotos: 'con fotos de su viaje', desliza: (n) => `Desliza para leer las ${n}`, ant: 'Reseña anterior', sig: 'Reseña siguiente' },
+  en: { fotos: 'Photos from our guests', verDe: 'Read the review by', media: (m, n) => `Average rating ${m} out of 5 from ${n} reviews`, clientes: 'guest reviews', conFotos: 'with photos of their trip', desliza: (n) => `Swipe to read all ${n}`, ant: 'Previous review', sig: 'Next review' },
+}
+const txtRs = (lang: string) => TXT_RS[lang === 'en' ? 'en' : 'es']
+
+function FotosViajeros({ lista, lang = 'es' }: { lista: Resena[]; lang?: string }) {
   const conMini = lista.filter((r) => r.photo && MINIS[r.photo]).slice(0, 8)
   if (conMini.length < 4) return null
   const ir = (e: { preventDefault(): void }, id: string) => {
@@ -312,10 +323,10 @@ function FotosViajeros({ lista }: { lista: Resena[] }) {
   }
   return (
     <div className="rs-fotos">
-      <p className="rs-fotos-titulo">Fotos de nuestros viajeros</p>
+      <p className="rs-fotos-titulo">{txtRs(lang).fotos}</p>
       <ul>
         {conMini.map((r) => (
-          <li key={r.id}><a href={`#resena-${r.id}`} onClick={(e) => ir(e, r.id)} aria-label={`Ver la reseña de ${r.name}`}>
+          <li key={r.id}><a href={`#resena-${r.id}`} onClick={(e) => ir(e, r.id)} aria-label={`${txtRs(lang).verDe} ${r.name}`}>
             <img src={MINIS[r.photo!].mini} alt="" width={160} height={160} loading="lazy" decoding="async" />
           </a></li>
         ))}
@@ -331,19 +342,19 @@ function ResumenResenas({ resenas, lang }: { resenas: Resena[]; lang: string }) 
   const llenas = Math.round(media)
   const conFoto = resenas.filter((r) => r.photo).length
   return (
-    <div className="rs-resumen" role="group" aria-label={`Nota media ${mediaResenas(resenas, lang)} de 5 en ${resenas.length} reseñas`}>
+    <div className="rs-resumen" role="group" aria-label={txtRs(lang).media(mediaResenas(resenas, lang), resenas.length)}>
       <p className="rs-nota" aria-hidden="true">
         <strong>{mediaResenas(resenas, lang)}</strong>
         <span className="v7-estrellas">{'★'.repeat(llenas)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - llenas)}</span></span>
       </p>
-      <p className="rs-cifras"><b>{resenas.length}</b> reseñas de clientes{conFoto > 0 && <> · <b>{conFoto}</b> con fotos de su viaje</>}</p>
+      <p className="rs-cifras"><b>{resenas.length}</b> {txtRs(lang).clientes}{conFoto > 0 && <> · <b>{conFoto}</b> {txtRs(lang).conFotos}</>}</p>
     </div>
   )
 }
 
 /** Flechas de la fila de reseñas (/es/): pasan una tarjeta. En el móvil se
  *  desliza con el dedo y con teclado la fila (tabIndex 0) se mueve con las flechas. */
-function MandosFila({ fila, total }: { fila: RefObject<HTMLDivElement | null>; total: number }) {
+function MandosFila({ fila, total, lang = 'es' }: { fila: RefObject<HTMLDivElement | null>; total: number; lang?: string }) {
   const mover = (dir: 1 | -1) => {
     const f = fila.current
     const t = f?.querySelector('figure')
@@ -382,9 +393,9 @@ function MandosFila({ fila, total }: { fila: RefObject<HTMLDivElement | null>; t
   }, [fila, total])
   return (
     <div className="rs-mandos">
-      <span className="rs-pista">Desliza para leer las {total}</span>
-      <button type="button" onClick={() => mover(-1)} aria-label="Reseña anterior">←</button>
-      <button type="button" onClick={() => mover(1)} aria-label="Reseña siguiente">→</button>
+      <span className="rs-pista">{txtRs(lang).desliza(total)}</span>
+      <button type="button" onClick={() => mover(-1)} aria-label={txtRs(lang).ant}>←</button>
+      <button type="button" onClick={() => mover(1)} aria-label={txtRs(lang).sig}>→</button>
     </div>
   )
 }
@@ -1106,6 +1117,21 @@ function PlacaEs() {
   )
 }
 
+/** Placa de la marca sobre la foto de la portada INGLESA (25-11-2026, «el inglés,
+ *  otra cosa»): no el cartel de andén del español sino una tarjeta de ryokan —
+ *  índigo aizome, el nombre en versalitas espaciadas, un hilo de oro y los
+ *  lugares debajo. Solo tipografía y CSS (marca-en.css); la flor es la de UIX. */
+function PlacaEn() {
+  return (
+    <div className="en-placa" role="img" aria-label="Tony Kansai Guide">
+      <span className="en-placa-kana" lang="ja" aria-hidden="true">関西 · 日本</span>
+      <span className="en-placa-nombre" aria-hidden="true"><Logo /></span>
+      <span className="en-placa-linea" aria-hidden="true" />
+      <span className="en-placa-lugares" aria-hidden="true">Kyoto · Osaka · Nara</span>
+    </div>
+  )
+}
+
 /** «Lo que hay» de la portada española: las experiencias (montaña incluida) y,
  *  en la misma sección, el precio cerrado por grupo (#precios sigue existiendo
  *  para los enlaces antiguos /es/#precios). Sin botón propio: el contacto va
@@ -1113,9 +1139,11 @@ function PlacaEs() {
 function LoQueHayEs({ p }: { p: Pagina }) {
   const e = p.experiencias
   const r = p.precioRef
+  // Clases por idioma: es-* (marca-es.css) o en-* (marca-en.css).
+  const pre = p.lang === 'en' ? 'en' : 'es'
   if (!e) return null
   return (
-    <section id="experiencias" className="v7-seccion es-loquehay">
+    <section id="experiencias" className={`v7-seccion ${pre}-loquehay`}>
       <h2>{e.titulo}</h2>
       <p className="v7-entradilla">{e.sub}</p>
       <ul className="v7-exp-lista">
@@ -1130,9 +1158,9 @@ function LoQueHayEs({ p }: { p: Pagina }) {
         ))}
       </ul>
       {r && (
-        <div id="precios" className="es-precio" data-aparece="">
-          <p className="es-precio-cifra">{desdeHero(p.lang)}</p>
-          <p className="es-precio-texto">{r.texto}</p>
+        <div id="precios" className={`${pre}-precio`} data-aparece="">
+          <p className={`${pre}-precio-cifra`}>{desdeHero(p.lang)}</p>
+          <p className={`${pre}-precio-texto`}>{r.texto}</p>
           <a className="v9-enlace" href={r.ruta}>{r.enlace} →</a>
         </div>
       )}
@@ -1146,28 +1174,31 @@ function LoQueHayEs({ p }: { p: Pagina }) {
 /** Final de la portada española: todo lo que no es «reseñas y lo que hay»,
  *  plegado y en el HTML (los enlaces siguen ahí y el JSON-LD FAQPage sigue
  *  respaldado por el texto visible al abrir). */
+const TEMPORADA_KANSAI: Record<string, string> = { es: 'Esta temporada en Kansai', en: 'This season in Kansai' }
 function MasEs({ p }: { p: Pagina }) {
   const r = p.precioRef
+  const pre = p.lang === 'en' ? 'en' : 'es'
+  const ficha = FICHA_RAPIDA[p.lang]
   // Tras montar (como TemporadaPortada): el HTML pregenerado no lleva fecha.
   const hayTemporada = useTemporadas().length > 0
   return (
-    <section className="v7-seccion v7-faq-troncal es-mas">
+    <section className={`v7-seccion v7-faq-troncal ${pre}-mas`}>
       {r && hayTemporada && (
         <details className="v7-plegado">
-          <summary>Esta temporada en Kansai</summary>
+          <summary>{TEMPORADA_KANSAI[p.lang] ?? TEMPORADA_KANSAI.es}</summary>
           <TemporadaPortada p={p} />
         </details>
       )}
-      {r && FICHA_RAPIDA.es && (
+      {r && ficha && (
         <details className="v7-plegado">
           <summary>{r.plegado}</summary>
           <dl className="v9-ficha">
-            {FICHA_RAPIDA.es.map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
+            {ficha.map(([t, d]) => <div key={t}><dt>{t}</dt><dd>{d}</dd></div>)}
           </dl>
         </details>
       )}
       <details className="v7-faq-plegada">
-        <summary><h2>{PREGUNTAS_FRECUENTES.es} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
+        <summary><h2>{PREGUNTAS_FRECUENTES[p.lang] ?? PREGUNTAS_FRECUENTES.es} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
         <div className="v7-faq">
           {p.faq.items.map((f) => (
             <details key={f.q}>
@@ -1198,6 +1229,10 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
   const troncal = p.guia === 'tony'
   // Portada española: reseñas arriba, con resumen y tarjetas de foto grande (resenas-es.css).
   const esEs = troncal && p.lang === 'es'
+  // Portada inglesa (25-11-2026): la misma lógica simple que la española
+  // (portada → reseñas → experiencias → contacto) con identidad propia (paleta-en.css).
+  const enEn = troncal && p.lang === 'en'
+  const simple = esEs || enEn
   const filaResenas = useRef<HTMLDivElement>(null)
   // Foto de portada sin «.jpg»: base de sus variantes webp (-600, -900, -1200, -retrato…).
   const baseHero = p.hero.foto.replace(/\.jpg$/, '')
@@ -1219,15 +1254,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
     // el Worker detrás. Así la fila no cambia de orden al llegar la petición: antes
     // la primera tarjeta pasaba al puesto 11 y Chrome, que mantiene el imán en la
     // tarjeta encajada, desplazaba la fila hasta allí.
-    const delBuild = esEs ? new Map(resenasFijas().map((r, i) => [r.id, i])) : null
+    const delBuild = simple ? new Map(resenasFijas().map((r, i) => [r.id, i])) : null
     const puesto = (r: Resena) => delBuild?.get(r.id) ?? Number.MAX_SAFE_INTEGER
-    let lista = [...resenas].sort((a, b) => peso(b) - peso(a) || (delBuild ? puesto(a) - puesto(b) : 0))
-    if (p.lang === 'ar') {
-      const legibles = lista.filter(enSuIdioma)
-      if (legibles.length >= 3) lista = legibles
-    }
-    return lista
-  }, [troncal, esEs, resenas, filtroEstrellas, p.lang])
+    // /ar/ enseña TODAS (antes solo las que estaban en árabe o traducidas: 6 de
+    // 30); las que se leen en árabe van primero y el resto con «Ver original».
+    return [...resenas].sort((a, b) => peso(b) - peso(a) || (delBuild ? puesto(a) - puesto(b) : 0))
+  }, [troncal, simple, resenas, filtroEstrellas, p.lang])
 
   useEffect(() => {
     // Las páginas legales siguen usando el contexto de idioma: que coincida.
@@ -1259,12 +1291,12 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         Troncal: una fila que se desliza, sin el resumen de estrellas (todas son de 5★
         y la cifra ya está en la portada) ni «Ver más»: van todas en el HTML. */}
     {p.resenas && resenas.length > 0 && (
-      <section className={`v7-seccion${esEs ? ' rs-es' : ''}`} id="resenas">
+      <section className={`v7-seccion${esEs ? ' rs-es' : enEn ? ' rs-en' : ''}`} id="resenas">
         <h2>{p.resenas.titulo}</h2>
-        {esEs && <ResumenResenas resenas={resenas} lang={p.lang} />}
-        {esEs && <FotosViajeros lista={resenasVistas} />}
+        {simple && <ResumenResenas resenas={resenas} lang={p.lang} />}
+        {simple && <FotosViajeros lista={resenasVistas} lang={p.lang} />}
         {p.resenas.nota && <p className="v7-entradilla">{p.resenas.nota}</p>}
-        {!esEs && <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>}
+        {!simple && <p className="v7-opinar"><a href={p.resenas.fuente ? '/ru/otzyv/' : `/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} {p.dir === 'rtl' ? '←' : '→'}</a></p>}
         {!troncal && resenas.length >= 20 && (() => {
           // Resumen con el reparto real de estrellas: que se vea que no todo es 5★.
           const cuenta = [5, 4, 3, 2, 1].map((n) => [n, resenas.filter((r) => r.stars === n).length] as const).filter(([, c]) => c > 0)
@@ -1294,23 +1326,23 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
             ))}
           </div>
         ) : (
-        <div ref={esEs ? filaResenas : undefined} className={`v7-resenas${troncal ? ' v7-resenas-fila' : ''}`} {...(troncal ? { role: 'region', 'aria-label': p.resenas.titulo, tabIndex: 0 } : {})}>
+        <div ref={simple ? filaResenas : undefined} className={`v7-resenas${troncal ? ' v7-resenas-fila' : ''}`} {...(troncal ? { role: 'region', 'aria-label': p.resenas.titulo, tabIndex: 0 } : {})}>
           {(troncal ? resenasVistas : resenasVistas.slice(0, verResenas)).map((r) => {
             const m = r.meta?.[p.lang]
             const nombre = m?.name ?? r.name, pais = m?.country ?? r.country, lugar = lugarEn(m?.tour ?? r.tour, p.lang, !!m)
             const texto = textoEn(r, p.lang)
             return (
-            <figure key={r.id} className={`tarjeta${r.photo ? ' v7-resena-con-foto' : ''}`} {...(esEs ? { id: `resena-${r.id}` } : {})}>
+            <figure key={r.id} className={`tarjeta${r.photo ? ' v7-resena-con-foto' : ''}`} {...(simple ? { id: `resena-${r.id}` } : {})}>
               {/* Foto arriba y siempre del mismo tamaño: antes iba al final con su altura
                   natural y la rejilla quedaba como un puzle mal encajado. */}
               {r.photo
-                ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }} aria-label={`${FOTO_DE[p.lang] ?? FOTO_DE.en} ${nombre}`}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} {...(esEs ? atributosFotoEs(r.photo) : {})} /></a>
+                ? <a href={r.photoFull || (r.photo.startsWith('/') ? r.photo : `/${r.photo}`)} target="_blank" rel="noopener" style={{ cursor: 'zoom-in' }} aria-label={`${FOTO_DE[p.lang] ?? FOTO_DE.en} ${nombre}`}><img className="v7-resena-foto" loading="lazy" src={r.photo.startsWith('/') ? r.photo : `/${r.photo}`} alt="" onError={sinFoto} {...(simple ? atributosFotoEs(r.photo) : {})} /></a>
                 : <div className="v7-resena-sinfoto" aria-hidden="true"><span lang="ja">{kanjiDe(r.tour)}</span></div>}
               <div className="v7-resena-cabeza">
                 <div className="v7-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}<span className="v7-estrellas-vacias">{'★'.repeat(5 - r.stars)}</span></div>
               </div>
               {/* En /es/ el recorte es más corto (6 líneas en el móvil, resenas-es.css): la tarjeta cabe en una pantalla. */}
-              <TextoRecortable largo={texto.length > (esEs ? 220 : 320)} lang={p.lang}>
+              <TextoRecortable largo={texto.length > (simple ? 220 : 320)} lang={p.lang}>
                 <TextoResena r={r} lang={p.lang} />
               </TextoRecortable>
               <figcaption>
@@ -1322,8 +1354,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
           })}
         </div>
         )}
-        {esEs && <MandosFila fila={filaResenas} total={resenasVistas.length} />}
-        {esEs && <p className="v7-opinar rs-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} →</a></p>}
+        {simple && <MandosFila fila={filaResenas} total={resenasVistas.length} lang={p.lang} />}
+        {simple && <p className="v7-opinar rs-opinar"><a href={`/opinar.html?lang=${p.lang}`}>{p.resenas.opinar} →</a></p>}
         {!troncal && resenasVistas.length > verResenas && (
           <p className="v7-ver-mas"><button type="button" onClick={() => setVerResenas((n) => n + 24)}>
             {VER_MAS[p.lang] ?? VER_MAS.en} ({resenasVistas.length - verResenas})
@@ -1372,7 +1404,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
       <a className="v7-saltar" href="#contacto">{p.nav.contacto}</a>
       {/* Español: la cabecera común de todas las páginas (marca + ☰). EN/AR, la suya. */}
-      {esEs ? <CabeceraEs activo="inicio" enPagina={[{ texto: 'Experiencias', ruta: '#experiencias' }, { texto: 'Precio', ruta: '#precios' }, { texto: 'Reseñas', ruta: '#resenas' }]} /> : <Cabecera p={p} troncal={troncal} />}
+      {esEs ? <CabeceraEs activo="inicio" enPagina={[{ texto: 'Experiencias', ruta: '#experiencias' }, { texto: 'Precio', ruta: '#precios' }, { texto: 'Reseñas', ruta: '#resenas' }]} />
+        : enEn ? <CabeceraEn activo="inicio" enPagina={[{ texto: 'Reviews', ruta: '#resenas' }, { texto: 'Experiences', ruta: '#experiencias' }, { texto: 'Price', ruta: '#precios' }, { texto: 'Contact', ruta: '#contacto' }]} />
+        : <Cabecera p={p} troncal={troncal} />}
 
       <main ref={principal}>
         {/* Portada de revista: texto sobre papel a un lado y la foto vertical al
@@ -1383,7 +1417,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         <section className="v9-portada">
           <div className="v9-portada-texto">
             {/* El único rojo de la página. 日本 y no 関西 en la de Tony: guías por todo Japón. */}
-            {!esEs && <span className="v9-sello" lang="ja" aria-hidden="true">{troncal ? '日本' : '関西'}</span>}
+            {!simple && <span className="v9-sello" lang="ja" aria-hidden="true">{troncal ? '日本' : '関西'}</span>}
             <h1>{p.hero.titulo}</h1>
             <p>{p.hero.sub}</p>
             <div className="v7-acciones">
@@ -1431,6 +1465,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 La mancha de tinta (HeroTinta, WebGL) ya no se monta en ninguna
                 portada (decisión del 21-11, también /ru/ y /larion/). */}
             {esEs && <PlacaEs />}
+            {enEn && <PlacaEn />}
             {troncal ? (
               <picture>
                 <source media="(min-width: 901px)" srcSet={`${baseHero}-retrato-900.webp 720w, ${baseHero}-retrato.webp 1440w`} sizes={SIZES_PORTADA_ESCRITORIO} />
@@ -1444,9 +1479,9 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Troncal: tres experiencias que enlazan a sus páginas (en vez del
             mosaico de 7 ciudades con precio y «Reservar» en cada una). */}
-        {esEs && seccionResenas}
+        {simple && seccionResenas}
 
-        {esEs ? <LoQueHayEs p={p} /> : troncal && <Experiencias p={p} msg={msgCorto} />}
+        {simple ? <LoQueHayEs p={p} /> : troncal && <Experiencias p={p} msg={msgCorto} />}
 
         {/* Las ciudades, cada una con su página (v8). En la troncal están en la
             columna «Destinos» del pie (y el JSON-LD ItemList las sigue listando). */}
@@ -1458,7 +1493,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Precios justo después de los tours: es lo primero que busca quien
             llega desde el móvil (Clarity, 23-10-2026), antes que las reseñas.
             Troncal: un solo precio de referencia; el resto, a dos clics. */}
-        {esEs ? null : troncal ? <PrecioReferencia p={p} /> : (
+        {simple ? null : troncal ? <PrecioReferencia p={p} /> : (
           <section id="precios" className="v7-seccion">
             <h2>{p.precios.titulo}</h2>
             <Precios p={p} resenas={resenas} />
@@ -1473,7 +1508,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         )}
 
         {/* Portada española: las reseñas van arriba, tras la portada (ver seccionResenas). */}
-        {!esEs && seccionResenas}
+        {!simple && seccionResenas}
 
 
         {/* Desde aquí hasta las preguntas, solo /ru/ y /larion/. En la troncal de
@@ -1598,7 +1633,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
         {/* Preguntas. Troncal: todas dentro de un solo plegable (una línea en el
             móvil). Siguen en el DOM, así que el JSON-LD FAQPage sigue respaldado y
             textos-ia.mjs las copia en index.md. El h2 va dentro del <summary>. */}
-        {esEs ? null : troncal ? (
+        {simple ? null : troncal ? (
           <section className="v7-seccion v7-faq-troncal">
             <details className="v7-faq-plegada">
               <summary><h2>{PREGUNTAS_FRECUENTES[p.lang] ?? p.faq.titulo} <span className="v7-faq-cuantas">({p.faq.items.length})</span></h2></summary>
@@ -1639,8 +1674,8 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
 
         {/* Contacto */}
         {/* Español: tras el contacto, lo demás plegado (temporada, ficha, preguntas). */}
-        {esEs && <><ContactoTroncal p={p} msg={msgCorto} /><MasEs p={p} /></>}
-        {esEs ? null : troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
+        {simple && <><ContactoTroncal p={p} msg={msgCorto} /><MasEs p={p} /></>}
+        {simple ? null : troncal ? <ContactoTroncal p={p} msg={msgCorto} /> : (
           <section id="contacto" className="v7-seccion">
             <h2>{p.contacto.titulo}</h2>
             <p className="v7-entradilla">{p.contacto.sub}</p>
@@ -1655,7 +1690,7 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
       {!troncal && <FranjaVentajas lang={p.lang} />}
 
       {/* Portada española: pie limpio de un solo índice (PieEs). */}
-      {esEs ? <PieEs p={p} /> : (
+      {esEs ? <PieEs p={p} /> : enEn ? <PieEn p={p} /> : (
       <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div>

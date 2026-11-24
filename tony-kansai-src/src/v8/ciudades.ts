@@ -164,7 +164,7 @@ const EN_LUGAR: Record<CiudadId, T> = {
 
 /** Tramos que se ofrecen en cada ciudad (igual que tramos() de Mosaico, que no
  *  se importa aquí para no hacer un círculo ciudades ⇄ Mosaico). */
-function tramosCiudad(id: CiudadId): Tramo[] {
+export function tramosCiudad(id: CiudadId): Tramo[] {
   const ruta = CIUDADES[id].diorama
   return [...new Set(ruta ? META[ruta].tramos : (['lejos'] as Tramo[]))]
 }

@@ -1,0 +1,84 @@
+/* English season pages (/en/kansai-winter/, /en/kyoto-autumn/,
+   /en/kyoto-cherry-blossom/) in the colours of their season, the same as Spanish
+   (temporadas-es.css, copied with its selectors moved to html[lang="en"] and
+   .tmp-en; contrast figures there). Otono.tsx puts .tmp-en .tmp-<season> on the
+   root only for Tony's English pages (never Larion). Specificity (0,7,1) beats
+   the English palette (paleta-en.css, 0,6,2) without !important. Light mode only.
+   The English header keeps its indigo wordmark with the season's bar; the
+   footer keeps its aizome band (the identity of the English site). */
+
+/* ── Invierno: nieve, azul hielo e índigo profundo; acción en azul glaciar ── */
+html[lang="en"]:not([data-tema='oscuro']) .v7.v7-otono.tmp-invierno:not(.v7-expedicion):not(.v7-sin-pixel) {
+  --washi: #edf3f8; --fondo: #edf3f8;
+  --sakura-velo: #dfe9f2; --sakura: #dfe9f2; --inverso: #dfe9f2; --cielo-velo: #dfe9f2;
+  --sakura-hondo: #9dbbd8;
+  --sakura-tinta: #2a5c8a;
+  --tinta: #13203a; --tenue: #47546a;
+  --verde: #1b5a86; --verde-hondo: #123f60; --verde-velo: #e3edf6;
+  --estrella: #8a6400; --borde-control: #66758a;
+  --linea: rgba(19, 32, 58, 0.12); --linea-fuerte: rgba(19, 32, 58, 0.2);
+  --tmp-hondo: #13203a; --tmp-claro: #eaf2f9;
+}
+/* ── Otoño: momiji, rojos y ocres sobrios sobre papel cálido ── */
+html[lang="en"]:not([data-tema='oscuro']) .v7.v7-otono.tmp-otono:not(.v7-expedicion):not(.v7-sin-pixel) {
+  --washi: #f7f0e6; --fondo: #f7f0e6;
+  --sakura-velo: #efe2d1; --sakura: #efe2d1; --inverso: #efe2d1; --cielo-velo: #efe2d1;
+  --sakura-hondo: #d59b6b;
+  --sakura-tinta: #9a3322;
+  --tinta: #2b1d16; --tenue: #5d4c40;
+  --verde: #8c311f; --verde-hondo: #6c2415; --verde-velo: #f6e6dc;
+  --estrella: #8a6000; --borde-control: #7d6a5c;
+  --linea: rgba(43, 29, 22, 0.12); --linea-fuerte: rgba(43, 29, 22, 0.2);
+  --tmp-hondo: #3b1d14; --tmp-claro: #fbf1e6;
+}
+/* ── Sakura: casi blanco y cerezo hondo (nada de rosa pastel de fondo) ── */
+html[lang="en"]:not([data-tema='oscuro']) .v7.v7-otono.tmp-sakura:not(.v7-expedicion):not(.v7-sin-pixel) {
+  --washi: #fff8fa; --fondo: #fff8fa;
+  --sakura-velo: #fbe6ed; --sakura: #fbe6ed; --inverso: #fbe6ed; --cielo-velo: #fbe6ed;
+  --sakura-hondo: #e79ab3;
+  --sakura-tinta: #a3365e;
+  --tinta: #2a1c27; --tenue: #5a4d58;
+  --verde: #9c2f58; --verde-hondo: #7a2243; --verde-velo: #fbe9f0;
+  --estrella: #8a6400; --borde-control: #806f7c;
+  --linea: rgba(42, 28, 39, 0.12); --linea-fuerte: rgba(42, 28, 39, 0.2);
+  --tmp-hondo: #3a1a2c; --tmp-claro: #fff1f5;
+}
+
+/* Fondo de la página (body) y una luz de estación arriba, tras la portada. */
+html[lang="en"]:not([data-tema='oscuro']):has(#root .v7.tmp-invierno:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #edf3f8; }
+html[lang="en"]:not([data-tema='oscuro']):has(#root .v7.tmp-otono:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #f7f0e6; }
+html[lang="en"]:not([data-tema='oscuro']):has(#root .v7.tmp-sakura:not(.v7-expedicion):not(.v7-sin-pixel)) body { background-color: #fff8fa; }
+html[lang="en"]:not([data-tema='oscuro']) .v7.v7-otono.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) {
+  background-image: linear-gradient(180deg, var(--sakura-velo) 0, var(--fondo) min(820px, 90vh));
+  background-repeat: no-repeat;
+}
+
+/* Detalles con color fijo en v7.css: el kanji de cada sitio va en el adorno. */
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-kanji { color: var(--sakura-tinta); }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-antetitulo { color: var(--sakura-tinta); }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-sitios li { border-top: 3px solid var(--sakura-hondo); }
+
+/* Cierre en la tinta honda de la estación (índigo de noche nevada, castaño de
+   arce, ciruelo): la banda que pide la reserva se ve distinta del resto. */
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-final {
+  background: var(--tmp-hondo); color: #ffffff;
+  box-shadow: 0 0 0 100vmax var(--tmp-hondo); clip-path: inset(0 -100vmax);
+  padding-top: clamp(56px, 8vw, 96px);
+}
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-final :is(h2, h3, .v7-entradilla, p, a:not(.v7-boton)) { color: var(--tmp-claro); }
+/* El color del botón va con !important en estilo-sereno (var(--boton-tinta)): se cambia por variables. */
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-final .v7-boton { --boton: #ffffff; --boton-tinta: var(--verde); background: #ffffff; }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-final .v7-boton:hover { --boton-tinta: var(--verde-hondo); background: var(--tmp-claro); }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-en:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-final :focus-visible { outline-color: #ffffff; }
+
+/* Otros idiomas y crédito de la foto, sobre el pie común. */
+.tmp-en-extra { width: min(var(--ancho, 1180px), calc(100% - 32px)); margin: 28px auto 0; display: grid; gap: 6px; font-size: 14px; color: var(--tenue); }
+.tmp-en-extra nav { display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.tmp-en-extra a { color: var(--tenue); text-underline-offset: 3px; min-height: 32px; display: inline-flex; align-items: center; }
+.tmp-en-extra a:hover { color: var(--tinta); }
+
+
+/* The common English header with the season's bar and band. */
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-invierno .cab-en { --cn-barra: rgba(237, 243, 248, .92); --cn-banda: #dfe9f2; }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-otono .cab-en { --cn-barra: rgba(247, 240, 230, .92); --cn-banda: #efe2d1; }
+html[lang="en"]:not([data-tema='oscuro']) .v7.tmp-sakura .cab-en { --cn-barra: rgba(255, 248, 250, .92); --cn-banda: #fbe6ed; }

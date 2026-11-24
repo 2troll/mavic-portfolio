@@ -1,0 +1,56 @@
+/* ══ English palette «aizome & kinari» (25-11-2026) ══════════════════════════
+   Tony: «la página inglés separada, otra cosa». The same layout as Spanish with
+   its own identity for the English-speaking traveller who can afford a private
+   guide: kinari (unbleached washi) paper, aizome indigo as the ONE action colour,
+   and gold (kinpaku) only as a hairline ornament. No pink, no red torii.
+     60 %  kinari #f7f4ed, band #eee8db (reviews, photo gaps)
+     30 %  white #ffffff cards; contact band in pale indigo #edf0f5
+     10 %  aizome #1e3a5f (hover #142b48): buttons, links that act
+   Contrast measured (WCAG), kinari / band / white:
+     ink #16202d 14,95 / 13,45 / 16,42 · muted #4c5563 6,86 / 6,17 / 7,54
+     aizome 10,47 / 9,42 / 11,50 (white on it 11,50) · gold text #7a5c1f 5,66 / 5,09
+     stars #8a6608 4,80 / 4,32 / 5,27 · control border #6f7885 4,07 / 3,66 / 4,47
+     gold ornament #a8843f 3,17 / 2,85 (graphics and rules only).
+   Scope: ONLY Tony's English pages — html[lang="en"] AND a CabeceraEn (.cab-en)
+   on the page. /larion/ is English too but never carries .cab-en, so it keeps the
+   palette of estilo-sereno §1. Dark mode (explicit) is left alone. */
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en) .v7:not(.v7-expedicion):not(.v7-sin-pixel) {
+  --washi: #f7f4ed;
+  --sakura-velo: #eee8db;
+  --sakura: #eee8db;
+  --sakura-hondo: #a8843f;
+  --sakura-tinta: #7a5c1f;
+  --cielo-velo: #edf0f5;
+  --cielo: #dde4ee;
+  --cielo-hondo: #a8843f;
+  --verde: #1e3a5f;
+  --verde-hondo: #142b48;
+  --verde-velo: #e6ecf4;
+  --sello: #1e3a5f;
+  --estrella: #8a6608;
+  --tinta: #16202d;
+  --tenue: #4c5563;
+  --linea: rgba(22, 32, 45, 0.10);
+  --linea-fuerte: rgba(22, 32, 45, 0.18);
+  --borde-control: #6f7885;
+  --sombra-1: 0 1px 2px rgba(20, 30, 46, 0.06);
+  --sombra-2: 0 1px 2px rgba(20, 30, 46, 0.05), 0 12px 32px -16px rgba(20, 30, 46, 0.18);
+  --sombra-3: 0 2px 6px rgba(20, 30, 46, 0.06), 0 18px 48px -20px rgba(20, 30, 46, 0.28);
+}
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en),
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en) body { background-color: #f7f4ed; color: #16202d; }
+html[lang="en"]:has(header.cab-en) ::selection { background: #dde4ee; color: #16202d; }
+
+/* The flower of UIX, never the torii, inside Tony's English pages. */
+html[lang="en"]:has(header.cab-en) .v7-logo .v7-logo-torii { display: none; }
+html[lang="en"]:has(header.cab-en) .v7-logo .v7-logo-sakura { display: block; color: #a8843f; }
+
+/* Pieces outside .v7 that read the page colours (cookies, language hint, team strip). */
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en) .v7-sugerencia-idioma a { background: #1e3a5f; }
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en) .v7-cookies button { background: #f7f4ed; }
+html[lang="en"]:not([data-tema='oscuro']):has(header.cab-en) .v7-cookies button.si { background: #1e3a5f; color: #ffffff; }
+
+/* Headings: the mincho stays, a touch lighter; small labels in spaced capitals. */
+html[lang="en"]:has(header.cab-en) .v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(h1, h2) { font-weight: 500; letter-spacing: -0.005em; }
+/* The hour of the «example day» (seasons) is not a control: gold text, not action indigo. */
+html[lang="en"]:has(header.cab-en) .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-dia span { color: var(--sakura-tinta); }

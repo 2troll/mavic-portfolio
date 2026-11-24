@@ -1,0 +1,61 @@
+/* Franja de venta de las páginas de ciudad de Tony en /es/ y /en/ (25-11-2026).
+   Quien llega desde una IA ya sabe lo que quiere: nota y reseñas, precio cerrado
+   y WhatsApp, justo debajo del titular. Sobrio: papel, una línea, sin sombras. */
+
+/* Nota bajo el h1. En escritorio va sobre la foto (texto blanco); en el móvil,
+   sobre papel (v8.css pasa la portada a dos filas por debajo de 760 px). */
+.cv-nota {
+  display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap;
+  font-size: clamp(0.95rem, 1.4vw, 1.1rem); color: #fff; text-decoration: none;
+  padding: 6px 12px; border-radius: 999px; background: rgba(17, 26, 40, 0.58);
+  font-variant-numeric: tabular-nums;
+}
+.cv-nota:hover span:last-child, .cv-nota:focus-visible span:last-child { text-decoration: underline; }
+.cv-nota strong { font-weight: 700; }
+.cv-estrellas { color: #f2c14e; letter-spacing: 1px; }
+
+/* Bloque bajo la portada: precio + WhatsApp y, al lado, las reseñas. */
+.cv-franja {
+  display: grid; grid-template-columns: minmax(0, 1fr); gap: 20px;
+  max-width: 1180px; margin: 0 auto; padding: 28px 16px 8px; box-sizing: border-box;
+}
+.cv-precios, .cv-citas li {
+  background: #fff; border: 1px solid var(--linea, rgba(30, 42, 54, 0.12)); border-radius: 18px;
+}
+.cv-precios { padding: 20px; display: grid; gap: 12px; align-content: start; }
+.cv-precios > * { margin: 0; }
+.cv-precios-tit { font-weight: 700; color: var(--tinta, #1e2a36); font-size: 1rem; }
+.cv-precios ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 0; }
+.cv-precios li {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px;
+  padding: 10px 0; border-bottom: 1px solid var(--linea, rgba(30, 42, 54, 0.12));
+  color: var(--tenue, #515b67); font-size: 1rem;
+}
+.cv-precios li:last-child { border-bottom: 0; }
+.cv-precios li strong { color: var(--tinta, #1e2a36); font-size: 1.25rem; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.cv-precios-nota { color: var(--tenue, #515b67); font-size: 0.95rem; }
+.cv-wa { width: 100%; min-height: 54px; justify-content: center; font-size: 17px; box-sizing: border-box; }
+
+.cv-citas h2 { margin: 0 0 12px; font-size: clamp(1.25rem, 2.2vw, 1.6rem); color: var(--tinta, #1e2a36); }
+.cv-citas ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; }
+.cv-citas li { padding: 16px 18px; display: grid; gap: 6px; }
+.cv-citas li > * { margin: 0; }
+.cv-citas .cv-estrellas { color: #9a6a00; font-size: 0.95rem; }
+.cv-citas blockquote { color: var(--tinta, #1e2a36); font-size: 1.02rem; line-height: 1.5; overflow-wrap: anywhere; }
+.cv-quien { color: var(--tenue, #515b67); font-size: 0.9rem; }
+.cv-quien small { font-size: 0.85rem; }
+.cv-leer { display: inline-block; margin-top: 12px; color: var(--tinta, #1e2a36); font-weight: 600; }
+
+@media (min-width: 900px) {
+  .cv-franja { grid-template-columns: minmax(300px, 380px) minmax(0, 1fr); gap: 28px; padding: 40px 24px 8px; align-items: start; }
+  .cv-citas ul { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+}
+@media (max-width: 760px) {
+  .cv-nota { color: var(--tinta, #1e2a36); background: color-mix(in srgb, var(--tinta, #1e2a36) 5%, var(--fondo, #fff)); border: 1px solid var(--linea, rgba(30, 42, 54, 0.12)); }
+  .cv-nota .cv-estrellas { color: #9a6a00; }
+  .cv-franja { padding-top: 8px; }
+}
+
+/* /en/: idiomas hermanos y créditos de fotos antes del pie inglés común. */
+.cv-creditos-en { display: grid; gap: 10px; padding-top: 12px; padding-bottom: 12px; }
+.cv-creditos-en nav { display: flex; gap: 16px; flex-wrap: wrap; }

@@ -1,0 +1,141 @@
+/* ── Common English footer (PieEn.tsx and scripts/pie-en.mjs) ────────────────
+   Same structure as the Spanish footer (pie-es.css): brand, line and contact;
+   Home · Reviews · Prices; the four branches of the tree (the same as the ☰
+   menu) in short columns — accordions on a phone — and a small last line with
+   languages, legal, credits and ©. Its own identity: a deep aizome indigo band,
+   like a noren at the end of the page, with kinari text and gold headings.
+   Contrast on #13243b (measured): kinari #f7f4ed 14,2:1, muted #bcc6d3 9,1:1,
+   gold #d9b877 8,2:1, focus light indigo #8fb0d8 7,0:1. */
+.pie-en {
+  --pn-banda: #13243b;
+  --pn-tinta: #f7f4ed;
+  --pn-tenue: #bcc6d3;
+  --pn-vino: #d9b877;
+  --pn-rosa: #d9b877;
+  --pn-verde: #8fb0d8;
+  --pn-linea: rgba(247, 244, 237, .16);
+  --pn-titular: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
+  --pn-letra: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  display: block; width: 100%; max-width: none; margin: 0; padding: clamp(40px, 6vw, 64px) 0 20px;
+  background: var(--pn-banda); color: var(--pn-tenue); border: 0; border-top: 2px solid #a8843f;
+  font: 400 15px/1.5 var(--pn-letra); text-align: start;
+}
+html[data-tema='oscuro'] .pie-en { --pn-banda: #0c1626; }
+.pie-en *, .pie-en *::before, .pie-en *::after { box-sizing: border-box; }
+.pie-en .pie-en-in { width: min(1180px, 100%); margin: 0 auto; padding: 0 16px; }
+@media (min-width: 721px) { .pie-en .pie-en-in { padding: 0 24px; } }
+.pie-en a { color: var(--pn-tenue); text-decoration: none; }
+.pie-en a:hover { color: var(--pn-tinta); text-decoration: underline; text-underline-offset: 3px; }
+.pie-en :focus-visible { outline: 2px solid var(--pn-verde); outline-offset: 2px; border-radius: 4px; }
+.pie-en ul { list-style: none; margin: 0; padding: 0; }
+.pie-en li { margin: 0; padding: 0; }
+.pie-en li::before { content: none; }
+.pie-en p { margin: 0; }
+
+/* Marca, lema y contacto */
+.pie-en .pie-en-cabeza { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 24px; padding-bottom: 20px; }
+.pie-en .pie-en-marca { display: inline-flex; align-items: center; min-height: 44px; color: var(--pn-tinta); }
+.pie-en .v7-logo { display: inline-flex; align-items: center; gap: 7px; }
+.pie-en .v7-logo .v7-logo-torii { display: none; }
+.pie-en .v7-logo .v7-logo-sakura { display: block; flex: none; width: 24px; height: 24px; }
+html .pie-en .pie-en-marca .v7-logo svg.v7-logo-sakura { color: var(--pn-rosa); }
+/* Clase repetida a propósito: gana a estilo-sereno §21 y a la montaña sin !important. */
+html .pie-en.pie-en .pie-en-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--pn-letra); font-weight: 600; font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: var(--pn-tinta); padding: 2px 0 5px; background: linear-gradient(#a8843f 0 0) 0 100% / 100% 1px no-repeat; }
+.pie-en .v7-logo-texto { display: inline; font-family: var(--pn-titular); font-weight: 600; font-size: 18px; letter-spacing: .01em; color: var(--pn-tinta); }
+.pie-en .pie-en-lema { flex: 1 1 260px; color: var(--pn-tenue); text-wrap: balance; }
+.pie-en .pie-en-contacto { display: flex; flex-wrap: wrap; gap: 4px 18px; }
+.pie-en .pie-en-contacto a { display: inline-flex; align-items: center; gap: 7px; min-height: 44px; color: var(--pn-tinta); font-weight: 600; }
+.pie-en .pie-en-contacto svg { flex: none; width: 18px; height: 18px; color: var(--pn-verde); }
+
+/* Lo principal: Inicio · Reseñas · Precios */
+.pie-en .pie-en-primeros { display: flex; flex-wrap: wrap; gap: 0 24px; padding: 4px 0; border-top: 1px solid var(--pn-linea); border-bottom: 1px solid var(--pn-linea); }
+.pie-en .pie-en-primeros a { display: inline-flex; align-items: center; min-height: 48px; font-family: var(--pn-titular); font-size: 18px; font-weight: 600; color: var(--pn-tinta); }
+
+/* Las cuatro ramas: móvil, acordeones */
+.pie-en .pie-en-cols { display: grid; grid-template-columns: 1fr; gap: 0; }
+.pie-en .pie-en-col { margin: 0; padding: 0; border: 0; border-bottom: 1px solid var(--pn-linea); background: none; }
+.pie-en .pie-en-col > summary {
+  display: flex; align-items: center; justify-content: space-between; min-height: 56px;
+  list-style: none; cursor: pointer; color: var(--pn-vino); font-size: 13px; font-weight: 650; letter-spacing: .16em; text-transform: uppercase;
+}
+.pie-en .pie-en-col > summary::-webkit-details-marker { display: none; }
+.pie-en .pie-en-col > summary::after {
+  content: ''; width: 8px; height: 8px; margin-inline-end: 6px; border: solid currentColor; border-width: 0 2px 2px 0;
+  transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.pie-en .pie-en-col[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.pie-en .pie-en-col ul { display: grid; gap: 0; }
+.pie-en .pie-en-col a { display: inline-flex; align-items: center; gap: 8px; min-height: 44px; line-height: 1.3; }
+.pie-en .pie-en-col > ul:last-child, .pie-en .pie-en-mas { padding-bottom: 12px; }
+.pie-en .pie-en-mas { margin: 0; border: 0; background: none; }
+.pie-en .pie-en-mas > summary {
+  display: inline-flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer;
+  color: var(--pn-vino); font-size: 14px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px;
+}
+.pie-en .pie-en-mas > summary::-webkit-details-marker { display: none; }
+.pie-en .pie-en-mas[open] > summary { display: none; }
+.pie-en .pie-en-nuevo {
+  flex: none; padding: 1px 7px; border-radius: 999px; background: transparent; border: 1px solid var(--pn-vino); color: var(--pn-vino);
+  font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* Escritorio: columnas siempre abiertas, sin acordeón */
+@media (min-width: 721px) {
+  .pie-en .pie-en-cols { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 40px; padding: 32px 0 8px; }
+  .pie-en .pie-en-col { border: 0; }
+  .pie-en .pie-en-col > summary { min-height: 0; margin: 0 0 10px; pointer-events: none; cursor: default; font-size: 15px; }
+  .pie-en .pie-en-col > summary::after { display: none; }
+  .pie-en .pie-en-col a { min-height: 34px; }
+  .pie-en .pie-en-mas > summary { min-height: 34px; }
+}
+@media (min-width: 1040px) { .pie-en .pie-en-cols { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
+/* Línea final: idioma · legal · créditos · © */
+.pie-en .pie-en-base {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 4px 24px;
+  margin-top: 20px; padding-top: 12px; border-top: 1px solid var(--pn-linea); font-size: 13.5px;
+}
+.pie-en .pie-en-base nav { display: flex; flex-wrap: wrap; align-items: center; gap: 0 16px; }
+.pie-en .pie-en-base a { display: inline-flex; align-items: center; min-height: 44px; }
+.pie-en .pie-en-idiomas a { color: var(--pn-tinta); font-weight: 600; }
+.pie-en .pie-en-creditos { margin: 0; padding: 0; border: 0; background: none; }
+.pie-en .pie-en-creditos > summary { display: inline-flex; align-items: center; min-height: 44px; list-style: none; cursor: pointer; }
+.pie-en .pie-en-creditos > summary::-webkit-details-marker { display: none; }
+.pie-en .pie-en-creditos > summary::after { content: '+'; margin-inline-start: 6px; }
+.pie-en .pie-en-creditos[open] { flex-basis: 100%; order: 9; }
+.pie-en .pie-en-creditos[open] > summary::after { content: '−'; }
+.pie-en .pie-en-creditos ul { padding: 0 0 8px 18px; list-style: disc; line-height: 1.6; }
+.pie-en .pie-en-creditos ul a { display: inline; min-height: 0; text-decoration: underline; text-underline-offset: 2px; }
+.pie-en .pie-en-copy { margin-inline-start: auto; }
+@media (max-width: 720px) { .pie-en .pie-en-copy { margin-inline-start: 0; flex-basis: 100%; padding: 8px 0 4px; } }
+
+@media (prefers-reduced-motion: reduce) { .pie-en .pie-en-col > summary::after { transition: none; } }
+
+/* Franja del equipo (Equipo.tsx, fuera de .v7) tras el pie español: la misma
+   banda, sin repetir la marca, como última línea del pie. */
+html[lang="en"]:has(.pie-en) section.eq.eq-react { --eq-fondo: #13243b; --eq-linea: rgba(247, 244, 237, .16); --eq-texto: #f7f4ed; --eq-tenue: #bcc6d3; --eq-acento: #8fb0d8; color-scheme: dark; border-top: 0; padding: 0 16px 20px; background: #13243b; }
+html[lang="en"]:has(.pie-en) section.eq.eq-react .eq-kap { max-width: 1132px; }
+html[lang="en"]:has(.pie-en) section.eq.eq-react .eq-marca { display: none; }
+html[lang="en"]:has(.pie-en) section.eq.eq-react .eq-guias > summary { font-size: 13px; min-height: 44px; color: #bcc6d3; }
+@media (max-width: 860px) {
+  html[lang="en"]:has(.pie-en) section.eq.eq-react { padding-bottom: calc(20px + env(safe-area-inset-bottom)); }
+  /* Con el aviso de cookies abierto (52 px abajo), la última línea sube por encima. */
+  html[lang="en"]:has(.pie-en):has(.v7-cookies) section.eq.eq-react { padding-bottom: calc(76px + env(safe-area-inset-bottom)); }
+}
+
+/* Dentro de páginas con estilo propio (montaña: .v7-expedicion / .mv-comun) el pie
+   no hereda sus mayúsculas ni su espaciado de letra. */
+.v7-expedicion .pie-en, .mv-comun .pie-en, .v7-expedicion .pie-en :not(.pie-en-nuevo), .mv-comun .pie-en :not(.pie-en-nuevo) { text-transform: none; }
+
+/* Páginas con estilos propios de <summary>/<details> (leyendas, reseñas…): el pie
+   no los hereda. Letra, tamaño y adornos fijados aquí. */
+.pie-en summary { font-family: var(--pn-letra); letter-spacing: 0; text-transform: none; padding: 0; margin: 0; background: none; border: 0; }
+.pie-en summary::before { content: none; display: none; }
+.pie-en .pie-en-mas > summary::after { content: none; display: none; }
+.pie-en .pie-en-creditos > summary { font-size: 13.5px; font-weight: 400; color: var(--pn-tenue); }
+.pie-en .pie-en-creditos > summary::after { color: inherit; font: inherit; position: static; transform: none; border: 0; width: auto; height: auto; background: none; }
+.pie-en .pie-en-col > summary::after { position: static; background: none; color: inherit; }
+
+/* The column titles keep their spaced capitals over the reset above. */
+.pie-en.pie-en .pie-en-col > summary { letter-spacing: .16em; text-transform: uppercase; font-size: 13px; color: var(--pn-vino); }
+.pie-en .pie-en-primeros a { font-weight: 500; }

@@ -10,6 +10,8 @@ import { LUGARES } from './leyendas-lugares.mjs'
 import { TEXTOS } from './leyendas-sub-textos.mjs'
 import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
 import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
+import { cabeceraEnHTML, cabeceraEnCSS } from './cabecera-en.mjs'
+import { pieEnHTML, pieEnCSS } from './pie-en.mjs'
 import { EXPEDIENTES, CSS_EXPEDIENTES, cargarFotosTony, buscarFoto, figuraTony, imagenLD, galeriaTony, resumenesPrincipal, partesLD, generarSub } from './leyendas-expedientes.mjs'
 
 const raiz = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -201,6 +203,18 @@ function generar(c) {
       .replace(/<footer>[\s\S]*?<\/footer>/, pieEsHTML({ idiomas: [{ lang: 'en', ruta: '/en/legends/', texto: 'English' }, { lang: 'ar', ruta: '/ar/asatir/', texto: 'العربية' }], extra: 'Relatos originales © Tony Hanma. Fotos de Wikimedia Commons con su autor y licencia en cada imagen.' }))
       .replace('</style>', `${cabeceraEsCSS}${pieEsCSS}</style>`)
     if (html === antes || !html.includes('class="cab-es"') || !html.includes('class="pie-es"')) throw new Error('leyendas: no se pudo poner la cabecera/pie común en español')
+  }
+  // In English, the common English header and footer (25-11-2026). The legends
+  // WhatsApp message of the old bar stays, as a link in the footer's last line.
+  if (c.lang === 'en') {
+    const antes = html
+    const waLeyendas = html.match(/<header class="barra">[\s\S]*?href="(https:\/\/wa\.me\/[^"]+)"[\s\S]*?<\/header>/)?.[1]
+    const idiomas = [{ lang: 'es', ruta: '/es/leyendas/', texto: 'Español' }, { lang: 'ar', ruta: '/ar/asatir/', texto: 'العربية' }]
+    html = html
+      .replace(/<header class="barra">[\s\S]*?<\/header>/, cabeceraEnHTML({ actual: '/en/legends/', idiomas }))
+      .replace(/<footer>[\s\S]*?<\/footer>/, pieEnHTML({ idiomas, extra: `${waLeyendas ? `<a href="${waLeyendas}">The legends tour on WhatsApp</a> · ` : ''}Original stories © Tony Hanma. Photos from Wikimedia Commons, with author and licence on each image.` }))
+      .replace('</style>', `${cabeceraEnCSS}${pieEnCSS}</style>`)
+    if (html === antes || !waLeyendas || !html.includes('class="cab-en"') || !html.includes('class="pie-en"')) throw new Error('legends: could not put the common English header/footer')
   }
 
   const dest = join(raiz, 'public', c.ruta)

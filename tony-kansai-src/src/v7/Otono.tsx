@@ -26,6 +26,9 @@ import './v7.css'
 import './invierno.css'
 import './estilo-pixel.css'
 import './temporadas-es.css'
+import './temporadas-en.css'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
 import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
@@ -65,6 +68,8 @@ export default function Otono({ id }: { id: OtonoId }) {
   const pie = PIE[p.lang]
   // En español, cabecera y pie comunes y la paleta de su estación (temporadas-es.css).
   const es = p.lang === 'es'
+  // En inglés (Tony, no Larion): cabecera y pie ingleses y la misma paleta de estación (temporadas-en.css).
+  const en = p.lang === 'en' && p.guia !== 'larion'
   const ld = p.productos && p.invierno ? ldInvierno(p) : {
     '@context': 'https://schema.org', '@type': 'TouristTrip',
     name: p.seo.titulo.split(' | ')[0], description: p.seo.descripcion, url: `${BASE}${p.ruta}`, inLanguage: p.lang,
@@ -79,7 +84,7 @@ export default function Otono({ id }: { id: OtonoId }) {
   }
 
   return (
-    <div className={`v7 v7-pagina v7-otono lang-${p.lang}${es ? ` tmp-es tmp-${p.temporada}` : ''}`} lang={p.lang} dir={dir}>
+    <div className={`v7 v7-pagina v7-otono lang-${p.lang}${es ? ` tmp-es tmp-${p.temporada}` : en ? ` tmp-en tmp-${p.temporada}` : ''}`} lang={p.lang} dir={dir}>
       <Helmet>
         <html lang={p.lang} dir={dir} />
         <title>{p.seo.titulo}</title>
@@ -93,7 +98,7 @@ export default function Otono({ id }: { id: OtonoId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      {es ? <CabeceraEs /> : <header className="v7-cabecera cristal">
+      {es ? <CabeceraEs /> : en ? <CabeceraEn activo={p.ruta} idiomas={familia.filter((x) => x !== p).map((x) => ({ lang: x.lang, ruta: x.ruta, texto: NOMBRE_LANG[x.lang] }))} /> : <header className="v7-cabecera cristal">
         <Link to={p.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-idiomas" aria-label="Language">
           {familia.map((x) => (
@@ -239,6 +244,8 @@ export default function Otono({ id }: { id: OtonoId }) {
           </aside>
           <PieEs p={PAGINAS.es} />
         </>
+      ) : en ? (
+        <PieEn p={PAGINAS.en} creditos={[{ foto: lugar, autor: credito.autor, licencia: credito.licencia, url: credito.url }]} idiomas={familia.filter((x) => x !== p).map((x) => ({ lang: x.lang, ruta: x.ruta, texto: NOMBRE_LANG[x.lang] }))} />
       ) : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>

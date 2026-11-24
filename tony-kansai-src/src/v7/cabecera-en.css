@@ -1,0 +1,191 @@
+/* ── Common English header (CabeceraEn.tsx and scripts/cabecera-en.mjs) ───────
+   Same structure as the Spanish one (cabecera-es.css), its own identity:
+   «aizome & kinari» — indigo-dyed cloth on unbleached paper, with a thin gold
+   hairline (kinpaku) as the only ornament. No pink, no red torii.
+   Shared by React and static pages (the generator reads this very file), so it
+   carries its own colours. Contrast measured (WCAG), white / kinari #f7f4ed:
+   ink #16202d 16,4 / 15,0 · muted #4c5563 7,5 / 6,9 · aizome #1e3a5f 11,5 / 10,5
+   (white on aizome 11,5) · gold text #7a5c1f 6,2 / 5,7 · gold ornament #a8843f
+   3,5 / 3,2 (graphics only, ≥ 3:1). */
+.cab-en {
+  --cn-barra: rgba(247, 244, 237, .92);
+  --cn-panel: #ffffff;
+  --cn-banda: #f1ece1;
+  --cn-tinta: #16202d;
+  --cn-tenue: #4c5563;
+  --cn-ai: #1e3a5f;
+  --cn-ai-hondo: #142b48;
+  --cn-oro: #a8843f;
+  --cn-oro-tinta: #7a5c1f;
+  --cn-linea: rgba(22, 32, 45, .12);
+  --cn-titular: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
+  --cn-letra: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  position: sticky; top: 0; z-index: 900;
+  display: block; width: 100%; margin: 0; padding: 0;
+  background: none;
+  border-bottom: 1px solid var(--cn-linea);
+  color: var(--cn-tinta);
+  font: 400 16px/1.4 var(--cn-letra);
+  text-align: start;
+}
+html[data-tema='oscuro'] .cab-en {
+  --cn-barra: rgba(14, 22, 34, .92); --cn-panel: #111b29; --cn-banda: #1a2638;
+  --cn-tinta: #eef1f5; --cn-tenue: #b6c0cd; --cn-ai: #9fc0e8; --cn-ai-hondo: #c3d8f2;
+  --cn-oro: #d9b877; --cn-oro-tinta: #d9b877; --cn-linea: rgba(255, 255, 255, .14);
+}
+/* The glass goes on a pseudo-element: a backdrop-filter on the header itself
+   would become the containing block of the fixed menu sheet. */
+.cab-en::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; background: var(--cn-barra);
+  -webkit-backdrop-filter: saturate(1.3) blur(12px); backdrop-filter: saturate(1.3) blur(12px);
+}
+.cab-en *, .cab-en *::before, .cab-en *::after { box-sizing: border-box; }
+.cab-en-in {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+  width: min(1180px, 100%); min-height: 60px; margin: 0 auto; padding: 8px 16px;
+}
+.cab-en a { color: inherit; }
+.cab-en :focus-visible { outline: 2px solid var(--cn-ai); outline-offset: 2px; border-radius: 6px; }
+
+/* The wordmark: the UIX flower in gold and the name in spaced capitals, indigo,
+   over a gold hairline — a noren rather than a station sign (the Spanish one).
+   Classes repeated on purpose: beats estilo-sereno §1/§21 inside .v7 without !important. */
+.cab-en .cab-en-marca, .cab-en .cab-en-panel-marca { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
+.cab-en .v7-logo { display: inline-flex; align-items: center; gap: 9px; }
+.cab-en.cab-en .v7-logo .v7-logo-torii { display: none; }
+.cab-en.cab-en .v7-logo .v7-logo-sakura { display: block; flex: none; width: 22px; height: 22px; color: var(--cn-oro); }
+html .cab-en.cab-en .v7-logo .v7-logo-texto.v7-logo-texto {
+  display: inline; font-family: var(--cn-letra); font-weight: 600; font-size: 13.5px; letter-spacing: .2em;
+  text-transform: uppercase; white-space: nowrap; color: var(--cn-ai); padding: 2px 0 5px;
+  background: linear-gradient(var(--cn-oro) 0 0) 0 100% / 100% 1px no-repeat;
+}
+@media (max-width: 379px) { html .cab-en.cab-en .v7-logo .v7-logo-texto.v7-logo-texto { letter-spacing: .14em; font-size: 12.5px; } }
+/* El botón ☰: tres rayas y, si cabe, la palabra. */
+.cab-en .cab-en-boton {
+  display: inline-flex; align-items: center; gap: 10px; min-width: 44px; min-height: 44px; margin: 0; padding: 0 14px 0 12px;
+  border: 1px solid rgba(30, 58, 95, .32); border-radius: 12px; background: var(--cn-panel); color: var(--cn-tinta);
+  font: 600 14px/1 var(--cn-letra); letter-spacing: .06em; cursor: pointer;
+  transition: background-color .15s, border-color .15s;
+}
+.cab-en .cab-en-boton:hover { border-color: var(--cn-tinta); }
+.cab-en .cab-en-rayas { display: inline-grid; gap: 4px; width: 20px; }
+.cab-en .cab-en-rayas i { display: block; height: 2px; border-radius: 2px; background: currentColor; }
+@media (max-width: 379px) { .cab-en .cab-en-boton-txt { display: none; } .cab-en .cab-en-boton { padding: 0 12px; } }
+
+/* Velo y hoja. Cerrados: invisibles y fuera del orden del foco (visibility). */
+.cab-en .cab-en-velo {
+  position: fixed; inset: 0; z-index: 901; background: rgba(20, 30, 46, .38);
+  opacity: 0; visibility: hidden; transition: opacity .25s, visibility 0s linear .25s;
+}
+.cab-en .cab-en-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 902;
+  display: flex; flex-direction: column; gap: 4px;
+  width: min(420px, 100vw); height: 100vh; height: 100dvh; margin: 0;
+  padding: 8px 20px calc(24px + env(safe-area-inset-bottom));
+  overflow-y: auto; overscroll-behavior: contain;
+  background: var(--cn-panel); color: var(--cn-tinta);
+  box-shadow: -24px 0 60px -30px rgba(20, 30, 46, .45);
+  transform: translateX(100%); visibility: hidden;
+  transition: transform .3s cubic-bezier(.2, .8, .2, 1), visibility 0s linear .3s;
+}
+.cab-en[data-abierto] { z-index: 2147483000; } /* por encima de hojas, cookies y barra de WhatsApp */
+.cab-en[data-abierto] .cab-en-velo { opacity: 1; visibility: visible; transition: opacity .25s; }
+.cab-en[data-abierto] .cab-en-panel { transform: none; visibility: visible; transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+@media (max-width: 560px) { .cab-en .cab-en-panel { width: 100vw; box-shadow: none; } }
+/* Con el menú abierto, la página de detrás no se desplaza. */
+html.cab-en-bloqueo, html.cab-en-bloqueo body { overflow: hidden; }
+
+.cab-en .cab-en-panel-cab {
+  position: sticky; top: -8px; z-index: 1; display: flex; align-items: center; justify-content: space-between;
+  min-height: 60px; margin: -8px -20px 4px; padding: 8px 12px 8px 20px;
+  background: var(--cn-panel); border-bottom: 1px solid var(--cn-linea);
+}
+.cab-en .cab-en-cerrar {
+  display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; margin: 0; padding: 0;
+  border: 0; border-radius: 12px; background: transparent; color: var(--cn-tinta); cursor: pointer;
+}
+.cab-en .cab-en-cerrar:hover { background: var(--cn-banda); }
+
+.cab-en .cab-en-arbol { display: block; margin: 0; padding: 0; }
+.cab-en .cab-en-arbol ul { list-style: none; margin: 0; padding: 0; }
+.cab-en .cab-en-arbol li { margin: 0; padding: 0; }
+.cab-en .cab-en-arbol li::before { content: none; }
+
+/* Primer nivel: tres enlaces grandes. */
+.cab-en .cab-en-primeros a {
+  display: flex; align-items: center; min-height: 52px; padding: 4px 0;
+  border-bottom: 1px solid var(--cn-linea); text-decoration: none;
+  font-family: var(--cn-titular); font-size: 21px; font-weight: 600; color: var(--cn-tinta);
+}
+.cab-en .cab-en-primeros a[aria-current='page'] { color: var(--cn-ai); }
+
+/* Ramas plegables. */
+.cab-en .cab-en-rama { margin: 0; padding: 0; border: 0; border-bottom: 1px solid var(--cn-linea); background: none; }
+.cab-en .cab-en-rama > summary {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;
+  list-style: none; cursor: pointer; font-size: 17px; font-weight: 650; color: var(--cn-tinta);
+}
+.cab-en .cab-en-rama > summary::-webkit-details-marker { display: none; }
+.cab-en .cab-en-rama > summary::after {
+  content: ''; flex: none; width: 8px; height: 8px; margin-inline-end: 6px;
+  border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+}
+.cab-en .cab-en-rama[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
+.cab-en .cab-en-rama ul { padding: 0 0 14px; display: grid; gap: 0; }
+.cab-en .cab-en-rama a {
+  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 0 6px 14px;
+  border-inline-start: 1px solid var(--cn-linea); text-decoration: none; color: var(--cn-tenue); font-size: 16px; line-height: 1.3;
+}
+.cab-en .cab-en-rama a:hover, .cab-en .cab-en-rama a[aria-current='page'] { color: var(--cn-tinta); border-inline-start-color: var(--cn-oro); }
+.cab-en .cab-en-rama a[aria-current='page'] { font-weight: 600; }
+/* Las ciudades, cortas, en dos columnas: la rama abierta no se hace eterna. */
+.cab-en .cab-en-rama-experiencias ul { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+.cab-en .cab-en-rama-experiencias li:has(> a:not([href^='/en/osaka/']):not([href^='/en/kyoto/']):not([href^='/en/nara/']):not([href^='/en/kobe/']):not([href^='/en/himeji/']):not([href^='/en/hiroshima/']):not([href^='/en/beyond/'])) { grid-column: 1 / -1; }
+.cab-en a.cab-en-destacado {
+  margin: 6px 0; padding: 10px 14px; border: 0; border-radius: 12px;
+  background: var(--cn-banda); color: var(--cn-ai); font-weight: 650;
+}
+.cab-en a.cab-en-destacado::after { content: '→'; margin-inline-start: auto; }
+.cab-en .cab-en-nuevo {
+  flex: none; padding: 1px 7px; border-radius: 999px; background: var(--cn-banda); color: var(--cn-ai);
+  font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
+}
+
+/* Contacto: el botón índigo, abajo del todo. */
+.cab-en .cab-en-wa {
+  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; margin: 18px 0 0; padding: 0 18px;
+  border-radius: 14px; background: var(--cn-ai); color: #ffffff; text-decoration: none; font-weight: 650; font-size: 16px;
+}
+.cab-en .cab-en-wa:hover { background: var(--cn-ai-hondo); }
+.cab-en .cab-en-wa svg { flex: none; width: 20px; height: 20px; }
+.cab-en .cab-en-idiomas { margin: 12px 0 0; font-size: 14px; color: var(--cn-tenue); text-align: center; }
+.cab-en .cab-en-idiomas a { display: inline-flex; align-items: center; min-height: 44px; color: var(--cn-tenue); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cab-en .cab-en-velo, .cab-en .cab-en-panel, .cab-en[data-abierto] .cab-en-velo, .cab-en[data-abierto] .cab-en-panel,
+  .cab-en .cab-en-rama > summary::after, .cab-en .cab-en-boton { transition: none; }
+}
+@media print { .cab-en { position: static; } .cab-en .cab-en-velo, .cab-en .cab-en-panel, .cab-en .cab-en-boton { display: none; } }
+
+/* Igual que el pie: en la montaña (.v7-expedicion / .mv-comun) sin heredar mayúsculas. */
+.v7-expedicion .cab-en, .mv-comun .cab-en, .v7-expedicion .cab-en :not(.cab-en-nuevo), .mv-comun .cab-en :not(.cab-en-nuevo) { text-transform: none; }
+
+/* Igual que el pie: los <summary> del menú no heredan los de la página. */
+.cab-en summary { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; letter-spacing: 0; text-transform: none; padding: 0; margin: 0; background: none; border: 0; }
+.cab-en summary::before { content: none; display: none; }
+.cab-en .cab-en-rama > summary::after { position: static; background: none; color: inherit; }
+
+/* ── English refinements: branch titles as small spaced capitals (the voice of a
+   ryokan's printed card), the open sheet on kinari paper with a gold rule on top. */
+.cab-en .cab-en-panel { background: #fbf9f4; border-top: 2px solid var(--cn-oro); }
+html[data-tema='oscuro'] .cab-en .cab-en-panel { background: var(--cn-panel); }
+.cab-en .cab-en-panel-cab { background: inherit; }
+.cab-en.cab-en .cab-en-rama > summary {
+  font-family: var(--cn-letra); font-size: 13px; font-weight: 650; letter-spacing: .16em; text-transform: uppercase; color: var(--cn-ai);
+}
+.cab-en .cab-en-primeros a { font-weight: 500; letter-spacing: .005em; }
+.cab-en .cab-en-boton { border-radius: 999px; }
+.cab-en .cab-en-wa { border-radius: 999px; letter-spacing: .02em; }
+.cab-en .cab-en-nuevo { color: var(--cn-oro-tinta); background: transparent; border: 1px solid var(--cn-oro); }
+.cab-en a.cab-en-destacado { background: var(--cn-ai); color: #ffffff; }
+html[data-tema='oscuro'] .cab-en a.cab-en-destacado { color: #111b29; }

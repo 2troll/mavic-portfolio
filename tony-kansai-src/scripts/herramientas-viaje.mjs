@@ -37,6 +37,8 @@ import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
 import { LOGO_SAKURA } from './logo-sakura.mjs'
 import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
 import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
+import { cabeceraEnHTML, cabeceraEnCSS } from './cabecera-en.mjs'
+import { pieEnHTML, pieEnCSS } from './pie-en.mjs'
 
 // datosItinerarios.ts importa './itin-en' sin extensión (Vite sí, Node no).
 registerHooks({
@@ -979,6 +981,10 @@ function cabecera({ lang, rutas, clave, secciones, t }) {
   if (lang === 'es') return cabeceraEsHTML({ actual: rutas.es, enPagina: secciones.map(([id, n]) => [n, `#${id}`]),
     ramasPagina: [{ titulo: C.nav.g2, enlaces: C.herramientas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }, { titulo: C.nav.g3, enlaces: C.mas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }],
     idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })) })
+  // In English, the common English header (same tree logic, its own identity).
+  if (lang === 'en') return cabeceraEnHTML({ actual: rutas.en, enPagina: secciones.map(([id, n]) => [n, `#${id}`]),
+    ramasPagina: [{ titulo: C.nav.g2, enlaces: C.herramientas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }, { titulo: C.nav.g3, enlaces: C.mas.map(([n, k]) => [n, enlaceRuta(k, lang)]) }],
+    idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })) })
   return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: C.nav.etiqueta, abrir: C.nav.abrir, grupos: [
     { t: C.nav.g1, enlaces: secciones.map(([id, n]) => [esc(n), `#${id}`]) },
@@ -996,6 +1002,8 @@ function migas(lang, nombre) {
 function pie(lang, t, rutas) {
   const C = COMUN[lang]
   if (lang === 'es') return pieEsHTML({ idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })),
+    extra: `${esc(C.pie.act)}: <bdi dir="ltr">${HOY}</bdi>`, equipo: equipoHTML({ lang, actual: 'tony' }) })
+  if (lang === 'en') return pieEnHTML({ idiomas: LANGS.filter((l) => l !== lang).map((l) => ({ lang: l, ruta: rutas[l], texto: C.idioma[l] })),
     extra: `${esc(C.pie.act)}: <bdi dir="ltr">${HOY}</bdi>`, equipo: equipoHTML({ lang, actual: 'tony' }) })
   return `<footer>${pieHTML({ mas: C.pie.mas,
     intro: `<p>${esc(C.pie.intro)}</p>`,
@@ -1038,7 +1046,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${rutas[l
 <script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?${fuentes}&display=swap">
-<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : ''}</style>
+<style>${lang === 'es' ? CSS_ES : CSS}${menuCSS}${equipoCSS}${lang === 'es' ? cabeceraEsCSS + pieEsCSS : lang === 'en' ? cabeceraEnCSS + pieEnCSS : ''}</style>
 </head>
 <body>
 <a class="saltar" href="#principal">${esc(lang === 'es' ? 'Ir al contenido' : lang === 'en' ? 'Skip to content' : 'انتقل إلى المحتوى')}</a>

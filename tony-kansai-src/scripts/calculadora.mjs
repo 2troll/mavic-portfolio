@@ -8,6 +8,8 @@ import { mkdirSync, writeFileSync } from 'node:fs'
 import { join } from 'node:path'
 import { cabeceraEsHTML, cabeceraEsCSS } from './cabecera-es.mjs'
 import { pieEsHTML, pieEsCSS } from './pie-es.mjs'
+import { cabeceraEnHTML, cabeceraEnCSS } from './cabecera-en.mjs'
+import { pieEnHTML, pieEnCSS } from './pie-en.mjs'
 
 const BASE = 'https://tonykansaiguide.com'
 const WA = '34634193106'
@@ -215,10 +217,10 @@ ${Object.keys(RUTA).map((l) => `<link rel="alternate" hreflang="${l}" href="${BA
 <meta property="og:title" content="${esc(t.title)}"><meta property="og:description" content="${esc(t.desc)}"><meta property="og:url" content="${BASE}${RUTA[lang]}">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
-<style>${lang === 'es' ? CSS_ES + cabeceraEsCSS + pieEsCSS : CSS}</style>
+<style>${lang === 'es' ? CSS_ES + cabeceraEsCSS + pieEsCSS : lang === 'en' ? CSS + cabeceraEnCSS + pieEnCSS : CSS}</style>
 </head>
 <body>
-${lang === 'es' ? cabeceraEsHTML({ actual: RUTA.es, idiomas: Object.keys(RUTA).filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })) }) : `<header><div class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · ${Object.keys(RUTA).filter((l) => l !== lang).map((l) => `<a href="${RUTA[l]}" hreflang="${l}" lang="${l}">${l === 'ar' ? 'عربي' : l.toUpperCase()}</a>`).join(' · ')}</div></header>`}
+${lang === 'es' ? cabeceraEsHTML({ actual: RUTA.es, idiomas: Object.keys(RUTA).filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })) }) : lang === 'en' ? cabeceraEnHTML({ actual: RUTA.en, idiomas: Object.keys(RUTA).filter((l) => l !== 'en').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'Español' })) }) : `<header><div class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · ${Object.keys(RUTA).filter((l) => l !== lang).map((l) => `<a href="${RUTA[l]}" hreflang="${l}" lang="${l}">${l === 'ar' ? 'عربي' : l.toUpperCase()}</a>`).join(' · ')}</div></header>`}
 <main class="w">
 <p class="eti">${esc(t.eti)}</p>
 <h1>${esc(t.h1)}</h1>
@@ -242,7 +244,7 @@ ${lang === 'es' ? cabeceraEsHTML({ actual: RUTA.es, idiomas: Object.keys(RUTA).f
 <section class="faq"><p class="eti">${esc(t.faq_t)}</p>${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}</section>
 <nav class="rel" aria-label="${esc(t.rel_t)}"><p class="eti">${esc(t.rel_t)}</p><ul>${t.rel.map(([h, x]) => `<li><a href="${h}">${esc(x)}</a></li>`).join('')}</ul></nav>
 </main>
-${lang === 'es' ? pieEsHTML({ idiomas: Object.keys(RUTA).filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })), extra: '<a href="https://www.instagram.com/tonykansaiguide/">Instagram</a>' }) : `<footer class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · <a href="https://www.instagram.com/tonykansaiguide/">Instagram</a> · tony@tonykansaiguide.com</footer>`}
+${lang === 'es' ? pieEsHTML({ idiomas: Object.keys(RUTA).filter((l) => l !== 'es').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'English' })), extra: '<a href="https://www.instagram.com/tonykansaiguide/">Instagram</a>' }) : lang === 'en' ? pieEnHTML({ idiomas: Object.keys(RUTA).filter((l) => l !== 'en').map((l) => ({ lang: l, ruta: RUTA[l], texto: l === 'ar' ? 'العربية' : 'Español' })), extra: '<a href="https://www.instagram.com/tonykansaiguide/">Instagram</a>' }) : `<footer class="w"><a href="/${lang}/">${esc(t.inicio)}</a> · <a href="https://www.instagram.com/tonykansaiguide/">Instagram</a> · tony@tonykansaiguide.com</footer>`}
 <script>
 (function(){
 var T=${JSON.stringify({ medio: t.medio, dia: t.dia, solo: t.solo, porque: t.porque, per: t.per, grupo: t.grupo, grande: t.grande, msg: t.msg, labels: t.labels, d: t.d, who: t.who, want: t.want })};

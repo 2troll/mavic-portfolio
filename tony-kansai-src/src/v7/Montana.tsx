@@ -8,6 +8,8 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, PAGINAS, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
 import resenasTony from '../../public/reviews.json'
 import { MONTANA, MONTES, KANJI, CIUDAD, CIMA, VENTA_ES } from './datosMontana'
 import type { MontanaId, MonteId } from './datosMontana'
@@ -154,6 +156,8 @@ export default function Montana({ id }: { id: MontanaId }) {
   const wa = (g: 'tony' | 'larion', texto: string) => enlaceGuia(g, p.saludo(nombreGuia(g), texto))
   const tg = !!GUIAS[p.guias[0]].tg
   const es = p.lang === 'es'
+  // /en/hiking/ (de Tony): la cabecera y el pie ingleses comunes, como en español.
+  const en = p.lang === 'en'
 
   // Salta al capítulo i del relieve 3D (0 = portada del relieve): el progreso
   // de MontesScroll es lineal con el scroll de su sección.
@@ -234,7 +238,8 @@ export default function Montana({ id }: { id: MontanaId }) {
 
       {/* En español, la cabecera común; envuelta en un .v7 claro porque su estilo
           (y el del pie) va fuera de .v7-expedicion. */}
-      {es ? <div className="v7 lang-es mv-comun"><CabeceraEs enPagina={[{ texto: 'Cumbres', ruta: '#cumbres' }, { texto: 'El oficio', ruta: '#oficio' }]} /></div> : <header className="v7-cabecera cristal">
+      {es ? <div className="v7 lang-es mv-comun"><CabeceraEs enPagina={[{ texto: 'Cumbres', ruta: '#cumbres' }, { texto: 'El oficio', ruta: '#oficio' }]} /></div>
+        : en ? <div className="v7 lang-en mv-comun"><CabeceraEn activo={p.ruta} enPagina={[{ texto: TEXTOS_CUMBRES.en.menu, ruta: '#cumbres' }, { texto: p.oficio.titulo, ruta: '#oficio' }]} idiomas={IDIOMAS.filter((x) => x.id !== id).map((x) => ({ lang: MONTANA[x.id].lang, ruta: MONTANA[x.id].ruta, texto: x.etiqueta }))} /></div> : <header className="v7-cabecera cristal">
         <Link to={CIUDAD[id]} className="v7-marca" aria-label="Tony Kansai Guide"> <Logo />
         </Link>
         <nav className="v7-anclas">
@@ -324,6 +329,26 @@ export default function Montana({ id }: { id: MontanaId }) {
             </details>
           </aside>
           <div className="v7 lang-es mv-comun"><PieEs p={PAGINAS.es} /></div>
+        </>
+      ) : en ? (
+        <>
+          {/* What the common footer doesn't carry: safety, the map source and the data/sound credits. */}
+          <aside className="mv-es-extra">
+            <nav aria-label="Other languages">
+              {IDIOMAS.filter((x) => x.id !== id).map((x) => <Link key={x.id} to={MONTANA[x.id].ruta} lang={MONTANA[x.id].lang}>{x.etiqueta}</Link>)}
+              <Link to="/safety/?lang=en">{PIE.en.seguridad}</Link>
+            </nav>
+            <p>{p.et.fuente}</p>
+            <p>3D flight: MapLibre GL (BSD-3), aerial photo 出典 国土地理院, terrain AWS Terrain Tiles, trails OpenFreeMap © OpenStreetMap</p>
+          </aside>
+          <div className="v7 lang-en mv-comun"><PieEn p={PAGINAS.en}
+            creditos={[
+              ...Object.entries(CREDITOS_FOTO).map(([, c]) => ({ foto: `Photo “${c.titulo}”`, autor: c.autor, licencia: c.licencia, url: c.pagina })),
+              { foto: 'Forecast', autor: 'MET Norway', licencia: 'CC BY 4.0', url: 'https://api.met.no/' },
+              { foto: 'Weather icons', autor: 'metno/weathericons', licencia: 'MIT', url: 'https://github.com/metno/weathericons' },
+              { foto: 'Map', autor: 'Natural Earth', licencia: 'public domain', url: 'https://www.naturalearthdata.com/' },
+            ]}
+            idiomas={IDIOMAS.filter((x) => x.id !== id).map((x) => ({ lang: MONTANA[x.id].lang, ruta: MONTANA[x.id].ruta, texto: x.etiqueta }))} /></div>
         </>
       ) : <footer className="v7-pie">
         <div className="v7-pie-fila">

@@ -9,7 +9,7 @@
 // apuntándose para el libro, pero su estampa no se ve: v8.css) y el sonido.
 // Rutas: Tony /es|en|ar/{ciudad}/; Larion /ru/{ciudad}/ y /larion/{ciudad}/.
 
-import { useEffect } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
@@ -17,12 +17,14 @@ import { GUIAS, CORREO, enlaceGuia, NOTA_TG } from '../v7/contenido'
 import { PAGINAS } from '../v7/contenido'
 import { CabeceraEs } from '../v7/CabeceraEs'
 import { PieEs } from '../v7/PieEs'
+import { CabeceraEn } from '../v7/CabeceraEn'
+import { PieEn } from '../v7/PieEn'
 import { HORAS, ITINERARIOS, META_ITIN } from '../v7/datosItinerarios'
 import { PRECIO, ETIQUETAS } from '../v7/datosRutas'
 import { foto } from '../v7/foto'
 import { Logo } from '../v7/Logo'
 import { HIKING_ROUTES } from '../lib/data'
-import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo, h1Ciudad, descripcionSeo, faqCiudadVisible, faqLd, introCiudad, fichaCiudad, precioPortada } from './ciudades'
+import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY, tituloSeo, h1Ciudad, descripcionSeo, faqCiudadVisible, faqLd, introCiudad, fichaCiudad, precioPortada, tramosCiudad } from './ciudades'
 import type { CiudadId, Lengua } from './ciudades'
 import creditos from './creditosZonas.json'
 import { TiempoCiudad } from './TiempoCiudad'
@@ -32,6 +34,9 @@ import '../v7/v7.css'
 // La hoja serena directamente (estilo-pixel.css ya solo la reimporta).
 import '../v7/estilo-sereno.css'
 import './v8.css'
+import './ciudad-venta.css'
+import resenasTony from '../../public/reviews.json'
+import { PRECIO_CORTO } from '../v7/datosRespuestasNuevas'
 import { IconoCanal } from '../v7/IconoWa'
 import { BarraWa } from '../v7/BarraWa'
 import { SelloCiudad } from '../v9/Sellos'
@@ -41,6 +46,118 @@ import { respuestaDeCiudad } from '../v7/datosRespuestas'
 import { SeccionesRespuesta } from '../v7/PaginaRespuesta'
 import { ToursNuevos } from '../v7/ToursNuevos'
 import { VentajasEnGuia, HerramientasEnGuia } from '../v7/KitGuia'
+
+// ── Franja de venta (25-11-2026) ─────────────────────────────────────────────
+// Clarity: ChatGPT manda la gente a /es/kyoto/ y /en/kyoto/; llegan informados y
+// solo quieren ver confianza y escribir. Debajo del titular: nota y número real de
+// reseñas, dos o tres reseñas cortas de esa ciudad, precio cerrado por grupo y el
+// WhatsApp con la ciudad ya escrita. Solo Tony en /es/ y /en/.
+// Las reseñas salen de las mismas dos fuentes que PaginaGuia (reviews.json del build
+// + las aprobadas desde el móvil en /api/resenas/publicas), sin copiar datos.
+interface ResenaC { id: string; stars: number; name: string; country: string; tour: string; text: string; lang?: string; traducciones?: Record<string, string> }
+const resenasBuild = (): ResenaC[] => ((resenasTony as unknown as { reviews: ResenaC[] }).reviews ?? []).filter((r) => r?.text && r.stars)
+function useResenasTony(activas: boolean): ResenaC[] {
+  const [lista, setLista] = useState<ResenaC[]>(() => (activas ? resenasBuild() : []))
+  useEffect(() => {
+    if (!activas) return
+    let vivo = true
+    fetch('/api/resenas/publicas', { cache: 'no-cache' }).then((r) => (r.ok ? r.json() : null)).catch(() => null).then((d) => {
+      const nuevas = ((d?.reviews ?? []) as ResenaC[]).filter((r) => r?.text && r.stars)
+      if (!vivo || !nuevas.length) return
+      const vistos = new Set<string>()
+      setLista([...nuevas, ...resenasBuild()].filter((r) => (vistos.has(r.id) ? false : (vistos.add(r.id), true))))
+    })
+    return () => { vivo = false }
+  }, [activas])
+  return lista
+}
+/** Qué reseñas hablan de cada ciudad (campo «tour» o el propio texto). */
+const CIUDAD_RE: Partial<Record<CiudadId, RegExp>> = {
+  kyoto: /kio|kyo|gion|fushimi|kinkaku|arashiyama/i, osaka: /osaka|dotonbori|kuromon/i, nara: /nara|tōdai|todai/i,
+  kobe: /kob/i, himeji: /himeji/i, hiroshima: /hiroshima|miyajima/i, beyond: /koya|kōya|kumano/i,
+}
+/** ¿El texto original está en inglés? (reviews.json marca alguna inglesa como «es»). */
+const pareceIngles = (t: string) => (t.match(/\b(the|and|was|we|with|our|you|very|had|it)\b/gi) ?? []).length > (t.match(/\b(el|la|que|muy|con|por|nos|fue|una|del)\b|[ñáéíóú]/gi) ?? []).length
+type Cita = { r: ResenaC; texto: string; traducida: boolean }
+function citasCiudad(lista: ResenaC[], ciudad: CiudadId, lang: 'es' | 'en'): Cita[] {
+  const re = CIUDAD_RE[ciudad]
+  const citas: (Cita & { puntos: number })[] = []
+  for (const r of lista) {
+    const ingles = pareceIngles(r.text)
+    const texto = lang === 'en' ? (ingles ? r.text : r.traducciones?.en) : (ingles ? undefined : r.text)
+    if (!texto || texto.length < 40 || texto.length > 280) continue
+    const deAqui = !!re && (re.test(r.tour ?? '') || re.test(r.text))
+    citas.push({ r, texto, traducida: lang === 'en' && !ingles, puntos: (deAqui ? 1000 : 0) + r.stars * 100 + Math.min(texto.length, 200) / 10 })
+  }
+  // Si la ciudad tiene al menos dos reseñas propias, solo esas (en /en/osaka/ salía una de Kioto).
+  const propias = citas.filter((x) => x.puntos >= 1000)
+  return (propias.length >= 2 ? propias : citas).sort((a, b) => b.puntos - a.puntos).slice(0, 3)
+}
+const PAIS_EN: Record<string, string> = { 'España': 'Spain', 'México': 'Mexico', 'Perú': 'Peru', 'Panamá': 'Panama' }
+const VENTA = {
+  es: { resenas: 'reseñas', leer: 'Leer todas las reseñas', titulo: 'Lo que dicen quienes ya vinieron', precio: 'Precio cerrado por grupo, no por persona', corto: 'Kioto, 2 horas', medio: 'Medio día', completo: 'Día completo', traducida: '', nota: 'Guía privado solo para vosotros. Recogida en el hotel.' },
+  en: { resenas: 'reviews', leer: 'Read all reviews', titulo: 'What guests say', precio: 'One fixed price per group, not per person', corto: 'Kyoto, 2 hours', medio: 'Half day', completo: 'Full day', traducida: 'Translated from Spanish', nota: 'A private guide just for your group. Hotel pick-up.' },
+} as const
+/** Mensaje de WhatsApp ya escrito con la ciudad: el cliente solo añade fechas y personas. */
+function mensajeCiudad(lang: 'es' | 'en', ciudad: string) {
+  return lang === 'es'
+    ? `Hola, me interesa un guía privado en ${ciudad}.\nFechas: \nPersonas: `
+    : `Hi, I'd like a private guide in ${ciudad}.\nDates: \nGroup size: `
+}
+const RESENAS_PAG: Record<'es' | 'en', string> = { es: '/es/#resenas', en: '/en/#resenas' }
+
+function FranjaNota({ lang, lista }: { lang: 'es' | 'en'; lista: ResenaC[] }) {
+  if (!lista.length) return null
+  const media = lista.reduce((t, r) => t + r.stars, 0) / lista.length
+  const nota = media.toFixed(1).replace('.', lang === 'es' ? ',' : '.')
+  return (
+    <a className="cv-nota" href={RESENAS_PAG[lang]}>
+      <span className="cv-estrellas" aria-hidden="true">★★★★★</span>
+      <strong>{nota}</strong><span>· {lista.length} {VENTA[lang].resenas}</span>
+    </a>
+  )
+}
+
+function FranjaVenta({ lang, ciudad, lista, wa }: { lang: 'es' | 'en'; ciudad: CiudadId; lista: ResenaC[]; wa: string }) {
+  const t = VENTA[lang]
+  const citas = useMemo(() => citasCiudad(lista, ciudad, lang), [lista, ciudad, lang])
+  const yen = (n: number) => '¥' + n.toLocaleString(lang === 'es' ? 'de-DE' : 'en-US')
+  const tramos = tramosCiudad(ciudad)
+  const precios: [string, number][] = [
+    ...(ciudad === 'kyoto' ? [[t.corto, PRECIO_CORTO] as [string, number]] : []),
+    ...(tramos.includes('medio') ? [[t.medio, PRECIO.medio] as [string, number]] : []),
+    ...(tramos.includes('completo') ? [[t.completo, PRECIO.completo] as [string, number]] : []),
+    ...(tramos.includes('lejos') ? [[t.completo, PRECIO.lejos] as [string, number]] : []),
+  ]
+  return (
+    <section className="cv-franja" aria-label={t.titulo}>
+      <div className="cv-precios">
+        <p className="cv-precios-tit">{t.precio}</p>
+        <ul>{precios.map(([n, v]) => <li key={n + v}><span>{n}</span><strong><bdi>{yen(v)}</bdi></strong></li>)}</ul>
+        <p className="cv-precios-nota">{t.nota}</p>
+        <a className="v7-boton cv-wa" href={wa} target="_blank" rel="noopener noreferrer"
+          onClick={() => window.gtag?.('event', 'generate_lead', { pagina: `ciudad-${ciudad}`, canal: 'whatsapp_franja' })}>
+          <IconoCanal tg={false} /> {CTA_EMPRESA[lang]}
+        </a>
+      </div>
+      {citas.length > 0 && (
+        <div className="cv-citas">
+          <h2>{t.titulo}</h2>
+          <ul>
+            {citas.map(({ r, texto, traducida }) => (
+              <li key={r.id}>
+                <span className="cv-estrellas" aria-label={`${r.stars}/5`}>{'★'.repeat(r.stars)}</span>
+                <blockquote lang={traducida || lang === 'es' ? lang : 'en'}>{lang === 'es' ? `«${texto.trim()}»` : `“${texto.trim()}”`}</blockquote>
+                <p className="cv-quien">{r.name}{r.country ? ` · ${lang === 'en' ? PAIS_EN[r.country] ?? r.country : r.country}` : ''}{traducida ? <small> · {t.traducida}</small> : null}</p>
+              </li>
+            ))}
+          </ul>
+          <a className="cv-leer" href={RESENAS_PAG[lang]}>{t.leer} →</a>
+        </div>
+      )}
+    </section>
+  )
+}
 
 const BASE = 'https://tonykansaiguide.com'
 
@@ -113,9 +230,12 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
   const hermanas = guia === 'larion' ? (['/ru', '/larion'] as const) : (['/es', '/en', '/ar'] as const)
   const etiquetaIdioma: Record<string, string> = { '/es': 'Español', '/en': 'English', '/ar': 'العربية', '/ru': 'Русский', '/larion': 'English' }
   const langDe = (p: string): Lengua => (p === '/larion' ? 'en' : (p.slice(1) as Lengua))
+  const idiomasOtros = hermanas.filter((h) => h !== prefijo).map((h) => ({ lang: langDe(h), ruta: `${h}/${c.id}/`, texto: etiquetaIdioma[h] }))
   const titulo = tituloSeo(c.id, lang, guia)
   const tg = !!GUIAS[guia].tg
-  const wa = enlaceGuia(guia, `${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)
+  const venta = guia === 'tony' && (lang === 'es' || lang === 'en') && (prefijo === '/es' || prefijo === '/en') ? (lang as 'es' | 'en') : null
+  const resenas = useResenasTony(!!venta)
+  const wa = venta ? enlaceGuia(guia, mensajeCiudad(venta, c.nombre[venta])) : enlaceGuia(guia, `${lang === 'ar' ? 'السلام عليكم يا' : lang === 'ru' ? 'Здравствуйте,' : lang === 'es' ? 'Hola' : 'Hi'} ${g}. ${c.nombre[lang]}:\n`)
   const cta = guia === 'tony' ? CTA_EMPRESA[lang] : et.escribe(g)
 
   return (
@@ -135,7 +255,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
       </Helmet>
 
       {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
-      {prefijo === '/es' ? <CabeceraEs activo={`/es/${c.id}/`} idiomas={hermanas.filter((h) => h !== prefijo).map((h) => ({ lang: langDe(h), ruta: `${h}/${c.id}/`, texto: etiquetaIdioma[h] }))} /> : <header className="v7-cabecera cristal">
+      {prefijo === '/es' ? <CabeceraEs activo={`/es/${c.id}/`} idiomas={idiomasOtros} /> : prefijo === '/en' ? <CabeceraEn activo={`/en/${c.id}/`} idiomas={idiomasOtros} /> : <header className="v7-cabecera cristal">
         <Link to={`${prefijo}/`} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-anclas" aria-label={et.otras}>
           {guia === 'tony' && prefijo in NAV_TONY
@@ -165,6 +285,7 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           </div>
           <div className="v8-portada-texto">
             <h1>{c.nombre[lang]}</h1>
+            {venta && <FranjaNota lang={venta} lista={resenas} />}
             {/* La frase que la gente escribe en el buscador o en la IA («guía privado en Kioto en español»). */}
             <p className="v8-portada-guia"><strong>{h1Ciudad(c.id, lang, guia)}</strong></p>
             <p>{LEMA_VISIBLE[c.id]?.[lang] ?? c.lema[lang]}</p>
@@ -175,6 +296,8 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
             </a>
           </div>
         </section>
+
+        {venta && <FranjaVenta lang={venta} ciudad={c.id} lista={resenas} wa={wa} />}
 
         {/* Ficha rápida (ciudades.ts): qué es, cuánto cuesta y cómo se reserva, antes
             de la galería. Es lo primero que lee una IA y lo que busca el cliente. */}
@@ -297,7 +420,21 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
           flotante que saltaba encima de los botones va oculta en v8.css (auditoría P8). */}
       <SelloCiudad id={c.id} lang={lang} guia={guia} />
 
-      {prefijo === '/es' ? <PieEs p={PAGINAS.es} creditos={[...c.zonas.flatMap((z) => CREDITOS[z.id] ? [{ foto: z.nombre.es, ...CREDITOS[z.id] }] : []), { foto: 'Tiempo', autor: 'Open-Meteo', licencia: 'CC BY 4.0', url: 'https://open-meteo.com/' }, { foto: 'Tifones', autor: 'Agencia Meteorológica de Japón', url: 'https://www.jma.go.jp/bosai/map.html#contents=typhoon' }]} idiomas={hermanas.filter((h) => h !== prefijo).map((h) => ({ lang: langDe(h), ruta: `${h}/${c.id}/`, texto: etiquetaIdioma[h] }))} /> : <footer className="v7-pie">
+      {/* /en/: el pie inglés común (PieEn) no lleva créditos; los de las fotos (CC BY)
+          y los idiomas hermanos se quedan aquí encima para no perder atribución ni enlaces. */}
+      {prefijo === '/en' && (
+        <div className="v7-seccion cv-creditos-en">
+          <nav aria-label="Language">{idiomasOtros.map((i) => <Link key={i.ruta} to={i.ruta} lang={i.lang}>{i.texto}</Link>)}</nav>
+          <details className="v7-creditos">
+            <summary>{PIE.en.creditos}</summary>
+            <ul lang="en" dir="ltr">
+              {c.zonas.map((z) => CREDITOS[z.id] && <li key={z.id}>{z.nombre.en}: <a href={CREDITOS[z.id].url} target="_blank" rel="noopener noreferrer">{CREDITOS[z.id].autor}</a>, {CREDITOS[z.id].licencia}</li>)}
+              <li>Weather: <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo</a> (CC BY 4.0); typhoons: <a href="https://www.jma.go.jp/bosai/map.html#contents=typhoon" target="_blank" rel="noopener noreferrer">Japan Meteorological Agency</a></li>
+            </ul>
+          </details>
+        </div>
+      )}
+      {prefijo === '/es' ? <PieEs p={PAGINAS.es} creditos={[...c.zonas.flatMap((z) => CREDITOS[z.id] ? [{ foto: z.nombre.es, ...CREDITOS[z.id] }] : []), { foto: 'Tiempo', autor: 'Open-Meteo', licencia: 'CC BY 4.0', url: 'https://open-meteo.com/' }, { foto: 'Tifones', autor: 'Agencia Meteorológica de Japón', url: 'https://www.jma.go.jp/bosai/map.html#contents=typhoon' }]} idiomas={idiomasOtros} /> : prefijo === '/en' ? <PieEn p={PAGINAS.en} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>

@@ -527,8 +527,9 @@ const en: Pagina = {
         foto: '/v8/zonas/kioto-kiyomizu', alt: 'Kiyomizu-dera temple among autumn leaves in Kyoto', ruta: '/en/kyoto/' },
       { titulo: 'Food and markets', texto: 'Markets like Kuromon and Nishiki, street food in Dōtonbori and where to eat well, including halal or vegetarian.',
         foto: '/v8/zonas/osaka-kuromon', alt: 'Stalls at Kuromon Market in Osaka', ruta: '/en/osaka/' },
-      { titulo: 'Nature and rural Japan', texto: 'Mountains near Kyoto and Nara, the cherry trees of Yoshino, Kōyasan or the Kumano Kodo, at your own pace.',
-        foto: '/v8/zonas/nara-yoshino', alt: 'Mount Yoshino covered in cherry blossom', ruta: '/en/hiking/' },
+      // Hiking on view (Tony, 25-11): 18 guided routes on /en/hiking/ (datosMontana.ts, m-en).
+      { titulo: 'Hiking and mountains', texto: '18 guided routes near Osaka and Kyoto: the Kumano Kodō, Kōyasan, Rokkō or Hakkyōgadake, the roof of Kansai (1,915 m).',
+        foto: '/v8/zonas/lejos-kumano', alt: 'The red pagoda of Seiganto-ji and Nachi Falls among the mountains, on the Kumano Kodō', ruta: '/en/hiking/' },
     ],
     otras: [
       { texto: 'Tokyo, anime and pop culture', ruta: '/en/tokyo-anime-guide/' },

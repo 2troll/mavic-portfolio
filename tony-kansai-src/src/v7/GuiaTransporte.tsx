@@ -14,6 +14,8 @@ import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
 import { PAGINAS } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoWa } from './IconoWa'
@@ -77,8 +79,8 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
-      {p.lang === 'es' ? <CabeceraEs activo={p.ruta} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <header className="v7-cabecera cristal">
+      {/* En español e inglés (Tony), la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {p.lang === 'es' ? <CabeceraEs activo={p.ruta} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : p.lang === 'en' ? <CabeceraEn activo={p.ruta} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <header className="v7-cabecera cristal">
         <Link to={p.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-idiomas" aria-label="Language">
           {hermanas.map(([k, x]) => (
@@ -167,7 +169,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
 
       <FranjaVentajas lang={p.lang} />
 
-      {p.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITO ? [{ foto: p.foto.lugar, ...CREDITO }] : undefined} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <footer className="v7-pie">
+      {p.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITO ? [{ foto: p.foto.lugar, ...CREDITO }] : undefined} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : p.lang === 'en' ? <PieEn p={PAGINAS.en} creditos={CREDITO ? [{ foto: p.foto.lugar, ...CREDITO }] : undefined} idiomas={hermanas.filter(([k]) => k !== id).map(([, x]) => ({ lang: x.lang, ruta: x.ruta, texto: x.lang === 'es' ? 'Español' : 'English' }))} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>

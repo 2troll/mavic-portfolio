@@ -12,6 +12,8 @@ import { useLanguage } from '../contexts/LanguageContext'
 import { GUIAS, CORREO, CREDITOS, PAGINAS, enlaceGuia } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
 import { ETIQUETAS, PRECIO } from './datosRutas'
 import { ET_ITIN, HORAS, ITINERARIOS, META_ITIN, ORDEN_LARION, ORDEN_TONY } from './datosItinerarios'
 import type { ItinId } from './datosItinerarios'
@@ -96,8 +98,8 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
         <meta property="og:image" content={`${BASE}${META_ITIN[orden[0]].foto}`} />
       </Helmet>
 
-      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
-      {lang === 'es' ? <CabeceraEs activo={pg.ruta} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <header className="v7-cabecera cristal">
+      {/* En español e inglés (Tony), la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {lang === 'es' ? <CabeceraEs activo={pg.ruta} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : lang === 'en' && guia === 'tony' ? <CabeceraEn activo={pg.ruta} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <header className="v7-cabecera cristal">
         <Link to={pg.ciudad} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         <nav className="v7-anclas">
           <Link to={pg.ciudad}>{flecha === '→' ? '←' : '→'} {et.volver}</Link>
@@ -185,7 +187,7 @@ export default function Itinerarios({ id }: { id: ItinPaginaId }) {
 
       <FranjaVentajas lang={lang} />
 
-      {lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITOS_ITIN} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <footer className="v7-pie">
+      {lang === 'es' ? <PieEs p={PAGINAS.es} creditos={CREDITOS_ITIN} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : lang === 'en' && guia === 'tony' ? <PieEn p={PAGINAS.en} creditos={CREDITOS_ITIN} idiomas={hermanas.filter((k) => k !== id).map((k) => ({ lang: PAGINAS_ITIN[k].lang, ruta: PAGINAS_ITIN[k].ruta, texto: PAGINAS_ITIN[k].etiqueta }))} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong>Tony Kansai Guide</strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>

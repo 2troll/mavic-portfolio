@@ -12,6 +12,8 @@ import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, CREDITOS, enlaceGuia, contactoLd } f
 import { PAGINAS } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
+import { CabeceraEn } from './CabeceraEn'
+import { PieEn } from './PieEn'
 import { foto } from './foto'
 import { Logo } from './Logo'
 import { IconoCanal } from './IconoWa'
@@ -76,8 +78,8 @@ export default function Viajeros({ id }: { id: MercadoId }) {
         <script type="application/ld+json">{JSON.stringify(ld)}</script>
       </Helmet>
 
-      {/* En español, la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
-      {m.lang === 'es' ? <CabeceraEs activo={m.ruta} /> : <header className="v7-cabecera cristal">
+      {/* En español e inglés (Tony), la cabecera y el pie comunes (árbol de la web, 25-11-2026). */}
+      {m.lang === 'es' ? <CabeceraEs activo={m.ruta} /> : m.lang === 'en' && (m.guia ?? 'tony') === 'tony' ? <CabeceraEn activo={m.ruta} /> : <header className="v7-cabecera cristal">
         <Link to={m.inicio} className="v7-marca" aria-label="Tony Kansai Guide"><Logo /></Link>
         {/* Sin selector de idiomas: el hueco empuja los botones a la derecha. */}
         <span aria-hidden="true" style={{ flex: 1 }} />
@@ -169,7 +171,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
 
       <FranjaVentajas lang={m.lang} />
 
-      {m.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={credito ? [credito] : undefined} /> : <footer className="v7-pie">
+      {m.lang === 'es' ? <PieEs p={PAGINAS.es} creditos={credito ? [credito] : undefined} /> : m.lang === 'en' && (m.guia ?? 'tony') === 'tony' ? <PieEn p={PAGINAS.en} creditos={credito ? [credito] : undefined} /> : <footer className="v7-pie">
         <div className="v7-pie-fila">
           <div><strong><Logo /></strong><p><a href={`mailto:${CORREO}`}>{CORREO}</a></p></div>
           <nav>
