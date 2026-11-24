@@ -313,6 +313,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'أسئلة شائعة',
     faq: [
+      { p: 'هل يمكن أن تكون المرشدة امرأة مسلمة؟', r: 'نعم. للمجموعات النسائية والعائلات المسلمة نعمل مع أربع مرشدات مسلمات يعشن في أوساكا وكيوتو، ومنهن من تتحدث العربية: tonykansaiguide.com/ar/murshida-muslima-yaban/' },
       { p: 'أين أصلي في كيوتو؟', r: 'في مسجد كيوتو قرب القصر الإمبراطوري، أو في المصليات المجانية في معالم مثل قلعة نيجو ومتحف كيوتو الدولي للمانغا.' },
       { p: 'ما أقرب مسجد من محطة كيوتو؟', r: 'مسجد كيوتو في شمال وسط المدينة قرب القصر الإمبراطوري، لا بجانب المحطة. في الجولة أرتّب المسار ليمرّ به أو بأحد المصليات وقت الصلاة.' },
       { p: 'هل يمكن زيارة مسجد كوبي؟', r: 'نعم. مسجد كوبي أقدم مسجد في اليابان (١٩٣٥)، في 2-25-14 Nakayamate-dori. نزوره مع الميناء وحي كيتانو، ونصلي فيه إن وافق وقت الصلاة.' },
@@ -384,6 +385,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'Frequently asked questions',
     faq: [
+      { p: 'Can we have a female Muslim guide?', r: 'Yes. For women-only groups and Muslim families we work with four Muslim women guides who live in Osaka and Kyoto. They speak English, Arabic, Indonesian and French: tonykansaiguide.com/en/muslim-female-guide-japan/' },
       { p: 'Where can I pray in Kyoto?', r: 'At Kyoto Mosque near the Imperial Palace, or at the free prayer spaces in sights such as Nijō Castle and the Kyoto International Manga Museum.' },
       { p: 'What is the closest mosque to Kyoto Station?', r: 'Kyoto Mosque is in the north of the city centre near the Imperial Palace, not next to the station. On a tour I plan the route to pass it, or a prayer space, at prayer time.' },
       { p: 'Can I visit Kobe Mosque?', r: 'Yes. Kobe Mosque is the oldest mosque in Japan (1935), at 2-25-14 Nakayamate-dori. We can visit it with the harbour and Kitano, and pray there if it is prayer time.' },
@@ -449,6 +451,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'أسئلة شائعة',
     faq: [
+      { p: 'هل يمكن أن تكون المرشدة امرأة مسلمة؟', r: 'نعم. للمجموعات النسائية والعائلات المسلمة نعمل مع أربع مرشدات مسلمات يعشن في أوساكا وكيوتو، ومنهن من تتحدث العربية: tonykansaiguide.com/ar/murshida-muslima-yaban/' },
       { p: 'هل يوجد طعام حلال في كيوتو؟', r: 'نعم. في قائمة «Muslim Friendly Kyoto» الرسمية مطاعم حلال ومطاعم بقائمة حلال، تراجعها جمعية كيوتو الإسلامية ومجلس كيوتو للشريعة والحلال.' },
       { p: 'هل يوجد واغيو حلال؟', r: 'نعم. في كيوتو مطاعم واغيو بقائمة حلال، منها «Halal A5 Wagyu Yakiniku Sudaku Kyoto» و«Kobe Beef Gion Sudaku Teppan». أتأكد منها قبل يومكم وتحجزونها أنتم.' },
       { p: 'أين آكل حلالاً في أوساكا؟', r: 'في نامبا وشينسايباشي مطاعم حاصلة على شهادة حلال. أختار لكم واحداً على طريق الجولة.' },
@@ -517,6 +520,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'Frequently asked questions',
     faq: [
+      { p: 'Can we have a female Muslim guide?', r: 'Yes. For women-only groups and Muslim families we work with four Muslim women guides who live in Osaka and Kyoto. They speak English, Arabic, Indonesian and French: tonykansaiguide.com/en/muslim-female-guide-japan/' },
       { p: 'Is there halal food in Kyoto?', r: 'Yes. The official “Muslim Friendly Kyoto” list has halal restaurants and restaurants with a halal menu, reviewed by the Kyoto Muslim Association and the Kyoto Council for Shariah and Halal.' },
       { p: 'Is there halal wagyu?', r: 'Yes. Kyoto has wagyu restaurants with a halal menu, such as “Halal A5 Wagyu Yakiniku Sudaku Kyoto” and “Kobe Beef Gion Sudaku Teppan”. I check them before your day and you book them yourselves.' },
       { p: 'Where can I eat halal in Osaka?', r: 'In Namba and Shinsaibashi there are halal-certified restaurants. I pick one on the route of your tour.' },
@@ -721,6 +725,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'Preguntas frecuentes',
     faq: [
+      { p: '¿Puede ser una guía mujer y musulmana?', r: 'Sí. Para grupos de mujeres y familias musulmanas trabajamos con cuatro guías musulmanas que viven en Osaka y Kioto. Hablan inglés, árabe, francés e indonesio: tonykansaiguide.com/es/guia-musulmana-japon/' },
       { p: '¿Hay un guía en Japón que hable español y árabe?', r: 'Sí. Tony guía en español, árabe e inglés en Osaka, Kioto, Nara y Kobe.' },
       { p: '¿Y en Tokio?', r: 'En Tokio, alrededor del Fuji, Nagano y Shizuoka guía Iheb, del mismo equipo: tunecino musulmán, en árabe, francés e inglés, con coche privado, comida halal y horas de oración.' },
       { p: '¿Se puede comer halal durante el tour?', r: 'Sí. Elijo restaurantes con certificado halal en la ruta; dímelo al reservar.' },
@@ -855,6 +860,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
     },
     faqTitulo: 'FAQ',
     faq: [
+      { p: 'Can we have a female Muslim guide?', r: 'Yes. For women-only groups and Muslim families we work with four Muslim women guides who live in Osaka and Kyoto. They speak English, Arabic, Indonesian and French: tonykansaiguide.com/en/muslim-female-guide-japan/' },
       { p: 'Is there an Arabic-speaking guide in Kyoto or Osaka?', r: 'Yes. Tony guides private tours in Arabic, English and Spanish in Osaka, Kyoto, Nara and Kobe.' },
       { p: 'And in Tokyo?', r: 'In Tokyo, around Mt. Fuji and in Nagano and Shizuoka, Iheb from the same team guides in Arabic, French and English. He is a Tunisian Muslim, with private cars, halal meals and prayer times: tonykansaiguide.com/en/arabic-speaking-guide-tokyo/' },
       { p: 'Is the guide Muslim?', r: 'Yes. Tony is Muslim and plans halal meals and prayer times into the day.' },
