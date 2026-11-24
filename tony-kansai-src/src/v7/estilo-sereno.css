@@ -965,3 +965,11 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-dia span { 
 @media (max-width: 560px) {
   html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto { display: inline; font-size: 15px; }
 }
+
+/* Marca en español: flor maciza en rosa cerezo hondo (5,3:1 sobre blanco) y el
+   nombre en el mincho de los titulares, con «Guide» más ligero. */
+[lang="es"] .v7-logo .v7-logo-sakura { color: #b5426a; width: 24px; height: 24px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo { gap: 7px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto {
+  font-family: var(--titular); font-weight: 600; letter-spacing: 0.01em; font-size: 16.5px; color: #1e2a36;
+}

@@ -16,6 +16,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
+import { LOGO_SAKURA } from './logo-sakura.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const { WA_TONY } = await import('../src/v7/contenido.ts')
@@ -313,7 +314,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[l]
 </head>
 <body>
 <a class="saltar" href="#${ORDEN_PAISES[0]}">${esc(t.indice)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
+<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
   { t: t.nav.g1, enlaces: ORDEN_PAISES.map((p) => [esc(PAISES[p][lang].n), `#${p}`]) },
   { t: t.nav.g2, enlaces: t.nav.japon.map(([n, h]) => [esc(n), h]) },

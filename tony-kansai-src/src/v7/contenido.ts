@@ -164,7 +164,7 @@ export const CREDITOS = [
   { foto: 'Hiroshima: Cúpula de la Bomba Atómica', tr: { en: 'Hiroshima: Atomic Bomb Dome', ar: 'هيروشيما: قبة القنبلة الذرية', ru: 'Хиросима: Атомный купол' }, autor: 'Jakub Hałun', licencia: 'CC BY 4.0', url: 'https://commons.wikimedia.org/wiki/File:Hiroshima_Peace_Memorial_(Genbaku_Dome),_20240817_0823_4200.jpg' },
   { foto: 'Globo y mapa: Blue Marble', tr: { en: 'Globe and map: Blue Marble', ar: 'الكرة الأرضية والخريطة: Blue Marble', ru: 'Глобус и карта: Blue Marble' }, licTr: { en: 'Public domain', ar: 'ملكية عامة', ru: 'Общественное достояние' }, autor: 'NASA Earth Observatory / GIBS', licencia: 'Dominio público', url: 'https://earthobservatory.nasa.gov/features/BlueMarble' },
   // 25-11-2026: el logo de las páginas en español (src/v7/logo-sakura.ts).
-  { foto: 'Logo: flor de cerezo', tr: { en: 'Logo: cherry blossom', ar: 'الشعار: زهرة الكرز', ru: 'Логотип: цветок сакуры' }, autor: 'Twemoji (Twitter, jdecked)', licencia: 'CC BY 4.0', url: 'https://github.com/jdecked/twemoji' },
+  { foto: 'Logo: flor de cerezo', tr: { en: 'Logo: cherry blossom', ar: 'الشعار: زهرة الكرز', ru: 'Логотип: цветок сакуры' }, autor: 'UIX Icons (MD Rakib Shekh)', licencia: 'MIT', url: 'https://github.com/mdrakibshekh/uix-icons' },
   // 21-11-2026: portada de /es/, /en/ y /ar/ (el castillo de Himeji con cerezos, la
   // de abajo: v7/fotos/portada*) y las fotos de las tres experiencias (datos de
   // src/v8/creditosZonas.json). El Fuji salió de la portada (tenía un torii rojo en

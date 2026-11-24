@@ -34,6 +34,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
+import { LOGO_SAKURA } from './logo-sakura.mjs'
 
 // datosItinerarios.ts importa './itin-en' sin extensión (Vite sí, Node no).
 registerHooks({
@@ -971,7 +972,7 @@ function relacionados(lang, actual) {
 
 function cabecera({ lang, rutas, clave, secciones, t }) {
   const C = COMUN[lang]
-  return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
+  return `<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: C.nav.etiqueta, abrir: C.nav.abrir, grupos: [
     { t: C.nav.g1, enlaces: secciones.map(([id, n]) => [esc(n), `#${id}`]) },
     { t: C.nav.g2, enlaces: C.herramientas.filter(([, k]) => k !== clave).map(([n, k]) => [esc(n), enlaceRuta(k, lang)]) },

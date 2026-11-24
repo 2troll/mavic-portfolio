@@ -20,6 +20,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { navHTML, pieHTML, menuCSS } from './menu-estatico.mjs'
 import { equipoHTML, equipoCSS } from './equipo-estatico.mjs'
+import { LOGO_SAKURA } from './logo-sakura.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const { PAGINAS, WA_TONY } = await import('../src/v7/contenido.ts')
@@ -911,7 +912,7 @@ ${LANGS.map((l) => `<link rel="alternate" hreflang="${l}" href="${BASE}${RUTA[cl
 </head>
 <body>
 <a class="saltar" href="#contenido">${esc(c.saltar)}</a>
-<header class="top"><div class="kap"><a class="marca" href="/${lang}/"><span aria-hidden="true">${lang === 'es' ? '🌸' : '⛩'}</span> Tony Kansai Guide</a>
+<header class="top"><div class="kap"><a class="marca" href="/${lang}/">${lang === 'es' ? LOGO_SAKURA : '<span aria-hidden="true">⛩</span>'} Tony Kansai Guide</a>
 ${navHTML({ etiqueta: c.nav.etiqueta, abrir: c.nav.abrir, grupos: [
   { t: c.nav.g1, enlaces: c.herr.map(([n, h]) => [esc(n), h]) },
   { t: c.nav.g2, enlaces: c.tours.map(([n, h]) => [esc(n), h]) },
