@@ -1101,36 +1101,8 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
   ],
 }
 
-/** Placa de la marca sobre la foto de la portada española (Tony, 25-11-2026:
- *  «que al entrar digan: wow, esto es Japón»). Es el cartel de andén japonés
- *  (駅名標): nombre grande, la franja de la línea y las estaciones vecinas a los
- *  lados. Franja: granate Hankyu y azul Shinkansen. Solo tipografía y CSS
- *  (marca-es.css); la flor es la de UIX (logo-sakura.ts). */
-function PlacaEs() {
-  return (
-    <div className="es-placa" role="img" aria-label="Tony Kansai Guide">
-      <span className="es-placa-kana" lang="ja" aria-hidden="true">関西 · 日本</span>
-      <span className="es-placa-nombre" aria-hidden="true"><Logo /></span>
-      <span className="es-placa-linea" aria-hidden="true" />
-      <span className="es-placa-vecinas" aria-hidden="true"><span>← Kioto</span><span>Nara →</span></span>
-    </div>
-  )
-}
-
-/** Placa de la marca sobre la foto de la portada INGLESA (25-11-2026, «el inglés,
- *  otra cosa»): no el cartel de andén del español sino una tarjeta de ryokan —
- *  índigo aizome, el nombre en versalitas espaciadas, un hilo de oro y los
- *  lugares debajo. Solo tipografía y CSS (marca-en.css); la flor es la de UIX. */
-function PlacaEn() {
-  return (
-    <div className="en-placa" role="img" aria-label="Tony Kansai Guide">
-      <span className="en-placa-kana" lang="ja" aria-hidden="true">関西 · 日本</span>
-      <span className="en-placa-nombre" aria-hidden="true"><Logo /></span>
-      <span className="en-placa-linea" aria-hidden="true" />
-      <span className="en-placa-lugares" aria-hidden="true">Kyoto · Osaka · Nara</span>
-    </div>
-  )
-}
+/* Las placas de marca sobre la foto (PlacaEs / PlacaEn) se quitaron el 25-11-2026:
+   Tony no quería ese cuadro en mitad de la foto. La marca va en la cabecera. */
 
 /** «Lo que hay» de la portada española: las experiencias (montaña incluida) y,
  *  en la misma sección, el precio cerrado por grupo (#precios sigue existiendo
@@ -1464,8 +1436,6 @@ export default function PaginaGuia({ id }: { id: PaginaId }) {
                 pide el ancho real (100vw), con un paso de 1200 px para pantallas x3.
                 La mancha de tinta (HeroTinta, WebGL) ya no se monta en ninguna
                 portada (decisión del 21-11, también /ru/ y /larion/). */}
-            {esEs && <PlacaEs />}
-            {enEn && <PlacaEn />}
             {troncal ? (
               <picture>
                 <source media="(min-width: 901px)" srcSet={`${baseHero}-retrato-900.webp 720w, ${baseHero}-retrato.webp 1440w`} sizes={SIZES_PORTADA_ESCRITORIO} />

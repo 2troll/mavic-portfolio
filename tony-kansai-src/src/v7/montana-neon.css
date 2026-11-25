@@ -71,7 +71,7 @@ html .v7.v7-montana .mv-alt-carril::before { background: linear-gradient(0deg, v
 .mv-mapa-hud::after { bottom: 10px; inset-inline-end: 10px; border-inline-start: 0; border-top: 0; }
 .mv-mapa-rotulo { position: absolute; top: 18px; inset-inline-start: 46px; margin: 0; font: 600 11px/1.5 var(--mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--pro-amarillo); text-shadow: 0 0 10px rgb(200 255 46 / 60%); }
 .mv-mapa-rotulo span { display: block; color: #9fb2c8; text-shadow: none; }
-.mv-mapa-todo { position: absolute; top: 64px; inset-inline-start: 18px; pointer-events: auto; background: rgb(5 7 12 / 85%); border: 1px solid var(--neon-linea); color: #eaf6ff; font: 600 11px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 14px; cursor: pointer; }
+.mv-mapa-todo { position: absolute; top: 64px; inset-inline-start: 18px; pointer-events: auto; background: rgb(5 7 12 / 85%); border: 1px solid var(--neon-linea); color: #eaf6ff; font: 600 11px/1 var(--mono); letter-spacing: 0.14em; text-transform: uppercase; padding: 10px 16px; min-height: 40px; cursor: pointer; }
 .mv-mapa-todo:hover { border-color: var(--neon-cian); color: var(--neon-cian); }
 .mv-mapa figcaption { margin-top: 10px; font: 500 11px/1.4 var(--mono); color: #6f8296; }
 

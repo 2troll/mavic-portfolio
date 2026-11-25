@@ -15,7 +15,7 @@
   --pn-verde: #8fb0d8;
   --pn-linea: rgba(247, 244, 237, .16);
   --pn-titular: 'Zen Old Mincho', 'Hiragino Mincho ProN', 'Yu Mincho', 'YuMincho', 'Noto Serif JP', serif;
-  --pn-letra: 'Geist Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --pn-letra: 'Geist Variable', 'Geist TK', system-ui, -apple-system, 'Segoe UI', sans-serif;
   display: block; width: 100%; max-width: none; margin: 0; padding: clamp(40px, 6vw, 64px) 0 20px;
   background: var(--pn-banda); color: var(--pn-tenue); border: 0; border-top: 2px solid #a8843f;
   font: 400 15px/1.5 var(--pn-letra); text-align: start;
@@ -37,7 +37,7 @@ html[data-tema='oscuro'] .pie-en { --pn-banda: #0c1626; }
 .pie-en .pie-en-marca { display: inline-flex; align-items: center; min-height: 44px; color: var(--pn-tinta); }
 .pie-en .v7-logo { display: inline-flex; align-items: center; gap: 7px; }
 .pie-en .v7-logo .v7-logo-torii { display: none; }
-.pie-en .v7-logo .v7-logo-sakura { display: block; flex: none; width: 24px; height: 24px; }
+.pie-en .v7-logo .v7-logo-sakura { display: block; flex: none; width: 28px; height: 28px; --logo-flor: #1e3a5f; }
 html .pie-en .pie-en-marca .v7-logo svg.v7-logo-sakura { color: var(--pn-rosa); }
 /* Clase repetida a propósito: gana a estilo-sereno §21 y a la montaña sin !important. */
 html .pie-en.pie-en .pie-en-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--pn-letra); font-weight: 600; font-size: 14px; letter-spacing: .2em; text-transform: uppercase; color: var(--pn-tinta); padding: 2px 0 5px; background: linear-gradient(#a8843f 0 0) 0 100% / 100% 1px no-repeat; }

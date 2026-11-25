@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Mapa de la web · tonykansaiguide.com</title>
+<style>
+  :root { --fondo:#faf6f2; --papel:#fff; --tinta:#1e2a36; --tenue:#5b6470; --linea:#e7ded8; --rosa:#b5426a; --verde:#2d684c; --ambar:#9a5b00; --rojo:#b3261e; --azul:#1d4f91; }
+  * { box-sizing: border-box; }
+  body { margin:0; background:var(--fondo); color:var(--tinta); font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif; }
+  header.top { position:sticky; top:0; z-index:5; background:rgba(250,246,242,.94); backdrop-filter:blur(8px); border-bottom:1px solid var(--linea); }
+  .in { max-width:1320px; margin:0 auto; padding:0 24px; }
+  .top .in { display:flex; gap:16px; align-items:center; min-height:64px; flex-wrap:wrap; padding-block:10px; }
+  h1 { font-size:19px; margin:0; letter-spacing:-.01em; } h1 span { color:var(--rosa); }
+  .controles { display:flex; gap:10px; flex-wrap:wrap; margin-inline-start:auto; }
+  input, select { font:inherit; font-size:14px; min-height:42px; padding:0 14px; border:1px solid var(--linea); border-radius:12px; background:#fff; color:inherit; }
+  input { width:240px; }
+  .cifras { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; margin:24px 0; }
+  .cifra { background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:16px 18px; cursor:pointer; text-align:start; font:inherit; color:inherit; }
+  .cifra b { display:block; font-size:28px; letter-spacing:-.02em; line-height:1.1; }
+  .cifra small { color:var(--tenue); }
+  .cifra[aria-pressed=true] { outline:2px solid var(--rosa); }
+  .cifra.mal b { color:var(--rojo); } .cifra.ok b { color:var(--verde); }
+  section.bloque { background:var(--papel); border:1px solid var(--linea); border-radius:18px; padding:20px 22px; margin:0 0 20px; }
+  section.bloque h2 { font-size:16px; margin:0 0 12px; }
+  .barras { display:flex; align-items:flex-end; gap:3px; height:120px; border-bottom:1px solid var(--linea); }
+  .barras i { flex:1; background:var(--rosa); opacity:.75; border-radius:3px 3px 0 0; min-height:2px; position:relative; }
+  .barras i:hover { opacity:1; }
+  .ejes { display:flex; justify-content:space-between; color:var(--tenue); font-size:12px; margin-top:4px; }
+  .dos { display:grid; grid-template-columns:1fr 1fr; gap:20px; } @media (max-width:900px){ .dos{grid-template-columns:1fr} }
+  ol.hist { margin:0; padding:0; list-style:none; max-height:340px; overflow:auto; }
+  ol.hist li { display:grid; grid-template-columns:90px 1fr; gap:10px; padding:7px 0; border-bottom:1px solid #f1ebe6; font-size:13.5px; }
+  ol.hist time { color:var(--tenue); font-variant-numeric:tabular-nums; }
+  table.calor { width:100%; border-collapse:collapse; font-size:13.5px; } table.calor td { padding:5px 0; border-bottom:1px solid #f1ebe6; } table.calor td:last-child { text-align:end; font-variant-numeric:tabular-nums; color:var(--tenue); }
+  .rejilla { display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:16px; margin-bottom:60px; }
+  .tarjeta { background:var(--papel); border:1px solid var(--linea); border-radius:16px; overflow:hidden; display:flex; flex-direction:column; }
+  .tarjeta .foto { aspect-ratio:390/560; background:#eee center top/cover no-repeat; border-bottom:1px solid var(--linea); display:block; }
+  .tarjeta .cuerpo { padding:12px 14px 14px; display:flex; flex-direction:column; gap:6px; flex:1; }
+  .tarjeta a.ruta { font-weight:650; color:var(--azul); word-break:break-all; text-decoration:none; font-size:14px; }
+  .tarjeta a.ruta:hover { text-decoration:underline; }
+  .tarjeta .tit { color:var(--tenue); font-size:13px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
+  .chips { display:flex; flex-wrap:wrap; gap:5px; }
+  .chip { font-size:11.5px; padding:3px 8px; border-radius:999px; background:#f3eee9; color:#3d4650; white-space:nowrap; }
+  .chip.es { background:#fbe3ea; } .chip.en { background:#e3ebf6; } .chip.no { background:#eee; color:#666; }
+  .prob { font-size:12.5px; color:var(--rojo); margin:0; padding-inline-start:16px; }
+  .hist1 { font-size:12px; color:var(--tenue); border-top:1px dashed var(--linea); padding-top:6px; margin-top:auto; }
+  details.botones summary { cursor:pointer; font-size:12.5px; color:var(--ambar); }
+  details.botones ul { margin:4px 0 0; padding-inline-start:16px; font-size:12px; color:var(--tenue); }
+  .vacio { padding:40px; text-align:center; color:var(--tenue); }
+  .nota { color:var(--tenue); font-size:13px; margin:-8px 0 16px; }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <h1>Mapa de la web <span>tonykansaiguide.com</span></h1>
+  <div class="controles">
+    <input id="q" type="search" placeholder="Buscar ruta o título…" aria-label="Buscar">
+    <select id="fSec" aria-label="Sección"><option value="">Todas las secciones</option></select>
+    <select id="fCab" aria-label="Cabecera"><option value="">Toda cabecera</option></select>
+    <select id="fOrden" aria-label="Orden"><option value="ruta">Orden: ruta</option><option value="prob">Más problemas primero</option><option value="ultimo">Cambiadas hace poco</option><option value="cambios">Más veces cambiadas</option></select>
+  </div>
+</div></header>
+<main class="in">
+  <div class="cifras" id="cifras"></div>
+  <p class="nota" id="nota"></p>
+  <div class="dos">
+    <section class="bloque"><h2>Historia: cambios por semana</h2><div class="barras" id="barras"></div><div class="ejes" id="ejes"></div><p class="nota" style="margin:12px 0 0" id="tipos"></p></section>
+    <section class="bloque"><h2>Últimas actualizaciones</h2><ol class="hist" id="ultimos"></ol></section>
+  </div>
+  <section class="bloque"><h2>Archivos que más se han tocado (diseño y generadores)</h2><table class="calor" id="calor"></table></section>
+  <div class="rejilla" id="rejilla"></div>
+</main>
+<script>
+const D = /*DATOS*/null
+const F = D.filas, R = D.resumen
+const $ = s => document.querySelector(s)
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]))
+let filtroProb = ''
+const TIPOS = { roto:'No cargan', izquierda:'Pegadas a la izquierda', desborda:'Se salen en el móvil', 'sin-estilo':'Sin diseño', botones:'Botones apretados', fotos:'Fotos rotas', errores:'Errores JS' }
+function cifras() {
+  const cuenta = k => F.filter(f => f.problemas.some(p => p[0] === k)).length
+  const sinProb = F.filter(f => !f.problemas.length).length
+  let h = `<button class="cifra" data-p=""><b>${F.length}</b><small>páginas en total</small></button>`
+  h += `<button class="cifra ok" data-p="__ok"><b>${sinProb}</b><small>sin problemas detectados</small></button>`
+  for (const k in TIPOS) { const n = cuenta(k); if (n) h += `<button class="cifra mal" data-p="${k}"><b>${n}</b><small>${TIPOS[k]}</small></button>` }
+  $('#cifras').innerHTML = h
+  document.querySelectorAll('.cifra').forEach(b => b.onclick = () => { filtroProb = filtroProb === b.dataset.p ? '' : b.dataset.p; pinta() })
+  $('#nota').textContent = `Capturas del móvil (390 px) hechas sobre la web tal como se publicará. Historia: ${R.commits} cambios entre ${R.desde} y ${R.hasta}. Toca una cifra para filtrar.`
+}
+function historia() {
+  const max = Math.max(...R.semanas.map(s => s[1]))
+  $('#barras').innerHTML = R.semanas.map(([d, n]) => `<i style="height:${(n / max * 100).toFixed(1)}%" title="Semana del ${d}: ${n} cambios"></i>`).join('')
+  $('#ejes').innerHTML = `<span>${R.semanas[0][0]}</span><span>${R.semanas.at(-1)[0]}</span>`
+  $('#tipos').textContent = 'Tipos de cambio: ' + R.tipos.map(([t, n]) => `${t} ${n}`).join(' · ')
+  $('#ultimos').innerHTML = R.ultimos.map(c => `<li><time>${c.d}</time><span>${esc(c.m)}</span></li>`).join('')
+  $('#calor').innerHTML = R.calientes.map(([f, n]) => `<tr><td>${esc(f)}</td><td>${n} cambios</td></tr>`).join('')
+}
+function opciones() {
+  const sec = [...new Set(F.map(f => f.seccion))].sort(), cab = [...new Set(F.map(f => f.cab))].sort()
+  $('#fSec').innerHTML += sec.map(s => `<option>${esc(s)}</option>`).join('')
+  $('#fCab').innerHTML += cab.map(s => `<option>${esc(s)}</option>`).join('')
+}
+function pinta() {
+  document.querySelectorAll('.cifra').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.p === filtroProb && filtroProb !== '')))
+  const q = $('#q').value.toLowerCase(), sec = $('#fSec').value, cab = $('#fCab').value, orden = $('#fOrden').value
+  let L = F.filter(f => (!q || (f.ruta + ' ' + f.titulo).toLowerCase().includes(q)) && (!sec || f.seccion === sec) && (!cab || f.cab === cab)
+    && (!filtroProb || (filtroProb === '__ok' ? !f.problemas.length : f.problemas.some(p => p[0] === filtroProb))))
+  if (orden === 'prob') L.sort((a, b) => b.problemas.length - a.problemas.length)
+  if (orden === 'ultimo') L.sort((a, b) => (b.ultimo || '').localeCompare(a.ultimo || ''))
+  if (orden === 'cambios') L.sort((a, b) => b.cambios - a.cambios)
+  $('#rejilla').innerHTML = L.length ? L.slice(0, 400).map(f => `<article class="tarjeta">
+    <a class="foto" href="https://tonykansaiguide.com${esc(f.ruta)}" target="_blank" rel="noopener" style="background-image:url('${esc(f.foto)}')" aria-label="Abrir ${esc(f.ruta)}" loading="lazy"></a>
+    <div class="cuerpo">
+      <a class="ruta" href="https://tonykansaiguide.com${esc(f.ruta)}" target="_blank" rel="noopener">${esc(f.ruta)}</a>
+      <div class="tit">${esc(f.titulo)}</div>
+      <div class="chips"><span class="chip ${esc(f.lang)}">${esc(f.lang || '¿?')}</span><span class="chip">${esc(f.tipo)}</span><span class="chip">cabecera: ${esc(f.cab)}</span><span class="chip">pie: ${esc(f.pie)}</span>${f.noindex ? '<span class="chip no">noindex</span>' : ''}</div>
+      ${f.problemas.length ? `<ul class="prob">${f.problemas.map(p => `<li>${esc(p[1])}</li>`).join('')}</ul>` : ''}
+      ${f.malos.length ? `<details class="botones"><summary>Ver botones apretados</summary><ul>${f.malos.map(m => `<li>«${esc(m.t || '(sin texto)')}» ${m.w}×${m.h} px · relleno ${m.p} · ${esc(m.m)}</li>`).join('')}</ul></details>` : ''}
+      ${f.errores.length ? `<details class="botones"><summary>Ver errores</summary><ul>${f.errores.map(e => `<li>${esc(e)}</li>`).join('')}</ul></details>` : ''}
+      <div class="hist1">${f.cambios ? `${f.cambios} cambios · último ${f.ultimo}<br>${esc(f.ultMsg)}` : f.tipo === 'React' ? 'Página de la app React (su historia va en src/)' : 'Sin historia propia'}</div>
+    </div></article>`).join('') + (L.length > 400 ? `<p class="vacio">…y ${L.length - 400} más: usa los filtros.</p>` : '') : '<p class="vacio">Nada con esos filtros.</p>'
+}
+cifras(); historia(); opciones(); pinta()
+for (const id of ['#q', '#fSec', '#fCab', '#fOrden']) $(id).addEventListener('input', pinta)
+</script>
+</body>
+</html>

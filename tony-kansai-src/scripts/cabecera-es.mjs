@@ -34,7 +34,7 @@ export const cabeceraEsCSS = cssDe('cabecera-es.css')
 const WA_D = readFileSync(join(root, 'src/v7/IconoWa.tsx'), 'utf8').match(/export function IconoWa[\s\S]*?<path d="([^"]+)"/)[1]
 export const iconoWa = `<svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="${WA_D}"/></svg>`
 /** El logo de Logo.tsx en español: flor UIX + nombre. */
-export const logoEs = `<span class="v7-logo"><svg class="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="${SAKURA_D}"/></svg><span class="v7-logo-texto">Tony Kansai Guide</span></span>`
+export const logoEs = `<span class="v7-logo"><svg class="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path style="fill:var(--logo-flor,#fff)" fill-rule="evenodd" transform="translate(4.2 4.4) scale(.65)" d="${SAKURA_D}"/></svg><span class="v7-logo-texto">Tony Kansai Guide</span></span>`
 
 export function enlaceArbol(e, actual, clase = '') {
   const cls = [clase, e.destacado ? 'cab-es-destacado' : ''].filter(Boolean).join(' ')

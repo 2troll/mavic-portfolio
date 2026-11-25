@@ -50,7 +50,7 @@
 
 @media (max-width: 700px) {
   .es-selector { top: 76px; inset-inline-end: 12px; flex-direction: column; gap: 4px; }
-  .es-boton { width: 50px; padding: 6px 2px 5px; }
+  .es-boton { width: 52px; min-height: 44px; padding: 7px 2px 6px; }
   .es-boton b { font-size: 1.15rem; }
   .es-boton span { font-size: 8px; letter-spacing: 0.04em; }
 }

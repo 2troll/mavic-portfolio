@@ -29,6 +29,7 @@
 .vt-marca .v7-logo-texto { color: var(--vt-tinta); letter-spacing: -0.01em; }
 .vt-idiomas { display: inline-flex; padding: 3px; border-radius: 999px; background: #eceae5; }
 .vt-idiomas a { padding: 6px 12px; border-radius: 999px; font-size: .85rem; font-weight: 600; text-decoration: none; color: var(--vt-suave); }
+html:not([lang='ru']) .vt-idiomas a { display: inline-flex; align-items: center; min-height: 40px; padding: 8px 16px; }
 .vt-idiomas a[aria-current='page'] { background: var(--vt-blanco); color: var(--vt-tinta); box-shadow: 0 1px 3px rgba(0, 0, 0, .12); }
 .vt-wa {
   display: inline-flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 999px;

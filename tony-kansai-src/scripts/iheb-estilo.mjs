@@ -198,7 +198,7 @@ export function ihebIdiomas(ruta, lang) {
 // formularios de reseñas, que no cargan ANIME_CSS.
 export const IHEB_IDIOMAS_CSS = `
 .idiomas{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
-.idiomas a,.idiomas span{display:inline-block;padding:3px 12px;border:2px solid var(--cizgi,#16132a);border-radius:999px;font-weight:800;font-size:14px;line-height:1.5;text-decoration:none;color:var(--fg,#16132a);background:var(--kart,#fff);white-space:nowrap}
+.idiomas a,.idiomas span{display:inline-flex;align-items:center;min-height:40px;padding:7px 16px;border:2px solid var(--cizgi,#16132a);border-radius:999px;font-weight:800;font-size:14px;line-height:1.5;text-decoration:none;color:var(--fg,#16132a);background:var(--kart,#fff);white-space:nowrap}
 .idiomas a:hover{background:var(--gok,#3ec5ff);color:#16132a}
 .idiomas [aria-current]{background:var(--sol,#ffd23f);color:#16132a;box-shadow:2px 2px 0 #16132a}
 .idiomas [lang=ar]{font-family:Tajawal,system-ui,sans-serif}

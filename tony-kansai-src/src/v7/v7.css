@@ -454,7 +454,7 @@
 .v7-cookies {
   position: fixed; z-index: 250; left: 50%; bottom: max(10px, env(safe-area-inset-bottom)); transform: translateX(-50%);
   width: min(560px, calc(100% - 16px)); display: flex; flex-wrap: nowrap; align-items: center; gap: 10px; justify-content: space-between;
-  padding-block: 4px; padding-inline: 16px 4px; border-radius: 15px; font: 14px/1.3 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  padding-block: 7px; padding-inline: 18px 7px; border-radius: 18px; font: 14px/1.3 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   /* 0,92 y no 0,72: sin desenfoque (Firefox antiguo, ahorro de energía en
      iOS) el botón de la portada se leía a través del aviso. */
   color: #f5f5f7; background: rgba(28, 28, 30, 0.92); border: 1px solid rgba(255, 255, 255, 0.14);
@@ -464,8 +464,8 @@
 /* Si un idioma no cabe, se recorta el texto con «…», nunca los botones. */
 .v7-cookies p { margin: 0; flex: 1 1 auto; min-width: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .v7-cookies a { color: rgba(245, 245, 247, 0.9); text-decoration: underline; text-underline-offset: 3px; }
-.v7-cookies div { display: flex; gap: 6px; flex: none; }
-.v7-cookies button { font: inherit; font-size: 13px; font-weight: 600; min-height: 32px; padding: 0 14px; border-radius: 999px; border: 0; cursor: pointer; background: rgba(255, 255, 255, 0.12); color: #f5f5f7; white-space: nowrap; }
+.v7-cookies div { display: flex; gap: 8px; flex: none; }
+.v7-cookies button { font: inherit; font-size: 14px; font-weight: 600; min-height: 42px; padding: 0 18px; border-radius: 999px; border: 0; cursor: pointer; background: rgba(255, 255, 255, 0.12); color: #f5f5f7; white-space: nowrap; }
 .v7-cookies button.si { background: #f5f5f7; color: #111; }
 @keyframes v7-cookies-entra { from { opacity: 0; transform: translate(-50%, 20px); } }
 /* Barra fija de WhatsApp a la vista (BarraWa y BarraMovil le ponen .ver):
@@ -474,8 +474,8 @@
   html:has(.v7-barra-movil.ver) .v7-cookies { bottom: calc(max(12px, env(safe-area-inset-bottom)) + 70px); }
 }
 @media (max-width: 480px) {
-  .v7-cookies { gap: 8px; padding-inline-start: 12px; font-size: 13px; }
-  .v7-cookies button { padding: 0 12px; }
+  .v7-cookies { gap: 10px; padding-inline-start: 14px; font-size: 13.5px; }
+  .v7-cookies button { padding: 0 16px; }
   /* En el móvil el enlace enseña solo «Usamos cookies»; «· Política de
      privacidad» se queda en el nombre del enlace para los lectores de pantalla. */
   .v7-cookies .v7-cookies-mas { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -1287,6 +1287,8 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 .v7-resena-inicial { flex: none; width: 38px; height: 38px; border-radius: 50%; display: grid; place-items: center; font-weight: 650; color: #fff; background: var(--acento); }
 .v7-resena-traducida { margin: -4px 0 10px; font-size: .78rem; opacity: .7; }
 .v7-resena-traducida button { font: inherit; color: var(--acento); background: none; border: 0; padding: 0; cursor: pointer; text-decoration: underline; }
+/* 25-11-2026 (Tony: «botones muy apretados»): pastilla de 36 px con aire en vez de un subrayado de 20 px. */
+.v7-resena-traducida button { display: inline-flex; align-items: center; min-height: 36px; padding: 6px 14px; margin-inline-start: 4px; border: 1px solid color-mix(in srgb, currentColor 35%, transparent); border-radius: 999px; text-decoration: none; font-weight: 600; }
 .v7-resenas figcaption strong { display: block; font-weight: 600; color: var(--tinta); }
 .v7-resenas figcaption small { display: block; font-size: 13px; color: var(--tenue); }
 
@@ -1549,3 +1551,14 @@ a.v7-boton[href^="https://t.me/"], a.cu-boton[href^="https://t.me/"], a.vn-boton
    pérdida auditiva:») no podía encogerse y empujaba el texto fuera de la línea. Párrafo normal. */
 html[lang="es"] .v7-legal .prose-custom li.flex.gap-2 { display: block; overflow-wrap: anywhere; }
 html[lang="es"] .v7-legal .prose-custom li.flex.gap-2 > span:first-child { margin-inline-end: 0.35em; }
+
+/* 25-11-2026 (Tony: «el devolver lo veo muy apretado»): el «← Volver» de las
+   páginas legales era un enlace de 12 px pegado a la esquina; ahora es un botón
+   de 42 px con aire, igual que el ☰ Menú de la cabecera española. */
+.v7-legal .v7-cabecera .v7-anclas { display: flex; margin-inline-start: auto; }
+.v7-legal .v7-cabecera .v7-anclas a {
+  display: inline-flex; align-items: center; gap: 8px; min-height: 42px; padding: 0 18px;
+  border: 1px solid color-mix(in srgb, var(--tinta) 25%, transparent); border-radius: 12px;
+  background: var(--superficie, #fff); color: var(--tinta); font-size: 15px; font-weight: 600; text-decoration: none; white-space: nowrap;
+}
+.v7-legal .v7-cabecera .v7-anclas a:hover { border-color: var(--tinta); }

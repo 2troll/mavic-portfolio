@@ -967,11 +967,11 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-dia span { 
 }
 
 /* Marca en español: flor maciza en rosa cerezo hondo (5,3:1 sobre blanco) y el
-   nombre en el mincho de los titulares, con «Guide» más ligero. */
-[lang="es"] .v7-logo .v7-logo-sakura { color: #b5426a; width: 24px; height: 24px; }
+   nombre en Geist (la letra de Nothing OS 5, Tony 25-11-2026). */
+[lang="es"] .v7-logo .v7-logo-sakura { color: #b5426a; width: 28px; height: 28px; --logo-flor: #fff; }
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo { gap: 7px; }
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto {
-  font-family: var(--titular); font-weight: 600; letter-spacing: 0.01em; font-size: 16.5px; color: #1e2a36;
+  font-family: 'Geist Variable', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; font-size: 16.5px; color: #1e2a36;
 }
 
 /* §22 Logotipo español en la cabecera (25-11-2026, marca): el nombre en granate

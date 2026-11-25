@@ -40,10 +40,11 @@ html[data-tema='oscuro'] .pie-es {
 .pie-es .pie-es-marca { display: inline-flex; align-items: center; min-height: 44px; color: var(--pe-tinta); }
 .pie-es .v7-logo { display: inline-flex; align-items: center; gap: 7px; }
 .pie-es .v7-logo .v7-logo-torii { display: none; }
-.pie-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 24px; height: 24px; }
+.pie-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 28px; height: 28px; --logo-flor: #fff; }
 html .pie-es .pie-es-marca .v7-logo svg.v7-logo-sakura { color: var(--pe-rosa); }
+html[data-tema='oscuro'] .pie-es .v7-logo .v7-logo-sakura { --logo-flor: #1d1a26; }
 /* Clase repetida a propósito: gana a estilo-sereno §21 y a la montaña sin !important. */
-html .pie-es.pie-es .pie-es-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--pe-titular); font-weight: 600; font-size: 18px; letter-spacing: .01em; text-transform: none; color: var(--pe-tinta); }
+html .pie-es.pie-es .pie-es-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: 'Geist Variable', 'Geist TK', system-ui, sans-serif; font-weight: 600; font-size: 18px; letter-spacing: -.01em; text-transform: none; color: var(--pe-tinta); }
 .pie-es .v7-logo-texto { display: inline; font-family: var(--pe-titular); font-weight: 600; font-size: 18px; letter-spacing: .01em; color: var(--pe-tinta); }
 .pie-es .pie-es-lema { flex: 1 1 260px; color: var(--pe-tenue); text-wrap: balance; }
 .pie-es .pie-es-contacto { display: flex; flex-wrap: wrap; gap: 4px 18px; }

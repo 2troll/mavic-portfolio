@@ -30,7 +30,7 @@ export const ARBOL_EN = arbolEn()
 export const cabeceraEnCSS = cssDe('cabecera-en.css')
 
 /** The Logo.tsx mark in English: UIX flower + name (no torii). */
-export const logoEn = `<span class="v7-logo"><svg class="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" fill-rule="evenodd" d="${SAKURA_D}"/></svg><span class="v7-logo-texto">Tony Kansai Guide</span></span>`
+export const logoEn = `<span class="v7-logo"><svg class="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor"/><path style="fill:var(--logo-flor,#fff)" fill-rule="evenodd" transform="translate(4.2 4.4) scale(.65)" d="${SAKURA_D}"/></svg><span class="v7-logo-texto">Tony Kansai Guide</span></span>`
 
 /** Without a translation of this page, the other home pages (as CabeceraEn.tsx). */
 export const IDIOMAS_EN = [{ lang: 'es', ruta: '/es/', texto: 'Español' }, { lang: 'ar', ruta: '/ar/', texto: 'العربية' }, { lang: 'ru', ruta: '/ru/', texto: 'Русский' }]

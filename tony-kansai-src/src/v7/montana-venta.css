@@ -68,3 +68,9 @@
    estilo-sereno pintaría de rosa el <body> de esta página oscura. */
 html[lang="es"]:has(#root .v7.v7-montana.v7-expedicion .mv-comun),
 html[lang="es"]:has(#root .v7.v7-montana.v7-expedicion .mv-comun) body { background-color: #05070c; color: #ffffff; }
+
+/* 25-11-2026 (Tony: «botones muy apretados»): en el móvil el botón de venta
+   cortaba «…por WhatsApp» (montana-pro fuerza nowrap con más peso). */
+@media (max-width: 860px) {
+  html .v7.v7-montana .mv-venta-acciones .v7-boton { white-space: normal; padding-block: 12px; line-height: 1.25; }
+}
