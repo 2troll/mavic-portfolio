@@ -22,6 +22,7 @@ import { yenLocal, PIE } from './formato'
 import creditosZonas from '../v8/creditosZonas.json'
 import { OTONO, PRECIO_OTONO, hermanas } from './datosOtono'
 import type { OtonoId, PaginaOtono } from './datosOtono'
+import { TEMPORADAS_PRECIO, precioTemporada } from './preciosTemporada'
 import './v7.css'
 import './invierno.css'
 import './estilo-pixel.css'
@@ -33,7 +34,6 @@ import { FranjaVentajas } from './FranjaVentajas'
 
 const BASE = 'https://tonykansaiguide.com'
 const P = OTONO
-const PRECIO = PRECIO_OTONO
 
 const CREDITOS = creditosZonas as Record<string, { autor: string; licencia: string; url: string }>
 const OTRA_TXT: Record<'otono' | 'sakura', Record<string, string>> = {
@@ -45,6 +45,10 @@ const PUBLICO: Record<string, string> = { es: 'Viajeros de España y México', e
 
 export default function Otono({ id }: { id: OtonoId }) {
   const p = P[id]
+  // Tony cobra por temporada (preciosTemporada.ts: sakura +30 %, otoño +20 %, invierno +10 %);
+  // las páginas de Larion mantienen su tarifa base.
+  const recargo = p.guia === 'tony' ? (TEMPORADAS_PRECIO.find((t) => t.id === p.temporada)?.recargo ?? 0) : 0
+  const PRECIO = { medio: precioTemporada(PRECIO_OTONO.medio, recargo), completo: precioTemporada(PRECIO_OTONO.completo, recargo) }
   const { setLang } = useLanguage()
   useEffect(() => { setLang(p.lang) }, [p.lang, setLang])
 

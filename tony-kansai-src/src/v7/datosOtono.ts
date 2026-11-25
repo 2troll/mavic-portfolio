@@ -64,7 +64,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     lang: 'es', ruta: '/es/otono-kioto/', inicio: '/es/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
       titulo: 'Otoño en Kioto 2026: cuándo ver los arces y guía privado en español | Tony Kansai Guide',
-      descripcion: 'Los arces rojos de Kioto con un guía privado en español: te recojo en el hotel y salimos temprano para llegar antes que las multitudes. Día completo ¥58.000 por grupo.',
+      descripcion: 'Los arces rojos de Kioto con un guía privado en español: te recojo en el hotel y salimos temprano para llegar antes que las multitudes. Día completo en otoño ¥70.000 por grupo.',
     },
     antetitulo: 'Temporada de momiji · noviembre y principios de diciembre',
     titulo: 'El otoño de Kioto, con guía en español.',
@@ -120,7 +120,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     lang: 'en', ruta: '/en/kyoto-autumn/', inicio: '/en/', temporada: 'otono', guia: 'tony', foto: 'kioto-kiyomizu',
     seo: {
       titulo: 'Kyoto Autumn Leaves 2026: Forecast, Best Spots & Private Guide | Tony Kansai Guide',
-      descripcion: 'See Kyoto\'s red maples with a private guide: hotel pick-up and an early start to beat the crowds. Full day ¥58,000 per group of up to 6.',
+      descripcion: 'See Kyoto\'s red maples with a private guide: hotel pick-up and an early start to beat the crowds. Full day in autumn ¥70,000 per group of up to 6.',
     },
     antetitulo: 'Momiji season · November to early December',
     titulo: 'Kyoto in autumn, with your own guide.',
