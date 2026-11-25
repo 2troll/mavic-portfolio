@@ -678,8 +678,9 @@ export const NUEVAS: Record<'o-ar' | 'o-ru' | 's-es' | 's-en' | 's-ar' | 's-ru',
 
 /** Precios de invierno por grupo (yenes). Los usan los textos y el JSON-LD. */
 export const PRECIO_INVIERNO = {
-  anoNuevo: 66000, lucesOsaka: 38000, lucesKobe: 45000,
-  nieveOnsen: 78000, arimaKobe: 70000, ciruelos: 58000, sakuraTemprano: 64000,
+  // 25-11-2026: subidos a la tarifa de temporada (preciosTemporada.ts): invierno +10 %, sakura +30 %.
+  anoNuevo: 66000, lucesOsaka: 42000, lucesKobe: 45000,
+  nieveOnsen: 78000, arimaKobe: 70000, ciruelos: 64000, sakuraTemprano: 75000,
 }
 const PI = PRECIO_INVIERNO
 /** Validez de cada tarifa (Offer.validFrom / priceValidUntil). */
