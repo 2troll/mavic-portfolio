@@ -87,6 +87,9 @@
   #intro p small { display:block; font-size:.4em; font-weight:400; color:var(--tenue); letter-spacing:0; margin-top:8px; }
   #nota { position:fixed; left:300px; bottom:14px; font-size:11.5px; color:#8a8476; max-width:480px; pointer-events:none; }
   #abrir { display:none; }
+  body.grande #izq, body.grande #lector, body.grande #nota, body.grande #abrir, body.grande .cifra { display:none !important; }
+  body.grande #arriba { left:20px; right:auto; } body.grande #zoom { right:16px; } body.grande #intro { left:0; right:0; }
+  #z-grande { font-size:15px !important; }
 
   @media (max-width:1100px) {
     #izq { display:none; bottom:auto; max-height:70vh; z-index:7; top:56px; } body.izq #izq { display:flex; }
@@ -120,6 +123,7 @@
       <li><b>Tocar punto</b>Encenderla: la señal corre por sus venas y el bot la lee</li>
       <li><b>Teclas 0-9</b>0 toda la web · 1-9 cada zona</li>
       <li><b>Espacio</b>Pausa · flechas para mover</li>
+      <li><b>F · ⛶</b>Pantalla grande, sin paneles</li>
     </ul>
   </div>
 </aside>
@@ -127,7 +131,7 @@
 <div id="arriba"><h1>La web por dentro</h1><div id="cifras" style="display:contents"></div></div>
 
 <div id="zoom" class="tarjeta" role="group" aria-label="Zoom">
-  <button id="z-mas" aria-label="Acercar">+</button><div id="escala">100%</div><button id="z-menos" aria-label="Alejar">−</button><button id="z-todo" aria-label="Ver toda la web" style="font-size:16px">⤢</button>
+  <button id="z-mas" aria-label="Acercar">+</button><div id="escala">100%</div><button id="z-menos" aria-label="Alejar">−</button><button id="z-todo" aria-label="Ver toda la web" style="font-size:16px">⤢</button><button id="z-grande" aria-label="Pantalla grande, sin paneles (tecla F)" aria-pressed="false">⛶</button>
 </div>
 
 <aside id="lector" class="tarjeta" aria-live="polite">
@@ -222,6 +226,7 @@ let W = 0, H = 0, DPR = 1, T = d3.zoomIdentity, kBase = 1
 function medir() { DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR) }
 medir()
 function hueco() {   // zona libre entre los paneles
+  if (document.body.classList.contains('grande')) return { x: 0, y: 0, w: W, h: H }
   if (W > 1100) return { x: 300, y: 56, w: W - 300 - 384, h: H - 56 - 40 }
   return { x: 0, y: 56, w: W, h: H * 0.66 - 70 }
 }
@@ -236,7 +241,7 @@ function encajar(xs, dur, margen = 1.12) {
   return k
 }
 let zonaActiva = null
-function verTodo(dur = 900) { zonaActiva = null; marcarZona(); kBase = encajar([...N, ...(ver.fuera ? FUERA : [])], dur, 1.06) }
+function verTodo(dur = 900) { zonaActiva = null; marcarZona(); kBase = encajar(N, dur, 1.1) }
 
 // ── Zonas ──
 const zonasEl = document.getElementById('zonas')
@@ -388,6 +393,12 @@ document.getElementById('otravez').addEventListener('click', intro)
 document.getElementById('z-mas').addEventListener('click', () => d3.select(cv).transition().duration(300).call(zoom.scaleBy, 1.5))
 document.getElementById('z-menos').addEventListener('click', () => d3.select(cv).transition().duration(300).call(zoom.scaleBy, 1 / 1.5))
 document.getElementById('z-todo').addEventListener('click', () => verTodo())
+function alternarGrande() { const on = document.body.classList.toggle('grande'); document.getElementById('z-grande').setAttribute('aria-pressed', on)
+  if (on && document.documentElement.requestFullscreen) document.documentElement.requestFullscreen().catch(() => {})
+  if (!on && document.fullscreenElement) document.exitFullscreen().catch(() => {})
+  setTimeout(() => zonaActiva ? encajar(zonaActiva.xs, 600) : verTodo(600), 120) }
+document.getElementById('z-grande').addEventListener('click', alternarGrande)
+document.addEventListener('fullscreenchange', () => { if (!document.fullscreenElement && document.body.classList.contains('grande')) alternarGrande() })
 const abrir = document.getElementById('abrir')
 abrir.addEventListener('click', () => { const on = document.body.classList.toggle('izq'); abrir.setAttribute('aria-expanded', on) })
 addEventListener('keydown', e => {
@@ -397,6 +408,7 @@ addEventListener('keydown', e => {
   else if (e.key === '0') verTodo()
   else if (/^[1-9]$/.test(e.key) && grupos[+e.key - 1]) irZona(grupos[+e.key - 1].g)
   else if (e.key === ' ') { e.preventDefault(); alternarPausa() }
+  else if (e.key === 'f' || e.key === 'F') alternarGrande()
   else if (e.key.startsWith('Arrow')) { e.preventDefault(); const d = 90, m = { ArrowLeft: [d, 0], ArrowRight: [-d, 0], ArrowUp: [0, d], ArrowDown: [0, -d] }[e.key]
     d3.select(cv).transition().duration(200).call(zoom.translateBy, m[0] / T.k, m[1] / T.k) }
 })
@@ -465,7 +477,7 @@ function marco(ahora) {
       cc.beginPath(); cc.arc(o.cx, o.cy, o.m + 24, 0, 6.283); cc.fill()
     }
     if (ver.texto || ver.cruces) for (const o of grupos) {   // venas en reposo
-      cc.strokeStyle = RAICES[o.g][1]; cc.globalAlpha = zonaActiva && zonaActiva !== o ? 0.05 : 0.24; cc.lineWidth = 0.7 / k; cc.beginPath()
+      cc.strokeStyle = RAICES[o.g][1]; cc.globalAlpha = zonaActiva && zonaActiva !== o ? 0.06 : 0.34; cc.lineWidth = 1.15 / k; cc.beginPath()
       for (const x of o.xs) for (const y of x.sale) { if (x.g !== y.g ? !ver.cruces : !ver.texto) continue
         const c = ctrl(x, y, ejeDe.get(x.id + '>' + y.id).k); cc.moveTo(x.x, x.y); cc.quadraticCurveTo(c[0], c[1], y.x, y.y) }
       cc.stroke()
@@ -481,15 +493,15 @@ function marco(ahora) {
     if (e.cruza ? !ver.cruces && !(e.h > 0.6) : !ver.texto && !(e.h > 0.6)) { e.h *= caer; continue }
     const tenue = (zonaActiva && e.a.g !== zonaActiva.g && e.b.g !== zonaActiva.g) ? 0.2 : 1, c = ctrl(e.a, e.b, e.k)
     cx.beginPath(); cx.moveTo(e.a.x, e.a.y); cx.quadraticCurveTo(c[0], c[1], e.b.x, e.b.y)
-    cx.strokeStyle = e.a.c; cx.globalAlpha = e.h * 0.6 * tenue; cx.lineWidth = (1 + e.h * 3) / k; cx.stroke()
+    cx.strokeStyle = e.a.c; cx.globalAlpha = Math.min(1, e.h * 0.8) * tenue; cx.lineWidth = (1.6 + e.h * 4.5) / k; cx.stroke()
     if (e.h > 0.15) { cx.setLineDash([3 / k, 8 / k]); cx.lineDashOffset = -ahora / 25 / k; cx.strokeStyle = '#fff'; cx.globalAlpha = Math.min(1, e.h) * tenue
-      cx.lineWidth = (0.8 + e.h * 1.4) / k; cx.stroke(); cx.setLineDash([]) }
+      cx.lineWidth = (1.1 + e.h * 2) / k; cx.stroke(); cx.setLineDash([]) }
     e.h *= caer
   }
   cx.globalAlpha = 1
 
   // neuronas: siempre visibles y nítidas
-  const rel = k / (kBase || k), escR = 1.3 * Math.pow(rel, -0.6)
+  const rel = k / (kBase || k), escR = 1.75 * Math.pow(rel, -0.55)
   if (ver.nodos) for (const x of N) {
     x.rd = x.r * escR
     const a = atenuar(x) ? 0.18 : 1, r = x.rd * (1 + x.e * 0.45) + (x === encima ? 2 / k : 0)
@@ -506,7 +518,7 @@ function marco(ahora) {
   // señales con estela
   for (const s of senales) {
     if ((s.tipo === 'gente' && !ver.gente) || (s.tipo === 'bot' && !ver.bots) || (s.tipo === 'eco' && !ver.solas) || s.rastro.length < 2) continue
-    const col = s.tipo === 'bot' ? '#0a8fb5' : s.tipo === 'eco' ? (s.a.c || '#555') : '#d97a00', grosor = s.tipo === 'bot' ? 4 : s.tipo === 'eco' ? 2.2 : 3.2
+    const col = s.tipo === 'bot' ? '#0a8fb5' : s.tipo === 'eco' ? (s.a.c || '#555') : '#d97a00', grosor = s.tipo === 'bot' ? 6 : s.tipo === 'eco' ? 3.4 : 5
     cx.strokeStyle = col; if (s.salto) cx.setLineDash([4 / k, 5 / k])
     for (let j = 1; j < s.rastro.length; j++) { const q = j / s.rastro.length
       cx.globalAlpha = q * 0.9; cx.lineWidth = q * grosor / k
