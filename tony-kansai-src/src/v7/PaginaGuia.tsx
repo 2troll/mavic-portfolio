@@ -50,6 +50,7 @@ import { useAparicion } from './aparicion'
 import { HistoriaManga } from '../v8/HistoriaManga'
 import { DIA, HISTORIA_LISTA, ROTULOS } from '../v8/historia'
 import { PRECIO } from './datosRutas'
+import { TEMPORADAS_PRECIO, TXT_TEMPORADAS, filaTemporada } from './preciosTemporada'
 import { listaTours } from '../v8/seoTours'
 import { CIUDADES, CIUDADES_LARION, CIUDADES_TONY } from '../v8/ciudades'
 import type { Lengua } from '../v8/ciudades'
@@ -810,6 +811,38 @@ function Contacto({ p }: { p: Pagina }) {
  *  PayPal, planes y experiencias siguen en /es/precios/ (/en/prices/,
  *  /ar/prices/). La ficha rápida sigue en el HTML, plegada: es lo que ChatGPT
  *  encontró y citó (18-10-2026), y lo que lee scripts/textos-ia.mjs. */
+/** Precio según la temporada (preciosTemporada.ts): tabla real en el HTML para
+ *  que Google y las IAs lean cada temporada con sus fechas y su precio. */
+function TablaTemporadas({ lang, titulo = true }: { lang: string; titulo?: boolean }) {
+  const l = (lang === 'en' || lang === 'ar' ? lang : lang === 'es' ? 'es' : null) as 'es' | 'en' | 'ar' | null
+  if (!l) return null
+  const t = TXT_TEMPORADAS[l]
+  return (
+    <div className="v7-temporadas-precio">
+      {titulo && <h3>{t.titulo}</h3>}
+      <div className="v7-temporadas-tabla">
+        <table>
+          <thead><tr><th scope="col">{t.temporada}</th><th scope="col">{t.medio}</th><th scope="col">{t.completo}</th><th scope="col">{t.lejos}</th></tr></thead>
+          <tbody>
+            {TEMPORADAS_PRECIO.map((x) => {
+              const f = filaTemporada(PRECIO, x.recargo)
+              return (
+                <tr key={x.id} className={`v7-tp-${x.id}`}>
+                  <th scope="row"><span aria-hidden="true">{x.emoji}</span> {x.nombre[l]}<small>{x.fechas[l]}</small></th>
+                  <td data-l={t.medio}><bdi dir="ltr">{yenLocal(f.medio, lang)}</bdi></td>
+                  <td data-l={t.completo}><bdi dir="ltr">{yenLocal(f.completo, lang)}</bdi></td>
+                  <td data-l={t.lejos}><bdi dir="ltr">{yenLocal(f.lejos, lang)}</bdi></td>
+                </tr>
+              )
+            })}
+          </tbody>
+        </table>
+      </div>
+      <p className="v7-temporadas-nota">{t.nota}</p>
+    </div>
+  )
+}
+
 function PrecioReferencia({ p }: { p: Pagina }) {
   const otono = useEsOtono()
   const r = p.precioRef
@@ -825,6 +858,7 @@ function PrecioReferencia({ p }: { p: Pagina }) {
         <p>{r.texto}</p>
         {/* HTML estático (scripts/precios.mjs): <a>, no <Link>, para salir de la SPA. */}
         <a className="v9-enlace" href={r.ruta}>{r.enlace} {flecha}</a>
+        {p.guia === 'tony' && <TablaTemporadas lang={p.lang} />}
         {/* Temporada que toca o se acerca (otoño, invierno o sakura; datosInvierno.ts):
             solo en español (Tony, 24-11). EN/AR siguen con la línea de los arces de
             Kioto (1-oct a 7-dic, hora de Japón), como antes. */}
@@ -1159,6 +1193,12 @@ function MasEs({ p }: { p: Pagina }) {
         <details className="v7-plegado">
           <summary>{TEMPORADA_KANSAI[p.lang] ?? TEMPORADA_KANSAI.es}</summary>
           <TemporadaPortada p={p} />
+        </details>
+      )}
+      {p.guia === 'tony' && TXT_TEMPORADAS[p.lang as 'es' | 'en' | 'ar'] && (
+        <details className="v7-plegado v7-plegado-temporadas" open>
+          <summary>{TXT_TEMPORADAS[p.lang as 'es' | 'en' | 'ar'].titulo}</summary>
+          <TablaTemporadas lang={p.lang} titulo={false} />
         </details>
       )}
       {r && ficha && (

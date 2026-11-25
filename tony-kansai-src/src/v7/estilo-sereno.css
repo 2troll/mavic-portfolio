@@ -1005,3 +1005,31 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-guia {
 }
 html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto { color: #f3eef0; }
 html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-guia { color: #f2a7c0; }
+
+/* Precio según la temporada (preciosTemporada.ts, 25-11-2026): tabla limpia,
+   sakura resaltada como temporada alta. En el móvil se desliza en horizontal. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-precio { margin: 28px 0 8px; text-align: start; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-precio h3 { margin: 0 0 12px; font-family: var(--titular); font-weight: 500; font-size: 1.35rem; color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla { overflow-x: auto; border-radius: var(--r-3); background: var(--superficie); box-shadow: 0 0 0 1px var(--linea); -webkit-overflow-scrolling: touch; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: 0.95rem; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla :is(th, td) { padding: 14px 16px; text-align: start; border-bottom: 1px solid var(--linea); vertical-align: middle; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla thead th { background: var(--sakura-velo); font-size: 0.78rem; font-weight: 600; color: var(--tenue); letter-spacing: 0.02em; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tbody th { font-weight: 600; color: var(--tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tbody th small { display: block; margin-top: 2px; font-weight: 400; font-size: 0.8rem; color: var(--tenue); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla td { font-family: var(--letra-cifras); font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tr:last-child :is(th, td) { border-bottom: 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tr.v7-tp-sakura { background: linear-gradient(90deg, #fdeef3, transparent); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tr.v7-tp-sakura td { color: var(--sakura-tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-nota { margin: 10px 2px 0; font-size: 0.88rem; color: var(--tenue); }
+html[data-tema='oscuro'] .v7 .v7-temporadas-tabla tr.v7-tp-sakura { background: linear-gradient(90deg, #3a2a36, transparent); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-plegado-temporadas .v7-temporadas-precio { margin-top: 4px; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-precio { min-width: 0; max-width: 100%; }
+@media (max-width: 640px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla { overflow: visible; background: none; box-shadow: none; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla :is(table, tbody) { display: block; min-width: 0; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla thead { display: none; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tr { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 10px; border-radius: var(--r-3); background: var(--superficie); box-shadow: 0 0 0 1px var(--linea); overflow: hidden; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla tbody th { grid-column: 1 / -1; padding: 14px 14px 6px; border: 0; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla td { align-self: end; padding: 6px 14px 14px; border: 0; font-size: 1rem; white-space: normal; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-temporadas-tabla td::before { content: attr(data-l); display: block; font-family: var(--letra); font-size: 0.72rem; font-weight: 500; color: var(--tenue); margin-bottom: 2px; }
+}

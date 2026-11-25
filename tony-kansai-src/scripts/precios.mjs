@@ -35,6 +35,7 @@ const { MONTES, KANJI, CIMA } = await import('../src/v7/datosMontana.ts')
 const { PLANES, KIT_LLEGADA } = await import('../src/v7/datosPlanes.ts')
 const { APPS, CIUDADES, RUTA_VENTAJAS, cuponDe } = await import('../src/v7/datosVentajas.ts')
 const { yenLocal } = await import('../src/v7/formato.ts')
+const { TEMPORADAS_PRECIO, TXT_TEMPORADAS, filaTemporada } = await import('../src/v7/preciosTemporada.ts')
 const { toursInvierno, CLAVES_PRECIO_INVIERNO, TXT_INVIERNO, RUTA_INVIERNO, yenesDesde, variosPrecios, horasTexto } = await import('../src/v7/datosInvierno.ts')
 
 // Invierno: datosTemporadas.ts importa sin extensión (Node no puede cargarlo), así
@@ -63,6 +64,17 @@ const tc = (s, lang) => (lang === 'en' ? s : DIC[lang][s] ?? s)
 
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 const yen = (n, lang) => `<bdi dir="ltr">${yenLocal(n, lang)}</bdi>`
+
+// Precio según la temporada (preciosTemporada.ts, Tony 25-11-2026): sakura +30 %,
+// otoño +20 %, invierno +10 %. Tabla real en el HTML para buscadores e IAs.
+function temporadasHTML(lang) {
+  const t = TXT_TEMPORADAS[lang]
+  const filas = TEMPORADAS_PRECIO.map((x) => {
+    const f = filaTemporada(PRECIO_RUTA, x.recargo)
+    return `<tr class="tp-${x.id}"><th scope="row"><span aria-hidden="true">${x.emoji}</span> ${esc(x.nombre[lang])}<small>${esc(x.fechas[lang])}</small></th><td data-l="${esc(t.medio)}">${yen(f.medio, lang)}</td><td data-l="${esc(t.completo)}">${yen(f.completo, lang)}</td><td data-l="${esc(t.lejos)}">${yen(f.lejos, lang)}</td></tr>`
+  }).join('')
+  return `<div class="temporadas" id="temporadas"><h3>${esc(t.titulo)}</h3><div class="temporadas-tabla"><table><thead><tr><th scope="col">${esc(t.temporada)}</th><th scope="col">${esc(t.medio)}</th><th scope="col">${esc(t.completo)}</th><th scope="col">${esc(t.lejos)}</th></tr></thead><tbody>${filas}</tbody></table></div><p class="temporadas-nota">${esc(t.nota)}</p></div>`
+}
 
 // Tarifas base de la página de Tony (contenido.ts): [medio, completo, lejos].
 function tarifas(lang) {
@@ -517,6 +529,7 @@ ${navHTML({ etiqueta: t.nav.etiqueta, abrir: t.nav.abrir, grupos: [
 <section class="bloque" id="tarifas"><div class="kap">
 <h2>${esc(t.tarifasH)}</h2><p class="sub">${esc(t.tarifasP)}</p>
 ${tarifasHTML}
+${temporadasHTML(lang)}
 ${notasHTML}
 </div></section>
 
@@ -644,6 +657,28 @@ figcaption a{color:inherit}
 .regla h2{font-size:clamp(22px,3.2vw,30px);margin-bottom:6px}
 .regla-k>div:first-child h2{color:var(--acento)}
 .regla p{color:var(--gris);max-width:52ch}
+/* Precio según la temporada */
+.temporadas { margin: 28px 0 8px; }
+.temporadas h3 { margin: 0 0 12px; font-size: 1.3rem; }
+.temporadas-tabla { overflow-x: auto; border-radius: 18px; background: #fff; box-shadow: 0 0 0 1px rgba(30,42,54,.1); -webkit-overflow-scrolling: touch; }
+.temporadas-tabla table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: .95rem; }
+.temporadas-tabla th, .temporadas-tabla td { padding: 14px 16px; text-align: start; border-bottom: 1px solid rgba(30,42,54,.1); vertical-align: middle; }
+.temporadas-tabla thead th { background: #f9e4e9; font-size: .78rem; font-weight: 600; color: #515b67; }
+.temporadas-tabla tbody th small { display: block; margin-top: 2px; font-weight: 400; font-size: .8rem; color: #515b67; }
+.temporadas-tabla td { font-variant-numeric: tabular-nums; font-weight: 600; white-space: nowrap; }
+.temporadas-tabla tr:last-child th, .temporadas-tabla tr:last-child td { border-bottom: 0; }
+.temporadas-tabla tr.tp-sakura { background: linear-gradient(90deg, #fdeef3, transparent); }
+.temporadas-tabla tr.tp-sakura td { color: #9d4569; }
+.temporadas-nota { margin: 10px 2px 0; font-size: .88rem; color: #515b67; }
+@media (max-width: 640px) {
+  .temporadas-tabla { overflow: visible; background: none; box-shadow: none; }
+  .temporadas-tabla table, .temporadas-tabla tbody, .temporadas-tabla tr { display: block; min-width: 0; }
+  .temporadas-tabla thead { display: none; }
+  .temporadas-tabla tr { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 10px; border-radius: 16px; background: #fff; box-shadow: 0 0 0 1px rgba(30,42,54,.1); overflow: hidden; }
+  .temporadas-tabla tbody th { grid-column: 1 / -1; padding: 14px 14px 6px; border: 0; }
+  .temporadas-tabla td { align-self: end; padding: 6px 14px 14px; border: 0; font-size: 1rem; white-space: normal; }
+  .temporadas-tabla td::before { content: attr(data-l); display: block; font-size: .72rem; font-weight: 500; color: #515b67; margin-bottom: 2px; }
+}
 /* Índice de secciones (se desliza en el móvil) */
 .indice{position:sticky;top:60px;z-index:40;background:var(--papel);border-bottom:1px solid var(--linea)}
 .indice ul{list-style:none;margin:0;padding:10px 0;display:flex;gap:6px;overflow-x:auto;scrollbar-width:none}
