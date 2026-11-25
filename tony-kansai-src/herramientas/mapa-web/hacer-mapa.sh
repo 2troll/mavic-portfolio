@@ -20,5 +20,6 @@ PY
 mkdir -p "$AQUI/fotos" && rm -f "$AQUI"/fotos/*
 node "$AQUI/auditar.mjs" "$DEP" "$AQUI"
 python3 "$AQUI/generar.py"
+python3 "$AQUI/arbol.py" "$DEP" "$AQUI/historia.json"
 echo "Abre: cd $AQUI && python3 -m http.server 5194  →  http://localhost:5194/"
 echo "Recuerda: npm run build reescribe páginas de public/ con fechas nuevas; revisa git status antes de commitear."

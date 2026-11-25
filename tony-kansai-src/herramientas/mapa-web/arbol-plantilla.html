@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Árbol de la web · tonykansaiguide.com</title>
+<style>
+  :root { --fondo:#faf6f2; --papel:#fff; --tinta:#1e2a36; --tenue:#5b6470; --linea:#e7ded8; --rosa:#b5426a; --verde:#2d684c; --ambar:#8a5300; --rojo:#b3261e; --azul:#1d4f91; }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--fondo); color:var(--tinta); font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif; }
+  header.top { position:sticky; top:0; z-index:5; background:rgba(250,246,242,.95); backdrop-filter:blur(8px); border-bottom:1px solid var(--linea); }
+  .top .in { display:flex; gap:12px; align-items:center; flex-wrap:wrap; padding:10px 20px; }
+  h1 { font-size:18px; margin:0; } h1 span { color:var(--rosa); }
+  input, select, button.b { font:inherit; font-size:14px; min-height:40px; padding:0 14px; border:1px solid var(--linea); border-radius:12px; background:#fff; color:inherit; }
+  button.b { cursor:pointer; font-weight:600; }
+  .ctl { display:flex; gap:8px; flex-wrap:wrap; margin-inline-start:auto; }
+  .cifras { display:flex; gap:8px; flex-wrap:wrap; padding:12px 20px 0; }
+  .cifra { border:1px solid var(--linea); background:#fff; border-radius:12px; padding:8px 14px; font:inherit; font-size:13px; cursor:pointer; color:inherit; }
+  .cifra b { font-size:17px; margin-inline-end:6px; }
+  .cifra[aria-pressed=true] { outline:2px solid var(--rosa); }
+  .cifra.mal b { color:var(--rojo); } .cifra.ojo b { color:var(--ambar); }
+  .cuerpo { display:grid; grid-template-columns:minmax(320px, 44%) 1fr; gap:16px; padding:12px 20px 40px; }
+  @media (max-width:900px) { .cuerpo { grid-template-columns:1fr; } }
+  .panel { min-width:0; background:var(--papel); border:1px solid var(--linea); border-radius:16px; padding:14px 16px; }
+  #arbol { max-height:calc(100vh - 170px); overflow:auto; position:sticky; top:150px; font-size:14px; }
+  #arbol ul { list-style:none; margin:0; padding-inline-start:16px; border-inline-start:1px solid #eadfd8; }
+  #arbol > ul { padding:0; border:0; }
+  #arbol details > summary { cursor:pointer; list-style:none; padding:3px 0; }
+  #arbol details > summary::before { content:'▸'; display:inline-block; width:14px; color:var(--tenue); transition:transform .15s; }
+  #arbol details[open] > summary::before { transform:rotate(90deg); }
+  .hoja { display:flex; gap:6px; align-items:baseline; padding:3px 6px; border-radius:8px; cursor:pointer; }
+  .hoja:hover, .hoja.sel { background:#fbe9ef; }
+  .hoja .seg { font-weight:600; color:var(--azul); white-space:nowrap; }
+  .hoja .tt { color:var(--tenue); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; min-width:0; flex:1; font-size:13px; }
+  .num { font-size:11.5px; color:var(--tenue); white-space:nowrap; font-variant-numeric:tabular-nums; }
+  .punto { width:8px; height:8px; border-radius:50%; flex:none; align-self:center; background:#c9d6cf; }
+  .punto.ojo { background:#e0a43a; } .punto.mal { background:var(--rojo); }
+  .rama { color:var(--tenue); font-size:12.5px; }
+  #detalle h2 { font-size:19px; margin:0 0 2px; word-break:break-all; color:var(--azul); }
+  #detalle .sub { color:var(--tenue); margin:0 0 10px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin:6px 0 10px; }
+  .chip { font-size:12px; padding:3px 9px; border-radius:999px; background:#f3eee9; }
+  .chip.mal { background:#fbe1df; color:var(--rojo); } .chip.ojo { background:#fdf0dc; color:var(--ambar); }
+  .grupos { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:12px; }
+  @media (max-width:1200px) { .grupos { grid-template-columns:1fr; } }
+  .grupo h3 { font-size:14px; margin:0 0 6px; }
+  .grupo h4 { font-size:12px; text-transform:uppercase; letter-spacing:.08em; color:var(--tenue); margin:10px 0 4px; }
+  .grupo ul { margin:0; padding:0; list-style:none; font-size:13.5px; }
+  .grupo li { padding:3px 0; border-bottom:1px solid #f3ede8; display:flex; gap:8px; }
+  .grupo li a { color:var(--azul); text-decoration:none; word-break:break-all; cursor:pointer; }
+  .grupo li a:hover { text-decoration:underline; }
+  .grupo li span { color:var(--tenue); flex:1; min-width:0; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .vacio { color:var(--tenue); font-size:13px; }
+  details.hist { margin:12px 20px 0; }
+  details.hist > summary { cursor:pointer; font-weight:650; padding:10px 16px; background:#fff; border:1px solid var(--linea); border-radius:14px; }
+  .barras { display:flex; align-items:flex-end; gap:3px; height:90px; border-bottom:1px solid var(--linea); margin-top:12px; }
+  .barras i { flex:1; background:var(--rosa); opacity:.75; border-radius:3px 3px 0 0; min-height:2px; }
+  ol.ult { list-style:none; margin:12px 0 0; padding:0; max-height:300px; overflow:auto; font-size:13.5px; }
+  ol.ult li { display:grid; grid-template-columns:96px 1fr; gap:8px; padding:5px 0; border-bottom:1px solid #f3ede8; }
+  ol.ult time { color:var(--tenue); }
+</style>
+</head>
+<body>
+<header class="top"><div class="in">
+  <h1>Árbol de la web <span>tonykansaiguide.com</span></h1>
+  <div class="ctl">
+    <input id="q" type="search" placeholder="Buscar ruta o título…" aria-label="Buscar">
+    <select id="lang" aria-label="Idioma"><option value="">Todos los idiomas</option></select>
+    <button class="b" id="abrir" type="button">Abrir todo</button>
+    <button class="b" id="cerrar" type="button">Cerrar todo</button>
+  </div>
+</div>
+<div class="cifras" id="cifras"></div>
+</header>
+<details class="hist"><summary id="histTit">Historia de la web</summary><div class="panel" style="margin-top:8px"><div class="barras" id="barras"></div><ol class="ult" id="ult"></ol></div></details>
+<div class="cuerpo">
+  <nav class="panel" id="arbol" aria-label="Árbol de rutas"></nav>
+  <section class="panel" id="detalle"><p class="vacio">Toca una página del árbol para ver qué lleva, a dónde lleva y desde dónde se llega.</p></section>
+</div>
+<script>
+const D = /*DATOS*/null
+const N = D.nodos, R = Object.keys(N).sort()
+const $ = s => document.querySelector(s), esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]))
+const AV = { 'nadie enlaza aquí':'mal', 'solo se llega por el menú o el pie':'ojo', 'el contenido no lleva a ninguna página':'ojo' }
+const nivel = n => n.av.some(a => AV[a] === 'mal' || /rotos/.test(a)) ? 'mal' : n.av.length ? 'ojo' : ''
+const entraTotal = n => new Set(Object.values(n.entra).flat()).size
+let filtro = '', sel = null
+
+function cifras() {
+  const cuenta = {}; R.forEach(r => N[r].av.forEach(a => { const k = /rotos/.test(a) ? 'enlaces rotos' : a; cuenta[k] = (cuenta[k] || 0) + 1 }))
+  const conex = R.reduce((s, r) => s + N[r].sale.length, 0)
+  let h = `<button class="cifra" data-f=""><b>${R.length}</b>páginas</button><span class="cifra" style="cursor:default"><b>${conex}</b>conexiones entre páginas</span>`
+  for (const [k, v] of Object.entries(cuenta)) h += `<button class="cifra ${k === 'nadie enlaza aquí' || k === 'enlaces rotos' ? 'mal' : 'ojo'}" data-f="${esc(k)}"><b>${v}</b>${esc(k)}</button>`
+  $('#cifras').innerHTML = h
+  document.querySelectorAll('#cifras button').forEach(b => b.onclick = () => { filtro = filtro === b.dataset.f ? '' : b.dataset.f; pinta(true) })
+}
+function pasa(r) {
+  const n = N[r], q = $('#q').value.toLowerCase(), l = $('#lang').value
+  return (!q || (r + ' ' + n.t).toLowerCase().includes(q)) && (!l || (n.l || '').startsWith(l)) && (!filtro || n.av.some(a => a === filtro || (filtro === 'enlaces rotos' && /rotos/.test(a))))
+}
+function construir(lista) {
+  // árbol por segmentos de la ruta: /es/kyoto/ → es › kyoto
+  const raiz = { hijos: {}, ruta: null }
+  for (const r of lista) {
+    const seg = r.replace(/^\/|\/$/g, '').split('/').filter(Boolean)
+    let x = raiz
+    seg.forEach(s => { x.hijos[s] ??= { hijos: {}, ruta: null }; x = x.hijos[s] })
+    x.ruta = r
+  }
+  const cuenta = x => (x.ruta ? 1 : 0) + Object.values(x.hijos).reduce((s, h) => s + cuenta(h), 0)
+  const hoja = (nombre, r) => { const n = N[r]; return `<div class="hoja${sel === r ? ' sel' : ''}" data-r="${esc(r)}"><i class="punto ${nivel(n)}"></i><span class="seg">${esc(nombre)}</span><span class="tt">${esc(n.t)}</span><span class="num" title="lleva a / llegan desde">→${n.sale.length} ←${entraTotal(n)}</span></div>` }
+  const rama = (x, abierto) => '<ul>' + Object.keys(x.hijos).sort().map(k => {
+    const h = x.hijos[k], nh = Object.keys(h.hijos).length
+    if (!nh) return `<li>${hoja(k + (h.ruta.endsWith('/') ? '/' : ''), h.ruta)}</li>`
+    return `<li><details${abierto ? ' open' : ''}><summary>${h.ruta ? hoja(k + '/', h.ruta).replace('class="hoja', 'style="display:inline-flex;width:calc(100% - 16px)" class="hoja') : `<span class="seg" style="color:var(--azul);font-weight:600">${esc(k)}/</span>`} <span class="rama">${cuenta(h)} páginas</span></summary>${rama(h, false)}</details></li>`
+  }).join('') + '</ul>'
+  const top = raiz.ruta ? `<div>${hoja('/ (raíz)', raiz.ruta)}</div>` : ''
+  return top + rama(raiz, lista.length < 60)
+}
+function pinta() {
+  const lista = R.filter(pasa)
+  $('#arbol').innerHTML = lista.length ? construir(lista) : '<p class="vacio">Nada con ese filtro.</p>'
+  document.querySelectorAll('#cifras button').forEach(b => b.setAttribute('aria-pressed', String(filtro !== '' && b.dataset.f === filtro)))
+}
+function lista(items, vacio) {
+  return items.length ? `<ul>${items.map(([r, t]) => `<li><a data-ir="${esc(r)}">${esc(r)}</a><span>${esc(t || N[r]?.t || '')}</span></li>`).join('')}</ul>` : `<p class="vacio">${vacio}</p>`
+}
+function detalle(r) {
+  sel = r; const n = N[r]
+  document.querySelectorAll('.hoja.sel').forEach(e => e.classList.remove('sel'))
+  document.querySelectorAll(`.hoja[data-r="${CSS.escape(r)}"]`).forEach(e => e.classList.add('sel'))
+  const porZ = z => n.sale.filter(s => s[2] === z).map(s => [s[0], s[1]])
+  const desde = z => (n.entra[z] || []).map(x => [x, ''])
+  $('#detalle').innerHTML = `<h2>${esc(r)}</h2><p class="sub">${esc(n.t)}</p>
+    <div class="chips"><span class="chip">${esc(n.l || 'sin idioma')}</span><span class="chip">${esc(n.tipo)}</span>${n.ni ? '<span class="chip">noindex (Google no la indexa)</span>' : '<span class="chip">indexable</span>'}${n.av.map(a => `<span class="chip ${AV[a] || 'mal'}">${esc(a)}</span>`).join('')}</div>
+    ${n.h1 ? `<p><b>Título de la página (h1):</b> ${esc(n.h1)}</p>` : ''}${n.d ? `<p><b>Lo que lleva:</b> ${esc(n.d)}</p>` : ''}
+    <p class="vacio">${n.nc ? `Cambiada ${n.nc} veces · la última el ${esc(n.ul)}: ${esc(n.um)}` : n.tipo === 'React' ? 'Página de la app React: su historia está en src/.' : ''} · <a href="https://tonykansaiguide.com${esc(r)}" target="_blank" rel="noopener">Abrir en la web ↗</a></p>
+    <div class="grupos">
+      <div class="grupo"><h3>Lleva a → ${n.sale.length} páginas</h3>
+        <h4>Desde el contenido</h4>${lista(porZ('contenido'), 'Ninguna: el texto no enlaza a otras páginas.')}
+        <h4>Desde el menú</h4>${lista(porZ('menú'), '—')}
+        <h4>Desde el pie</h4>${lista(porZ('pie'), '—')}
+        ${n.rotos.length ? `<h4 style="color:var(--rojo)">Enlaces rotos</h4><ul>${n.rotos.map(x => `<li><span style="color:var(--rojo)">${esc(x)}</span></li>`).join('')}</ul>` : ''}
+      </div>
+      <div class="grupo"><h3>Llegan desde ← ${entraTotal(n)} páginas</h3>
+        <h4>Desde su contenido</h4>${lista(desde('contenido'), 'Ninguna la enlaza desde el texto.')}
+        <h4>Desde su menú</h4>${lista(desde('menú'), '—')}
+        <h4>Desde su pie</h4>${lista(desde('pie'), '—')}
+      </div>
+    </div>`
+  if (innerWidth < 900) $('#detalle').scrollIntoView({ behavior: 'smooth' })
+}
+document.addEventListener('click', e => {
+  const h = e.target.closest('.hoja'); if (h) { e.preventDefault(); detalle(h.dataset.r); return }
+  const a = e.target.closest('a[data-ir]'); if (a) { e.preventDefault(); detalle(a.dataset.ir) }
+})
+function historia() {
+  const max = Math.max(...D.semanas.map(s => s[1]))
+  $('#barras').innerHTML = D.semanas.map(([d, n]) => `<i style="height:${(n / max * 100).toFixed(1)}%" title="Semana del ${d}: ${n} cambios"></i>`).join('')
+  $('#ult').innerHTML = D.ultimos.map(([d, m]) => `<li><time>${d}</time><span>${esc(m)}</span></li>`).join('')
+  $('#histTit').textContent = `Historia de la web: ${D.total} cambios entre ${D.desde} y ${D.hasta} (abrir)`
+}
+$('#lang').innerHTML += [...new Set(R.map(r => (N[r].l || '').slice(0, 2)).filter(Boolean))].sort().map(l => `<option>${l}</option>`).join('')
+for (const id of ['#q', '#lang']) $(id).addEventListener('input', () => pinta())
+$('#abrir').onclick = () => document.querySelectorAll('#arbol details').forEach(d => d.open = true)
+$('#cerrar').onclick = () => document.querySelectorAll('#arbol details').forEach(d => d.open = false)
+cifras(); historia(); pinta(); detalle(R.includes('/es/') ? '/es/' : R[0])
+</script>
+</body>
+</html>
