@@ -29,6 +29,9 @@ class Lector(HTMLParser):
         self.titulo = self.h1 = self.desc = self.lang = ''
         self.noindex = False
         self._en = None
+        # lo que se lleva una IA de la página: datos estructurados, apartados, párrafos
+        self.ld = []; self._ld = None; self.h2 = []; self.ps = []; self._p = None
+        self.pal = 0; self._salta = 0; self.img = self.alt = 0
 
     def handle_starttag(self, tag, attrs):
         at = dict(attrs)
@@ -36,6 +39,12 @@ class Lector(HTMLParser):
         if tag in ('header', 'footer', 'nav'): self.zona.append(tag)
         if tag == 'meta' and at.get('name') == 'description': self.desc = at.get('content', '')
         if tag == 'meta' and at.get('name') == 'robots' and 'noindex' in (at.get('content') or ''): self.noindex = True
+        if tag in ('script', 'style', 'noscript', 'svg'):
+            if tag == 'script' and at.get('type') == 'application/ld+json': self._ld = ''
+            else: self._salta += 1
+        if tag in ('h2', 'h3') and not self.zona: self._en = 'h2'; self.h2.append('')
+        if tag == 'p' and not self.zona: self._p = ''
+        if tag == 'img': self.img += 1; self.alt += bool((at.get('alt') or '').strip())
         if tag == 'title': self._en = 'titulo'
         if tag == 'h1' and not self.h1: self._en = 'h1'
         if tag == 'a' and at.get('href'):
@@ -45,15 +54,46 @@ class Lector(HTMLParser):
     def handle_endtag(self, tag):
         if tag in ('header', 'footer', 'nav') and tag in self.zona:
             while self.zona and self.zona.pop() != tag: pass
-        if tag in ('title', 'h1'): self._en = None
+        if tag == 'script' and self._ld is not None:
+            self.ld.append(self._ld); self._ld = None
+        elif tag in ('script', 'style', 'noscript', 'svg') and self._salta: self._salta -= 1
+        if tag == 'p' and self._p is not None:
+            t = ' '.join(self._p.split())
+            if len(t) > 40: self.ps.append(t)
+            self._p = None
+        if tag in ('title', 'h1', 'h2', 'h3'): self._en = None
         if tag == 'a' and self.a:
             self.enl.append(tuple(self.a)); self.a = None
 
     def handle_data(self, data):
         d = data
+        if self._ld is not None: self._ld += d; return
+        if self._salta: return
+        if not self.zona: self.pal += len(d.split())
+        if self._p is not None: self._p += d
+        if self._en == 'h2': self.h2[-1] += d
         if self._en == 'titulo': self.titulo += d
         elif self._en == 'h1': self.h1 += d
         if self.a is not None: self.a[1] += d
+
+
+def tipos_ld(bloques):
+    """Tipos schema.org de los JSON-LD y número de preguntas FAQ."""
+    tipos, faq = collections.Counter(), 0
+    def mira(o):
+        nonlocal faq
+        if isinstance(o, list):
+            for x in o: mira(x)
+        elif isinstance(o, dict):
+            t = o.get('@type')
+            for x in (t if isinstance(t, list) else [t] if t else []): tipos[x] += 1
+            if t == 'Question' or (isinstance(t, list) and 'Question' in t): faq += 1
+            for v in o.values():
+                if isinstance(v, (dict, list)): mira(v)
+    for b in bloques:
+        try: mira(json.loads(b))
+        except Exception: tipos['JSON-LD roto'] += 1
+    return dict(tipos.most_common(10)), faq
 
 
 def ruta_de(rel):
@@ -117,6 +157,12 @@ def archivo(r):
     f = f'public/{rr}index.html' if (rr == '' or rr.endswith('/')) else f'public/{rr}'
     return f if f in A else None
 
+def ia_de(L):
+    ld, faq = tipos_ld(L.ld)
+    h2 = [' '.join(h.split())[:80] for h in L.h2 if h.strip()]
+    return {'ld': ld, 'faq': faq, 'h2': h2[:10], 'nh2': len(h2), 'p': [p[:170] for p in L.ps[:5]],
+            'np': len(L.ps), 'w': L.pal, 'img': L.img, 'alt': L.alt}
+
 nodos = {}
 for r, L in paginas.items():
     f = archivo(r); idx = A.get(f, []) if f else []
@@ -136,6 +182,7 @@ for r, L in paginas.items():
         'entra': {z: sorted(v) for z, v in e.items()}, 'rotos': sorted(rotos.get(r, ())),
         'nc': len(idx), 'ul': C[idx[0]]['d'] if idx else '', 'um': C[idx[0]]['m'][:120] if idx else '',
         'tipo': 'estática' if f else 'React', 'av': avisos,
+        'ia': ia_de(L),
     }
 
 sem = collections.Counter()
@@ -145,7 +192,9 @@ datos = {'nodos': nodos, 'semanas': sorted(sem.items()), 'ultimos': [[c['d'], c[
          'total': len(C), 'desde': C[-1]['d'] if C else '', 'hasta': C[0]['d'] if C else ''}
 js = json.dumps(datos, ensure_ascii=False).replace('</', '<\\/')
 # arbol.html = lista; grafo.html = árbol radial con flechas (misma inyección de datos)
-for plantilla, salida in (('arbol-plantilla.html', 'arbol.html'), ('grafo-plantilla.html', 'grafo.html')):
+for plantilla, salida in (('arbol-plantilla.html', 'arbol.html'), ('grafo-plantilla.html', 'grafo.html'),
+                          ('neuronas-plantilla.html', 'neuronas.html')):
+    if not os.path.exists(os.path.join(AQUI, plantilla)): continue
     pl = open(os.path.join(AQUI, plantilla), encoding='utf-8').read()
     open(os.path.join(AQUI, salida), 'w', encoding='utf-8').write(pl.replace('/*DATOS*/null', js))
 cuenta = collections.Counter(a.split(' ')[0] if a[0].isdigit() else a for n in nodos.values() for a in n['av'])

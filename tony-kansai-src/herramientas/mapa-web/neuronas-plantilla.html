@@ -1,0 +1,491 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex">
+<title>La web por dentro · tonykansaiguide.com</title>
+<style>
+  :root { --fondo:#06060c; --tinta:#eef0f7; --tenue:#9aa0b4; --linea:rgba(255,255,255,.09); --persona:#ffc46b; --bot:#5fe3ff; --rosa:#ff8fb1; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; overflow:hidden; background:var(--fondo); color:var(--tinta);
+    font:14px/1.5 'Geist','Geist Variable',system-ui,-apple-system,'Segoe UI',sans-serif; }
+  canvas { position:fixed; inset:0; width:100%; height:100%; display:block; cursor:grab; }
+  canvas:active { cursor:grabbing; }
+  button { font:inherit; color:inherit; cursor:pointer; }
+  .vidrio { background:rgba(14,14,24,.72); border:1px solid var(--linea); border-radius:16px;
+    -webkit-backdrop-filter:blur(14px); backdrop-filter:blur(14px); }
+
+  #cabeza { position:fixed; left:20px; top:18px; max-width:520px; pointer-events:none; }
+  #cabeza h1 { margin:0; font-size:22px; font-weight:600; letter-spacing:-.01em; }
+  #cabeza p { margin:2px 0 0; color:var(--tenue); font-size:13px; }
+  #cifras { position:fixed; left:20px; top:100px; display:flex; flex-wrap:wrap; gap:6px; max-width:560px; pointer-events:none; }
+  .cifra { padding:5px 10px; font-size:12px; color:var(--tenue); border-radius:10px; }
+  .cifra b { display:block; color:var(--tinta); font-size:16px; font-weight:600; font-variant-numeric:tabular-nums; }
+  .cifra.p b { color:var(--persona); } .cifra.i b { color:var(--bot); }
+
+  #mandos { position:fixed; left:20px; bottom:18px; display:flex; flex-wrap:wrap; gap:6px; align-items:center; padding:6px; }
+  .b { min-height:36px; padding:0 14px; border-radius:10px; border:1px solid transparent; background:transparent; display:inline-flex; align-items:center; gap:7px; }
+  .b:hover { background:rgba(255,255,255,.06); }
+  .b[aria-pressed=true] { background:rgba(255,255,255,.12); border-color:rgba(255,255,255,.16); }
+  .b:focus-visible { outline:2px solid var(--bot); outline-offset:2px; }
+  .b i { width:8px; height:8px; border-radius:50%; display:inline-block; }
+  .sep { width:1px; height:22px; background:var(--linea); margin:0 4px; }
+  #velocidad { accent-color:var(--bot); width:90px; }
+
+  #leyenda { position:fixed; left:20px; bottom:96px; padding:10px 12px; font-size:12px; color:var(--tenue); display:grid; grid-template-columns:repeat(2,auto); gap:3px 16px; }
+  #leyenda span { display:flex; align-items:center; gap:7px; white-space:nowrap; }
+  #leyenda i { width:9px; height:9px; border-radius:50%; box-shadow:0 0 8px currentColor; }
+
+  #lector { position:fixed; right:16px; top:16px; bottom:16px; width:380px; display:flex; flex-direction:column; overflow:hidden; }
+  #lector header { padding:14px 16px 10px; border-bottom:1px solid var(--linea); }
+  #lector .quien { display:flex; align-items:center; gap:8px; font-size:12px; color:var(--bot); text-transform:uppercase; letter-spacing:.08em; }
+  #lector .quien::before { content:''; width:8px; height:8px; border-radius:50%; background:var(--bot); box-shadow:0 0 10px var(--bot); animation:late 1.2s infinite; }
+  @keyframes late { 50% { opacity:.3; } }
+  #lector .url { margin:6px 0 0; font:12.5px ui-monospace,SFMono-Regular,Menlo,monospace; color:var(--tinta); word-break:break-all; }
+  #pasos { flex:1; overflow:auto; padding:10px 16px 16px; scrollbar-width:thin; }
+  .paso { margin:0 0 12px; opacity:0; transform:translateY(6px); transition:opacity .35s, transform .35s; }
+  .paso.ya { opacity:1; transform:none; }
+  .paso h3 { margin:0 0 4px; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.09em; color:var(--tenue); display:flex; gap:8px; align-items:center; }
+  .paso h3 b { color:var(--bot); font-variant-numeric:tabular-nums; font-weight:600; }
+  .paso .txt { font-size:13.5px; color:var(--tinta); }
+  .parr { position:relative; font-size:12.5px; color:#c9cddb; padding:6px 9px; margin:0 0 5px; border-radius:8px; background:rgba(255,255,255,.035); overflow:hidden; }
+  .parr::after { content:''; position:absolute; inset:0; background:linear-gradient(90deg,transparent,rgba(95,227,255,.22),transparent); transform:translateX(-100%); animation:barre 1.1s ease-out forwards; }
+  @keyframes barre { to { transform:translateX(100%); } }
+  mark { background:none; border-radius:4px; padding:0 2px; }
+  mark.n { color:#ffd38a; background:rgba(255,196,107,.14); }
+  mark.e { color:#9ff0ff; background:rgba(95,227,255,.12); }
+  .chips { display:flex; flex-wrap:wrap; gap:5px; }
+  .chip { font-size:11.5px; padding:2px 9px; border-radius:999px; border:1px solid rgba(95,227,255,.35); color:#bff4ff; }
+  .chip.no { border-color:rgba(255,143,177,.45); color:#ffc0d3; }
+  .h2s { margin:0; padding:0 0 0 14px; font-size:12.5px; color:#c9cddb; }
+  .cita { font-size:13px; padding:10px 12px; border-radius:10px; border:1px solid rgba(95,227,255,.3); background:rgba(95,227,255,.06); }
+  .cita small { display:block; color:var(--tenue); font-size:11px; margin-top:6px; }
+  #memoria { padding:10px 16px; border-top:1px solid var(--linea); font-size:12px; color:var(--tenue); display:flex; justify-content:space-between; gap:10px; }
+  #memoria b { color:var(--bot); font-variant-numeric:tabular-nums; }
+
+  #tip { position:fixed; pointer-events:none; padding:8px 11px; font-size:12.5px; max-width:300px; opacity:0; transition:opacity .15s; z-index:5; }
+  #tip small { display:block; color:var(--tenue); font-family:ui-monospace,Menlo,monospace; font-size:11px; }
+
+  #intro { position:fixed; inset:0; display:grid; place-items:center; pointer-events:none; text-align:center; z-index:4; }
+  #intro p { margin:0; font-size:clamp(26px,4.2vw,54px); font-weight:600; letter-spacing:-.02em; line-height:1.1; opacity:0; transition:opacity .9s, transform .9s; transform:translateY(10px); text-shadow:0 0 40px rgba(6,6,12,.9); }
+  #intro p.ya { opacity:1; transform:none; }
+  #intro p small { display:block; font-size:.42em; font-weight:400; color:var(--tenue); letter-spacing:0; margin-top:10px; }
+  #nota { position:fixed; left:20px; bottom:66px; font-size:11.5px; color:#6f7488; max-width:560px; pointer-events:none; }
+  #pista { position:fixed; left:50%; top:18px; transform:translateX(-50%); font-size:12.5px; color:var(--tenue); padding:7px 14px; border-radius:999px; pointer-events:none; white-space:nowrap; }
+  @media (min-width:901px) { #pista { left:calc((100% - 400px) / 2); } }
+
+  @media (max-width:900px) {
+    #lector { left:10px; right:10px; top:auto; bottom:10px; width:auto; height:38vh; }
+    #mandos { left:10px; right:10px; bottom:calc(38vh + 18px); }
+    #leyenda, #nota, #pista { display:none; }
+    #cifras { top:70px; left:10px; } #cabeza { left:12px; }
+    .cifra:nth-child(n+4):not(.p):not(.i) { display:none; }
+    #cabeza p { display:none; } #cifras { top:52px; }
+    #mandos { gap:2px; } #mandos .sep, #mandos label, #otravez { display:none; }
+    #lector { height:34vh; } #mandos { bottom:calc(34vh + 16px); }
+  }
+</style>
+</head>
+<body>
+<canvas id="c" aria-label="Animación: las páginas de la web como neuronas conectadas por sus enlaces"></canvas>
+
+<div id="cabeza"><h1>La web por dentro</h1><p>Cada punto es una página. Cada línea, un enlace dentro del texto. Así entra la gente y así la leen las IAs.</p></div>
+<div id="cifras"></div>
+<div id="leyenda" class="vidrio"></div>
+
+<div id="mandos" class="vidrio" role="toolbar" aria-label="Mandos">
+  <button class="b" data-modo="todo" aria-pressed="true">Todo</button>
+  <button class="b" data-modo="gente" aria-pressed="false"><i style="background:var(--persona)"></i>Personas</button>
+  <button class="b" data-modo="bots" aria-pressed="false"><i style="background:var(--bot)"></i>IAs y bots</button>
+  <span class="sep"></span>
+  <button class="b" id="pausa" aria-pressed="false">Pausa</button>
+  <label class="b" title="Velocidad">Ritmo <input id="velocidad" type="range" min="0.3" max="3" step="0.1" value="1"></label>
+  <button class="b" id="otravez">Contarlo otra vez</button>
+</div>
+
+<aside id="lector" class="vidrio" aria-live="polite">
+  <header><div class="quien" id="quien">Bot leyendo</div><p class="url" id="url">—</p></header>
+  <div id="pasos"></div>
+  <div id="memoria"><span>Páginas leídas <b id="m-pag">0</b></span><span>Párrafos <b id="m-par">0</b></span><span>Datos guardados <b id="m-dat">0</b></span></div>
+</aside>
+
+<div id="tip" class="vidrio"></div>
+<div id="intro"><p id="frase"></p></div>
+<div id="pista" class="vidrio">Arrastra una neurona · tócala para encenderla · rueda o pellizco para acercar</div>
+<div id="nota">Estructura, textos y datos reales de la web. El ir y venir de personas y bots es una simulación para ver cómo funciona; no es tráfico en directo.</div>
+
+<script src="d3.min.js"></script>
+<script>
+const D = /*DATOS*/null
+const RED = matchMedia('(prefers-reduced-motion: reduce)').matches
+const fmt = n => n.toLocaleString('es-ES')
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]))
+
+// ── Raíces: cada sección es un «lóbulo» del cerebro ──
+const RAICES = {
+  es: ['Español', '#ff8fb1'], en: ['English', '#7cc4ff'], ar: ['العربية', '#6fe0b5'], fr: ['Français', '#b79cff'],
+  ru: ['Русский · Larion', '#ffb36b'], larion: ['Larion', '#ffd36b'], familias: ['Familias', '#ff7a7a'],
+  private: ['Privado · Mario', '#c9d1ff'], tr: ['Türkçe · Ferhat', '#ff9d6b'], hiking: ['Senderismo', '#9de07a'],
+  tours: ['Tours', '#ffe08a'], tiktok: ['TikTok', '#ff5fd2'], otros: ['Raíz y generales', '#a7adc0'],
+}
+const raiz = r => { const s = r.split('/')[1] || ''; return r.split('/').length > 2 && RAICES[s] ? s : 'otros' }
+
+// ── Nodos y enlaces del texto (los del menú y el pie solo los siguen los bots) ──
+const ids = Object.keys(D.nodos)
+const N = ids.map(id => { const n = D.nodos[id]; return { id, n, g: raiz(id), e: 0, ent: (n.entra.contenido || []).length } })
+const porId = new Map(N.map(x => [x.id, x]))
+N.forEach(x => {
+  x.sale = x.n.sale.filter(s => s[2] === 'contenido').map(s => porId.get(s[0])).filter(Boolean)
+  x.todo = x.n.sale.map(s => porId.get(s[0])).filter(Boolean)
+  x.r = 1.6 + Math.sqrt(x.ent) * 0.75
+  x.c = RAICES[x.g][1]
+})
+const E = []
+N.forEach(a => a.sale.forEach(b => E.push({ source: a, target: b, a, b, h: 0, k: ((a.id.length * 7 + b.id.length * 13) % 2) ? 1 : -1 })))
+const ejeDe = new Map(E.map(e => [e.a.id + '>' + e.b.id, e]))
+const TOT = {
+  pag: N.length, txt: E.length, todo: N.reduce((s, x) => s + x.n.sale.length, 0),
+  pal: N.reduce((s, x) => s + x.n.ia.w, 0), par: N.reduce((s, x) => s + x.n.ia.np, 0),
+  faq: N.reduce((s, x) => s + x.n.ia.faq, 0), ld: N.reduce((s, x) => s + Object.values(x.n.ia.ld).reduce((a, b) => a + b, 0), 0),
+}
+
+// ── Lóbulos en círculo, proporcionales al número de páginas ──
+const grupos = Object.keys(RAICES).map(g => ({ g, n: N.filter(x => x.g === g).length })).filter(o => o.n)
+const R0 = 430, centro = {}
+{ const tot = grupos.filter(o => o.g !== 'otros').reduce((s, o) => s + o.n, 0); let ang = -Math.PI / 2
+  grupos.forEach(o => { if (o.g === 'otros') { centro.otros = [0, 0]; return }
+    const w = o.n / tot * Math.PI * 2, a = ang + w / 2; ang += w
+    const rr = R0 * (0.55 + 0.45 * Math.min(1, o.n / 60)); centro[o.g] = [Math.cos(a) * rr, Math.sin(a) * rr] }) }
+N.forEach(x => { const a = Math.random() * 6.283, d = Math.random() * 6; x.x = Math.cos(a) * d; x.y = Math.sin(a) * d })
+
+const sim = d3.forceSimulation(N)
+  .force('link', d3.forceLink(E).distance(30).strength(0.018))
+  .force('carga', d3.forceManyBody().strength(-14).distanceMax(220))
+  .force('x', d3.forceX(x => centro[x.g][0]).strength(0.13))
+  .force('y', d3.forceY(x => centro[x.g][1]).strength(0.13))
+  .force('choque', d3.forceCollide(x => x.r + 1.6))
+  .alphaDecay(0.018).stop()
+
+// ── Fuentes de fuera: buscadores, IAs y redes en un anillo exterior ──
+const FUERA = [
+  { t: 'Google', tipo: 'gente', c: '#ffc46b' }, { t: 'ChatGPT', tipo: 'gente', c: '#ffc46b' },
+  { t: 'Instagram', tipo: 'gente', c: '#ffc46b' }, { t: 'WhatsApp', tipo: 'gente', c: '#ffc46b' },
+  { t: 'Enlace directo', tipo: 'gente', c: '#ffc46b' }, { t: 'Perplexity', tipo: 'gente', c: '#ffc46b' },
+  { t: 'GPTBot', tipo: 'bot', c: '#5fe3ff' }, { t: 'ClaudeBot', tipo: 'bot', c: '#5fe3ff' },
+  { t: 'Googlebot', tipo: 'bot', c: '#8fb4ff' }, { t: 'PerplexityBot', tipo: 'bot', c: '#5fe3ff' },
+  { t: 'Bingbot', tipo: 'bot', c: '#8fb4ff' }, { t: 'Applebot', tipo: 'bot', c: '#5fe3ff' },
+]
+FUERA.forEach((f, i) => { const a = (i + 0.5) / FUERA.length * Math.PI * 2 - Math.PI / 2; f.x = Math.cos(a) * (R0 + 110); f.y = Math.sin(a) * (R0 + 110); f.e = 0 })
+
+const entradasGente = N.filter(x => !x.n.ni && x.g !== 'otros' || x.id === '/')
+const pesoE = entradasGente.map(x => 1 + x.ent * 1.5)
+const sumaE = pesoE.reduce((a, b) => a + b, 0)
+function entradaAlAzar() { let r = Math.random() * sumaE; for (let i = 0; i < entradasGente.length; i++) { r -= pesoE[i]; if (r <= 0) return entradasGente[i] } return entradasGente[0] }
+
+// ── Lienzo, zoom y brillos precocinados ──
+const cv = document.getElementById('c'), cx = cv.getContext('2d')
+let W = 0, H = 0, DPR = 1, T = d3.zoomIdentity
+function medir() {
+  DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight
+  cv.width = W * DPR; cv.height = H * DPR
+}
+medir(); addEventListener('resize', () => { medir(); encuadrar() })
+const zoom = d3.zoom().scaleExtent([0.15, 8]).on('zoom', e => { T = e.transform })
+zoom.filter(ev => ev.type === 'wheel' || ev.type.startsWith('touch') && ev.touches && ev.touches.length > 1 || !cerca(ev.clientX ?? ev.touches?.[0]?.clientX, ev.clientY ?? ev.touches?.[0]?.clientY))
+d3.select(cv).call(zoom)
+let arrastrada = null
+d3.select(cv).call(d3.drag()
+  .subject(ev => cerca(ev.sourceEvent.clientX ?? ev.x, ev.sourceEvent.clientY ?? ev.y))
+  .on('start', ev => { arrastrada = ev.subject; sim.alphaTarget(0.18).alpha(Math.max(sim.alpha(), 0.2)) })
+  .on('drag', ev => { const se = ev.sourceEvent.touches ? ev.sourceEvent.touches[0] : ev.sourceEvent
+    const [wx, wy] = T.invert([se.clientX, se.clientY]); arrastrada.fx = wx; arrastrada.fy = wy; arrastrada.e = 1.2
+    if (Math.random() < 0.18 && arrastrada.sale.length) lanzar(arrastrada, arrastrada.sale[(Math.random() * arrastrada.sale.length) | 0], 'eco', { f: 0.7 }) })
+  .on('end', () => { if (arrastrada) { arrastrada.fx = arrastrada.fy = null } arrastrada = null; sim.alphaTarget(0) }))
+function encuadrar() {
+  const ancho = W > 900 ? W - 410 : W, alto = W > 900 ? H : H * 0.62 - 60
+  const k = Math.min(ancho, alto - 120) / ((R0 + 190) * 2)
+  d3.select(cv).call(zoom.transform, d3.zoomIdentity.translate(ancho / 2 + (W > 900 ? 60 : 0), (W > 900 ? H / 2 + 30 : 60 + alto / 2) + 20).scale(k))
+}
+encuadrar()
+
+const sprites = {}
+function brillo(color) {
+  if (sprites[color]) return sprites[color]
+  const s = document.createElement('canvas'); s.width = s.height = 64
+  const g = s.getContext('2d'), gr = g.createRadialGradient(32, 32, 0, 32, 32, 32)
+  gr.addColorStop(0, '#ffffff'); gr.addColorStop(0.12, color); gr.addColorStop(0.4, color + '55'); gr.addColorStop(1, color + '00')
+  g.fillStyle = gr; g.fillRect(0, 0, 64, 64); return (sprites[color] = s)
+}
+
+// ── Señales: personas (ámbar) y bots (cian) que viajan por los axones ──
+const senales = []
+let modo = 'todo', pausa = false, ritmo = 1
+const cuenta = { gente: 0, leidas: 0, parr: 0, datos: 0 }
+
+function ctrl(a, b, k) { const mx = (a.x + b.x) / 2, my = (a.y + b.y) / 2, dx = b.x - a.x, dy = b.y - a.y; return [mx - dy * 0.16 * k, my + dx * 0.16 * k] }
+function punto(a, b, c, t) { const u = 1 - t; return [u * u * a.x + 2 * u * t * c[0] + t * t * b.x, u * u * a.y + 2 * u * t * c[1] + t * t * b.y] }
+
+function lanzar(desde, hasta, tipo, extra) {
+  const eje = ejeDe.get(desde.id + '>' + hasta.id)
+  senales.push({ a: desde, b: hasta, t: 0, v: (tipo === 'bot' ? 0.022 : 0.012) * (0.7 + Math.random() * 0.6), tipo, k: eje ? eje.k : 1, eje, rastro: [], ...extra })
+}
+function disparar(x, fuerza, tipo, prof) {
+  x.e = Math.min(1.4, x.e + fuerza)
+  // como una neurona: al encenderse, ilumina algunos de sus axones y a veces la señal sigue
+  const vec = x.sale
+  for (let i = 0; i < Math.min(3, vec.length); i++) { const e = ejeDe.get(x.id + '>' + vec[(Math.random() * vec.length) | 0].id); if (e) e.h = Math.max(e.h, 0.55 * fuerza) }
+  if (tipo === 'gente' && vec.length && prof < 6 && Math.random() < 0.72) {
+    const sig = vec[(Math.random() * vec.length) | 0]
+    setTimeout(() => lanzar(x, sig, 'gente', { prof: prof + 1 }), 250 + Math.random() * 500)
+  }
+  if (tipo === 'eco' && vec.length && fuerza > 0.35) {
+    vec.slice(0, 4).forEach((s, i) => setTimeout(() => lanzar(x, s, 'eco', { f: fuerza * 0.62 }), 120 + i * 90))
+  }
+}
+
+// ── Bots: recorren la web enlace a enlace, leen y guardan ──
+const bots = []
+function nuevoBot(f) {
+  const ini = Math.random() < 0.5 ? porId.get('/') || N[0] : entradaAlAzar()
+  const b = { f, en: null, vistas: new Set(), espera: 0, nombre: f.t }
+  bots.push(b); b.viaje = true; lanzar(f, ini, 'bot', { bot: b }); return b
+}
+let seguido = null
+function siguientePara(b) {
+  const x = b.en
+  const libres = x.todo.filter(y => !b.vistas.has(y.id))
+  const delTexto = libres.filter(y => x.sale.includes(y))
+  let sig = (delTexto.length ? delTexto : libres)[(Math.random() * (delTexto.length || libres.length)) | 0]
+  if (!sig) { sig = entradaAlAzar(); b.salto = true } else b.salto = false   // sin enlaces nuevos: vuelve al sitemap
+  if (b.vistas.size > 60) { b.vistas.clear() }
+  b.viaje = true; lanzar(x, sig, 'bot', { bot: b, salto: b.salto })
+}
+function llegaBot(b, x) {
+  b.en = x; b.viaje = false; b.vistas.add(x.id); x.e = Math.min(1.4, x.e + 0.9); x.leida = 1
+  cuenta.leidas++; if (!x.n.ni) { cuenta.parr += x.n.ia.np; cuenta.datos += x.n.ia.faq + Object.keys(x.n.ia.ld).length }
+  if (b === seguido) { b.espera = 9; leer(b, x) } else b.espera = 0.6 + Math.random() * 0.8
+}
+
+// ── Panel: lo que el bot se lleva de cada página, paso a paso ──
+const pasos = document.getElementById('pasos'); let turno = 0
+const resalta = t => esc(t)
+  .replace(/(\d[\d.,]*\s?(?:¥|€|\$|yenes|euros|horas?|h\b|min|minutos|personas|km|días?|%)|¥\s?\d[\d.,]*)/g, '<mark class="n">$1</mark>')
+  .replace(/(^|[^\wÁÉÍÓÚáéíóúñ>])([A-ZÁÉÍÓÚ][a-záéíóúñ]{3,}(?:\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*)/g, (m, a, b, i) => i === 0 ? m : a + '<mark class="e">' + b + '</mark>')
+function leer(b, x) {
+  const yo = ++turno, ia = x.n.ia
+  document.getElementById('quien').textContent = b.nombre + ' leyendo'
+  document.getElementById('url').textContent = 'tonykansaiguide.com' + x.id
+  pasos.innerHTML = ''
+  const lista = []
+  lista.push(['Descarga el HTML', `<b>${fmt(ia.w)}</b> palabras`, `<div class="txt" dir="auto">${ia.np} párrafos · ${ia.nh2} apartados · ${ia.img} imágenes</div>`])
+  if (x.n.ni) lista.push(['Etiqueta robots', '', `<div class="chips"><span class="chip no">noindex: la lee, pero no la guarda</span></div>`])
+  lista.push(['Título', '', `<div class="txt" dir="auto">${esc(x.n.t || '—')}</div>`])
+  if (x.n.h1) lista.push(['Encabezado principal (h1)', '', `<div class="txt" dir="auto">${esc(x.n.h1)}</div>`])
+  if (ia.h2.length) lista.push(['Apartados (h2/h3)', `<b>${ia.nh2}</b>`, `<ol class="h2s" dir="auto">${ia.h2.slice(0, 6).map(h => `<li>${esc(h)}</li>`).join('')}</ol>`])
+  ia.p.slice(0, 4).forEach((p, i) => lista.push([i ? '' : 'Párrafos: busca datos y nombres', i ? '' : `<b>${ia.np}</b>`, `<div class="parr" dir="auto">${resalta(p)}</div>`]))
+  const tipos = Object.entries(ia.ld)
+  if (tipos.length) lista.push(['Datos estructurados (JSON-LD)', `<b>${tipos.reduce((s, t) => s + t[1], 0)}</b>`, `<div class="chips">${tipos.map(([t, n]) => `<span class="chip">${esc(t)}${n > 1 ? ' ×' + n : ''}</span>`).join('')}</div>`])
+  else lista.push(['Datos estructurados (JSON-LD)', '', `<div class="chips"><span class="chip no">ninguno</span></div>`])
+  if (ia.faq) lista.push(['Preguntas con respuesta', `<b>${ia.faq}</b>`, `<div class="txt" dir="auto">Listas para citarse tal cual en una respuesta.</div>`])
+  lista.push(['Enlaces que seguirá', `<b>${x.todo.length}</b>`, `<div class="txt" dir="auto">${x.sale.length} desde el texto · ${x.todo.length - x.sale.length} del menú y el pie</div>`])
+  if (x.n.d && !x.n.ni) lista.push(['Así podría citarla una IA', '', `<div class="cita" dir="auto">${esc(x.n.d)}<small>Fuente: tonykansaiguide.com${esc(x.id)}</small></div>`])
+  const paso = 6.4 / lista.length
+  lista.forEach(([h, n, cuerpo], i) => setTimeout(() => {
+    if (yo !== turno) return
+    const d = document.createElement('div'); d.className = 'paso'
+    d.innerHTML = (h ? `<h3>${h} ${n}</h3>` : '') + cuerpo; pasos.appendChild(d)
+    requestAnimationFrame(() => d.classList.add('ya')); pasos.scrollTop = pasos.scrollHeight
+  }, i * paso * 1000 / ritmo))
+}
+
+// ── Cifras y leyenda ──
+const cifras = document.getElementById('cifras')
+const C = [['pag', 'páginas'], ['txt', 'enlaces en el texto'], ['todo', 'enlaces en total'], ['pal', 'palabras'], ['par', 'párrafos'], ['faq', 'preguntas FAQ'], ['ld', 'datos JSON-LD']]
+cifras.innerHTML = C.map(([k, t]) => `<div class="cifra vidrio"><b data-k="${k}">0</b>${t}</div>`).join('') +
+  `<div class="cifra vidrio p"><b id="v-gente">0</b>personas (sim.)</div><div class="cifra vidrio i"><b id="v-bots">0</b>lecturas de bots</div>`
+document.getElementById('leyenda').innerHTML = grupos.map(o => `<span><i style="color:${RAICES[o.g][1]};background:${RAICES[o.g][1]}"></i>${RAICES[o.g][0]} · ${o.n}</span>`).join('')
+function subirCifras(dur) {
+  const t0 = performance.now()
+  ;(function paso(t) { const p = Math.min(1, (t - t0) / dur), e = 1 - Math.pow(1 - p, 3)
+    cifras.querySelectorAll('b[data-k]').forEach(b => { b.textContent = fmt(Math.round(TOT[b.dataset.k] * e)) })
+    if (p < 1) requestAnimationFrame(paso) })(t0)
+}
+
+// ── Introducción para enseñarla ──
+const frase = document.getElementById('frase'); let introT = []
+function intro() {
+  introT.forEach(clearTimeout); introT = []
+  sim.nodes().forEach(x => { const a = Math.random() * 6.283, d = Math.random() * 6; x.x = Math.cos(a) * d; x.y = Math.sin(a) * d; x.vx = x.vy = 0 })
+  sim.alpha(1); subirCifras(RED ? 10 : 5200)
+  const F = [
+    [`${fmt(TOT.pag)} páginas.`, 'Cada una, una neurona.'],
+    [`${fmt(TOT.todo)} enlaces.`, `${fmt(TOT.txt)} salen del propio texto.`],
+    [`${fmt(TOT.pal)} palabras que leer.`, `${fmt(TOT.faq)} preguntas con respuesta · ${fmt(TOT.ld)} datos para las máquinas.`],
+    ['Así entra la gente…', 'desde Google, ChatGPT, Instagram o WhatsApp.'],
+    ['…y así la lee una IA.', 'Párrafo a párrafo, dato a dato.'],
+  ]
+  if (RED) return
+  F.forEach(([a, b], i) => {
+    introT.push(setTimeout(() => { frase.innerHTML = `${esc(a)}<small>${esc(b)}</small>`; frase.classList.add('ya') }, 300 + i * 2600))
+    introT.push(setTimeout(() => frase.classList.remove('ya'), 300 + i * 2600 + 2000))
+  })
+}
+
+// ── Interacción: pasar por encima y tocar ──
+const tip = document.getElementById('tip')
+function cerca(px, py) {
+  const [wx, wy] = T.invert([px, py]); let mejor = null, md = (12 / T.k) ** 2
+  for (const x of N) { const d = (x.x - wx) ** 2 + (x.y - wy) ** 2; if (d < md) { md = d; mejor = x } }
+  return mejor
+}
+let encima = null
+cv.addEventListener('mousemove', ev => {
+  encima = cerca(ev.clientX, ev.clientY)
+  if (!encima) { tip.style.opacity = 0; return }
+  tip.innerHTML = `${esc(encima.n.t || encima.id)}<small>${esc(encima.id)} · ${encima.ent} llegan desde el texto · ${encima.sale.length} salen</small>`
+  tip.style.left = Math.min(ev.clientX + 14, W - 320) + 'px'; tip.style.top = ev.clientY + 14 + 'px'; tip.style.opacity = 1
+})
+cv.addEventListener('mouseleave', () => { encima = null; tip.style.opacity = 0 })
+cv.addEventListener('click', ev => {
+  const x = cerca(ev.clientX, ev.clientY); if (!x) return
+  disparar(x, 1.2, 'eco', 0); x.sale.slice(0, 6).forEach((s, i) => setTimeout(() => lanzar(x, s, 'eco', { f: 0.9 }), i * 70))
+  if (seguido && !seguido.viaje) llegaBot(seguido, x)   // el bot que seguimos lee la página tocada
+})
+
+document.querySelectorAll('[data-modo]').forEach(b => b.addEventListener('click', () => {
+  modo = b.dataset.modo; document.querySelectorAll('[data-modo]').forEach(o => o.setAttribute('aria-pressed', o === b))
+}))
+document.getElementById('pausa').addEventListener('click', e => { pausa = !pausa; e.currentTarget.setAttribute('aria-pressed', pausa); e.currentTarget.textContent = pausa ? 'Seguir' : 'Pausa' })
+document.getElementById('velocidad').addEventListener('input', e => { ritmo = +e.target.value })
+document.getElementById('otravez').addEventListener('click', intro)
+
+// ── Bucle ──
+let ultimo = performance.now(), relojGente = 0, relojBot = 0, edad = 0
+FUERA.filter(f => f.tipo === 'bot').slice(0, 4).forEach((f, i) => setTimeout(() => { const b = nuevoBot(f); if (!seguido) seguido = b }, 2500 + i * 1800))
+
+function marco(ahora) {
+  const dt = Math.min(0.05, (ahora - ultimo) / 1000) * (pausa ? 0 : ritmo); ultimo = ahora; edad += dt
+  if (sim.alpha() > 0.03 || arrastrada) { sim.tick(); if (edad < 3) sim.tick() }
+  // actividad espontánea: el cerebro nunca está quieto
+  if (dt && Math.random() < dt * (RED ? 0.3 : 1.6)) { const x = N[(Math.random() * N.length) | 0]; if (x.sale.length) disparar(x, 0.7, 'eco', 0) }
+
+  // personas que llegan desde fuera
+  relojGente -= dt
+  if (modo !== 'bots' && relojGente <= 0 && edad > 8) {
+    relojGente = (RED ? 2.5 : 0.55) * (0.5 + Math.random())
+    const fs = FUERA.filter(f => f.tipo === 'gente'), f = fs[(Math.random() * fs.length) | 0]
+    f.e = 1; cuenta.gente++; lanzar(f, entradaAlAzar(), 'gente', { prof: 0, entra: true })
+  }
+  // bots: esperan leyendo y siguen
+  for (const b of bots) if (b.en && !b.viaje) { b.espera -= dt; if (b.espera <= 0 && modo !== 'gente') siguientePara(b) }
+  // seguir a otro bot de vez en cuando
+  relojBot -= dt
+  if (relojBot <= 0 && bots.length) { relojBot = 26; seguido = bots[(bots.indexOf(seguido) + 1) % bots.length] }
+
+  // mover señales
+  for (let i = senales.length - 1; i >= 0; i--) {
+    const s = senales[i]
+    s.oculta = s.tipo === 'bot' && modo === 'gente' || s.tipo === 'gente' && modo === 'bots'
+    s.t += s.v * dt * 60
+    const c = ctrl(s.a, s.b, s.k), p = punto(s.a, s.b, c, Math.min(1, s.t))
+    s.rastro.push(p); if (s.rastro.length > (s.tipo === 'bot' ? 14 : 9)) s.rastro.shift()
+    if (s.eje) s.eje.h = Math.max(s.eje.h, s.tipo === 'eco' ? 0.5 : 0.8)
+    if (s.t >= 1) {
+      senales.splice(i, 1)
+      if (s.tipo === 'bot') llegaBot(s.bot, s.b)
+      else if (s.tipo === 'eco') disparar(s.b, s.f, 'eco', 0)
+      else disparar(s.b, 0.85, 'gente', s.prof)
+    }
+  }
+
+  // ── dibujar ──
+  cx.setTransform(DPR, 0, 0, DPR, 0, 0)
+  cx.globalCompositeOperation = 'source-over'
+  const fondo = cx.createRadialGradient(W * 0.42, H * 0.5, 0, W * 0.42, H * 0.5, Math.max(W, H) * 0.75)
+  fondo.addColorStop(0, '#0d0c1a'); fondo.addColorStop(1, '#05050a')
+  cx.fillStyle = fondo; cx.fillRect(0, 0, W, H)
+  cx.setTransform(DPR * T.k, 0, 0, DPR * T.k, DPR * T.x, DPR * T.y)
+
+  // axones en reposo
+  cx.lineWidth = 0.6 / T.k; cx.strokeStyle = 'rgba(150,160,220,0.065)'; cx.beginPath()
+  for (const e of E) { const c = ctrl(e.a, e.b, e.k); cx.moveTo(e.a.x, e.a.y); cx.quadraticCurveTo(c[0], c[1], e.b.x, e.b.y) }
+  cx.stroke()
+  // axones encendidos
+  cx.globalCompositeOperation = 'lighter'
+  for (const e of E) {
+    if (e.h < 0.02) continue
+    const c = ctrl(e.a, e.b, e.k); cx.strokeStyle = e.a.c; cx.globalAlpha = e.h * 0.4; cx.lineWidth = (0.8 + e.h * 2.4) / T.k
+    cx.beginPath(); cx.moveTo(e.a.x, e.a.y); cx.quadraticCurveTo(c[0], c[1], e.b.x, e.b.y); cx.stroke()
+    if (e.h > 0.12) { cx.globalAlpha = Math.min(1, e.h * 1.1); cx.lineWidth = (0.9 + e.h * 1.4) / T.k
+      cx.setLineDash([2.5 / T.k, 9 / T.k]); cx.lineDashOffset = -ahora / 28 / T.k
+      cx.strokeStyle = '#ffffff'; cx.stroke(); cx.setLineDash([]) }
+    e.h *= Math.pow(0.965, dt * 60 || 1)
+  }
+  cx.globalAlpha = 1
+
+  // neuronas
+  for (const x of N) {
+    const s = x.r * (3.2 + x.e * 5) + (x === encima ? 8 : 0)
+    cx.globalAlpha = Math.min(1, 0.38 + x.e * 0.6 + (x.leida ? 0.12 : 0))
+    cx.drawImage(brillo(x.c), x.x - s, x.y - s, s * 2, s * 2)
+    if (x.e > 0.25) { cx.globalAlpha = (x.e - 0.25) * 0.6; cx.strokeStyle = x.c; cx.lineWidth = 1 / T.k
+      cx.beginPath(); cx.arc(x.x, x.y, x.r + (1.4 - x.e) * 26, 0, 6.283); cx.stroke() }
+    x.e *= Math.pow(0.955, dt * 60 || 1)
+    if (x.leida) x.leida *= Math.pow(0.995, dt * 60 || 1)
+  }
+  cx.globalAlpha = 1
+
+  // señales con estela
+  for (const s of senales) {
+    if (s.oculta || s.rastro.length < 2) continue
+    const col = s.tipo === 'bot' ? s.bot.f.c : s.tipo === 'eco' ? s.a.c || '#fff' : '#ffc46b'
+    cx.strokeStyle = col; cx.lineCap = 'round'
+    for (let j = 1; j < s.rastro.length; j++) {
+      cx.globalAlpha = j / s.rastro.length * (s.tipo === 'eco' ? 0.6 : 0.9); cx.lineWidth = (j / s.rastro.length) * (s.tipo === 'bot' ? 3 : 2.2) / T.k
+      if (s.salto) cx.setLineDash([3 / T.k, 4 / T.k])
+      cx.beginPath(); cx.moveTo(s.rastro[j - 1][0], s.rastro[j - 1][1]); cx.lineTo(s.rastro[j][0], s.rastro[j][1]); cx.stroke()
+      cx.setLineDash([])
+    }
+    const p = s.rastro[s.rastro.length - 1], z = (s.tipo === 'bot' ? 14 : 9) / T.k
+    cx.globalAlpha = 1; cx.drawImage(brillo(col), p[0] - z, p[1] - z, z * 2, z * 2)
+  }
+
+  // bot seguido: retícula de lectura sobre su página
+  if (seguido && seguido.en && seguido.espera > 0) {
+    const x = seguido.en, rr = x.r + 10 + Math.sin(ahora / 180) * 3
+    cx.globalAlpha = 0.9; cx.strokeStyle = '#5fe3ff'; cx.lineWidth = 1.4 / T.k
+    cx.beginPath(); cx.arc(x.x, x.y, rr, ahora / 600, ahora / 600 + 4.4); cx.stroke()
+    cx.globalAlpha = 0.35; cx.beginPath(); cx.arc(x.x, x.y, rr + 8, -ahora / 900, -ahora / 900 + 2.2); cx.stroke()
+  }
+
+  // fuentes de fuera
+  cx.globalCompositeOperation = 'source-over'
+  cx.font = `${12 / T.k}px system-ui,sans-serif`; cx.textAlign = 'center'
+  for (const f of FUERA) {
+    const z = (16 + f.e * 14) / T.k
+    cx.globalCompositeOperation = 'lighter'; cx.globalAlpha = 0.5 + f.e * 0.5; cx.drawImage(brillo(f.c), f.x - z, f.y - z, z * 2, z * 2)
+    cx.globalCompositeOperation = 'source-over'; cx.globalAlpha = 0.85; cx.fillStyle = f.tipo === 'bot' ? '#bff4ff' : '#ffe2b0'
+    cx.fillText(f.t, f.x, f.y + 26 / T.k); f.e *= 0.96
+  }
+  // nombres de los lóbulos
+  cx.font = `600 ${13 / T.k}px system-ui,sans-serif`
+  for (const o of grupos) { if (o.g === 'otros' || o.n < 15) continue
+    let sx = 0, sy = 0, m = 0; const xs = N.filter(x => x.g === o.g)
+    for (const x of xs) { sx += x.x; sy += x.y } sx /= xs.length; sy /= xs.length
+    for (const x of xs) m = Math.max(m, Math.hypot(x.x - sx, x.y - sy) * 0.8)
+    const d = Math.hypot(sx, sy) || 1
+    cx.globalAlpha = 0.75; cx.fillStyle = RAICES[o.g][1]; cx.fillText(RAICES[o.g][0], sx + sx / d * (m + 18), sy + sy / d * (m + 18) + 4 / T.k) }
+  cx.globalAlpha = 1
+
+  document.getElementById('v-gente').textContent = fmt(cuenta.gente)
+  document.getElementById('v-bots').textContent = fmt(cuenta.leidas)
+  document.getElementById('m-pag').textContent = fmt(cuenta.leidas)
+  document.getElementById('m-par').textContent = fmt(cuenta.parr)
+  document.getElementById('m-dat').textContent = fmt(cuenta.datos)
+  requestAnimationFrame(marco)
+}
+intro(); requestAnimationFrame(marco)
+</script>
+</body>
+</html>
