@@ -1,0 +1,671 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Raíces de la web · tonykansaiguide.com</title>
+<style>
+  :root {
+    --papel:#f6f1e7; --hoja:#fffdf8; --tinta:#1f2a33; --tenue:#56606a; --linea:#e2d8ca; --linea-2:#efe7da;
+    --rosa:#b5426a; --verde:#2d684c; --gris:#8d8a84; --ambar:#8a5300; --rojo:#b3261e; --azul:#1d4f91;
+    --foco:#1d4f91; --radio:14px;
+  }
+  * { box-sizing:border-box; }
+  html, body { height:100%; }
+  body { margin:0; background:var(--papel); color:var(--tinta); font:15px/1.5 system-ui,-apple-system,'Segoe UI',sans-serif;
+         display:grid; grid-template-rows:auto 1fr; height:100dvh; overflow:hidden; }
+  button, input, select { font:inherit; color:inherit; }
+  :focus-visible { outline:3px solid var(--foco); outline-offset:2px; }
+  .b { min-height:40px; min-width:40px; padding:0 14px; border:1px solid var(--linea); border-radius:12px; background:var(--hoja);
+       cursor:pointer; font-size:14px; font-weight:600; display:inline-flex; align-items:center; gap:8px; white-space:nowrap; }
+  .b:hover { border-color:#cbbda9; }
+  .b[aria-pressed=true], .b[aria-expanded=true] { background:#efe5d6; border-color:#cbbda9; }
+
+  /* ---------- barra superior ---------- */
+  header.top { background:var(--hoja); border-bottom:1px solid var(--linea); padding:10px 18px; display:flex; flex-wrap:wrap; gap:10px 14px; align-items:center; position:relative; z-index:20; }
+  .marca { display:flex; flex-direction:column; line-height:1.2; margin-inline-end:6px; }
+  .marca h1 { margin:0; font-size:17px; letter-spacing:-.01em; }
+  .marca small { color:var(--tenue); font-size:12.5px; }
+  .buscar { position:relative; flex:1 1 260px; max-width:420px; }
+  .buscar input { width:100%; min-height:40px; padding:0 14px; border:1px solid var(--linea); border-radius:12px; background:#fff; font-size:14px; }
+  .sug { position:absolute; inset-inline:0; top:calc(100% + 6px); margin:0; padding:6px; list-style:none; background:#fff; border:1px solid var(--linea);
+         border-radius:12px; box-shadow:0 12px 30px rgba(60,40,20,.12); max-height:min(60vh,420px); overflow:auto; z-index:30; }
+  .sug[hidden] { display:none; }
+  .sug li { padding:8px 10px; border-radius:8px; cursor:pointer; display:grid; gap:1px; }
+  .sug li[aria-selected=true], .sug li:hover { background:#f6ece2; }
+  .sug .r { font-weight:600; font-size:13.5px; word-break:break-all; }
+  .sug .t { color:var(--tenue); font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .sug .v { color:var(--tenue); font-size:13px; padding:8px 10px; }
+  select.b { padding-inline-end:10px; font-weight:500; }
+  .cifras { display:flex; gap:8px; flex-wrap:wrap; margin-inline-start:auto; }
+  .cifra { font-size:13px; color:var(--tenue); padding:4px 10px; border:1px solid var(--linea-2); border-radius:10px; background:var(--papel); }
+  .cifra b { color:var(--tinta); font-size:15px; font-variant-numeric:tabular-nums; margin-inline-end:4px; }
+  .cifra.ojo b { color:var(--ambar); }
+  .acciones { display:flex; gap:8px; flex-wrap:wrap; }
+
+  /* ---------- lienzo + ficha ---------- */
+  main { display:grid; grid-template-columns:1fr 400px; min-height:0; position:relative; }
+  #lienzo { position:relative; min-width:0; min-height:0; overflow:hidden; }
+  svg#grafo { width:100%; height:100%; display:block; cursor:grab; touch-action:none; }
+  svg#grafo:active { cursor:grabbing; }
+
+  .filtros { position:absolute; top:14px; inset-inline-start:14px; display:flex; flex-wrap:wrap; gap:6px; align-items:center;
+             background:rgba(255,253,248,.94); border:1px solid var(--linea); border-radius:var(--radio); padding:6px; max-width:calc(100% - 28px); z-index:5; }
+  .filtros .tit { font-size:12px; color:var(--tenue); padding:0 6px; text-transform:uppercase; letter-spacing:.06em; }
+  .conm { display:inline-flex; align-items:center; gap:8px; min-height:40px; padding:0 12px; border-radius:10px; cursor:pointer; font-size:13.5px; font-weight:600; user-select:none; }
+  .conm:hover { background:#f3ebdf; }
+  .conm input { width:18px; height:18px; margin:0; accent-color:var(--tinta); }
+  .conm i { width:22px; height:0; border-top:3px solid; display:inline-block; position:relative; }
+  .conm i::after { content:''; position:absolute; right:-3px; top:-6.5px; border:5px solid transparent; border-left:7px solid; border-left-color:inherit; }
+  .corto { display:none; }
+  .conm.c i { color:var(--verde); border-color:var(--verde); }
+  .conm.m i { color:var(--gris); border-color:var(--gris); border-top-style:dashed; }
+  .conm.p i { color:#b4aea5; border-color:#b4aea5; border-top-style:dotted; }
+  .conm.e i { color:var(--rosa); border-color:var(--rosa); }
+  .zoom { position:absolute; bottom:14px; inset-inline-start:14px; display:flex; gap:6px; z-index:5; }
+  .zoom .b { background:rgba(255,253,248,.96); }
+
+  #leyenda { position:absolute; bottom:68px; inset-inline-start:14px; width:min(340px, calc(100% - 28px)); background:var(--hoja); border:1px solid var(--linea);
+             border-radius:var(--radio); padding:14px 16px; box-shadow:0 14px 34px rgba(60,40,20,.12); z-index:6; font-size:13.5px; max-height:calc(100% - 140px); overflow:auto; }
+  #leyenda[hidden] { display:none; }
+  #leyenda h2 { font-size:13px; text-transform:uppercase; letter-spacing:.06em; color:var(--tenue); margin:0 0 8px; }
+  #leyenda h2 + * { margin-top:0; }
+  #leyenda ul { list-style:none; margin:0 0 14px; padding:0; display:grid; gap:6px; }
+  #leyenda ul.secs { grid-template-columns:1fr 1fr; }
+  #leyenda li { display:flex; align-items:center; gap:8px; }
+  #leyenda svg { flex:none; }
+
+  #tip { position:absolute; pointer-events:none; background:var(--tinta); color:#fbf7f0; padding:8px 12px; border-radius:10px; font-size:13px; line-height:1.4;
+         max-width:320px; z-index:8; box-shadow:0 10px 24px rgba(0,0,0,.18); }
+  #tip[hidden] { display:none; }
+  #tip b { display:block; word-break:break-all; }
+  #tip span { color:#d9d2c6; }
+
+  aside#ficha { background:var(--hoja); border-inline-start:1px solid var(--linea); overflow:auto; min-height:0; padding:20px 22px 40px; }
+  .asa { display:none; }
+  #ficha h2 { font-size:20px; margin:0 0 4px; word-break:break-all; letter-spacing:-.01em; }
+  #ficha .sub { color:var(--tenue); margin:0 0 12px; }
+  #ficha p.desc { margin:0 0 14px; font-size:14px; }
+  .chips { display:flex; gap:6px; flex-wrap:wrap; margin:0 0 14px; padding:0; list-style:none; }
+  .chip { font-size:12.5px; padding:3px 10px; border-radius:999px; background:#f0e8dc; color:var(--tinta); }
+  .chip.mal { background:#fbe1df; color:var(--rojo); } .chip.ojo { background:#fbeed8; color:var(--ambar); } .chip.bien { background:#e1efe6; color:var(--verde); }
+  .fila-b { display:flex; gap:8px; flex-wrap:wrap; margin:0 0 18px; }
+  a.b { text-decoration:none; color:var(--azul); }
+  .cambio { font-size:13.5px; color:var(--tenue); border-top:1px solid var(--linea-2); padding-top:12px; margin:0 0 6px; }
+  .cambio b { color:var(--tinta); font-weight:600; }
+  details.grupo { border-top:1px solid var(--linea-2); padding:4px 0; }
+  details.grupo > summary { list-style:none; cursor:pointer; min-height:44px; display:flex; align-items:center; gap:10px; font-weight:650; font-size:15px; }
+  details.grupo > summary::-webkit-details-marker { display:none; }
+  details.grupo > summary::before { content:''; width:7px; height:7px; border-right:2px solid var(--tenue); border-bottom:2px solid var(--tenue); transform:rotate(-45deg); transition:transform .15s; margin-inline:3px 4px; }
+  details.grupo[open] > summary::before { transform:rotate(45deg); }
+  details.grupo summary .n { margin-inline-start:auto; font-weight:500; color:var(--tenue); font-size:13px; font-variant-numeric:tabular-nums; }
+  .zona { font-size:11.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--tenue); margin:10px 0 4px; display:flex; align-items:center; gap:8px; }
+  .zona::before { content:''; width:16px; border-top:3px solid; }
+  .zona.contenido::before { border-color:var(--verde); } .zona.menú::before { border-color:var(--gris); border-top-style:dashed; }
+  .zona.pie::before { border-color:#b4aea5; border-top-style:dotted; } .zona.entra::before { border-color:var(--rosa); }
+  ul.destinos { list-style:none; margin:0 0 6px; padding:0; }
+  ul.destinos li button { all:unset; box-sizing:border-box; width:100%; display:grid; gap:0; padding:7px 8px; border-radius:8px; cursor:pointer; min-height:40px; }
+  ul.destinos li button:hover { background:#f6ece2; }
+  ul.destinos li button:focus-visible { outline:3px solid var(--foco); outline-offset:-1px; }
+  ul.destinos .r { color:var(--azul); font-weight:600; font-size:13.5px; word-break:break-all; }
+  ul.destinos .t { color:var(--tenue); font-size:12.5px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .vacio { color:var(--tenue); font-size:13.5px; margin:4px 0 10px; }
+  .intro h2 { font-size:19px; }
+  .intro ol { padding-inline-start:20px; margin:0 0 18px; display:grid; gap:8px; font-size:14px; }
+  .secciones { list-style:none; padding:0; margin:0; display:grid; gap:2px; }
+  .secciones button { all:unset; box-sizing:border-box; width:100%; display:flex; align-items:center; gap:10px; padding:8px; border-radius:8px; cursor:pointer; min-height:40px; font-size:14px; }
+  .secciones button:hover { background:#f6ece2; }
+  .secciones button:focus-visible { outline:3px solid var(--foco); }
+  .secciones .pt { width:12px; height:12px; border-radius:50%; flex:none; }
+  .secciones .n { margin-inline-start:auto; color:var(--tenue); font-variant-numeric:tabular-nums; font-size:13px; }
+
+  /* ---------- historia ---------- */
+  #historia { position:absolute; inset-block:0; inset-inline-start:0; width:min(460px, 100%); background:var(--hoja); border-inline-end:1px solid var(--linea);
+              box-shadow:12px 0 34px rgba(60,40,20,.10); z-index:15; display:flex; flex-direction:column; transform:translateX(-102%); transition:transform .25s ease; visibility:hidden; }
+  #historia.abierta { transform:none; visibility:visible; }
+  #historia .cab { display:flex; align-items:center; justify-content:space-between; padding:16px 18px 8px; }
+  #historia h2 { margin:0; font-size:18px; }
+  #historia .cuerpo { padding:0 18px 24px; overflow:auto; }
+  #historia .res { color:var(--tenue); font-size:13.5px; margin:0 0 10px; }
+  .barras { display:flex; align-items:flex-end; gap:2px; height:120px; border-bottom:1px solid var(--linea); }
+  .barras i { flex:1; background:var(--rosa); opacity:.8; border-radius:3px 3px 0 0; min-height:2px; }
+  .barras i:hover { opacity:1; }
+  .meses { display:flex; justify-content:space-between; font-size:11.5px; color:var(--tenue); margin:4px 0 16px; }
+  ol.ult { list-style:none; margin:0; padding:0; font-size:13.5px; }
+  ol.ult li { display:grid; grid-template-columns:92px 1fr; gap:8px; padding:7px 0; border-bottom:1px solid var(--linea-2); }
+  ol.ult time { color:var(--tenue); font-variant-numeric:tabular-nums; }
+
+  /* ---------- SVG ---------- */
+  .rama-l { fill:none; stroke:#cdbfae; stroke-width:1.2; }
+  g.nodo { cursor:pointer; }
+  g.nodo .punto { stroke:var(--hoja); stroke-width:1.5; transition:opacity .2s; }
+  g.nodo.virtual .punto { fill:var(--hoja) !important; stroke-width:2; }
+  g.nodo .aro { fill:none; stroke-width:1.4; stroke-dasharray:2.5 2.5; }
+  g.nodo .alerta { stroke:var(--hoja); stroke-width:1; }
+  g.nodo text { font-size:11px; fill:var(--tinta); paint-order:stroke; stroke:var(--papel); stroke-width:3.5px; stroke-linejoin:round; }
+  g.nodo text .cnt { fill:var(--tenue); font-weight:500; }
+  g.nodo.d1 text { font-size:14px; font-weight:650; }
+  g.nodo.d0 text { font-size:15px; font-weight:700; }
+  g.nodo:focus { outline:none; }
+  g.nodo:focus-visible .foco { stroke:var(--foco); stroke-width:3; fill:none; }
+  g.nodo .foco { fill:none; stroke:none; }
+  g.nodo.sel .foco { stroke:var(--tinta); stroke-width:2.5; fill:none; }
+  g.nodo:hover .punto { stroke:var(--tinta); }
+  svg.lejos g.nodo.dn text { display:none; }
+  svg.hay-sel g.nodo, svg.hay-sel .rama-l { opacity:.18; }
+  svg.hay-sel g.nodo.vivo { opacity:1; }
+  svg.hay-sel g.nodo.vivo text { font-weight:600; }
+  g.nodo.filtrado { opacity:.18; }
+  svg.hay-sel g.nodo.filtrado.vivo { opacity:1; }
+  .flechas path { fill:none; stroke-linecap:round; }
+  .flechas .contenido { stroke:var(--verde); stroke-width:1.7; stroke-opacity:.85; }
+  .flechas .menú { stroke:var(--gris); stroke-width:1.1; stroke-opacity:.45; stroke-dasharray:5 4; }
+  .flechas .pie { stroke:#b4aea5; stroke-width:1; stroke-opacity:.4; stroke-dasharray:1.5 3.5; }
+  .flechas .entra { stroke:var(--rosa); stroke-width:1.3; stroke-opacity:.5; }
+  .flechas .entra.debil { stroke-width:1; stroke-opacity:.28; }
+  .flechas path.foco-l { stroke-opacity:1; stroke-width:2.6; }
+
+  @media (max-width:900px) {
+    header.top { padding:8px 12px; gap:8px; }
+    .marca small { display:none; }
+    .marca { flex:1; min-width:0; white-space:nowrap; }
+    .buscar { flex:1 1 200px; max-width:none; order:3; min-width:0; }
+    #lang { order:4; flex:none; max-width:118px; padding:0 6px; }
+    .acciones .b { padding:0 10px; }
+    .largo { display:none; }
+    .corto { display:inline; }
+    .cifras { display:none; }
+    .acciones { margin-inline-start:auto; }
+    main { grid-template-columns:1fr; }
+    .filtros { top:8px; inset-inline:8px; max-width:none; gap:2px; padding:4px; }
+    .filtros .tit { display:none; }
+    .conm { padding:0 8px; font-size:12.5px; gap:6px; }
+    .conm i { display:none; }
+    .conm { gap:5px; padding:0 7px; }
+    .conm.c input { accent-color:var(--verde); } .conm.e input { accent-color:var(--rosa); } .conm.m input, .conm.p input { accent-color:#6f6c66; }
+    .zoom { inset-inline-start:8px; bottom:calc(var(--ficha-h, 64px) + 8px); }
+    .zoom .b { padding:0 10px; }
+    #leyenda { bottom:calc(var(--ficha-h, 64px) + 56px); inset-inline-start:8px; max-height:calc(100% - var(--ficha-h, 64px) - 120px); width:calc(100% - 16px); }
+    aside#ficha { position:absolute; inset-inline:0; bottom:0; height:var(--ficha-h, 64px); border:0; border-top:1px solid var(--linea); border-radius:18px 18px 0 0;
+                  box-shadow:0 -10px 30px rgba(60,40,20,.12); padding:0 16px 30px; z-index:10; transition:height .25s ease; }
+    main.ficha-abierta { --ficha-h:52dvh; }
+    .asa { display:flex; position:sticky; top:0; background:var(--hoja); z-index:2; width:100%; min-height:56px; align-items:center; gap:10px; border:0; padding:0; cursor:pointer; font-weight:650; font-size:15px; text-align:start; }
+    .asa .barra { position:absolute; top:6px; left:50%; width:40px; height:4px; border-radius:2px; background:#d6cab9; transform:translateX(-50%); }
+    .asa .txt { flex:1; min-width:0; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-top:6px; }
+    .asa .flecha { width:10px; height:10px; border-right:2px solid var(--tenue); border-bottom:2px solid var(--tenue); transform:rotate(-135deg); margin:8px 6px 0; transition:transform .2s; }
+    aside#ficha.abierta .asa .flecha { transform:rotate(45deg); margin-top:0; }
+    aside#ficha:not(.abierta) .contenido-ficha { display:none; }
+  }
+  @media (prefers-reduced-motion:reduce) { *, *::before, *::after { transition:none !important; animation:none !important; } }
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="marca"><h1>Raíces de la web</h1><small>tonykansaiguide.com · cómo se conectan las páginas</small></div>
+  <div class="buscar" role="combobox" aria-expanded="false" aria-owns="sug" aria-haspopup="listbox">
+    <label for="q" class="sr" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Buscar una página</label>
+    <input id="q" type="search" autocomplete="off" placeholder="Buscar página: kioto, /es/nara/, reseñas…" aria-autocomplete="list" aria-controls="sug">
+    <ul id="sug" class="sug" role="listbox" hidden></ul>
+  </div>
+  <label class="sr" for="lang" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Idioma</label>
+  <select id="lang" class="b" title="Resaltar solo un idioma"></select>
+  <div class="cifras" id="cifras"></div>
+  <div class="acciones">
+    <button class="b" id="bLeyenda" aria-expanded="false" aria-controls="leyenda">Leyenda</button>
+    <button class="b" id="bHistoria" aria-expanded="false" aria-controls="historia">Historia</button>
+  </div>
+</header>
+<main>
+  <div id="lienzo">
+    <svg id="grafo" role="img" aria-label="Árbol radial de las páginas de la web">
+      <defs>
+        <marker id="m-contenido" viewBox="0 0 10 10" refX="14" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#2d684c"/></marker>
+        <marker id="m-menú" viewBox="0 0 10 10" refX="16" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#8d8a84"/></marker>
+        <marker id="m-pie" viewBox="0 0 10 10" refX="16" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b4aea5"/></marker>
+        <marker id="m-entra" viewBox="0 0 10 10" refX="14" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#b5426a"/></marker>
+      </defs>
+      <g id="escena"><g id="ramas"></g><g id="flechas" class="flechas"></g><g id="nodos"></g></g>
+    </svg>
+    <div class="filtros" role="group" aria-label="Qué flechas mostrar">
+      <span class="tit">Flechas</span>
+      <label class="conm c"><input type="checkbox" id="fC" checked><i></i>Contenido</label>
+      <label class="conm m"><input type="checkbox" id="fM"><i></i>Menú</label>
+      <label class="conm p"><input type="checkbox" id="fP"><i></i>Pie</label>
+      <label class="conm e"><input type="checkbox" id="fE" checked><i></i><span class="largo">Quién llega aquí</span><span class="corto">Llegan</span></label>
+    </div>
+    <div class="zoom">
+      <button class="b" id="bCentrar" title="Ver todo el árbol">Centrar</button>
+      <button class="b" id="bMas" aria-label="Acercar">+</button>
+      <button class="b" id="bMenos" aria-label="Alejar">−</button>
+      <button class="b" id="bAbrir" title="Abrir o cerrar todas las ramas">Abrir todo</button>
+    </div>
+    <div id="leyenda" hidden></div>
+    <div id="tip" hidden></div>
+    <section id="historia" aria-label="Historia de cambios" aria-hidden="true">
+      <div class="cab"><h2>Historia de la web</h2><button class="b" id="bCerrarH">Cerrar</button></div>
+      <div class="cuerpo" id="historiaCuerpo"></div>
+    </section>
+  </div>
+  <aside id="ficha" aria-label="Ficha de la página">
+    <button class="asa" id="asa" aria-expanded="false" aria-controls="contenidoFicha"><span class="barra"></span><span class="txt" id="asaTxt">Ficha de la página</span><span class="flecha"></span></button>
+    <div class="contenido-ficha" id="contenidoFicha"></div>
+  </aside>
+</main>
+<script src="d3.min.js"></script>
+<script>
+'use strict'
+const D = /*DATOS*/null
+const N = D.nodos
+const $ = s => document.querySelector(s)
+const esc = s => String(s ?? '').replace(/[&<>"]/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]))
+const reducido = matchMedia('(prefers-reduced-motion: reduce)').matches
+const DUR = reducido ? 0 : 520
+const WEB = 'https://tonykansaiguide.com'
+const AV = { 'nadie enlaza aquí':'mal', 'solo se llega por el menú o el pie':'ojo', 'el contenido no lleva a ninguna página':'ojo' }
+const nivelAviso = a => /rotos/.test(a) ? 'mal' : (AV[a] || 'ojo')
+const nivel = n => !n || !n.av.length ? '' : n.av.some(a => nivelAviso(a) === 'mal') ? 'mal' : 'ojo'
+const entraSet = n => new Set(Object.values(n.entra).flat())
+const ZONAS = ['contenido', 'menú', 'pie']
+const ZNOMBRE = { 'contenido':'Desde el texto', 'menú':'Desde el menú', 'pie':'Desde el pie' }
+
+/* ---------- secciones: nombre y color propio (tonos tierra y sakura) ---------- */
+const NOMBRE = { es:'Español', en:'English', ar:'العربية', fr:'Français', tr:'Türkçe', ru:'Русский', familias:'Familias', private:'Privado',
+  larion:'Larion', hiking:'Senderismo', tours:'Tours', tiktok:'TikTok', guides:'Guías', general:'Páginas generales' }
+const PALETA = ['#c0603f', '#34588c', '#6a7d2c', '#8a5a9e', '#a87515', '#2f7a82', '#9b4a5c', '#5a4a78', '#4f7b55', '#7c6a3a', '#a3672b', '#55606c', '#8c5b44']
+const GRIS_GEN = '#8a8075'
+
+/* ---------- construir la jerarquía a partir de las rutas ---------- */
+const rutas = Object.keys(N).sort()
+const conHijos = {}
+for (const r of rutas) { const s = r.replace(/^\/|\/$/g, '').split('/').filter(Boolean); if (s.length > 1) conHijos[s[0]] = (conHijos[s[0]] || 0) + 1 }
+const datosRaiz = { id:'/', nombre:'tonykansaiguide.com', ruta:N['/'] ? '/' : null, hijos:[] }
+const porId = new Map([['/', datosRaiz]])
+const general = { id:'grupo:general', nombre:NOMBRE.general, ruta:null, hijos:[], sec:'general' }
+function asegura(id, nombre, padre, sec) {
+  if (porId.has(id)) return porId.get(id)
+  const n = { id, nombre, ruta:N[id] ? id : null, hijos:[], sec }
+  porId.set(id, n); padre.hijos.push(n); return n
+}
+for (const r of rutas) {
+  if (r === '/') continue
+  const seg = r.replace(/^\/|\/$/g, '').split('/').filter(Boolean)
+  if (!conHijos[seg[0]]) {
+    // páginas sueltas de primer nivel: juntas en un grupo para no saturar el primer anillo
+    if (!general.hijos.length) porId.set(general.id, general)
+    general.hijos.push({ id:r, nombre:seg[0], ruta:r, hijos:[], sec:'general' }); porId.set(r, general.hijos.at(-1)); continue
+  }
+  let padre = datosRaiz
+  seg.forEach((s, i) => {
+    const id = i === seg.length - 1 ? r : '/' + seg.slice(0, i + 1).join('/') + '/'
+    padre = asegura(id, i === 0 ? (NOMBRE[s] || s) : s, padre, seg[0])
+  })
+}
+for (const n of porId.values()) if (n !== datosRaiz) n.hijos.sort((a, b) => a.nombre.localeCompare(b.nombre))
+const ORDEN = ['es', 'en', 'ar', 'fr', 'tr', 'ru', 'familias', 'private', 'larion', 'hiking', 'tours', 'tiktok', 'guides']
+const cuentaPag = x => (x.ruta ? 1 : 0) + x.hijos.reduce((s, h) => s + cuentaPag(h), 0)
+datosRaiz.hijos.sort((a, b) => { const ia = ORDEN.indexOf(a.sec), ib = ORDEN.indexOf(b.sec); return (ia < 0 ? 99 : ia) - (ib < 0 ? 99 : ib) || cuentaPag(b) - cuentaPag(a) })
+if (general.hijos.length) datosRaiz.hijos.push(general)
+
+const COLOR = {}
+datosRaiz.hijos.forEach((h, i) => { COLOR[h.sec] = h.sec === 'general' ? GRIS_GEN : PALETA[i % PALETA.length] })
+const colorDe = d => d.depth === 0 ? '#1f2a33' : COLOR[d.data.sec] || GRIS_GEN
+
+const raiz = d3.hierarchy(datosRaiz, d => d.hijos.length ? d.hijos : null)
+const todos = raiz.descendants()
+const nodoDe = new Map(todos.map(d => [d.data.id, d]))
+todos.forEach(d => { d._kids = d.children || null; if (d.depth >= 1) d.children = null })
+raiz.x0 = 0; raiz.y0 = 0
+
+const entraN = new Map(rutas.map(r => [r, entraSet(N[r]).size]))
+const rTam = d3.scaleSqrt().domain([0, d3.max(entraN.values())]).range([3.2, 13])
+const radio = d => d.depth === 0 ? 15 : !d.data.ruta ? 6 : rTam(entraN.get(d.data.ruta))
+
+/* ---------- disposición radial: el radio de cada anillo crece si hace falta sitio ---------- */
+const arbol = d3.tree().size([2 * Math.PI, 1]).separation((a, b) => (a.parent === b.parent ? 1 : 2) / a.depth)
+function disponer() {
+  arbol(raiz)
+  const porNivel = d3.group(raiz.descendants(), d => d.depth)
+  const R = [0]; const prof = d3.max([...porNivel.keys()])
+  for (let k = 1; k <= prof; k++) {
+    const xs = (porNivel.get(k) || []).map(d => d.x).sort((a, b) => a - b)
+    let gap = Math.PI
+    for (let i = 1; i < xs.length; i++) gap = Math.min(gap, xs[i] - xs[i - 1])
+    if (xs.length > 1) gap = Math.min(gap, 2 * Math.PI - xs.at(-1) + xs[0])
+    R[k] = Math.max(R[k - 1] + (k === 1 ? 210 : 190), 14 / gap)
+  }
+  raiz.each(d => { d.y = R[d.depth] })
+}
+const punto = d => d3.pointRadial(d.x, d.y)
+const enlaceRadial = d3.linkRadial().angle(d => d.x).radius(d => d.y)
+
+/* ---------- escena SVG, zoom ---------- */
+const svg = d3.select('#grafo'), escena = d3.select('#escena')
+const capaRamas = d3.select('#ramas'), capaNodos = d3.select('#nodos'), capaFlechas = d3.select('#flechas')
+const zoom = d3.zoom().scaleExtent([0.04, 5]).on('zoom', e => {
+  escena.attr('transform', e.transform)
+  svg.classed('lejos', e.transform.k < 0.42)
+})
+svg.call(zoom).on('dblclick.zoom', null)
+function tamLienzo() {
+  const b = $('#lienzo').getBoundingClientRect()
+  const movil = matchMedia('(max-width:900px)').matches
+  // en móvil la ficha tapa la parte de abajo; se usa su altura final, no la de mitad de transición
+  const fh = movil ? ($('#ficha').classList.contains('abierta') ? innerHeight * 0.52 : 64) : 0
+  return { w:b.width, h:Math.max(200, b.height - fh - (movil ? 52 : 0)), top: movil ? 60 : 64 }
+}
+function encuadrar(lista, maxK = 1.4) {
+  const ps = lista.map(punto)
+  if (!ps.length) return
+  const [x0, x1] = d3.extent(ps, p => p[0]), [y0, y1] = d3.extent(ps, p => p[1])
+  const { w, h, top } = tamLienzo(), m = w < 600 ? 110 : 150
+  const k = Math.min(maxK, (w - 40) / (x1 - x0 + 2 * m), (h - top - 20) / (y1 - y0 + 2 * m))
+  const t = d3.zoomIdentity.translate(w / 2 - k * (x0 + x1) / 2, top + (h - top) / 2 - k * (y0 + y1) / 2).scale(k)
+  svg.transition().duration(reducido ? 0 : 650).call(zoom.transform, t)
+}
+const visibles = () => raiz.descendants()
+
+/* ---------- dibujar ---------- */
+let selId = null, filtroLang = ''
+function etiqueta(d) {
+  const t = d3.select(this), r = radio(d)
+  if (d.depth === 0) { t.attr('transform', `translate(0,${r + 20})`).attr('text-anchor', 'middle'); return }
+  const izq = d.x > Math.PI, dentro = !!d.children && d.depth > 0
+  const off = dentro ? -(r + 6) : r + 6
+  t.attr('transform', `rotate(${d.x * 180 / Math.PI - 90}) translate(${off},0) rotate(${izq ? 180 : 0})`)
+   .attr('text-anchor', (izq !== dentro) ? 'end' : 'start')
+}
+function textoEtq(d) {
+  const t = d3.select(this); t.text(null)
+  let n = d.data.nombre; if (n.length > 24) n = n.slice(0, 22) + '…'
+  t.append('tspan').text(n)
+  if (d._kids && !d.children) t.append('tspan').attr('class', 'cnt').text('  ' + cuentaPag(d.data))
+}
+function actualizar(origen) {
+  disponer()
+  const nodos = visibles(), enlaces = raiz.links()
+  const desde = d => { let a = d.parent; while (a && a.x0 === undefined) a = a.parent; return a ? d3.pointRadial(a.x0, a.y0) : [0, 0] }
+  const hacia = d => { let a = d.parent; while (a && !nodos.includes(a)) a = a.parent; return a ? punto(a) : [0, 0] }
+
+  const ns = capaNodos.selectAll('g.nodo').data(nodos, d => d.data.id)
+  const ent = ns.enter().append('g').attr('class', 'nodo').attr('tabindex', 0).attr('role', 'button')
+    .attr('transform', d => `translate(${desde(d)})`).style('opacity', 0)
+    .on('click', (e, d) => { e.stopPropagation(); pulsar(d) })
+    .on('keydown', (e, d) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pulsar(d) } })
+    .on('mouseenter', mostrarTip).on('mousemove', moverTip).on('mouseleave', ocultarTip)
+    .on('focus', function (e, d) { mostrarTip.call(this, e, d, true) }).on('blur', ocultarTip)
+  ent.append('circle').attr('class', 'aro')
+  ent.append('circle').attr('class', 'punto')
+  ent.append('circle').attr('class', 'foco')
+  ent.append('circle').attr('class', 'alerta')
+  ent.append('text').attr('dy', '0.32em')
+  const todosN = ent.merge(ns)
+  todosN.attr('class', d => `nodo d${Math.min(d.depth, 1)}${d.depth >= 2 ? ' dn' : ''}${d.data.ruta ? '' : ' virtual'}${d.data.id === selId ? ' sel' : ''}`)
+    .attr('aria-label', d => `${d.data.ruta || d.data.nombre}${d._kids ? (d.children ? ', rama abierta' : ', rama cerrada') : ''}`)
+    .attr('aria-expanded', d => d._kids ? String(!!d.children) : null)
+  todosN.transition().duration(DUR).attr('transform', d => `translate(${punto(d)})`).style('opacity', null)
+  todosN.select('.punto').attr('r', radio).style('fill', colorDe).style('stroke', d => d.data.ruta ? null : colorDe(d))
+  todosN.select('.aro').attr('r', d => radio(d) + 4).style('stroke', colorDe).style('display', d => d._kids && !d.children ? null : 'none')
+  todosN.select('.foco').attr('r', d => radio(d) + 5)
+  todosN.select('.alerta').each(function (d) {
+    const nv = d.data.ruta ? nivel(N[d.data.ruta]) : '', r = radio(d)
+    d3.select(this).attr('r', nv ? 2.8 : 0).attr('cx', r * .75).attr('cy', -r * .75).style('fill', nv === 'mal' ? '#b3261e' : '#c98a1e')
+  })
+  todosN.select('text').each(textoEtq).each(etiqueta)
+  ns.exit().transition().duration(DUR).attr('transform', d => `translate(${hacia(d)})`).style('opacity', 0).remove()
+
+  const ls = capaRamas.selectAll('path.rama-l').data(enlaces, d => d.target.data.id)
+  const p0 = d => { const [x, y] = desde(d.target); const a = Math.atan2(x, -y), r = Math.hypot(x, y); const o = { x:a, y:r }; return enlaceRadial({ source:o, target:o }) }
+  ls.enter().append('path').attr('class', 'rama-l').attr('d', p0)
+    .merge(ls).transition().duration(DUR).attr('d', enlaceRadial)
+  ls.exit().transition().duration(DUR).attr('d', d => { const [x, y] = hacia(d.target); const o = { x:Math.atan2(x, -y), y:Math.hypot(x, y) }; return enlaceRadial({ source:o, target:o }) }).remove()
+
+  raiz.each(d => { d.x0 = d.x; d.y0 = d.y })
+  pintarFiltro()
+  dibujarFlechas()
+}
+
+/* ---------- flechas de la página elegida ---------- */
+const lineaHaz = b => d3.line().curve(d3.curveBundle.beta(b))
+const filtros = () => ({ contenido:$('#fC').checked, 'menú':$('#fM').checked, pie:$('#fP').checked, entra:$('#fE').checked })
+function conexiones(ruta) {
+  const n = N[ruta], f = filtros()
+  const sale = n.sale.filter(s => f[s[2]] && nodoDe.has(s[0])).map(s => ({ a:ruta, b:s[0], z:s[2] }))
+  const entra = []
+  if (f.entra) {
+    const visto = new Map()
+    for (const z of ZONAS) { if (!f[z]) continue; for (const o of n.entra[z] || []) if (!visto.has(o) && nodoDe.has(o)) visto.set(o, z) }
+    for (const [o, z] of visto) entra.push({ a:o, b:ruta, z })
+  }
+  return { sale, entra }
+}
+function abrirHasta(d) { let cambio = false; for (const a of d.ancestors().slice(1)) if (a._kids && !a.children) { a.children = a._kids; cambio = true } return cambio }
+function dibujarFlechas() {
+  const s = selId && N[selId] ? selId : null
+  svg.classed('hay-sel', !!selId)
+  capaNodos.selectAll('g.nodo').classed('vivo', false).classed('sel', d => d.data.id === selId)
+  if (!selId) { capaFlechas.selectAll('path').remove(); return }
+  const vivos = new Set([selId, '/'])
+  if (!s) { const d = nodoDe.get(selId); (d.children || []).forEach(h => vivos.add(h.data.id)) }
+  const { sale, entra } = s ? conexiones(s) : { sale:[], entra:[] }
+  const lista = [...entra.map(e => ({ ...e, tipo:'entra' })), ...sale.map(e => ({ ...e, tipo:'sale' }))]
+  lista.forEach(e => { vivos.add(e.a); vivos.add(e.b) })
+  capaNodos.selectAll('g.nodo').classed('vivo', d => vivos.has(d.data.id))
+  const fs = capaFlechas.selectAll('path').data(lista, e => e.tipo + e.a + '>' + e.b)
+  fs.exit().remove()
+  fs.enter().append('path').style('opacity', 0).merge(fs)
+    .attr('class', e => e.tipo === 'entra' ? 'entra' + (e.z === 'contenido' ? '' : ' debil') : e.z)
+    .attr('marker-end', e => `url(#m-${e.tipo === 'entra' ? 'entra' : e.z})`)
+    .attr('data-otro', e => e.tipo === 'entra' ? e.a : e.b)
+    .attr('d', e => {
+      const a = nodoDe.get(e.a), b = nodoDe.get(e.b)
+      return lineaHaz(e.tipo === 'entra' ? 0.7 : 0.88)(a.path(b).map(punto))
+    })
+    .transition().delay(DUR * 0.7).duration(reducido ? 0 : 350).style('opacity', 1)
+}
+function resaltarFlecha(ruta, si) { capaFlechas.selectAll('path').classed('foco-l', function () { return si && this.dataset.otro === ruta }) }
+
+/* ---------- interacción ---------- */
+function pulsar(d) {
+  const ya = selId === d.data.id, antes = raiz.descendants().length
+  if (d._kids) { if (ya && d.children) { d.children = null; actualizar(d); return } if (!d.children) d.children = d._kids }
+  seleccionar(d.data.id, { volar:false, origen:d, antes })
+}
+function seleccionar(id, { volar = true, origen = null, antes = raiz.descendants().length } = {}) {
+  const d = nodoDe.get(id); if (!d) return
+  selId = id
+  abrirHasta(d)
+  if (N[id]) { const { sale, entra } = conexiones(id); [...sale.map(e => e.b), ...entra.map(e => e.a)].forEach(o => abrirHasta(nodoDe.get(o))) }
+  actualizar(origen || d)
+  // si el árbol creció, reencuadrar para que se vean todas las flechas
+  if (raiz.descendants().length !== antes) volar = true
+  ficha(id)
+  if (history.replaceState) history.replaceState(null, '', '#' + encodeURIComponent(id))
+  const enfoque = [d]
+  if (volar) {
+    if (N[id]) { const { sale, entra } = conexiones(id); [...sale.map(e => e.b), ...entra.map(e => e.a)].forEach(o => enfoque.push(nodoDe.get(o))) }
+    else (d.children || []).forEach(h => enfoque.push(h))
+    encuadrar(enfoque, 1.3)
+  }
+}
+function soltar() { selId = null; dibujarFlechas(); ficha(null); if (history.replaceState) history.replaceState(null, '', location.pathname) }
+svg.on('click', e => { if (e.target === svg.node()) soltar() })
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return
+  if ($('#historia').classList.contains('abierta')) return historia(false)
+  if (!$('#leyenda').hidden) return leyenda(false)
+  if (selId) soltar()
+})
+for (const id of ['#fC', '#fM', '#fP', '#fE']) $(id).addEventListener('change', () => { if (selId) seleccionar(selId, { volar:false }) })
+
+/* ---------- tooltip ---------- */
+const tip = $('#tip')
+function mostrarTip(e, d, teclado) {
+  const n = d.data.ruta ? N[d.data.ruta] : null
+  tip.innerHTML = `<b>${esc(d.data.ruta || d.data.nombre)}</b>` + (n ? `${esc(n.t || n.h1 || '')}<br><span>→ ${n.sale.length} salen · ← ${entraN.get(d.data.ruta)} llegan${n.av.length ? ' · ' + esc(n.av.join(', ')) : ''}</span>`
+    : `<span>${cuentaPag(d.data)} páginas dentro</span>`)
+  tip.hidden = false
+  if (teclado) { const r = this.getBoundingClientRect(), b = $('#lienzo').getBoundingClientRect(); colocaTip(r.right - b.left, r.top - b.top) } else moverTip(e)
+}
+function moverTip(e) { const b = $('#lienzo').getBoundingClientRect(); colocaTip(e.clientX - b.left, e.clientY - b.top) }
+function colocaTip(x, y) {
+  const b = $('#lienzo').getBoundingClientRect(), w = tip.offsetWidth, h = tip.offsetHeight
+  tip.style.left = Math.min(b.width - w - 8, x + 14) + 'px'; tip.style.top = Math.max(8, y - h - 12 < 8 ? y + 18 : y - h - 12) + 'px'
+}
+function ocultarTip() { tip.hidden = true }
+
+/* ---------- ficha lateral ---------- */
+const fichaEl = $('#contenidoFicha')
+function itemsRuta(lista) {
+  return '<ul class="destinos">' + lista.map(([r, t]) => `<li><button data-ir="${esc(r)}"><span class="r">${esc(r)}</span>${t ? `<span class="t">${esc(t)}</span>` : ''}</button></li>`).join('') + '</ul>'
+}
+function ficha(id) {
+  const movil = matchMedia('(max-width:900px)').matches
+  if (!id) {
+    $('#asaTxt').textContent = 'Cómo leer el árbol'
+    fichaEl.innerHTML = `<div class="intro"><h2>Cómo leer el árbol</h2><ol>
+      <li>En el centro está la web. Cada <b>raíz</b> que sale es una sección (un idioma, Familias, Privado…), y de ella cuelgan sus páginas.</li>
+      <li><b>Pulsa un punto</b> para abrir su rama y ver sus flechas: <span style="color:var(--verde);font-weight:600">verde</span> = a dónde lleva desde el texto, <span style="color:var(--rosa);font-weight:600">rosa</span> = quién llega a ella.</li>
+      <li>Arrastra para moverte y usa la rueda o dos dedos para acercar. <b>Esc</b> quita la selección.</li></ol>
+      <h3 style="font-size:14px;margin:0 0 6px">Secciones</h3><ul class="secciones">` +
+      raiz._kids.map(h => `<li><button data-ir="${esc(h.data.id)}"><span class="pt" style="background:${COLOR[h.data.sec]}"></span>${esc(h.data.nombre)} <span style="color:var(--tenue);font-size:12.5px">${h.data.ruta ? esc(h.data.ruta) : ''}</span><span class="n">${cuentaPag(h.data)}</span></button></li>`).join('') + '</ul></div>'
+    return
+  }
+  const d = nodoDe.get(id), n = N[id]
+  $('#asaTxt').textContent = id
+  if (!n) {
+    fichaEl.innerHTML = `<h2>${esc(d.data.nombre)}</h2><p class="sub">${cuentaPag(d.data)} páginas en este grupo</p>` + itemsRuta((d._kids || []).map(h => [h.data.id, N[h.data.id]?.t || '']))
+    if (movil) abrirFicha(true); return
+  }
+  const sale = z => n.sale.filter(s => s[2] === z).map(s => [s[0], s[1]])
+  const totalEntra = entraN.get(id)
+  const chips = [`<li class="chip">${esc(n.l || 'sin idioma')}</li>`, n.ni ? '<li class="chip ojo">no indexable</li>' : '<li class="chip bien">indexable en Google</li>', `<li class="chip">${esc(n.tipo)}</li>`]
+    .concat(n.av.map(a => `<li class="chip ${nivelAviso(a)}">${esc(a)}</li>`)).join('')
+  let h = `<h2>${esc(id)}</h2><p class="sub">${esc(n.t || n.h1 || 'Sin título')}</p><ul class="chips">${chips}</ul>`
+  if (n.d) h += `<p class="desc">${esc(n.d)}</p>`
+  h += `<div class="fila-b"><a class="b" href="${WEB}${esc(id)}" target="_blank" rel="noopener">Abrir en la web ↗</a>` +
+       (d._kids ? `<button class="b" id="bRama">${d.children ? 'Cerrar rama' : 'Abrir rama'}</button>` : '') + '</div>'
+  h += `<p class="cambio">${n.ul ? `Último cambio <b>${esc(n.ul)}</b> · ${esc(n.um)}<br>${n.nc} cambios en total` : 'Página generada por React (sin historial propio)'}</p>`
+  h += `<details class="grupo" open><summary>Lleva a<span class="n">${n.sale.length}</span></summary>`
+  h += ZONAS.map(z => { const l = sale(z); return l.length ? `<div class="zona ${z}">${z === 'contenido' ? 'Desde el texto' : z === 'menú' ? 'Desde el menú' : 'Desde el pie'} · ${l.length}</div>` + itemsRuta(l) : '' }).join('') || '<p class="vacio">No enlaza a ninguna página.</p>'
+  h += `</details><details class="grupo" open><summary>Llegan desde<span class="n">${totalEntra}</span></summary>`
+  h += ZONAS.map(z => { const l = (n.entra[z] || []).map(o => [o, N[o]?.t || '']); return l.length ? `<div class="zona entra">${ZNOMBRE[z]} · ${l.length}</div>` + itemsRuta(l) : '' }).join('') || '<p class="vacio">Ninguna página enlaza aquí.</p>'
+  h += '</details>'
+  if (n.rotos.length) h += `<details class="grupo" open><summary>Enlaces rotos<span class="n">${n.rotos.length}</span></summary><ul class="destinos">${n.rotos.map(r => `<li><span class="r" style="color:var(--rojo);padding:6px 8px;display:block">${esc(r)}</span></li>`).join('')}</ul></details>`
+  fichaEl.innerHTML = h
+  fichaEl.scrollTop = 0; $('#ficha').scrollTop = 0
+  const br = $('#bRama'); if (br) br.onclick = () => { if (d.children) d.children = null; else d.children = d._kids; actualizar(d); ficha(id) }
+  if (movil) abrirFicha(true)
+}
+$('#ficha').addEventListener('click', e => {
+  const b = e.target.closest('[data-ir]'); if (!b) return
+  e.preventDefault(); seleccionar(b.dataset.ir, { volar:true })
+})
+$('#ficha').addEventListener('mouseover', e => { const b = e.target.closest('[data-ir]'); resaltarFlecha(b ? b.dataset.ir : null, !!b) })
+function abrirFicha(si) { $('#ficha').classList.toggle('abierta', si); document.querySelector('main').classList.toggle('ficha-abierta', si); $('#asa').setAttribute('aria-expanded', String(si)) }
+$('#asa').addEventListener('click', () => abrirFicha(!$('#ficha').classList.contains('abierta')))
+
+/* ---------- idioma ---------- */
+function pintarFiltro() {
+  capaNodos.selectAll('g.nodo').classed('filtrado', d => !!filtroLang && !!d.data.ruta && (N[d.data.ruta].l || '—') !== filtroLang)
+}
+{
+  const cuenta = d3.rollup(rutas, v => v.length, r => N[r].l || '—')
+  $('#lang').innerHTML = '<option value="">Idioma: todos</option>' + [...cuenta].sort((a, b) => b[1] - a[1]).map(([l, c]) => `<option value="${esc(l)}">${esc(l)} · ${c}</option>`).join('')
+  $('#lang').addEventListener('change', e => { filtroLang = e.target.value; pintarFiltro() })
+}
+
+/* ---------- búsqueda ---------- */
+const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+const indice = rutas.map(r => [r, norm(r + ' ' + N[r].t + ' ' + N[r].h1)])
+const q = $('#q'), sug = $('#sug'); let act = -1, res = []
+function buscar() {
+  const t = norm(q.value.trim())
+  if (!t) { sug.hidden = true; $('.buscar').setAttribute('aria-expanded', 'false'); return }
+  const partes = t.split(/\s+/)
+  res = indice.filter(([r, s]) => partes.every(p => s.includes(p)) && (!filtroLang || (N[r].l || '—') === filtroLang))
+    .sort((a, b) => (norm(a[0]).includes(t) ? 0 : 1) - (norm(b[0]).includes(t) ? 0 : 1) || (a[0].startsWith('/es/') ? 0 : 1) - (b[0].startsWith('/es/') ? 0 : 1) || a[0].length - b[0].length).slice(0, 12).map(x => x[0])
+  act = res.length ? 0 : -1
+  sug.innerHTML = res.length ? res.map((r, i) => `<li role="option" id="o${i}" data-r="${esc(r)}" aria-selected="${i === act}"><span class="r">${esc(r)}</span><span class="t">${esc(N[r].t)}</span></li>`).join('')
+    : '<li class="v" role="option" aria-disabled="true">Ninguna página coincide.</li>'
+  sug.hidden = false; $('.buscar').setAttribute('aria-expanded', 'true')
+}
+function marcar(i) { act = i; sug.querySelectorAll('li[data-r]').forEach((li, j) => li.setAttribute('aria-selected', String(j === i))); q.setAttribute('aria-activedescendant', 'o' + i); sug.querySelector(`#o${i}`)?.scrollIntoView({ block:'nearest' }) }
+function elegir(r) { sug.hidden = true; q.value = r; q.blur(); seleccionar(r, { volar:true }) }
+q.addEventListener('input', buscar)
+q.addEventListener('focus', () => { if (q.value) buscar() })
+q.addEventListener('keydown', e => {
+  if (sug.hidden) return
+  if (e.key === 'ArrowDown') { e.preventDefault(); marcar(Math.min(res.length - 1, act + 1)) }
+  else if (e.key === 'ArrowUp') { e.preventDefault(); marcar(Math.max(0, act - 1)) }
+  else if (e.key === 'Enter' && act >= 0) { e.preventDefault(); elegir(res[act]) }
+  else if (e.key === 'Escape') { sug.hidden = true; e.stopPropagation() }
+})
+sug.addEventListener('mousedown', e => { const li = e.target.closest('li[data-r]'); if (li) { e.preventDefault(); elegir(li.dataset.r) } })
+q.addEventListener('blur', () => setTimeout(() => { sug.hidden = true }, 120))
+
+/* ---------- cifras, leyenda, historia ---------- */
+{
+  const conex = rutas.reduce((s, r) => s + N[r].sale.length, 0), conAv = rutas.filter(r => N[r].av.length).length
+  const f = new Intl.NumberFormat('es-ES')
+  $('#cifras').innerHTML = `<span class="cifra"><b>${f.format(rutas.length)}</b>páginas</span><span class="cifra"><b>${f.format(conex)}</b>enlaces</span><span class="cifra ojo" title="Páginas con algún aviso"><b>${f.format(conAv)}</b>con avisos</span>`
+}
+function leyenda(si) {
+  const el = $('#leyenda'); el.hidden = !si; $('#bLeyenda').setAttribute('aria-expanded', String(si))
+  if (!si || el.innerHTML) return
+  const linea = (c, dash, w = 3) => `<svg width="34" height="12" aria-hidden="true"><line x1="1" y1="6" x2="25" y2="6" stroke="${c}" stroke-width="${w}" ${dash ? `stroke-dasharray="${dash}"` : ''}/><path d="M24,1 L33,6 L24,11 z" fill="${c}"/></svg>`
+  const pt = (c, r, extra = '') => `<svg width="34" height="28" aria-hidden="true"><circle cx="17" cy="14" r="${r}" fill="${c}" ${extra}/></svg>`
+  el.innerHTML = `<h2>Flechas (al elegir una página)</h2><ul>
+    <li>${linea('#2d684c')}Lleva a, desde el texto de la página</li>
+    <li>${linea('#8d8a84', '5 4', 2)}Lleva a, desde el menú</li>
+    <li>${linea('#b4aea5', '1.5 3.5', 2)}Lleva a, desde el pie</li>
+    <li>${linea('#b5426a')}Llega aquí desde otra página</li></ul>
+    <h2>Puntos</h2><ul>
+    <li>${pt('#6a7d2c', 4)}${pt('#6a7d2c', 11)}Más grande = más páginas llegan a él</li>
+    <li><svg width="34" height="28" aria-hidden="true"><circle cx="17" cy="14" r="6" fill="#6a7d2c"/><circle cx="17" cy="14" r="10" fill="none" stroke="#6a7d2c" stroke-width="1.4" stroke-dasharray="2.5 2.5"/></svg>Rama cerrada: púlsala para abrirla</li>
+    <li>${pt('#fffdf8', 6, 'stroke="#6a7d2c" stroke-width="2"')}Carpeta sin página propia</li>
+    <li><svg width="34" height="28" aria-hidden="true"><circle cx="17" cy="14" r="7" fill="#9aa"/><circle cx="23" cy="8" r="3.5" fill="#c98a1e"/></svg>Aviso: solo se llega por menú/pie, o no lleva a nada</li>
+    <li><svg width="34" height="28" aria-hidden="true"><circle cx="17" cy="14" r="7" fill="#9aa"/><circle cx="23" cy="8" r="3.5" fill="#b3261e"/></svg>Problema: nadie enlaza aquí o hay enlaces rotos</li></ul>
+    <h2>Secciones</h2><ul class="secs">${raiz._kids.map(h => `<li><svg width="14" height="14" aria-hidden="true"><circle cx="7" cy="7" r="6" fill="${COLOR[h.data.sec]}"/></svg>${esc(h.data.nombre)}</li>`).join('')}</ul>`
+}
+$('#bLeyenda').addEventListener('click', () => leyenda($('#leyenda').hidden))
+function historia(si) {
+  const el = $('#historia'); el.classList.toggle('abierta', si); el.setAttribute('aria-hidden', String(!si)); $('#bHistoria').setAttribute('aria-expanded', String(si))
+  if (si) { $('#bCerrarH').focus(); if (!$('#historiaCuerpo').innerHTML) pintarHistoria() } else $('#bHistoria').focus()
+}
+function pintarHistoria() {
+  const max = d3.max(D.semanas, s => s[1]) || 1
+  const meses = []; let ult = ''
+  D.semanas.forEach(([s]) => { const m = s.slice(0, 7); if (m !== ult) { meses.push(m); ult = m } })
+  const fm = m => new Date(m + '-01T00:00').toLocaleDateString('es-ES', { month:'short', year:'2-digit' })
+  const pocos = meses.length > 6 ? [meses[0], meses[Math.floor(meses.length / 2)], meses.at(-1)] : meses
+  $('#historiaCuerpo').innerHTML = `<p class="res"><b>${D.total}</b> cambios guardados entre el ${esc(D.desde)} y el ${esc(D.hasta)}. Cada barra es una semana.</p>
+    <div class="barras" role="img" aria-label="Cambios por semana">${D.semanas.map(([s, c]) => `<i style="height:${Math.max(2, c / max * 100)}%" title="Semana del ${s}: ${c} cambios"></i>`).join('')}</div>
+    <div class="meses">${pocos.map(m => `<span>${fm(m)}</span>`).join('')}</div>
+    <h3 style="font-size:14px;margin:0 0 4px">Últimos cambios</h3>
+    <ol class="ult">${D.ultimos.map(([d, m]) => `<li><time>${esc(d)}</time><span>${esc(m)}</span></li>`).join('')}</ol>`
+}
+$('#bHistoria').addEventListener('click', () => historia(!$('#historia').classList.contains('abierta')))
+$('#bCerrarH').addEventListener('click', () => historia(false))
+
+/* ---------- botones de zoom ---------- */
+$('#bCentrar').addEventListener('click', () => encuadrar(visibles(), 1.2))
+$('#bMas').addEventListener('click', () => svg.transition().duration(reducido ? 0 : 250).call(zoom.scaleBy, 1.4))
+$('#bMenos').addEventListener('click', () => svg.transition().duration(reducido ? 0 : 250).call(zoom.scaleBy, 1 / 1.4))
+$('#bAbrir').addEventListener('click', () => {
+  const abierto = todos.every(d => !d._kids || d.children)
+  todos.forEach(d => { if (d._kids) d.children = abierto && d.depth > 0 ? null : d._kids })
+  $('#bAbrir').textContent = abierto ? 'Abrir todo' : 'Cerrar todo'
+  actualizar(raiz); encuadrar(visibles(), 1.2)
+})
+addEventListener('resize', () => {})
+
+/* ---------- arranque ---------- */
+actualizar(raiz)
+ficha(null)
+const inicial = decodeURIComponent(location.hash.slice(1))
+if (inicial && nodoDe.has(inicial)) seleccionar(inicial, { volar:true })
+else encuadrar(visibles(), 1.1)
+</script>
+</body>
+</html>

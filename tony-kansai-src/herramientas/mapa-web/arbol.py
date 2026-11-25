@@ -143,8 +143,10 @@ for c in C:
     d = datetime.date.fromisoformat(c['d']); sem[(d - datetime.timedelta(days=d.weekday())).isoformat()] += 1
 datos = {'nodos': nodos, 'semanas': sorted(sem.items()), 'ultimos': [[c['d'], c['m'][:150]] for c in C[:80]],
          'total': len(C), 'desde': C[-1]['d'] if C else '', 'hasta': C[0]['d'] if C else ''}
-pl = open(os.path.join(AQUI, 'arbol-plantilla.html'), encoding='utf-8').read()
-open(os.path.join(AQUI, 'arbol.html'), 'w', encoding='utf-8').write(
-    pl.replace('/*DATOS*/null', json.dumps(datos, ensure_ascii=False).replace('</', '<\\/')))
+js = json.dumps(datos, ensure_ascii=False).replace('</', '<\\/')
+# arbol.html = lista; grafo.html = árbol radial con flechas (misma inyección de datos)
+for plantilla, salida in (('arbol-plantilla.html', 'arbol.html'), ('grafo-plantilla.html', 'grafo.html')):
+    pl = open(os.path.join(AQUI, plantilla), encoding='utf-8').read()
+    open(os.path.join(AQUI, salida), 'w', encoding='utf-8').write(pl.replace('/*DATOS*/null', js))
 cuenta = collections.Counter(a.split(' ')[0] if a[0].isdigit() else a for n in nodos.values() for a in n['av'])
 print(len(nodos), 'páginas ·', sum(len(v) for v in sale.values()), 'conexiones ·', dict(cuenta))

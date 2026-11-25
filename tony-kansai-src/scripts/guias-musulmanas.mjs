@@ -71,6 +71,8 @@ const T = {
       ['Do we take part in anything at temples?', 'No. At temples and shrines the guide only explains history and culture.'],
       ['How much is it and when should I book?', 'We send a price for your group before you book. Book 1 to 2 weeks ahead if you can.'],
     ],
+    masH: 'Plan the rest of your trip',
+    mas: 'Read about <a href="/en/mosques-kansai/">mosques and prayer rooms in Kansai</a> and <a href="/en/halal-kyoto-osaka/">halal food in Kyoto and Osaka</a>. Day trips our guests like: <a href="/en/kobe-private-guide-one-day/">Kobe in one day</a> and <a href="/en/nara-day-trip-from-osaka/">Nara from Osaka</a>. Prefer an Arabic-speaking guide? See <a href="/en/arabic-speaking-guide-japan/">Tony, Arabic-speaking guide in Japan</a>. Are you a Muslim woman guide? <a href="/en/careers/muslim-female-guide/">Guide with us</a>.',
     finalH: 'Tell us your dates',
     final: 'We reply on WhatsApp with a guide and a price.',
     pie: 'Tony Kansai Guide · Osaka, Japan', idiomas: 'Other languages', fotos: 'Photos', inicio: 'Home',
@@ -100,6 +102,8 @@ const T = {
       ['هل نشارك في أي شيء في المعابد؟', 'لا. في المعابد تشرح المرشدة التاريخ والثقافة فقط.'],
       ['كم السعر ومتى أحجز؟', 'نرسل لك سعراً لمجموعتك قبل الحجز. الأفضل الحجز قبل أسبوع إلى أسبوعين.'],
     ],
+    masH: 'خطّطي لبقية رحلتك',
+    mas: 'اقرئي عن <a href="/ar/mosques-kansai/">المساجد والمصليات في كانساي</a> و<a href="/ar/halal-kyoto-osaka/">الطعام الحلال في كيوتو وأوساكا</a>، وعن <a href="/ar/hiroshima-miyajima-day-trip/">رحلة يوم إلى هيروشيما وميياجيما</a>. وإن كنتِ قادمة من الخليج: <a href="/ar/from-gulf/">ما تحتاجينه قبل السفر إلى اليابان</a>. هل أنتِ مرشدة مسلمة؟ <a href="/ar/wazaif/murshida-muslima/">انضمي إلينا</a>.',
     finalH: 'أرسلي لنا تواريخك',
     final: 'نرد عليك عبر واتساب بالمرشدة والسعر.',
     pie: 'Tony Kansai Guide · أوساكا، اليابان', idiomas: 'لغات أخرى', fotos: 'الصور', inicio: 'الرئيسية',
@@ -187,6 +191,8 @@ const T = {
       ['¿Hay que participar en algo en los templos?', 'No. En templos y santuarios la guía solo explica la historia y la cultura.'],
       ['¿Cuánto cuesta y con cuánta antelación reservo?', 'Te mandamos el precio para tu grupo antes de reservar. Mejor con 1 o 2 semanas de antelación.'],
     ],
+    masH: 'Para preparar el resto del viaje',
+    mas: 'Excursiones de un día: <a href="/es/excursion-nara-desde-osaka/">Nara desde Osaka</a> y <a href="/es/excursion-hiroshima-miyajima-desde-osaka/">Hiroshima y Miyajima</a>. Si viajáis desde España o Latinoamérica, <a href="/es/viajar-a-japon-desde-espana-y-latinoamerica/">lo práctico antes de volar</a>. Si os vale un guía hombre, Tony es <a href="/es/guia-espanol-arabe-japon/">guía en español y árabe en Japón</a>. ¿Eres guía musulmana? <a href="/es/empleo/guia-musulmana/">Trabaja con nosotros</a>.',
     finalH: 'Dinos tus fechas',
     final: 'Te contestamos por WhatsApp con la guía y el precio.',
     pie: 'Tony Kansai Guide · Osaka, Japón', idiomas: 'Otros idiomas', fotos: 'Fotos', inicio: 'Inicio',
@@ -424,7 +430,7 @@ ${alternos}
 </section>
 <section class="kap bloque dos">
   <div><h2>${t.pasosH}</h2><ol class="pasos">${t.pasos.map((p) => `<li class="rev">${p}</li>`).join('')}</ol></div>
-  <div><h2>${t.faqH}</h2><div class="faq">${t.faq.map(([q, a]) => `<div class="rev"><h3>${q}</h3><p>${a}</p></div>`).join('')}</div></div>
+  <div><h2>${t.faqH}</h2><div class="faq">${t.faq.map(([q, a]) => `<div class="rev"><h3>${q}</h3><p>${a}</p></div>`).join('')}${t.mas ? `<div class="rev"><h3>${t.masH}</h3><p>${t.mas}</p></div>` : ''}</div></div>
 </section>
 <section class="final"><div class="kap"><h2>${t.finalH}</h2><p>${t.final}</p>${boton()}</div></section>
 </main>

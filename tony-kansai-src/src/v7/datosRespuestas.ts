@@ -883,6 +883,72 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
   ...NUEVAS_RESPUESTAS,
 }
 
+/** «Para seguir leyendo» (25-11-2026): enlaces en el cuerpo de cada respuesta a sus
+ *  hermanas, a su ciudad y a las páginas de viaje, para que ninguna quede colgando solo
+ *  del menú o del pie (auditoría de enlaces internos). Solo rutas que existen y en el
+ *  idioma de la página. coste-es/coste-en se pintan dentro de /es/kyoto/ y /en/kyoto/. */
+export interface Seguir { titulo: string; enlaces: { texto: string; ruta: string }[] }
+const SEGUIR_ES = 'Para seguir leyendo'
+const SEGUIR_EN = 'Keep reading'
+const SEGUIR_AR = 'اقرأ أيضًا'
+const E = {
+  privadoGrupo: { texto: '¿Tour privado o excursión en grupo?', ruta: '/es/tour-privado-o-en-grupo-japon/' },
+  naraEs: { texto: 'Excursión a Nara desde Osaka', ruta: '/es/excursion-nara-desde-osaka/' },
+  hiroshimaEs: { texto: 'Hiroshima y Miyajima en un día desde Osaka', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/' },
+  arabeEs: { texto: 'Guía en español y árabe en Japón', ruta: '/es/guia-espanol-arabe-japon/' },
+  kansaiEs: { texto: 'Guía en español en Kansai', ruta: '/es/guia-espanol-kansai/' },
+  viajarEs: { texto: 'Viajar a Japón desde España y Latinoamérica', ruta: '/es/viajar-a-japon-desde-espana-y-latinoamerica/' },
+  musulmanaEs: { texto: 'Guías musulmanas para mujeres y familias', ruta: '/es/guia-musulmana-japon/' },
+  destinosEs: { texto: 'Viajes fuera de Japón que Tony coordina en español y árabe', ruta: '/es/destinos/' },
+  familiaEn: { texto: 'Kyoto private guide for families', ruta: '/en/kyoto-private-guide-family/' },
+  recogidaEn: { texto: 'Osaka private guide with hotel pickup', ruta: '/en/osaka-private-guide-hotel-pickup/' },
+  naraEn: { texto: 'Nara day trip from Osaka', ruta: '/en/nara-day-trip-from-osaka/' },
+  koyasanEn: { texto: 'Kōyasan day trip with a private guide', ruta: '/en/koyasan-day-trip-private-guide/' },
+  kobeEn: { texto: 'Kobe in one day with a private guide', ruta: '/en/kobe-private-guide-one-day/' },
+  mezquitasEn: { texto: 'Mosques and prayer rooms in Kansai', ruta: '/en/mosques-kansai/' },
+  halalEn: { texto: 'Halal food in Kyoto and Osaka', ruta: '/en/halal-kyoto-osaka/' },
+  arabeEn: { texto: 'Arabic-speaking guide in Japan', ruta: '/en/arabic-speaking-guide-japan/' },
+  espanolEn: { texto: 'Spanish-speaking guide in Japan', ruta: '/en/spanish-speaking-guide-japan/' },
+  musulmanaEn: { texto: 'Muslim female guide in Japan', ruta: '/en/muslim-female-guide-japan/' },
+  viajarEn: { texto: 'Travelling to Japan from the UK and the USA', ruta: '/en/travel-to-japan-from-uk-and-usa/' },
+  destinosEn: { texto: 'Trips beyond Japan, coordinated in Arabic and English', ruta: '/en/destinations/' },
+  mezquitasAr: { texto: 'المساجد والمصليات في كانساي', ruta: '/ar/mosques-kansai/' },
+  halalAr: { texto: 'الطعام الحلال في كيوتو وأوساكا', ruta: '/ar/halal-kyoto-osaka/' },
+  hiroshimaAr: { texto: 'هيروشيما وميياجيما في يوم واحد من أوساكا', ruta: '/ar/hiroshima-miyajima-day-trip/' },
+  golfoAr: { texto: 'السفر إلى اليابان من الخليج', ruta: '/ar/from-gulf/' },
+  musulmanaAr: { texto: 'مرشدة مسلمة للنساء والعائلات', ruta: '/ar/murshida-muslima-yaban/' },
+}
+const es = (...enlaces: Seguir['enlaces']): Seguir => ({ titulo: SEGUIR_ES, enlaces })
+const en = (...enlaces: Seguir['enlaces']): Seguir => ({ titulo: SEGUIR_EN, enlaces })
+const ar = (...enlaces: Seguir['enlaces']): Seguir => ({ titulo: SEGUIR_AR, enlaces })
+export const SEGUIR: Partial<Record<RespuestaId, Seguir>> = {
+  'coste-es': es(E.privadoGrupo, E.naraEs, E.arabeEs),
+  'coste-en': en(E.familiaEn, E.naraEn, E.recogidaEn),
+  'kansai-es': es(E.privadoGrupo, E.arabeEs, E.naraEs, E.hiroshimaEs, E.viajarEs),
+  'privado-es': es(E.kansaiEs, E.arabeEs, E.naraEs, E.hiroshimaEs, E.viajarEs),
+  'arabe-es': es(E.musulmanaEs, E.privadoGrupo, E.viajarEs, E.destinosEs),
+  'corto-es': es(E.privadoGrupo, E.naraEs),
+  'bici-es': es(E.privadoGrupo, E.naraEs),
+  'nara-es': es({ texto: 'Nara con guía', ruta: '/es/nara/' }, E.hiroshimaEs, E.privadoGrupo, E.viajarEs),
+  'hiroshima-es': es({ texto: 'Hiroshima con guía', ruta: '/es/hiroshima/' }, E.naraEs, E.privadoGrupo, E.arabeEs),
+  'kansai-en': en(E.arabeEn, E.recogidaEn, E.naraEn, E.familiaEn, E.viajarEn),
+  'arabe-en': en(E.mezquitasEn, E.halalEn, E.musulmanaEn, E.espanolEn, E.destinosEn),
+  'mezquitas-en': en(E.halalEn, E.musulmanaEn, E.arabeEn, E.kobeEn),
+  'halal-en': en(E.mezquitasEn, E.musulmanaEn, E.arabeEn, E.naraEn),
+  'corto-en': en(E.familiaEn, E.recogidaEn),
+  'bici-en': en(E.familiaEn, E.naraEn),
+  'familia-en': en({ texto: 'Kyoto with a private guide', ruta: '/en/kyoto/' }, E.naraEn, E.recogidaEn, E.kobeEn),
+  'recogida-en': en({ texto: 'Osaka with a private guide', ruta: '/en/osaka/' }, E.naraEn, E.kobeEn, E.koyasanEn, E.viajarEn),
+  'nara-en': en({ texto: 'Nara with a private guide', ruta: '/en/nara/' }, E.recogidaEn, E.familiaEn, E.kobeEn, E.koyasanEn),
+  'koyasan-en': en({ texto: 'Beyond the cities: Kōyasan and Kumano', ruta: '/en/beyond/' }, E.recogidaEn, E.naraEn, E.kobeEn),
+  'kobe-en': en({ texto: 'Kobe with a private guide', ruta: '/en/kobe/' }, E.mezquitasEn, E.halalEn, E.recogidaEn, E.koyasanEn),
+  'mezquitas-ar': ar(E.halalAr, E.musulmanaAr, E.hiroshimaAr, E.golfoAr),
+  'halal-ar': ar(E.mezquitasAr, E.musulmanaAr, E.hiroshimaAr, E.golfoAr),
+  'corto-ar': ar(E.mezquitasAr, E.halalAr),
+  'bici-ar': ar(E.halalAr, E.hiroshimaAr),
+  'hiroshima-ar': ar({ texto: 'هيروشيما مع مرشد', ruta: '/ar/hiroshima/' }, E.mezquitasAr, E.halalAr, E.golfoAr, E.musulmanaAr),
+}
+
 /** Respuestas que viven dentro de la página de su ciudad (19-10-2026): competían
  *  con ella por la misma búsqueda. Su texto se pinta allí (CuerpoRespuesta) y la
  *  ruta vieja lleva noindex + canonical a la ciudad (rutas-antiguas.json). */

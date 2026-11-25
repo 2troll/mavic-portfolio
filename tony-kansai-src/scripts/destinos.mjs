@@ -169,6 +169,8 @@ const T = {
       ['¿Hay comida halal?', 'Sí. En Bosnia y Herzegovina y en Turquía la comida halal es lo normal; en Sri Lanka hay comidas halal disponibles. En el resto de rutas, dile a Tony lo que necesitas y lo consulta antes de reservar.'],
       ['¿Quién organiza el viaje?', 'Un operador local con licencia en cada país. Tony lo coordina contigo en tu idioma (español, inglés o árabe) y es tu contacto durante todo el viaje.'],
     ],
+    japonH: '¿Y en Japón?',
+    japon: 'En Japón, Tony no coordina: guía él mismo en Kansai, como <a href="/es/guia-espanol-arabe-japon/">guía en español y árabe</a>. Los precios por grupo están en <a href="/es/precios/">la página de precios</a>; para elegir, mira <a href="/es/tour-privado-o-en-grupo-japon/">tour privado o en grupo</a> y excursiones de un día como <a href="/es/excursion-nara-desde-osaka/">Nara desde Osaka</a> o <a href="/es/excursion-hiroshima-miyajima-desde-osaka/">Hiroshima y Miyajima</a>. Si viajas desde España o Latinoamérica: <a href="/es/viajar-a-japon-desde-espana-y-latinoamerica/">lo práctico antes de volar</a>.',
     ctaH: '¿Te interesa alguno?', ctaP: 'Dime el viaje, las fechas y cuántos sois, y te contesto con el precio cerrado.', ctaB: 'Escribir por WhatsApp',
     msgGeneral: 'Hola, Tony. Vengo de la página de nuevos destinos.',
     nav: { etiqueta: 'Secciones', abrir: 'Abrir menú', g1: 'Destinos', g2: 'Japón', g3: 'Más', cta: 'WhatsApp', japon: [['Precios en Japón', PRECIOS.es], ['Rutas por ciudad', '/es/rutas/'], ['Montaña', '/es/montana/']], mas: [['Página de Tony', '/es/'], ['Ventajas para tu viaje', '/es/ventajas/']] },
@@ -196,6 +198,8 @@ const T = {
       ['Is there halal food?', 'Yes. In Bosnia and Herzegovina and in Türkiye halal food is the norm; in Sri Lanka halal meals are available. For the other routes, tell Tony what you need and he checks before you book.'],
       ['Who runs the trip?', 'A licensed local operator in each country. Tony coordinates it with you in your language (English, Spanish or Arabic) and is your contact for the whole trip.'],
     ],
+    japonH: 'And in Japan?',
+    japon: 'In Japan, Tony does not coordinate: he guides you himself in Kansai, as an <a href="/en/arabic-speaking-guide-japan/">Arabic-speaking</a> or <a href="/en/spanish-speaking-guide-japan/">Spanish-speaking guide</a>, or in English. Group prices are on <a href="/en/prices/">the prices page</a>; popular days include <a href="/en/nara-day-trip-from-osaka/">a Nara day trip from Osaka</a> and <a href="/en/kobe-private-guide-one-day/">Kobe in one day</a>. Travelling from the UK or the USA? <a href="/en/travel-to-japan-from-uk-and-usa/">What to know before you fly</a>.',
     ctaH: 'Interested in one of them?', ctaP: 'Tell me the trip, your dates and group size, and I’ll reply with a fixed price.', ctaB: 'Message on WhatsApp',
     msgGeneral: 'Hi Tony, I’m coming from the new destinations page.',
     nav: { etiqueta: 'Sections', abrir: 'Open menu', g1: 'Destinations', g2: 'Japan', g3: 'More', cta: 'WhatsApp', japon: [['Prices in Japan', PRECIOS.en], ['Routes by city', '/en/routes/'], ['Hiking', '/en/hiking/']], mas: [['Tony’s page', '/en/'], ['Perks for your trip', '/en/perks/']] },
@@ -223,6 +227,8 @@ const T = {
       ['هل يتوفر طعام حلال؟', 'نعم. في البوسنة والهرسك وتركيا الطعام الحلال هو القاعدة، وفي سريلانكا تتوفر وجبات حلال. وفي المسارات الأخرى أخبروا طوني بما تحتاجونه ليتحقق قبل الحجز.'],
       ['من ينظّم الرحلة؟', 'مشغّل محلي مرخّص في كل بلد. ويتولّى طوني التنسيق معكم بلغتكم (العربية أو الإنجليزية أو الإسبانية) ويبقى جهة تواصلكم طوال الرحلة.'],
     ],
+    japonH: 'وفي اليابان؟',
+    japon: 'في اليابان لا يكتفي طوني بالتنسيق، بل يرشدكم بنفسه في كانساي بالعربية أو الإنجليزية أو الإسبانية. الأسعار للمجموعة في <a href="/ar/prices/">صفحة الأسعار</a>، ومن الرحلات المطلوبة <a href="/ar/hiroshima-miyajima-day-trip/">رحلة يوم إلى هيروشيما وميياجيما</a>. وللتخطيط: <a href="/ar/mosques-kansai/">المساجد في كانساي</a> و<a href="/ar/halal-kyoto-osaka/">الطعام الحلال في كيوتو وأوساكا</a>، وإن كنتم قادمين من الخليج: <a href="/ar/from-gulf/">ما تحتاجونه قبل السفر</a>. وللنساء والعائلات: <a href="/ar/murshida-muslima-yaban/">مرشدات مسلمات في اليابان</a>.',
     ctaH: 'هل تهمّكم إحدى هذه الرحلات؟', ctaP: 'أخبروني بالرحلة والتواريخ وعددكم، وأردّ عليكم بسعر ثابت.', ctaB: 'راسلني على واتساب',
     msgGeneral: 'مرحبًا طوني، جئت من صفحة الوجهات الجديدة.',
     nav: { etiqueta: 'الأقسام', abrir: 'افتح القائمة', g1: 'الوجهات', g2: 'اليابان', g3: 'المزيد', cta: 'واتساب', japon: [['الأسعار في اليابان', PRECIOS.ar], ['المسارات حسب المدينة', '/ar/routes/'], ['الجبال', '/ar/hiking/']], mas: [['صفحة طوني', '/ar/'], ['مزايا لرحلتك', '/ar/perks/']] },
@@ -344,6 +350,10 @@ ${paisesHTML}
 <h2>${esc(t.faqH)}</h2>
 ${t.faq.map(([q, a]) => `<details><summary>${esc(q)}</summary><p>${esc(a)}</p></details>`).join('')}
 <p class="nota">${esc(t.actualizado(FECHA_PRECIOS))}</p>
+</div></section>
+
+<section class="bloque" id="japon"><div class="kap estrecho">
+<h2>${esc(t.japonH)}</h2><p>${t.japon}</p>
 </div></section>
 
 <section class="cierre"><div class="kap">

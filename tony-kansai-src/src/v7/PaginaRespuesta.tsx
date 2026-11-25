@@ -24,7 +24,7 @@ import { useCambio } from './cambio'
 import creditosZonas from '../v8/creditosZonas.json'
 import { PRECIO_GUIA } from './datosGuias'
 import { PRECIO } from './datosRutas'
-import { PAGINAS_RESPUESTA, REVISADO, hermanasRespuesta } from './datosRespuestas'
+import { PAGINAS_RESPUESTA, REVISADO, SEGUIR, hermanasRespuesta } from './datosRespuestas'
 import type { RespuestaId, Tabla } from './datosRespuestas'
 import './v7.css'
 // La hoja serena directamente (estilo-pixel.css ya solo la reimporta).
@@ -232,6 +232,7 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
  *  usa también la página de su ciudad cuando la respuesta vive dentro de ella. */
 export function SeccionesRespuesta({ id, fuentes = false }: { id: RespuestaId; fuentes?: boolean }) {
   const p = PAGINAS_RESPUESTA[id]
+  const seguir = SEGUIR[id]
   return (
     <>
       {p.secciones.map((s) => (
@@ -242,6 +243,14 @@ export function SeccionesRespuesta({ id, fuentes = false }: { id: RespuestaId; f
           {s.tabla && <TablaRespuesta tabla={s.tabla} />}
         </section>
       ))}
+      {seguir && (
+        <section className="v7-seccion">
+          <h2>{seguir.titulo}</h2>
+          <ul className="v7-seguir">
+            {seguir.enlaces.map((e) => <li key={e.ruta}><Link to={e.ruta}>{e.texto}</Link></li>)}
+          </ul>
+        </section>
+      )}
       {fuentes && (
         <section className="v7-seccion">
           <h2>{p.fuentesTitulo}</h2>

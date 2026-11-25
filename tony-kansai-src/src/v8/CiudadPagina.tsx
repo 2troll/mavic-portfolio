@@ -208,6 +208,18 @@ const MAS: Record<Lengua, string> = {
 
 const PAGINA_DIA: Record<string, string> = { '/es': '/es/rutas/', '/en': '/en/routes/', '/ar': '/ar/routes/', '/ru': '/ru/routes/', '/larion': '/larion/routes/' }
 const PAGINA_MONTE: Record<string, string> = { '/es': '/es/montana/', '/en': '/en/hiking/', '/ar': '/ar/hiking/', '/ru': '/ru/hiking/', '/larion': '/en/hiking/' }
+/** La página de respuesta de cada ciudad, enlazada desde el texto (25-11-2026): antes
+ *  solo se llegaba a ellas por el menú. Clave: ruta de la ciudad. Solo páginas de Tony. */
+const RESPUESTA_HERMANA: Record<string, { antes: string; texto: string; ruta: string }> = {
+  '/en/kyoto/': { antes: 'Travelling with children or grandparents?', texto: 'Kyoto private guide for families', ruta: '/en/kyoto-private-guide-family/' },
+  '/en/osaka/': { antes: 'Staying in Osaka?', texto: 'Private guide with hotel pickup', ruta: '/en/osaka-private-guide-hotel-pickup/' },
+  '/en/nara/': { antes: 'Coming from Osaka?', texto: 'Nara day trip from Osaka with a private guide', ruta: '/en/nara-day-trip-from-osaka/' },
+  '/en/kobe/': { antes: 'Only one day?', texto: 'Kobe in one day with a private guide', ruta: '/en/kobe-private-guide-one-day/' },
+  '/en/beyond/': { antes: 'Kōyasan in one day from Osaka?', texto: 'Kōyasan day trip with a private guide', ruta: '/en/koyasan-day-trip-private-guide/' },
+  '/es/nara/': { antes: '¿Os alojáis en Osaka?', texto: 'Excursión a Nara desde Osaka', ruta: '/es/excursion-nara-desde-osaka/' },
+  '/es/hiroshima/': { antes: '¿Desde Osaka y en un solo día?', texto: 'Hiroshima y Miyajima en un día', ruta: '/es/excursion-hiroshima-miyajima-desde-osaka/' },
+  '/ar/hiroshima/': { antes: 'من أوساكا وفي يوم واحد:', texto: 'رحلة يوم إلى هيروشيما وميياجيما', ruta: '/ar/hiroshima-miyajima-day-trip/' },
+}
 
 const nombreGuia = (g: 'tony' | 'larion', lang: Lengua) => (lang === 'ar' && g === 'tony' ? 'طوني' : lang === 'ru' ? 'Ларион' : g === 'tony' ? 'Tony' : 'Larion')
 const RESUMEN: Record<Lengua, string> = { es: 'En resumen', en: 'In short', ar: 'باختصار', ru: 'Коротко' }
@@ -355,6 +367,11 @@ export default function CiudadPagina({ pg }: { pg: PaginaCiudad }) {
 
         {/* Tour de 2 h y tour en bici por Kioto (11-11-2026), solo en las páginas de Kioto de Tony. */}
         {c.id === 'kyoto' && guia === 'tony' && <ToursNuevos lang={lang} />}
+
+        {guia === 'tony' && RESPUESTA_HERMANA[`${prefijo}/${c.id}/`] && (() => {
+          const h = RESPUESTA_HERMANA[`${prefijo}/${c.id}/`]
+          return <p className="v7-entradilla v7-seccion">{h.antes} <Link to={h.ruta}>{h.texto} {lang === 'ar' ? '←' : '→'}</Link></p>
+        })()}
 
         {/* Preguntas frecuentes: las del FAQPage, sin techos ni primera persona en lo
             que se ve (faqCiudadVisible); el JSON-LD conserva el texto de siempre. */}

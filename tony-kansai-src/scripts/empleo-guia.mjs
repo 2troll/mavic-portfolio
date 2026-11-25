@@ -53,6 +53,7 @@ const T = {
       ['First tour', 'We match you with the next tour that fits your days and send you the full plan.'],
     ],
     privacidad: 'We do not publish your details. They are only used to contact you about tours.',
+    enlaces: 'What our guests book: <a href="/en/muslim-female-guide-japan/">private tours with a Muslim female guide</a>, planned around <a href="/en/mosques-kansai/">mosques and prayer rooms in Kansai</a> and <a href="/en/halal-kyoto-osaka/">halal food in Kyoto and Osaka</a>. Many families also add <a href="/en/kobe-private-guide-one-day/">a day in Kobe</a> or <a href="/en/nara-day-trip-from-osaka/">a Nara day trip</a>.',
     compartirH: 'Know someone?',
     compartir: 'Share this page with a sister, a friend or your community group.',
     copiar: 'Copy link', copiado: 'Link copied', waCompartir: 'Share on WhatsApp',
@@ -92,6 +93,7 @@ const T = {
       ['Primer tour', 'Te asignamos el siguiente tour que encaje con tus días y te mandamos el plan completo.'],
     ],
     privacidad: 'No publicamos tus datos. Solo se usan para contactarte sobre tours.',
+    enlaces: 'Lo que reservan nuestras clientas: <a href="/es/guia-musulmana-japon/">tours privados con guía musulmana</a> en <a href="/es/osaka/">Osaka</a>, <a href="/es/kyoto/">Kioto</a>, <a href="/es/nara/">Nara</a> y <a href="/es/kobe/">Kobe</a>. Tony, que coordina el equipo, es <a href="/es/guia-espanol-arabe-japon/">guía en español y árabe en Japón</a>.',
     compartirH: '¿Conoces a alguien?',
     compartir: 'Comparte esta página con una hermana, una amiga o tu grupo de la comunidad.',
     copiar: 'Copiar enlace', copiado: 'Enlace copiado', waCompartir: 'Compartir por WhatsApp',
@@ -131,6 +133,7 @@ const T = {
       ['أول جولة', 'نرشّحك لأقرب جولة تناسب أيامك ونرسل لك الخطة كاملة.'],
     ],
     privacidad: 'لا ننشر بياناتك، ونستخدمها فقط للتواصل معك بخصوص الجولات.',
+    enlaces: 'ما تحجزه ضيفاتنا: <a href="/ar/murshida-muslima-yaban/">جولات خاصة مع مرشدة مسلمة</a>، مخطّطة حول <a href="/ar/mosques-kansai/">المساجد والمصليات في كانساي</a> و<a href="/ar/halal-kyoto-osaka/">الطعام الحلال في كيوتو وأوساكا</a>، ومنها <a href="/ar/hiroshima-miyajima-day-trip/">رحلة يوم إلى هيروشيما وميياجيما</a>.',
     compartirH: 'تعرفين أحدًا؟',
     compartir: 'شاركي هذه الصفحة مع أخت أو صديقة أو مجموعة جاليتك.',
     copiar: 'نسخ الرابط', copiado: 'تم نسخ الرابط', waCompartir: 'مشاركة عبر واتساب',
@@ -322,7 +325,7 @@ ${lang === 'es' ? cabeceraEsHTML({ actual: RUTAS.es, idiomas: ['en', 'ar'].map((
   <a class="credito" href="https://commons.wikimedia.org/wiki/File:Kobe_Kobe-Moschee_Innen_Gebetsraum_2.jpg" rel="noopener" target="_blank">${t.credito}</a>
 </section>
 <section class="kap bloque dos">
-  <div class="rev"><h2>${t.trabajoH}</h2><ul class="lista">${t.trabajo.map((x) => `<li>${x}</li>`).join('')}</ul></div>
+  <div class="rev"><h2>${t.trabajoH}</h2><ul class="lista">${t.trabajo.map((x) => `<li>${x}</li>`).join('')}</ul><p class="nota">${t.enlaces}</p></div>
   <div class="rev"><h2>${t.perfilH}</h2><ul class="lista">${t.perfil.map((x) => `<li>${x}</li>`).join('')}</ul></div>
 </section>
 <section class="kap bloque rev">

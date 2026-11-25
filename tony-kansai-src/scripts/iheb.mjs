@@ -524,7 +524,7 @@ ${carte('en', 'tokyo-camii', 'Tokyo Camii', 'Muslim-friendly programs', 'Halal m
 ${carte('en', 'narita', 'Narita Airport', 'Ground coordination', 'Coordination with licensed transport partners (cars, coaches), hotels and restaurants.')}
 ${carte('en', 'yokohama', 'Yokohama', 'Partner network', 'Introductions to other agencies and guides in Japan; Kansai with Tony’s team.')}
 </ul>
-<p>Serving Gulf (GCC) clients? See <a href="/en/arabic-speaking-guide-tokyo/">Arabic-speaking guide for GCC agencies</a>.</p>
+<p>Serving Gulf (GCC) clients? See <a href="/en/arabic-speaking-guide-tokyo/">Arabic-speaking guide for GCC agencies</a>. Sending families from India? See <a href="/en/tokyo-anime-guide/from-india/">Tokyo for travellers from India</a>, with vegetarian and Jain-friendly food planning.</p>
 <h2>How we work together</h2>
 <ol class="adimlar"><li>Send dates, group size and the program on WhatsApp.</li><li>We confirm availability, the agency rate and any transport needed.</li><li>A clear cooperation agreement with your agency.</li><li>Iheb meets your clients and runs the day.</li></ol>
 <h2>FAQ</h2>
@@ -1662,7 +1662,7 @@ function enPrecios() {
       ['How much is a private transfer from Haneda?', `¥${P.hanedaIda} one way per vehicle for 1 to 4 guests, ¥${P.hanedaIV} round trip.`],
       ['How much is a private Mt. Fuji day tour from Tokyo with a car and guide?', `¥${P.tour4} for 1 to 4 guests and ¥${P.tour8} for 5 to 8, about 10 hours, with vehicle, driver, fuel, tolls, parking and guide.`],
     ],
-    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Arabic-speaking guide for Gulf families', '/en/arabic-speaking-guide-tokyo/'], ['Muslim guide in Tokyo', '/en/muslim-guide-tokyo/']] })
+    ver: [['Day trips from Tokyo', '/en/tokyo-anime-guide/day-trips/'], ['Arabic-speaking guide for Gulf families', '/en/arabic-speaking-guide-tokyo/'], ['Muslim guide in Tokyo', '/en/muslim-guide-tokyo/'], ['Tokyo for travellers from India', '/en/tokyo-anime-guide/from-india/']] })
 }
 function frPrecios() {
   return paginaPrecios({ lang: 'fr', ruta: '/fr/tarifs-transferts-excursions/', etiqueta: 'Tarifs', alt: 'Le mont Fuji et le lac Kawaguchi',
