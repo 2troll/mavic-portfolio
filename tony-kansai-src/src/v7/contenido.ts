@@ -89,15 +89,16 @@ export interface DatosContacto {
 
 /** WhatsApp de Tony (el de las facturas, perfil.json). */
 export const WA_TONY = '34634193106'
-/** PayPal.Me de Tony: enlace fijo que no caduca y admite muchos pagos (los de
- *  Wise son de un solo uso y caducan a los 30 días). /<importe>JPY lo deja puesto. */
-export const PAYPAL_TONY = 'https://paypal.me/2troll'
 /** Wisetag de Tony: fijo, pero solo paga quien ya tiene cuenta de Wise. */
 export const WISE_TONY = 'https://wise.com/pay/me/amirk1643'
+/** Revolut y PayPay de Tony (sin PayPal desde el 25-11-2026). Vacío = el botón
+ *  abre WhatsApp pidiendo los datos (Pagos.tsx); poner aquí el enlace cuando lo haya. */
+export const REVOLUT_TONY = ''
+export const PAYPAY_TONY = ''
 export const PAGAR: Record<string, { boton: string; wise: string; nota: string }> = {
-  es: { boton: 'Pagar con PayPal', wise: 'Wise (con cuenta Wise)', nota: 'Si pagas por adelantado, hazlo solo cuando hayamos confirmado la fecha por WhatsApp.' },
-  en: { boton: 'Pay with PayPal', wise: 'Wise (Wise account)', nota: 'If you pay in advance, do it only once we have confirmed your date on WhatsApp.' },
-  ar: { boton: 'ادفع عبر PayPal', wise: 'Wise (لأصحاب حساب Wise)', nota: 'إن دفعت مسبقاً، فادفع فقط بعد تأكيد الموعد عبر واتساب.' },
+  es: { boton: 'Pagar por adelantado', wise: 'Wise (con cuenta Wise)', nota: 'Si pagas por adelantado, hazlo solo cuando hayamos confirmado la fecha por WhatsApp.' },
+  en: { boton: 'Pay in advance', wise: 'Wise (Wise account)', nota: 'If you pay in advance, do it only once we have confirmed your date on WhatsApp.' },
+  ar: { boton: 'ادفع مسبقاً', wise: 'Wise (لأصحاب حساب Wise)', nota: 'إن دفعت مسبقاً، فادفع فقط بعد تأكيد الموعد عبر واتساب.' },
 }
 /** Contacto de Larion: Telegram, no WhatsApp (los clientes rusohablantes no usan
  *  WhatsApp). La cuenta es de Tony, que coordina y contesta por Larion; su nombre
@@ -263,7 +264,7 @@ const es: Pagina = {
       { nombre: 'Excursión lejana', detalle: 'Kōyasan, Amanohashidate, Kumano…', precio: fmtYen(YEN.lejos, '.'), yenes: YEN.lejos, desde: true },
     ],
     notas: [
-      'Se paga en efectivo, en yenes, el día del tour, o por adelantado con PayPal, Wise o transferencia.',
+      'Se paga en efectivo, en yenes, el día del tour, o por adelantado con Wise, Revolut, PayPay o transferencia.',
     ],
     aprox: 'al cambio de hoy',
     porPersona: (n) => `Siendo 4: ${fmtYen(n / 4, '.')} por persona`,
@@ -293,7 +294,7 @@ const es: Pagina = {
   faq: {
     titulo: 'Preguntas',
     items: [
-      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con PayPal o Wise, o con un enlace de pago con tarjeta que te mando.' },
+      { q: '¿Cómo se paga?', a: 'En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con Wise, Revolut o PayPay, o con un enlace de pago con tarjeta que te mando.' },
       { q: '¿Necesito el JR Pass?', a: 'Si os movéis dentro de Kansai, normalmente no. Con una tarjeta ICOCA o Suica pagáis cada tren y autobús. Pregúntame antes de comprar nada.' },
       { q: '¿Y si llueve?', a: 'Por ciudad salimos igual: Kansai con lluvia es precioso y hay menos gente. En montaña decido yo por seguridad; si se cancela, cambiamos de fecha o te devuelvo lo pagado.' },
       { q: '¿Podemos ir con niños?', a: 'Claro. Adapto el ritmo y el recorrido a su edad.' },
@@ -372,7 +373,7 @@ const es: Pagina = {
 // Preguntas de /en/ tal como estaban antes del rediseño (21-11-2026): /larion/
 // hereda de `en` y se queda con ellas; /en/ cambia tres (CAMBIOS_FAQ_EN).
 const FAQ_EN_ANTES: Pregunta[] = [
-  { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I\'ll send you.' },
+  { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use Wise, Revolut or PayPay from the buttons under Prices, or a card payment link I\'ll send you.' },
   { q: 'Do I need a JR Pass?', a: 'Not usually, if you\'re staying within Kansai. An ICOCA or Suica card covers almost every train and bus. Ask me before you buy anything.' },
   { q: 'What if it rains?', a: 'City days go ahead: Kansai is lovely in the rain and the crowds thin out. In the mountains I make the call for safety; if we cancel, we move the date or you get your money back.' },
   { q: 'Can we bring children?', a: 'Of course. I adapt the pace and the route to their age.' },
@@ -387,7 +388,7 @@ const FAQ_EN_ANTES: Pregunta[] = [
 // Sin techos en /en/ (Antonio: «nunca cerrar puertas»): el «up to 6» sigue en el JSON-LD y en llms.txt.
 const CAMBIOS_FAQ_EN: Record<string, Pregunta> = {
   // Los botones de PayPal y Wise iban en las tarjetas de precio de la portada, que ya no están.
-  'How do I pay?': { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise, or a card payment link I\'ll send you.' },
+  'How do I pay?': { q: 'How do I pay?', a: 'In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use Wise, Revolut or PayPay, or a card payment link I\'ll send you.' },
   'What if there are more than 6 of us?': { q: 'What if we\'re a large group?', a: 'The listed price is per group, not per person. If you\'re a large group, message us: we guide larger groups too and we\'ll tell you how we can organise it.' },
   'Do you organise trips for families or groups of 6 to 10?': { q: 'Do you organise trips for families or groups?', a: 'Yes. Antonio, the team\'s coordinator, arranges tailor-made trips all over Japan in Spanish: guides, itinerary, hotels, ryokan and private transport. Quotes are tailor-made.', enlace: { texto: 'Family and group trips (in Spanish)', href: '/familias/' } },
 }
@@ -469,7 +470,7 @@ const en: Pagina = {
       { nombre: 'Long day trip', detalle: 'Kōyasan, Amanohashidate, Kumano…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
     ],
     notas: [
-      'Payment is in cash, in yen, on the day, or in advance with PayPal, Wise or bank transfer.',
+      'Payment is in cash, in yen, on the day, or in advance with Wise, Revolut, PayPay or bank transfer.',
     ],
     aprox: 'at today\'s rate',
     porPersona: (n) => `For 4 people: ${fmtYen(n / 4, ',')} each`,
@@ -633,7 +634,7 @@ const ar: Pagina = {
       { nombre: 'رحلة بعيدة', detalle: 'كوياسان، أمانوهاشيداتي، كومانو…', precio: fmtYen(YEN.lejos, ','), yenes: YEN.lejos, desde: true },
     ],
     notas: [
-      'الدفع نقداً بالين في يوم الجولة، أو مسبقاً عبر PayPal أو Wise أو تحويل بنكي.',
+      'الدفع نقداً بالين في يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay أو تحويل بنكي.',
     ],
     aprox: 'بسعر الصرف اليوم',
     temporada: {
@@ -658,7 +659,7 @@ const ar: Pagina = {
   faq: {
     titulo: 'أسئلة',
     items: [
-      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر PayPal أو Wise، أو برابط دفع بالبطاقة أرسله لك.' },
+      { q: 'كيف أدفع؟', a: 'نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر Wise أو Revolut أو PayPay، أو برابط دفع بالبطاقة أرسله لك.' },
       { q: 'هل يوجد طعام حلال؟', a: 'نعم. أنا مسلم وأعرف الأماكن الحلال الموثوقة في أوساكا وكيوتو. أخبرني عند الحجز لا في يوم الجولة.' },
       { q: 'أين نصلي أثناء الجولة؟', a: 'في كانساي مسجد أوساكا ومسجد كوبي وجمعية كيوتو الإسلامية، وفي مطار كانساي مصليات في المبنيين. أضع وقفات الصلاة في المسار من البداية.' },
       { q: 'هل أحتاج تذكرة JR Pass؟', a: 'في الغالب لا إذا كانت إقامتك في كانساي. بطاقة ICOCA أو Suica تكفي لمعظم القطارات والحافلات. اسألني قبل أن تشتري.' },

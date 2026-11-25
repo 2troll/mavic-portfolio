@@ -8,7 +8,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, CREDITOS, enlaceGuia, contactoLd } from './contenido'
+import { GUIAS, CORREO, PAGAR, CREDITOS, enlaceGuia, contactoLd } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import { PAGINAS } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
@@ -137,7 +138,7 @@ export default function Viajeros({ id }: { id: MercadoId }) {
                 <p className="v7-plan-grupo">{visible(m.porGrupo)}</p>
                 <p className="v7-plan-persona">{m.porPersona(yenLocal(y / 4, m.lang))}</p>
                 {cambios.length > 0 && <p className="v7-plan-aprox">≈ {enDivisa(y)}</p>}
-                {pagar && <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${y}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
+                {pagar && <PagosAdelantado lang={m.lang} valor={y} />}
               </article>
             ))}
           </div>

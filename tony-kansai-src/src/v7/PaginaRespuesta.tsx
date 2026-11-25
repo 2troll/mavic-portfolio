@@ -7,7 +7,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { GUIAS, CORREO, PAGAR } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import { PAGINAS } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
@@ -168,7 +169,7 @@ export default function PaginaRespuesta({ id }: { id: RespuestaId }) {
             {p.precios.notas.map((n) => <li key={n}>{visible(n)}</li>)}
           </ul>
           {!p.precios.lejos && (
-            <p className="v7-pagar-antes">{pagar.nota} <a className="v9-enlace" href={`${PAYPAL_TONY}/${PRECIO_GUIA.medio}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a></p>
+            <p className="v7-pagar-antes">{pagar.nota} <PagosAdelantado lang={p.lang} valor={PRECIO_GUIA.medio} className="v7-pagos-linea" /></p>
           )}
         </section>
 

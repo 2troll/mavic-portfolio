@@ -53,7 +53,7 @@ export default function Terms() {
 
             <Section title={tc('2. Booking Process')}>
               <p>{tc('Bookings are made directly via WhatsApp. A booking is confirmed only when both parties have agreed on the tour date, time, meeting point, and price, and the client has received a written confirmation from the guide.')}</p>
-              <p className="mt-2">{tc('There is no automatic online booking: every date is confirmed personally on WhatsApp. Payment is in cash, in yen, on the day of the tour, or in advance by PayPal, Wise or bank transfer once the date is confirmed (the methods available are shown on each guide page).')}</p>
+              <p className="mt-2">{tc('There is no automatic online booking: every date is confirmed personally on WhatsApp. Payment is in cash, in yen, on the day of the tour, or in advance by Wise, Revolut, PayPay or bank transfer once the date is confirmed (the methods available are shown on each guide page).')}</p>
             </Section>
 
             <Section title={tc('3. Pricing and Payment')}>
@@ -67,7 +67,7 @@ export default function Terms() {
                 <Li label={tc('Food and drink')}>{tc("All meals, tastings and drinks are at the client's own expense.")}</Li>
                 <Li label={tc('Tips')}>{tc("Gratuities are entirely at the client's discretion and never expected.")}</Li>
               </ul>
-              <p className="mt-3">{tc('The payment method (cash on the day, PayPal, Wise or bank transfer) is confirmed when you book. We reserve the right to request a deposit for tours booked more than 30 days in advance.')}</p>
+              <p className="mt-3">{tc('The payment method (cash on the day, Wise, Revolut, PayPay or bank transfer) is confirmed when you book. We reserve the right to request a deposit for tours booked more than 30 days in advance.')}</p>
             </Section>
 
             <Section title={tc('4. Cancellation Policy')}>
@@ -173,7 +173,7 @@ export default function Terms() {
                 <p>{tc('We accept the following payment methods for hiking services:')}</p>
                 <div className="mt-3 space-y-1.5">
                   <Li label={tc('Cash')}>{tc('Japanese yen (JPY) on the day of the tour. Preferred method.')}</Li>
-                  <Li label="Wise / PayPal">{tc('Payment in advance through Wise or PayPal, once the date is confirmed.')}</Li>
+                  <Li label="Wise / Revolut / PayPay">{tc('Payment in advance through Wise, Revolut or PayPay, once the date is confirmed.')}</Li>
                   <Li label={tc('Bank transfer')}>{tc('Available for bookings made more than 7 days in advance.')}</Li>
                   <Li label={tc('Card')}>{tc('On prior request, subject to availability.')}</Li>
                 </div>

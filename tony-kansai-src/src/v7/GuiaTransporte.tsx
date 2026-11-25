@@ -10,7 +10,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR } from './contenido'
+import { GUIAS, CORREO, PAGAR } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import { PAGINAS } from './contenido'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
@@ -134,7 +135,7 @@ export default function GuiaTransporte({ id }: { id: GuiaId }) {
                 <h3>{nombre}</h3>
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO[k], p.lang)}</bdi></p>
                 <p className="v7-plan-grupo">{visible(p.porGrupo)}</p>
-                <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${PRECIO[k]}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>
+                <PagosAdelantado lang={p.lang} valor={PRECIO[k]} />
               </article>
             ))}
           </div>

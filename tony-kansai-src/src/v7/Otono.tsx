@@ -10,7 +10,8 @@ import { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, PAGINAS, enlaceGuia, contactoLd } from './contenido'
+import { GUIAS, CORREO, PAGAR, PAGINAS, enlaceGuia, contactoLd } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
 import { foto } from './foto'
@@ -172,7 +173,7 @@ export default function Otono({ id }: { id: OtonoId }) {
                 <p className="v7-plan-precio"><bdi>{yenLocal(PRECIO[k], p.lang)}</bdi></p>
                 <p className="v7-plan-grupo">{visible(p.porGrupo)}</p>
                 <p className="v7-plan-persona">{p.porPersona(yenLocal(PRECIO[k] / 4, p.lang))}</p>
-                {pagar && <a className="v7-plan-pagar" href={`${PAYPAL_TONY}/${PRECIO[k]}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
+                {pagar && <PagosAdelantado lang={p.lang} pagina={id} valor={PRECIO[k]} />}
               </article>
             ))}
           </div>
@@ -291,7 +292,7 @@ function Tours({ p, productos, pagar, id }: { p: PaginaOtono; productos: NonNull
                   <span className="v7-invierno-etiqueta">{t.etiqueta}</span>
                   <span className="v7-plan-precio"><bdi>{yenLocal(t.yen, p.lang)}</bdi></span>
                   <span className="v7-plan-grupo">{visible(p.porGrupo)} · {p.porPersona(yenLocal(t.yen / 4, p.lang))}</span>
-                  {pagar && <a className="v7-invierno-pagar" href={`${PAYPAL_TONY}/${t.yen}JPY`} target="_blank" rel="noopener noreferrer">{pagar.boton}</a>}
+                  {pagar && <PagosAdelantado lang={p.lang} pagina={id} valor={t.yen} />}
                 </div>
               ))}
             </div>

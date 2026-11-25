@@ -1278,6 +1278,10 @@ html .v7 { --radio: 26px; --cristal-fondo: color-mix(in srgb, var(--superficie) 
 /* Pagar por adelantado: enlace discreto bajo «Reservar por WhatsApp». */
 .v7-plan-pagar-enlace { display: block; margin-top: 10px; text-align: center; font-size: 14px; color: inherit; opacity: 0.75; text-decoration: underline; text-underline-offset: 3px; }
 .v7-plan-pagar-enlace:hover { opacity: 1; }
+/* Pago por adelantado (Pagos.tsx): Wise · Revolut · PayPay, cada uno su enlace. */
+.v7-pagos { text-decoration: none; }
+.v7-pagos a { color: inherit; text-decoration: underline; text-underline-offset: 3px; font-weight: 600; }
+.v7-pagos-linea { display: inline; }
 
 /* Reseñas: comillas de acento, inicial del cliente y nombre destacado. */
 .v7-resenas figure { position: relative; padding-top: 34px; }

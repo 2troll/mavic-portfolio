@@ -103,7 +103,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     porPersona: (y) => `Siendo 4: ${y} por persona`,
     notas: [
       'Trenes, entradas y comidas no están incluidos: los pagáis en el momento y yo os digo cómo.',
-      'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+      'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
       'Cancelación sin coste hasta 72 horas antes.',
     ],
     consejosTitulo: 'Consejos para el otoño',
@@ -159,7 +159,7 @@ export const OTONO: Record<OtonoId, PaginaOtono> = {
     porPersona: (y) => `For 4 people: ${y} each`,
     notas: [
       'Trains, admissions and meals aren\'t included: you pay as we go and I show you how.',
-      'Pay in cash on the day, or in advance with PayPal or Wise.',
+      'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
       'Free cancellation up to 72 hours before.',
     ],
     consejosTitulo: 'Autumn tips',

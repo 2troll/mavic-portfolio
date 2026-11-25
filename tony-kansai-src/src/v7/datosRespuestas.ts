@@ -156,7 +156,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
         titulo: 'Plataforma o guía directo',
         parrafos: [
           'Las plataformas te dan un catálogo grande y un pago a través de ellas, y se quedan una comisión. Reservando directo hablas con el guía antes de pagar nada, ajustas el recorrido con él y el precio es el del guía.',
-          'Con Tony puedes pagar en efectivo el día del tour, o por adelantado con PayPal o Wise cuando la fecha está confirmada por WhatsApp.',
+          'Con Tony puedes pagar en efectivo el día del tour, o por adelantado con Wise, Revolut o PayPay cuando la fecha está confirmada por WhatsApp.',
         ],
       },
     ],
@@ -166,7 +166,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
       notas: [
         'Trenes, entradas y comidas no están incluidos: se pagan en el momento y yo te digo cómo.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+        'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
         'Cancelación sin coste hasta 72 horas antes.',
       ],
     },
@@ -177,7 +177,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       { p: '¿Y si somos más de 6?', r: 'Acompaño grupos de hasta 14 personas. Dime el número de personas y te digo el precio.' },
       { p: '¿Qué no está incluido?', r: 'Trenes, entradas y comidas. Se pagan en el momento; te digo antes cuánto llevar.' },
       { p: '¿Me recoges en el hotel?', r: 'Sí, en el vestíbulo de tu hotel en Osaka, Kioto o Nara.' },
-      { p: '¿Cómo se paga y hasta cuándo puedo cancelar?', r: 'En efectivo el día del tour, o por adelantado con PayPal o Wise una vez confirmada la fecha. Cancelación gratis hasta 72 horas antes.' },
+      { p: '¿Cómo se paga y hasta cuándo puedo cancelar?', r: 'En efectivo el día del tour, o por adelantado con Wise, Revolut o PayPay una vez confirmada la fecha. Cancelación gratis hasta 72 horas antes.' },
       { p: '¿Un guía en Japón necesita licencia?', r: 'No. Desde el 4 de enero de 2018 cualquier persona puede guiar cobrando; solo el título oficial 全国通訳案内士 (guía-intérprete nacional) está reservado a quien aprueba su examen (JNTO).' },
     ],
     fuentesTitulo: 'Fuentes',
@@ -226,7 +226,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
         titulo: 'Platform or direct?',
         parrafos: [
           'Platforms give you a big catalogue and payment through them, and they take a commission. Booking direct, you talk to the guide before paying anything, shape the day together and pay the guide\'s own price.',
-          'With Tony you can pay cash on the day, or in advance with PayPal or Wise once your date is confirmed on WhatsApp.',
+          'With Tony you can pay cash on the day, or in advance with Wise, Revolut or PayPay once your date is confirmed on WhatsApp.',
         ],
       },
     ],
@@ -236,7 +236,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
       notas: [
         'Trains, entry fees and meals are not included: you pay them on the spot and I tell you how.',
-        'Pay cash on the day, or in advance with PayPal or Wise.',
+        'Pay cash on the day, or in advance with Wise, Revolut or PayPay.',
         'Free cancellation up to 72 hours before.',
       ],
     },
@@ -247,7 +247,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       { p: 'What if we are more than 6?', r: 'I guide groups of up to 14. Tell me how many you are and I\'ll send you the price.' },
       { p: 'What is not included?', r: 'Trains, entry fees and meals. You pay them on the spot; I tell you beforehand how much cash to bring.' },
       { p: 'Do you pick us up at the hotel?', r: 'Yes, in your hotel lobby in Osaka, Kyoto or Nara.' },
-      { p: 'How do I pay, and until when can I cancel?', r: 'Cash on the day, or in advance with PayPal or Wise once the date is confirmed. Free cancellation up to 72 hours before.' },
+      { p: 'How do I pay, and until when can I cancel?', r: 'Cash on the day, or in advance with Wise, Revolut or PayPay once the date is confirmed. Free cancellation up to 72 hours before.' },
       { p: 'Do tour guides in Japan need a license?', r: 'No. Since 4 January 2018 anyone may guide for pay in Japan; only the official title 全国通訳案内士 (National Guide Interpreter) is reserved for those who pass its exam (JNTO).' },
     ],
     fuentesTitulo: 'Sources',
@@ -307,7 +307,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'نصف يوم · ٤ ساعات', completo: 'يوم كامل · ٨ ساعات', porGrupo: 'للمجموعة، حتى ٦ أشخاص',
       notas: [
         'القطارات وتذاكر الدخول والطعام غير مشمولة، وتُدفع في مكانها.',
-        'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر PayPal أو Wise.',
+        'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay.',
         'الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.',
       ],
     },
@@ -379,7 +379,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
       notas: [
         'Trains, admissions and meals aren\'t included: you pay as we go.',
-        'Pay in yen in cash on the day, or in advance with PayPal or Wise.',
+        'Pay in yen in cash on the day, or in advance with Wise, Revolut or PayPay.',
         'Free cancellation up to 72 hours before.',
       ],
     },
@@ -445,7 +445,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'نصف يوم · ٤ ساعات', completo: 'يوم كامل · ٨ ساعات', porGrupo: 'للمجموعة، حتى ٦ أشخاص',
       notas: [
         'القطارات وتذاكر الدخول والطعام غير مشمولة، وتُدفع في مكانها.',
-        'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر PayPal أو Wise.',
+        'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay.',
         'الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.',
       ],
     },
@@ -514,7 +514,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
       notas: [
         'Trains, admissions and meals aren’t included: you pay as we go.',
-        'Pay in yen in cash on the day, or in advance with PayPal or Wise.',
+        'Pay in yen in cash on the day, or in advance with Wise, Revolut or PayPay.',
         'Free cancellation up to 72 hours before.',
       ],
     },
@@ -585,7 +585,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
         titulo: 'Cómo se reserva',
         parrafos: [
           'Escribes por WhatsApp con fechas, número de personas y qué os apetece. Tony contesta con un plan y el precio cerrado del grupo.',
-          'Se paga en efectivo en yenes el día del tour, o por adelantado con PayPal o Wise cuando la fecha está confirmada. La cancelación es gratis hasta 72 horas antes.',
+          'Se paga en efectivo en yenes el día del tour, o por adelantado con Wise, Revolut o PayPay cuando la fecha está confirmada. La cancelación es gratis hasta 72 horas antes.',
         ],
       },
     ],
@@ -595,7 +595,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
       notas: [
         'Grupos de más de 6, hasta 14 personas: precio a consultar.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+        'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
         'Cancelación sin coste hasta 72 horas antes.',
       ],
     },
@@ -664,7 +664,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
       notas: [
         'Trenes, entradas y comidas no están incluidos.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+        'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
         'Cancelación sin coste hasta 72 horas antes.',
       ],
     },
@@ -719,7 +719,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
       notas: [
         'Trenes, entradas y comidas no están incluidos.',
-        'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+        'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
         'Cancelación sin coste hasta 72 horas antes.',
       ],
     },
@@ -795,7 +795,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
       notas: [
         'Groups of 7 to 14: ask for a price.',
-        'Pay in cash on the day, or in advance with PayPal or Wise.',
+        'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
         'Free cancellation up to 72 hours before.',
       ],
     },
@@ -854,7 +854,7 @@ export const PAGINAS_RESPUESTA: Record<RespuestaId, PaginaRespuesta> = {
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
       notas: [
         'Trains, entry fees and meals are not included.',
-        'Pay in cash on the day, or in advance with PayPal or Wise.',
+        'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
         'Free cancellation up to 72 hours before.',
       ],
     },

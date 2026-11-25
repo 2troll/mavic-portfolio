@@ -10,7 +10,7 @@ export const FAQ_LD_PORTADA: Partial<Record<string, { q: string; a: string }[]>>
   "es": [
     {
       "q": "¿Cómo se paga?",
-      "a": "En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con PayPal o Wise desde los botones de Precios, o con un enlace de pago con tarjeta que te mando."
+      "a": "En efectivo, en yenes, el día del tour. Si prefieres pagar por adelantado, una vez confirmada la fecha por WhatsApp puedes hacerlo con Wise, Revolut o PayPay desde los botones de Precios, o con un enlace de pago con tarjeta que te mando."
     },
     {
       "q": "¿Necesito el JR Pass?",
@@ -56,7 +56,7 @@ export const FAQ_LD_PORTADA: Partial<Record<string, { q: string; a: string }[]>>
   "en": [
     {
       "q": "How do I pay?",
-      "a": "In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use PayPal or Wise from the buttons under Prices, or a card payment link I'll send you."
+      "a": "In cash, in yen, on the day. If you prefer to pay in advance, once we have confirmed your date on WhatsApp you can use Wise, Revolut or PayPay from the buttons under Prices, or a card payment link I'll send you."
     },
     {
       "q": "Do I need a JR Pass?",
@@ -102,7 +102,7 @@ export const FAQ_LD_PORTADA: Partial<Record<string, { q: string; a: string }[]>>
   "ar": [
     {
       "q": "كيف أدفع؟",
-      "a": "نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر PayPal أو Wise من أزرار قسم الأسعار، أو برابط دفع بالبطاقة أرسله لك."
+      "a": "نقداً بالين في يوم الجولة. وإن فضّلت الدفع مسبقاً، فبعد تأكيد الموعد عبر واتساب يمكنك الدفع عبر Wise أو Revolut أو PayPay من أزرار قسم الأسعار، أو برابط دفع بالبطاقة أرسله لك."
     },
     {
       "q": "هل يوجد طعام حلال؟",

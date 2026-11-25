@@ -135,7 +135,7 @@ export const GUIAS_TRANSPORTE: Record<GuiaId, PaginaGuia> = {
     medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo',
     notas: [
       'Trenes, entradas y comidas no están incluidos: se pagan en el momento y yo te digo cómo.',
-      'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+      'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
       'Cancelación sin coste hasta 72 horas antes.',
     ],
     faqTitulo: 'Preguntas frecuentes',
@@ -207,7 +207,7 @@ export const GUIAS_TRANSPORTE: Record<GuiaId, PaginaGuia> = {
     medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group',
     notas: [
       'Trains, admissions and meals aren\'t included: you pay as we go and I show you how.',
-      'Pay in cash on the day, or in advance with PayPal or Wise.',
+      'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
       'Free cancellation up to 72 hours before.',
     ],
     faqTitulo: 'Frequently asked questions',
@@ -285,7 +285,7 @@ export const GUIAS_TRANSPORTE: Record<GuiaId, PaginaGuia> = {
     medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo',
     notas: [
       'Trenes, entradas y comidas no están incluidos: se pagan en el momento y yo te digo cómo.',
-      'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+      'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
       'Cancelación sin coste hasta 72 horas antes.',
     ],
     faqTitulo: 'Preguntas frecuentes',
@@ -361,7 +361,7 @@ export const GUIAS_TRANSPORTE: Record<GuiaId, PaginaGuia> = {
     medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group',
     notas: [
       'Trains, admissions and meals aren\'t included: you pay as we go and I show you how.',
-      'Pay in cash on the day, or in advance with PayPal or Wise.',
+      'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
       'Free cancellation up to 72 hours before.',
     ],
     faqTitulo: 'Frequently asked questions',

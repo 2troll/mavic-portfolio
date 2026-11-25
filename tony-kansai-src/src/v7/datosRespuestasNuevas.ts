@@ -61,7 +61,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         titulo: 'Cómo reservar',
         parrafos: [
           'Escríbeme por WhatsApp con la fecha, la hora, cuántos sois y tu hotel. Te contesto yo, no una agencia.',
-          'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise. Cancelación gratis hasta 72 horas antes.',
+          'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay. Cancelación gratis hasta 72 horas antes.',
         ],
       },
     ],
@@ -130,7 +130,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         titulo: 'How to book',
         parrafos: [
           'Message me on WhatsApp with the date, time, number of people and your hotel. I answer myself, not an agency.',
-          'Pay in cash on the day or in advance by PayPal or Wise. Free cancellation up to 72 hours before.',
+          'Pay in cash on the day or in advance by Wise, Revolut or PayPay. Free cancellation up to 72 hours before.',
         ],
       },
     ],
@@ -188,7 +188,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         lista: [
           'Incluye: tu guía en bici contigo todo el recorrido, la ruta preparada y ayuda con lo que necesites.',
           'No incluye: el alquiler de las bicis (en Cycle & Eat, con un 15 % de descuento), entradas ni comidas.',
-          'Se paga en efectivo el día o por adelantado con PayPal o Wise. Cancelación gratis hasta 72 horas antes.',
+          'Se paga en efectivo el día o por adelantado con Wise, Revolut o PayPay. Cancelación gratis hasta 72 horas antes.',
         ],
       },
       {
@@ -250,7 +250,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         lista: [
           'Included: your guide riding with you the whole way, a planned route and help with anything you need.',
           'Not included: bike rental (from Cycle & Eat, 15% off), tickets and meals.',
-          'Pay in cash on the day or in advance by PayPal or Wise. Free cancellation up to 72 hours before.',
+          'Pay in cash on the day or in advance by Wise, Revolut or PayPay. Free cancellation up to 72 hours before.',
         ],
       },
       {
@@ -323,7 +323,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         titulo: 'كيف تحجز',
         parrafos: [
           'راسلني على واتساب بالتاريخ والساعة وعدد الأشخاص واسم الفندق. أنا من يرد، وليست وكالة.',
-          'الدفع نقدًا يوم الجولة أو مسبقًا عبر PayPal أو Wise. الإلغاء مجاني حتى 72 ساعة قبل الموعد.',
+          'الدفع نقدًا يوم الجولة أو مسبقًا عبر Wise أو Revolut أو PayPay. الإلغاء مجاني حتى 72 ساعة قبل الموعد.',
         ],
       },
     ],
@@ -381,7 +381,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         lista: [
           'مشمول: مرشدك يركب الدراجة معك طوال الطريق، ومسار مُعدّ مسبقًا، ومساعدة في كل ما تحتاجه، ووقفات للصلاة إذا أردتم.',
           'غير مشمول: استئجار الدراجات (من Cycle & Eat بخصم 15٪) والتذاكر والطعام.',
-          'الدفع نقدًا يوم الجولة أو مسبقًا عبر PayPal أو Wise. الإلغاء مجاني حتى 72 ساعة قبل الموعد.',
+          'الدفع نقدًا يوم الجولة أو مسبقًا عبر Wise أو Revolut أو PayPay. الإلغاء مجاني حتى 72 ساعة قبل الموعد.',
         ],
       },
       {
@@ -458,7 +458,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         titulo: 'How to book',
         parrafos: [
           'Message me on WhatsApp with the date, the number of people, the children’s ages and your hotel. I answer myself, not an agency.',
-          'Pay in cash on the day or in advance by PayPal or Wise. Free cancellation up to 72 hours before.',
+          'Pay in cash on the day or in advance by Wise, Revolut or PayPay. Free cancellation up to 72 hours before.',
         ],
       },
     ],
@@ -526,7 +526,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
         titulo: 'How to book',
         parrafos: [
           'Message me on WhatsApp with the date, number of people and your hotel. I answer myself, not an agency.',
-          'Pay in cash on the day or in advance by PayPal or Wise. Free cancellation up to 72 hours before.',
+          'Pay in cash on the day or in advance by Wise, Revolut or PayPay. Free cancellation up to 72 hours before.',
         ],
       },
     ],
@@ -606,7 +606,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
       titulo: 'From your Osaka hotel, same price for 1 or 6 people',
       texto: 'Just your group, at your pace. Hotel lobby meeting in Osaka or Kyoto.',
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
-      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by PayPal or Wise.', 'Free cancellation up to 72 hours before.'],
+      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by Wise, Revolut or PayPay.', 'Free cancellation up to 72 hours before.'],
     },
     faqTitulo: 'FAQ',
     faq: [
@@ -672,7 +672,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
       titulo: 'Desde tu hotel de Osaka, mismo precio para 1 o 6 personas',
       texto: 'Solo tu grupo y a tu ritmo. Te recojo en el vestíbulo de tu hotel en Osaka o Kioto.',
       medio: 'Medio día · 4 horas', completo: 'Día completo · 8 horas', porGrupo: 'por grupo, hasta 6 personas',
-      notas: ['Trenes, entradas y comidas no incluidos.', 'Pago en efectivo el día del tour o por adelantado por PayPal o Wise.', 'Cancelación gratis hasta 72 horas antes.'],
+      notas: ['Trenes, entradas y comidas no incluidos.', 'Pago en efectivo el día del tour o por adelantado por Wise, Revolut o PayPay.', 'Cancelación gratis hasta 72 horas antes.'],
     },
     faqTitulo: 'Preguntas frecuentes',
     faq: [
@@ -789,7 +789,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
       texto: 'اليوم كاملاً لمجموعتكم وحدها. أرسل لكم سعراً ثابتاً حسب المسار ووقت الانطلاق.',
       medio: 'نصف يوم · ٤ ساعات', completo: 'يوم كامل · ٨ ساعات', porGrupo: 'للمجموعة، حتى ٦ أشخاص',
       lejos: { nombre: 'هيروشيما وميياجيما · يوم كامل', desde: 'من', boton: 'اطلب سعراً ثابتاً' },
-      notas: ['القطارات والعبّارة وتذاكر الدخول والطعام غير مشمولة.', 'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر PayPal أو Wise.', 'الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.'],
+      notas: ['القطارات والعبّارة وتذاكر الدخول والطعام غير مشمولة.', 'الدفع نقداً بالين يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay.', 'الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.'],
     },
     faqTitulo: 'أسئلة شائعة',
     faq: [
@@ -902,7 +902,7 @@ export const NUEVAS_RESPUESTAS: Record<'corto-es' | 'corto-en' | 'corto-ar' | 'b
       titulo: 'Kobe with your own guide, same price for 1 or 6 people',
       texto: 'Just your group, at your pace. Hotel lobby meeting in Osaka, Kyoto or Kobe.',
       medio: 'Half day · 4 hours', completo: 'Full day · 8 hours', porGrupo: 'per group, up to 6 people',
-      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by PayPal or Wise.', 'Free cancellation up to 72 hours before.'],
+      notas: ['Trains, tickets and meals are not included.', 'Pay in cash on the day or in advance by Wise, Revolut or PayPay.', 'Free cancellation up to 72 hours before.'],
     },
     faqTitulo: 'FAQ',
     faq: [

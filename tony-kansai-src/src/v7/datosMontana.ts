@@ -177,7 +177,7 @@ export const VENTA_ES = {
     'Fotos de la ruta, enviadas después',
   ],
   noIncluye: 'Trenes, autobuses, comidas y entradas: se pagan aparte, directamente.',
-  pago: 'Pago en efectivo en yenes el mismo día, o por adelantado con PayPal, Wise o transferencia cuando la fecha esté confirmada.',
+  pago: 'Pago en efectivo en yenes el mismo día, o por adelantado con Wise, Revolut, PayPay o transferencia cuando la fecha esté confirmada.',
   boton: 'Pedir mi día de montaña por WhatsApp',
   verRutas: 'Ver las rutas',
   resenas: { titulo: 'Lo que dicen de Tony sus clientes', de: 'reseñas', todas: 'Ver todas las reseñas' },

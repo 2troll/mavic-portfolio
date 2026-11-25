@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 import { Helmet } from 'react-helmet-async'
 import { HIKING_ROUTES } from '../lib/data'
 import { useLanguage } from '../contexts/LanguageContext'
-import { GUIAS, CORREO, PAYPAL_TONY, PAGAR, PAGINAS, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
+import { GUIAS, CORREO, PAGAR, PAGINAS, enlaceGuia, contactoLd, NOTA_TG } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import { CabeceraEs } from './CabeceraEs'
 import { PieEs } from './PieEs'
 import { CabeceraEn } from './CabeceraEn'
@@ -211,8 +212,7 @@ export default function Montana({ id }: { id: MontanaId }) {
         </div>
         {pagar && (
           <p className="v7-monte-pagar">
-            <a href={`${PAYPAL_TONY}/${yenes}JPY`} target="_blank" rel="noopener noreferrer"
-              onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, ruta: m, valor: yenes, canal: 'paypal' })}>{pagar.boton}</a>
+            <PagosAdelantado lang={p.lang} pagina={p.id} valor={yenes} className="v7-pagos-linea" />
             <span>{pagar.nota}</span>
           </p>
         )}

@@ -23,7 +23,8 @@ import { LOGOS } from './logosMarcas'
 import { Helmet } from 'react-helmet-async'
 import { Mosaico } from '../v8/Mosaico'
 import { LibroSellos } from '../v9/Sellos'
-import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAYPAL_TONY, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, TG_TONY, WA_LARION_URL, WA_LARION_VISIBLE, NOTA_TG } from './contenido'
+import { PAGINAS, HERMANAS, GUIAS, NOMBRE_GUIA, CREDITOS, CORREO, PAGAR, enlaceGuia, contactoLd, TG_LARION_URL, TG_LARION_VISIBLE, TG_TONY, WA_LARION_URL, WA_LARION_VISIBLE, NOTA_TG } from './contenido'
+import { PagosAdelantado } from './Pagos'
 import type { PaginaId, Pagina, DatosContacto } from './contenido'
 import { useLanguage } from '../contexts/LanguageContext'
 import { foto } from './foto'
@@ -603,7 +604,6 @@ const mediaResenas = (l: Resena[], lang: string) =>
 const RESERVAR_PLAN: Record<string, string> = { es: 'Reservar por WhatsApp', en: 'Book on WhatsApp', ar: 'احجز عبر واتساب', ru: 'Забронировать в WhatsApp' }
 /** Larion: Telegram (t.me no prellena, el plan lo dice el cliente). */
 const RESERVAR_PLAN_TG: Record<string, string> = { en: 'Book on Telegram', ru: 'Забронировать в Telegram' }
-const PAGO_ADELANTADO: Record<string, string> = { es: 'o paga por adelantado con PayPal', en: 'or pay in advance with PayPal', ar: 'أو ادفع مسبقاً عبر PayPal', ru: 'или оплатить заранее через PayPal' }
 
 // Tour corto de 2 horas en Kioto (precio en datosRespuestasNuevas.ts).
 const CORTO_TXT: Record<string, { texto: string; ruta: string }> = {
@@ -658,7 +658,7 @@ function FichaTour({ p }: { p: Pagina }) {
 }
 
 function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
-  // Solo en las páginas de Tony: el PayPal es suyo.
+  // Solo en las páginas de Tony: los medios de pago son suyos.
   const pagar = p.guia === 'tony' ? PAGAR[p.lang] : undefined
   const cambios = useCambio(p.mercado.divisas)
   const otono = useEsOtono()
@@ -698,10 +698,7 @@ function Precios({ p, resenas }: { p: Pagina; resenas: Resena[] }) {
               {(GUIAS[p.guia].tg ? RESERVAR_PLAN_TG : RESERVAR_PLAN)[p.lang] ?? RESERVAR_PLAN.en}
             </a>
             {pagar && !plan.desde && (
-              <a className="v7-plan-pagar-enlace" href={`${PAYPAL_TONY}/${plan.yenes}JPY`} target="_blank" rel="noopener noreferrer"
-                onClick={() => window.gtag?.('event', 'begin_checkout', { pagina: p.id, valor: plan.yenes, canal: 'paypal' })}>
-                {PAGO_ADELANTADO[p.lang] ?? PAGO_ADELANTADO.en}
-              </a>
+              <PagosAdelantado lang={p.lang} pagina={p.id} valor={plan.yenes} />
             )}
             {cambios.length > 0 && (
               <p className="v7-plan-aprox">
@@ -1100,7 +1097,7 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['En bici', 'Kioto en bici con el guía, al precio de medio día o día completo; las bicis se alquilan aparte'],
     ['Grupos', 'Solo tu grupo; grupos grandes, precio a consultar'],
     ['Recogida', 'En el vestíbulo de tu hotel'],
-    ['Pago', 'Efectivo el día del tour, o PayPal o Wise por adelantado'],
+    ['Pago', 'Efectivo el día del tour, o Wise, Revolut o PayPay por adelantado'],
     ['Cancelación', 'Gratis hasta 72 horas antes; con menos de 72 horas se cobra la mitad'],
     ['Experiencia', 'Más de 25 tours guiados'],
     ['Contacto', 'WhatsApp +34 634 193 106 · tony@tonykansaiguide.com'],
@@ -1114,7 +1111,7 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['By bike', 'Kyoto by bike with your guide, at the half-day or full-day price; bikes are rented separately'],
     ['Groups', 'Your group only; larger groups, price on request'],
     ['Pick-up', 'In your hotel lobby'],
-    ['Payment', 'Cash on the day, or PayPal or Wise in advance'],
+    ['Payment', 'Cash on the day, or Wise, Revolut or PayPay in advance'],
     ['Cancellation', 'Free up to 72 hours before; with less than 72 hours, half the price is charged'],
     ['Experience', 'More than 25 tours guided'],
     ['Contact', 'WhatsApp +34 634 193 106 · tony@tonykansaiguide.com'],
@@ -1128,7 +1125,7 @@ const FICHA_RAPIDA: Record<string, [string, string][]> = {
     ['بالدراجة', 'كيوتو بالدراجة مع المرشد، بسعر نصف اليوم أو اليوم الكامل؛ والدراجات تُستأجر على حدة'],
     ['المجموعات', 'مجموعتك وحدها؛ المجموعات الكبيرة بسعر حسب الطلب'],
     ['الاستقبال', 'في بهو فندقك'],
-    ['الدفع', 'نقداً يوم الجولة، أو مسبقاً عبر PayPal أو Wise'],
+    ['الدفع', 'نقداً يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay'],
     ['الإلغاء', 'مجاني حتى ٧٢ ساعة قبل الجولة؛ وقبل أقل من ٧٢ ساعة يُدفع نصف السعر'],
     ['الخبرة', 'أكثر من ٢٥ جولة'],
     ['التواصل', 'واتساب ‎+34 634 193 106 · tony@tonykansaiguide.com'],

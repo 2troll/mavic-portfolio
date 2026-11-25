@@ -418,21 +418,21 @@ export function fichaCiudad(id: CiudadId, lang: Lengua, guia: 'tony' | 'larion')
       { q: 'Incluye', a: 'Recogida en el vestíbulo de tu hotel, ruta a tu medida, ayuda con trenes y tarjeta IC, y dónde comer (también halal y vegetariano).' },
       { q: 'Qué se ve', a: `${mayus(zonas)}.` },
       { q: 'Idiomas', a: 'Español (nativo), inglés y árabe.' },
-      { q: 'Pago', a: 'En efectivo, en yenes, el día del tour, o por adelantado con PayPal o Wise. Cancelación gratis hasta 72 horas antes.' },
+      { q: 'Pago', a: 'En efectivo, en yenes, el día del tour, o por adelantado con Wise, Revolut o PayPay. Cancelación gratis hasta 72 horas antes.' },
     ],
     en: [
       { q: 'Price', a: precio },
       { q: 'Included', a: 'Hotel lobby pick-up, a route planned around you, help with trains and IC cards, and where to eat (halal and vegetarian too).' },
       { q: 'What you see', a: `${mayus(zonas)}.` },
       { q: 'Languages', a: 'English, Spanish (native) and Arabic.' },
-      { q: 'Payment', a: 'Cash in yen on the day, or in advance by PayPal or Wise. Free cancellation up to 72 hours before.' },
+      { q: 'Payment', a: 'Cash in yen on the day, or in advance by Wise, Revolut or PayPay. Free cancellation up to 72 hours before.' },
     ],
     ar: [
       { q: 'السعر', a: precio },
       { q: 'يشمل', a: 'الاستقبال من بهو الفندق، ومساراً على ذوقكم، والمساعدة في القطارات وبطاقة IC، وأماكن الطعام الحلال.' },
       { q: 'ماذا نزور', a: `${zonas}.` },
       { q: 'اللغات', a: 'العربية والإسبانية والإنجليزية.' },
-      { q: 'الدفع', a: 'نقداً بالين في يوم الجولة، أو مسبقاً عبر PayPal أو Wise. الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.' },
+      { q: 'الدفع', a: 'نقداً بالين في يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay. الإلغاء مجاني حتى ٧٢ ساعة قبل الجولة.' },
     ],
   }
   return lang === 'ru' ? tony.en : tony[lang]

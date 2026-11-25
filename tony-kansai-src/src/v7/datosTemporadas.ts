@@ -725,7 +725,7 @@ export const INVIERNO: Record<'w-es' | 'w-en' | 'w-ar', PaginaOtono> = {
     preciosTitulo: 'Precios de invierno, por grupo', porGrupo: 'por grupo',
     porPersona: (y) => `Siendo 4: ${y} por persona`,
     notas: [
-      'Se paga en efectivo el día del tour o por adelantado con PayPal o Wise.',
+      'Se paga en efectivo el día del tour o por adelantado con Wise, Revolut o PayPay.',
       'Cancelación sin coste hasta 72 horas antes.',
       'No hay tours los viernes.',
     ],
@@ -888,7 +888,7 @@ export const INVIERNO: Record<'w-es' | 'w-en' | 'w-ar', PaginaOtono> = {
     preciosTitulo: 'Winter prices, per group', porGrupo: 'per group',
     porPersona: (y) => `For 4 people: ${y} each`,
     notas: [
-      'Pay in cash on the day, or in advance with PayPal or Wise.',
+      'Pay in cash on the day, or in advance with Wise, Revolut or PayPay.',
       'Free cancellation up to 72 hours before.',
       'No tours on Fridays.',
     ],
@@ -1051,7 +1051,7 @@ export const INVIERNO: Record<'w-es' | 'w-en' | 'w-ar', PaginaOtono> = {
     preciosTitulo: 'أسعار الشتاء للمجموعة', porGrupo: 'للمجموعة',
     porPersona: (y) => `لأربعة أشخاص: ${y} للشخص`,
     notas: [
-      'الدفع نقداً يوم الجولة، أو مسبقاً عبر PayPal أو Wise.',
+      'الدفع نقداً يوم الجولة، أو مسبقاً عبر Wise أو Revolut أو PayPay.',
       'الإلغاء مجاني حتى 72 ساعة قبل الموعد.',
       'لا جولات يوم الجمعة.',
     ],
