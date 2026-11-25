@@ -48,7 +48,7 @@
 
   function boton(t, cfg) {
     if (d.getElementById('caida-boton')) return
-    var st = d.createElement('style')
+    var st = d.getElementById('caida-boton-estilo') || d.createElement('style'); st.id = 'caida-boton-estilo'
     st.textContent =
       '#caida-boton{position:fixed;right:max(12px,env(safe-area-inset-right));top:var(--caida-arriba,76px);z-index:46;' +
       'width:40px;height:40px;border-radius:50%;border:1px solid rgba(30,42,54,.18);background:rgba(255,255,255,.88);' +
@@ -59,7 +59,7 @@
       '#caida-boton[aria-pressed="false"]::after{content:"";position:absolute;width:24px;height:2px;background:#1e2a36;transform:rotate(-45deg);border-radius:2px}' +
       'html[data-tema="oscuro"] #caida-boton{background:rgba(29,26,38,.88);border-color:rgba(255,255,255,.2)}' +
       'html[data-tema="oscuro"] #caida-boton[aria-pressed="false"]::after{background:#f3eef0}' +
-      'body:has(.v7-expedicion) #caida-boton{display:none}@media print{#caida-boton{display:none}}'
+      'body:has(.v7-expedicion) #caida-boton,html.cab-es-bloqueo #caida-boton{display:none}@media print{#caida-boton{display:none}}'
     d.head.appendChild(st)
     var bt = d.createElement('button')
     bt.id = 'caida-boton'; bt.type = 'button'
@@ -85,12 +85,14 @@
       var alto = h ? h.getBoundingClientRect().height : 64
       d.documentElement.style.setProperty('--caida-arriba', Math.round(Math.min(alto, 120) + 10) + 'px')
     }
-    sitio(); w.addEventListener('resize', sitio)
+    sitio(); if (!w.__caidaSitio) { w.__caidaSitio = 1; w.addEventListener('resize', sitio) }
   }
 
+  var actual = null   // temporada que se está viendo ahora
   function montar() {
     if (!enEspanol()) return
     var t = temporada(), cfg = T[t]
+    actual = t
     if (!cfg || !d.body) return
     var b = d.body
     if (b.classList.contains('v7-expedicion') || d.querySelector('.v7-expedicion')) return
@@ -108,7 +110,7 @@
     st.textContent =
       '#caida{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:45;contain:strict;opacity:0;transition:opacity 2s}' +
       '#caida.on{opacity:1}#caida.pausa *{animation-play-state:paused!important}' +
-      'body:has(.v7-expedicion) #caida{display:none}' +
+      'body:has(.v7-expedicion) #caida{display:none}html.cab-es-bloqueo #caida,html.cab-es-bloqueo #caida-boton{display:none}' +
       '#caida>i{position:absolute;top:0;font-style:normal;line-height:1;will-change:transform;animation:cd-cae linear infinite}' +
       '#caida>i>b{display:block;font-weight:400;animation:cd-va ease-in-out infinite alternate}' +
       '@keyframes cd-cae{0%{transform:translate3d(0,-12vh,0);opacity:0}8%{opacity:var(--o)}88%{opacity:var(--o)}100%{transform:translate3d(var(--dx),108vh,0);opacity:0}}' +
@@ -134,6 +136,32 @@
       w.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', function (e) { if (e.matches) c.remove() })
     } catch (e) {}
   }
+
+  // La SPA cambia de página sin recargar (Tony, 25-11-2026: «cuando cambio en el
+  // menú se queda siempre la anterior»): al cambiar la ruta se vuelve a mirar la
+  // temporada y, si es otra, se quitan la caída y el botón y se montan los nuevos.
+  function quitar() {
+    var c = d.getElementById('caida'), k = d.getElementById('caida-boton')
+    if (c) c.remove(); if (k) k.remove()
+  }
+  function revisar() {
+    if (!enEspanol()) return
+    var t = temporada()
+    if (t === actual) return
+    quitar(); actual = null; montar()
+  }
+  var ruta = location.pathname + location.search
+  function alCambiarRuta() {
+    var r = location.pathname + location.search
+    if (r === ruta) return
+    ruta = r; setTimeout(revisar, 60)   // tras pintar la página nueva (lang, .v7-expedicion)
+  }
+  ;['pushState', 'replaceState'].forEach(function (m) {
+    var orig = history[m]
+    if (!orig) return
+    history[m] = function () { var x = orig.apply(this, arguments); alCambiarRuta(); return x }
+  })
+  w.addEventListener('popstate', alCambiarRuta)
 
   function luego() { (w.requestIdleCallback || function (f) { setTimeout(f, 200) })(montar, { timeout: 3000 }) }
   if (d.readyState === 'complete') luego(); else w.addEventListener('load', luego)

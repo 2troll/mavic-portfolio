@@ -439,10 +439,32 @@ html[data-tema='oscuro']:has(#root .v7:not(.v7-expedicion):not(.v7-sin-pixel)) :
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) a.v7-plan-pagar { background: var(--boton); color: var(--boton-tinta); border-radius: var(--r-2); }
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) a.v7-plan-pagar:hover { background: var(--boton-hover); }
 
-/* Preguntas */
-.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details { background: var(--superficie); border: 1px solid var(--linea); border-radius: var(--r-2); }
-.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details[open] { box-shadow: var(--sombra-1); }
-.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary::after { color: var(--acento); }
+/* Preguntas (Tony, 25-11-2026: «las cajitas están muy cuadradas, más minimalista»):
+   una lista limpia, sin cajas. Filete fino entre preguntas, aire a los lados,
+   un «+» en un círculo sakura que gira a «×» al abrir. Las respuestas siguen
+   enteras en el HTML (y en el FAQPage JSON-LD) para Google y las IAs. */
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq { gap: 0; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details {
+  background: none; border: 0; border-radius: 0; box-shadow: none; padding: 0;
+  border-bottom: 1px solid var(--linea);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details:first-child { border-top: 1px solid var(--linea); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary {
+  align-items: center; padding: 20px 4px; font-size: 1.05rem; font-weight: 600; line-height: 1.4; color: var(--tinta);
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary::after {
+  content: ''; flex: none; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--sakura-velo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M12 6v12M6 12h12' fill='none' stroke='%239d4569' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E") center / 16px no-repeat;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.2s;
+}
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details[open] summary::after { content: ''; transform: rotate(45deg); background-color: #fbe3ea; }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary:hover { color: var(--sakura-tinta); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details > :not(summary) { padding: 0 48px 22px 4px; margin: 0; color: var(--tenue); line-height: 1.65; max-width: 62ch; }
+@media (max-width: 560px) {
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary { padding: 18px 2px; font-size: 1rem; }
+  .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq details > :not(summary) { padding: 0 8px 20px 2px; }
+}
+@media (prefers-reduced-motion: reduce) { .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-faq summary::after { transition: none; } }
 
 /* Formulario (va después de WhatsApp, regla de Antonio). */
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-formulario :is(input, select, textarea) {
@@ -775,10 +797,11 @@ html:has(.v7:not(.v7-expedicion):not(.v7-sin-pixel)) section.eq.eq-react { --eq-
 }
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) > summary::-webkit-details-marker { display: none; }
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada) > summary::after {
-  content: ''; flex: none; width: 8px; height: 8px; border: solid var(--tenue); border-width: 0 1.5px 1.5px 0;
-  transform: translateY(-2px) rotate(45deg); transition: transform 0.2s ease;
+  content: ''; flex: none; width: 34px; height: 34px; border-radius: 50%;
+  background: var(--sakura-velo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%239d4569' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+  transition: transform 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
-.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada)[open] > summary::after { transform: translateY(1px) rotate(-135deg); }
+.v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada)[open] > summary::after { transform: rotate(180deg); }
 .v7:not(.v7-expedicion):not(.v7-sin-pixel) :is(.v7-plegado, .v7-faq-plegada)[open] > :not(summary) { padding-bottom: 20px; }
 
 /* Reseñas en fila también en escritorio: la sección mide una pantalla y las
@@ -915,8 +938,8 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) {
   --washi: #fdeff2;          /* el 60 %: usuzakura, fondo de página */
   --sakura-velo: #f9e4e9;    /* banda: reseñas, pie, cabeceras de tabla, huecos de foto */
   --sakura: #f9e4e9;         /* pétalo: inicial de reseña, chip «nuevo», selección */
-  --sakura-hondo: #e8a9b9;   /* solo adorno (kanji grande, filetes): no es texto */
-  --sakura-tinta: #8e3b55;   /* rosa vino para TEXTO de adorno: 5,93 fondo / 5,15 banda */
+  --sakura-hondo: #ee9fb5;   /* solo adorno (kanji grande, filetes): no es texto */
+  --sakura-tinta: #9d4569;   /* rosa sakura hondo para TEXTO de adorno: 5,39 fondo / 4,96 banda */
   --verde: #2d684c;
   --verde-hondo: #23513c;
   --estrella: #946900;       /* 4,03 fondo / 3,50 banda */
@@ -966,28 +989,19 @@ html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-otono-dia span { 
   html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto { display: inline; font-size: 15px; }
 }
 
-/* Marca en español: flor maciza en rosa cerezo hondo (5,3:1 sobre blanco) y el
-   nombre en Geist (la letra de Nothing OS 5, Tony 25-11-2026). */
-[lang="es"] .v7-logo .v7-logo-sakura { color: #b5426a; width: 28px; height: 28px; --logo-flor: #fff; }
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo { gap: 7px; }
+/* Marca en español (Tony, 25-11-2026: «mejora el logo, quita las líneas, un font
+   que atraiga, rosa sakura»): flor de cerezo sola en degradado sakura (Logo.tsx)
+   y el nombre en dos tiempos: «Tony Kansai» en el mincho de los titulares y
+   «GUIDE» pequeño y espaciado. Sin franjas de tren debajo. Lo mismo que
+   cabecera-es.css para la barra común. */
+[lang="es"] .v7-logo .v7-logo-sakura { width: 30px; height: 30px; }
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo { gap: 9px; }
 html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto {
-  font-family: 'Geist Variable', system-ui, sans-serif; font-weight: 600; letter-spacing: -0.01em; font-size: 16.5px; color: #1e2a36;
+  display: inline-flex; align-items: baseline; gap: 7px; padding: 0; background: none;
+  font-family: var(--mincho); font-weight: 500; letter-spacing: 0.01em; font-size: 19px; line-height: 1; color: #1e2a36;
 }
-
-/* §22 Logotipo español en la cabecera (25-11-2026, marca): el nombre en granate
-   Hankyu (#5d1f2a, 12,9:1 sobre blanco y 11,8:1 sobre #fdeff2) con la franja de
-   tren debajo: granate y un hilo azul Shinkansen (#1d4f91). Flor UIX en sakura. */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto {
-  color: #5d1f2a; padding-bottom: 5px;
-  background:
-    linear-gradient(#5d1f2a 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
-    linear-gradient(#1d4f91 0 0) 0 100% / 100% 1px no-repeat;
+html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-guia {
+  font-family: var(--letra); font-size: 10.5px; font-weight: 600; letter-spacing: 0.24em; text-transform: uppercase; color: #9d4569;
 }
-html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo-texto {
-  color: #f1c4d0;
-  background:
-    linear-gradient(#e8a9b9 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
-    linear-gradient(#8fb2e6 0 0) 0 100% / 100% 1px no-repeat;
-}
-/* Flor UIX en rosa cerezo (#b5426a, 5,3:1 sobre blanco) en la cabecera española: §1 la pintaba en tinta. */
-html[lang="es"] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-cabecera .v7-logo svg.v7-logo-sakura { color: #b5426a; }
+html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-texto { color: #f3eef0; }
+html[lang="es"][data-tema='oscuro'] .v7:not(.v7-expedicion):not(.v7-sin-pixel) .v7-logo-guia { color: #f2a7c0; }

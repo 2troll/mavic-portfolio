@@ -17,8 +17,10 @@
   --ce-banda: #f9e4e9;
   --ce-tinta: #1e2a36;
   --ce-tenue: #515b67;
-  --ce-vino: #8e3b55;
-  --ce-rosa: #b5426a;
+  --ce-vino: #9d4569;          /* rosa sakura hondo para texto: 6,0:1 sobre blanco */
+  --ce-rosa: #ee9fb5;          /* pétalo: solo adorno */
+  --ce-velo: #fdf0f4;
+  --ce-activo: #fbe3ea;
   --ce-verde: #2d684c;
   --ce-verde-hondo: #24563e;
   --ce-linea: rgba(30, 42, 54, .12);
@@ -34,7 +36,7 @@
 }
 html[data-tema='oscuro'] .cab-es {
   --ce-barra: rgba(22, 20, 30, .9); --ce-panel: #1d1a26; --ce-banda: #262233;
-  --ce-tinta: #f3eef0; --ce-tenue: #b9c1cc; --ce-vino: #f2a7c0; --ce-rosa: #f2a7c0;
+  --ce-tinta: #f3eef0; --ce-tenue: #b9c1cc; --ce-vino: #f2a7c0; --ce-rosa: #f2a7c0; --ce-velo: #262233; --ce-activo: #3a2a36;
   --ce-linea: rgba(255, 255, 255, .14);
 }
 /* El cristal va en un pseudo: un backdrop-filter en la propia cabecera haría de
@@ -51,42 +53,38 @@ html[data-tema='oscuro'] .cab-es {
 .cab-es a { color: inherit; }
 .cab-es :focus-visible { outline: 2px solid var(--ce-verde); outline-offset: 2px; border-radius: 8px; }
 
-/* La marca. Es la de estilo-sereno §22 (PORTADA): nombre en granate Hankyu
-   #5d1f2a con la franja de tren granate + hilo azul Shinkansen #1d4f91, flor
-   #b5426a. §22 solo alcanza a .v7-cabecera dentro de .v7, y las páginas
-   estáticas no cargan estilo-sereno: por eso se repiten aquí LOS MISMOS valores
-   (si §22 cambia, cambiar también aquí). Solo la marca de la barra. */
+/* La marca (Tony, 25-11-2026: «mejora el logo, quita las líneas de debajo del
+   nombre, un font que atraiga, rosa sakura»): la flor de cerezo sola, en
+   degradado sakura, y el nombre en dos tiempos: «Tony Kansai» en el mincho de
+   los titulares (Zen Old Mincho, copia en public/v7/letra para las estáticas) y
+   «GUIDE» pequeño y espaciado en Geist. Sin franjas debajo. Se repite en
+   estilo-sereno §22 (dentro de .v7): si cambia aquí, cambiar allí. */
+@font-face { font-family: 'Zen Mincho TK'; font-style: normal; font-weight: 500; font-display: swap; src: url('/v7/letra/zen-old-mincho-latin-500.woff2') format('woff2'); unicode-range: U+0000-00FF,U+0131,U+0152-0153,U+2000-206F,U+20AC,U+2122; }
 .cab-es .cab-es-marca, .cab-es .cab-es-panel-marca { display: inline-flex; align-items: center; min-height: 44px; text-decoration: none; }
 .cab-es .v7-logo { display: inline-flex; align-items: center; gap: 9px; }
 .cab-es .v7-logo .v7-logo-torii { display: none; }
-.cab-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 28px; height: 28px; --logo-flor: #fff; }
-.cab-es .v7-logo-texto { display: inline; font-family: var(--ce-marca); font-weight: 600; font-size: 16.5px; letter-spacing: -.01em; white-space: nowrap; }
-html .cab-es .cab-es-marca .v7-logo svg.v7-logo-sakura { color: #b5426a; }
+.cab-es .v7-logo .v7-logo-sakura { display: block; flex: none; width: 30px; height: 30px; filter: drop-shadow(0 1px 2px rgba(201, 87, 124, .25)); transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+.cab-es .cab-es-marca:hover .v7-logo-sakura { transform: rotate(72deg); }
 /* Clase repetida a propósito: gana a estilo-sereno §21 (0,5,1) dentro de .v7 sin !important. */
-html .cab-es.cab-es .cab-es-marca .v7-logo .v7-logo-texto.v7-logo-texto {
-  font-family: var(--ce-marca); font-weight: 600; font-size: 16.5px; letter-spacing: -.01em; text-transform: none;
-  color: #5d1f2a; padding-bottom: 5px;
-  background:
-    linear-gradient(#5d1f2a 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
-    linear-gradient(#1d4f91 0 0) 0 100% / 100% 1px no-repeat;
+html .cab-es.cab-es .v7-logo .v7-logo-texto.v7-logo-texto {
+  display: inline-flex; align-items: baseline; gap: 7px; padding: 0; background: none; text-transform: none; white-space: nowrap;
+  font-family: 'Zen Old Mincho', 'Zen Mincho TK', 'Hiragino Mincho ProN', 'Yu Mincho', serif; font-weight: 500;
+  font-size: 19px; letter-spacing: .01em; line-height: 1; color: var(--ce-tinta);
 }
-html[data-tema='oscuro'] .cab-es.cab-es .cab-es-marca .v7-logo .v7-logo-texto.v7-logo-texto {
-  color: #f1c4d0;
-  background:
-    linear-gradient(#e8a9b9 0 0) 0 calc(100% - 2px) / 100% 2px no-repeat,
-    linear-gradient(#8fb2e6 0 0) 0 100% / 100% 1px no-repeat;
+html .cab-es.cab-es .v7-logo .v7-logo-guia {
+  font-family: var(--ce-marca); font-size: 10.5px; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--ce-vino);
 }
-html .cab-es .cab-es-panel-marca .v7-logo svg.v7-logo-sakura { color: #b5426a; }
-html .cab-es.cab-es .cab-es-panel-marca .v7-logo .v7-logo-texto.v7-logo-texto { font-family: var(--ce-marca); font-weight: 600; font-size: 16.5px; letter-spacing: -.01em; text-transform: none; color: var(--ce-tinta); }
+@media (max-width: 379px) { html .cab-es.cab-es .v7-logo .v7-logo-texto.v7-logo-texto { font-size: 17px; } html .cab-es.cab-es .v7-logo .v7-logo-guia { display: none; } }
 
 /* El botón ☰: tres rayas y, si cabe, la palabra. */
 .cab-es .cab-es-boton {
   display: inline-flex; align-items: center; gap: 10px; min-width: 44px; min-height: 44px; margin: 0; padding: 0 14px 0 12px;
-  border: 1px solid rgba(30, 42, 54, .28); border-radius: 12px; background: var(--ce-panel); color: var(--ce-tinta);
+  border: 1px solid rgba(30, 42, 54, .16); border-radius: 999px; background: var(--ce-panel); color: var(--ce-tinta);
+  box-shadow: 0 1px 2px rgba(30, 42, 54, .06);
   font: 600 15px/1 system-ui, -apple-system, 'Segoe UI', sans-serif; cursor: pointer;
   transition: background-color .15s, border-color .15s;
 }
-.cab-es .cab-es-boton:hover { border-color: var(--ce-tinta); }
+.cab-es .cab-es-boton:hover { border-color: var(--ce-rosa); background: var(--ce-velo); }
 .cab-es .cab-es-rayas { display: inline-grid; gap: 4px; width: 20px; }
 .cab-es .cab-es-rayas i { display: block; height: 2px; border-radius: 2px; background: currentColor; }
 @media (max-width: 379px) { .cab-es .cab-es-boton-txt { display: none; } .cab-es .cab-es-boton { padding: 0 12px; } }
@@ -130,50 +128,66 @@ html.cab-es-bloqueo, html.cab-es-bloqueo body { overflow: hidden; }
 .cab-es .cab-es-arbol li { margin: 0; padding: 0; }
 .cab-es .cab-es-arbol li::before { content: none; }
 
-/* Primer nivel: tres enlaces grandes. */
+/* Menú (Tony, 25-11-2026: «mejora el menú, sobre todo en el teléfono»): los tres
+   primeros como baldosas, las ramas con chevrón en un círculo, las ciudades como
+   chips y WhatsApp siempre a la vista abajo. Sin filetes laterales. */
+.cab-es .cab-es-primeros { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin: 10px 0 12px; }
 .cab-es .cab-es-primeros a {
-  display: flex; align-items: center; min-height: 52px; padding: 4px 0;
-  border-bottom: 1px solid var(--ce-linea); text-decoration: none;
-  font-family: var(--ce-titular); font-size: 21px; font-weight: 600; color: var(--ce-tinta);
+  display: flex; align-items: center; justify-content: center; min-height: 56px; padding: 6px 8px;
+  border: 1px solid var(--ce-linea); border-radius: 16px; background: var(--ce-velo); text-decoration: none; text-align: center;
+  font-family: var(--ce-titular); font-size: 18px; font-weight: 500; color: var(--ce-tinta);
+  transition: border-color .15s, background-color .15s, transform .15s;
 }
-.cab-es .cab-es-primeros a[aria-current='page'] { color: var(--ce-vino); }
+.cab-es .cab-es-primeros a:hover { border-color: var(--ce-rosa); }
+.cab-es .cab-es-primeros a:active { transform: scale(.97); }
+.cab-es .cab-es-primeros a[aria-current='page'] { background: var(--ce-activo); border-color: var(--ce-rosa); color: var(--ce-vino); }
 
 /* Ramas plegables. */
 .cab-es .cab-es-rama { margin: 0; padding: 0; border: 0; border-bottom: 1px solid var(--ce-linea); background: none; }
 .cab-es .cab-es-rama > summary {
-  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 56px;
-  list-style: none; cursor: pointer; font-size: 17px; font-weight: 650; color: var(--ce-tinta);
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 58px;
+  list-style: none; cursor: pointer; font-size: 17px; font-weight: 600; color: var(--ce-tinta);
 }
 .cab-es .cab-es-rama > summary::-webkit-details-marker { display: none; }
 .cab-es .cab-es-rama > summary::after {
-  content: ''; flex: none; width: 8px; height: 8px; margin-inline-end: 6px;
-  border: solid currentColor; border-width: 0 2px 2px 0; transform: translateY(-2px) rotate(45deg); transition: transform .2s;
+  content: ''; flex: none; width: 30px; height: 30px; border-radius: 50%;
+  background: var(--ce-velo) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%231e2a36' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center / 18px no-repeat;
+  transition: transform .25s cubic-bezier(.2, .8, .2, 1), background-color .15s;
 }
-.cab-es .cab-es-rama[open] > summary::after { transform: translateY(2px) rotate(-135deg); }
-.cab-es .cab-es-rama ul { padding: 0 0 14px; display: grid; gap: 0; }
+.cab-es .cab-es-rama[open] > summary::after { transform: rotate(180deg); background-color: var(--ce-activo); }
+.cab-es .cab-es-rama ul { padding: 0 0 16px; display: grid; gap: 2px; }
 .cab-es .cab-es-rama a {
-  display: flex; align-items: center; gap: 8px; min-height: 44px; padding: 6px 0 6px 14px;
-  border-inline-start: 1px solid var(--ce-linea); text-decoration: none; color: var(--ce-tenue); font-size: 16px; line-height: 1.3;
+  display: flex; align-items: center; gap: 10px; min-height: 46px; padding: 8px 12px; border-radius: 12px;
+  text-decoration: none; color: var(--ce-tinta); font-size: 15.5px; line-height: 1.3; transition: background-color .15s;
 }
-.cab-es .cab-es-rama a:hover, .cab-es .cab-es-rama a[aria-current='page'] { color: var(--ce-tinta); border-inline-start-color: var(--ce-rosa); }
-.cab-es .cab-es-rama a[aria-current='page'] { font-weight: 600; }
-/* Las ciudades, cortas, en dos columnas: la rama abierta no se hace eterna. */
-.cab-es .cab-es-rama-experiencias ul { grid-template-columns: 1fr 1fr; column-gap: 12px; }
+.cab-es .cab-es-rama a::before { content: ''; flex: none; width: 6px; height: 6px; border-radius: 50%; background: var(--ce-rosa); opacity: .55; }
+.cab-es .cab-es-rama a:hover { background: var(--ce-velo); }
+.cab-es .cab-es-rama a[aria-current='page'] { background: var(--ce-activo); color: var(--ce-vino); font-weight: 600; }
+.cab-es .cab-es-rama a[aria-current='page']::before { opacity: 1; }
+/* Las ciudades, cortas: chips en rejilla, la rama abierta no se hace eterna. */
+.cab-es .cab-es-rama-experiencias ul { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 6px; }
 .cab-es .cab-es-rama-experiencias li:has(> a:not([href^='/es/osaka/']):not([href^='/es/kyoto/']):not([href^='/es/nara/']):not([href^='/es/kobe/']):not([href^='/es/himeji/']):not([href^='/es/hiroshima/']):not([href^='/es/beyond/'])) { grid-column: 1 / -1; }
-.cab-es a.cab-es-destacado {
-  margin: 6px 0; padding: 10px 14px; border: 0; border-radius: 12px;
-  background: var(--ce-banda); color: var(--ce-vino); font-weight: 650;
+.cab-es .cab-es-rama-experiencias li > a:is([href^='/es/osaka/'], [href^='/es/kyoto/'], [href^='/es/nara/'], [href^='/es/kobe/'], [href^='/es/himeji/'], [href^='/es/hiroshima/'], [href^='/es/beyond/']) {
+  justify-content: center; min-height: 44px; border: 1px solid var(--ce-linea); background: var(--ce-panel); font-size: 15px;
 }
+.cab-es .cab-es-rama-experiencias li > a:is([href^='/es/osaka/'], [href^='/es/kyoto/'], [href^='/es/nara/'], [href^='/es/kobe/'], [href^='/es/himeji/'], [href^='/es/hiroshima/'], [href^='/es/beyond/'])::before { display: none; }
+.cab-es a.cab-es-destacado {
+  margin: 6px 0; padding: 12px 14px; border-radius: 14px;
+  background: linear-gradient(100deg, #fdeef3, #fbe0e8); color: var(--ce-vino); font-weight: 650;
+}
+.cab-es a.cab-es-destacado::before { display: none; }
 .cab-es a.cab-es-destacado::after { content: '→'; margin-inline-start: auto; }
 .cab-es .cab-es-nuevo {
-  flex: none; padding: 1px 7px; border-radius: 999px; background: var(--ce-banda); color: var(--ce-vino);
+  flex: none; padding: 1px 7px; border-radius: 999px; background: var(--ce-activo); color: var(--ce-vino);
   font-size: 11px; font-weight: 650; letter-spacing: .04em; text-transform: uppercase;
 }
 
-/* Contacto: el botón verde, abajo del todo. */
+/* Contacto: el botón verde, pegado abajo para tenerlo siempre a mano en el móvil. */
 .cab-es .cab-es-wa {
-  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 52px; margin: 18px 0 0; padding: 0 18px;
-  border-radius: 14px; background: var(--ce-verde); color: #ffffff; text-decoration: none; font-weight: 650; font-size: 16px;
+  position: sticky; bottom: 0; z-index: 1;
+  display: flex; align-items: center; justify-content: center; gap: 10px; min-height: 54px; margin: 18px 0 0; padding: 0 18px;
+  border-radius: 16px; background: var(--ce-verde); color: #ffffff; text-decoration: none; font-weight: 650; font-size: 16px;
+  box-shadow: 0 -14px 20px 4px var(--ce-panel), 0 8px 20px -10px rgba(45, 104, 76, .6);
 }
 .cab-es .cab-es-wa:hover { background: var(--ce-verde-hondo); }
 .cab-es .cab-es-wa svg { flex: none; width: 20px; height: 20px; }
@@ -192,4 +206,5 @@ html.cab-es-bloqueo, html.cab-es-bloqueo body { overflow: hidden; }
 /* Igual que el pie: los <summary> del menú no heredan los de la página. */
 .cab-es summary { font-family: system-ui, -apple-system, 'Segoe UI', sans-serif; letter-spacing: 0; text-transform: none; padding: 0; margin: 0; background: none; border: 0; }
 .cab-es summary::before { content: none; display: none; }
-.cab-es .cab-es-rama > summary::after { position: static; background: none; color: inherit; }
+.cab-es .cab-es-rama > summary::after { position: static; color: inherit; }
+html[data-tema='oscuro'] .cab-es .cab-es-rama > summary::after { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M7 10l5 5 5-5' fill='none' stroke='%23f3eef0' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }

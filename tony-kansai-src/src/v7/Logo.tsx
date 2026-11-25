@@ -2,7 +2,7 @@
 // https://github.com/Richard9394/MingCute) y el nombre en la letra del sistema.
 // No es un dibujo propio: el icono viene tal cual de la biblioteca.
 // En español (Tony, 25-11-2026) se ve la flor de cerezo de UIX Icons en su lugar,
-// blanca dentro de un disco (el sol de la bandera; 25-11 «mejora el logo»):
+// en rosa sakura y sin disco (Tony, 25-11-2026: «mejora el logo… rosa sakura»):
 // van los dos y el CSS (estilo-sereno §21) enseña uno según [lang], así sirve
 // igual en la prerenderización y en la SPA sin saber la ruta.
 import { SAKURA_D } from './logo-sakura'
@@ -13,8 +13,8 @@ export function Logo({ texto = true }: { texto?: boolean }) {
   return (
     <span className="v7-logo">
       <svg className="v7-logo-torii" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" fillRule="evenodd" d={TORII} /></svg>
-      <svg className="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><circle cx="12" cy="12" r="12" fill="currentColor" /><path style={{ fill: 'var(--logo-flor, #fff)' }} fillRule="evenodd" transform="translate(4.2 4.4) scale(.65)" d={SAKURA_D} /></svg>
-      {texto && <span className="v7-logo-texto">Tony Kansai Guide</span>}
+      <svg className="v7-logo-sakura" viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><defs><radialGradient id="tk-petalo" cx="50%" cy="50%" r="58%"><stop offset="0" stopColor="#fbd3de" /><stop offset=".55" stopColor="#f2a9bd" /><stop offset="1" stopColor="#e4849f" /></radialGradient></defs><path fill="url(#tk-petalo)" fillRule="evenodd" d={SAKURA_D} /><circle cx="12" cy="12" r="1.9" fill="#c9577c" /></svg>
+      {texto && <span className="v7-logo-texto">Tony Kansai <span className="v7-logo-guia">Guide</span></span>}
     </span>
   )
 }
