@@ -18,7 +18,8 @@
   .tarjeta { background:rgba(255,253,249,.94); border:1px solid var(--linea); border-radius:16px; box-shadow:0 6px 24px rgba(40,30,10,.07);
     -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); }
 
-  #arriba { position:fixed; left:300px; right:384px; top:12px; display:flex; align-items:center; gap:8px; flex-wrap:wrap; pointer-events:none; }
+  #arriba { position:fixed; left:300px; right:384px; top:12px; display:flex; align-items:center; gap:8px; flex-wrap:nowrap; overflow:hidden; pointer-events:none; }
+  .cifra { white-space:nowrap; }
   #arriba h1 { margin:0 8px 0 4px; font-size:19px; font-weight:650; letter-spacing:-.01em; }
   .cifra { padding:4px 10px; font-size:11.5px; color:var(--tenue); border-radius:10px; background:rgba(255,253,249,.85); border:1px solid var(--linea-2); }
   .cifra b { color:var(--tinta); font-size:14px; font-weight:650; font-variant-numeric:tabular-nums; margin-inline-end:4px; }
@@ -87,11 +88,23 @@
   #intro p small { display:block; font-size:.4em; font-weight:400; color:var(--tenue); letter-spacing:0; margin-top:8px; }
   #nota { position:fixed; left:300px; bottom:14px; font-size:11.5px; color:#8a8476; max-width:480px; pointer-events:none; }
   #abrir { display:none; }
+  #vistas { position:fixed; left:300px; right:384px; top:54px; display:flex; gap:6px; align-items:center; flex-wrap:wrap; z-index:3; }
+  .vista { min-height:36px; padding:0 14px; border-radius:999px; border:1px solid var(--linea); background:rgba(255,253,249,.94); font-size:13.5px; display:inline-flex; gap:8px; align-items:center; white-space:nowrap; }
+  .vista:hover { border-color:#cbbda9; } .vista[aria-pressed=true] { background:var(--tinta); color:#fff; border-color:var(--tinta); }
+  .vista kbd { font:10.5px ui-monospace,Menlo,monospace; opacity:.55; }
+  #sub { display:none; gap:5px; align-items:center; flex-wrap:wrap; margin-inline-start:6px; } body.v-texto #sub { display:flex; }
+  #sub .b { min-height:30px; font-size:12.5px; padding:0 10px; } #sub small { color:var(--tenue); font-size:12px; margin-inline-start:4px; } #sub small b { color:var(--tinta); }
+  #buscar { width:100%; min-height:38px; border-radius:10px; border:1px solid var(--linea); background:var(--blanco); padding:0 12px; font-size:13.5px; }
+  #buscar.mal { border-color:#d6457a; } #buscar:focus-visible { outline:2px solid var(--bot); outline-offset:1px; }
+  #porDentro { margin-top:8px; min-height:30px; font-size:12.5px; } body.v-rayos #porDentro { display:none; }
+  body:not(.v-neuronas) #zoom, body:not(.v-neuronas) #nota { display:none; }
+  canvas { transition:opacity .17s; }
   body.grande #izq, body.grande #lector, body.grande #nota, body.grande #abrir, body.grande .cifra { display:none !important; }
-  body.grande #arriba { left:20px; right:auto; } body.grande #zoom { right:16px; } body.grande #intro { left:0; right:0; }
+  body.grande #arriba { left:20px; right:auto; } body.grande #vistas { left:20px; right:20px; } body.grande #zoom { right:16px; } body.grande #intro { left:0; right:0; }
   #z-grande { font-size:15px !important; }
 
   @media (max-width:1100px) {
+    #vistas { left:10px; right:10px; top:54px; flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; } .vista kbd { display:none; } .vista { min-height:34px; padding:0 12px; font-size:13px; }
     #izq { display:none; bottom:auto; max-height:70vh; z-index:7; top:56px; } body.izq #izq { display:flex; }
     #abrir { display:inline-flex; position:fixed; left:10px; top:10px; z-index:8; }
     #arriba { left:150px; right:10px; top:10px; } #arriba h1 { display:none; }
@@ -109,6 +122,8 @@
 <button class="b tarjeta" id="abrir" aria-expanded="false">☰ Capas y zonas</button>
 <aside id="izq" class="tarjeta" aria-label="Zonas, capas y controles">
   <div class="dentro">
+    <h2>Buscar una página</h2>
+    <input id="buscar" type="search" list="paginas" placeholder="kioto, precios, /en/…" aria-label="Buscar una página" autocomplete="off"><datalist id="paginas"></datalist>
     <h2>Zonas · qué parte ver</h2>
     <div id="zonas"></div>
     <h2>Capas · qué mostrar</h2>
@@ -121,6 +136,8 @@
       <li><b>Rueda · pellizco</b>Acercar y alejar (o + y −)</li>
       <li><b>Arrastrar punto</b>Tirar de esa página y su red</li>
       <li><b>Tocar punto</b>Encenderla: la señal corre por sus venas y el bot la lee</li>
+      <li><b>Doble toque</b>Ver esa página por dentro</li>
+      <li><b>N · R · Z · T</b>Cambiar de vista</li>
       <li><b>Teclas 0-9</b>0 toda la web · 1-9 cada zona</li>
       <li><b>Espacio</b>Pausa · flechas para mover</li>
       <li><b>F · ⛶</b>Pantalla grande, sin paneles</li>
@@ -129,13 +146,14 @@
 </aside>
 
 <div id="arriba"><h1>La web por dentro</h1><div id="cifras" style="display:contents"></div></div>
+<nav id="vistas" aria-label="Vistas"></nav>
 
 <div id="zoom" class="tarjeta" role="group" aria-label="Zoom">
   <button id="z-mas" aria-label="Acercar">+</button><div id="escala">100%</div><button id="z-menos" aria-label="Alejar">−</button><button id="z-todo" aria-label="Ver toda la web" style="font-size:16px">⤢</button><button id="z-grande" aria-label="Pantalla grande, sin paneles (tecla F)" aria-pressed="false">⛶</button>
 </div>
 
 <aside id="lector" class="tarjeta" aria-live="polite">
-  <header><div class="quien" id="quien">Bot leyendo</div><p class="url" id="url">Esperando al primer bot…</p></header>
+  <header><div class="quien" id="quien">Bot leyendo</div><p class="url" id="url">Esperando al primer bot…</p><button class="b" id="porDentro">Ver esta página por dentro (Rayos X)</button></header>
   <div id="pasos"></div>
   <div id="memoria"><span>Leídas <b id="m-pag">0</b></span><span>Párrafos <b id="m-par">0</b></span><span>Datos guardados <b id="m-dat">0</b></span></div>
 </aside>
@@ -226,12 +244,12 @@ let W = 0, H = 0, DPR = 1, T = d3.zoomIdentity, kBase = 1
 function medir() { DPR = Math.min(2, devicePixelRatio || 1); W = innerWidth; H = innerHeight; cv.width = Math.round(W * DPR); cv.height = Math.round(H * DPR) }
 medir()
 function hueco() {   // zona libre entre los paneles
-  if (document.body.classList.contains('grande')) return { x: 0, y: 0, w: W, h: H }
-  if (W > 1100) return { x: 300, y: 56, w: W - 300 - 384, h: H - 56 - 40 }
-  return { x: 0, y: 56, w: W, h: H * 0.66 - 70 }
+  if (document.body.classList.contains('grande')) return { x: 0, y: 100, w: W, h: H - 100 }
+  if (W > 1100) return { x: 300, y: 100, w: W - 300 - 384, h: H - 100 - 30 }
+  return { x: 0, y: 98, w: W, h: H * 0.66 - 108 }
 }
 const zoom = d3.zoom().scaleExtent([0.12, 10]).on('zoom', e => { T = e.transform; document.getElementById('escala').textContent = Math.round(T.k / kBase * 100) + '%' })
-zoom.filter(ev => ev.type === 'wheel' || (ev.touches && ev.touches.length > 1) || !cerca(ev.clientX ?? ev.touches?.[0]?.clientX, ev.clientY ?? ev.touches?.[0]?.clientY))
+zoom.filter(ev => vista === 'neuronas' && (ev.type === 'wheel' || (ev.touches && ev.touches.length > 1) || !cerca(ev.clientX ?? ev.touches?.[0]?.clientX, ev.clientY ?? ev.touches?.[0]?.clientY)))
 function encajar(xs, dur, margen = 1.12) {
   const h = hueco(); let x0 = 1e9, y0 = 1e9, x1 = -1e9, y1 = -1e9
   for (const p of xs) { x0 = Math.min(x0, p.x); y0 = Math.min(y0, p.y); x1 = Math.max(x1, p.x); y1 = Math.max(y1, p.y) }
@@ -288,7 +306,7 @@ function siguientePara(b) {
 function llegaBot(b, x) {
   b.en = x; b.viaje = false; b.vistas.add(x.id); x.e = Math.min(1.3, x.e + 0.8); x.leida = 1
   cuenta.leidas++; if (!x.n.ni) { cuenta.parr += x.n.ia.np; cuenta.datos += x.n.ia.faq + Object.keys(x.n.ia.ld).length }
-  if (b === seguido) { b.espera = 9; leer(b, x) } else b.espera = 0.6 + Math.random() * 0.8
+  if (b === seguido) { b.espera = 9; if (vista !== 'rayos') leer(b, x) } else b.espera = 0.6 + Math.random() * 0.8
 }
 
 // ── Lector: lo que la IA saca de cada página ──
@@ -297,7 +315,7 @@ const resalta = t => esc(t)
   .replace(/(\d[\d.,]*\s?(?:¥|€|\$|yenes|euros|horas?|h\b|min|minutos|personas|km|días?|%)|¥\s?\d[\d.,]*)/g, '<mark class="n">$1</mark>')
   .replace(/(^|[^\wÁÉÍÓÚáéíóúñ>])([A-ZÁÉÍÓÚ][a-záéíóúñ]{3,}(?:\s[A-ZÁÉÍÓÚ][a-záéíóúñ]+)*)/g, (m, a, b, i) => i === 0 ? m : a + '<mark class="e">' + b + '</mark>')
 function leer(b, x) {
-  const yo = ++turno, ia = x.n.ia, L = []
+  const yo = ++turno, ia = x.n.ia, L = []; ultimaLeida = x
   document.getElementById('quien').textContent = b.nombre + ' leyendo'
   document.getElementById('url').textContent = 'tonykansaiguide.com' + x.id
   pasos.innerHTML = ''
@@ -359,7 +377,7 @@ function cerca(px, py) {
 let encima = null, arrastrada = null
 d3.select(cv).call(d3.drag()
   .container(cv)
-  .filter(ev => !ev.button && !!cerca(ev.clientX ?? ev.touches?.[0]?.clientX, ev.clientY ?? ev.touches?.[0]?.clientY))
+  .filter(ev => vista === 'neuronas' && !ev.button && !!cerca(ev.clientX ?? ev.touches?.[0]?.clientX, ev.clientY ?? ev.touches?.[0]?.clientY))
   .subject(ev => cerca(ev.sourceEvent.clientX ?? ev.sourceEvent.touches?.[0]?.clientX, ev.sourceEvent.clientY ?? ev.sourceEvent.touches?.[0]?.clientY))
   .on('start', ev => { saltarIntro(); arrastrada = ev.subject; arrastrada.movida = false; sim.alphaTarget(0.12).alpha(Math.max(sim.alpha(), 0.15)) })
   .on('drag', ev => { const se = ev.sourceEvent.touches ? ev.sourceEvent.touches[0] : ev.sourceEvent
@@ -376,6 +394,7 @@ d3.select(cv).call(zoom).on('dblclick.zoom', null)
 addEventListener('resize', () => { medir(); zonaActiva ? encajar(zonaActiva.xs, 0) : verTodo(0) })
 
 cv.addEventListener('pointermove', ev => {
+  if (vista !== 'neuronas') return moverOtra(ev)
   if (arrastrada) return
   encima = cerca(ev.clientX, ev.clientY); cv.classList.toggle('mano', !!encima)
   if (!encima) { tip.style.opacity = 0; return }
@@ -402,7 +421,11 @@ document.addEventListener('fullscreenchange', () => { if (!document.fullscreenEl
 const abrir = document.getElementById('abrir')
 abrir.addEventListener('click', () => { const on = document.body.classList.toggle('izq'); abrir.setAttribute('aria-expanded', on) })
 addEventListener('keydown', e => {
+  if (e.target.matches && e.target.matches('input[type=search]')) return
+  const tecla = { n: 'neuronas', r: 'rayos', z: 'zonas', t: 'texto' }[e.key.toLowerCase()]
+  if (tecla && !e.metaKey && !e.ctrlKey) { irVista(tecla); return }
   if (e.target.closest && e.target.closest('input,button') && e.key === ' ') return
+  if (vista !== 'neuronas' && /^[0-9+=\-]$|^Arrow/.test(e.key) && !(/^[0-9]$/.test(e.key))) return
   if (e.key === '+' || e.key === '=') d3.select(cv).transition().duration(250).call(zoom.scaleBy, 1.4)
   else if (e.key === '-') d3.select(cv).transition().duration(250).call(zoom.scaleBy, 1 / 1.4)
   else if (e.key === '0') verTodo()
@@ -412,6 +435,308 @@ addEventListener('keydown', e => {
   else if (e.key.startsWith('Arrow')) { e.preventDefault(); const d = 90, m = { ArrowLeft: [d, 0], ArrowRight: [-d, 0], ArrowUp: [0, d], ArrowDown: [0, -d] }[e.key]
     d3.select(cv).transition().duration(200).call(zoom.translateBy, m[0] / T.k, m[1] / T.k) }
 })
+
+// ══ Vistas: la misma web vista de cuatro maneras ══
+// Neuronas (el lienzo de siempre) · Rayos X de una página · Entre zonas · Dónde está el texto.
+// La simulación sigue viva en todas: lo que se enciende en las neuronas brilla también aquí.
+let vista = 'neuronas', t0Vista = 0, rx = null, ultimaLeida = null, encimaO = null
+const VISTAS = [['neuronas', 'Neuronas', 'N'], ['rayos', 'Rayos X de una página', 'R'], ['zonas', 'Entre zonas', 'Z'], ['texto', 'Dónde está el texto', 'T']]
+const vistasEl = document.getElementById('vistas')
+vistasEl.innerHTML = VISTAS.map(([k, t, l]) => `<button class="vista" data-v="${k}" aria-pressed="${k === 'neuronas'}">${t}<kbd>${l}</kbd></button>`).join('') + '<span id="sub"></span>'
+const subEl = document.getElementById('sub')
+document.body.classList.add('v-neuronas')
+function irVista(v, luego) {
+  if (v === vista) { if (luego) luego(); return }
+  saltarIntro(); tip.style.opacity = 0; encimaO = null
+  cv.style.opacity = 0
+  setTimeout(() => {
+    vista = v; document.body.classList.remove('v-neuronas', 'v-rayos', 'v-zonas', 'v-texto'); document.body.classList.add('v-' + v)
+    vistasEl.querySelectorAll('.vista').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === v)))
+    t0Vista = performance.now(); mapaClave = cuerdaClave = rxClave = ''; parts.length = 0
+    if (v === 'rayos') abrirRayos(rx || ultimaLeida || ORDEN[0])
+    if (v === 'texto') pintarSub()
+    cv.style.opacity = 1; cv.classList.remove('mano')
+    if (luego) luego()
+  }, RED ? 0 : 170)
+}
+vistasEl.addEventListener('click', e => { const b = e.target.closest('.vista'); if (b) irVista(b.dataset.v) })
+
+// ── utilidades en pantalla (sin zoom) ──
+const pantalla = () => cx.setTransform(DPR, 0, 0, DPR, 0, 0)
+function tx(t, x, y, px, color, peso = 500, alinea = 'left', borde = true) {
+  cx.font = `${peso} ${px}px Geist,system-ui,-apple-system,sans-serif`; cx.textAlign = alinea; cx.textBaseline = 'middle'
+  if (borde) { cx.lineWidth = 4; cx.strokeStyle = 'rgba(246,242,234,.94)'; cx.lineJoin = 'round'; cx.strokeText(t, x, y) }
+  cx.fillStyle = color; cx.fillText(t, x, y)
+}
+const corta = (t, max) => t.length > max ? t.slice(0, max - 1) + '…' : t
+const suave = p => 1 - Math.pow(1 - Math.max(0, Math.min(1, p)), 3)
+function caja(x, y, w, h, r) { cx.beginPath(); cx.roundRect ? cx.roundRect(x, y, w, h, r) : cx.rect(x, y, w, h) }
+const sumaLD = x => Object.values(x.n.ia.ld).reduce((a, b) => a + b, 0)
+const ponerTip = (html, ev) => { tip.innerHTML = html; tip.style.left = Math.min(ev.clientX + 14, W - 320) + 'px'; tip.style.top = Math.min(ev.clientY + 16, H - 90) + 'px'; tip.style.opacity = 1 }
+
+// ════ 1. Dónde está el texto: cada página, un bloque de su tamaño ════
+const METRICAS = [['w', 'Palabras', x => x.n.ia.w], ['np', 'Párrafos', x => x.n.ia.np], ['faq', 'Preguntas FAQ', x => x.n.ia.faq],
+  ['ld', 'Datos para IA', sumaLD], ['ent', 'Enlaces que llegan', x => x.ent]]
+let metrica = 'w', mapa = null, mapaClave = ''
+function pintarSub() {
+  const f = METRICAS.find(m => m[0] === metrica)[2], v = N.map(f).sort((a, b) => b - a), tot = v.reduce((a, b) => a + b, 0)
+  const top = v.slice(0, Math.ceil(v.length * 0.2)).reduce((a, b) => a + b, 0)
+  subEl.innerHTML = METRICAS.map(([k, t]) => `<button class="b" data-m="${k}" aria-pressed="${k === metrica}">${t}</button>`).join('') +
+    `<small>El 20 % de las páginas reúne el <b>${tot ? Math.round(top / tot * 100) : 0} %</b></small>`
+}
+subEl.addEventListener('click', e => { const b = e.target.closest('[data-m]'); if (b) { metrica = b.dataset.m; mapaClave = ''; t0Vista = performance.now(); pintarSub() } })
+function prepMapa(h) {
+  h = { ...h, y: h.y + 40, h: h.h - 40 }
+  const clave = [h.x, h.y, h.w, h.h, metrica, zonaActiva && zonaActiva.g].join('|'); if (clave === mapaClave) return; mapaClave = clave
+  const f = METRICAS.find(m => m[0] === metrica)[2]
+  const raizH = d3.hierarchy({ hijos: grupos.filter(o => !zonaActiva || o === zonaActiva).map(o => ({ o, hijos: o.xs.map(x => ({ x })) })) }, d => d.hijos)
+    .sum(d => d.x ? f(d.x) : 0).sort((a, b) => b.value - a.value)
+  d3.treemap().size([h.w - 16, h.h - 16]).paddingOuter(3).paddingTop(d => d.depth === 1 ? 24 : 0).paddingInner(1.5).round(true).tile(d3.treemapSquarify.ratio(1.25))(raizH)
+  mapa = { ox: h.x + 8, oy: h.y + 8, hojas: raizH.leaves().filter(l => l.value > 0), zonas: (raizH.children || []).filter(z => z.value > 0), unidad: METRICAS.find(m => m[0] === metrica)[1].toLowerCase() }
+}
+function dibujaTexto(ahora) {
+  const h = hueco(); prepMapa(h); const { ox, oy } = mapa, p = (ahora - t0Vista) / 1100, n = mapa.hojas.length
+  for (const z of mapa.zonas) {
+    const c = RAICES[z.data.o.g][1]
+    cx.globalAlpha = 0.09; cx.fillStyle = c; caja(ox + z.x0, oy + z.y0, z.x1 - z.x0, z.y1 - z.y0, 10); cx.fill(); cx.globalAlpha = 1
+    if (z.x1 - z.x0 > 70) tx(corta(`${RAICES[z.data.o.g][0]} · ${fmt(z.value)}`, Math.floor((z.x1 - z.x0) / 7)), ox + z.x0 + 8, oy + z.y0 + 12, 12.5, c, 700, 'left', false)
+  }
+  mapa.hojas.forEach((l, i) => {
+    const x = l.data.x, e = suave(p * 1.7 - (i / n) * 0.7); if (e <= 0) return
+    const w = (l.x1 - l.x0) * e, hh = (l.y1 - l.y0) * e, x0 = ox + (l.x0 + l.x1) / 2 - w / 2, y0 = oy + (l.y0 + l.y1) / 2 - hh / 2
+    const brillo = Math.min(1, x.e)
+    cx.globalAlpha = 0.5 + brillo * 0.5; cx.fillStyle = x.c; caja(x0, y0, w, hh, Math.min(6, w / 4, hh / 4)); cx.fill()
+    if (brillo > 0.1) { cx.globalAlpha = brillo * 0.6; cx.fillStyle = '#fff'; caja(x0 + 2, y0 + 2, Math.max(0, w - 4), Math.max(0, hh * 0.35), 4); cx.fill() }
+    if (x.leida > 0.05) { cx.globalAlpha = x.leida; cx.fillStyle = '#0a8fb5'; cx.beginPath(); cx.arc(x0 + w - 6, y0 + 6, Math.min(4, w / 5), 0, 6.283); cx.fill() }
+    cx.globalAlpha = 1
+    if (encimaO === l) { cx.strokeStyle = '#1d2230'; cx.lineWidth = 2; caja(x0, y0, w, hh, 5); cx.stroke() }
+    if (e > 0.95 && w > 66 && hh > 26) {
+      cx.save(); cx.beginPath(); cx.rect(x0 + 2, y0, w - 4, hh); cx.clip()
+      tx(x.nombre, x0 + 6, y0 + 12, 11.5, '#fff', 650, 'left', false)
+      if (hh > 40) tx(fmt(l.value) + ' ' + mapa.unidad, x0 + 6, y0 + 27, 10.5, 'rgba(255,255,255,.85)', 500, 'left', false)
+      cx.restore()
+    }
+  })
+}
+function hojaEn(px, py) {
+  if (!mapa) return null
+  for (const l of mapa.hojas) if (px >= mapa.ox + l.x0 && px <= mapa.ox + l.x1 && py >= mapa.oy + l.y0 && py <= mapa.oy + l.y1) return l
+  return null
+}
+
+// ════ 2. Entre zonas: cuánta información pasa de una sección a otra ════
+const conCruces = grupos.filter(o => E.some(e => e.cruza && (e.a.g === o.g || e.b.g === o.g)))
+const GZ = conCruces.map(o => o.g), iZ = new Map(GZ.map((g, i) => [g, i]))
+const MZ = GZ.map(() => GZ.map(() => 0)); E.forEach(e => { if (e.cruza && iZ.has(e.a.g) && iZ.has(e.b.g)) MZ[iZ.get(e.a.g)][iZ.get(e.b.g)]++ })
+const dentroZ = {}; E.forEach(e => { if (!e.cruza) dentroZ[e.a.g] = (dentroZ[e.a.g] || 0) + 1 })
+let cuerda = null, cuerdaClave = ''; const parts = []
+function prepCuerda(h) {
+  const clave = [h.x, h.y, h.w, h.h].join('|'); if (clave === cuerdaClave) return; cuerdaClave = clave
+  const R = Math.max(60, Math.min(h.w, h.h) / 2 - (W < 700 ? 64 : 120))
+  const ch = d3.chord().padAngle(0.045).sortSubgroups(d3.descending)(MZ)
+  cuerda = { ch, R, cx: h.x + h.w / 2, cy: h.y + h.h / 2, arco: d3.arc().innerRadius(R).outerRadius(R + 18).context(cx), cinta: d3.ribbon().radius(R - 3).context(cx),
+    par: new Map(ch.map(c => [c.source.index + '>' + c.target.index, c]).concat(ch.map(c => [c.target.index + '>' + c.source.index, c]))) }
+}
+function soltarParticula(c, haciaTarget, grande) {
+  const de = haciaTarget ? c.source : c.target, a = haciaTarget ? c.target : c.source
+  parts.push({ a0: de.startAngle + (de.endAngle - de.startAngle) * Math.random(), a1: a.startAngle + (a.endAngle - a.startAngle) * Math.random(), t: 0, v: 0.45 + Math.random() * 0.3, g: GZ[de.index], grande })
+  if (parts.length > 900) parts.shift()
+}
+function pulsoCuerda(ga, gb) { if (!cuerda || !iZ.has(ga) || !iZ.has(gb)) return; const c = cuerda.par.get(iZ.get(ga) + '>' + iZ.get(gb)); if (c) soltarParticula(c, c.source.index === iZ.get(ga), true) }
+function grupoEn(px, py) {
+  if (!cuerda) return null
+  const dx = px - cuerda.cx, dy = py - cuerda.cy, r = Math.hypot(dx, dy); if (r < cuerda.R - 4 || r > cuerda.R + 70) return null
+  let a = Math.atan2(dx, -dy); if (a < 0) a += 6.283
+  return cuerda.ch.groups.find(g => a >= g.startAngle && a <= g.endAngle) || null
+}
+function dibujaZonas(ahora, dt) {
+  const h = hueco(); prepCuerda(h); const { ch, R } = cuerda, p = suave((ahora - t0Vista) / 1200)
+  const foco = encimaO ? encimaO.index : zonaActiva && iZ.has(zonaActiva.g) ? iZ.get(zonaActiva.g) : null
+  // partículas espontáneas, en proporción a los enlaces de cada par
+  if (dt) for (const c of ch) { if (Math.random() < c.source.value * dt * 0.05) soltarParticula(c, true); if (Math.random() < c.target.value * dt * 0.05) soltarParticula(c, false) }
+  cx.setTransform(DPR, 0, 0, DPR, DPR * cuerda.cx, DPR * cuerda.cy); cx.rotate((1 - p) * -0.6); cx.scale(0.6 + 0.4 * p, 0.6 + 0.4 * p)
+  for (const c of ch) {
+    const on = foco == null || c.source.index === foco || c.target.index === foco
+    cx.globalAlpha = (on ? (foco == null ? 0.32 : 0.62) : 0.06) * p; cx.fillStyle = RAICES[GZ[c.source.value >= c.target.value ? c.source.index : c.target.index]][1]
+    cx.beginPath(); cuerda.cinta(c); cx.fill()
+  }
+  for (const g of ch.groups) {
+    const col = RAICES[GZ[g.index]][1]; cx.globalAlpha = foco == null || foco === g.index ? 1 : 0.35; cx.fillStyle = col
+    cx.beginPath(); cuerda.arco(g); cx.fill()
+  }
+  // partículas: viajan por la cinta, como la señal por una vena
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const q = parts[i]; if (q.rayo) continue; q.t += q.v * dt; if (q.t >= 1) { parts.splice(i, 1); continue }
+    const rr = R - 3, P0 = [Math.sin(q.a0) * rr, -Math.cos(q.a0) * rr], P1 = [Math.sin(q.a1) * rr, -Math.cos(q.a1) * rr]
+    const pos = t => { const u = 1 - t; return [u * u * P0[0] + t * t * P1[0], u * u * P0[1] + t * t * P1[1]] }
+    const [x1, y1] = pos(q.t), [x0, y0] = pos(Math.max(0, q.t - 0.06)), on = foco == null || GZ[foco] === q.g
+    cx.globalAlpha = (on ? 0.95 : 0.15) * p; cx.strokeStyle = q.grande ? '#fff' : RAICES[q.g][1]; cx.lineWidth = q.grande ? 4 : 2.2; cx.lineCap = 'round'
+    cx.beginPath(); cx.moveTo(x0, y0); cx.lineTo(x1, y1); cx.stroke()
+    if (q.grande) { cx.fillStyle = RAICES[q.g][1]; cx.beginPath(); cx.arc(x1, y1, 3.4, 0, 6.283); cx.fill() }
+  }
+  cx.globalAlpha = 1; pantalla()
+  for (const g of ch.groups) {
+    const a = (g.startAngle + g.endAngle) / 2, lr = R + 30, lx = cuerda.cx + Math.sin(a) * lr, ly = cuerda.cy - Math.cos(a) * lr, der = Math.sin(a) >= 0
+    const gname = GZ[g.index], fuera = MZ[g.index].reduce((s, v) => s + v, 0)
+    if (g.endAngle - g.startAngle < 0.12 && foco !== g.index) continue   // las zonas finas: nombre al pasar el ratón
+    cx.globalAlpha = (foco == null || foco === g.index ? 1 : 0.4) * p
+    tx(RAICES[gname][0], lx, ly - 7, W < 700 ? 12 : 14, RAICES[gname][1], 700, der ? 'left' : 'right')
+    tx(`${fmt(fuera)} salen · ${fmt(dentroZ[gname] || 0)} dentro`, lx, ly + 9, 10.5, '#626877', 500, der ? 'left' : 'right')
+  }
+  cx.globalAlpha = 1
+  tx(fmt(E.filter(e => e.cruza).length), cuerda.cx, cuerda.cy - 8, 26, '#1d2230', 700, 'center')
+  tx('enlaces cruzan de una zona a otra', cuerda.cx, cuerda.cy + 16, 11.5, '#626877', 500, 'center')
+}
+
+// ════ 3. Rayos X: una página desmontada, como la lee una IA ════
+let rxClave = '', piezas = [], rxCentro = null, absorbidas = 0, vueltaAnt = 0
+const rad = g => g * Math.PI / 180
+function abrirRayos(x) {
+  rx = x; rxClave = ''; absorbidas = 0; t0Vista = performance.now()
+  leer({ nombre: 'ClaudeBot' }, x)
+}
+function prepRayos(h) {
+  const x = rx, clave = x.id + '|' + [h.x, h.y, h.w, h.h].join('|'); if (clave === rxClave) return; rxClave = clave
+  const ia = x.n.ia, C = [h.x + h.w / 2, h.y + h.h / 2 + (W < 700 ? 10 : 22)], S = Math.max(70, Math.min(h.w / 2 - (W < 700 ? 16 : 120), (h.h - 70) / 2))
+  rxCentro = { x: C[0], y: C[1], S, r: S * 0.13 }
+  const P = [], pon = (ang, r, o) => P.push({ ang: rad(ang), x: C[0] + Math.cos(rad(ang)) * r * S, y: C[1] + Math.sin(rad(ang)) * r * S, e: 0, vuelta: -1, ...o })
+  const reparte = (a0, a1, n, f) => { for (let i = 0; i < n; i++) f(n === 1 ? (a0 + a1) / 2 : a0 + (a1 - a0) * (i + 0.5) / n, i) }
+  const espiral = (a0, a1, n, r0, r1, f) => { for (let i = 0; i < n; i++) { const q = (i * 0.6180339) % 1; f(a0 + (a1 - a0) * q, r0 + (r1 - r0) * Math.sqrt((i + 0.5) / n), i) } }
+  // estructura (arriba)
+  pon(-125, 0.3, { tipo: 'titulo', r: 7, c: '#1d2230', txt: x.n.t || '—', et: 'Título' })
+  if (x.n.h1) pon(-55, 0.3, { tipo: 'h1', r: 6.5, c: '#1d2230', txt: x.n.h1, et: 'H1' })
+  reparte(-165, -15, Math.min(ia.nh2, 28), (a, i) => pon(a, 0.52, { tipo: 'h2', r: 4.2, c: '#3b4150', txt: ia.h2[i] || 'Apartado ' + (i + 1), et: 'Apartado' }))
+  // párrafos (derecha)
+  espiral(-8, 72, Math.min(ia.np, 160), 0.2, 0.6, (a, r, i) => pon(a, r, { tipo: 'p', r: i < 5 ? 4.5 : 2.6, c: i < 5 ? '#d97a00' : '#e3a659', txt: ia.p[i] || `Párrafo ${i + 1} de ${ia.np}`, et: 'Párrafo' }))
+  // datos para la IA (abajo)
+  const tipos = Object.entries(ia.ld)
+  reparte(62, 150, tipos.length, (a, i) => pon(a, 0.36, { tipo: 'ld', r: 5 + Math.min(5, tipos[i][1]), c: '#0a8fb5', txt: tipos[i][0] + (tipos[i][1] > 1 ? ' ×' + tipos[i][1] : ''), et: 'Dato JSON-LD', etiqueta: tipos[i][0] }))
+  espiral(80, 155, Math.min(ia.faq, 80), 0.47, 0.62, (a, r, i) => pon(a, r, { tipo: 'faq', r: 2.6, c: '#2d9bb8', txt: `Pregunta con respuesta ${i + 1} de ${ia.faq}`, et: 'FAQ' }))
+  // imágenes (izquierda)
+  espiral(162, 200, Math.min(ia.img, 60), 0.22, 0.6, (a, r, i) => pon(a, r, { tipo: 'img', r: 3.4, c: i < ia.alt ? '#4b9a2f' : '#c2562a', hueca: i >= ia.alt, txt: i < ia.alt ? 'Imagen con texto alternativo: la IA sabe qué muestra' : 'Imagen SIN texto alternativo: para la IA es un hueco', et: 'Imagen' }))
+  // enlaces que salen (anillo exterior)
+  const lista = x.todo.slice(0, 72)
+  reparte(-90, 270, lista.length, (a, i) => { const y = lista[i]; pon(a, 0.86, { tipo: 'enlace', r: 4 + Math.min(4, Math.sqrt(y.ent) * 0.6), c: y.c, txt: y.nombre, et: x.sale.includes(y) ? 'Enlace desde el texto' : 'Enlace del menú o el pie', destino: y, texto: x.sale.includes(y) }) })
+  piezas = P
+}
+function dibujaRayos(ahora, dt) {
+  if (!rx) return
+  const h = hueco(); prepRayos(h); const { x: cxC, y: cyC, S, r: rc } = rxCentro, ia = rx.n.ia, p = suave((ahora - t0Vista) / 1000)
+  // cabecera
+  tx(corta(rx.nombre, W < 700 ? 30 : 60), h.x + 18, h.y + 14, W < 700 ? 15 : 19, '#1d2230', 700, 'left')
+  tx('tonykansaiguide.com' + corta(rx.id, 60), h.x + 18, h.y + 36, 11.5, '#626877', 500, 'left')
+  // guías de los sectores
+  const SECT = [['ESTRUCTURA', -90, '#1d2230'], ['PÁRRAFOS · ' + ia.np, 32, '#b86400'], ['DATOS PARA IA · ' + (sumaLD(rx) + ia.faq), 117, '#05617c'], ['IMÁGENES · ' + ia.alt + '/' + ia.img + ' con texto', 181, '#4b7a2f']]
+  cx.globalAlpha = 0.5 * p; cx.strokeStyle = '#e4dccf'; cx.lineWidth = 1
+  for (const r of [0.3, 0.52, 0.72]) { cx.beginPath(); cx.arc(cxC, cyC, r * S, 0, 6.283); cx.stroke() }
+  cx.setLineDash([2, 6]); cx.beginPath(); cx.arc(cxC, cyC, 0.86 * S, 0, 6.283); cx.stroke(); cx.setLineDash([])
+  cx.globalAlpha = p
+  for (const [t, a, c] of SECT) { const lx = cxC + Math.cos(rad(a)) * 0.72 * S, ly = cyC + Math.sin(rad(a)) * 0.72 * S; tx(t, lx, ly, 10.5, c, 700, 'center') }
+  // haz que barre: la IA leyendo
+  const vel = 0.9 * ritmo * (pausa ? 0 : 1); rxCentro.ang = (rxCentro.ang || -Math.PI / 2) + vel * dt
+  const b = rxCentro.ang, vuelta = Math.floor((b + Math.PI / 2) / 6.283)
+  if (vuelta !== vueltaAnt) { vueltaAnt = vuelta; for (const q of piezas) q.vuelta = -1 }
+  const g = cx.createRadialGradient(cxC, cyC, rc, cxC, cyC, S * 0.92)
+  g.addColorStop(0, 'rgba(10,143,181,.22)'); g.addColorStop(1, 'rgba(10,143,181,0)')
+  cx.fillStyle = g; cx.beginPath(); cx.moveTo(cxC, cyC); cx.arc(cxC, cyC, S * 0.92, b - 0.42, b); cx.closePath(); cx.fill()
+  cx.strokeStyle = 'rgba(10,143,181,.8)'; cx.lineWidth = 1.6; cx.beginPath(); cx.moveTo(cxC, cyC); cx.lineTo(cxC + Math.cos(b) * S * 0.92, cyC + Math.sin(b) * S * 0.92); cx.stroke()
+  const bn = ((b % 6.283) + 6.283) % 6.283
+  // piezas
+  piezas.forEach((q, i) => {
+    const ap = suave(p * 1.6 - (i / piezas.length) * 0.6); if (ap <= 0) return
+    const an = ((q.ang % 6.283) + 6.283) % 6.283, d = (bn - an + 6.283) % 6.283
+    if (d < 0.08 && q.vuelta !== vuelta && !pausa) { q.vuelta = vuelta; q.e = 1; if (q.tipo !== 'enlace') parts.push({ rayo: true, x: q.x, y: q.y, t: 0, c: q.c }); else if (q.destino) q.destino.e = Math.max(q.destino.e, 0.8) }
+    const X = cxC + (q.x - cxC) * ap, Y = cyC + (q.y - cyC) * ap
+    if (q.tipo === 'enlace') { cx.globalAlpha = (0.12 + q.e * 0.5) * ap; cx.strokeStyle = q.c; cx.lineWidth = q.texto ? 1.4 : 0.8; if (!q.texto) cx.setLineDash([3, 4]); cx.beginPath(); cx.moveTo(cxC + (X - cxC) * 0.18, cyC + (Y - cyC) * 0.18); cx.lineTo(X, Y); cx.stroke(); cx.setLineDash([]) }
+    const r = q.r * (1 + q.e * 0.7) + (encimaO === q ? 2 : 0)
+    if (q.e > 0.1) { cx.globalAlpha = q.e * 0.3 * ap; cx.fillStyle = q.c; cx.beginPath(); cx.arc(X, Y, r * 2.6, 0, 6.283); cx.fill() }
+    cx.globalAlpha = ap
+    if (q.hueca) { cx.strokeStyle = q.c; cx.lineWidth = 1.6; cx.beginPath(); cx.arc(X, Y, r, 0, 6.283); cx.stroke() }
+    else { cx.fillStyle = q.c; cx.beginPath(); cx.arc(X, Y, r, 0, 6.283); cx.fill(); cx.strokeStyle = '#fff'; cx.lineWidth = 1; cx.stroke() }
+    q.e *= Math.pow(0.95, dt * 60)
+  })
+  cx.globalAlpha = 1
+  // etiquetas: título, h1, tipos de datos y (si caben) los destinos
+  const nEnl = piezas.filter(z => z.tipo === 'enlace').length
+  for (const q of piezas) {
+    if (W < 700) break   // en el móvil, sin etiquetas: el lector de abajo cuenta lo mismo
+    if (q.tipo === 'titulo') tx(q.et + ': ' + corta(q.txt, W < 700 ? 16 : 30), q.x + 4, q.y - 14, 11.5, '#1d2230', 600, 'right')
+    else if (q.tipo === 'h1') tx(q.et + ': ' + corta(q.txt, W < 700 ? 16 : 30), q.x - 4, q.y - 14, 11.5, '#1d2230', 600, 'left')
+    else if (q.tipo === 'ld') { const k = piezas.filter(z => z.tipo === 'ld').indexOf(q); tx(corta(q.etiqueta, 16), q.x, q.y + (k % 2 ? -(q.r + 10) : q.r + 11), 10.5, '#05617c', 600, 'center') }
+    else if (q.tipo === 'enlace' && (nEnl <= 26 || encimaO === q) && W > 700) { const der = Math.cos(q.ang) >= 0; tx(corta(q.txt, 26), q.x + (der ? 9 : -9), q.y, 10.5, '#3b4150', 500, der ? 'left' : 'right') }
+  }
+  // trozos que viajan al centro: lo que la IA se queda
+  for (let i = parts.length - 1; i >= 0; i--) {
+    const q = parts[i]; if (!q.rayo) continue; q.t += dt * 1.6
+    if (q.t >= 1) { parts.splice(i, 1); absorbidas++; rxCentro.pulso = 1; continue }
+    const e = q.t * q.t, X = q.x + (cxC - q.x) * e, Y = q.y + (cyC - q.y) * e
+    cx.globalAlpha = 1 - q.t * 0.4; cx.fillStyle = q.c; cx.beginPath(); cx.arc(X, Y, 2.4, 0, 6.283); cx.fill()
+  }
+  // el centro: la IA
+  const pu = rxCentro.pulso || 0; rxCentro.pulso = pu * Math.pow(0.9, dt * 60)
+  cx.globalAlpha = 0.18 + pu * 0.25; cx.fillStyle = '#0a8fb5'; cx.beginPath(); cx.arc(cxC, cyC, rc * (1.5 + pu * 0.4), 0, 6.283); cx.fill()
+  cx.globalAlpha = 1; cx.fillStyle = '#fff'; cx.beginPath(); cx.arc(cxC, cyC, rc, 0, 6.283); cx.fill(); cx.strokeStyle = '#0a8fb5'; cx.lineWidth = 2.5; cx.stroke()
+  tx(fmt(absorbidas), cxC, cyC - 5, Math.max(13, rc * 0.5), '#05617c', 700, 'center', false)
+  tx('trozos leídos', cxC, cyC + rc * 0.42, 9.5, '#626877', 500, 'center', false)
+}
+function piezaEn(px, py) {
+  let mejor = null, md = 1e9
+  for (const q of piezas) { const d = Math.hypot(q.x - px, q.y - py) - q.r; if (d < 8 && d < md) { md = d; mejor = q } }
+  return mejor
+}
+
+// ── ratón y teclas en las vistas nuevas ──
+function moverOtra(ev) {
+  const px = ev.clientX, py = ev.clientY
+  if (vista === 'texto') { encimaO = hojaEn(px, py); const l = encimaO; if (!l) { tip.style.opacity = 0; cv.classList.remove('mano'); return }
+    const x = l.data.x, ia = x.n.ia; cv.classList.add('mano')
+    ponerTip(`<b>${esc(x.nombre)}</b><small>${esc(x.id)}<br>${fmt(ia.w)} palabras · ${ia.np} párrafos · ${ia.faq} FAQ · ${sumaLD(x)} datos · ${x.ent} enlaces llegan<br>Toca para verla por dentro</small>`, ev) }
+  else if (vista === 'zonas') { encimaO = grupoEn(px, py); const g = encimaO; if (!g) { tip.style.opacity = 0; cv.classList.remove('mano'); return }
+    const z = GZ[g.index], des = MZ[g.index].map((v, j) => [GZ[j], v]).filter(d => d[1]).sort((a, b) => b[1] - a[1]).slice(0, 4); cv.classList.add('mano')
+    const llegan = MZ.reduce((s, f) => s + f[g.index], 0)
+    ponerTip(`<b>${esc(RAICES[z][0])}</b><small>${fmt(dentroZ[z] || 0)} enlaces dentro · ${fmt(MZ[g.index].reduce((s, v) => s + v, 0))} salen · ${fmt(llegan)} llegan<br>Más hacia: ${des.map(d => esc(RAICES[d[0]][0]) + ' ' + d[1]).join(' · ') || '—'}<br>Toca para ver la zona en neuronas</small>`, ev) }
+  else if (vista === 'rayos') { encimaO = piezaEn(px, py); const q = encimaO
+    if (!q) { const enC = rxCentro && Math.hypot(px - rxCentro.x, py - rxCentro.y) < rxCentro.r; cv.classList.toggle('mano', !!enC); if (enC) ponerTip('<b>La IA</b><small>Toca para volver a las neuronas en esta página</small>', ev); else tip.style.opacity = 0; return }
+    cv.classList.toggle('mano', q.tipo === 'enlace')
+    ponerTip(`<b>${esc(q.et)}</b><small dir="auto" style="font-family:inherit">${esc(corta(q.txt, 220))}${q.tipo === 'enlace' ? '<br>Toca para abrirla por dentro' : ''}</small>`, ev) }
+}
+function clicOtra(ev) {
+  const px = ev.clientX, py = ev.clientY
+  if (vista === 'texto') { const l = hojaEn(px, py); if (l) { rx = l.data.x; irVista('rayos') } }
+  else if (vista === 'zonas') { const g = grupoEn(px, py); if (g) irVista('neuronas', () => irZona(GZ[g.index])) }
+  else if (vista === 'rayos') {
+    const q = piezaEn(px, py); if (q && q.destino) return abrirRayos(q.destino)
+    if (rxCentro && Math.hypot(px - rxCentro.x, py - rxCentro.y) < rxCentro.r) { const x = rx; irVista('neuronas', () => irA(x)) }
+  }
+}
+function dibujaOtra(ahora, dt) {
+  pantalla(); cx.fillStyle = '#f6f2ea'; cx.fillRect(0, 0, W, H); cx.lineCap = 'round'
+  if (vista === 'texto') dibujaTexto(ahora)
+  else if (vista === 'zonas') dibujaZonas(ahora, dt)
+  else if (vista === 'rayos') dibujaRayos(ahora, dt)
+  cx.globalAlpha = 1
+}
+
+// ── buscar una página ──
+const buscar = document.getElementById('buscar')
+document.getElementById('paginas').innerHTML = ORDEN_B().map(x => `<option value="${esc(x.id)}">${esc(x.nombre)}</option>`).join('')
+function ORDEN_B() { return [...N].sort((a, b) => b.ent - a.ent) }
+const norm = s => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '')
+function encontrar(q) { q = norm(q.trim()); if (!q) return null; const L = ORDEN_B()
+  return L.find(x => norm(x.id) === q) || L.find(x => norm(x.id).includes(q)) || L.find(x => norm(x.nombre + ' ' + (x.n.t || '')).includes(q)) }
+function irA(x) {
+  if (vista === 'rayos') return abrirRayos(x)
+  irVista('neuronas', () => {
+    zonaActiva = null; marcarZona(); encajar([x, ...x.sale.slice(0, 14)], 900, 1.7)
+    disparar(x, 1.2, 'eco', 0); x.sale.slice(0, 8).forEach((s, i) => setTimeout(() => lanzar(x, s, 'eco', { f: 0.9 }), i * 60))
+    if (seguido && !seguido.viaje) llegaBot(seguido, x)
+  })
+}
+buscar.addEventListener('keydown', e => { if (e.key !== 'Enter') return; e.preventDefault(); const x = encontrar(buscar.value); buscar.classList.toggle('mal', !x); if (x) { irA(x); document.body.classList.remove('izq'); buscar.blur() } })
+buscar.addEventListener('change', () => { const x = encontrar(buscar.value); if (x) { buscar.classList.remove('mal'); irA(x) } })
+document.getElementById('porDentro').addEventListener('click', () => { rx = ultimaLeida || rx; if (vista === 'rayos') abrirRayos(rx); else irVista('rayos') })
+cv.addEventListener('click', ev => { if (vista !== 'neuronas') clicOtra(ev) })
+cv.addEventListener('dblclick', ev => { if (vista !== 'neuronas') return; const x = cerca(ev.clientX, ev.clientY); if (x) { rx = x; irVista('rayos') } })
 
 // ── Bucle ──
 let ultimo = performance.now(), relojGente = 0, relojBot = 27, edad = 0, encuadrado = false
@@ -431,10 +756,18 @@ function texto(t, x, y, px, color, peso, k) {
   cx.fillStyle = color; cx.fillText(t, x, y)
 }
 
+function cifrasVivas() {
+  document.getElementById('v-gente').textContent = fmt(cuenta.gente)
+  document.getElementById('v-bots').textContent = fmt(cuenta.leidas)
+  document.getElementById('m-pag').textContent = fmt(cuenta.leidas)
+  document.getElementById('m-par').textContent = fmt(cuenta.parr)
+  document.getElementById('m-dat').textContent = fmt(cuenta.datos)
+}
+
 function marco(ahora) {
   const dtReal = Math.min(0.05, (ahora - ultimo) / 1000), dt = dtReal * (pausa ? 0 : ritmo); ultimo = ahora; edad += dtReal
   if (sim.alpha() > 0.02 || arrastrada) { sim.tick(); if (edad < 2.5) sim.tick() }
-  if (!encuadrado && edad > 3) { encuadrado = true; if (!zonaActiva) verTodo(1400) }   // al asentarse, encuadra
+  if (!encuadrado && edad > 3 && vista === 'neuronas') { encuadrado = true; if (!zonaActiva) verTodo(1400) }   // al asentarse, encuadra
 
   if (ver.solas && dt && Math.random() < dt * (RED ? 0.3 : 1.4)) { const x = N[(Math.random() * N.length) | 0]; if (x.sale.length) disparar(x, 0.7, 'eco', 0) }
   relojGente -= dt
@@ -452,10 +785,17 @@ function marco(ahora) {
     if (dt) { s.rastro.push(p); if (s.rastro.length > (s.tipo === 'bot' ? 16 : 11)) s.rastro.shift() }
     if (s.eje) s.eje.h = Math.max(s.eje.h, s.tipo === 'eco' ? 0.55 : 0.85)
     if (s.t >= 1) { senales.splice(i, 1)
-      if (s.tipo === 'bot') llegaBot(s.bot, s.b); else if (s.tipo === 'eco') disparar(s.b, s.f, 'eco', 0); else disparar(s.b, 0.85, 'gente', s.prof) }
+      if (s.tipo === 'bot') llegaBot(s.bot, s.b); else if (s.tipo === 'eco') disparar(s.b, s.f, 'eco', 0); else disparar(s.b, 0.85, 'gente', s.prof)
+      if (s.eje && s.eje.cruza && vista === 'zonas') pulsoCuerda(s.a.g, s.b.g) }
   }
   const caer = Math.pow(0.962, dt * 60)
 
+  if (vista !== 'neuronas') {
+    for (const e of E) e.h *= caer
+    for (const x of N) { x.e *= caer; if (x.leida) x.leida *= Math.pow(0.996, dt * 60) }
+    for (const f of FUERA) f.e *= caer
+    dibujaOtra(ahora, dt); cifrasVivas(); requestAnimationFrame(marco); return
+  }
   // ── dibujar ──
   const k = T.k
   cx.setTransform(DPR, 0, 0, DPR, 0, 0)
@@ -574,11 +914,7 @@ function marco(ahora) {
   }
   cx.globalAlpha = 1
 
-  document.getElementById('v-gente').textContent = fmt(cuenta.gente)
-  document.getElementById('v-bots').textContent = fmt(cuenta.leidas)
-  document.getElementById('m-pag').textContent = fmt(cuenta.leidas)
-  document.getElementById('m-par').textContent = fmt(cuenta.parr)
-  document.getElementById('m-dat').textContent = fmt(cuenta.datos)
+  cifrasVivas()
   requestAnimationFrame(marco)
 }
 intro(); requestAnimationFrame(marco)
