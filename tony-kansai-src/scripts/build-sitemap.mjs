@@ -12,6 +12,7 @@ import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { ihebAlternas } from './iheb-estilo.mjs'
 import { RUTAS as GUIAS_MUSULMANAS } from './guias-musulmanas.mjs'
+import { RUTAS_PM } from './partners-muslimah.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
@@ -76,6 +77,8 @@ const paginas = [
   ...['/en/careers/muslim-female-guide', '/es/empleo/guia-musulmana', '/ar/wazaif/murshida-muslima'].map((loc) => ({ loc, priority: '0.8', changefreq: 'monthly', v7: 'empleo' })),
   // Guías musulmanas mujeres para clientas y familias musulmanas (scripts/guias-musulmanas.mjs, 24-11-2026).
   ...Object.values(GUIAS_MUSULMANAS).map((r) => ({ loc: r.replace(/\/$/, ''), priority: '0.95', changefreq: 'monthly', v7: 'guiasMusulmanas' })),
+  // Hanma Travel Partners: guías musulmanas para AGENCIAS (scripts/partners-muslimah.mjs, 27-11-2026).
+  ...Object.values(RUTAS_PM).map((r) => ({ loc: r.replace(/\/$/, ''), priority: '0.85', changefreq: 'monthly', v7: 'partnersMuslimah' })),
   // «Kansai de TikTok»: sitios virales por temporada + Ruta TikTok (scripts/tiktok.mjs).
   ...['/tiktok', '/tiktok/otono', '/tiktok/invierno', '/tiktok/primavera', '/tiktok/en', '/tiktok/en/autumn', '/tiktok/en/winter', '/tiktok/en/spring', '/tiktok/ar', '/tiktok/ar/autumn', '/tiktok/ar/winter', '/tiktok/ar/spring'].map((loc) => ({ loc, priority: loc.split('/').length > 3 || /otono|invierno|primavera/.test(loc) ? '0.85' : '0.95', changefreq: 'weekly', v7: 'tiktok' })),
   // Antonio, coordinador de viajes a medida para familias y grupos hispanohablantes: HTML estático de scripts/familias.mjs.
@@ -223,6 +226,7 @@ const V7 = {
   leyendas: [['es', '/es/leyendas/'], ['en', '/en/legends/'], ['ar', '/ar/asatir/']],
   leyendasTerror: [['es', '/es/leyendas/terror-real/'], ['en', '/en/legends/true-horror-stories/'], ['ar', '/ar/asatir/ruab-haqiqi/']],
   leyendasMisterio: [['es', '/es/leyendas/lugares-misteriosos/'], ['en', '/en/legends/mysterious-places/'], ['ar', '/ar/asatir/amakin-ghamida/']],
+  partnersMuslimah: Object.entries(RUTAS_PM),
   ...HERR_RUTAS,
 }
 
@@ -255,7 +259,7 @@ const FUENTE = {
   otono: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'], sakura: ['src/v7/datosOtono.ts', 'src/v7/Otono.tsx'],
   invierno: ['src/v7/datosInvierno.ts', 'src/v7/datosTemporadas.ts', 'src/v7/datosOtono.ts', 'src/v7/Otono.tsx'],
   osakaKioto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'], aeropuerto: ['src/v7/datosGuias.ts', 'src/v7/GuiaTransporte.tsx'],
-  empleo: ['scripts/empleo-guia.mjs'], guiasMusulmanas: ['scripts/guias-musulmanas.mjs'],
+  empleo: ['scripts/empleo-guia.mjs'], guiasMusulmanas: ['scripts/guias-musulmanas.mjs', 'scripts/guias-musulmanas-estudio.mjs'], partnersMuslimah: ['scripts/partners-muslimah.mjs'],
   ventajas: ['src/v7/datosVentajas.ts', 'src/v7/Ventajas.tsx'], ventajaApp: ['src/v7/datosVentajas.ts', 'src/v7/datosVentajasDetalle.ts'],
   coste: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], mezquitas: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'], halal: ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx'],
   ...Object.fromEntries(['kansai', 'privado', 'arabe'].map((g) => [g, ['src/v7/datosRespuestas.ts', 'src/v7/PaginaRespuesta.tsx']])),
