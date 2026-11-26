@@ -14,12 +14,13 @@
 import { mkdirSync, writeFileSync } from 'node:fs'
 import { join, dirname } from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { E } from './guias-musulmanas-estudio.mjs'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const BASE = 'https://tonykansaiguide.com'
 const WA = '34634193106'
 const MAIL = 'tony@tonykansaiguide.com'
-const MODIFICADO = '2026-11-24'
+const MODIFICADO = '2026-11-26'
 const GSAP_V = '3.15.0'
 const LENIS_V = '1.3.27'
 
@@ -249,7 +250,7 @@ function jsonLd(lang, t) {
         termsOfService: 'Price quoted per group before booking',
         availableChannel: { '@type': 'ServiceChannel', serviceUrl: url, servicePhone: '+34634193106', availableLanguage: LENGUAS },
       },
-      { '@type': 'FAQPage', '@id': url + '#faq', inLanguage: lang, mainEntity: t.faq.map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
+      { '@type': 'FAQPage', '@id': url + '#faq', inLanguage: lang, mainEntity: [...t.faq, ...E[lang].faqExtra].map(([q, a]) => ({ '@type': 'Question', name: q, acceptedAnswer: { '@type': 'Answer', text: a } })) },
       { '@type': 'BreadcrumbList', itemListElement: [
         { '@type': 'ListItem', position: 1, name: t.inicio, item: BASE + INICIO[lang] },
         { '@type': 'ListItem', position: 2, name: t.h1, item: url },
@@ -297,6 +298,10 @@ p{margin:0}a{color:var(--verde)}
 .op{background:#fff;border:1px solid var(--linea);border-radius:var(--radio);padding:22px 22px 24px;border-top:4px solid var(--sakura-hondo)}
 .op:nth-child(2){border-top-color:var(--cielo)}.op:nth-child(3){border-top-color:var(--verde)}
 .op h3{font-size:24px;margin-bottom:6px}.op p{color:var(--tenue)}
+.via{margin-top:28px;background:#fff;border:1px solid var(--linea);border-radius:var(--radio);padding:22px;border-inline-start:4px solid var(--sakura-hondo)}.via h2{font-size:clamp(24px,6vw,32px);margin-bottom:8px}.via p{color:var(--tenue)}
+.intro{max-width:62ch;color:var(--tenue);margin:-8px 0 22px}
+.neces{display:grid;gap:0;counter-reset:n}.nec{padding:18px 0;border-bottom:1px solid var(--linea)}.nec h3{font-family:inherit;font-weight:700;font-size:18px;line-height:1.4;margin-bottom:4px}.nec h3::before{counter-increment:n;content:counter(n,decimal-leading-zero) '  ';color:var(--sakura-hondo)}.nec p{color:var(--tenue)}
+.aero{margin-top:18px;font-size:15px;color:var(--tenue)}
 .ciudades{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;scroll-padding-inline:22px;padding:0 22px 8px;margin:0 -22px;scrollbar-width:none}
 .ciudades::-webkit-scrollbar{display:none}
 .ciudad{flex:0 0 76%;scroll-snap-align:start;margin:0}
@@ -325,6 +330,7 @@ footer nav{display:flex;flex-wrap:wrap;gap:6px 14px}footer a{color:var(--tenue)}
   .heroe .kap{grid-template-columns:1.1fr .9fr;align-items:center;gap:56px}.heroe{padding:24px 0 72px}
   .datos ul{grid-template-columns:repeat(3,1fr)}.datos li{grid-template-columns:1fr;gap:8px}
   .opciones{grid-template-columns:repeat(3,1fr)}
+  .neces{grid-template-columns:1fr 1fr;column-gap:48px}
   .ciudades{display:grid;grid-template-columns:repeat(4,1fr);overflow:visible;margin:0;padding:0}
   .bloque.dos{display:grid;grid-template-columns:1fr 1.2fr;gap:56px}.bloque.dos>div+div{margin-top:0}
   .wa-fijo{display:none}footer{padding-bottom:40px}
@@ -369,6 +375,7 @@ mm.add('(prefers-reduced-motion: reduce)',function(){g.set('.entra,.rev',{visibi
 
 function pagina(lang) {
   const t = T[lang]
+  const e = E[lang]
   const rtl = lang === 'ar'
   const url = BASE + RUTAS[lang]
   const alternos = Object.entries(RUTAS).map(([l, r]) => `<link rel="alternate" hreflang="${l}" href="${BASE + r}">`).join('\n') + `\n<link rel="alternate" hreflang="x-default" href="${BASE + RUTAS.en}">`
@@ -423,6 +430,13 @@ ${alternos}
 <section class="kap bloque">
   <h2>${t.opcionesH}</h2>
   <div class="opciones">${t.opciones.map(([a, b]) => `<article class="op rev"><h3>${a}</h3><p>${b}</p></article>`).join('')}</div>
+  <div class="via rev"><h2>${e.viaH}</h2><p>${e.via}</p></div>
+</section>
+<section class="kap bloque" id="estudio">
+  <h2>${e.estudioH}</h2>
+  <p class="intro rev">${e.estudio}</p>
+  <div class="neces">${e.neces.map(([a, b]) => `<div class="nec rev"><h3>${a}</h3><p>${b}</p></div>`).join('')}</div>
+  <p class="aero rev">${e.airport}</p>
 </section>
 <section class="kap bloque">
   <h2>${t.ciudadesH}</h2>
@@ -430,7 +444,7 @@ ${alternos}
 </section>
 <section class="kap bloque dos">
   <div><h2>${t.pasosH}</h2><ol class="pasos">${t.pasos.map((p) => `<li class="rev">${p}</li>`).join('')}</ol></div>
-  <div><h2>${t.faqH}</h2><div class="faq">${t.faq.map(([q, a]) => `<div class="rev"><h3>${q}</h3><p>${a}</p></div>`).join('')}${t.mas ? `<div class="rev"><h3>${t.masH}</h3><p>${t.mas}</p></div>` : ''}</div></div>
+  <div><h2>${t.faqH}</h2><div class="faq">${[...t.faq, ...e.faqExtra].map(([q, a]) => `<div class="rev"><h3>${q}</h3><p>${a}</p></div>`).join('')}${t.mas ? `<div class="rev"><h3>${t.masH}</h3><p>${t.mas}</p></div>` : ''}</div></div>
 </section>
 <section class="final"><div class="kap"><h2>${t.finalH}</h2><p>${t.final}</p>${boton()}</div></section>
 </main>
