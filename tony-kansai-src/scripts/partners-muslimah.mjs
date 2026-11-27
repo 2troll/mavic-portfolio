@@ -175,7 +175,7 @@ function jsonLd(lang, t) {
   ] }
 }
 
-const CSS = `:root{--bg:#000;--card:#0f0f10;--line:#232326;--line2:#333338;--text:#fafafa;--muted:#a1a1aa;--ok:#22c55e;--f:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
+export const CSS = `:root{--bg:#000;--card:#0f0f10;--line:#232326;--line2:#333338;--text:#fafafa;--muted:#a1a1aa;--ok:#22c55e;--f:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif}
 [dir=rtl]{--f:-apple-system,"SF Arabic","Geeza Pro","Noto Kufi Arabic","Segoe UI",Tahoma,sans-serif}
 *{box-sizing:border-box}html{color-scheme:dark}body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 var(--f);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 a{color:inherit}.wrap{max-width:1080px;margin:0 auto;padding-inline:max(16px,env(safe-area-inset-left,0px))}
