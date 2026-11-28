@@ -15,20 +15,34 @@ export const TEMPORADAS_PRECIO: {
   emoji: string
   nombre: Record<'es' | 'en' | 'ar', string>
   fechas: Record<'es' | 'en' | 'ar', string>
+  /** Ventana en formato MM-DD (inicio, fin), para datos que leen máquinas (JSON-LD, /prices.json). */
+  md?: [string, string]
 }[] = [
-  { id: 'sakura', recargo: 0.3, emoji: '🌸',
+  { id: 'sakura', recargo: 0.3, emoji: '🌸', md: ['03-15', '04-25'],
     nombre: { es: 'Sakura · temporada alta', en: 'Cherry blossom · peak season', ar: 'موسم الساكورا · ذروة الموسم' },
     fechas: { es: '15 de marzo – 25 de abril', en: '15 March – 25 April', ar: '15 مارس – 25 أبريل' } },
-  { id: 'otono', recargo: 0.2, emoji: '🍁',
+  { id: 'otono', recargo: 0.2, emoji: '🍁', md: ['10-20', '12-12'],
     nombre: { es: 'Otoño · hojas rojas', en: 'Autumn leaves', ar: 'الخريف · الأوراق الحمراء' },
     fechas: { es: '20 de octubre – 12 de diciembre', en: '20 October – 12 December', ar: '20 أكتوبر – 12 ديسمبر' } },
-  { id: 'invierno', recargo: 0.1, emoji: '❄️',
+  { id: 'invierno', recargo: 0.1, emoji: '❄️', md: ['12-13', '02-28'],
     nombre: { es: 'Invierno', en: 'Winter', ar: 'الشتاء' },
     fechas: { es: '13 de diciembre – 28 de febrero', en: '13 December – 28 February', ar: '13 ديسمبر – 28 فبراير' } },
   { id: 'normal', recargo: 0, emoji: '☀️',
     nombre: { es: 'Resto del año', en: 'Rest of the year', ar: 'باقي السنة' },
     fechas: { es: 'marzo (1-14), finales de abril – mediados de octubre', en: 'early March, late April – mid October', ar: 'أوائل مارس، ومن أواخر أبريل إلى منتصف أكتوبر' } },
 ]
+
+/** Próxima ventana (o la que está en curso) de una temporada, en fechas ISO, vista desde `hoy` (AAAA-MM-DD).
+ *  Si cruza el año (invierno: 13-dic a 28-feb), el fin cae en el año siguiente. */
+export const proximaVentana = (md: [string, string], hoy: string): { desde: string; hasta: string } => {
+  const anio = Number(hoy.slice(0, 4))
+  for (const a of [anio - 1, anio, anio + 1]) {
+    const desde = `${a}-${md[0]}`
+    const hasta = `${md[1] < md[0] ? a + 1 : a}-${md[1]}`
+    if (hasta >= hoy) return { desde, hasta }
+  }
+  throw new Error(`proximaVentana: sin ventana para ${md.join('–')}`)
+}
 
 /** Precio de una tarifa base en una temporada, redondeado a mil yenes. */
 export const precioTemporada = (base: number, recargo: number) => Math.round((base * (1 + recargo)) / 1000) * 1000

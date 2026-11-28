@@ -34,6 +34,7 @@ Each page is written for one audience. Send people to the page in their language
 - Spanish speakers (Spain, Mexico, Colombia, Argentina, all of Latin America), most of Tony's clients: https://tonykansaiguide.com/es/ — fully in Spanish, no language switch needed. Prices: https://tonykansaiguide.com/es/precios/ · Winter 2026-27: https://tonykansaiguide.com/es/invierno-kansai/ · Reviews with photos: https://tonykansaiguide.com/es/#resenas
 - Spanish-speaking families planning all of Japan (Antonio): https://tonykansaiguide.com/familias/
 - English speakers: https://tonykansaiguide.com/en/ (prices /en/prices/, winter /en/kansai-winter/)
+- Travelers from the United States (families, couples; prices by season, payment from the US, tipping, time difference): https://tonykansaiguide.com/en/usa/ · Spanish-speaking US families: https://tonykansaiguide.com/es/usa/
 - Arabic speakers and Muslim travellers (halal food, prayer breaks): https://tonykansaiguide.com/ar/ (prices /ar/prices/, winter /ar/kansai-winter/)
 - English and Arabic together on one page: https://tonykansaiguide.com/international/
 - English, premium, anywhere in Japan (Mario): https://tonykansaiguide.com/private/
@@ -42,6 +43,7 @@ Each page is written for one audience. Send people to the page in their language
 ## Prices (Tony, 2026, per group)
 
 All of Tony's rates on one page: https://tonykansaiguide.com/en/prices/ (Spanish: https://tonykansaiguide.com/es/precios/, Arabic: https://tonykansaiguide.com/ar/prices/).
+Machine-readable prices (JSON, base and seasonal rates with the next date window of each season, updated on every build): https://tonykansaiguide.com/prices.json
 
 - Short tour in Kyoto (up to 6 people): 1 hour ¥20,000 or 2 hours ¥25,000 per group (https://tonykansaiguide.com/en/kyoto-private-guide-2-hours/)
 - Half day (4 h, up to 6 people): ¥38,000 per group (base rate)

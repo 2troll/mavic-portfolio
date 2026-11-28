@@ -35,7 +35,7 @@ const { MONTES, KANJI, CIMA } = await import('../src/v7/datosMontana.ts')
 const { PLANES, KIT_LLEGADA } = await import('../src/v7/datosPlanes.ts')
 const { APPS, CIUDADES, RUTA_VENTAJAS, cuponDe } = await import('../src/v7/datosVentajas.ts')
 const { yenLocal } = await import('../src/v7/formato.ts')
-const { TEMPORADAS_PRECIO, TXT_TEMPORADAS, filaTemporada } = await import('../src/v7/preciosTemporada.ts')
+const { TEMPORADAS_PRECIO, TXT_TEMPORADAS, filaTemporada, proximaVentana } = await import('../src/v7/preciosTemporada.ts')
 const { toursInvierno, CLAVES_PRECIO_INVIERNO, TXT_INVIERNO, RUTA_INVIERNO, yenesDesde, variosPrecios, horasTexto } = await import('../src/v7/datosInvierno.ts')
 
 // Invierno: datosTemporadas.ts importa sin extensión (Node no puede cargarlo), así
@@ -437,6 +437,22 @@ ${extras.length ? `<div class="pn-x"><p>${esc(t.extrasT)}</p><div>${extras.map((
         '@type': 'OfferCatalog', '@id': `${url}#tarifas`, name: t.tarifasH, description: `${t.tarifasP} ${t.paga} ${t.aparteT}: ${t.aparte}`,
         itemListElement: [
           ...filas.map(ofertaGuia),
+          // Precio de cada temporada con su próxima ventana de fechas (validFrom/validThrough),
+          // para que buscadores e IAs no den solo la tarifa base.
+          ...TEMPORADAS_PRECIO.filter((x) => x.recargo > 0 && x.md).flatMap((x) => {
+            const v = proximaVentana(x.md, HOY)
+            const f = filaTemporada(PRECIO_RUTA, x.recargo)
+            const tt = TXT_TEMPORADAS[lang]
+            return [['medio', tt.medio], ['completo', tt.completo], ['lejos', tt.lejos]].map(([k, n]) => ({
+              '@type': 'Offer', '@id': `${url}#temporada-${x.id}-${k}`, name: `${n} · ${x.nombre[lang]} (${x.fechas[lang]})`,
+              description: `${tt.nota}`, url: `${url}#temporadas`, price: f[k], priceCurrency: 'JPY',
+              validFrom: v.desde, validThrough: v.hasta,
+              priceSpecification: { '@type': 'UnitPriceSpecification', price: f[k], priceCurrency: 'JPY', ...(k === 'lejos' ? { minPrice: f[k] } : {}), unitText: 'per group of up to 6 people', validFrom: v.desde, validThrough: v.hasta },
+              eligibleQuantity: { '@type': 'QuantitativeValue', maxValue: 6, unitText: 'people per group' },
+              availability: 'https://schema.org/InStock', offeredBy: tony,
+              itemOffered: { '@type': 'Service', serviceType: 'Private tour guide', name: n, provider: tony, areaServed: ['Kyoto', 'Osaka', 'Nara', 'Kobe', 'Himeji'] },
+            }))
+          }),
           ...RUTAS_TONY.flatMap((id) => TEXTOS[lang][id].opciones.map((o, i) => ({
             '@type': 'Offer', name: `${TEXTOS[lang][id].titulo} · ${nombresTramo[META[id].tramos[i]] ?? o.nombre}`, description: o.texto,
             price: PRECIO_RUTA[META[id].tramos[i]], priceCurrency: 'JPY', url: `${url}#ciudades`, offeredBy: tony,
@@ -1014,4 +1030,41 @@ for (const lang of LANGS) {
   const html = pagina(lang)
   writeFileSync(join(dir, 'index.html'), html)
   console.log(`precios: ${RUTA[lang]} (${Math.round(html.length / 1024)} KB)`)
+}
+
+// ── /prices.json ─────────────────────────────────────────────────────────
+// Los mismos precios en un JSON plano para asistentes de IA y agregadores
+// (enlazado desde llms.txt). Sale de las mismas fuentes que las páginas: si
+// cambia un precio, cambia aquí en el siguiente build.
+{
+  const tramos = { half_day_4h: PRECIO_RUTA.medio, full_day_8h: PRECIO_RUTA.completo, long_day_trip_from: PRECIO_RUTA.lejos }
+  const temporadas = TEMPORADAS_PRECIO.map((x) => {
+    const f = filaTemporada(PRECIO_RUTA, x.recargo)
+    return {
+      id: x.id,
+      name: x.nombre.en,
+      dates: x.fechas.en,
+      ...(x.md ? (({ desde, hasta }) => ({ next_window: { start: desde, end: hasta } }))(proximaVentana(x.md, HOY)) : {}),
+      surcharge_percent: Math.round(x.recargo * 100),
+      prices_jpy: { half_day_4h: f.medio, full_day_8h: f.completo, long_day_trip_from: f.lejos },
+    }
+  })
+  const datos = {
+    updated: HOY,
+    business: 'Tony Kansai Guide',
+    guide: 'Tony Hanma (private tour guide based in Osaka, Japan)',
+    languages: ['Spanish (native)', 'English', 'Arabic'],
+    area: ['Kyoto', 'Osaka', 'Nara', 'Kobe', 'Himeji', 'Kansai day trips'],
+    currency: 'JPY',
+    price_basis: 'Per private group of up to 6 people, not per person. Groups of up to 14 on request.',
+    season_rule: 'The date of the tour decides the season.',
+    base_prices_jpy: { kyoto_short_tour_2h: PRECIO_CORTO, ...tramos },
+    seasons: temporadas,
+    not_included: 'Trains, admissions and meals are paid separately as you go.',
+    halal_friendly: 'Halal meals and prayer times can be planned into the day.',
+    booking: { whatsapp: WA_TONY, email: 'tony@tonykansaiguide.com' },
+    pages: { en: `${BASE}${RUTA.en}`, es: `${BASE}${RUTA.es}`, ar: `${BASE}${RUTA.ar}` },
+  }
+  writeFileSync(join(root, 'public', 'prices.json'), JSON.stringify(datos, null, 2) + '\n')
+  console.log('precios: /prices.json')
 }

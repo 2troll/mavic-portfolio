@@ -1,0 +1,96 @@
+{
+  "updated": "2026-11-28",
+  "business": "Tony Kansai Guide",
+  "guide": "Tony Hanma (private tour guide based in Osaka, Japan)",
+  "languages": [
+    "Spanish (native)",
+    "English",
+    "Arabic"
+  ],
+  "area": [
+    "Kyoto",
+    "Osaka",
+    "Nara",
+    "Kobe",
+    "Himeji",
+    "Kansai day trips"
+  ],
+  "currency": "JPY",
+  "price_basis": "Per private group of up to 6 people, not per person. Groups of up to 14 on request.",
+  "season_rule": "The date of the tour decides the season.",
+  "base_prices_jpy": {
+    "kyoto_short_tour_2h": 25000,
+    "half_day_4h": 38000,
+    "full_day_8h": 58000,
+    "long_day_trip_from": 70000
+  },
+  "seasons": [
+    {
+      "id": "sakura",
+      "name": "Cherry blossom · peak season",
+      "dates": "15 March – 25 April",
+      "next_window": {
+        "start": "2027-03-15",
+        "end": "2027-04-25"
+      },
+      "surcharge_percent": 30,
+      "prices_jpy": {
+        "half_day_4h": 49000,
+        "full_day_8h": 75000,
+        "long_day_trip_from": 91000
+      }
+    },
+    {
+      "id": "otono",
+      "name": "Autumn leaves",
+      "dates": "20 October – 12 December",
+      "next_window": {
+        "start": "2026-10-20",
+        "end": "2026-12-12"
+      },
+      "surcharge_percent": 20,
+      "prices_jpy": {
+        "half_day_4h": 46000,
+        "full_day_8h": 70000,
+        "long_day_trip_from": 84000
+      }
+    },
+    {
+      "id": "invierno",
+      "name": "Winter",
+      "dates": "13 December – 28 February",
+      "next_window": {
+        "start": "2026-12-13",
+        "end": "2027-02-28"
+      },
+      "surcharge_percent": 10,
+      "prices_jpy": {
+        "half_day_4h": 42000,
+        "full_day_8h": 64000,
+        "long_day_trip_from": 77000
+      }
+    },
+    {
+      "id": "normal",
+      "name": "Rest of the year",
+      "dates": "early March, late April – mid October",
+      "surcharge_percent": 0,
+      "prices_jpy": {
+        "half_day_4h": 38000,
+        "full_day_8h": 58000,
+        "long_day_trip_from": 70000
+      }
+    }
+  ],
+  "not_included": "Trains, admissions and meals are paid separately as you go.",
+  "halal_friendly": "Halal meals and prayer times can be planned into the day.",
+  "booking": {
+    "whatsapp": "34634193106",
+    "email": "tony@tonykansaiguide.com"
+  },
+  "pages": {
+    "en": "https://tonykansaiguide.com/en/prices/",
+    "es": "https://tonykansaiguide.com/es/precios/",
+    "ar": "https://tonykansaiguide.com/ar/prices/"
+  }
+}
